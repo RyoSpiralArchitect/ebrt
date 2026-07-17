@@ -1,0 +1,7 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+.ruff_cache/
+.venv/
+venv/
+HACKATHON_ROADMAP_INTERNAL.md
