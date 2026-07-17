@@ -1,6 +1,6 @@
 # EBRT v0.1 Benchmark: Protocol, Evidence, and Claim Boundary
 
-**Status:** Protocol frozen; results pending the reportable full run
+**Status:** Reportable v0.1 baseline complete
 
 **Scope:** Structured mechanism benchmark, not an LLM accuracy evaluation
 
@@ -13,9 +13,9 @@ inform that submission, but this document exists to make the mechanism's
 evidence, limitations, and next experiments independently inspectable.
 
 > [!NOTE]
-> Sections marked **Pending full run** are intentionally empty. Do not replace
-> them with quick-run measurements. The generated report and manifest should be
-> committed alongside the filled sections.
+> Every number below comes from the committed full-run bundle. Quick and profile
+> smoke runs were used only to validate the harness and are not evidence cited
+> in this note.
 
 ## 1. Research question
 
@@ -189,68 +189,115 @@ external validity.
 
 ## 7. Results
 
-**Pending full run.** Populate this section only from the committed full-run
-artifacts, and include the artifact manifest digest.
+The full run completed without a source-integrity, numerical, accounting,
+control-bound, or locality assertion failure. The raw bundle is committed at
+`artifacts/benchmark_v0_1/`.
 
 ### 7.1 Run identity
 
 | Field | Value |
 | --- | --- |
-| Run timestamp | `[PENDING FULL RUN]` |
-| Git commit | `[PENDING FULL RUN]` |
-| Manifest SHA-256 | `[PENDING FULL RUN]` |
-| Trial count | `[PENDING FULL RUN]` |
-| Platform | `[PENDING FULL RUN]` |
-| Python / PyTorch | `[PENDING FULL RUN]` |
+| Run timestamp | `2026-07-17T19:39:15Z` (`2026-07-18 04:39:15 JST`) |
+| Source commit | `37f81340f534b5ce0259b6e1f34ebe16f1cbc71b` |
+| Manifest SHA-256 | `fe7050e5eb4e41358be032643b3e6eb7847df266cd684944d7943ebd75d37d4d` |
+| Trials | 7,680 correctness + 630 profile = 8,310 |
+| Elapsed time | 177.804 seconds |
+| Platform | macOS 26.2, arm64, CPU, float32, one PyTorch thread |
+| Python / PyTorch | CPython 3.13.13 / PyTorch 2.11.0 |
 
 ### 7.2 Primary contrasts
 
 | Contrast | Estimand | Point estimate | 95% CI / exact test | Interpretation |
 | --- | --- | ---: | --- | --- |
-| D−A | Total mechanism value | `[PENDING]` | `[PENDING]` | `[PENDING]` |
-| D−C | Informed-routing value | `[PENDING]` | `[PENDING]` | `[PENDING]` |
-| E−D | Annotated-target intervention | `[PENDING]` | `[PENDING]` | `[PENDING]` |
-| B−A | Detector/scaffold cost | `[PENDING]` | `[PENDING]` | `[PENDING]` |
+| D−A | Target-topic success | +0.4210 | case-cluster 95% CI `[+0.2682, +0.5790]` | Full EBRT improves the labeled revision topic on this suite |
+| D−C | Source-distance gain | +0.0493 | case-cluster 95% CI `[+0.0187, +0.0813]` | Informed routing adds continuous source alignment; its binary endpoint gain is smaller |
+| E−D | Gold-target distance gain | +0.2228 | case-cluster 95% CI `[+0.1096, +0.3419]` | Forcing the annotated target improves that local target, not final performance |
+| B−A | External wall time | +0.2166 ms | case-cluster 95% CI `[+0.1512, +0.3162]` | Detection/scaffolding preserves output but adds cost |
+
+Arm-level target-topic success was 0.5556 for A and B, 0.9549 for C, 0.9766
+for D, and 0.9115 for E. D−C target-topic success was +0.0217 with a
+case-cluster 95% CI of `[0.0000, +0.0495]`. D's all-topic conjunction gain over
+A was +0.0859, but its 95% CI `[-0.0078, +0.1849]` crossed zero. The evidence
+therefore supports correction of the labeled revision topic, not a claim that
+the whole multi-topic trajectory improves uniformly.
+
+Gold-route E had perfect annotated routing recall and the strongest local
+target-distance gain (0.9483), but lower source-distance gain (0.1494 versus
+D's 0.2660) and lower final target-topic success (0.9115 versus 0.9766). This
+rejects the assumption that an annotated semantic cause is automatically the
+best recurrent control location.
 
 ### 7.3 Stable-case safety
 
 | Metric | Result |
 | --- | ---: |
-| Unnecessary event rate | `[PENDING]` |
-| Unnecessary revision rate | `[PENDING]` |
-| Pre-target drift | `[PENDING]` |
-| Non-target leakage | `[PENDING]` |
-| Rollback rate | `[PENDING]` |
+| Unnecessary event rate | 0/192 stable trials for each detector-bearing arm |
+| Unnecessary revision rate | 0/192 stable trials for C, D, and E |
+| Pre-target state drift | 0.0 maximum across all arms and trials |
+| Non-target control leakage | 0.0 maximum across all arms and trials |
+| D unrelated-topic state drift | 0.4652 mean maximum norm; suffix propagation is not topic-local |
+| D rollback-to-best rate | 478/1,312 revision events (36.4%); all 1,312 were still accepted |
+
+“Rollback” here means choosing the best optimizer checkpoint instead of its
+last iterate, not rejecting the revision back to the zero-control baseline.
 
 ### 7.4 Runtime and scaling
 
 | Profile | Median | p95 | MAD | Step-accounting note |
 | --- | ---: | ---: | ---: | --- |
-| Forward-only | `[PENDING]` | `[PENDING]` | `[PENDING]` | `[PENDING]` |
-| Detect-only | `[PENDING]` | `[PENDING]` | `[PENDING]` | `[PENDING]` |
-| Full EBRT | `[PENDING]` | `[PENDING]` | `[PENDING]` | `[PENDING]` |
-| Scaling sweep | `[PENDING]` | `[PENDING]` | `[PENDING]` | `[PENDING]` |
+| Forward-only correctness trials | 0.516 ms | 1.024 ms | 0.094 ms | median 4 generator steps |
+| Detect-only correctness trials | 0.680 ms | 1.234 ms | 0.125 ms | median 8 generator steps |
+| Full EBRT correctness trials | 11.419 ms | 22.001 ms | 5.595 ms | median 111; p95 222 generator steps |
+
+| Scaling slice | Result | Accounting / interpretation |
+| --- | --- | --- |
+| No-event T=2048 | A 68.604 ms; B 332.898 ms; D 328.794 ms | T=256→2048 wall-time exponent: A 0.94, D 1.36 |
+| One far event at T=2048, D | 4,908.228 ms | 75,776 generator steps |
+| Revision steps 1→64, D | 7.045→143.195 ms | 192→2,208 generator steps on the fixed fixture |
+| Replay distance far/middle/near, D | 68.828 / 38.699 / 12.297 ms | Same revision-step count; suffix length changes |
+
+Revision-step scaling was approximately monotone: D rose from 7.045 ms at one
+optimizer step to 143.195 ms at 64. Replay distance also mattered: far, middle,
+and near targets took 68.828, 38.699, and 12.297 ms respectively. Changing
+`top_k` from 1 to 4 on its small fixture left runtime near 17.2 ms and did not
+change generator-step count, so the current dense update path does not realize
+a compute benefit from narrower routing.
 
 ### 7.5 Result narrative
 
-`[PENDING FULL RUN: summarize what the preregistered contrasts establish, what
-they fail to establish, and whether any hypothesis must be rejected. Separate
-statistical uncertainty from engineering significance.]`
+H1 is supported for the labeled target topic and stable-case preservation, but
+not for the stricter all-topic conjunction. H2 receives partial support: D
+improves source-distance gain over random routing, while its binary success
+gain is modest and its routing-informative gold recall (0.5000) is essentially
+the same as C's (0.5014). H3 is supported only as a local target intervention;
+the idea that E is a task-performance ceiling is rejected. H4 is supported: B
+reproduces A exactly and costs more. H5 holds for controls and states before the
+selected target, but unrelated-topic suffix states still move. H6 passed every
+trial-level assertion.
+
+The detector-bearing arms show event precision and recall of 1.0 only because
+the benchmark labeler and detector share the same explicit structured event
+contract. This result says nothing about natural-language semantic detection.
 
 ## 8. Failure clusters
 
-**Pending full run.** Classify every failed or rolled-back trial by the earliest
-observable failure boundary, preserving representative case IDs and trace
-links.
+Failure records are diagnostic flags and can overlap; they are not 3,702
+independent task failures. Counts below are trial-level flags from
+`failures.jsonl`.
 
 | Cluster | Count | Observable signature | Likely layer | Next discriminating test |
 | --- | ---: | --- | --- | --- |
-| Event miss / false event | `[PENDING]` | `[PENDING]` | Detector | `[PENDING]` |
-| Wrong routed target | `[PENDING]` | `[PENDING]` | Router | `[PENDING]` |
-| Correct target, ineffective update | `[PENDING]` | `[PENDING]` | Optimizer/control | `[PENDING]` |
-| Correct local update, replay failure | `[PENDING]` | `[PENDING]` | Generator/replay | `[PENDING]` |
-| Constraint rejection / rollback | `[PENDING]` | `[PENDING]` | Acceptance policy | `[PENDING]` |
-| Budget suppression | `[PENDING]` | `[PENDING]` | Resource policy | `[PENDING]` |
+| Event miss / false event | 0 | Exact source-step labels matched | Structured detector contract | Replace oracle fields with a model-produced semantic adapter |
+| Wrong annotated route | 695 | C: 343, D: 352; 537 were multi-anchor cases | Router / target definition | Split recency, contradiction, and stale-anchor families and score control leverage separately |
+| Gold route, failed endpoint | 102 | E route recall 1.0 but target-topic output wrong; 96 were multi-anchor trials | Objective / propagation | Decompose local target gain, source gain, and final decode per event |
+| Local update versus replay failure | Not uniquely identifiable | The same 102 E candidates can fail after a strong local target update | Generator/replay | Add per-suffix survival curves before assigning a layer |
+| Rollback to best checkpoint | 1,540 | C: 521, D: 477, E: 542 trial flags; revisions remained accepted | Optimizer/checkpoint policy | Early-stop on best energy and measure saved replay work |
+| Budget suppression | 1,248 | B: 1,152 by design; C/D/E: 32 each | Resource policy | Separate detector audit from executable-budget outcome in reports |
+
+Target-topic failures were A: 512, B: 512, C: 52, D: 27, and E: 102. The D
+route misses concentrate in the multi-anchor and sequential families. Because
+many route misses still end in the correct binary label, routing recall and
+continuous distance must remain visible instead of relying on success alone.
 
 Do not label every wrong target as one isolated distractor. Where the trace
 supports it, preserve broader wrong-anchor families such as recency bias,
@@ -258,8 +305,7 @@ connection underspecification, or stale-anchor attraction.
 
 ## 9. Bottleneck inventory
 
-The following are **inspection-derived candidates**, not measured conclusions.
-The full profile must confirm, reject, or reorder them:
+The following inspection-derived candidates were tested by the full profile:
 
 1. prefix states are repeatedly materialized and all prior positions are
    scanned, which may dominate long no-event sequences;
@@ -276,15 +322,18 @@ The full profile must confirm, reject, or reorder them:
 
 ### Measured bottleneck ranking
 
-**Pending full run.** For each bottleneck, report the profile slice, observed
-scaling, confidence or variability summary, and proposed mitigation. Preserve
-negative results.
-
 | Rank | Bottleneck | Evidence | Impact | Candidate mitigation |
 | ---: | --- | --- | --- | --- |
-| 1 | `[PENDING]` | `[PENDING]` | `[PENDING]` | `[PENDING]` |
-| 2 | `[PENDING]` | `[PENDING]` | `[PENDING]` | `[PENDING]` |
-| 3 | `[PENDING]` | `[PENDING]` | `[PENDING]` | `[PENDING]` |
+| 1 | Repeated suffix replay | One-event D at T=2048 took 4,908.228 ms and 75,776 generator steps; 1→64 optimizer steps increased latency 7.045→143.195 ms; far replay was 5.6× near | Dominant event-path cost | Add adaptive early stopping, cache unchanged prefixes, and benchmark bounded replay windows |
+| 2 | Superlinear no-event scaffold | At T=2048, D took 328.794 ms versus A's 68.604 ms; T=256→2048 exponent was 1.36 for D versus 0.94 for A; B matched D | Wasted cost even when no revision occurs | Keep incremental state buffers and per-topic indices; avoid repeated `torch.stack(prefix)` and all-prior scans |
+| 3 | Semantic-route / control-location mismatch | D informative gold recall 0.5000; E improved local target gain by 0.2228 over D but reduced source gain by 0.1166 and target success by 0.0651 | Limits routing interpretation and whole-trajectory reliability | Separate semantic causal anchors from control-leverage candidates; penalize unrelated-topic propagation and score both layers |
+
+The dense full-sequence control tensor remains an implementation concern, but
+this run did not isolate its cost. The near-identical `top_k=1/2/4` timings are
+consistent with the current dense path, not proof that sparse controls cannot
+help. Full audit artifacts total roughly 5.7 MB, dominated by raw trials and
+diagnostic failure records; trace verbosity is a storage concern but not the
+leading measured runtime bottleneck.
 
 ## 10. Threats to validity
 
@@ -312,10 +361,10 @@ negative results.
 | Claim | Evidence required | Current disposition |
 | --- | --- | --- |
 | The structured EBRT loop executes end to end | Monolith self-tests and traces | Supported at mechanism level |
-| The public benchmark leaves the frozen monolith unchanged | Before/after SHA guard and manifest | Must be reverified for every run |
-| Full EBRT beats forward-only on this suite | Full paired D−A results | Pending full run |
-| Informed routing adds value over revision alone | Routing-informative paired D−C results | Pending full run |
-| Stable sequences are preserved | Stable-family false-event, revision, and leakage metrics | Pending full run |
+| The public benchmark leaves the frozen monolith unchanged | Before/after SHA guard and manifest | Supported for this run; both digests equal `b1702f…a529` |
+| Full EBRT beats forward-only on this suite | Full paired D−A results | Supported for target-topic success; not established for the all-topic conjunction |
+| Informed routing adds value over revision alone | Routing-informative paired D−C results | Partially supported by source-distance gain; binary gain is modest and gold recall is not better than random |
+| Stable sequences are preserved | Stable-family false-event, revision, and leakage metrics | Supported for stable fixtures and pre-target/control locality; unrelated suffix topics are not invariant |
 | EBRT detects semantic changes in natural language | Natural-language detector benchmark | Not implemented / not claimed |
 | EBRT edits a Transformer or GPT hidden state | Trained-model integration and intervention evidence | Not implemented / not claimed |
 | EBRT improves LLM reasoning accuracy | External task benchmarks with adequate controls | Not established / not claimed |
@@ -325,15 +374,19 @@ negative results.
 
 Proceed in evidence order:
 
-1. run and freeze the full structured benchmark;
-2. optimize only the measured top bottleneck, then rerun the same protocol;
-3. add adversarial routing fixtures without changing the frozen baseline suite;
-4. introduce a GPT-5.6 semantic adapter at one explicit boundary;
-5. compare that adapter with a matched textual self-revision control and an
+1. preserve this full structured run as the immutable v0.1 baseline;
+2. add an incremental no-event scaffold and rerun the same length profile;
+3. add adaptive replay stopping/windowing and rerun the revision-step and
+   replay-distance profiles;
+4. split semantic-anchor routing from control-leverage routing, add propagation
+   survival metrics, and extend the adversarial routing fixtures without
+   changing the frozen baseline suite;
+5. introduce a GPT-5.6 semantic adapter at one explicit boundary;
+6. compare that adapter with a matched textual self-revision control and an
    unchanged forward-only control;
-6. test whether structured event and routing decisions remain auditable under
+7. test whether structured event and routing decisions remain auditable under
    model-generated inputs;
-7. build the minimum evaluator interface around the most discriminating trace,
+8. build the minimum evaluator interface around the most discriminating trace,
    after the evidence identifies it.
 
 Promotion beyond mechanism proof requires success on the benchmark that
@@ -341,7 +394,7 @@ corresponds to the new claim. Plumbing alone is not promotion evidence.
 
 ## 13. Artifact checklist
 
-The reportable bundle should contain:
+The committed reportable bundle contains:
 
 ```text
 artifacts/benchmark_v0_1/

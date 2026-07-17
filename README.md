@@ -39,6 +39,7 @@ ebrt_monolith_v0_1.py         frozen mechanism implementation and demo
 benchmark_ebrt_v0_1.py        independent matched-comparison benchmark
 docs/RND_BENCHMARK_V0_1.md    protocol, results, limits, and claim ledger
 artifacts/benchmark_v0_1/     committed machine-readable benchmark evidence
+artifacts/demo_v0_1/trace.json committed no-build mechanism trace
 requirements.txt              runtime dependency declaration
 LICENSE                       Apache License 2.0
 ```
@@ -144,13 +145,49 @@ correctness.
 See the [R&D benchmark note](docs/RND_BENCHMARK_V0_1.md) for fixtures, metrics,
 statistics, failure analysis, and threats to validity.
 
+## Measured v0.1 baseline
+
+The reportable run executed 7,680 correctness trials and 630 controlled-profile
+trials from source commit `37f81340`. Inspect the generated
+[benchmark report](artifacts/benchmark_v0_1/benchmark_report.md) and
+[manifest](artifacts/benchmark_v0_1/manifest.json) before interpreting the
+summary.
+
+| Arm | Target-topic success | Source-distance gain | Informative route recall | Median trial time |
+| --- | ---: | ---: | ---: | ---: |
+| A — forward-only | 55.56% | 0.000 | — | 0.516 ms |
+| B — detect-only | 55.56% | 0.000 | — | 0.680 ms |
+| C — random route | 95.49% | 0.217 | 50.14% | 11.611 ms |
+| D — full EBRT | 97.66% | 0.266 | 50.00% | 11.419 ms |
+| E — gold route | 91.15% | 0.149 | 100.00% | 12.202 ms |
+
+Relative to A, D improved target-topic success by 42.10 percentage points with
+a case-cluster 95% CI of `[+26.82, +57.90]`. Its stricter all-topic gain was
+8.59 points with a CI of `[-0.78, +18.49]`, so whole-trajectory improvement is
+not established. D improved source-distance gain over C by 0.0493
+`[+0.0187, +0.0813]`, but its binary advantage was modest and its annotated
+route recall was not better than random.
+
+E corrected the annotated target most strongly, yet underperformed D at the
+event/output state. That result is useful: the semantic causal anchor and the
+most effective recurrent control location are not necessarily the same thing.
+Stable cases produced no event or revision, and all pre-target state and
+non-target control drift checks were exactly zero; unrelated suffix topics were
+not invariant.
+
+The top measured engineering bottlenecks are replay and scaffold cost. At
+length 2,048, a no-event D run took 328.794 ms versus A's 68.604 ms; one far
+event raised D to 4,908.228 ms and 75,776 generator steps. See the R&D note for
+revision-step, replay-distance, failure-cluster, and claim-ledger details.
+
 ## Current scope and claim boundary
 
 | Statement | v0.1 status |
 | --- | --- |
 | A bounded event-triggered backward-revision loop executes end to end | Demonstrated by the structured harness and self-tests |
 | The frozen core can be evaluated through an external matched benchmark | Covered by the benchmark and SHA guard |
-| EBRT improves the synthetic task relative to controls | Report only from the committed full benchmark; see the R&D note |
+| EBRT improves the labeled revision topic relative to forward-only on this suite | Supported by the committed full benchmark |
+| EBRT improves every topic in the trajectory | Not established; the all-topic CI crosses zero |
 | Events are detected autonomously from natural language | Not implemented |
 | EBRT edits hidden states inside a trained Transformer or GPT model | Not implemented |
 | EBRT improves real-world LLM reasoning accuracy | Not established |
@@ -168,8 +205,8 @@ category determination.
 
 - **Milestone 0 — frozen mechanism:** preserve the v0.1 monolith and its audit
   trace.
-- **Milestone 1 — measurable baseline:** publish matched controls, raw evidence,
-  bottleneck analysis, and this claim ledger.
+- **Milestone 1 — measurable baseline (complete):** publish matched controls,
+  raw evidence, bottleneck analysis, and this claim ledger.
 - **Milestone 2 — meaningful GPT-5.6 adapter:** replace structured-oracle
   assumptions at a clearly defined boundary, benchmark it against matched
   textual controls, and retain observable rollback behavior.
@@ -206,8 +243,8 @@ evidence is sufficient for a scientific or product claim.
 ## Development status
 
 This repository is an early public R&D release. The benchmark and committed
-artifacts are the first milestone. A product interface and GPT-5.6 adapter are
-still pending, and there is no hosted service in v0.1.
+artifacts complete the first milestone. A product interface and meaningful
+GPT-5.6 adapter are still pending, and there is no hosted service in v0.1.
 
 Issues and pull requests that add reproducible tests, adversarial fixtures, or
 better controls are especially welcome. Please avoid expanding claims without
