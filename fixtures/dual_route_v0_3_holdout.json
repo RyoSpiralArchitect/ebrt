@@ -1,0 +1,4811 @@
+{
+  "schema_version": "ebrt-dual-route-fixtures-v0.3",
+  "split": "holdout",
+  "cases": [
+    {
+      "case_id": "holdout_front_loaded_with_tail_00",
+      "family": "holdout_front_loaded_with_tail",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_front_loaded_with_tail_topic_00",
+          "stance": 0.91,
+          "text": "Holdout front anchor 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_front_loaded_with_tail_topic_00",
+          "stance": 0.66,
+          "text": "Holdout front candidate one 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_front_loaded_with_tail_topic_00",
+          "stance": 0.41,
+          "text": "Holdout front candidate two 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_front_loaded_with_tail_topic_00",
+          "stance": 0.16,
+          "text": "Holdout front candidate three 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_front_loaded_with_tail_tail_0_00",
+          "stance": -0.08,
+          "text": "Distinct tail context 0 for holdout variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_front_loaded_with_tail_tail_1_00",
+          "stance": 0,
+          "text": "Distinct tail context 1 for holdout variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_front_loaded_with_tail_tail_2_00",
+          "stance": 0.08,
+          "text": "Distinct tail context 2 for holdout variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_front_loaded_with_tail_topic_00",
+          "stance": -0.86,
+          "text": "Tail-end contradiction is the sole event in holdout variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_front_loaded_with_tail_post_event_00_a",
+          "stance": 0.18,
+          "text": "A separate topic enters after the revision event and remains unrelated.",
+          "confidence": 0.72,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: four front-loaded anchors, a three-topic tail, then one late event. Includes 1 post-event continuation observation on unrelated topic so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_front_loaded_with_tail_01",
+      "family": "holdout_front_loaded_with_tail",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_front_loaded_with_tail_topic_01",
+          "stance": 0.9,
+          "text": "Holdout front anchor 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_front_loaded_with_tail_topic_01",
+          "stance": 0.65,
+          "text": "Holdout front candidate one 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_front_loaded_with_tail_topic_01",
+          "stance": 0.4,
+          "text": "Holdout front candidate two 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_front_loaded_with_tail_topic_01",
+          "stance": 0.15,
+          "text": "Holdout front candidate three 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_front_loaded_with_tail_tail_0_01",
+          "stance": -0.08,
+          "text": "Distinct tail context 0 for holdout variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_front_loaded_with_tail_tail_1_01",
+          "stance": 0,
+          "text": "Distinct tail context 1 for holdout variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_front_loaded_with_tail_tail_2_01",
+          "stance": 0.08,
+          "text": "Distinct tail context 2 for holdout variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_front_loaded_with_tail_topic_01",
+          "stance": -0.85,
+          "text": "Tail-end contradiction is the sole event in holdout variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_front_loaded_with_tail_post_event_01_a",
+          "stance": 0.18,
+          "text": "A separate topic enters after the revision event and remains unrelated.",
+          "confidence": 0.72,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: four front-loaded anchors, a three-topic tail, then one late event. Includes 1 post-event continuation observation on unrelated topic so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_front_loaded_with_tail_02",
+      "family": "holdout_front_loaded_with_tail",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_front_loaded_with_tail_topic_02",
+          "stance": 0.89,
+          "text": "Holdout front anchor 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_front_loaded_with_tail_topic_02",
+          "stance": 0.64,
+          "text": "Holdout front candidate one 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_front_loaded_with_tail_topic_02",
+          "stance": 0.39,
+          "text": "Holdout front candidate two 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_front_loaded_with_tail_topic_02",
+          "stance": 0.14,
+          "text": "Holdout front candidate three 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_front_loaded_with_tail_tail_0_02",
+          "stance": -0.08,
+          "text": "Distinct tail context 0 for holdout variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_front_loaded_with_tail_tail_1_02",
+          "stance": 0,
+          "text": "Distinct tail context 1 for holdout variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_front_loaded_with_tail_tail_2_02",
+          "stance": 0.08,
+          "text": "Distinct tail context 2 for holdout variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_front_loaded_with_tail_topic_02",
+          "stance": -0.84,
+          "text": "Tail-end contradiction is the sole event in holdout variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_front_loaded_with_tail_post_event_02_a",
+          "stance": 0.18,
+          "text": "A separate topic enters after the revision event and remains unrelated.",
+          "confidence": 0.72,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: four front-loaded anchors, a three-topic tail, then one late event. Includes 1 post-event continuation observation on unrelated topic so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_front_loaded_with_tail_03",
+      "family": "holdout_front_loaded_with_tail",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_front_loaded_with_tail_topic_03",
+          "stance": 0.88,
+          "text": "Holdout front anchor 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_front_loaded_with_tail_topic_03",
+          "stance": 0.63,
+          "text": "Holdout front candidate one 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_front_loaded_with_tail_topic_03",
+          "stance": 0.38,
+          "text": "Holdout front candidate two 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_front_loaded_with_tail_topic_03",
+          "stance": 0.13,
+          "text": "Holdout front candidate three 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_front_loaded_with_tail_tail_0_03",
+          "stance": -0.08,
+          "text": "Distinct tail context 0 for holdout variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_front_loaded_with_tail_tail_1_03",
+          "stance": 0,
+          "text": "Distinct tail context 1 for holdout variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_front_loaded_with_tail_tail_2_03",
+          "stance": 0.08,
+          "text": "Distinct tail context 2 for holdout variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_front_loaded_with_tail_topic_03",
+          "stance": -0.83,
+          "text": "Tail-end contradiction is the sole event in holdout variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_front_loaded_with_tail_post_event_03_a",
+          "stance": 0.18,
+          "text": "A separate topic enters after the revision event and remains unrelated.",
+          "confidence": 0.72,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: four front-loaded anchors, a three-topic tail, then one late event. Includes 1 post-event continuation observation on unrelated topic so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_dual_repeated_stream_00",
+      "family": "holdout_dual_repeated_stream",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_dual_repeated_stream_topic_00",
+          "stance": 0.96,
+          "text": "Primary stream anchor 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_parallel_00",
+          "stance": -0.28,
+          "text": "Parallel stream anchor 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_topic_00",
+          "stance": 0.78,
+          "text": "Primary stream candidate 0 in holdout variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_parallel_00",
+          "stance": -0.22,
+          "text": "Parallel stream non-event 0 in holdout variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_topic_00",
+          "stance": 0.59,
+          "text": "Primary stream candidate 1 in holdout variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_parallel_00",
+          "stance": -0.16,
+          "text": "Parallel stream non-event 1 in holdout variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_topic_00",
+          "stance": 0.39,
+          "text": "Primary stream candidate 2 in holdout variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_parallel_00",
+          "stance": -0.1,
+          "text": "Parallel stream non-event 2 in holdout variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_topic_00",
+          "stance": 0.17,
+          "text": "Primary stream candidate 3 in holdout variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_parallel_00",
+          "stance": -0.04,
+          "text": "Parallel stream non-event 3 in holdout variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_topic_00",
+          "stance": -0.81,
+          "text": "Primary stream alone reverses in holdout variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_post_event_00_a",
+          "stance": -0.22,
+          "text": "A stable unrelated topic starts after the revision event.",
+          "confidence": 0.69,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_post_event_00_a",
+          "stance": -0.17,
+          "text": "The unrelated continuation drifts slightly without revising its stance.",
+          "confidence": 0.73,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: five eligible primary anchors alternate with a repeated stable parallel topic. Includes 2 post-event continuation observations on unrelated topics so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_dual_repeated_stream_01",
+      "family": "holdout_dual_repeated_stream",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_dual_repeated_stream_topic_01",
+          "stance": 0.95,
+          "text": "Primary stream anchor 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_parallel_01",
+          "stance": -0.28,
+          "text": "Parallel stream anchor 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_topic_01",
+          "stance": 0.77,
+          "text": "Primary stream candidate 0 in holdout variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_parallel_01",
+          "stance": -0.21,
+          "text": "Parallel stream non-event 0 in holdout variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_topic_01",
+          "stance": 0.58,
+          "text": "Primary stream candidate 1 in holdout variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_parallel_01",
+          "stance": -0.15,
+          "text": "Parallel stream non-event 1 in holdout variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_topic_01",
+          "stance": 0.38,
+          "text": "Primary stream candidate 2 in holdout variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_parallel_01",
+          "stance": -0.09,
+          "text": "Parallel stream non-event 2 in holdout variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_topic_01",
+          "stance": 0.16,
+          "text": "Primary stream candidate 3 in holdout variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_parallel_01",
+          "stance": -0.03,
+          "text": "Parallel stream non-event 3 in holdout variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_topic_01",
+          "stance": -0.8,
+          "text": "Primary stream alone reverses in holdout variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_post_event_01_a",
+          "stance": -0.22,
+          "text": "A stable unrelated topic starts after the revision event.",
+          "confidence": 0.69,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_post_event_01_a",
+          "stance": -0.17,
+          "text": "The unrelated continuation drifts slightly without revising its stance.",
+          "confidence": 0.73,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: five eligible primary anchors alternate with a repeated stable parallel topic. Includes 2 post-event continuation observations on unrelated topics so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_dual_repeated_stream_02",
+      "family": "holdout_dual_repeated_stream",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_dual_repeated_stream_topic_02",
+          "stance": 0.94,
+          "text": "Primary stream anchor 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_parallel_02",
+          "stance": -0.28,
+          "text": "Parallel stream anchor 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_topic_02",
+          "stance": 0.76,
+          "text": "Primary stream candidate 0 in holdout variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_parallel_02",
+          "stance": -0.2,
+          "text": "Parallel stream non-event 0 in holdout variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_topic_02",
+          "stance": 0.57,
+          "text": "Primary stream candidate 1 in holdout variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_parallel_02",
+          "stance": -0.14,
+          "text": "Parallel stream non-event 1 in holdout variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_topic_02",
+          "stance": 0.37,
+          "text": "Primary stream candidate 2 in holdout variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_parallel_02",
+          "stance": -0.08,
+          "text": "Parallel stream non-event 2 in holdout variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_topic_02",
+          "stance": 0.15,
+          "text": "Primary stream candidate 3 in holdout variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_parallel_02",
+          "stance": -0.02,
+          "text": "Parallel stream non-event 3 in holdout variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_topic_02",
+          "stance": -0.79,
+          "text": "Primary stream alone reverses in holdout variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_post_event_02_a",
+          "stance": -0.22,
+          "text": "A stable unrelated topic starts after the revision event.",
+          "confidence": 0.69,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_post_event_02_a",
+          "stance": -0.17,
+          "text": "The unrelated continuation drifts slightly without revising its stance.",
+          "confidence": 0.73,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: five eligible primary anchors alternate with a repeated stable parallel topic. Includes 2 post-event continuation observations on unrelated topics so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_dual_repeated_stream_03",
+      "family": "holdout_dual_repeated_stream",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_dual_repeated_stream_topic_03",
+          "stance": 0.93,
+          "text": "Primary stream anchor 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_parallel_03",
+          "stance": -0.28,
+          "text": "Parallel stream anchor 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_topic_03",
+          "stance": 0.75,
+          "text": "Primary stream candidate 0 in holdout variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_parallel_03",
+          "stance": -0.19,
+          "text": "Parallel stream non-event 0 in holdout variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_topic_03",
+          "stance": 0.56,
+          "text": "Primary stream candidate 1 in holdout variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_parallel_03",
+          "stance": -0.13,
+          "text": "Parallel stream non-event 1 in holdout variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_topic_03",
+          "stance": 0.36,
+          "text": "Primary stream candidate 2 in holdout variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_parallel_03",
+          "stance": -0.07,
+          "text": "Parallel stream non-event 2 in holdout variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_topic_03",
+          "stance": 0.14,
+          "text": "Primary stream candidate 3 in holdout variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_parallel_03",
+          "stance": -0.01,
+          "text": "Parallel stream non-event 3 in holdout variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_topic_03",
+          "stance": -0.78,
+          "text": "Primary stream alone reverses in holdout variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_post_event_03_a",
+          "stance": -0.22,
+          "text": "A stable unrelated topic starts after the revision event.",
+          "confidence": 0.69,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_post_event_03_a",
+          "stance": -0.17,
+          "text": "The unrelated continuation drifts slightly without revising its stance.",
+          "confidence": 0.73,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: five eligible primary anchors alternate with a repeated stable parallel topic. Includes 2 post-event continuation observations on unrelated topics so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_split_candidate_clusters_00",
+      "family": "holdout_split_candidate_clusters",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_split_candidate_clusters_topic_00",
+          "stance": 0.94,
+          "text": "First cluster anchor 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_topic_00",
+          "stance": 0.73,
+          "text": "First cluster candidate one 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_topic_00",
+          "stance": 0.52,
+          "text": "First cluster candidate two 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_separator_00",
+          "stance": -0.12,
+          "text": "Separator topic starts 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_separator_00",
+          "stance": -0.06,
+          "text": "Separator topic stays stable 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_separator_00",
+          "stance": 0,
+          "text": "Separator topic ends stable 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_topic_00",
+          "stance": 0.3,
+          "text": "Second cluster candidate three 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_topic_00",
+          "stance": 0.08,
+          "text": "Second cluster candidate four 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_topic_00",
+          "stance": -0.83,
+          "text": "Split-cluster final event 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_post_event_00_a",
+          "stance": 0.24,
+          "text": "An unrelated stream begins after the revision event.",
+          "confidence": 0.68,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_post_event_00_b",
+          "stance": -0.12,
+          "text": "A second unrelated topic briefly interrupts the continuation.",
+          "confidence": 0.66,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_post_event_00_a",
+          "stance": 0.29,
+          "text": "The first unrelated stream returns with only a small non-event drift.",
+          "confidence": 0.71,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: five anchors are split into early and late clusters by a repeated separator stream. Includes 3 post-event continuation observations on unrelated topics so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_split_candidate_clusters_01",
+      "family": "holdout_split_candidate_clusters",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_split_candidate_clusters_topic_01",
+          "stance": 0.93,
+          "text": "First cluster anchor 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_topic_01",
+          "stance": 0.72,
+          "text": "First cluster candidate one 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_topic_01",
+          "stance": 0.51,
+          "text": "First cluster candidate two 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_separator_01",
+          "stance": -0.12,
+          "text": "Separator topic starts 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_separator_01",
+          "stance": -0.06,
+          "text": "Separator topic stays stable 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_separator_01",
+          "stance": 0,
+          "text": "Separator topic ends stable 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_topic_01",
+          "stance": 0.29,
+          "text": "Second cluster candidate three 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_topic_01",
+          "stance": 0.07,
+          "text": "Second cluster candidate four 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_topic_01",
+          "stance": -0.82,
+          "text": "Split-cluster final event 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_post_event_01_a",
+          "stance": 0.24,
+          "text": "An unrelated stream begins after the revision event.",
+          "confidence": 0.68,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_post_event_01_b",
+          "stance": -0.12,
+          "text": "A second unrelated topic briefly interrupts the continuation.",
+          "confidence": 0.66,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_post_event_01_a",
+          "stance": 0.29,
+          "text": "The first unrelated stream returns with only a small non-event drift.",
+          "confidence": 0.71,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: five anchors are split into early and late clusters by a repeated separator stream. Includes 3 post-event continuation observations on unrelated topics so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_split_candidate_clusters_02",
+      "family": "holdout_split_candidate_clusters",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_split_candidate_clusters_topic_02",
+          "stance": 0.92,
+          "text": "First cluster anchor 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_topic_02",
+          "stance": 0.71,
+          "text": "First cluster candidate one 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_topic_02",
+          "stance": 0.5,
+          "text": "First cluster candidate two 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_separator_02",
+          "stance": -0.12,
+          "text": "Separator topic starts 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_separator_02",
+          "stance": -0.06,
+          "text": "Separator topic stays stable 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_separator_02",
+          "stance": 0,
+          "text": "Separator topic ends stable 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_topic_02",
+          "stance": 0.28,
+          "text": "Second cluster candidate three 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_topic_02",
+          "stance": 0.06,
+          "text": "Second cluster candidate four 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_topic_02",
+          "stance": -0.81,
+          "text": "Split-cluster final event 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_post_event_02_a",
+          "stance": 0.24,
+          "text": "An unrelated stream begins after the revision event.",
+          "confidence": 0.68,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_post_event_02_b",
+          "stance": -0.12,
+          "text": "A second unrelated topic briefly interrupts the continuation.",
+          "confidence": 0.66,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_post_event_02_a",
+          "stance": 0.29,
+          "text": "The first unrelated stream returns with only a small non-event drift.",
+          "confidence": 0.71,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: five anchors are split into early and late clusters by a repeated separator stream. Includes 3 post-event continuation observations on unrelated topics so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_split_candidate_clusters_03",
+      "family": "holdout_split_candidate_clusters",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_split_candidate_clusters_topic_03",
+          "stance": 0.91,
+          "text": "First cluster anchor 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_topic_03",
+          "stance": 0.7,
+          "text": "First cluster candidate one 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_topic_03",
+          "stance": 0.49,
+          "text": "First cluster candidate two 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_separator_03",
+          "stance": -0.12,
+          "text": "Separator topic starts 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_separator_03",
+          "stance": -0.06,
+          "text": "Separator topic stays stable 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_separator_03",
+          "stance": 0,
+          "text": "Separator topic ends stable 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_topic_03",
+          "stance": 0.27,
+          "text": "Second cluster candidate three 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_topic_03",
+          "stance": 0.05,
+          "text": "Second cluster candidate four 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_topic_03",
+          "stance": -0.8,
+          "text": "Split-cluster final event 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_post_event_03_a",
+          "stance": 0.24,
+          "text": "An unrelated stream begins after the revision event.",
+          "confidence": 0.68,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_post_event_03_b",
+          "stance": -0.12,
+          "text": "A second unrelated topic briefly interrupts the continuation.",
+          "confidence": 0.66,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_split_candidate_clusters_post_event_03_a",
+          "stance": 0.29,
+          "text": "The first unrelated stream returns with only a small non-event drift.",
+          "confidence": 0.71,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: five anchors are split into early and late clusters by a repeated separator stream. Includes 3 post-event continuation observations on unrelated topics so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_confidence_gradient_six_00",
+      "family": "holdout_confidence_gradient_six",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_confidence_gradient_six_topic_00",
+          "stance": 0.98,
+          "text": "Confidence-gradient candidate 0 in holdout variant 0.",
+          "confidence": 0.98,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_confidence_gradient_six_topic_00",
+          "stance": 0.79,
+          "text": "Confidence-gradient candidate 1 in holdout variant 0.",
+          "confidence": 0.88,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_confidence_gradient_six_topic_00",
+          "stance": 0.61,
+          "text": "Confidence-gradient candidate 2 in holdout variant 0.",
+          "confidence": 0.78,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_confidence_gradient_six_topic_00",
+          "stance": 0.43,
+          "text": "Confidence-gradient candidate 3 in holdout variant 0.",
+          "confidence": 0.68,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_confidence_gradient_six_topic_00",
+          "stance": 0.25,
+          "text": "Confidence-gradient candidate 4 in holdout variant 0.",
+          "confidence": 0.58,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_confidence_gradient_six_topic_00",
+          "stance": 0.07,
+          "text": "Confidence-gradient candidate 5 in holdout variant 0.",
+          "confidence": 0.56,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_confidence_gradient_six_topic_00",
+          "stance": -0.78,
+          "text": "High-confidence gradient reversal 0.",
+          "confidence": 0.96,
+          "revision_cue": 0.92
+        },
+        {
+          "topic": "holdout_confidence_gradient_six_post_event_00_a",
+          "stance": 0.18,
+          "text": "A separate topic enters after the revision event and remains unrelated.",
+          "confidence": 0.72,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: six eligible anchors follow a decreasing-confidence gradient before a high-confidence cued event. Includes 1 post-event continuation observation on unrelated topic so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_confidence_gradient_six_01",
+      "family": "holdout_confidence_gradient_six",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_confidence_gradient_six_topic_01",
+          "stance": 0.975,
+          "text": "Confidence-gradient candidate 0 in holdout variant 1.",
+          "confidence": 0.98,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_confidence_gradient_six_topic_01",
+          "stance": 0.785,
+          "text": "Confidence-gradient candidate 1 in holdout variant 1.",
+          "confidence": 0.88,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_confidence_gradient_six_topic_01",
+          "stance": 0.605,
+          "text": "Confidence-gradient candidate 2 in holdout variant 1.",
+          "confidence": 0.78,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_confidence_gradient_six_topic_01",
+          "stance": 0.425,
+          "text": "Confidence-gradient candidate 3 in holdout variant 1.",
+          "confidence": 0.68,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_confidence_gradient_six_topic_01",
+          "stance": 0.245,
+          "text": "Confidence-gradient candidate 4 in holdout variant 1.",
+          "confidence": 0.58,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_confidence_gradient_six_topic_01",
+          "stance": 0.065,
+          "text": "Confidence-gradient candidate 5 in holdout variant 1.",
+          "confidence": 0.56,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_confidence_gradient_six_topic_01",
+          "stance": -0.77,
+          "text": "High-confidence gradient reversal 1.",
+          "confidence": 0.96,
+          "revision_cue": 0.92
+        },
+        {
+          "topic": "holdout_confidence_gradient_six_post_event_01_a",
+          "stance": 0.18,
+          "text": "A separate topic enters after the revision event and remains unrelated.",
+          "confidence": 0.72,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: six eligible anchors follow a decreasing-confidence gradient before a high-confidence cued event. Includes 1 post-event continuation observation on unrelated topic so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_confidence_gradient_six_02",
+      "family": "holdout_confidence_gradient_six",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_confidence_gradient_six_topic_02",
+          "stance": 0.97,
+          "text": "Confidence-gradient candidate 0 in holdout variant 2.",
+          "confidence": 0.98,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_confidence_gradient_six_topic_02",
+          "stance": 0.78,
+          "text": "Confidence-gradient candidate 1 in holdout variant 2.",
+          "confidence": 0.88,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_confidence_gradient_six_topic_02",
+          "stance": 0.6,
+          "text": "Confidence-gradient candidate 2 in holdout variant 2.",
+          "confidence": 0.78,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_confidence_gradient_six_topic_02",
+          "stance": 0.42,
+          "text": "Confidence-gradient candidate 3 in holdout variant 2.",
+          "confidence": 0.68,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_confidence_gradient_six_topic_02",
+          "stance": 0.24,
+          "text": "Confidence-gradient candidate 4 in holdout variant 2.",
+          "confidence": 0.58,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_confidence_gradient_six_topic_02",
+          "stance": 0.06,
+          "text": "Confidence-gradient candidate 5 in holdout variant 2.",
+          "confidence": 0.56,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_confidence_gradient_six_topic_02",
+          "stance": -0.76,
+          "text": "High-confidence gradient reversal 2.",
+          "confidence": 0.96,
+          "revision_cue": 0.92
+        },
+        {
+          "topic": "holdout_confidence_gradient_six_post_event_02_a",
+          "stance": 0.18,
+          "text": "A separate topic enters after the revision event and remains unrelated.",
+          "confidence": 0.72,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: six eligible anchors follow a decreasing-confidence gradient before a high-confidence cued event. Includes 1 post-event continuation observation on unrelated topic so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_confidence_gradient_six_03",
+      "family": "holdout_confidence_gradient_six",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_confidence_gradient_six_topic_03",
+          "stance": 0.965,
+          "text": "Confidence-gradient candidate 0 in holdout variant 3.",
+          "confidence": 0.98,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_confidence_gradient_six_topic_03",
+          "stance": 0.775,
+          "text": "Confidence-gradient candidate 1 in holdout variant 3.",
+          "confidence": 0.88,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_confidence_gradient_six_topic_03",
+          "stance": 0.595,
+          "text": "Confidence-gradient candidate 2 in holdout variant 3.",
+          "confidence": 0.78,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_confidence_gradient_six_topic_03",
+          "stance": 0.415,
+          "text": "Confidence-gradient candidate 3 in holdout variant 3.",
+          "confidence": 0.68,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_confidence_gradient_six_topic_03",
+          "stance": 0.235,
+          "text": "Confidence-gradient candidate 4 in holdout variant 3.",
+          "confidence": 0.58,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_confidence_gradient_six_topic_03",
+          "stance": 0.055,
+          "text": "Confidence-gradient candidate 5 in holdout variant 3.",
+          "confidence": 0.56,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_confidence_gradient_six_topic_03",
+          "stance": -0.75,
+          "text": "High-confidence gradient reversal 3.",
+          "confidence": 0.96,
+          "revision_cue": 0.92
+        },
+        {
+          "topic": "holdout_confidence_gradient_six_post_event_03_a",
+          "stance": 0.18,
+          "text": "A separate topic enters after the revision event and remains unrelated.",
+          "confidence": 0.72,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: six eligible anchors follow a decreasing-confidence gradient before a high-confidence cued event. Includes 1 post-event continuation observation on unrelated topic so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_revision_cue_ramp_00",
+      "family": "holdout_revision_cue_ramp",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_revision_cue_ramp_topic_00",
+          "stance": 0.93,
+          "text": "Cue-ramp anchor 0.",
+          "confidence": 1,
+          "revision_cue": 0.15
+        },
+        {
+          "topic": "holdout_revision_cue_ramp_topic_00",
+          "stance": 0.61,
+          "text": "Low-cue candidate one 0.",
+          "confidence": 0.92,
+          "revision_cue": 0.2
+        },
+        {
+          "topic": "holdout_revision_cue_ramp_marker_00",
+          "stance": 0.18,
+          "text": "Cue-ramp marker 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_revision_cue_ramp_topic_00",
+          "stance": 0.24,
+          "text": "Mid-cue candidate two 0.",
+          "confidence": 0.9,
+          "revision_cue": 0.35
+        },
+        {
+          "topic": "holdout_revision_cue_ramp_topic_00",
+          "stance": -0.08,
+          "text": "Near-threshold stance is suppressed by cue in 0.",
+          "confidence": 0.88,
+          "revision_cue": 0.45
+        },
+        {
+          "topic": "holdout_revision_cue_ramp_topic_00",
+          "stance": -0.18,
+          "text": "Fourth candidate remains below event threshold via cue 0.",
+          "confidence": 0.86,
+          "revision_cue": 0.5
+        },
+        {
+          "topic": "holdout_revision_cue_ramp_topic_00",
+          "stance": -0.8,
+          "text": "Full-cue final contradiction triggers one event 0.",
+          "confidence": 0.98,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_revision_cue_ramp_post_event_00_a",
+          "stance": -0.22,
+          "text": "A stable unrelated topic starts after the revision event.",
+          "confidence": 0.69,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_revision_cue_ramp_post_event_00_a",
+          "stance": -0.17,
+          "text": "The unrelated continuation drifts slightly without revising its stance.",
+          "confidence": 0.73,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: five anchors carry a rising revision-cue schedule; only the full-cue terminal observation fires. Includes 2 post-event continuation observations on unrelated topics so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_revision_cue_ramp_01",
+      "family": "holdout_revision_cue_ramp",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_revision_cue_ramp_topic_01",
+          "stance": 0.92,
+          "text": "Cue-ramp anchor 1.",
+          "confidence": 1,
+          "revision_cue": 0.15
+        },
+        {
+          "topic": "holdout_revision_cue_ramp_topic_01",
+          "stance": 0.6,
+          "text": "Low-cue candidate one 1.",
+          "confidence": 0.92,
+          "revision_cue": 0.2
+        },
+        {
+          "topic": "holdout_revision_cue_ramp_marker_01",
+          "stance": 0.18,
+          "text": "Cue-ramp marker 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_revision_cue_ramp_topic_01",
+          "stance": 0.23,
+          "text": "Mid-cue candidate two 1.",
+          "confidence": 0.9,
+          "revision_cue": 0.35
+        },
+        {
+          "topic": "holdout_revision_cue_ramp_topic_01",
+          "stance": -0.09,
+          "text": "Near-threshold stance is suppressed by cue in 1.",
+          "confidence": 0.88,
+          "revision_cue": 0.45
+        },
+        {
+          "topic": "holdout_revision_cue_ramp_topic_01",
+          "stance": -0.19,
+          "text": "Fourth candidate remains below event threshold via cue 1.",
+          "confidence": 0.86,
+          "revision_cue": 0.5
+        },
+        {
+          "topic": "holdout_revision_cue_ramp_topic_01",
+          "stance": -0.79,
+          "text": "Full-cue final contradiction triggers one event 1.",
+          "confidence": 0.98,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_revision_cue_ramp_post_event_01_a",
+          "stance": -0.22,
+          "text": "A stable unrelated topic starts after the revision event.",
+          "confidence": 0.69,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_revision_cue_ramp_post_event_01_a",
+          "stance": -0.17,
+          "text": "The unrelated continuation drifts slightly without revising its stance.",
+          "confidence": 0.73,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: five anchors carry a rising revision-cue schedule; only the full-cue terminal observation fires. Includes 2 post-event continuation observations on unrelated topics so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_revision_cue_ramp_02",
+      "family": "holdout_revision_cue_ramp",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_revision_cue_ramp_topic_02",
+          "stance": 0.91,
+          "text": "Cue-ramp anchor 2.",
+          "confidence": 1,
+          "revision_cue": 0.15
+        },
+        {
+          "topic": "holdout_revision_cue_ramp_topic_02",
+          "stance": 0.59,
+          "text": "Low-cue candidate one 2.",
+          "confidence": 0.92,
+          "revision_cue": 0.2
+        },
+        {
+          "topic": "holdout_revision_cue_ramp_marker_02",
+          "stance": 0.18,
+          "text": "Cue-ramp marker 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_revision_cue_ramp_topic_02",
+          "stance": 0.22,
+          "text": "Mid-cue candidate two 2.",
+          "confidence": 0.9,
+          "revision_cue": 0.35
+        },
+        {
+          "topic": "holdout_revision_cue_ramp_topic_02",
+          "stance": -0.1,
+          "text": "Near-threshold stance is suppressed by cue in 2.",
+          "confidence": 0.88,
+          "revision_cue": 0.45
+        },
+        {
+          "topic": "holdout_revision_cue_ramp_topic_02",
+          "stance": -0.2,
+          "text": "Fourth candidate remains below event threshold via cue 2.",
+          "confidence": 0.86,
+          "revision_cue": 0.5
+        },
+        {
+          "topic": "holdout_revision_cue_ramp_topic_02",
+          "stance": -0.78,
+          "text": "Full-cue final contradiction triggers one event 2.",
+          "confidence": 0.98,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_revision_cue_ramp_post_event_02_a",
+          "stance": -0.22,
+          "text": "A stable unrelated topic starts after the revision event.",
+          "confidence": 0.69,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_revision_cue_ramp_post_event_02_a",
+          "stance": -0.17,
+          "text": "The unrelated continuation drifts slightly without revising its stance.",
+          "confidence": 0.73,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: five anchors carry a rising revision-cue schedule; only the full-cue terminal observation fires. Includes 2 post-event continuation observations on unrelated topics so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_revision_cue_ramp_03",
+      "family": "holdout_revision_cue_ramp",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_revision_cue_ramp_topic_03",
+          "stance": 0.9,
+          "text": "Cue-ramp anchor 3.",
+          "confidence": 1,
+          "revision_cue": 0.15
+        },
+        {
+          "topic": "holdout_revision_cue_ramp_topic_03",
+          "stance": 0.58,
+          "text": "Low-cue candidate one 3.",
+          "confidence": 0.92,
+          "revision_cue": 0.2
+        },
+        {
+          "topic": "holdout_revision_cue_ramp_marker_03",
+          "stance": 0.18,
+          "text": "Cue-ramp marker 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_revision_cue_ramp_topic_03",
+          "stance": 0.21,
+          "text": "Mid-cue candidate two 3.",
+          "confidence": 0.9,
+          "revision_cue": 0.35
+        },
+        {
+          "topic": "holdout_revision_cue_ramp_topic_03",
+          "stance": -0.11,
+          "text": "Near-threshold stance is suppressed by cue in 3.",
+          "confidence": 0.88,
+          "revision_cue": 0.45
+        },
+        {
+          "topic": "holdout_revision_cue_ramp_topic_03",
+          "stance": -0.21,
+          "text": "Fourth candidate remains below event threshold via cue 3.",
+          "confidence": 0.86,
+          "revision_cue": 0.5
+        },
+        {
+          "topic": "holdout_revision_cue_ramp_topic_03",
+          "stance": -0.77,
+          "text": "Full-cue final contradiction triggers one event 3.",
+          "confidence": 0.98,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_revision_cue_ramp_post_event_03_a",
+          "stance": -0.22,
+          "text": "A stable unrelated topic starts after the revision event.",
+          "confidence": 0.69,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_revision_cue_ramp_post_event_03_a",
+          "stance": -0.17,
+          "text": "The unrelated continuation drifts slightly without revising its stance.",
+          "confidence": 0.73,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: five anchors carry a rising revision-cue schedule; only the full-cue terminal observation fires. Includes 2 post-event continuation observations on unrelated topics so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_neutral_stance_bridge_00",
+      "family": "holdout_neutral_stance_bridge",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_neutral_stance_bridge_topic_00",
+          "stance": 1,
+          "text": "Positive bridge anchor 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_neutral_stance_bridge_topic_00",
+          "stance": 0.72,
+          "text": "Bridge candidate one 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_neutral_stance_bridge_topic_00",
+          "stance": 0.44,
+          "text": "Bridge candidate two 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_neutral_stance_bridge_topic_00",
+          "stance": 0.16,
+          "text": "Bridge candidate three 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_neutral_stance_bridge_topic_00",
+          "stance": -0.02,
+          "text": "Neutral bridge candidate four stays subthreshold 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_neutral_stance_bridge_topic_00",
+          "stance": -0.72,
+          "text": "Bridge exits into the sole contradiction 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_neutral_stance_bridge_post_event_00_a",
+          "stance": 0.24,
+          "text": "An unrelated stream begins after the revision event.",
+          "confidence": 0.68,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_neutral_stance_bridge_post_event_00_b",
+          "stance": -0.12,
+          "text": "A second unrelated topic briefly interrupts the continuation.",
+          "confidence": 0.66,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_neutral_stance_bridge_post_event_00_a",
+          "stance": 0.29,
+          "text": "The first unrelated stream returns with only a small non-event drift.",
+          "confidence": 0.71,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: five anchors cross gradually toward neutral without firing, followed by one super-threshold reversal. Includes 3 post-event continuation observations on unrelated topics so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_neutral_stance_bridge_01",
+      "family": "holdout_neutral_stance_bridge",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_neutral_stance_bridge_topic_01",
+          "stance": 0.99,
+          "text": "Positive bridge anchor 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_neutral_stance_bridge_topic_01",
+          "stance": 0.71,
+          "text": "Bridge candidate one 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_neutral_stance_bridge_topic_01",
+          "stance": 0.43,
+          "text": "Bridge candidate two 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_neutral_stance_bridge_topic_01",
+          "stance": 0.15,
+          "text": "Bridge candidate three 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_neutral_stance_bridge_topic_01",
+          "stance": -0.03,
+          "text": "Neutral bridge candidate four stays subthreshold 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_neutral_stance_bridge_topic_01",
+          "stance": -0.71,
+          "text": "Bridge exits into the sole contradiction 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_neutral_stance_bridge_post_event_01_a",
+          "stance": 0.24,
+          "text": "An unrelated stream begins after the revision event.",
+          "confidence": 0.68,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_neutral_stance_bridge_post_event_01_b",
+          "stance": -0.12,
+          "text": "A second unrelated topic briefly interrupts the continuation.",
+          "confidence": 0.66,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_neutral_stance_bridge_post_event_01_a",
+          "stance": 0.29,
+          "text": "The first unrelated stream returns with only a small non-event drift.",
+          "confidence": 0.71,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: five anchors cross gradually toward neutral without firing, followed by one super-threshold reversal. Includes 3 post-event continuation observations on unrelated topics so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_neutral_stance_bridge_02",
+      "family": "holdout_neutral_stance_bridge",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_neutral_stance_bridge_topic_02",
+          "stance": 0.98,
+          "text": "Positive bridge anchor 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_neutral_stance_bridge_topic_02",
+          "stance": 0.7,
+          "text": "Bridge candidate one 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_neutral_stance_bridge_topic_02",
+          "stance": 0.42,
+          "text": "Bridge candidate two 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_neutral_stance_bridge_topic_02",
+          "stance": 0.14,
+          "text": "Bridge candidate three 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_neutral_stance_bridge_topic_02",
+          "stance": -0.04,
+          "text": "Neutral bridge candidate four stays subthreshold 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_neutral_stance_bridge_topic_02",
+          "stance": -0.7,
+          "text": "Bridge exits into the sole contradiction 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_neutral_stance_bridge_post_event_02_a",
+          "stance": 0.24,
+          "text": "An unrelated stream begins after the revision event.",
+          "confidence": 0.68,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_neutral_stance_bridge_post_event_02_b",
+          "stance": -0.12,
+          "text": "A second unrelated topic briefly interrupts the continuation.",
+          "confidence": 0.66,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_neutral_stance_bridge_post_event_02_a",
+          "stance": 0.29,
+          "text": "The first unrelated stream returns with only a small non-event drift.",
+          "confidence": 0.71,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: five anchors cross gradually toward neutral without firing, followed by one super-threshold reversal. Includes 3 post-event continuation observations on unrelated topics so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_neutral_stance_bridge_03",
+      "family": "holdout_neutral_stance_bridge",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_neutral_stance_bridge_topic_03",
+          "stance": 0.97,
+          "text": "Positive bridge anchor 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_neutral_stance_bridge_topic_03",
+          "stance": 0.69,
+          "text": "Bridge candidate one 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_neutral_stance_bridge_topic_03",
+          "stance": 0.41,
+          "text": "Bridge candidate two 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_neutral_stance_bridge_topic_03",
+          "stance": 0.13,
+          "text": "Bridge candidate three 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_neutral_stance_bridge_topic_03",
+          "stance": -0.05,
+          "text": "Neutral bridge candidate four stays subthreshold 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_neutral_stance_bridge_topic_03",
+          "stance": -0.69,
+          "text": "Bridge exits into the sole contradiction 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_neutral_stance_bridge_post_event_03_a",
+          "stance": 0.24,
+          "text": "An unrelated stream begins after the revision event.",
+          "confidence": 0.68,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_neutral_stance_bridge_post_event_03_b",
+          "stance": -0.12,
+          "text": "A second unrelated topic briefly interrupts the continuation.",
+          "confidence": 0.66,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_neutral_stance_bridge_post_event_03_a",
+          "stance": 0.29,
+          "text": "The first unrelated stream returns with only a small non-event drift.",
+          "confidence": 0.71,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: five anchors cross gradually toward neutral without firing, followed by one super-threshold reversal. Includes 3 post-event continuation observations on unrelated topics so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_semantic_echo_pattern_00",
+      "family": "holdout_semantic_echo_pattern",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_semantic_echo_pattern_topic_00",
+          "stance": 0.92,
+          "text": "Canonical support wording anchors echo variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_semantic_echo_pattern_echo_context_00",
+          "stance": -0.14,
+          "text": "Echo context begins 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_semantic_echo_pattern_topic_00",
+          "stance": 0.64,
+          "text": "Paraphrased support echo A for 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_semantic_echo_pattern_topic_00",
+          "stance": 0.9,
+          "text": "Near-duplicate anchor wording echo B for 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_semantic_echo_pattern_echo_context_00",
+          "stance": -0.08,
+          "text": "Echo context repeats safely 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_semantic_echo_pattern_topic_00",
+          "stance": 0.62,
+          "text": "Paraphrased support echo C for 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_semantic_echo_pattern_topic_00",
+          "stance": 0.88,
+          "text": "Near-duplicate support echo D for 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_semantic_echo_pattern_topic_00",
+          "stance": -0.88,
+          "text": "Opposing paraphrase triggers the only event 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_semantic_echo_pattern_post_event_00_a",
+          "stance": 0.18,
+          "text": "A separate topic enters after the revision event and remains unrelated.",
+          "confidence": 0.72,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: five eligible anchors alternate two semantic echo modes plus a stable context stream. Includes 1 post-event continuation observation on unrelated topic so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_semantic_echo_pattern_01",
+      "family": "holdout_semantic_echo_pattern",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_semantic_echo_pattern_topic_01",
+          "stance": 0.91,
+          "text": "Canonical support wording anchors echo variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_semantic_echo_pattern_echo_context_01",
+          "stance": -0.14,
+          "text": "Echo context begins 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_semantic_echo_pattern_topic_01",
+          "stance": 0.63,
+          "text": "Paraphrased support echo A for 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_semantic_echo_pattern_topic_01",
+          "stance": 0.89,
+          "text": "Near-duplicate anchor wording echo B for 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_semantic_echo_pattern_echo_context_01",
+          "stance": -0.08,
+          "text": "Echo context repeats safely 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_semantic_echo_pattern_topic_01",
+          "stance": 0.61,
+          "text": "Paraphrased support echo C for 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_semantic_echo_pattern_topic_01",
+          "stance": 0.87,
+          "text": "Near-duplicate support echo D for 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_semantic_echo_pattern_topic_01",
+          "stance": -0.87,
+          "text": "Opposing paraphrase triggers the only event 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_semantic_echo_pattern_post_event_01_a",
+          "stance": 0.18,
+          "text": "A separate topic enters after the revision event and remains unrelated.",
+          "confidence": 0.72,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: five eligible anchors alternate two semantic echo modes plus a stable context stream. Includes 1 post-event continuation observation on unrelated topic so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_semantic_echo_pattern_02",
+      "family": "holdout_semantic_echo_pattern",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_semantic_echo_pattern_topic_02",
+          "stance": 0.9,
+          "text": "Canonical support wording anchors echo variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_semantic_echo_pattern_echo_context_02",
+          "stance": -0.14,
+          "text": "Echo context begins 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_semantic_echo_pattern_topic_02",
+          "stance": 0.62,
+          "text": "Paraphrased support echo A for 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_semantic_echo_pattern_topic_02",
+          "stance": 0.88,
+          "text": "Near-duplicate anchor wording echo B for 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_semantic_echo_pattern_echo_context_02",
+          "stance": -0.08,
+          "text": "Echo context repeats safely 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_semantic_echo_pattern_topic_02",
+          "stance": 0.6,
+          "text": "Paraphrased support echo C for 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_semantic_echo_pattern_topic_02",
+          "stance": 0.86,
+          "text": "Near-duplicate support echo D for 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_semantic_echo_pattern_topic_02",
+          "stance": -0.86,
+          "text": "Opposing paraphrase triggers the only event 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_semantic_echo_pattern_post_event_02_a",
+          "stance": 0.18,
+          "text": "A separate topic enters after the revision event and remains unrelated.",
+          "confidence": 0.72,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: five eligible anchors alternate two semantic echo modes plus a stable context stream. Includes 1 post-event continuation observation on unrelated topic so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_semantic_echo_pattern_03",
+      "family": "holdout_semantic_echo_pattern",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_semantic_echo_pattern_topic_03",
+          "stance": 0.89,
+          "text": "Canonical support wording anchors echo variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_semantic_echo_pattern_echo_context_03",
+          "stance": -0.14,
+          "text": "Echo context begins 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_semantic_echo_pattern_topic_03",
+          "stance": 0.61,
+          "text": "Paraphrased support echo A for 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_semantic_echo_pattern_topic_03",
+          "stance": 0.87,
+          "text": "Near-duplicate anchor wording echo B for 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_semantic_echo_pattern_echo_context_03",
+          "stance": -0.08,
+          "text": "Echo context repeats safely 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_semantic_echo_pattern_topic_03",
+          "stance": 0.59,
+          "text": "Paraphrased support echo C for 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_semantic_echo_pattern_topic_03",
+          "stance": 0.85,
+          "text": "Near-duplicate support echo D for 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_semantic_echo_pattern_topic_03",
+          "stance": -0.85,
+          "text": "Opposing paraphrase triggers the only event 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_semantic_echo_pattern_post_event_03_a",
+          "stance": 0.18,
+          "text": "A separate topic enters after the revision event and remains unrelated.",
+          "confidence": 0.72,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: five eligible anchors alternate two semantic echo modes plus a stable context stream. Includes 1 post-event continuation observation on unrelated topic so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_braided_context_reentry_00",
+      "family": "holdout_braided_context_reentry",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_braided_context_reentry_claim_00",
+          "stance": 0.86,
+          "text": "A provisional claim opens braided holdout variant 0.",
+          "confidence": 0.96,
+          "revision_cue": 0.91
+        },
+        {
+          "topic": "holdout_braided_context_reentry_lane_aurora_00",
+          "stance": -0.31,
+          "text": "Aurora carries an unrelated scheduling constraint through the braid. Variant 0.",
+          "confidence": 0.74,
+          "revision_cue": 0.84
+        },
+        {
+          "topic": "holdout_braided_context_reentry_claim_00",
+          "stance": 0.62,
+          "text": "The claim narrows after the aurora lane but remains compatible with its opening position. Variant 0.",
+          "confidence": 0.91,
+          "revision_cue": 0.87
+        },
+        {
+          "topic": "holdout_braided_context_reentry_lane_cobalt_00",
+          "stance": 0.22,
+          "text": "Cobalt records an independent inventory condition in the braid. Variant 0.",
+          "confidence": 0.81,
+          "revision_cue": 0.77
+        },
+        {
+          "topic": "holdout_braided_context_reentry_claim_00",
+          "stance": 0.38,
+          "text": "The claim is restated after the cobalt lane without becoming a revision. Variant 0.",
+          "confidence": 0.94,
+          "revision_cue": 0.9
+        },
+        {
+          "topic": "holdout_braided_context_reentry_lane_fern_00",
+          "stance": -0.14,
+          "text": "Fern introduces a separate environmental observation. Variant 0.",
+          "confidence": 0.69,
+          "revision_cue": 0.89
+        },
+        {
+          "topic": "holdout_braided_context_reentry_claim_00",
+          "stance": 0.13,
+          "text": "The claim weakens after the fern lane while staying below the event boundary. Variant 0.",
+          "confidence": 0.9,
+          "revision_cue": 0.85
+        },
+        {
+          "topic": "holdout_braided_context_reentry_lane_saffron_00",
+          "stance": 0.34,
+          "text": "Saffron adds an unrelated procedural checkpoint. Variant 0.",
+          "confidence": 0.77,
+          "revision_cue": 0.8
+        },
+        {
+          "topic": "holdout_braided_context_reentry_claim_00",
+          "stance": -0.07,
+          "text": "The last eligible claim anchor follows the saffron lane and remains non-eventful. Variant 0.",
+          "confidence": 0.92,
+          "revision_cue": 0.88
+        },
+        {
+          "topic": "holdout_braided_context_reentry_lane_violet_00",
+          "stance": -0.26,
+          "text": "Violet closes the context braid with a distinct logistics note. Variant 0.",
+          "confidence": 0.72,
+          "revision_cue": 0.86
+        },
+        {
+          "topic": "holdout_braided_context_reentry_claim_00",
+          "stance": -0.46,
+          "text": "A late reentry now rejects the opening claim and creates the sole event in variant 0.",
+          "confidence": 0.98,
+          "revision_cue": 0.96
+        },
+        {
+          "topic": "holdout_braided_context_reentry_coda_a_00",
+          "stance": 0.21,
+          "text": "An unrelated coda follows the reentry event in variant 0.",
+          "confidence": 0.79,
+          "revision_cue": 0.81
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: five eligible claim anchors are braided with five unrelated context lanes before one late reentry event, followed by 1 unrelated post-event observation."
+    },
+    {
+      "case_id": "holdout_braided_context_reentry_01",
+      "family": "holdout_braided_context_reentry",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_braided_context_reentry_claim_01",
+          "stance": 0.83,
+          "text": "A provisional claim opens braided holdout variant 1.",
+          "confidence": 0.94,
+          "revision_cue": 0.93
+        },
+        {
+          "topic": "holdout_braided_context_reentry_lane_aurora_01",
+          "stance": -0.29,
+          "text": "Aurora carries an unrelated scheduling constraint through the braid. Variant 1.",
+          "confidence": 0.75,
+          "revision_cue": 0.82
+        },
+        {
+          "topic": "holdout_braided_context_reentry_claim_01",
+          "stance": 0.59,
+          "text": "The claim narrows after the aurora lane but remains compatible with its opening position. Variant 1.",
+          "confidence": 0.93,
+          "revision_cue": 0.89
+        },
+        {
+          "topic": "holdout_braided_context_reentry_lane_cobalt_01",
+          "stance": 0.24,
+          "text": "Cobalt records an independent inventory condition in the braid. Variant 1.",
+          "confidence": 0.82,
+          "revision_cue": 0.75
+        },
+        {
+          "topic": "holdout_braided_context_reentry_claim_01",
+          "stance": 0.34,
+          "text": "The claim is restated after the cobalt lane without becoming a revision. Variant 1.",
+          "confidence": 0.9,
+          "revision_cue": 0.86
+        },
+        {
+          "topic": "holdout_braided_context_reentry_lane_fern_01",
+          "stance": -0.12,
+          "text": "Fern introduces a separate environmental observation. Variant 1.",
+          "confidence": 0.7,
+          "revision_cue": 0.87
+        },
+        {
+          "topic": "holdout_braided_context_reentry_claim_01",
+          "stance": 0.08,
+          "text": "The claim weakens after the fern lane while staying below the event boundary. Variant 1.",
+          "confidence": 0.92,
+          "revision_cue": 0.91
+        },
+        {
+          "topic": "holdout_braided_context_reentry_lane_saffron_01",
+          "stance": 0.36,
+          "text": "Saffron adds an unrelated procedural checkpoint. Variant 1.",
+          "confidence": 0.78,
+          "revision_cue": 0.78
+        },
+        {
+          "topic": "holdout_braided_context_reentry_claim_01",
+          "stance": -0.12,
+          "text": "The last eligible claim anchor follows the saffron lane and remains non-eventful. Variant 1.",
+          "confidence": 0.91,
+          "revision_cue": 0.87
+        },
+        {
+          "topic": "holdout_braided_context_reentry_lane_violet_01",
+          "stance": -0.24,
+          "text": "Violet closes the context braid with a distinct logistics note. Variant 1.",
+          "confidence": 0.73,
+          "revision_cue": 0.84
+        },
+        {
+          "topic": "holdout_braided_context_reentry_claim_01",
+          "stance": -0.49,
+          "text": "A late reentry now rejects the opening claim and creates the sole event in variant 1.",
+          "confidence": 0.97,
+          "revision_cue": 0.98
+        },
+        {
+          "topic": "holdout_braided_context_reentry_coda_a_01",
+          "stance": -0.28,
+          "text": "A separate coda begins after the reentry event in variant 1.",
+          "confidence": 0.76,
+          "revision_cue": 0.74
+        },
+        {
+          "topic": "holdout_braided_context_reentry_coda_a_01",
+          "stance": -0.21,
+          "text": "The same unrelated coda settles without an event in variant 1.",
+          "confidence": 0.82,
+          "revision_cue": 0.8
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: five eligible claim anchors are braided with five unrelated context lanes before one late reentry event, followed by 2 unrelated post-event observations."
+    },
+    {
+      "case_id": "holdout_braided_context_reentry_02",
+      "family": "holdout_braided_context_reentry",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_braided_context_reentry_claim_02",
+          "stance": 0.88,
+          "text": "A provisional claim opens braided holdout variant 2.",
+          "confidence": 0.95,
+          "revision_cue": 0.89
+        },
+        {
+          "topic": "holdout_braided_context_reentry_lane_aurora_02",
+          "stance": -0.32,
+          "text": "Aurora carries an unrelated scheduling constraint through the braid. Variant 2.",
+          "confidence": 0.76,
+          "revision_cue": 0.85
+        },
+        {
+          "topic": "holdout_braided_context_reentry_claim_02",
+          "stance": 0.65,
+          "text": "The claim narrows after the aurora lane but remains compatible with its opening position. Variant 2.",
+          "confidence": 0.92,
+          "revision_cue": 0.88
+        },
+        {
+          "topic": "holdout_braided_context_reentry_lane_cobalt_02",
+          "stance": 0.21,
+          "text": "Cobalt records an independent inventory condition in the braid. Variant 2.",
+          "confidence": 0.83,
+          "revision_cue": 0.78
+        },
+        {
+          "topic": "holdout_braided_context_reentry_claim_02",
+          "stance": 0.41,
+          "text": "The claim is restated after the cobalt lane without becoming a revision. Variant 2.",
+          "confidence": 0.94,
+          "revision_cue": 0.92
+        },
+        {
+          "topic": "holdout_braided_context_reentry_lane_fern_02",
+          "stance": -0.15,
+          "text": "Fern introduces a separate environmental observation. Variant 2.",
+          "confidence": 0.71,
+          "revision_cue": 0.9
+        },
+        {
+          "topic": "holdout_braided_context_reentry_claim_02",
+          "stance": 0.16,
+          "text": "The claim weakens after the fern lane while staying below the event boundary. Variant 2.",
+          "confidence": 0.91,
+          "revision_cue": 0.86
+        },
+        {
+          "topic": "holdout_braided_context_reentry_lane_saffron_02",
+          "stance": 0.33,
+          "text": "Saffron adds an unrelated procedural checkpoint. Variant 2.",
+          "confidence": 0.79,
+          "revision_cue": 0.81
+        },
+        {
+          "topic": "holdout_braided_context_reentry_claim_02",
+          "stance": -0.05,
+          "text": "The last eligible claim anchor follows the saffron lane and remains non-eventful. Variant 2.",
+          "confidence": 0.93,
+          "revision_cue": 0.9
+        },
+        {
+          "topic": "holdout_braided_context_reentry_lane_violet_02",
+          "stance": -0.27,
+          "text": "Violet closes the context braid with a distinct logistics note. Variant 2.",
+          "confidence": 0.74,
+          "revision_cue": 0.87
+        },
+        {
+          "topic": "holdout_braided_context_reentry_claim_02",
+          "stance": -0.43,
+          "text": "A late reentry now rejects the opening claim and creates the sole event in variant 2.",
+          "confidence": 0.96,
+          "revision_cue": 0.94
+        },
+        {
+          "topic": "holdout_braided_context_reentry_coda_a_02",
+          "stance": 0.31,
+          "text": "The first independent coda starts after the event in variant 2.",
+          "confidence": 0.73,
+          "revision_cue": 0.78
+        },
+        {
+          "topic": "holdout_braided_context_reentry_coda_b_02",
+          "stance": -0.18,
+          "text": "A second unrelated coda briefly interrupts variant 2.",
+          "confidence": 0.8,
+          "revision_cue": 0.75
+        },
+        {
+          "topic": "holdout_braided_context_reentry_coda_a_02",
+          "stance": 0.35,
+          "text": "The first coda returns with only bounded drift in variant 2.",
+          "confidence": 0.77,
+          "revision_cue": 0.82
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: five eligible claim anchors are braided with five unrelated context lanes before one late reentry event, followed by 3 unrelated post-event observations."
+    },
+    {
+      "case_id": "holdout_braided_context_reentry_03",
+      "family": "holdout_braided_context_reentry",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_braided_context_reentry_claim_03",
+          "stance": 0.81,
+          "text": "A provisional claim opens braided holdout variant 3.",
+          "confidence": 0.93,
+          "revision_cue": 0.92
+        },
+        {
+          "topic": "holdout_braided_context_reentry_lane_aurora_03",
+          "stance": -0.28,
+          "text": "Aurora carries an unrelated scheduling constraint through the braid. Variant 3.",
+          "confidence": 0.73,
+          "revision_cue": 0.83
+        },
+        {
+          "topic": "holdout_braided_context_reentry_claim_03",
+          "stance": 0.56,
+          "text": "The claim narrows after the aurora lane but remains compatible with its opening position. Variant 3.",
+          "confidence": 0.9,
+          "revision_cue": 0.84
+        },
+        {
+          "topic": "holdout_braided_context_reentry_lane_cobalt_03",
+          "stance": 0.25,
+          "text": "Cobalt records an independent inventory condition in the braid. Variant 3.",
+          "confidence": 0.8,
+          "revision_cue": 0.76
+        },
+        {
+          "topic": "holdout_braided_context_reentry_claim_03",
+          "stance": 0.31,
+          "text": "The claim is restated after the cobalt lane without becoming a revision. Variant 3.",
+          "confidence": 0.92,
+          "revision_cue": 0.89
+        },
+        {
+          "topic": "holdout_braided_context_reentry_lane_fern_03",
+          "stance": -0.11,
+          "text": "Fern introduces a separate environmental observation. Variant 3.",
+          "confidence": 0.68,
+          "revision_cue": 0.88
+        },
+        {
+          "topic": "holdout_braided_context_reentry_claim_03",
+          "stance": 0.04,
+          "text": "The claim weakens after the fern lane while staying below the event boundary. Variant 3.",
+          "confidence": 0.89,
+          "revision_cue": 0.91
+        },
+        {
+          "topic": "holdout_braided_context_reentry_lane_saffron_03",
+          "stance": 0.37,
+          "text": "Saffron adds an unrelated procedural checkpoint. Variant 3.",
+          "confidence": 0.76,
+          "revision_cue": 0.79
+        },
+        {
+          "topic": "holdout_braided_context_reentry_claim_03",
+          "stance": -0.15,
+          "text": "The last eligible claim anchor follows the saffron lane and remains non-eventful. Variant 3.",
+          "confidence": 0.9,
+          "revision_cue": 0.86
+        },
+        {
+          "topic": "holdout_braided_context_reentry_lane_violet_03",
+          "stance": -0.23,
+          "text": "Violet closes the context braid with a distinct logistics note. Variant 3.",
+          "confidence": 0.71,
+          "revision_cue": 0.85
+        },
+        {
+          "topic": "holdout_braided_context_reentry_claim_03",
+          "stance": -0.53,
+          "text": "A late reentry now rejects the opening claim and creates the sole event in variant 3.",
+          "confidence": 0.95,
+          "revision_cue": 0.97
+        },
+        {
+          "topic": "holdout_braided_context_reentry_coda_a_03",
+          "stance": 0.14,
+          "text": "A quiet unrelated coda follows the event in variant 3.",
+          "confidence": 0.84,
+          "revision_cue": 0.77
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: five eligible claim anchors are braided with five unrelated context lanes before one late reentry event, followed by 1 unrelated post-event observation."
+    },
+    {
+      "case_id": "holdout_repeated_distractor_bursts_00",
+      "family": "holdout_repeated_distractor_bursts",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_repeated_distractor_bursts_distractor_00",
+          "stance": 0.22,
+          "text": "Distractor leads burst variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_topic_00",
+          "stance": 0.97,
+          "text": "Primary anchor follows distractor lead 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_distractor_00",
+          "stance": 0.18,
+          "text": "Distractor burst one 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_distractor_00",
+          "stance": 0.14,
+          "text": "Distractor burst two 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_topic_00",
+          "stance": 0.74,
+          "text": "Primary candidate one after burst 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_distractor_00",
+          "stance": 0.1,
+          "text": "Distractor burst three 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_topic_00",
+          "stance": 0.5,
+          "text": "Primary candidate two 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_distractor_00",
+          "stance": 0.06,
+          "text": "Distractor burst four 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_distractor_00",
+          "stance": 0.02,
+          "text": "Distractor burst five 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_topic_00",
+          "stance": 0.26,
+          "text": "Primary candidate three 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_topic_00",
+          "stance": 0.02,
+          "text": "Primary candidate four 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_topic_00",
+          "stance": -0.79,
+          "text": "Primary reversal ends repeated bursts 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_post_event_00_a",
+          "stance": 0.24,
+          "text": "An unrelated stream begins after the revision event.",
+          "confidence": 0.68,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_post_event_00_b",
+          "stance": -0.12,
+          "text": "A second unrelated topic briefly interrupts the continuation.",
+          "confidence": 0.66,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_post_event_00_a",
+          "stance": 0.29,
+          "text": "The first unrelated stream returns with only a small non-event drift.",
+          "confidence": 0.71,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: five primary anchors occur inside uneven bursts of one repeated non-event distractor. Includes 3 post-event continuation observations on unrelated topics so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_repeated_distractor_bursts_01",
+      "family": "holdout_repeated_distractor_bursts",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_repeated_distractor_bursts_distractor_01",
+          "stance": 0.22,
+          "text": "Distractor leads burst variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_topic_01",
+          "stance": 0.96,
+          "text": "Primary anchor follows distractor lead 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_distractor_01",
+          "stance": 0.18,
+          "text": "Distractor burst one 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_distractor_01",
+          "stance": 0.14,
+          "text": "Distractor burst two 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_topic_01",
+          "stance": 0.73,
+          "text": "Primary candidate one after burst 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_distractor_01",
+          "stance": 0.1,
+          "text": "Distractor burst three 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_topic_01",
+          "stance": 0.49,
+          "text": "Primary candidate two 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_distractor_01",
+          "stance": 0.06,
+          "text": "Distractor burst four 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_distractor_01",
+          "stance": 0.02,
+          "text": "Distractor burst five 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_topic_01",
+          "stance": 0.25,
+          "text": "Primary candidate three 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_topic_01",
+          "stance": 0.01,
+          "text": "Primary candidate four 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_topic_01",
+          "stance": -0.78,
+          "text": "Primary reversal ends repeated bursts 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_post_event_01_a",
+          "stance": 0.24,
+          "text": "An unrelated stream begins after the revision event.",
+          "confidence": 0.68,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_post_event_01_b",
+          "stance": -0.12,
+          "text": "A second unrelated topic briefly interrupts the continuation.",
+          "confidence": 0.66,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_post_event_01_a",
+          "stance": 0.29,
+          "text": "The first unrelated stream returns with only a small non-event drift.",
+          "confidence": 0.71,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: five primary anchors occur inside uneven bursts of one repeated non-event distractor. Includes 3 post-event continuation observations on unrelated topics so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_repeated_distractor_bursts_02",
+      "family": "holdout_repeated_distractor_bursts",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_repeated_distractor_bursts_distractor_02",
+          "stance": 0.22,
+          "text": "Distractor leads burst variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_topic_02",
+          "stance": 0.95,
+          "text": "Primary anchor follows distractor lead 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_distractor_02",
+          "stance": 0.18,
+          "text": "Distractor burst one 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_distractor_02",
+          "stance": 0.14,
+          "text": "Distractor burst two 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_topic_02",
+          "stance": 0.72,
+          "text": "Primary candidate one after burst 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_distractor_02",
+          "stance": 0.1,
+          "text": "Distractor burst three 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_topic_02",
+          "stance": 0.48,
+          "text": "Primary candidate two 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_distractor_02",
+          "stance": 0.06,
+          "text": "Distractor burst four 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_distractor_02",
+          "stance": 0.02,
+          "text": "Distractor burst five 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_topic_02",
+          "stance": 0.24,
+          "text": "Primary candidate three 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_topic_02",
+          "stance": 0,
+          "text": "Primary candidate four 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_topic_02",
+          "stance": -0.77,
+          "text": "Primary reversal ends repeated bursts 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_post_event_02_a",
+          "stance": 0.24,
+          "text": "An unrelated stream begins after the revision event.",
+          "confidence": 0.68,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_post_event_02_b",
+          "stance": -0.12,
+          "text": "A second unrelated topic briefly interrupts the continuation.",
+          "confidence": 0.66,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_post_event_02_a",
+          "stance": 0.29,
+          "text": "The first unrelated stream returns with only a small non-event drift.",
+          "confidence": 0.71,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: five primary anchors occur inside uneven bursts of one repeated non-event distractor. Includes 3 post-event continuation observations on unrelated topics so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_repeated_distractor_bursts_03",
+      "family": "holdout_repeated_distractor_bursts",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_repeated_distractor_bursts_distractor_03",
+          "stance": 0.22,
+          "text": "Distractor leads burst variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_topic_03",
+          "stance": 0.94,
+          "text": "Primary anchor follows distractor lead 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_distractor_03",
+          "stance": 0.18,
+          "text": "Distractor burst one 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_distractor_03",
+          "stance": 0.14,
+          "text": "Distractor burst two 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_topic_03",
+          "stance": 0.71,
+          "text": "Primary candidate one after burst 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_distractor_03",
+          "stance": 0.1,
+          "text": "Distractor burst three 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_topic_03",
+          "stance": 0.47,
+          "text": "Primary candidate two 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_distractor_03",
+          "stance": 0.06,
+          "text": "Distractor burst four 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_distractor_03",
+          "stance": 0.02,
+          "text": "Distractor burst five 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_topic_03",
+          "stance": 0.23,
+          "text": "Primary candidate three 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_topic_03",
+          "stance": -0.01,
+          "text": "Primary candidate four 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_topic_03",
+          "stance": -0.76,
+          "text": "Primary reversal ends repeated bursts 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_post_event_03_a",
+          "stance": 0.24,
+          "text": "An unrelated stream begins after the revision event.",
+          "confidence": 0.68,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_post_event_03_b",
+          "stance": -0.12,
+          "text": "A second unrelated topic briefly interrupts the continuation.",
+          "confidence": 0.66,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_repeated_distractor_bursts_post_event_03_a",
+          "stance": 0.29,
+          "text": "The first unrelated stream returns with only a small non-event drift.",
+          "confidence": 0.71,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: five primary anchors occur inside uneven bursts of one repeated non-event distractor. Includes 3 post-event continuation observations on unrelated topics so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_sparse_six_anchor_route_00",
+      "family": "holdout_sparse_six_anchor_route",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_sparse_six_anchor_route_topic_00",
+          "stance": 0.99,
+          "text": "Sparse-six anchor 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_spacer_0_00",
+          "stance": -0.18,
+          "text": "Sparse unique spacer 0 for 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_topic_00",
+          "stance": 0.82,
+          "text": "Sparse primary candidate 1 for 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_spacer_1_00",
+          "stance": -0.09,
+          "text": "Sparse unique spacer 1 for 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_topic_00",
+          "stance": 0.65,
+          "text": "Sparse primary candidate 2 for 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_spacer_2_00",
+          "stance": 0,
+          "text": "Sparse unique spacer 2 for 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_topic_00",
+          "stance": 0.48,
+          "text": "Sparse primary candidate 3 for 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_spacer_3_00",
+          "stance": 0.09,
+          "text": "Sparse unique spacer 3 for 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_topic_00",
+          "stance": 0.31,
+          "text": "Sparse primary candidate 4 for 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_spacer_4_00",
+          "stance": 0.18,
+          "text": "Sparse unique spacer 4 for 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_topic_00",
+          "stance": 0.14,
+          "text": "Sparse primary candidate 5 for 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_topic_00",
+          "stance": -0.76,
+          "text": "Sparse-six final event 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_post_event_00_a",
+          "stance": 0.18,
+          "text": "A separate topic enters after the revision event and remains unrelated.",
+          "confidence": 0.72,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: six eligible anchors are evenly separated by five unique-topic spacers. Includes 1 post-event continuation observation on unrelated topic so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_sparse_six_anchor_route_01",
+      "family": "holdout_sparse_six_anchor_route",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_sparse_six_anchor_route_topic_01",
+          "stance": 0.98,
+          "text": "Sparse-six anchor 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_spacer_0_01",
+          "stance": -0.18,
+          "text": "Sparse unique spacer 0 for 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_topic_01",
+          "stance": 0.81,
+          "text": "Sparse primary candidate 1 for 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_spacer_1_01",
+          "stance": -0.09,
+          "text": "Sparse unique spacer 1 for 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_topic_01",
+          "stance": 0.64,
+          "text": "Sparse primary candidate 2 for 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_spacer_2_01",
+          "stance": 0,
+          "text": "Sparse unique spacer 2 for 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_topic_01",
+          "stance": 0.47,
+          "text": "Sparse primary candidate 3 for 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_spacer_3_01",
+          "stance": 0.09,
+          "text": "Sparse unique spacer 3 for 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_topic_01",
+          "stance": 0.3,
+          "text": "Sparse primary candidate 4 for 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_spacer_4_01",
+          "stance": 0.18,
+          "text": "Sparse unique spacer 4 for 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_topic_01",
+          "stance": 0.13,
+          "text": "Sparse primary candidate 5 for 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_topic_01",
+          "stance": -0.75,
+          "text": "Sparse-six final event 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_post_event_01_a",
+          "stance": 0.18,
+          "text": "A separate topic enters after the revision event and remains unrelated.",
+          "confidence": 0.72,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: six eligible anchors are evenly separated by five unique-topic spacers. Includes 1 post-event continuation observation on unrelated topic so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_sparse_six_anchor_route_02",
+      "family": "holdout_sparse_six_anchor_route",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_sparse_six_anchor_route_topic_02",
+          "stance": 0.97,
+          "text": "Sparse-six anchor 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_spacer_0_02",
+          "stance": -0.18,
+          "text": "Sparse unique spacer 0 for 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_topic_02",
+          "stance": 0.8,
+          "text": "Sparse primary candidate 1 for 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_spacer_1_02",
+          "stance": -0.09,
+          "text": "Sparse unique spacer 1 for 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_topic_02",
+          "stance": 0.63,
+          "text": "Sparse primary candidate 2 for 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_spacer_2_02",
+          "stance": 0,
+          "text": "Sparse unique spacer 2 for 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_topic_02",
+          "stance": 0.46,
+          "text": "Sparse primary candidate 3 for 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_spacer_3_02",
+          "stance": 0.09,
+          "text": "Sparse unique spacer 3 for 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_topic_02",
+          "stance": 0.29,
+          "text": "Sparse primary candidate 4 for 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_spacer_4_02",
+          "stance": 0.18,
+          "text": "Sparse unique spacer 4 for 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_topic_02",
+          "stance": 0.12,
+          "text": "Sparse primary candidate 5 for 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_topic_02",
+          "stance": -0.74,
+          "text": "Sparse-six final event 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_post_event_02_a",
+          "stance": 0.18,
+          "text": "A separate topic enters after the revision event and remains unrelated.",
+          "confidence": 0.72,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: six eligible anchors are evenly separated by five unique-topic spacers. Includes 1 post-event continuation observation on unrelated topic so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_sparse_six_anchor_route_03",
+      "family": "holdout_sparse_six_anchor_route",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_sparse_six_anchor_route_topic_03",
+          "stance": 0.96,
+          "text": "Sparse-six anchor 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_spacer_0_03",
+          "stance": -0.18,
+          "text": "Sparse unique spacer 0 for 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_topic_03",
+          "stance": 0.79,
+          "text": "Sparse primary candidate 1 for 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_spacer_1_03",
+          "stance": -0.09,
+          "text": "Sparse unique spacer 1 for 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_topic_03",
+          "stance": 0.62,
+          "text": "Sparse primary candidate 2 for 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_spacer_2_03",
+          "stance": 0,
+          "text": "Sparse unique spacer 2 for 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_topic_03",
+          "stance": 0.45,
+          "text": "Sparse primary candidate 3 for 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_spacer_3_03",
+          "stance": 0.09,
+          "text": "Sparse unique spacer 3 for 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_topic_03",
+          "stance": 0.28,
+          "text": "Sparse primary candidate 4 for 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_spacer_4_03",
+          "stance": 0.18,
+          "text": "Sparse unique spacer 4 for 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_topic_03",
+          "stance": 0.11,
+          "text": "Sparse primary candidate 5 for 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_topic_03",
+          "stance": -0.73,
+          "text": "Sparse-six final event 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_sparse_six_anchor_route_post_event_03_a",
+          "stance": 0.18,
+          "text": "A separate topic enters after the revision event and remains unrelated.",
+          "confidence": 0.72,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: six eligible anchors are evenly separated by five unique-topic spacers. Includes 1 post-event continuation observation on unrelated topic so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_near_threshold_precursors_00",
+      "family": "holdout_near_threshold_precursors",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_near_threshold_precursors_topic_00",
+          "stance": 0.94,
+          "text": "Near-threshold anchor 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_near_threshold_precursors_topic_00",
+          "stance": 0.2,
+          "text": "Safe precursor one 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_near_threshold_precursors_calibrator_00",
+          "stance": -0.05,
+          "text": "Threshold calibrator 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_near_threshold_precursors_topic_00",
+          "stance": -0.04,
+          "text": "Safe precursor two remains below threshold 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_near_threshold_precursors_topic_00",
+          "stance": -0.12,
+          "text": "Safe precursor three approaches threshold 0.",
+          "confidence": 0.98,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_near_threshold_precursors_topic_00",
+          "stance": -0.14,
+          "text": "Safe precursor four stays just below threshold 0.",
+          "confidence": 0.96,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_near_threshold_precursors_topic_00",
+          "stance": -0.28,
+          "text": "Small extra shift crosses the sole event threshold 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_near_threshold_precursors_post_event_00_a",
+          "stance": -0.22,
+          "text": "A stable unrelated topic starts after the revision event.",
+          "confidence": 0.69,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_near_threshold_precursors_post_event_00_a",
+          "stance": -0.17,
+          "text": "The unrelated continuation drifts slightly without revising its stance.",
+          "confidence": 0.73,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: five eligible anchors include two near-threshold non-events immediately before a minimally super-threshold event. Includes 2 post-event continuation observations on unrelated topics so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_near_threshold_precursors_01",
+      "family": "holdout_near_threshold_precursors",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_near_threshold_precursors_topic_01",
+          "stance": 0.93,
+          "text": "Near-threshold anchor 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_near_threshold_precursors_topic_01",
+          "stance": 0.19,
+          "text": "Safe precursor one 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_near_threshold_precursors_calibrator_01",
+          "stance": -0.05,
+          "text": "Threshold calibrator 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_near_threshold_precursors_topic_01",
+          "stance": -0.05,
+          "text": "Safe precursor two remains below threshold 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_near_threshold_precursors_topic_01",
+          "stance": -0.13,
+          "text": "Safe precursor three approaches threshold 1.",
+          "confidence": 0.98,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_near_threshold_precursors_topic_01",
+          "stance": -0.15,
+          "text": "Safe precursor four stays just below threshold 1.",
+          "confidence": 0.96,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_near_threshold_precursors_topic_01",
+          "stance": -0.29,
+          "text": "Small extra shift crosses the sole event threshold 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_near_threshold_precursors_post_event_01_a",
+          "stance": -0.22,
+          "text": "A stable unrelated topic starts after the revision event.",
+          "confidence": 0.69,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_near_threshold_precursors_post_event_01_a",
+          "stance": -0.17,
+          "text": "The unrelated continuation drifts slightly without revising its stance.",
+          "confidence": 0.73,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: five eligible anchors include two near-threshold non-events immediately before a minimally super-threshold event. Includes 2 post-event continuation observations on unrelated topics so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_near_threshold_precursors_02",
+      "family": "holdout_near_threshold_precursors",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_near_threshold_precursors_topic_02",
+          "stance": 0.92,
+          "text": "Near-threshold anchor 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_near_threshold_precursors_topic_02",
+          "stance": 0.18,
+          "text": "Safe precursor one 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_near_threshold_precursors_calibrator_02",
+          "stance": -0.05,
+          "text": "Threshold calibrator 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_near_threshold_precursors_topic_02",
+          "stance": -0.06,
+          "text": "Safe precursor two remains below threshold 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_near_threshold_precursors_topic_02",
+          "stance": -0.14,
+          "text": "Safe precursor three approaches threshold 2.",
+          "confidence": 0.98,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_near_threshold_precursors_topic_02",
+          "stance": -0.16,
+          "text": "Safe precursor four stays just below threshold 2.",
+          "confidence": 0.96,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_near_threshold_precursors_topic_02",
+          "stance": -0.3,
+          "text": "Small extra shift crosses the sole event threshold 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_near_threshold_precursors_post_event_02_a",
+          "stance": -0.22,
+          "text": "A stable unrelated topic starts after the revision event.",
+          "confidence": 0.69,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_near_threshold_precursors_post_event_02_a",
+          "stance": -0.17,
+          "text": "The unrelated continuation drifts slightly without revising its stance.",
+          "confidence": 0.73,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: five eligible anchors include two near-threshold non-events immediately before a minimally super-threshold event. Includes 2 post-event continuation observations on unrelated topics so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_near_threshold_precursors_03",
+      "family": "holdout_near_threshold_precursors",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_near_threshold_precursors_topic_03",
+          "stance": 0.91,
+          "text": "Near-threshold anchor 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_near_threshold_precursors_topic_03",
+          "stance": 0.17,
+          "text": "Safe precursor one 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_near_threshold_precursors_calibrator_03",
+          "stance": -0.05,
+          "text": "Threshold calibrator 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_near_threshold_precursors_topic_03",
+          "stance": -0.07,
+          "text": "Safe precursor two remains below threshold 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_near_threshold_precursors_topic_03",
+          "stance": -0.15,
+          "text": "Safe precursor three approaches threshold 3.",
+          "confidence": 0.98,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_near_threshold_precursors_topic_03",
+          "stance": -0.17,
+          "text": "Safe precursor four stays just below threshold 3.",
+          "confidence": 0.96,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_near_threshold_precursors_topic_03",
+          "stance": -0.31,
+          "text": "Small extra shift crosses the sole event threshold 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_near_threshold_precursors_post_event_03_a",
+          "stance": -0.22,
+          "text": "A stable unrelated topic starts after the revision event.",
+          "confidence": 0.69,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_near_threshold_precursors_post_event_03_a",
+          "stance": -0.17,
+          "text": "The unrelated continuation drifts slightly without revising its stance.",
+          "confidence": 0.73,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: five eligible anchors include two near-threshold non-events immediately before a minimally super-threshold event. Includes 2 post-event continuation observations on unrelated topics so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_mixed_context_length_00",
+      "family": "holdout_mixed_context_length",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_mixed_context_length_topic_00",
+          "stance": 0.93,
+          "text": "Short anchor 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_mixed_context_length_brief_00",
+          "stance": 0.11,
+          "text": "Brief side context 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_mixed_context_length_topic_00",
+          "stance": 0.72,
+          "text": "A medium-length candidate explains that the original support remains provisionally valid for variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_mixed_context_length_topic_00",
+          "stance": 0.5,
+          "text": "Candidate 0 with concise wording.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_mixed_context_length_extended_00",
+          "stance": -0.09,
+          "text": "An extended unrelated context passage for variant 0 deliberately changes text length without repeating its topic or producing another event.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_mixed_context_length_topic_00",
+          "stance": 0.29,
+          "text": "A substantially longer same-topic candidate for variant 0 preserves support while adding context that changes the deterministic text encoding.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_mixed_context_length_topic_00",
+          "stance": 0.07,
+          "text": "Tiny precursor 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_mixed_context_length_topic_00",
+          "stance": -0.85,
+          "text": "The final same-topic statement reverses the premise and is the only event in mixed-length variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_mixed_context_length_post_event_00_a",
+          "stance": 0.24,
+          "text": "An unrelated stream begins after the revision event.",
+          "confidence": 0.68,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_mixed_context_length_post_event_00_b",
+          "stance": -0.12,
+          "text": "A second unrelated topic briefly interrupts the continuation.",
+          "confidence": 0.66,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_mixed_context_length_post_event_00_a",
+          "stance": 0.29,
+          "text": "The first unrelated stream returns with only a small non-event drift.",
+          "confidence": 0.71,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: five eligible anchors use sharply different text lengths and two unique side contexts. Includes 3 post-event continuation observations on unrelated topics so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_mixed_context_length_01",
+      "family": "holdout_mixed_context_length",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_mixed_context_length_topic_01",
+          "stance": 0.92,
+          "text": "Short anchor 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_mixed_context_length_brief_01",
+          "stance": 0.11,
+          "text": "Brief side context 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_mixed_context_length_topic_01",
+          "stance": 0.71,
+          "text": "A medium-length candidate explains that the original support remains provisionally valid for variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_mixed_context_length_topic_01",
+          "stance": 0.49,
+          "text": "Candidate 1 with concise wording.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_mixed_context_length_extended_01",
+          "stance": -0.09,
+          "text": "An extended unrelated context passage for variant 1 deliberately changes text length without repeating its topic or producing another event.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_mixed_context_length_topic_01",
+          "stance": 0.28,
+          "text": "A substantially longer same-topic candidate for variant 1 preserves support while adding context that changes the deterministic text encoding.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_mixed_context_length_topic_01",
+          "stance": 0.06,
+          "text": "Tiny precursor 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_mixed_context_length_topic_01",
+          "stance": -0.84,
+          "text": "The final same-topic statement reverses the premise and is the only event in mixed-length variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_mixed_context_length_post_event_01_a",
+          "stance": 0.24,
+          "text": "An unrelated stream begins after the revision event.",
+          "confidence": 0.68,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_mixed_context_length_post_event_01_b",
+          "stance": -0.12,
+          "text": "A second unrelated topic briefly interrupts the continuation.",
+          "confidence": 0.66,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_mixed_context_length_post_event_01_a",
+          "stance": 0.29,
+          "text": "The first unrelated stream returns with only a small non-event drift.",
+          "confidence": 0.71,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: five eligible anchors use sharply different text lengths and two unique side contexts. Includes 3 post-event continuation observations on unrelated topics so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_mixed_context_length_02",
+      "family": "holdout_mixed_context_length",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_mixed_context_length_topic_02",
+          "stance": 0.91,
+          "text": "Short anchor 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_mixed_context_length_brief_02",
+          "stance": 0.11,
+          "text": "Brief side context 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_mixed_context_length_topic_02",
+          "stance": 0.7,
+          "text": "A medium-length candidate explains that the original support remains provisionally valid for variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_mixed_context_length_topic_02",
+          "stance": 0.48,
+          "text": "Candidate 2 with concise wording.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_mixed_context_length_extended_02",
+          "stance": -0.09,
+          "text": "An extended unrelated context passage for variant 2 deliberately changes text length without repeating its topic or producing another event.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_mixed_context_length_topic_02",
+          "stance": 0.27,
+          "text": "A substantially longer same-topic candidate for variant 2 preserves support while adding context that changes the deterministic text encoding.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_mixed_context_length_topic_02",
+          "stance": 0.05,
+          "text": "Tiny precursor 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_mixed_context_length_topic_02",
+          "stance": -0.83,
+          "text": "The final same-topic statement reverses the premise and is the only event in mixed-length variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_mixed_context_length_post_event_02_a",
+          "stance": 0.24,
+          "text": "An unrelated stream begins after the revision event.",
+          "confidence": 0.68,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_mixed_context_length_post_event_02_b",
+          "stance": -0.12,
+          "text": "A second unrelated topic briefly interrupts the continuation.",
+          "confidence": 0.66,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_mixed_context_length_post_event_02_a",
+          "stance": 0.29,
+          "text": "The first unrelated stream returns with only a small non-event drift.",
+          "confidence": 0.71,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: five eligible anchors use sharply different text lengths and two unique side contexts. Includes 3 post-event continuation observations on unrelated topics so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_mixed_context_length_03",
+      "family": "holdout_mixed_context_length",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "holdout_mixed_context_length_topic_03",
+          "stance": 0.9,
+          "text": "Short anchor 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_mixed_context_length_brief_03",
+          "stance": 0.11,
+          "text": "Brief side context 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_mixed_context_length_topic_03",
+          "stance": 0.69,
+          "text": "A medium-length candidate explains that the original support remains provisionally valid for variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_mixed_context_length_topic_03",
+          "stance": 0.47,
+          "text": "Candidate 3 with concise wording.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_mixed_context_length_extended_03",
+          "stance": -0.09,
+          "text": "An extended unrelated context passage for variant 3 deliberately changes text length without repeating its topic or producing another event.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_mixed_context_length_topic_03",
+          "stance": 0.26,
+          "text": "A substantially longer same-topic candidate for variant 3 preserves support while adding context that changes the deterministic text encoding.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_mixed_context_length_topic_03",
+          "stance": 0.04,
+          "text": "Tiny precursor 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_mixed_context_length_topic_03",
+          "stance": -0.82,
+          "text": "The final same-topic statement reverses the premise and is the only event in mixed-length variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_mixed_context_length_post_event_03_a",
+          "stance": 0.24,
+          "text": "An unrelated stream begins after the revision event.",
+          "confidence": 0.68,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_mixed_context_length_post_event_03_b",
+          "stance": -0.12,
+          "text": "A second unrelated topic briefly interrupts the continuation.",
+          "confidence": 0.66,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_mixed_context_length_post_event_03_a",
+          "stance": 0.29,
+          "text": "The first unrelated stream returns with only a small non-event drift.",
+          "confidence": 0.71,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Holdout structure: five eligible anchors use sharply different text lengths and two unique side contexts. Includes 3 post-event continuation observations on unrelated topics so terminal propagation is distinct from source-step leverage."
+    },
+    {
+      "case_id": "holdout_stable_bounded_drift_00",
+      "family": "holdout_stable_bounded_drift",
+      "evaluation_role": "stable_guardrail",
+      "observations": [
+        {
+          "topic": "holdout_stable_bounded_drift_topic_00",
+          "stance": 0.42,
+          "text": "Stable bounded anchor 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_stable_bounded_drift_topic_00",
+          "stance": 0.3,
+          "text": "Stable bounded update one 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_stable_bounded_drift_topic_00",
+          "stance": 0.18,
+          "text": "Stable bounded update two 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_stable_bounded_drift_topic_00",
+          "stance": 0.06,
+          "text": "Stable bounded update three 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_stable_bounded_drift_topic_00",
+          "stance": -0.06,
+          "text": "Stable bounded update four 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Stable holdout structure: repeated topic drift remains far below the event threshold."
+    },
+    {
+      "case_id": "holdout_stable_bounded_drift_01",
+      "family": "holdout_stable_bounded_drift",
+      "evaluation_role": "stable_guardrail",
+      "observations": [
+        {
+          "topic": "holdout_stable_bounded_drift_topic_01",
+          "stance": 0.43,
+          "text": "Stable bounded anchor 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_stable_bounded_drift_topic_01",
+          "stance": 0.31,
+          "text": "Stable bounded update one 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_stable_bounded_drift_topic_01",
+          "stance": 0.19,
+          "text": "Stable bounded update two 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_stable_bounded_drift_topic_01",
+          "stance": 0.07,
+          "text": "Stable bounded update three 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_stable_bounded_drift_topic_01",
+          "stance": -0.05,
+          "text": "Stable bounded update four 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Stable holdout structure: repeated topic drift remains far below the event threshold."
+    },
+    {
+      "case_id": "holdout_stable_bounded_drift_02",
+      "family": "holdout_stable_bounded_drift",
+      "evaluation_role": "stable_guardrail",
+      "observations": [
+        {
+          "topic": "holdout_stable_bounded_drift_topic_02",
+          "stance": 0.44,
+          "text": "Stable bounded anchor 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_stable_bounded_drift_topic_02",
+          "stance": 0.32,
+          "text": "Stable bounded update one 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_stable_bounded_drift_topic_02",
+          "stance": 0.2,
+          "text": "Stable bounded update two 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_stable_bounded_drift_topic_02",
+          "stance": 0.08,
+          "text": "Stable bounded update three 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_stable_bounded_drift_topic_02",
+          "stance": -0.04,
+          "text": "Stable bounded update four 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Stable holdout structure: repeated topic drift remains far below the event threshold."
+    },
+    {
+      "case_id": "holdout_stable_bounded_drift_03",
+      "family": "holdout_stable_bounded_drift",
+      "evaluation_role": "stable_guardrail",
+      "observations": [
+        {
+          "topic": "holdout_stable_bounded_drift_topic_03",
+          "stance": 0.45,
+          "text": "Stable bounded anchor 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_stable_bounded_drift_topic_03",
+          "stance": 0.33,
+          "text": "Stable bounded update one 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_stable_bounded_drift_topic_03",
+          "stance": 0.21,
+          "text": "Stable bounded update two 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_stable_bounded_drift_topic_03",
+          "stance": 0.09,
+          "text": "Stable bounded update three 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_stable_bounded_drift_topic_03",
+          "stance": -0.03,
+          "text": "Stable bounded update four 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Stable holdout structure: repeated topic drift remains far below the event threshold."
+    },
+    {
+      "case_id": "holdout_stable_low_cue_opposition_00",
+      "family": "holdout_stable_low_cue_opposition",
+      "evaluation_role": "stable_guardrail",
+      "observations": [
+        {
+          "topic": "holdout_stable_low_cue_opposition_topic_00",
+          "stance": 0.92,
+          "text": "Low-cue opposition anchor 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_stable_low_cue_opposition_topic_00",
+          "stance": -0.82,
+          "text": "Strong opposition is explicitly low cue 0.",
+          "confidence": 1,
+          "revision_cue": 0.3
+        },
+        {
+          "topic": "holdout_stable_low_cue_opposition_topic_00",
+          "stance": -0.74,
+          "text": "Low-cue opposition remains non-eventful 0.",
+          "confidence": 1,
+          "revision_cue": 0.25
+        },
+        {
+          "topic": "holdout_stable_low_cue_opposition_topic_00",
+          "stance": 0.7,
+          "text": "Return remains low cue and non-eventful 0.",
+          "confidence": 1,
+          "revision_cue": 0.3
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Stable holdout structure: large stance changes are suppressed by a fixed low revision cue."
+    },
+    {
+      "case_id": "holdout_stable_low_cue_opposition_01",
+      "family": "holdout_stable_low_cue_opposition",
+      "evaluation_role": "stable_guardrail",
+      "observations": [
+        {
+          "topic": "holdout_stable_low_cue_opposition_topic_01",
+          "stance": 0.91,
+          "text": "Low-cue opposition anchor 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_stable_low_cue_opposition_topic_01",
+          "stance": -0.81,
+          "text": "Strong opposition is explicitly low cue 1.",
+          "confidence": 1,
+          "revision_cue": 0.3
+        },
+        {
+          "topic": "holdout_stable_low_cue_opposition_topic_01",
+          "stance": -0.73,
+          "text": "Low-cue opposition remains non-eventful 1.",
+          "confidence": 1,
+          "revision_cue": 0.25
+        },
+        {
+          "topic": "holdout_stable_low_cue_opposition_topic_01",
+          "stance": 0.69,
+          "text": "Return remains low cue and non-eventful 1.",
+          "confidence": 1,
+          "revision_cue": 0.3
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Stable holdout structure: large stance changes are suppressed by a fixed low revision cue."
+    },
+    {
+      "case_id": "holdout_stable_low_cue_opposition_02",
+      "family": "holdout_stable_low_cue_opposition",
+      "evaluation_role": "stable_guardrail",
+      "observations": [
+        {
+          "topic": "holdout_stable_low_cue_opposition_topic_02",
+          "stance": 0.9,
+          "text": "Low-cue opposition anchor 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_stable_low_cue_opposition_topic_02",
+          "stance": -0.8,
+          "text": "Strong opposition is explicitly low cue 2.",
+          "confidence": 1,
+          "revision_cue": 0.3
+        },
+        {
+          "topic": "holdout_stable_low_cue_opposition_topic_02",
+          "stance": -0.72,
+          "text": "Low-cue opposition remains non-eventful 2.",
+          "confidence": 1,
+          "revision_cue": 0.25
+        },
+        {
+          "topic": "holdout_stable_low_cue_opposition_topic_02",
+          "stance": 0.68,
+          "text": "Return remains low cue and non-eventful 2.",
+          "confidence": 1,
+          "revision_cue": 0.3
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Stable holdout structure: large stance changes are suppressed by a fixed low revision cue."
+    },
+    {
+      "case_id": "holdout_stable_low_cue_opposition_03",
+      "family": "holdout_stable_low_cue_opposition",
+      "evaluation_role": "stable_guardrail",
+      "observations": [
+        {
+          "topic": "holdout_stable_low_cue_opposition_topic_03",
+          "stance": 0.89,
+          "text": "Low-cue opposition anchor 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_stable_low_cue_opposition_topic_03",
+          "stance": -0.79,
+          "text": "Strong opposition is explicitly low cue 3.",
+          "confidence": 1,
+          "revision_cue": 0.3
+        },
+        {
+          "topic": "holdout_stable_low_cue_opposition_topic_03",
+          "stance": -0.71,
+          "text": "Low-cue opposition remains non-eventful 3.",
+          "confidence": 1,
+          "revision_cue": 0.25
+        },
+        {
+          "topic": "holdout_stable_low_cue_opposition_topic_03",
+          "stance": 0.67,
+          "text": "Return remains low cue and non-eventful 3.",
+          "confidence": 1,
+          "revision_cue": 0.3
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Stable holdout structure: large stance changes are suppressed by a fixed low revision cue."
+    },
+    {
+      "case_id": "holdout_stable_low_confidence_opposition_00",
+      "family": "holdout_stable_low_confidence_opposition",
+      "evaluation_role": "stable_guardrail",
+      "observations": [
+        {
+          "topic": "holdout_stable_low_confidence_opposition_topic_00",
+          "stance": 0.9,
+          "text": "Low-confidence opposition anchor 0.",
+          "confidence": 0.5,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_stable_low_confidence_opposition_stable_side_00",
+          "stance": -0.12,
+          "text": "Stable side observation 0.",
+          "confidence": 0.9,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_stable_low_confidence_opposition_topic_00",
+          "stance": -0.88,
+          "text": "Opposition remains low confidence 0.",
+          "confidence": 0.5,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_stable_low_confidence_opposition_topic_00",
+          "stance": -0.7,
+          "text": "Follow-up remains low confidence 0.",
+          "confidence": 0.5,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_stable_low_confidence_opposition_topic_00",
+          "stance": 0.72,
+          "text": "Return remains low confidence 0.",
+          "confidence": 0.5,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Stable holdout structure: large stance changes remain below threshold because the active anchor and updates stay at confidence 0.5."
+    },
+    {
+      "case_id": "holdout_stable_low_confidence_opposition_01",
+      "family": "holdout_stable_low_confidence_opposition",
+      "evaluation_role": "stable_guardrail",
+      "observations": [
+        {
+          "topic": "holdout_stable_low_confidence_opposition_topic_01",
+          "stance": 0.89,
+          "text": "Low-confidence opposition anchor 1.",
+          "confidence": 0.5,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_stable_low_confidence_opposition_stable_side_01",
+          "stance": -0.12,
+          "text": "Stable side observation 1.",
+          "confidence": 0.9,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_stable_low_confidence_opposition_topic_01",
+          "stance": -0.87,
+          "text": "Opposition remains low confidence 1.",
+          "confidence": 0.5,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_stable_low_confidence_opposition_topic_01",
+          "stance": -0.69,
+          "text": "Follow-up remains low confidence 1.",
+          "confidence": 0.5,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_stable_low_confidence_opposition_topic_01",
+          "stance": 0.71,
+          "text": "Return remains low confidence 1.",
+          "confidence": 0.5,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Stable holdout structure: large stance changes remain below threshold because the active anchor and updates stay at confidence 0.5."
+    },
+    {
+      "case_id": "holdout_stable_low_confidence_opposition_02",
+      "family": "holdout_stable_low_confidence_opposition",
+      "evaluation_role": "stable_guardrail",
+      "observations": [
+        {
+          "topic": "holdout_stable_low_confidence_opposition_topic_02",
+          "stance": 0.88,
+          "text": "Low-confidence opposition anchor 2.",
+          "confidence": 0.5,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_stable_low_confidence_opposition_stable_side_02",
+          "stance": -0.12,
+          "text": "Stable side observation 2.",
+          "confidence": 0.9,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_stable_low_confidence_opposition_topic_02",
+          "stance": -0.86,
+          "text": "Opposition remains low confidence 2.",
+          "confidence": 0.5,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_stable_low_confidence_opposition_topic_02",
+          "stance": -0.68,
+          "text": "Follow-up remains low confidence 2.",
+          "confidence": 0.5,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_stable_low_confidence_opposition_topic_02",
+          "stance": 0.7,
+          "text": "Return remains low confidence 2.",
+          "confidence": 0.5,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Stable holdout structure: large stance changes remain below threshold because the active anchor and updates stay at confidence 0.5."
+    },
+    {
+      "case_id": "holdout_stable_low_confidence_opposition_03",
+      "family": "holdout_stable_low_confidence_opposition",
+      "evaluation_role": "stable_guardrail",
+      "observations": [
+        {
+          "topic": "holdout_stable_low_confidence_opposition_topic_03",
+          "stance": 0.87,
+          "text": "Low-confidence opposition anchor 3.",
+          "confidence": 0.5,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_stable_low_confidence_opposition_stable_side_03",
+          "stance": -0.12,
+          "text": "Stable side observation 3.",
+          "confidence": 0.9,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_stable_low_confidence_opposition_topic_03",
+          "stance": -0.85,
+          "text": "Opposition remains low confidence 3.",
+          "confidence": 0.5,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_stable_low_confidence_opposition_topic_03",
+          "stance": -0.67,
+          "text": "Follow-up remains low confidence 3.",
+          "confidence": 0.5,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_stable_low_confidence_opposition_topic_03",
+          "stance": 0.69,
+          "text": "Return remains low confidence 3.",
+          "confidence": 0.5,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Stable holdout structure: large stance changes remain below threshold because the active anchor and updates stay at confidence 0.5."
+    }
+  ]
+}

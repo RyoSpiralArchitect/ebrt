@@ -1,0 +1,298 @@
+{
+  "schema_version": "ebrt-dual-route-policy-lock-v0.3",
+  "policy_version": "0.3",
+  "status": "LOCKED",
+  "frozen_dependencies": {
+    "monolith_and_v0_2_must_remain_unchanged": true,
+    "source_sha256": {
+      "ebrt_monolith_v0_1.py": "b1702f2868839d989cc3a9321d227436a23c3dad6cc86483edee9d5dbab3a529",
+      "benchmark_ebrt_v0_1.py": "3a12be0344aed424789f4681aee450068f0a7a0b015c8f0167d4b31ea9443619",
+      "semantic_adapter_v0_2.py": "836b7afadabb2e2e5b6ea53afe2795e529ab20193b00d83af9a5624d4f32d2ca",
+      "instrumentation_ebrt_v0_2.py": "663b0e446e07d8c24be228f3e5e56a6a53665bd3a637979bf285597f7d0bbb7d",
+      "benchmark_instrumentation_v0_2.py": "5cb0f390b5b4f9daf3df973725cb3c43c674efa81e505344e3bd05dc0123451c",
+      "render_instrumentation_v0_2.py": "1011835d0829e951e30f421dc14b6c04204bbcce2708e15350270e98be04f7e2",
+      "dual_route_policy_v0_3.py": "5797e87727b17853088272a74a8affac4610a4bcc195664ed047642e5bd9763c",
+      "benchmark_dual_route_v0_3.py": "1341585bb7e5e2d8f26b294b4aac9d7c110736290e69ccd694101f8c012dd91a",
+      "fixtures/dual_route_v0_3_dev.json": "ba6e6943d7295e6e5279335587b36aceb8776447bca4a731ad4ae0e87cdf69ec",
+      "fixtures/dual_route_v0_3_holdout.json": "68662d5ad6301ab175d5ad32e0ccfb5ed615a98eb48025ab887a999cfec6b670",
+      "fixtures/dual_route_v0_3_sequential.json": "095fdc0685ea590be83df87ef35024ef7aa0a814a3b87fd073eacbee699bd028"
+    }
+  },
+  "runtime": {
+    "device": "cpu",
+    "dtype": "float32",
+    "expected_environment": {
+      "python_version": "3.13.13",
+      "torch_version": "2.11.0",
+      "system": "Darwin",
+      "machine": "arm64",
+      "platform": "macOS-26.2-arm64-arm-64bit-Mach-O",
+      "release": "25.2.0"
+    },
+    "determinism_scope": "byte_reproducible_artifacts_require_the_same_locked_runtime_environment",
+    "model_seeds": {
+      "start_inclusive": 0,
+      "end_inclusive": 31
+    },
+    "execution_modes": {
+      "quick": {
+        "model_seed_start_inclusive": 0,
+        "model_seed_end_inclusive": 3,
+        "promotion_eligible": false
+      },
+      "full": {
+        "model_seed_start_inclusive": 0,
+        "model_seed_end_inclusive": 31,
+        "promotion_eligible": true
+      }
+    },
+    "torch_threads": 1
+  },
+  "event_and_capacity": {
+    "event_threshold": 0.55,
+    "route_width_k": 2,
+    "distinct_control_steps_required": true,
+    "primary_minimum_eligible_steps": 4,
+    "primary_maximum_eligible_steps": 6,
+    "event_delta_frobenius_norm_max": 1.75,
+    "absolute_per_step_control_norm_max": 1.75,
+    "maximum_unique_topics_per_case": 8,
+    "optimizer": {
+      "name": "Adam",
+      "revision_steps": 32,
+      "learning_rate": 0.08,
+      "loss_weights": "inherit_frozen_v0_1"
+    },
+    "matched_replay_start": "minimum_eligible_step",
+    "natural_cost_replay_start": "minimum_selected_control_step",
+    "matched_probe_execution": "all_capacity_matched_arms_run_and_charge_the_same_prefix_only_leverage_probe",
+    "fixture_config_overrides_by_role": {
+      "promotion_primary": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "stable_guardrail": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "sequential_stress": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 2
+      }
+    }
+  },
+  "source_projection_leverage": {
+    "definition": "centered_finite_difference_of_target_aligned_event_source_belief_projection_along_one_normalized_topic_aligned_control_direction",
+    "epsilon": 0.001,
+    "allowed_information": [
+      "observations_through_event_source",
+      "branch_local_controls_before_current_event",
+      "current_event_revision_target",
+      "frozen_core_and_codec"
+    ],
+    "forbidden_route_information": [
+      "future_observations",
+      "post_revision_terminal_gain",
+      "post_revision_propagation",
+      "post_revision_leakage",
+      "holdout_gold_outcomes"
+    ],
+    "sequential_rule": "recompute_after_every_accepted_revision_from_the_current_branch_prefix"
+  },
+  "ordering": {
+    "score_tie_break": [
+      "score_descending",
+      "candidate_step_ascending"
+    ],
+    "dual_collision_backfill": [
+      "remaining_source_projection_leverage_rank",
+      "remaining_semantic_rank",
+      "candidate_step_ascending"
+    ],
+    "random_route": {
+      "algorithm": "sha256_counter_based_uniform_without_replacement",
+      "seed_material_in_order": [
+        "schema_version",
+        "case_id",
+        "model_seed",
+        "event_ordinal",
+        "source_step"
+      ],
+      "execution_order_independent": true
+    }
+  },
+  "arms": {
+    "semantic_only": {
+      "id": "S2_semantic",
+      "deployable": true,
+      "objective_anchor_steps": "semantic_rank_1",
+      "control_steps": "semantic_rank_top_2"
+    },
+    "source_projection_only": {
+      "id": "L2_source_projection",
+      "deployable": true,
+      "objective_anchor_steps": "source_projection_leverage_rank_1",
+      "control_steps": "source_projection_leverage_rank_top_2"
+    },
+    "dual": {
+      "id": "D2_dual",
+      "deployable": true,
+      "objective_anchor_steps": "semantic_rank_1",
+      "control_steps": "semantic_rank_1_plus_best_distinct_source_projection_leverage_step"
+    },
+    "semantic_random": {
+      "id": "SR2_semantic_random",
+      "deployable": false,
+      "objective_anchor_steps": "semantic_rank_1",
+      "control_steps": "semantic_rank_1_plus_one_deterministic_uniform_distinct_candidate",
+      "matched_probe_rule": "run_and_charge_the_same_leverage_probe_then_discard_its_ranking"
+    },
+    "gold_diagnostic": {
+      "id": "G2_gold_diagnostic",
+      "deployable": false,
+      "privileged": true,
+      "performance_ceiling": false,
+      "objective_anchor_steps": "annotated_gold_anchor_rank_1",
+      "control_steps": "gold_anchor_plus_best_distinct_source_projection_leverage_step",
+      "promotion_eligible": false
+    },
+    "legacy_reference": {
+      "id": "D1_legacy_reference",
+      "deployable": true,
+      "route_width_k": 1,
+      "capacity_matched": false,
+      "promotion_eligible": false,
+      "purpose": "frozen_v0_1_regression_reference_only"
+    }
+  },
+  "estimands": {
+    "decision_point_shadow": {
+      "prefix": "freeze_canonical_frozen_D_prefix_including_earlier_D_revisions",
+      "implemented_scope": "single_event_cases_where_the_canonical_D_prefix_is_the_common_zero_control_prefix",
+      "frozen_fields": [
+        "event",
+        "candidate_set",
+        "semantic_attention",
+        "revision_target",
+        "pre_event_controls"
+      ],
+      "current_action_only": true,
+      "later_revisions": "suppressed",
+      "interpretation": "local_action_quality_only_not_policy_value"
+    },
+    "end_to_end": {
+      "initialization": "zero_controls_per_arm",
+      "event_policy": "redetect_and_rerank_on_each_arm_branch",
+      "sequential_policy": "recompute_candidates_and_leverage_after_each_accepted_revision",
+      "stale_D_or_shadow_mapping_forbidden": true,
+      "promotion_estimand": true,
+      "privileged_gold_anchor_visibility": "G2_only"
+    }
+  },
+  "endpoints": {
+    "primary": {
+      "name": "end_to_end_terminal_target_distance_gain",
+      "direction": "higher_is_better",
+      "evaluator_target": "independently_rederived_copy_of_the_policy_visible_structured_revision_target",
+      "endpoint_horizon": "terminal_state_after_1_to_3_post_event_observations_and_outside_the_event_source_optimizer_horizon",
+      "co_primary_contrasts": [
+        "D2_dual_minus_S2_semantic",
+        "D2_dual_minus_SR2_semantic_random"
+      ],
+      "minimum_superiority_margin": 0.02,
+      "promotion_population": "promotion_primary_single_event_holdout"
+    },
+    "guardrails": {
+      "target_topic_success_difference_lower_bound_min": -0.02,
+      "all_topic_accuracy_difference_lower_bound_min": -0.02,
+      "unrelated_state_leakage_difference_upper_bound_max": 0.05,
+      "stable_guardrail_event_count": 0,
+      "stable_guardrail_control_norm": 0,
+      "stable_guardrail_state_drift": 0,
+      "frozen_core_pass_rate": 1,
+      "finite_output_pass_rate": 1,
+      "control_bound_pass_rate": 1,
+      "dual_semantic_objective_anchor_retention_rate": 1
+    },
+    "compute": {
+      "inclusive_generator_steps": "core_plus_route_probe_plus_optimizer_replay",
+      "additional_fields": [
+        "core_generator_steps",
+        "route_probe_generator_steps",
+        "optimizer_backward_calls",
+        "replayed_state_steps",
+        "candidate_count_total",
+        "candidate_count_max_per_event",
+        "terminal_gain_per_1000_inclusive_generator_steps"
+      ],
+      "dual_to_semantic_random_inclusive_steps_ratio_upper_bound_max": 1.1,
+      "dual_to_semantic_natural_cost_steps_ratio_upper_bound_max": 1.5,
+      "deterministic_step_counts_are_primary_compute_evidence": true,
+      "natural_cost_frontier": "D2_and_S2_native_mode_only; quality_is_not_a_promotion_contrast",
+      "wall_time_and_peak_memory": "excluded_from_the_deterministic_v0.3_bundle_and_deferred_to_an_isolated_runtime_profile"
+    },
+    "secondary": [
+      "source_target_distance_gain",
+      "annotated_target_control_distance_gain",
+      "target_topic_success",
+      "all_topic_accuracy",
+      "unrelated_state_leakage",
+      "terminal_gain_per_control_norm"
+    ]
+  },
+  "statistics": {
+    "pairing_unit": [
+      "case_id",
+      "model_seed"
+    ],
+    "inference_cluster": "case_family",
+    "family_weighting": "equal_family_weight_after_within_family_case_and_seed_mean",
+    "bootstrap": {
+      "method": "deterministic_case_family_cluster_percentile",
+      "resamples": 10000,
+      "seed": 20260718
+    },
+    "co_primary_rule": "intersection_union_both_contrasts_must_pass",
+    "exploratory_multiple_comparisons": "Holm_if_exploratory_p_values_are_reported; no_exploratory_p_values_are_planned_for_v0.3",
+    "post_treatment_case_exclusion_forbidden": true,
+    "insufficient_power_result": "inconclusive_not_promoted"
+  },
+  "split_and_scope": {
+    "dev": {
+      "fixture_file": "fixtures/dual_route_v0_3_dev.json",
+      "new_single_event_families": 6,
+      "cases_per_family": 4,
+      "promotion_eligible": false
+    },
+    "holdout_primary": {
+      "fixture_file": "fixtures/dual_route_v0_3_holdout.json",
+      "unseen_single_event_families": 12,
+      "stable_guardrail_families": 3,
+      "cases_per_family": 4,
+      "one_shot": true,
+      "strict_unseen_regenerated_family": "holdout_braided_context_reentry"
+    },
+    "sequential_stress": {
+      "fixture_file": "fixtures/dual_route_v0_3_sequential.json",
+      "unseen_sequential_families": 4,
+      "cases_per_family": 4,
+      "pooled_with_primary": false,
+      "claim_rule": "multi_event_support_requires_single_event_promotion_plus_both_sequential_contrasts_and_the_same_noninferiority_leakage_compute_and_structural_guardrails"
+    }
+  },
+  "one_shot_holdout_rule": {
+    "canonical_ledger_file": "artifacts/.dual_route_v0_3_holdout_ledger.json",
+    "policy_source_config_endpoints_margins_and_fixture_hashes_must_be_filled_and_frozen_before_run": true,
+    "holdout_outcomes_must_not_tune_policy": true,
+    "any_post_holdout_change_requires_new_policy_version": true,
+    "repeated_promotion_on_same_holdout_forbidden": true,
+    "failed_or_missing_arm_runs_must_not_be_excluded_post_hoc": true,
+    "any_started_success_failure_or_interruption_is_terminal_for_v0_3": true,
+    "quick_execution_scope": "dev_primary_only_no_holdout_or_sequential_policy_runs",
+    "pre_lock_operational_smoke_disposition": "the_only_smoked_primary_holdout_family_was_removed_and_regenerated_with_new_ids_topics_text_and_values_before_this_lock",
+    "pre_lock_sequential_disposition": "the_four_old_sequential_family_representatives_seen_in_quick_were_removed; all_16_cases_and_4_families_were_regenerated_with_new_ids_topics_text_and_values_before_this_lock"
+  }
+}

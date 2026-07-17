@@ -1,0 +1,1866 @@
+{
+  "schema_version": "ebrt-dual-route-fixtures-v0.3",
+  "split": "sequential",
+  "cases": [
+    {
+      "case_id": "sequential_orbit_flipback_00",
+      "family": "sequential_orbit_flipback",
+      "evaluation_role": "sequential_stress",
+      "observations": [
+        {
+          "topic": "sequential_orbit_flipback_core_00",
+          "stance": 0.84,
+          "text": "The orbit claim opens with qualified support in variant 0.",
+          "confidence": 0.95,
+          "revision_cue": 0.9
+        },
+        {
+          "topic": "sequential_orbit_flipback_orbit_a_00",
+          "stance": -0.21,
+          "text": "Orbit lane A carries unrelated timing context in variant 0.",
+          "confidence": 0.77,
+          "revision_cue": 0.82
+        },
+        {
+          "topic": "sequential_orbit_flipback_core_00",
+          "stance": 0.63,
+          "text": "The orbit claim contracts once without revising in variant 0.",
+          "confidence": 0.92,
+          "revision_cue": 0.87
+        },
+        {
+          "topic": "sequential_orbit_flipback_orbit_b_00",
+          "stance": 0.24,
+          "text": "Orbit lane B adds an independent resource note in variant 0.",
+          "confidence": 0.74,
+          "revision_cue": 0.79
+        },
+        {
+          "topic": "sequential_orbit_flipback_core_00",
+          "stance": 0.39,
+          "text": "A second orbit update remains aligned with the opening anchor in variant 0.",
+          "confidence": 0.9,
+          "revision_cue": 0.89
+        },
+        {
+          "topic": "sequential_orbit_flipback_orbit_a_00",
+          "stance": -0.15,
+          "text": "Orbit lane A returns with a small non-event drift in variant 0.",
+          "confidence": 0.81,
+          "revision_cue": 0.84
+        },
+        {
+          "topic": "sequential_orbit_flipback_core_00",
+          "stance": 0.1,
+          "text": "The last pre-flip orbit update stays below threshold in variant 0.",
+          "confidence": 0.91,
+          "revision_cue": 0.86
+        },
+        {
+          "topic": "sequential_orbit_flipback_core_00",
+          "stance": -0.49,
+          "text": "The orbit claim crosses into rejection for the first event in variant 0.",
+          "confidence": 0.98,
+          "revision_cue": 0.96
+        },
+        {
+          "topic": "sequential_orbit_flipback_orbit_b_00",
+          "stance": 0.29,
+          "text": "Orbit lane B closes its unrelated note after the first event in variant 0.",
+          "confidence": 0.79,
+          "revision_cue": 0.83
+        },
+        {
+          "topic": "sequential_orbit_flipback_core_00",
+          "stance": -0.32,
+          "text": "The rejected orbit claim partially recovers but remains near its new anchor in variant 0.",
+          "confidence": 0.93,
+          "revision_cue": 0.88
+        },
+        {
+          "topic": "sequential_orbit_flipback_core_00",
+          "stance": -0.15,
+          "text": "A second recovery remains non-eventful before flipback in variant 0.",
+          "confidence": 0.92,
+          "revision_cue": 0.9
+        },
+        {
+          "topic": "sequential_orbit_flipback_core_00",
+          "stance": 0.81,
+          "text": "The orbit claim returns to support for the second event in variant 0.",
+          "confidence": 0.97,
+          "revision_cue": 0.95
+        },
+        {
+          "topic": "sequential_orbit_flipback_afterglow_a_00",
+          "stance": 0.13,
+          "text": "An unrelated afterglow follows the second event in sequential_orbit_flipback variant 0.",
+          "confidence": 0.76,
+          "revision_cue": 0.72
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 2
+      },
+      "note": "Sequential structure: one orbit topic produces a rejection event with four eligible candidates, then a flipback event with seven eligible candidates, followed by 1 unrelated post-event observation."
+    },
+    {
+      "case_id": "sequential_orbit_flipback_01",
+      "family": "sequential_orbit_flipback",
+      "evaluation_role": "sequential_stress",
+      "observations": [
+        {
+          "topic": "sequential_orbit_flipback_core_01",
+          "stance": 0.87,
+          "text": "The orbit claim opens with qualified support in variant 1.",
+          "confidence": 0.94,
+          "revision_cue": 0.91
+        },
+        {
+          "topic": "sequential_orbit_flipback_orbit_a_01",
+          "stance": -0.19,
+          "text": "Orbit lane A carries unrelated timing context in variant 1.",
+          "confidence": 0.78,
+          "revision_cue": 0.8099999999999999
+        },
+        {
+          "topic": "sequential_orbit_flipback_core_01",
+          "stance": 0.65,
+          "text": "The orbit claim contracts once without revising in variant 1.",
+          "confidence": 0.92,
+          "revision_cue": 0.88
+        },
+        {
+          "topic": "sequential_orbit_flipback_orbit_b_01",
+          "stance": 0.22999999999999998,
+          "text": "Orbit lane B adds an independent resource note in variant 1.",
+          "confidence": 0.76,
+          "revision_cue": 0.8
+        },
+        {
+          "topic": "sequential_orbit_flipback_core_01",
+          "stance": 0.41,
+          "text": "A second orbit update remains aligned with the opening anchor in variant 1.",
+          "confidence": 0.91,
+          "revision_cue": 0.88
+        },
+        {
+          "topic": "sequential_orbit_flipback_orbit_a_01",
+          "stance": -0.13,
+          "text": "Orbit lane A returns with a small non-event drift in variant 1.",
+          "confidence": 0.81,
+          "revision_cue": 0.84
+        },
+        {
+          "topic": "sequential_orbit_flipback_core_01",
+          "stance": 0.12,
+          "text": "The last pre-flip orbit update stays below threshold in variant 1.",
+          "confidence": 0.91,
+          "revision_cue": 0.87
+        },
+        {
+          "topic": "sequential_orbit_flipback_core_01",
+          "stance": -0.46,
+          "text": "The orbit claim crosses into rejection for the first event in variant 1.",
+          "confidence": 0.97,
+          "revision_cue": 0.97
+        },
+        {
+          "topic": "sequential_orbit_flipback_orbit_b_01",
+          "stance": 0.27999999999999997,
+          "text": "Orbit lane B closes its unrelated note after the first event in variant 1.",
+          "confidence": 0.79,
+          "revision_cue": 0.83
+        },
+        {
+          "topic": "sequential_orbit_flipback_core_01",
+          "stance": -0.28,
+          "text": "The rejected orbit claim partially recovers but remains near its new anchor in variant 1.",
+          "confidence": 0.93,
+          "revision_cue": 0.88
+        },
+        {
+          "topic": "sequential_orbit_flipback_core_01",
+          "stance": -0.11,
+          "text": "A second recovery remains non-eventful before flipback in variant 1.",
+          "confidence": 0.92,
+          "revision_cue": 0.9
+        },
+        {
+          "topic": "sequential_orbit_flipback_core_01",
+          "stance": 0.84,
+          "text": "The orbit claim returns to support for the second event in variant 1.",
+          "confidence": 0.97,
+          "revision_cue": 0.96
+        },
+        {
+          "topic": "sequential_orbit_flipback_afterglow_a_01",
+          "stance": -0.25,
+          "text": "A separate afterglow opens after the second event in sequential_orbit_flipback variant 1.",
+          "confidence": 0.75,
+          "revision_cue": 0.77
+        },
+        {
+          "topic": "sequential_orbit_flipback_afterglow_a_01",
+          "stance": -0.19,
+          "text": "The unrelated afterglow settles with bounded drift in sequential_orbit_flipback variant 1.",
+          "confidence": 0.8,
+          "revision_cue": 0.79
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 2
+      },
+      "note": "Sequential structure: one orbit topic produces a rejection event with four eligible candidates, then a flipback event with seven eligible candidates, followed by 2 unrelated post-event observations."
+    },
+    {
+      "case_id": "sequential_orbit_flipback_02",
+      "family": "sequential_orbit_flipback",
+      "evaluation_role": "sequential_stress",
+      "observations": [
+        {
+          "topic": "sequential_orbit_flipback_core_02",
+          "stance": 0.82,
+          "text": "The orbit claim opens with qualified support in variant 2.",
+          "confidence": 0.9299999999999999,
+          "revision_cue": 0.92
+        },
+        {
+          "topic": "sequential_orbit_flipback_orbit_a_02",
+          "stance": -0.16999999999999998,
+          "text": "Orbit lane A carries unrelated timing context in variant 2.",
+          "confidence": 0.79,
+          "revision_cue": 0.7999999999999999
+        },
+        {
+          "topic": "sequential_orbit_flipback_core_02",
+          "stance": 0.6,
+          "text": "The orbit claim contracts once without revising in variant 2.",
+          "confidence": 0.92,
+          "revision_cue": 0.87
+        },
+        {
+          "topic": "sequential_orbit_flipback_orbit_b_02",
+          "stance": 0.22,
+          "text": "Orbit lane B adds an independent resource note in variant 2.",
+          "confidence": 0.74,
+          "revision_cue": 0.81
+        },
+        {
+          "topic": "sequential_orbit_flipback_core_02",
+          "stance": 0.35,
+          "text": "A second orbit update remains aligned with the opening anchor in variant 2.",
+          "confidence": 0.92,
+          "revision_cue": 0.89
+        },
+        {
+          "topic": "sequential_orbit_flipback_orbit_a_02",
+          "stance": -0.10999999999999999,
+          "text": "Orbit lane A returns with a small non-event drift in variant 2.",
+          "confidence": 0.81,
+          "revision_cue": 0.84
+        },
+        {
+          "topic": "sequential_orbit_flipback_core_02",
+          "stance": 0.07,
+          "text": "The last pre-flip orbit update stays below threshold in variant 2.",
+          "confidence": 0.91,
+          "revision_cue": 0.88
+        },
+        {
+          "topic": "sequential_orbit_flipback_core_02",
+          "stance": -0.51,
+          "text": "The orbit claim crosses into rejection for the first event in variant 2.",
+          "confidence": 0.98,
+          "revision_cue": 0.96
+        },
+        {
+          "topic": "sequential_orbit_flipback_orbit_b_02",
+          "stance": 0.26999999999999996,
+          "text": "Orbit lane B closes its unrelated note after the first event in variant 2.",
+          "confidence": 0.79,
+          "revision_cue": 0.83
+        },
+        {
+          "topic": "sequential_orbit_flipback_core_02",
+          "stance": -0.34,
+          "text": "The rejected orbit claim partially recovers but remains near its new anchor in variant 2.",
+          "confidence": 0.93,
+          "revision_cue": 0.88
+        },
+        {
+          "topic": "sequential_orbit_flipback_core_02",
+          "stance": -0.17,
+          "text": "A second recovery remains non-eventful before flipback in variant 2.",
+          "confidence": 0.92,
+          "revision_cue": 0.9
+        },
+        {
+          "topic": "sequential_orbit_flipback_core_02",
+          "stance": 0.79,
+          "text": "The orbit claim returns to support for the second event in variant 2.",
+          "confidence": 0.97,
+          "revision_cue": 0.95
+        },
+        {
+          "topic": "sequential_orbit_flipback_afterglow_a_02",
+          "stance": 0.29,
+          "text": "The first independent afterglow starts after the second event in sequential_orbit_flipback variant 2.",
+          "confidence": 0.74,
+          "revision_cue": 0.76
+        },
+        {
+          "topic": "sequential_orbit_flipback_afterglow_b_02",
+          "stance": -0.17,
+          "text": "A second unrelated afterglow briefly crosses sequential_orbit_flipback variant 2.",
+          "confidence": 0.8,
+          "revision_cue": 0.77
+        },
+        {
+          "topic": "sequential_orbit_flipback_afterglow_a_02",
+          "stance": 0.34,
+          "text": "The first afterglow returns without another event in sequential_orbit_flipback variant 2.",
+          "confidence": 0.82,
+          "revision_cue": 0.8
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 2
+      },
+      "note": "Sequential structure: one orbit topic produces a rejection event with four eligible candidates, then a flipback event with seven eligible candidates, followed by 3 unrelated post-event observations."
+    },
+    {
+      "case_id": "sequential_orbit_flipback_03",
+      "family": "sequential_orbit_flipback",
+      "evaluation_role": "sequential_stress",
+      "observations": [
+        {
+          "topic": "sequential_orbit_flipback_core_03",
+          "stance": 0.85,
+          "text": "The orbit claim opens with qualified support in variant 3.",
+          "confidence": 0.95,
+          "revision_cue": 0.93
+        },
+        {
+          "topic": "sequential_orbit_flipback_orbit_a_03",
+          "stance": -0.15,
+          "text": "Orbit lane A carries unrelated timing context in variant 3.",
+          "confidence": 0.8,
+          "revision_cue": 0.7899999999999999
+        },
+        {
+          "topic": "sequential_orbit_flipback_core_03",
+          "stance": 0.62,
+          "text": "The orbit claim contracts once without revising in variant 3.",
+          "confidence": 0.92,
+          "revision_cue": 0.88
+        },
+        {
+          "topic": "sequential_orbit_flipback_orbit_b_03",
+          "stance": 0.21,
+          "text": "Orbit lane B adds an independent resource note in variant 3.",
+          "confidence": 0.76,
+          "revision_cue": 0.8200000000000001
+        },
+        {
+          "topic": "sequential_orbit_flipback_core_03",
+          "stance": 0.38,
+          "text": "A second orbit update remains aligned with the opening anchor in variant 3.",
+          "confidence": 0.93,
+          "revision_cue": 0.88
+        },
+        {
+          "topic": "sequential_orbit_flipback_orbit_a_03",
+          "stance": -0.09,
+          "text": "Orbit lane A returns with a small non-event drift in variant 3.",
+          "confidence": 0.81,
+          "revision_cue": 0.84
+        },
+        {
+          "topic": "sequential_orbit_flipback_core_03",
+          "stance": 0.09,
+          "text": "The last pre-flip orbit update stays below threshold in variant 3.",
+          "confidence": 0.91,
+          "revision_cue": 0.89
+        },
+        {
+          "topic": "sequential_orbit_flipback_core_03",
+          "stance": -0.48,
+          "text": "The orbit claim crosses into rejection for the first event in variant 3.",
+          "confidence": 0.97,
+          "revision_cue": 0.97
+        },
+        {
+          "topic": "sequential_orbit_flipback_orbit_b_03",
+          "stance": 0.26,
+          "text": "Orbit lane B closes its unrelated note after the first event in variant 3.",
+          "confidence": 0.79,
+          "revision_cue": 0.83
+        },
+        {
+          "topic": "sequential_orbit_flipback_core_03",
+          "stance": -0.3,
+          "text": "The rejected orbit claim partially recovers but remains near its new anchor in variant 3.",
+          "confidence": 0.93,
+          "revision_cue": 0.88
+        },
+        {
+          "topic": "sequential_orbit_flipback_core_03",
+          "stance": -0.13,
+          "text": "A second recovery remains non-eventful before flipback in variant 3.",
+          "confidence": 0.92,
+          "revision_cue": 0.9
+        },
+        {
+          "topic": "sequential_orbit_flipback_core_03",
+          "stance": 0.82,
+          "text": "The orbit claim returns to support for the second event in variant 3.",
+          "confidence": 0.97,
+          "revision_cue": 0.96
+        },
+        {
+          "topic": "sequential_orbit_flipback_afterglow_a_03",
+          "stance": 0.19,
+          "text": "An unrelated afterglow follows the second event in sequential_orbit_flipback variant 3.",
+          "confidence": 0.79,
+          "revision_cue": 0.76
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 2
+      },
+      "note": "Sequential structure: one orbit topic produces a rejection event with four eligible candidates, then a flipback event with seven eligible candidates, followed by 1 unrelated post-event observation."
+    },
+    {
+      "case_id": "sequential_dual_axis_stagger_00",
+      "family": "sequential_dual_axis_stagger",
+      "evaluation_role": "sequential_stress",
+      "observations": [
+        {
+          "topic": "sequential_dual_axis_stagger_north_00",
+          "stance": 0.83,
+          "text": "North-axis support opens the stagger in variant 0.",
+          "confidence": 0.95,
+          "revision_cue": 0.91
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_south_00",
+          "stance": -0.82,
+          "text": "South-axis rejection opens independently in variant 0.",
+          "confidence": 0.96,
+          "revision_cue": 0.9
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_north_00",
+          "stance": 0.59,
+          "text": "North-axis evidence softens while remaining non-eventful in variant 0.",
+          "confidence": 0.92,
+          "revision_cue": 0.87
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_south_00",
+          "stance": -0.58,
+          "text": "South-axis evidence softens without changing polarity in variant 0.",
+          "confidence": 0.91,
+          "revision_cue": 0.88
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_north_00",
+          "stance": 0.33,
+          "text": "A second north-axis update stays under the event boundary in variant 0.",
+          "confidence": 0.9,
+          "revision_cue": 0.89
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_bridge_00",
+          "stance": -0.12,
+          "text": "An unrelated bridge measurement separates the staggered axes in variant 0.",
+          "confidence": 0.75,
+          "revision_cue": 0.81
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_south_00",
+          "stance": -0.32,
+          "text": "A second south-axis update remains tied to its opening anchor in variant 0.",
+          "confidence": 0.93,
+          "revision_cue": 0.86
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_north_00",
+          "stance": 0.05,
+          "text": "The fourth north-axis candidate remains a precursor in variant 0.",
+          "confidence": 0.91,
+          "revision_cue": 0.88
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_south_00",
+          "stance": -0.06,
+          "text": "The fourth south-axis candidate remains a precursor in variant 0.",
+          "confidence": 0.92,
+          "revision_cue": 0.89
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_north_00",
+          "stance": -0.49,
+          "text": "North axis reverses first and creates event one in variant 0.",
+          "confidence": 0.98,
+          "revision_cue": 0.96
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_bridge_00",
+          "stance": -0.07,
+          "text": "The unrelated bridge moves slightly between the two events in variant 0.",
+          "confidence": 0.79,
+          "revision_cue": 0.84
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_south_00",
+          "stance": 0.5,
+          "text": "South axis reverses second and creates event two in variant 0.",
+          "confidence": 0.97,
+          "revision_cue": 0.96
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_afterglow_a_00",
+          "stance": -0.26,
+          "text": "A separate afterglow opens after the second event in sequential_dual_axis_stagger variant 0.",
+          "confidence": 0.75,
+          "revision_cue": 0.76
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_afterglow_a_00",
+          "stance": -0.2,
+          "text": "The unrelated afterglow settles with bounded drift in sequential_dual_axis_stagger variant 0.",
+          "confidence": 0.8,
+          "revision_cue": 0.79
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 2
+      },
+      "note": "Sequential structure: two independent axes each contribute four eligible candidates and reverse in staggered events, followed by 2 unrelated post-event observations."
+    },
+    {
+      "case_id": "sequential_dual_axis_stagger_01",
+      "family": "sequential_dual_axis_stagger",
+      "evaluation_role": "sequential_stress",
+      "observations": [
+        {
+          "topic": "sequential_dual_axis_stagger_north_01",
+          "stance": 0.86,
+          "text": "North-axis support opens the stagger in variant 1.",
+          "confidence": 0.95,
+          "revision_cue": 0.92
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_south_01",
+          "stance": -0.79,
+          "text": "South-axis rejection opens independently in variant 1.",
+          "confidence": 0.95,
+          "revision_cue": 0.91
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_north_01",
+          "stance": 0.62,
+          "text": "North-axis evidence softens while remaining non-eventful in variant 1.",
+          "confidence": 0.92,
+          "revision_cue": 0.87
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_south_01",
+          "stance": -0.55,
+          "text": "South-axis evidence softens without changing polarity in variant 1.",
+          "confidence": 0.92,
+          "revision_cue": 0.88
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_north_01",
+          "stance": 0.36,
+          "text": "A second north-axis update stays under the event boundary in variant 1.",
+          "confidence": 0.9,
+          "revision_cue": 0.89
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_bridge_01",
+          "stance": -0.09,
+          "text": "An unrelated bridge measurement separates the staggered axes in variant 1.",
+          "confidence": 0.76,
+          "revision_cue": 0.81
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_south_01",
+          "stance": -0.29,
+          "text": "A second south-axis update remains tied to its opening anchor in variant 1.",
+          "confidence": 0.93,
+          "revision_cue": 0.87
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_north_01",
+          "stance": 0.08,
+          "text": "The fourth north-axis candidate remains a precursor in variant 1.",
+          "confidence": 0.91,
+          "revision_cue": 0.88
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_south_01",
+          "stance": -0.03,
+          "text": "The fourth south-axis candidate remains a precursor in variant 1.",
+          "confidence": 0.92,
+          "revision_cue": 0.89
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_north_01",
+          "stance": -0.46,
+          "text": "North axis reverses first and creates event one in variant 1.",
+          "confidence": 0.98,
+          "revision_cue": 0.97
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_bridge_01",
+          "stance": -0.04000000000000001,
+          "text": "The unrelated bridge moves slightly between the two events in variant 1.",
+          "confidence": 0.79,
+          "revision_cue": 0.84
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_south_01",
+          "stance": 0.53,
+          "text": "South axis reverses second and creates event two in variant 1.",
+          "confidence": 0.97,
+          "revision_cue": 0.95
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_afterglow_a_01",
+          "stance": 0.28,
+          "text": "The first independent afterglow starts after the second event in sequential_dual_axis_stagger variant 1.",
+          "confidence": 0.74,
+          "revision_cue": 0.79
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_afterglow_b_01",
+          "stance": -0.18,
+          "text": "A second unrelated afterglow briefly crosses sequential_dual_axis_stagger variant 1.",
+          "confidence": 0.8,
+          "revision_cue": 0.77
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_afterglow_a_01",
+          "stance": 0.33,
+          "text": "The first afterglow returns without another event in sequential_dual_axis_stagger variant 1.",
+          "confidence": 0.82,
+          "revision_cue": 0.79
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 2
+      },
+      "note": "Sequential structure: two independent axes each contribute four eligible candidates and reverse in staggered events, followed by 3 unrelated post-event observations."
+    },
+    {
+      "case_id": "sequential_dual_axis_stagger_02",
+      "family": "sequential_dual_axis_stagger",
+      "evaluation_role": "sequential_stress",
+      "observations": [
+        {
+          "topic": "sequential_dual_axis_stagger_north_02",
+          "stance": 0.81,
+          "text": "North-axis support opens the stagger in variant 2.",
+          "confidence": 0.95,
+          "revision_cue": 0.93
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_south_02",
+          "stance": -0.84,
+          "text": "South-axis rejection opens independently in variant 2.",
+          "confidence": 0.96,
+          "revision_cue": 0.92
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_north_02",
+          "stance": 0.57,
+          "text": "North-axis evidence softens while remaining non-eventful in variant 2.",
+          "confidence": 0.92,
+          "revision_cue": 0.87
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_south_02",
+          "stance": -0.6,
+          "text": "South-axis evidence softens without changing polarity in variant 2.",
+          "confidence": 0.91,
+          "revision_cue": 0.88
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_north_02",
+          "stance": 0.3,
+          "text": "A second north-axis update stays under the event boundary in variant 2.",
+          "confidence": 0.9,
+          "revision_cue": 0.89
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_bridge_02",
+          "stance": -0.06,
+          "text": "An unrelated bridge measurement separates the staggered axes in variant 2.",
+          "confidence": 0.77,
+          "revision_cue": 0.81
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_south_02",
+          "stance": -0.35,
+          "text": "A second south-axis update remains tied to its opening anchor in variant 2.",
+          "confidence": 0.93,
+          "revision_cue": 0.88
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_north_02",
+          "stance": 0.02,
+          "text": "The fourth north-axis candidate remains a precursor in variant 2.",
+          "confidence": 0.91,
+          "revision_cue": 0.88
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_south_02",
+          "stance": -0.09,
+          "text": "The fourth south-axis candidate remains a precursor in variant 2.",
+          "confidence": 0.92,
+          "revision_cue": 0.89
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_north_02",
+          "stance": -0.51,
+          "text": "North axis reverses first and creates event one in variant 2.",
+          "confidence": 0.98,
+          "revision_cue": 0.96
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_bridge_02",
+          "stance": -0.010000000000000009,
+          "text": "The unrelated bridge moves slightly between the two events in variant 2.",
+          "confidence": 0.79,
+          "revision_cue": 0.84
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_south_02",
+          "stance": 0.48,
+          "text": "South axis reverses second and creates event two in variant 2.",
+          "confidence": 0.97,
+          "revision_cue": 0.96
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_afterglow_a_02",
+          "stance": 0.18,
+          "text": "An unrelated afterglow follows the second event in sequential_dual_axis_stagger variant 2.",
+          "confidence": 0.79,
+          "revision_cue": 0.74
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 2
+      },
+      "note": "Sequential structure: two independent axes each contribute four eligible candidates and reverse in staggered events, followed by 1 unrelated post-event observation."
+    },
+    {
+      "case_id": "sequential_dual_axis_stagger_03",
+      "family": "sequential_dual_axis_stagger",
+      "evaluation_role": "sequential_stress",
+      "observations": [
+        {
+          "topic": "sequential_dual_axis_stagger_north_03",
+          "stance": 0.84,
+          "text": "North-axis support opens the stagger in variant 3.",
+          "confidence": 0.95,
+          "revision_cue": 0.91
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_south_03",
+          "stance": -0.81,
+          "text": "South-axis rejection opens independently in variant 3.",
+          "confidence": 0.95,
+          "revision_cue": 0.93
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_north_03",
+          "stance": 0.6,
+          "text": "North-axis evidence softens while remaining non-eventful in variant 3.",
+          "confidence": 0.92,
+          "revision_cue": 0.87
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_south_03",
+          "stance": -0.57,
+          "text": "South-axis evidence softens without changing polarity in variant 3.",
+          "confidence": 0.92,
+          "revision_cue": 0.88
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_north_03",
+          "stance": 0.34,
+          "text": "A second north-axis update stays under the event boundary in variant 3.",
+          "confidence": 0.9,
+          "revision_cue": 0.89
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_bridge_03",
+          "stance": -0.03,
+          "text": "An unrelated bridge measurement separates the staggered axes in variant 3.",
+          "confidence": 0.78,
+          "revision_cue": 0.81
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_south_03",
+          "stance": -0.31,
+          "text": "A second south-axis update remains tied to its opening anchor in variant 3.",
+          "confidence": 0.93,
+          "revision_cue": 0.89
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_north_03",
+          "stance": 0.06,
+          "text": "The fourth north-axis candidate remains a precursor in variant 3.",
+          "confidence": 0.91,
+          "revision_cue": 0.88
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_south_03",
+          "stance": -0.05,
+          "text": "The fourth south-axis candidate remains a precursor in variant 3.",
+          "confidence": 0.92,
+          "revision_cue": 0.89
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_north_03",
+          "stance": -0.48,
+          "text": "North axis reverses first and creates event one in variant 3.",
+          "confidence": 0.98,
+          "revision_cue": 0.97
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_bridge_03",
+          "stance": 0.01999999999999999,
+          "text": "The unrelated bridge moves slightly between the two events in variant 3.",
+          "confidence": 0.79,
+          "revision_cue": 0.84
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_south_03",
+          "stance": 0.51,
+          "text": "South axis reverses second and creates event two in variant 3.",
+          "confidence": 0.97,
+          "revision_cue": 0.95
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_afterglow_a_03",
+          "stance": -0.2,
+          "text": "A separate afterglow opens after the second event in sequential_dual_axis_stagger variant 3.",
+          "confidence": 0.73,
+          "revision_cue": 0.78
+        },
+        {
+          "topic": "sequential_dual_axis_stagger_afterglow_a_03",
+          "stance": -0.14,
+          "text": "The unrelated afterglow settles with bounded drift in sequential_dual_axis_stagger variant 3.",
+          "confidence": 0.8,
+          "revision_cue": 0.79
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 2
+      },
+      "note": "Sequential structure: two independent axes each contribute four eligible candidates and reverse in staggered events, followed by 2 unrelated post-event observations."
+    },
+    {
+      "case_id": "sequential_braided_echo_handoff_00",
+      "family": "sequential_braided_echo_handoff",
+      "evaluation_role": "sequential_stress",
+      "observations": [
+        {
+          "topic": "sequential_braided_echo_handoff_alpha_00",
+          "stance": 0.88,
+          "text": "Alpha opens the braided history with measured support in variant 0.",
+          "confidence": 0.96,
+          "revision_cue": 0.9
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_beta_00",
+          "stance": -0.86,
+          "text": "Beta opens a separate braided history with measured rejection in variant 0.",
+          "confidence": 0.95,
+          "revision_cue": 0.92
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_alpha_00",
+          "stance": 0.68,
+          "text": "Alpha echo one remains compatible with its origin in variant 0.",
+          "confidence": 0.92,
+          "revision_cue": 0.87
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_braid_00",
+          "stance": 0.18,
+          "text": "A shared braid marker contributes unrelated context in variant 0.",
+          "confidence": 0.78,
+          "revision_cue": 0.8
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_beta_00",
+          "stance": -0.65,
+          "text": "Beta echo one remains compatible with its origin in variant 0.",
+          "confidence": 0.91,
+          "revision_cue": 0.88
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_alpha_00",
+          "stance": 0.47,
+          "text": "Alpha echo two weakens without revising in variant 0.",
+          "confidence": 0.93,
+          "revision_cue": 0.89
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_beta_00",
+          "stance": -0.43,
+          "text": "Beta echo two approaches neutrality without revising in variant 0.",
+          "confidence": 0.92,
+          "revision_cue": 0.86
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_alpha_00",
+          "stance": 0.24,
+          "text": "Alpha echo three remains below the event threshold in variant 0.",
+          "confidence": 0.9,
+          "revision_cue": 0.91
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_braid_00",
+          "stance": 0.23,
+          "text": "The braid marker returns with bounded drift in variant 0.",
+          "confidence": 0.81,
+          "revision_cue": 0.83
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_alpha_00",
+          "stance": 0.01,
+          "text": "Alpha echo four completes five eligible candidates in variant 0.",
+          "confidence": 0.94,
+          "revision_cue": 0.88
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_alpha_00",
+          "stance": -0.45,
+          "text": "Alpha rejects its origin and creates the handoff event in variant 0.",
+          "confidence": 0.98,
+          "revision_cue": 0.96
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_beta_00",
+          "stance": -0.18,
+          "text": "Beta echo three completes four eligible candidates after the handoff in variant 0.",
+          "confidence": 0.93,
+          "revision_cue": 0.9
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_gate_00",
+          "stance": -0.25,
+          "text": "An unrelated gate observation separates the handoff events in variant 0.",
+          "confidence": 0.76,
+          "revision_cue": 0.82
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_beta_00",
+          "stance": 0.49,
+          "text": "Beta accepts the opposite position and creates the second event in variant 0.",
+          "confidence": 0.97,
+          "revision_cue": 0.95
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_afterglow_a_00",
+          "stance": 0.27,
+          "text": "The first independent afterglow starts after the second event in sequential_braided_echo_handoff variant 0.",
+          "confidence": 0.74,
+          "revision_cue": 0.78
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_afterglow_b_00",
+          "stance": -0.19,
+          "text": "A second unrelated afterglow briefly crosses sequential_braided_echo_handoff variant 0.",
+          "confidence": 0.8,
+          "revision_cue": 0.77
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_afterglow_a_00",
+          "stance": 0.32,
+          "text": "The first afterglow returns without another event in sequential_braided_echo_handoff variant 0.",
+          "confidence": 0.82,
+          "revision_cue": 0.81
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 2
+      },
+      "note": "Sequential structure: braided alpha and beta histories hand off from a five-eligible event to a four-eligible event, followed by 3 unrelated post-event observations."
+    },
+    {
+      "case_id": "sequential_braided_echo_handoff_01",
+      "family": "sequential_braided_echo_handoff",
+      "evaluation_role": "sequential_stress",
+      "observations": [
+        {
+          "topic": "sequential_braided_echo_handoff_alpha_01",
+          "stance": 0.85,
+          "text": "Alpha opens the braided history with measured support in variant 1.",
+          "confidence": 0.96,
+          "revision_cue": 0.91
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_beta_01",
+          "stance": -0.83,
+          "text": "Beta opens a separate braided history with measured rejection in variant 1.",
+          "confidence": 0.95,
+          "revision_cue": 0.91
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_alpha_01",
+          "stance": 0.65,
+          "text": "Alpha echo one remains compatible with its origin in variant 1.",
+          "confidence": 0.92,
+          "revision_cue": 0.87
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_braid_01",
+          "stance": 0.16,
+          "text": "A shared braid marker contributes unrelated context in variant 1.",
+          "confidence": 0.78,
+          "revision_cue": 0.81
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_beta_01",
+          "stance": -0.62,
+          "text": "Beta echo one remains compatible with its origin in variant 1.",
+          "confidence": 0.91,
+          "revision_cue": 0.88
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_alpha_01",
+          "stance": 0.43,
+          "text": "Alpha echo two weakens without revising in variant 1.",
+          "confidence": 0.93,
+          "revision_cue": 0.89
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_beta_01",
+          "stance": -0.39,
+          "text": "Beta echo two approaches neutrality without revising in variant 1.",
+          "confidence": 0.92,
+          "revision_cue": 0.87
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_alpha_01",
+          "stance": 0.2,
+          "text": "Alpha echo three remains below the event threshold in variant 1.",
+          "confidence": 0.9,
+          "revision_cue": 0.91
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_braid_01",
+          "stance": 0.21000000000000002,
+          "text": "The braid marker returns with bounded drift in variant 1.",
+          "confidence": 0.81,
+          "revision_cue": 0.83
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_alpha_01",
+          "stance": -0.02,
+          "text": "Alpha echo four completes five eligible candidates in variant 1.",
+          "confidence": 0.94,
+          "revision_cue": 0.89
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_alpha_01",
+          "stance": -0.48,
+          "text": "Alpha rejects its origin and creates the handoff event in variant 1.",
+          "confidence": 0.98,
+          "revision_cue": 0.96
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_beta_01",
+          "stance": -0.15,
+          "text": "Beta echo three completes four eligible candidates after the handoff in variant 1.",
+          "confidence": 0.93,
+          "revision_cue": 0.9
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_gate_01",
+          "stance": -0.23,
+          "text": "An unrelated gate observation separates the handoff events in variant 1.",
+          "confidence": 0.77,
+          "revision_cue": 0.82
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_beta_01",
+          "stance": 0.52,
+          "text": "Beta accepts the opposite position and creates the second event in variant 1.",
+          "confidence": 0.97,
+          "revision_cue": 0.96
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_afterglow_a_01",
+          "stance": 0.17,
+          "text": "An unrelated afterglow follows the second event in sequential_braided_echo_handoff variant 1.",
+          "confidence": 0.79,
+          "revision_cue": 0.72
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 2
+      },
+      "note": "Sequential structure: braided alpha and beta histories hand off from a five-eligible event to a four-eligible event, followed by 1 unrelated post-event observation."
+    },
+    {
+      "case_id": "sequential_braided_echo_handoff_02",
+      "family": "sequential_braided_echo_handoff",
+      "evaluation_role": "sequential_stress",
+      "observations": [
+        {
+          "topic": "sequential_braided_echo_handoff_alpha_02",
+          "stance": 0.89,
+          "text": "Alpha opens the braided history with measured support in variant 2.",
+          "confidence": 0.96,
+          "revision_cue": 0.92
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_beta_02",
+          "stance": -0.87,
+          "text": "Beta opens a separate braided history with measured rejection in variant 2.",
+          "confidence": 0.95,
+          "revision_cue": 0.92
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_alpha_02",
+          "stance": 0.7,
+          "text": "Alpha echo one remains compatible with its origin in variant 2.",
+          "confidence": 0.92,
+          "revision_cue": 0.87
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_braid_02",
+          "stance": 0.13999999999999999,
+          "text": "A shared braid marker contributes unrelated context in variant 2.",
+          "confidence": 0.78,
+          "revision_cue": 0.8200000000000001
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_beta_02",
+          "stance": -0.67,
+          "text": "Beta echo one remains compatible with its origin in variant 2.",
+          "confidence": 0.91,
+          "revision_cue": 0.88
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_alpha_02",
+          "stance": 0.49,
+          "text": "Alpha echo two weakens without revising in variant 2.",
+          "confidence": 0.93,
+          "revision_cue": 0.89
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_beta_02",
+          "stance": -0.45,
+          "text": "Beta echo two approaches neutrality without revising in variant 2.",
+          "confidence": 0.92,
+          "revision_cue": 0.88
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_alpha_02",
+          "stance": 0.26,
+          "text": "Alpha echo three remains below the event threshold in variant 2.",
+          "confidence": 0.9,
+          "revision_cue": 0.91
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_braid_02",
+          "stance": 0.19,
+          "text": "The braid marker returns with bounded drift in variant 2.",
+          "confidence": 0.81,
+          "revision_cue": 0.83
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_alpha_02",
+          "stance": 0.03,
+          "text": "Alpha echo four completes five eligible candidates in variant 2.",
+          "confidence": 0.94,
+          "revision_cue": 0.88
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_alpha_02",
+          "stance": -0.44,
+          "text": "Alpha rejects its origin and creates the handoff event in variant 2.",
+          "confidence": 0.98,
+          "revision_cue": 0.96
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_beta_02",
+          "stance": -0.2,
+          "text": "Beta echo three completes four eligible candidates after the handoff in variant 2.",
+          "confidence": 0.93,
+          "revision_cue": 0.9
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_gate_02",
+          "stance": -0.21,
+          "text": "An unrelated gate observation separates the handoff events in variant 2.",
+          "confidence": 0.78,
+          "revision_cue": 0.82
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_beta_02",
+          "stance": 0.48,
+          "text": "Beta accepts the opposite position and creates the second event in variant 2.",
+          "confidence": 0.97,
+          "revision_cue": 0.95
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_afterglow_a_02",
+          "stance": -0.21,
+          "text": "A separate afterglow opens after the second event in sequential_braided_echo_handoff variant 2.",
+          "confidence": 0.73,
+          "revision_cue": 0.77
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_afterglow_a_02",
+          "stance": -0.15,
+          "text": "The unrelated afterglow settles with bounded drift in sequential_braided_echo_handoff variant 2.",
+          "confidence": 0.8,
+          "revision_cue": 0.79
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 2
+      },
+      "note": "Sequential structure: braided alpha and beta histories hand off from a five-eligible event to a four-eligible event, followed by 2 unrelated post-event observations."
+    },
+    {
+      "case_id": "sequential_braided_echo_handoff_03",
+      "family": "sequential_braided_echo_handoff",
+      "evaluation_role": "sequential_stress",
+      "observations": [
+        {
+          "topic": "sequential_braided_echo_handoff_alpha_03",
+          "stance": 0.86,
+          "text": "Alpha opens the braided history with measured support in variant 3.",
+          "confidence": 0.96,
+          "revision_cue": 0.93
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_beta_03",
+          "stance": -0.84,
+          "text": "Beta opens a separate braided history with measured rejection in variant 3.",
+          "confidence": 0.95,
+          "revision_cue": 0.91
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_alpha_03",
+          "stance": 0.66,
+          "text": "Alpha echo one remains compatible with its origin in variant 3.",
+          "confidence": 0.92,
+          "revision_cue": 0.87
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_braid_03",
+          "stance": 0.12,
+          "text": "A shared braid marker contributes unrelated context in variant 3.",
+          "confidence": 0.78,
+          "revision_cue": 0.8300000000000001
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_beta_03",
+          "stance": -0.63,
+          "text": "Beta echo one remains compatible with its origin in variant 3.",
+          "confidence": 0.91,
+          "revision_cue": 0.88
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_alpha_03",
+          "stance": 0.45,
+          "text": "Alpha echo two weakens without revising in variant 3.",
+          "confidence": 0.93,
+          "revision_cue": 0.89
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_beta_03",
+          "stance": -0.41,
+          "text": "Beta echo two approaches neutrality without revising in variant 3.",
+          "confidence": 0.92,
+          "revision_cue": 0.89
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_alpha_03",
+          "stance": 0.22,
+          "text": "Alpha echo three remains below the event threshold in variant 3.",
+          "confidence": 0.9,
+          "revision_cue": 0.91
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_braid_03",
+          "stance": 0.17,
+          "text": "The braid marker returns with bounded drift in variant 3.",
+          "confidence": 0.81,
+          "revision_cue": 0.83
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_alpha_03",
+          "stance": -0.01,
+          "text": "Alpha echo four completes five eligible candidates in variant 3.",
+          "confidence": 0.94,
+          "revision_cue": 0.89
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_alpha_03",
+          "stance": -0.47,
+          "text": "Alpha rejects its origin and creates the handoff event in variant 3.",
+          "confidence": 0.98,
+          "revision_cue": 0.96
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_beta_03",
+          "stance": -0.17,
+          "text": "Beta echo three completes four eligible candidates after the handoff in variant 3.",
+          "confidence": 0.93,
+          "revision_cue": 0.9
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_gate_03",
+          "stance": -0.19,
+          "text": "An unrelated gate observation separates the handoff events in variant 3.",
+          "confidence": 0.79,
+          "revision_cue": 0.82
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_beta_03",
+          "stance": 0.51,
+          "text": "Beta accepts the opposite position and creates the second event in variant 3.",
+          "confidence": 0.97,
+          "revision_cue": 0.96
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_afterglow_a_03",
+          "stance": 0.33,
+          "text": "The first independent afterglow starts after the second event in sequential_braided_echo_handoff variant 3.",
+          "confidence": 0.73,
+          "revision_cue": 0.76
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_afterglow_b_03",
+          "stance": -0.16,
+          "text": "A second unrelated afterglow briefly crosses sequential_braided_echo_handoff variant 3.",
+          "confidence": 0.8,
+          "revision_cue": 0.77
+        },
+        {
+          "topic": "sequential_braided_echo_handoff_afterglow_a_03",
+          "stance": 0.38,
+          "text": "The first afterglow returns without another event in sequential_braided_echo_handoff variant 3.",
+          "confidence": 0.82,
+          "revision_cue": 0.81
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 2
+      },
+      "note": "Sequential structure: braided alpha and beta histories hand off from a five-eligible event to a four-eligible event, followed by 3 unrelated post-event observations."
+    },
+    {
+      "case_id": "sequential_beacon_anchor_swap_00",
+      "family": "sequential_beacon_anchor_swap",
+      "evaluation_role": "sequential_stress",
+      "observations": [
+        {
+          "topic": "sequential_beacon_anchor_swap_beacon_00",
+          "stance": 0.77,
+          "text": "A low-confidence beacon premise opens variant 0.",
+          "confidence": 0.41,
+          "revision_cue": 0.84
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_prism_00",
+          "stance": -0.16,
+          "text": "Prism context records an unrelated calibration in variant 0.",
+          "confidence": 0.79,
+          "revision_cue": 0.81
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_beacon_00",
+          "stance": 0.7,
+          "text": "A higher-confidence beacon reading refreshes the active anchor in variant 0.",
+          "confidence": 0.88,
+          "revision_cue": 0.86
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_tide_00",
+          "stance": 0.28,
+          "text": "Tide context adds an independent observation in variant 0.",
+          "confidence": 0.74,
+          "revision_cue": 0.83
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_beacon_00",
+          "stance": 0.49,
+          "text": "Beacon update one remains near the refreshed anchor in variant 0.",
+          "confidence": 0.91,
+          "revision_cue": 0.88
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_beacon_00",
+          "stance": 0.27,
+          "text": "Beacon update two stays below the first event boundary in variant 0.",
+          "confidence": 0.92,
+          "revision_cue": 0.89
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_amber_00",
+          "stance": -0.29,
+          "text": "Amber context contributes a separate checkpoint in variant 0.",
+          "confidence": 0.77,
+          "revision_cue": 0.8
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_beacon_00",
+          "stance": 0.04,
+          "text": "Beacon update three completes five eligible candidates in variant 0.",
+          "confidence": 0.9,
+          "revision_cue": 0.87
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_beacon_00",
+          "stance": -0.73,
+          "text": "The refreshed beacon reverses and creates event one in variant 0.",
+          "confidence": 0.97,
+          "revision_cue": 0.97
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_prism_00",
+          "stance": -0.1,
+          "text": "Prism context returns with bounded drift after event one in variant 0.",
+          "confidence": 0.82,
+          "revision_cue": 0.85
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_beacon_00",
+          "stance": -0.52,
+          "text": "The reversed beacon relaxes once without another event in variant 0.",
+          "confidence": 0.93,
+          "revision_cue": 0.88
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_beacon_00",
+          "stance": -0.3,
+          "text": "The reversed beacon relaxes twice while preserving its new anchor in variant 0.",
+          "confidence": 0.92,
+          "revision_cue": 0.9
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_beacon_00",
+          "stance": 0.66,
+          "text": "The beacon swaps polarity again and creates event two in variant 0.",
+          "confidence": 0.96,
+          "revision_cue": 0.95
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_afterglow_a_00",
+          "stance": 0.16,
+          "text": "An unrelated afterglow follows the second event in sequential_beacon_anchor_swap variant 0.",
+          "confidence": 0.79,
+          "revision_cue": 0.78
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 2
+      },
+      "note": "Sequential structure: a low-confidence premise is replaced by a stronger anchor before same-topic events with five and eight eligible candidates, followed by 1 unrelated post-event observation."
+    },
+    {
+      "case_id": "sequential_beacon_anchor_swap_01",
+      "family": "sequential_beacon_anchor_swap",
+      "evaluation_role": "sequential_stress",
+      "observations": [
+        {
+          "topic": "sequential_beacon_anchor_swap_beacon_01",
+          "stance": 0.74,
+          "text": "A low-confidence beacon premise opens variant 1.",
+          "confidence": 0.43,
+          "revision_cue": 0.85
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_prism_01",
+          "stance": -0.14,
+          "text": "Prism context records an unrelated calibration in variant 1.",
+          "confidence": 0.79,
+          "revision_cue": 0.81
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_beacon_01",
+          "stance": 0.67,
+          "text": "A higher-confidence beacon reading refreshes the active anchor in variant 1.",
+          "confidence": 0.87,
+          "revision_cue": 0.87
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_tide_01",
+          "stance": 0.26,
+          "text": "Tide context adds an independent observation in variant 1.",
+          "confidence": 0.75,
+          "revision_cue": 0.83
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_beacon_01",
+          "stance": 0.46,
+          "text": "Beacon update one remains near the refreshed anchor in variant 1.",
+          "confidence": 0.91,
+          "revision_cue": 0.88
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_beacon_01",
+          "stance": 0.23,
+          "text": "Beacon update two stays below the first event boundary in variant 1.",
+          "confidence": 0.92,
+          "revision_cue": 0.9
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_amber_01",
+          "stance": -0.27999999999999997,
+          "text": "Amber context contributes a separate checkpoint in variant 1.",
+          "confidence": 0.77,
+          "revision_cue": 0.81
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_beacon_01",
+          "stance": 0.01,
+          "text": "Beacon update three completes five eligible candidates in variant 1.",
+          "confidence": 0.9,
+          "revision_cue": 0.87
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_beacon_01",
+          "stance": -0.76,
+          "text": "The refreshed beacon reverses and creates event one in variant 1.",
+          "confidence": 0.97,
+          "revision_cue": 0.96
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_prism_01",
+          "stance": -0.08,
+          "text": "Prism context returns with bounded drift after event one in variant 1.",
+          "confidence": 0.82,
+          "revision_cue": 0.85
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_beacon_01",
+          "stance": -0.55,
+          "text": "The reversed beacon relaxes once without another event in variant 1.",
+          "confidence": 0.93,
+          "revision_cue": 0.88
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_beacon_01",
+          "stance": -0.33,
+          "text": "The reversed beacon relaxes twice while preserving its new anchor in variant 1.",
+          "confidence": 0.92,
+          "revision_cue": 0.9
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_beacon_01",
+          "stance": 0.63,
+          "text": "The beacon swaps polarity again and creates event two in variant 1.",
+          "confidence": 0.96,
+          "revision_cue": 0.96
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_afterglow_a_01",
+          "stance": -0.22,
+          "text": "A separate afterglow opens after the second event in sequential_beacon_anchor_swap variant 1.",
+          "confidence": 0.73,
+          "revision_cue": 0.76
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_afterglow_a_01",
+          "stance": -0.16,
+          "text": "The unrelated afterglow settles with bounded drift in sequential_beacon_anchor_swap variant 1.",
+          "confidence": 0.8,
+          "revision_cue": 0.79
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 2
+      },
+      "note": "Sequential structure: a low-confidence premise is replaced by a stronger anchor before same-topic events with five and eight eligible candidates, followed by 2 unrelated post-event observations."
+    },
+    {
+      "case_id": "sequential_beacon_anchor_swap_02",
+      "family": "sequential_beacon_anchor_swap",
+      "evaluation_role": "sequential_stress",
+      "observations": [
+        {
+          "topic": "sequential_beacon_anchor_swap_beacon_02",
+          "stance": 0.79,
+          "text": "A low-confidence beacon premise opens variant 2.",
+          "confidence": 0.4,
+          "revision_cue": 0.86
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_prism_02",
+          "stance": -0.12,
+          "text": "Prism context records an unrelated calibration in variant 2.",
+          "confidence": 0.79,
+          "revision_cue": 0.81
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_beacon_02",
+          "stance": 0.72,
+          "text": "A higher-confidence beacon reading refreshes the active anchor in variant 2.",
+          "confidence": 0.89,
+          "revision_cue": 0.86
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_tide_02",
+          "stance": 0.24000000000000002,
+          "text": "Tide context adds an independent observation in variant 2.",
+          "confidence": 0.76,
+          "revision_cue": 0.83
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_beacon_02",
+          "stance": 0.51,
+          "text": "Beacon update one remains near the refreshed anchor in variant 2.",
+          "confidence": 0.91,
+          "revision_cue": 0.88
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_beacon_02",
+          "stance": 0.29,
+          "text": "Beacon update two stays below the first event boundary in variant 2.",
+          "confidence": 0.92,
+          "revision_cue": 0.89
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_amber_02",
+          "stance": -0.26999999999999996,
+          "text": "Amber context contributes a separate checkpoint in variant 2.",
+          "confidence": 0.77,
+          "revision_cue": 0.8200000000000001
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_beacon_02",
+          "stance": 0.06,
+          "text": "Beacon update three completes five eligible candidates in variant 2.",
+          "confidence": 0.9,
+          "revision_cue": 0.87
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_beacon_02",
+          "stance": -0.71,
+          "text": "The refreshed beacon reverses and creates event one in variant 2.",
+          "confidence": 0.97,
+          "revision_cue": 0.97
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_prism_02",
+          "stance": -0.060000000000000005,
+          "text": "Prism context returns with bounded drift after event one in variant 2.",
+          "confidence": 0.82,
+          "revision_cue": 0.85
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_beacon_02",
+          "stance": -0.5,
+          "text": "The reversed beacon relaxes once without another event in variant 2.",
+          "confidence": 0.93,
+          "revision_cue": 0.88
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_beacon_02",
+          "stance": -0.28,
+          "text": "The reversed beacon relaxes twice while preserving its new anchor in variant 2.",
+          "confidence": 0.92,
+          "revision_cue": 0.9
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_beacon_02",
+          "stance": 0.68,
+          "text": "The beacon swaps polarity again and creates event two in variant 2.",
+          "confidence": 0.96,
+          "revision_cue": 0.95
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_afterglow_a_02",
+          "stance": 0.32,
+          "text": "The first independent afterglow starts after the second event in sequential_beacon_anchor_swap variant 2.",
+          "confidence": 0.73,
+          "revision_cue": 0.79
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_afterglow_b_02",
+          "stance": -0.17,
+          "text": "A second unrelated afterglow briefly crosses sequential_beacon_anchor_swap variant 2.",
+          "confidence": 0.8,
+          "revision_cue": 0.77
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_afterglow_a_02",
+          "stance": 0.37,
+          "text": "The first afterglow returns without another event in sequential_beacon_anchor_swap variant 2.",
+          "confidence": 0.82,
+          "revision_cue": 0.8
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 2
+      },
+      "note": "Sequential structure: a low-confidence premise is replaced by a stronger anchor before same-topic events with five and eight eligible candidates, followed by 3 unrelated post-event observations."
+    },
+    {
+      "case_id": "sequential_beacon_anchor_swap_03",
+      "family": "sequential_beacon_anchor_swap",
+      "evaluation_role": "sequential_stress",
+      "observations": [
+        {
+          "topic": "sequential_beacon_anchor_swap_beacon_03",
+          "stance": 0.76,
+          "text": "A low-confidence beacon premise opens variant 3.",
+          "confidence": 0.42,
+          "revision_cue": 0.87
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_prism_03",
+          "stance": -0.1,
+          "text": "Prism context records an unrelated calibration in variant 3.",
+          "confidence": 0.79,
+          "revision_cue": 0.81
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_beacon_03",
+          "stance": 0.69,
+          "text": "A higher-confidence beacon reading refreshes the active anchor in variant 3.",
+          "confidence": 0.86,
+          "revision_cue": 0.87
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_tide_03",
+          "stance": 0.22000000000000003,
+          "text": "Tide context adds an independent observation in variant 3.",
+          "confidence": 0.77,
+          "revision_cue": 0.83
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_beacon_03",
+          "stance": 0.48,
+          "text": "Beacon update one remains near the refreshed anchor in variant 3.",
+          "confidence": 0.91,
+          "revision_cue": 0.88
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_beacon_03",
+          "stance": 0.25,
+          "text": "Beacon update two stays below the first event boundary in variant 3.",
+          "confidence": 0.92,
+          "revision_cue": 0.9
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_amber_03",
+          "stance": -0.26,
+          "text": "Amber context contributes a separate checkpoint in variant 3.",
+          "confidence": 0.77,
+          "revision_cue": 0.8300000000000001
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_beacon_03",
+          "stance": 0.02,
+          "text": "Beacon update three completes five eligible candidates in variant 3.",
+          "confidence": 0.9,
+          "revision_cue": 0.87
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_beacon_03",
+          "stance": -0.74,
+          "text": "The refreshed beacon reverses and creates event one in variant 3.",
+          "confidence": 0.97,
+          "revision_cue": 0.96
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_prism_03",
+          "stance": -0.04000000000000001,
+          "text": "Prism context returns with bounded drift after event one in variant 3.",
+          "confidence": 0.82,
+          "revision_cue": 0.85
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_beacon_03",
+          "stance": -0.53,
+          "text": "The reversed beacon relaxes once without another event in variant 3.",
+          "confidence": 0.93,
+          "revision_cue": 0.88
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_beacon_03",
+          "stance": -0.31,
+          "text": "The reversed beacon relaxes twice while preserving its new anchor in variant 3.",
+          "confidence": 0.92,
+          "revision_cue": 0.9
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_beacon_03",
+          "stance": 0.65,
+          "text": "The beacon swaps polarity again and creates event two in variant 3.",
+          "confidence": 0.96,
+          "revision_cue": 0.96
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_afterglow_a_03",
+          "stance": -0.18,
+          "text": "A separate afterglow opens after the second event in sequential_beacon_anchor_swap variant 3.",
+          "confidence": 0.77,
+          "revision_cue": 0.76
+        },
+        {
+          "topic": "sequential_beacon_anchor_swap_afterglow_a_03",
+          "stance": -0.12,
+          "text": "The unrelated afterglow settles with bounded drift in sequential_beacon_anchor_swap variant 3.",
+          "confidence": 0.79,
+          "revision_cue": 0.78
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 2
+      },
+      "note": "Sequential structure: a low-confidence premise is replaced by a stronger anchor before same-topic events with five and eight eligible candidates, followed by 2 unrelated post-event observations."
+    }
+  ]
+}
