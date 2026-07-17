@@ -1,0 +1,21 @@
+{
+  "artifacts": {
+    "mirror.html": {
+      "bytes": 222995,
+      "sha256": "5cc1c88d4b30fa28e7f2c8541f0282f985a7b9a4f3b7fb504d7866fa299fbb60"
+    },
+    "trace.json": {
+      "bytes": 98494,
+      "sha256": "4bdbbf04969f5ace3d624e36900197d3d923e805795e274e3b3d01dcf1ce7cbc"
+    }
+  },
+  "schema_version": "ebrt-instrumentation-demo-manifest-v0.2",
+  "source_session_fingerprint": "12f03a01b3634578518b511d6297242ef79176e030aacd857732284242da273f",
+  "sources": {
+    "ebrt_monolith_v0_1.py": "b1702f2868839d989cc3a9321d227436a23c3dad6cc86483edee9d5dbab3a529",
+    "instrumentation_ebrt_v0_2.py": "663b0e446e07d8c24be228f3e5e56a6a53665bd3a637979bf285597f7d0bbb7d",
+    "render_instrumentation_v0_2.py": "1011835d0829e951e30f421dc14b6c04204bbcce2708e15350270e98be04f7e2",
+    "semantic_adapter_v0_2.py": "836b7afadabb2e2e5b6ea53afe2795e529ab20193b00d83af9a5624d4f32d2ca"
+  },
+  "trace_fingerprint": "6a5bb5bdd1a6d6c970a559b653e9107394fc940951653fa3addada50c2c0b35c"
+}

@@ -35,6 +35,8 @@ SCHEMA_VERSION = "ebrt-instrumentation-benchmark-v0.2"
 EXPECTED_TRACE_SCHEMA = "ebrt-instrumentation-v0.2"
 DEFAULT_INSTRUMENTATION = Path(__file__).with_name("instrumentation_ebrt_v0_2.py")
 DEFAULT_MONOLITH = Path(__file__).with_name("ebrt_monolith_v0_1.py")
+DEFAULT_SEMANTIC_ADAPTER = Path(__file__).with_name("semantic_adapter_v0_2.py")
+V01_BENCHMARK_PATH = Path(v01.__file__).resolve()
 DEFAULT_OUTPUT_DIR = Path("artifacts/benchmark_instrumentation_v0_2")
 BOOTSTRAP_SEED = 20_260_718
 EPSILON = 1e-12
@@ -45,8 +47,8 @@ CLAIM_BOUNDARY = (
     "This benchmark measures a structured synthetic mechanism, not natural-language reasoning quality.",
     "Event-local mirrors are matched counterfactual execution traces, not private chain-of-thought or model introspection.",
     "Turn angle and curvature are coordinate-sensitive geometric proxies; lower or higher values are not inherently better.",
-    "Semantic attention and offline control leverage answer different questions: why a premise is implicated versus where a control most changes the recurrent state.",
-    "Candidate leverage is a local offline intervention diagnostic, not proof of causal optimality under another model or task.",
+    "Semantic attention and offline target-aligned source-projection leverage answer different questions: why a premise is implicated versus how one predefined local control direction changes the event-source belief projection.",
+    "Candidate control_leverage is a centered finite difference along one topic-aligned control direction; it is not full-state controllability, an objective gradient, or proof of causal optimality.",
     "Outcome and leakage associations are descriptive on the fixed 48-case suite and do not establish external validity or causality.",
     "Paired seeds control the toy generator initialization but do not close case-selection, representation, or future hosted-model nondeterminism.",
 )
@@ -278,7 +280,7 @@ def spearman_correlation(left: Sequence[float], right: Sequence[float]) -> float
 def candidate_alignment_metrics(
     candidates: Sequence[Mapping[str, Any]], selected_steps: Sequence[int]
 ) -> dict[str, Any]:
-    """Compare semantic attention with offline candidate control leverage."""
+    """Compare semantics with target-aligned source-projection leverage."""
 
     clean = [
         item
@@ -493,6 +495,32 @@ def _group_mean_difference(
     return statistics.fmean(positive) - statistics.fmean(negative)
 
 
+def _field_mean(rows: Sequence[Mapping[str, Any]], field: str) -> float | None:
+    values = _numeric(rows, field)
+    return statistics.fmean(values) if values else None
+
+
+def _seed_invariant_by_case_source(
+    rows: Sequence[Mapping[str, Any]], field: str
+) -> bool:
+    """Check whether a metric repeats exactly across seeds per case/event source."""
+
+    grouped: dict[tuple[str, int], list[float]] = defaultdict(list)
+    for row in rows:
+        value = row.get(field)
+        if value is None:
+            continue
+        try:
+            number = float(value)
+        except (TypeError, ValueError):
+            continue
+        if math.isfinite(number):
+            grouped[(str(row["case_id"]), int(row["source_step"]))].append(number)
+    return bool(grouped) and all(
+        max(values) - min(values) <= EPSILON for values in grouped.values()
+    )
+
+
 def build_outcome_associations(
     event_rows: Sequence[Mapping[str, Any]],
     *,
@@ -635,14 +663,47 @@ def summarize_measurements(
         "target_gain_per_backward_call",
     )
     candidate_fields = ("semantic_attention", "control_leverage")
+    alignment_fields = (
+        "attention_leverage_spearman",
+        "selected_is_max_leverage",
+        "selected_leverage_regret",
+        "semantic_gold_is_max_leverage",
+        "selected_hits_semantic_gold",
+    )
     informative_event_rows = [
         row for row in event_rows if int(row.get("candidate_count", 0)) > 1
     ]
+    alignment_bootstrap: dict[str, dict[str, Any]] = {}
+    for index, field in enumerate(alignment_fields):
+
+        def mean_statistic(
+            rows: Sequence[Mapping[str, Any]], field: str = field
+        ) -> float | None:
+            return _field_mean(rows, field)
+
+        alignment_bootstrap[field] = case_cluster_bootstrap(
+            informative_event_rows,
+            mean_statistic,
+            seed=BOOTSTRAP_SEED + 300 + index,
+            resamples=bootstrap_resamples,
+        )
     return {
         "counts": {
             "trial_rows": len(trial_rows),
             "event_rows": len(event_rows),
             "multi_candidate_event_rows": len(informative_event_rows),
+            "multi_candidate_cases": len(
+                {str(row["case_id"]) for row in informative_event_rows}
+            ),
+            "multi_candidate_case_sources": len(
+                {
+                    (str(row["case_id"]), int(row["source_step"]))
+                    for row in informative_event_rows
+                }
+            ),
+            "multi_candidate_families": len(
+                {str(row["family"]) for row in informative_event_rows}
+            ),
             "candidate_rows": len(candidate_rows),
             "cases": len({str(row["case_id"]) for row in trial_rows}),
             "model_seeds": len({int(row["model_seed"]) for row in trial_rows}),
@@ -655,14 +716,17 @@ def summarize_measurements(
         },
         "informative_alignment_metrics": {
             field: _distribution(_numeric(informative_event_rows, field))
-            for field in (
-                "attention_leverage_spearman",
-                "selected_is_max_leverage",
-                "selected_leverage_regret",
-                "semantic_gold_is_max_leverage",
-                "selected_hits_semantic_gold",
-            )
+            for field in alignment_fields
         },
+        "informative_alignment_case_cluster_bootstrap": alignment_bootstrap,
+        "informative_alignment_seed_invariant_by_case_source": {
+            field: _seed_invariant_by_case_source(informative_event_rows, field)
+            for field in alignment_fields
+        },
+        "candidate_control_leverage_definition": (
+            "Centered finite difference of the target-aligned event-source belief "
+            "projection along one normalized topic-aligned control direction."
+        ),
         "candidate_metrics": {
             field: _distribution(_numeric(candidate_rows, field))
             for field in candidate_fields
@@ -688,6 +752,10 @@ def render_report(results: Mapping[str, Any]) -> str:
     counts = summary["counts"]
     event_metrics = summary["event_metrics"]
     informative_alignment = summary["informative_alignment_metrics"]
+    alignment_bootstrap = summary["informative_alignment_case_cluster_bootstrap"]
+    alignment_seed_invariant = summary[
+        "informative_alignment_seed_invariant_by_case_source"
+    ]
     trial_metrics = summary["trial_metrics"]
     lines = [
         "# EBRT v0.2 instrumentation benchmark",
@@ -698,9 +766,15 @@ def render_report(results: Mapping[str, Any]) -> str:
         f"- Trials: {counts['trial_rows']} across {counts['cases']} cases and {counts['model_seeds']} paired seeds",
         f"- Instrumented events: {counts['event_rows']}",
         f"- Multi-candidate events: {counts['multi_candidate_event_rows']}",
+        (
+            "- Multi-candidate support: "
+            f"{counts['multi_candidate_cases']} case clusters, "
+            f"{counts['multi_candidate_case_sources']} case-source fixtures, "
+            f"{counts['multi_candidate_families']} families"
+        ),
         f"- Offline candidate probes: {counts['candidate_rows']}",
         "",
-        "The event-local mirror is the attribution baseline. Curvature and attention/leverage",
+        "The event-local mirror is the attribution baseline. Curvature and semantic/source-projection-leverage",
         "alignment are exploratory diagnostics and are not standalone quality measures.",
         "",
         "## Core measurements",
@@ -735,9 +809,12 @@ def render_report(results: Mapping[str, Any]) -> str:
             "",
             "Single-candidate events make selection agreement mechanical, so the",
             "multi-candidate column is the informative routing comparison.",
+            "Here `control_leverage` is only the target-aligned event-source belief",
+            "projection finite difference along one predefined topic-aligned control",
+            "direction; it is not an objective gradient or full controllability.",
             "",
-            "| Metric | All events (mean; n) | Multi-candidate only (mean; n) |",
-            "| --- | ---: | ---: |",
+            "| Metric | All events (mean; n) | Multi-candidate only (mean; n) | Case-cluster 95% CI |",
+            "| --- | ---: | ---: | ---: |",
         ]
     )
     for field in (
@@ -749,12 +826,22 @@ def render_report(results: Mapping[str, Any]) -> str:
     ):
         all_metric = event_metrics[field]
         informative_metric = informative_alignment[field]
+        bootstrap = alignment_bootstrap[field]
         lines.append(
             f"| `{field}` | {_format_number(all_metric['mean'])}; {all_metric['n']} | "
-            f"{_format_number(informative_metric['mean'])}; {informative_metric['n']} |"
+            f"{_format_number(informative_metric['mean'])}; {informative_metric['n']} | "
+            f"[{_format_number(bootstrap['ci_low'])}, {_format_number(bootstrap['ci_high'])}] |"
         )
     lines.extend(
         [
+            "",
+            (
+                "All five multi-candidate alignment metrics were seed-invariant within "
+                "each case-source fixture. The 512 event rows therefore do not represent "
+                "512 independent routing situations."
+                if all(alignment_seed_invariant.values())
+                else "At least one alignment metric varied across seeds within a fixture."
+            ),
             "",
             "## Session outcomes",
             "",
@@ -1363,6 +1450,8 @@ def _source_manifest(
     mode: str,
     monolith_path: Path,
     instrumentation_path: Path,
+    semantic_adapter_path: Path,
+    v01_benchmark_path: Path,
     fixture_sha: str,
     model_seeds: Sequence[int],
     revision_steps: int,
@@ -1377,6 +1466,10 @@ def _source_manifest(
             "monolith_sha256": _sha256(monolith_path),
             "instrumentation_file": instrumentation_path.name,
             "instrumentation_sha256": _sha256(instrumentation_path),
+            "semantic_adapter_file": semantic_adapter_path.name,
+            "semantic_adapter_sha256": _sha256(semantic_adapter_path),
+            "v01_benchmark_file": v01_benchmark_path.name,
+            "v01_benchmark_sha256": _sha256(v01_benchmark_path),
             "benchmark_file": benchmark_path.name,
             "benchmark_sha256": _sha256(benchmark_path),
             "fixture_sha256": fixture_sha,
@@ -1397,6 +1490,10 @@ def _source_manifest(
             "candidate_control_leverage": True,
             "candidate_control_leverage_method": (
                 "centered_finite_difference_topic_aligned_control"
+            ),
+            "candidate_control_leverage_definition": (
+                "target_aligned_event_source_belief_projection_derivative_"
+                "along_one_normalized_topic_aligned_control_direction"
             ),
             "candidate_control_leverage_epsilon": LEVERAGE_EPSILON,
             "geometry_epsilon": GEOMETRY_EPSILON,
@@ -1423,16 +1520,17 @@ def run_benchmark(
         raise ValueError(mode)
     instrumentation_path = instrumentation_path.resolve()
     monolith_path = monolith_path.resolve()
+    semantic_adapter_path = instrumentation_path.with_name(
+        DEFAULT_SEMANTIC_ADAPTER.name
+    ).resolve()
+    v01_benchmark_path = V01_BENCHMARK_PATH.resolve()
     monolith_sha_before = v01._assert_monolith_sha(monolith_path)
     # Install the canonical module name before importing the instrumentation layer.
     base_module = _load_module(monolith_path, "ebrt_monolith_v0_1")
     instrumentation = _load_module(
         instrumentation_path, "instrumentation_ebrt_v0_2_benchmark"
     )
-    adapter_module = _load_module(
-        instrumentation_path.with_name("semantic_adapter_v0_2.py"),
-        "semantic_adapter_v0_2",
-    )
+    adapter_module = _load_module(semantic_adapter_path, "semantic_adapter_v0_2")
     adapter_provenance = adapter_module.StructuredOracleAdapter().provenance.to_dict()
     cases = v01.build_correctness_cases()
     fixture_sha = hashlib.sha256(
@@ -1485,6 +1583,8 @@ def run_benchmark(
         mode=mode,
         monolith_path=monolith_path,
         instrumentation_path=instrumentation_path,
+        semantic_adapter_path=semantic_adapter_path,
+        v01_benchmark_path=v01_benchmark_path,
         fixture_sha=fixture_sha,
         model_seeds=model_seeds,
         revision_steps=resolved_steps,
@@ -1597,8 +1697,14 @@ def run_self_tests(
 
     instrumentation_path = instrumentation_path.resolve()
     monolith_path = monolith_path.resolve()
+    semantic_adapter_path = instrumentation_path.with_name(
+        DEFAULT_SEMANTIC_ADAPTER.name
+    ).resolve()
+    v01_benchmark_path = V01_BENCHMARK_PATH.resolve()
     monolith_sha_before = v01._assert_monolith_sha(monolith_path)
     instrumentation_sha_before = _sha256(instrumentation_path)
+    semantic_adapter_sha_before = _sha256(semantic_adapter_path)
+    v01_benchmark_sha_before = _sha256(v01_benchmark_path)
     base_module = _load_module(monolith_path, "ebrt_monolith_v0_1")
     instrumentation = _load_module(
         instrumentation_path, "instrumentation_ebrt_v0_2_benchmark"
@@ -1606,10 +1712,7 @@ def run_self_tests(
     instrumentation_report = instrumentation.run_self_tests()
     if instrumentation_report.get("status") != "PASS":
         raise AssertionError("instrumentation core self-test failed")
-    adapter_module = _load_module(
-        instrumentation_path.with_name("semantic_adapter_v0_2.py"),
-        "semantic_adapter_v0_2",
-    )
+    adapter_module = _load_module(semantic_adapter_path, "semantic_adapter_v0_2")
     provenance = adapter_module.StructuredOracleAdapter().provenance.to_dict()
     cases = v01.build_correctness_cases()
     by_id = {case.case_id: case for case in cases}
@@ -1723,6 +1826,8 @@ def run_self_tests(
         mode="self-test",
         monolith_path=monolith_path,
         instrumentation_path=instrumentation_path,
+        semantic_adapter_path=semantic_adapter_path,
+        v01_benchmark_path=v01_benchmark_path,
         fixture_sha=fixture_sha,
         model_seeds=(7,),
         revision_steps=4,
@@ -1761,12 +1866,18 @@ def run_self_tests(
 
     monolith_sha_after = v01._assert_monolith_sha(monolith_path)
     instrumentation_sha_after = _sha256(instrumentation_path)
+    semantic_adapter_sha_after = _sha256(semantic_adapter_path)
+    v01_benchmark_sha_after = _sha256(v01_benchmark_path)
     if monolith_sha_before != monolith_sha_after:
         raise AssertionError("monolith changed during v0.2 benchmark self-test")
     if instrumentation_sha_before != instrumentation_sha_after:
         raise AssertionError(
             "instrumentation source changed during benchmark self-test"
         )
+    if semantic_adapter_sha_before != semantic_adapter_sha_after:
+        raise AssertionError("semantic adapter changed during benchmark self-test")
+    if v01_benchmark_sha_before != v01_benchmark_sha_after:
+        raise AssertionError("v0.1 benchmark changed during v0.2 self-test")
     return {
         "status": "PASS",
         "schema_version": SCHEMA_VERSION,
@@ -1777,6 +1888,8 @@ def run_self_tests(
         "candidate_count": len(candidate_rows),
         "monolith_sha256": monolith_sha_after,
         "instrumentation_sha256": instrumentation_sha_after,
+        "semantic_adapter_sha256": semantic_adapter_sha_after,
+        "v01_benchmark_sha256": v01_benchmark_sha_after,
         "checks": [
             "geometry straight/turn/reversal/zero-speed fixtures",
             "translation and orthogonal-rotation invariance",

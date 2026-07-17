@@ -904,9 +904,9 @@ def _candidate_scatter(
             points.append((step, semantic, candidate_leverage, selected))
     if not points:
         return (
-            '<div class="empty-panel compact"><strong>Semantic score × control leverage</strong><br>'
+            '<div class="empty-panel compact"><strong>Semantic score × source-projection leverage</strong><br>'
             "No candidate has both supplied values. The renderer does not infer "
-            "control leverage from unrelated aggregate gains.</div>",
+            "event-source projection leverage from unrelated aggregate gains.</div>",
             rows,
         )
     width, height = 520, 286
@@ -935,10 +935,10 @@ def _candidate_scatter(
 
     pieces = [
         f'<svg class="chart scatter" viewBox="0 0 {width} {height}" '
-        'role="img" aria-label="Candidate semantic score versus control leverage">',
-        "<title>Candidate semantic score versus control leverage</title>",
+        'role="img" aria-label="Candidate semantic score versus source-projection leverage">',
+        "<title>Candidate semantic score versus source-projection leverage</title>",
         f'<rect width="{width}" height="{height}" rx="8" fill="{COLOR["surface"]}"/>',
-        f'<text x="{left}" y="23" class="chart-title">Semantic score × control leverage</text>',
+        f'<text x="{left}" y="23" class="chart-title">Semantic score × source-projection leverage</text>',
     ]
     for index in range(5):
         fraction = index / 4
@@ -975,7 +975,7 @@ def _candidate_scatter(
             'text-anchor="middle">semantic candidate score</text>',
             f'<text x="15" y="{top + plot_height / 2}" class="axis-label" '
             f'text-anchor="middle" transform="rotate(-90 15 {top + plot_height / 2})">'
-            "control leverage</text>",
+            "source-projection leverage</text>",
             "</svg>",
         ]
     )
@@ -989,7 +989,7 @@ def _candidate_table(rows: Sequence[Mapping[str, Any]]) -> str:
         "step",
         "semantic",
         "semantic field",
-        "control leverage",
+        "source-projection leverage",
         "topic similarity",
         "contradiction",
         "recency",
@@ -1515,7 +1515,7 @@ def render_trace_html(
       <div>
         <h1>{safe_title}</h1>
         <p class="lede">A descriptive mirror of global trajectory geometry and event-local
-        intervention evidence. It keeps semantic candidate preference, control leverage,
+        intervention evidence. It keeps semantic candidate preference, source-projection leverage,
         replay propagation, and revision policy visibly separate.</p>
       </div>
       <button class="download" id="download-trace" type="button">Download raw trace JSON</button>
@@ -1766,7 +1766,7 @@ def run_self_test() -> dict[str, Any]:
         "Turn angle",
         "Per-event local mirror separation",
         "propagation ‖Δh‖ (later revisions suppressed)",
-        "Semantic score × control leverage",
+        "Semantic score × source-projection leverage",
         "accepted · rollback to best checkpoint",
         "Download raw trace JSON",
         'id="ebrt-trace-data"',
@@ -1801,7 +1801,7 @@ def run_self_test() -> dict[str, Any]:
             "global baseline/final mirror separation",
             "speed and turn-angle geometry",
             "event markers and local mirror separation",
-            "semantic-score versus control-leverage candidates",
+            "semantic-score versus source-projection-leverage candidates",
             "source-keyed sequential event/mirror joining",
             "route, replay, acceptance and rollback details",
             "safe embedded JSON round-trip and raw download payload",

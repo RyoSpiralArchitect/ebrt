@@ -5,7 +5,7 @@ This module is an observer, not a replacement reasoning implementation.  It
 subclasses the SHA-pinned v0.1 engine, records the inputs and outputs of existing
 private hooks, and builds exact event-local mirrors from ``RevisionRecord``.
 The committed execution path, selected route, controls, states, and counters are
-left unchanged.  Optional control-leverage probes run on a separate cloned
+left unchanged. Optional source-projection leverage probes run on a separate cloned
 diagnostic engine and are reported outside execution counters.
 """
 
@@ -598,6 +598,11 @@ class InstrumentedEventDrivenBackwardReasoner(frozen.EventDrivenBackwardReasoner
             "candidate_control_leverage": {
                 "enabled": False,
                 "method": None,
+                "metric": "target_aligned_source_belief_projection_derivative",
+                "definition": (
+                    "Centered finite difference along one normalized topic-aligned "
+                    "control direction at the event source."
+                ),
                 "epsilon": None,
                 "candidates": [],
             },
@@ -625,7 +630,7 @@ class InstrumentedEventDrivenBackwardReasoner(frozen.EventDrivenBackwardReasoner
                 "Confidence and semantic fields are structured inputs, not model-discovered uncertainty.",
                 "Normalized acceleration and turn angle are exploratory signals, not reasoning-quality metrics.",
                 "Event-local mirrors isolate the current control delta; global baseline deltas do not attribute later events.",
-                "Diagnostic control-leverage probes do not alter runtime routing or committed execution.",
+                "Diagnostic source-projection leverage probes do not alter runtime routing or committed execution.",
                 "No private chain-of-thought or hosted-model hidden state is observed.",
             ],
         }
@@ -821,13 +826,20 @@ class InstrumentedEventDrivenBackwardReasoner(frozen.EventDrivenBackwardReasoner
         return {
             "enabled": True,
             "method": "centered_finite_difference_topic_aligned_control",
+            "metric": "target_aligned_source_belief_projection_derivative",
+            "definition": (
+                "Centered finite difference along one normalized topic-aligned "
+                "control direction at the event source."
+            ),
             "epsilon": epsilon,
             "candidates": rows,
             "diagnostic_generator_step_calls": diagnostic.generator.step_call_count,
             "diagnostic_core_hash": diagnostic.generator.frozen_hash(),
             "execution_counter_neutral": True,
             "interpretation": (
-                "Local sensitivity only; it is not a runtime route or an independent quality metric."
+                "One-direction event-source projection sensitivity only; it is not an "
+                "objective gradient, full-state controllability, runtime route, or "
+                "independent quality metric."
             ),
         }
 
@@ -1047,7 +1059,7 @@ def run_self_tests() -> dict[str, Any]:
             "global delta reconstruction",
             "geometry straight/turn/reversal/zero-speed/invariance fixtures",
             "deep optimizer call accounting",
-            "separate-engine candidate control-leverage neutrality",
+            "separate-engine candidate source-projection leverage neutrality",
             "deterministic trace fingerprint",
             "versioned structured-oracle provenance",
         ],
