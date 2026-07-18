@@ -17,8 +17,15 @@ belief projection.
 The purpose is to discover stronger routers, replay policies, and revision
 objectives—not merely to attach an explanation after execution.
 
+EBRT v0.3 prospectively implemented the resulting dual-route hypothesis under
+a frozen five-arm, one-shot holdout protocol. Attempt 1 terminated on a
+predeclared matched/native replay-invariance assertion, before a validated
+result bundle was written. That terminal result reveals that the
+trajectory-anchor loss horizon changed when one variable also set the physical
+replay start; it does not rank the dual and control arms on quality.
+
 > [!IMPORTANT]
-> v0.1/v0.2 are **not** a Transformer implementation, a GPT latent-state editor, or
+> v0.1-v0.3 are **not** a Transformer implementation, a GPT latent-state editor, or
 > evidence of improved language-model accuracy. Topic, stance, and revision
 > targets remain structured inputs in the committed harness. v0.2 exposes an
 > adapter boundary, but meaningful GPT-5.6 integration is a later milestone,
@@ -49,12 +56,18 @@ semantic_adapter_v0_2.py      versioned semantic-input boundary and provenance
 instrumentation_ebrt_v0_2.py  event-local mirrors, geometry, and leverage probes
 benchmark_instrumentation_v0_2.py v0.2 measurement and discovery benchmark
 render_instrumentation_v0_2.py dependency-free mirror HTML/SVG renderer
+dual_route_policy_v0_3.py     frozen five-arm dual-route policy candidate
+benchmark_dual_route_v0_3.py preregistered matched/holdout runner
+policy_lock_v0_3.json         frozen policy, endpoint, fixture, and runtime lock
+fixtures/dual_route_v0_3_*.json DEV, holdout, and sequential case families
 docs/RND_BENCHMARK_V0_1.md    protocol, results, limits, and claim ledger
 docs/RND_INSTRUMENTATION_V0_2.md measurement contract and algorithm findings
+docs/RND_DUAL_ROUTE_V0_3.md   terminal invariant result and v0.3.1 direction
 artifacts/benchmark_v0_1/     committed machine-readable benchmark evidence
 artifacts/demo_v0_1/trace.json committed no-build mechanism trace
 artifacts/benchmark_instrumentation_v0_2/ committed v0.2 measurement evidence
 artifacts/instrumentation_v0_2/ committed trace and standalone mirror figure
+artifacts/.dual_route_v0_3_holdout_ledger.json canonical terminal attempt record
 requirements.txt              runtime dependency declaration
 LICENSE                       Apache License 2.0
 ```
@@ -135,6 +148,19 @@ Diagnostic generator calls are reported separately. Instrumentation timing is
 excluded from deterministic v0.2 artifacts and does not replace the frozen v0.1
 performance baseline.
 
+Validate the frozen v0.3 policy and runner, or run the DEV-only smoke path:
+
+```bash
+python3 dual_route_policy_v0_3.py --self-test
+python3 benchmark_dual_route_v0_3.py self-test
+python3 benchmark_dual_route_v0_3.py quick \
+  --output benchmark_results/v0_3_quick --no-progress
+```
+
+Do **not** rerun `full` for v0.3. Its canonical one-shot ledger is terminal.
+The next full experiment must use a new v0.3.1 policy version, ledger, and fresh
+holdout.
+
 ## Judge path: inspect first, rerun second
 
 No training or model build is required to inspect the submitted evidence.
@@ -159,6 +185,18 @@ For the v0.2 counterfactual observer, inspect:
 4. `events.csv` and `candidates.csv` for event-local effects and the separate
    semantic-attention/source-projection-leverage surface.
 
+For the v0.3 prospective experiment, inspect:
+
+1. [`docs/RND_DUAL_ROUTE_V0_3.md`](docs/RND_DUAL_ROUTE_V0_3.md) for the frozen
+   comparison, terminal assertion, mechanism diagnosis, and clean next design;
+2. `policy_lock_v0_3.json` for the preregistered arms, endpoints, margins,
+   guardrails, fixture hashes, runtime, and one-shot rule;
+3. `artifacts/.dual_route_v0_3_holdout_ledger.json` for the canonical attempt-1
+   terminal record.
+
+There is intentionally no normal v0.3 result directory: the runner stopped
+before validated bundle publication, and the ledger stores no outcome rows.
+
 After installing the single runtime dependency, the shortest executable check
 is:
 
@@ -168,6 +206,8 @@ python3 benchmark_ebrt_v0_1.py --self-test
 python3 instrumentation_ebrt_v0_2.py --self-test
 python3 benchmark_instrumentation_v0_2.py --self-test
 python3 render_instrumentation_v0_2.py --self-test
+python3 dual_route_policy_v0_3.py --self-test
+python3 benchmark_dual_route_v0_3.py self-test
 ```
 
 The manifest is the source of truth for the exact platform used to produce the
@@ -277,6 +317,38 @@ See the [v0.2 R&D note](docs/RND_INSTRUMENTATION_V0_2.md), generated
 [benchmark report](artifacts/benchmark_instrumentation_v0_2/benchmark_report.md),
 and standalone [Mirror figure](artifacts/instrumentation_v0_2/mirror.html).
 
+## v0.3 terminal protocol result
+
+v0.3 froze five capacity-matched policies, new DEV/holdout/sequential families,
+two co-primary D2 contrasts, noninferiority/leakage/compute guardrails, exact
+runtime hashes, and a one-shot ledger. Protocol commit `5b88faa` was pushed
+before the holdout command ran.
+
+Attempt 1 ended with:
+
+```text
+AssertionError: native selected-min replay changed matched outcome:
+('holdout_dual_repeated_stream_00', 0, 'S2')
+```
+
+This is a terminal invariant rejection, not a policy-quality result. The
+matched/native comparison kept the named objective and selected control sites
+fixed, but one `replay_floor` variable controlled both physical recomputation
+and the support of the trajectory-anchor loss. The latter changed the actual
+optimization objective, so the native lane was not a cost-only change; exact
+outcome preservation failed in the observed case.
+
+No validated result bundle or outcome rows were written. D2-S2, D2-SR2,
+confidence intervals, guardrails, stable cases, sequential cases, and promotion
+status are all **not evaluated**. v0.3 is not rerun. The next version will
+separate execution replay start from trajectory-anchor loss horizon, then study
+semantic objective, control sites, and loss horizon as distinct policy
+dimensions on an entirely fresh holdout.
+
+See the [v0.3 R&D note](docs/RND_DUAL_ROUTE_V0_3.md), frozen
+[`policy_lock_v0_3.json`](policy_lock_v0_3.json), and canonical
+[`holdout ledger`](artifacts/.dual_route_v0_3_holdout_ledger.json).
+
 ## Current scope and claim boundary
 
 | Statement | Current status |
@@ -288,7 +360,10 @@ and standalone [Mirror figure](artifacts/instrumentation_v0_2/mirror.html).
 | One revision's local and downstream effect can be isolated from earlier accepted revisions | Implemented by the v0.2 event-local mirror |
 | Semantic-anchor and source-projection-leverage rankings are identical | Not supported on the informative fixed-suite fixtures; they are measured separately |
 | Curvature measures reasoning correctness | Not established; currently an effect/geometry diagnostic |
-| The proposed dual-route policy improves outcomes | Not implemented; explicit next matched experiment |
+| The five-arm dual-route candidate executes on DEV fixtures | Implemented with deterministic accounting and matched budgets in v0.3 |
+| The dual-route policy improves or degrades held-out outcomes | Not evaluated; attempt 1 terminated before validated metrics were published |
+| The coupled v0.3 minimum-selected lane preserves the matched outcome | Refuted as a universal exact invariant by the terminal v0.3 counterexample |
+| A changed coupled `replay_floor` is a cost-only exact-invariance optimization | Refuted by v0.3; execution replay start and trajectory-anchor loss horizon must be separated |
 | Events are detected autonomously from natural language | Not implemented |
 | EBRT edits hidden states inside a trained Transformer or GPT model | Not implemented |
 | EBRT improves real-world LLM reasoning accuracy | Not established |
@@ -312,6 +387,15 @@ category determination.
   revision through an event-local mirror, separate semantic relevance from
   source-projection leverage, and measure propagation, geometry, leakage, and
   efficiency.
+- **Milestone 1.75 — prospective dual-route test (terminal and documented):**
+  freeze a five-arm matched protocol before opening a new holdout, preserve its
+  one-shot terminal ledger, and publish the rejected replay-invariance premise
+  without recovering partial outcome statistics.
+- **Milestone 1.8 — replay-policy factorization:** on a new v0.3.1 protocol and
+  fresh holdout, separate execution replay start from trajectory-anchor loss
+  horizon, keep the primary route comparison matched, and evaluate loss horizon
+  as a separate quality/leakage policy axis while exact-preserving execution
+  replay remains the cost axis.
 - **Milestone 2 — meaningful GPT-5.6 adapter:** the versioned provider-neutral
   interface exists; a live GPT-5.6 implementation and matched textual controls
   remain pending.
@@ -342,6 +426,8 @@ Human decisions remain explicit. In particular, the project owner chose to:
   not only to police public claims;
 - keep semantic-cause routing separate from the narrower source-projection
   leverage diagnostic;
+- preserve the terminal v0.3 attempt instead of recovering unpublished partial
+  metrics, and turn its replay/loss coupling into the next causal experiment;
 - keep mechanism, model-integration, and accuracy claims separate;
 - require meaningful GPT-5.6 use before representing the project as
   hackathon-ready.
@@ -352,10 +438,12 @@ evidence is sufficient for a scientific or product claim.
 ## Development status
 
 This repository is an early public R&D release. The frozen mechanism baseline
-and counterfactual instrumentation milestones are complete. The current
-structured results nominate, but do not yet validate, a dual-route EBRT policy.
-A live GPT-5.6 adapter, matched language benchmark, and hosted judge sandbox are
-still pending; there is no hosted service in v0.2.
+and counterfactual instrumentation milestones are complete. The v0.3
+dual-route policy is implemented, but its preregistered one-shot comparison is
+terminal and inconclusive after rejecting a replay-invariance assumption. It
+does not validate or quality-rank the dual route. A new replay-factorized
+v0.3.1, live GPT-5.6 adapter, matched language benchmark, and hosted judge
+sandbox are still pending; there is no hosted service in this release.
 
 Issues and pull requests that add reproducible tests, adversarial fixtures, or
 better controls are especially welcome. Please avoid expanding claims without
