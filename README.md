@@ -44,6 +44,17 @@ annotation. Direct passed 30/30 strict outputs; staged Full passed 4/30, with no
 Full-only win. This freezes a useful negative result: repair or bypass lossy
 public-state factorization before investing further in selective replay.
 
+EBRT v0.4.1 adds the two missing same-block controls: a one-shot raw arm with
+no revision envelope, and a staged arm that retains the cumulative raw prefix.
+It also adds a provisional local, read-only Inspector over normalized recorded
+artifacts. The Inspector is an observation-contract experiment, not a freeze of
+the eventual frontend, navigation, brand, or hosting model.
+
+The locked 30-run attempt produced a strong but non-decision-ready trend:
+cumulative-raw staging passed 30/30 strict outputs versus 2/28 completed
+card-only outputs. Two card-only runs stopped on a local contract error, so the
+manifest is `INCOMPLETE` and the preregistered cause conclusion remains closed.
+
 > [!IMPORTANT]
 > v0.1-v0.3.1 are **not** a Transformer implementation, a GPT latent-state
 > editor, or evidence of improved language-model accuracy. v0.4 meaningfully
@@ -93,12 +104,17 @@ policy_lock_v0_4.json        non-promotional Language Replay DEV contract
 fixtures/language_replay_v0_4_*.json separated DEV inputs and machine gold
 benchmark_direct_full_calibration_v0_4.py completion-ceiling Direct/Full runner
 policy_lock_direct_full_calibration_v0_4.json frozen two-arm DEV contract
+benchmark_aperture_controls_v0_4_1.py locked same-block four-arm control runner
+policy_lock_aperture_controls_v0_4_1.json non-promotional aperture-control contract
+build_inspector_snapshot_v0_4_1.py validated public-artifact normalizer
+inspector/                    provisional local read-only artifact viewer
 docs/RND_BENCHMARK_V0_1.md    protocol, results, limits, and claim ledger
 docs/RND_INSTRUMENTATION_V0_2.md measurement contract and algorithm findings
 docs/RND_DUAL_ROUTE_V0_3.md   terminal invariant result and v0.3.1 direction
 docs/RND_DUAL_ROUTE_V0_3_1.md factorization design, DEV results, and next experiment
 docs/RND_LANGUAGE_REPLAY_V0_4.md live protocol, result, failure, and v0.4.1 axis
 docs/RND_DIRECT_FULL_CALIBRATION_V0_4.md repeated result and state-loss diagnosis
+docs/RND_APERTURE_CONTROLS_V0_4_1.md control result and causal boundary
 artifacts/benchmark_v0_1/     committed machine-readable benchmark evidence
 artifacts/demo_v0_1/trace.json committed no-build mechanism trace
 artifacts/benchmark_instrumentation_v0_2/ committed v0.2 measurement evidence
@@ -108,6 +124,7 @@ artifacts/benchmark_dual_route_v0_3_1_dev/ committed non-promotional DEV evidenc
 artifacts/benchmark_language_replay_v0_4_fake_dev/ scripted plumbing evidence only
 artifacts/benchmark_language_replay_v0_4_live_smoke/ boundary-fixed GPT-5.6 DEV canary
 artifacts/benchmark_direct_full_calibration_v0_4_dev/ non-promotional 10-case DEV evidence
+artifacts/benchmark_aperture_controls_v0_4_1_dev/ incomplete locked four-arm attempt
 requirements.txt              runtime dependency declaration
 requirements-live.txt         separately pinned OpenAI/Pydantic live dependencies
 LICENSE                       Apache License 2.0
@@ -281,6 +298,36 @@ and Full use different call counts and realized token/latency budgets. The
 committed bundle is development evidence, never a promotion or general model
 benchmark.
 
+Validate the v0.4.1 four-arm controls and Inspector exporter without making an
+API call:
+
+```bash
+python3 benchmark_aperture_controls_v0_4_1.py self-test
+python3 build_inspector_snapshot_v0_4_1.py self-test
+```
+
+The locked canary and full-sized contaminated-DEV block commands are:
+
+```bash
+python3 benchmark_aperture_controls_v0_4_1.py live-smoke
+python3 benchmark_aperture_controls_v0_4_1.py live-dev
+```
+
+Build the normalized recorded snapshot and launch the provisional local viewer:
+
+```bash
+python3 build_inspector_snapshot_v0_4_1.py build \
+  --bundle artifacts/benchmark_aperture_controls_v0_4_1_dev \
+  --output inspector/public/data/ebrt-public-inspector-v0.1.json
+cd inspector
+pnpm install
+pnpm dev
+```
+
+This viewer is read-only and unhosted. It displays recorded raw aperture,
+emitted public-card support, grading availability, and provider-reported usage;
+it does not expose private chain-of-thought or model hidden state.
+
 ## Judge path: inspect first, rerun second
 
 No training or model build is required to inspect the submitted evidence.
@@ -345,6 +392,17 @@ For the repeated Direct-vs-Full calibration, inspect:
    source and artifact hashes;
 4. `benchmark_report.md` and `arm_rows.csv` for the compact result, then
    `results.json`, `traces.jsonl`, and `calls.jsonl` for the full audit surface.
+
+For the v0.4.1 control block and provisional Inspector, inspect:
+
+1. [`docs/RND_APERTURE_CONTROLS_V0_4_1.md`](docs/RND_APERTURE_CONTROLS_V0_4_1.md)
+   for the paired questions, result, readiness status, and interpretation limit;
+2. `policy_lock_aperture_controls_v0_4_1.json` for the four arms, post-event
+   temporal semantics, output-ceiling scope, and cause-decision gate;
+3. `artifacts/benchmark_aperture_controls_v0_4_1_dev/` for sanitized calls,
+   traces, grades, exact receipts, and manifest hashes;
+4. `inspector/` for the replaceable local viewer and
+   `build_inspector_snapshot_v0_4_1.py` for its validated public data contract.
 
 There is intentionally no normal v0.3 result directory: the runner stopped
 before validated bundle publication, and the ledger stores no outcome rows.
@@ -628,6 +686,51 @@ no-revision-envelope one-shot raw control and a six-call cumulative-raw restart
 that tests card-only information loss while holding staging fixed. See the
 [calibration R&D note](docs/RND_DIRECT_FULL_CALIBRATION_V0_4.md).
 
+## v0.4.1 Aperture-controls result
+
+The follow-up ran the two planned controls in the same block as fresh Direct
+and card-only anchors. The four arms were no-envelope one-shot raw,
+fixed-envelope one-shot raw, fixed-envelope card-only staging, and
+fixed-envelope cumulative-raw staging. All used the same exact model and
+reasoning setting and a nominal 4,608-token output ceiling per case; input
+tokens, call counts, realized output/reasoning tokens, latency, and compute were
+not matched.
+
+The 30 scheduled case-trials produced 28 complete four-arm runs. Both
+incomplete arms were card-only staging and stopped after their third completed
+provider call with a sanitized `local_contract_error`. The artifact preserves
+414 validated receipts, carries an `INCOMPLETE` manifest, and does not open its
+locked cause-decision gate.
+
+| Metric | No-envelope Direct | Fixed Direct | Card-only staged | Cumulative raw |
+| --- | ---: | ---: | ---: | ---: |
+| Completed outputs | 30/30 | 30/30 | 28/30 | 30/30 |
+| Strict machine success | 29/30 | 30/30 | 2/28 | 30/30 |
+| Answer exact | 30/30 | 30/30 | 11/28 | 30/30 |
+| Descriptive stable-pass cases | 10/10 | 10/10 | 1/10 | 10/10 |
+| API calls | 30 | 30 | 174 | 180 |
+| Input tokens | 22,041 | 22,911 | 131,308 | 148,222 |
+| Output tokens | 4,523 | 4,563 | 41,299 | 35,046 |
+| Reasoning-token detail | 87 | 0 | 17,861 | 9,232 |
+
+Among completed staged pairs, cumulative raw had 26 exclusive strict
+successes and shared two successes with card-only; card-only had no exclusive
+success. This strongly nominates raw aperture as the next bottleneck to study,
+but it is a descriptive result on contaminated DEV, not a completed causal
+estimate or a general model-quality claim. The exact local validator sub-rule
+for the two rejected cards was intentionally not retained, so stable
+non-sensitive failure reason codes are the next instrumentation requirement.
+Post-run review also found an unexercised harmful-envelope direction branch in
+the frozen helper. It does not affect this not-ready artifact or the observed
+10/10 one-shot stable parity, but a decision-ready successor must version the
+runner, repair that branch, and add its missing self-test rather than rerun this
+exact lock.
+
+The provisional Inspector renders this incomplete artifact honestly: grade
+unavailability is `NOT ASSESSED`, the header remains `Cause decision: NOT
+READY`, and envelope delivery is visible per arm. See the
+[v0.4.1 R&D note](docs/RND_APERTURE_CONTROLS_V0_4_1.md).
+
 ## Current scope and claim boundary
 
 | Statement | Current status |
@@ -652,7 +755,10 @@ that tests card-only information loss while holding staging fixed. See the
 | The current staged Full protocol matches one-shot fixed-envelope Direct quality | Refuted on the locked contaminated DEV calibration: Full passed 4/30 versus Direct 30/30, with 0 Full-only outcomes |
 | One-shot fixed-envelope Direct is stable on the existing 10-case DEV suite | Supported at 3/3 trials for all 10 cases; the suite is saturated and not a fresh holdout |
 | The calibration proves an unassisted plain API is superior | Not supported; Direct receives fixed revision metadata and a strict output scaffold |
-| Public-card compression alone caused the Full deficit | Not yet isolated; a cumulative-raw staged control is required to separate compression from repeated-call/prompt effects |
+| Public-card compression alone caused the Full deficit | Not formally established: cumulative raw passed 30/30 versus card-only 2/28 completed outputs, but two card-only runs were incomplete and the intervention also changes input volume |
+| Retaining cumulative raw repairs this staged protocol | Strongly nominated on contaminated DEV: 30/30 strict outputs and 10/10 descriptive stable cases, while the locked cause gate remains closed because two paired runs were incomplete |
+| The fixed revision envelope improves the saturated one-shot raw scaffold | Not established; fixed passed 30/30 versus no-envelope 29/30 at output level and both were stable on 10/10 cases, with no decision-ready cause estimate |
+| The Inspector is the final EBRT frontend or a hosted debugger | No; it is a provisional local read-only view over recorded public artifacts and may be replaced entirely |
 | Selective replay should be optimized before state sufficiency | Not supported by current evidence; it is paused as a quality direction and remains an unranked future efficiency ablation |
 | EBRT edits hidden states inside a trained Transformer or GPT model | Not implemented |
 | EBRT improves real-world LLM reasoning accuracy | Not established |
@@ -696,9 +802,17 @@ category determination.
   A no-revision-envelope one-shot raw control, cumulative-raw staging control,
   and fresh harder DEV suite come first; if the compression ablation supports
   it, a generic evidence ledger follows. Promotion evidence is still pending.
-- **Milestone 3 — coherent evaluator experience:** the deterministic standalone
-  Mirror figure exists; a minimal editable or hosted judge sandbox remains
-  pending. A broad product UI is still intentionally deferred.
+- **Milestone 2.2 — aperture controls (locked attempt preserved, decision not
+  ready):** the no-envelope and cumulative-raw controls ran in one four-arm
+  block. Cumulative raw passed 30/30 strict outputs, but two card-only arms
+  stopped on a local contract error. The incomplete artifact is preserved and
+  no cause decision is promoted; stable non-sensitive validator reason codes
+  and a fresh successor block come before a formal mechanism claim.
+- **Milestone 3 — coherent evaluator experience (provisional local viewer):**
+  the deterministic Mirror figure and a local read-only Inspector over
+  normalized recorded artifacts now exist. The first Inspector is deliberately
+  replaceable; an editable or hosted judge sandbox and the eventual product
+  interaction remain pending.
 - **Milestone 4 — submission evidence:** document the Codex development record,
   provide an English demo under the event rules, include the required Codex
   feedback session, and audit every public claim against committed artifacts.
@@ -718,7 +832,9 @@ Human decisions remain explicit. In particular, the project owner chose to:
 - freeze the monolith before benchmarking;
 - separate public R&D evidence from the temporary submission checklist;
 - require matched controls and independent gold metrics;
-- defer UI work until the benchmark reveals the most informative interaction;
+- defer the final product UI until the benchmark reveals the most informative
+  interaction, while using a provisional read-only viewer to test the public
+  artifact and observation contract;
 - use instrumentation to generate and falsify new routing/revision policies,
   not only to police public claims;
 - keep semantic-cause routing separate from the narrower source-projection
@@ -752,10 +868,15 @@ guardrail. Selective used fewer input/output tokens but more reasoning tokens.
 The subsequent locked 10-case × 3-trial calibration is also complete: one-shot
 fixed-envelope Direct passed 30/30 while staged public-card Full passed 4/30.
 This pauses both Full and selective as quality directions until a redesigned
-public state meets the Direct non-degradation gate. A no-revision-envelope
-one-shot raw control, cumulative-raw staged control, generic evidence ledger,
-fresh harder DEV and promotion suites, and a hosted judge sandbox remain
-pending; there is no hosted service in this release.
+public state meets the Direct non-degradation gate. The v0.4.1 control attempt
+then found cumulative raw at 30/30 strict outputs versus card-only at 2/28
+completed outputs, while no-envelope and fixed-envelope Direct reached 29/30
+and 30/30. Two card-only arms failed a local contract after a completed third
+provider call, leaving the manifest incomplete and the cause decision not
+ready. The repository now includes a provisional local read-only Inspector for
+that recorded evidence. Stable validator reason codes, a fresh harder DEV and
+promotion suite, a compact replacement state, and any hosted judge sandbox
+remain pending; there is no hosted service in this release.
 
 Issues and pull requests that add reproducible tests, adversarial fixtures, or
 better controls are especially welcome. Please avoid expanding claims without
