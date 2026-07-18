@@ -108,7 +108,7 @@ policy_lock_v0_3_1.json       non-promotional DEV_DRAFT contract and future gate
 fixtures/dual_route_v0_3_1_*.json fresh DEV and contaminated regression fixtures
 language_replay_bridge_v0_4.py public cards, pre-outcome plan, three replay lanes
 openai_reasoning_provider_v0_4.py strict GPT-5.6 Responses providers
-benchmark_language_replay_v0_4.py offline gates, live canary, grading, bundles
+benchmark_language_replay_v0_4.py deterministic/live gates, grading, bundles
 policy_lock_v0_4.json        non-promotional Language Replay DEV contract
 fixtures/language_replay_v0_4_*.json separated DEV inputs and machine gold
 benchmark_direct_full_calibration_v0_4.py completion-ceiling Direct/Full runner
@@ -267,22 +267,29 @@ families and promotion rules are locked. DEV commands accept another supported
 CPython 3.11+/PyTorch 2.x CPU runtime, record every expected/actual mismatch,
 and remain non-promotional with no cross-runtime byte-reproducibility claim.
 
-Validate the v0.4 public-state bridge and deterministic plumbing bundle:
+Validate the dependency-free v0.4 public-state bridge first:
 
 ```bash
 python3 language_replay_bridge_v0_4.py
+```
+
+The frozen v0.4 benchmark `self-test` also validates the exact
+OpenAI/Pydantic structured-output schemas. It makes no API call, but it requires
+the separately pinned schema dependencies:
+
+```bash
+python3 -m pip install -r requirements-live.txt
+python3 openai_reasoning_provider_v0_4.py
 python3 benchmark_language_replay_v0_4.py self-test
 python3 benchmark_language_replay_v0_4.py fake-dev \
   --output benchmark_results/v0_4_fake_dev
 ```
 
 The local provider is explicitly gold-backed and proves plumbing only. To run
-the locked two-case GPT-5.6 canary, install the separate live dependencies and
-provide `OPENAI_API_KEY` through the process environment:
+the locked two-case GPT-5.6 canary, additionally provide `OPENAI_API_KEY`
+through the process environment:
 
 ```bash
-python3 -m pip install -r requirements-live.txt
-python3 openai_reasoning_provider_v0_4.py
 python3 benchmark_language_replay_v0_4.py live-smoke \
   --output benchmark_results/v0_4_live_smoke
 ```

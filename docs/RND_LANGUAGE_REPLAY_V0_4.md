@@ -291,21 +291,28 @@ Not supported:
 
 ## Reproduce
 
-Offline core and scripted plumbing:
+Dependency-free bridge core:
 
 ```bash
 python3 language_replay_bridge_v0_4.py
+```
+
+The frozen benchmark `self-test` imports the exact live provider schemas. It
+does not make an API call, but `requirements-live.txt` must be installed before
+running it or the scripted bundle:
+
+```bash
+python3 -m pip install -r requirements-live.txt
 python3 openai_reasoning_provider_v0_4.py
 python3 benchmark_language_replay_v0_4.py self-test
 python3 benchmark_language_replay_v0_4.py fake-dev \
   --output benchmark_results/v0_4_fake_dev
 ```
 
-Live smoke requires the separately declared live dependencies and an
-`OPENAI_API_KEY` in the process environment:
+Live smoke additionally requires an `OPENAI_API_KEY` in the process
+environment:
 
 ```bash
-python3 -m pip install -r requirements-live.txt
 python3 benchmark_language_replay_v0_4.py live-smoke \
   --output benchmark_results/v0_4_live_smoke
 ```
