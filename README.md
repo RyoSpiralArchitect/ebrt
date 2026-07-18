@@ -108,7 +108,7 @@ policy_lock_v0_3_1.json       non-promotional DEV_DRAFT contract and future gate
 fixtures/dual_route_v0_3_1_*.json fresh DEV and contaminated regression fixtures
 language_replay_bridge_v0_4.py public cards, pre-outcome plan, three replay lanes
 openai_reasoning_provider_v0_4.py strict GPT-5.6 Responses providers
-benchmark_language_replay_v0_4.py offline gates, live canary, grading, bundles
+benchmark_language_replay_v0_4.py deterministic/live gates, grading, bundles
 policy_lock_v0_4.json        non-promotional Language Replay DEV contract
 fixtures/language_replay_v0_4_*.json separated DEV inputs and machine gold
 benchmark_direct_full_calibration_v0_4.py completion-ceiling Direct/Full runner
@@ -267,22 +267,29 @@ families and promotion rules are locked. DEV commands accept another supported
 CPython 3.11+/PyTorch 2.x CPU runtime, record every expected/actual mismatch,
 and remain non-promotional with no cross-runtime byte-reproducibility claim.
 
-Validate the v0.4 public-state bridge and deterministic plumbing bundle:
+Validate the dependency-free v0.4 public-state bridge first:
 
 ```bash
 python3 language_replay_bridge_v0_4.py
+```
+
+The frozen v0.4 benchmark `self-test` also validates the exact
+OpenAI/Pydantic structured-output schemas. It makes no API call, but it requires
+the separately pinned schema dependencies:
+
+```bash
+python3 -m pip install -r requirements-live.txt
+python3 openai_reasoning_provider_v0_4.py
 python3 benchmark_language_replay_v0_4.py self-test
 python3 benchmark_language_replay_v0_4.py fake-dev \
   --output benchmark_results/v0_4_fake_dev
 ```
 
 The local provider is explicitly gold-backed and proves plumbing only. To run
-the locked two-case GPT-5.6 canary, install the separate live dependencies and
-provide `OPENAI_API_KEY` through the process environment:
+the locked two-case GPT-5.6 canary, additionally provide `OPENAI_API_KEY`
+through the process environment:
 
 ```bash
-python3 -m pip install -r requirements-live.txt
-python3 openai_reasoning_provider_v0_4.py
 python3 benchmark_language_replay_v0_4.py live-smoke \
   --output benchmark_results/v0_4_live_smoke
 ```
@@ -312,35 +319,32 @@ and Full use different call counts and realized token/latency budgets. The
 committed bundle is development evidence, never a promotion or general model
 benchmark.
 
-Validate the v0.4.1 four-arm controls and Inspector exporter without making an
-API call:
+Validate the v0.4.2 diagnostic successor and Inspector exporter without making
+an API call:
 
 ```bash
-python3 benchmark_aperture_controls_v0_4_1.py self-test
+python3 benchmark_aperture_controls_v0_4_2.py self-test
 python3 build_inspector_snapshot_v0_4_1.py self-test
 ```
 
-The locked canary and full-sized contaminated-DEV block commands are:
-
-```bash
-python3 benchmark_aperture_controls_v0_4_1.py live-smoke
-python3 benchmark_aperture_controls_v0_4_1.py live-dev
-```
-
-Build the normalized recorded snapshot and launch the provisional local viewer:
+The committed full block is intentionally not a resume target. Its passing
+contract-smoke launch evidence and incomplete full evidence are both preserved
+under `artifacts/`. To build their normalized read-only view:
 
 ```bash
 python3 build_inspector_snapshot_v0_4_1.py build \
-  --bundle artifacts/benchmark_aperture_controls_v0_4_1_dev \
+  --bundle artifacts/benchmark_aperture_controls_v0_4_2_dev \
   --output inspector/public/data/ebrt-public-inspector-v0.1.json
 cd inspector
 pnpm install
 pnpm dev
 ```
 
-This viewer is read-only and unhosted. It displays recorded raw aperture,
-emitted public-card support, grading availability, and provider-reported usage;
-it does not expose private chain-of-thought or model hidden state.
+This viewer is read-only and unhosted. `Overview` replays already recorded final
+public outputs and their cross-arm diff without a model call; `Inspect` displays
+raw aperture, public-card support, grading availability, terminal reason/step,
+and provider-reported usage. It does not expose private chain-of-thought or
+model hidden state.
 
 ## Judge path: inspect first, rerun second
 
@@ -858,9 +862,11 @@ category determination.
   cause decision is promoted and no run is filled or reinterpreted.
 - **Milestone 3 — coherent evaluator experience (provisional local viewer):**
   the deterministic Mirror figure and a local read-only Inspector over
-  normalized recorded artifacts now exist. The first Inspector is deliberately
-  replaceable; an editable or hosted judge sandbox and the eventual product
-  interaction remain pending.
+  normalized recorded artifacts now exist. Its Overview reaches recorded final
+  output and public diff, while its detailed view distinguishes accepted
+  outputs, assessed terminal rejection, and non-assessable provider/SDK
+  failure. The first Inspector is deliberately replaceable; an editable or
+  hosted judge sandbox and the eventual product interaction remain pending.
 - **Milestone 4 — submission evidence:** document the Codex development record,
   provide an English demo under the event rules, include the required Codex
   feedback session, and audit every public claim against committed artifacts.

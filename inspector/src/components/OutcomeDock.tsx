@@ -38,7 +38,7 @@ export function OutcomeDock({ arms, selectedArm }: Props) {
             <thead>
               <tr>
                 <th>Execution protocol</th>
-                <th>Final strict grader outcome</th>
+                <th>Final endpoint outcome</th>
                 <th>Required evidence</th>
                 <th>API calls</th>
                 <th>Input tokens</th>
@@ -48,15 +48,18 @@ export function OutcomeDock({ arms, selectedArm }: Props) {
             </thead>
             <tbody>
               {arms.map((arm) => {
-                const available = arm.outcome.available;
-                const success = available && arm.outcome.machine_success === true;
+                const detailAvailable = arm.outcome.available;
+                const endpointAssessed = arm.outcome.primary_endpoint_assessed
+                  ?? arm.primary_endpoint_assessed
+                  ?? detailAvailable;
+                const success = endpointAssessed && arm.outcome.machine_success === true;
                 return (
                   <tr key={arm.arm} className={arm.arm === selectedArm ? "selected" : ""}>
                     <th>{armLabel(arm.arm)}</th>
-                    <td className={available ? (success ? "pass" : "fail") : "not-assessed"}>
-                      {available ? (success ? "PASS" : "FAIL") : "NOT ASSESSED"}
+                    <td className={endpointAssessed ? (success ? "pass" : "fail") : "not-assessed"}>
+                      {endpointAssessed ? (success ? "PASS" : "FAIL") : "NOT ASSESSED"}
                     </td>
-                    <td>{available ? (arm.outcome.missing_required_evidence_ids.length === 0 ? "met" : `missing ${arm.outcome.missing_required_evidence_ids.join(", ")}`) : "not assessed"}</td>
+                    <td>{detailAvailable ? (arm.outcome.missing_required_evidence_ids.length === 0 ? "met" : `missing ${arm.outcome.missing_required_evidence_ids.join(", ")}`) : endpointAssessed ? "detail unavailable" : "not assessed"}</td>
                     <td>{arm.cost.api_calls}</td>
                     <td>{formatTokens(arm.cost.input_tokens)}</td>
                     <td>{formatTokens(arm.cost.output_tokens)}</td>
