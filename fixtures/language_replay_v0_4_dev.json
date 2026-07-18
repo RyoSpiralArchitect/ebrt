@@ -1,0 +1,316 @@
+{
+  "schema_version": "ebrt-language-replay-fixture-v0.4",
+  "status": "DEV_DRAFT",
+  "notes": [
+    "Closed-world single-event cases for bridge development only.",
+    "Semantic fields are consumed only by the local structured observer; the live GPT observer receives raw public text only.",
+    "Gold answers and route expectations live in a separate file and are not passed to providers."
+  ],
+  "cases": [
+    {
+      "case_id": "route_code_supersession",
+      "family": "lookup_key_revision",
+      "question": "Which bay is assigned to shipment NERA? Answer AMBER or BLUE.",
+      "answer_choices": ["AMBER", "BLUE"],
+      "decision_slots": [
+        {"slot_id": "current_code", "description": "NERA's current route code", "allowed_values": ["A1", "B2"]},
+        {"slot_id": "bay", "description": "assigned bay", "allowed_values": ["AMBER", "BLUE"]},
+        {"slot_id": "cargo_seal", "description": "stable cargo seal status", "allowed_values": ["SEALED"]}
+      ],
+      "initial_evidence": [
+        {"evidence_id": "R1", "text": "The task is to assign a bay to shipment NERA using its current route code."},
+        {"evidence_id": "R2", "text": "The route table maps code A1 to bay AMBER and code B2 to bay BLUE."},
+        {"evidence_id": "R3", "text": "The registry currently lists NERA with route code A1."},
+        {"evidence_id": "R4", "text": "The current registry code must be looked up in the route table."},
+        {"evidence_id": "R5", "text": "NERA's cargo seal status is SEALED and does not change its bay assignment."}
+      ],
+      "late_evidence": {
+        "evidence_id": "R6",
+        "text": "Registry correction: NERA's current route code is B2, not A1. This entry supersedes evidence R3.",
+        "semantic": {
+          "topic": "nera_route_code",
+          "stance": -1.0,
+          "confidence": 1.0,
+          "revision_cue": 1.0,
+          "relevant": true,
+          "invalidated_evidence_ids": ["R3"],
+          "public_summary": "R6 replaces R3 as NERA's current route-code record."
+        }
+      }
+    },
+    {
+      "case_id": "alias_rebind",
+      "family": "entity_alias_revision",
+      "question": "Is Luma eligible? Answer ELIGIBLE or INELIGIBLE.",
+      "answer_choices": ["ELIGIBLE", "INELIGIBLE"],
+      "decision_slots": [
+        {"slot_id": "entity", "description": "entity currently bound to Luma", "allowed_values": ["AX4", "BX7"]},
+        {"slot_id": "score", "description": "score of the bound entity", "allowed_values": ["62", "81"]},
+        {"slot_id": "region", "description": "stable Luma region", "allowed_values": ["EAST"]}
+      ],
+      "initial_evidence": [
+        {"evidence_id": "A1", "text": "An entity is ELIGIBLE when its score is at least 70; otherwise it is INELIGIBLE."},
+        {"evidence_id": "A2", "text": "The score table lists AX4 with 62 points and BX7 with 81 points."},
+        {"evidence_id": "A3", "text": "The alias registry binds Luma to entity AX4."},
+        {"evidence_id": "A4", "text": "Eligibility uses the score of the entity currently bound to the alias."},
+        {"evidence_id": "A5", "text": "Luma's region is EAST and region does not change this eligibility rule."}
+      ],
+      "late_evidence": {
+        "evidence_id": "A6",
+        "text": "Alias correction: Luma is bound to BX7, not AX4. This supersedes evidence A3.",
+        "semantic": {
+          "topic": "luma_alias",
+          "stance": 1.0,
+          "confidence": 1.0,
+          "revision_cue": 1.0,
+          "relevant": true,
+          "invalidated_evidence_ids": ["A3"],
+          "public_summary": "A6 rebinds Luma from AX4 to BX7."
+        }
+      }
+    },
+    {
+      "case_id": "unit_reinterpretation",
+      "family": "unit_revision",
+      "question": "Is crate M over the 100 kg limit? Answer OVER_LIMIT or WITHIN_LIMIT.",
+      "answer_choices": ["OVER_LIMIT", "WITHIN_LIMIT"],
+      "decision_slots": [
+        {"slot_id": "weight_kg", "description": "converted weight in kilograms", "allowed_values": ["28", "112"]},
+        {"slot_id": "color", "description": "stable crate color", "allowed_values": ["GREEN"]}
+      ],
+      "initial_evidence": [
+        {"evidence_id": "U1", "text": "A crate is OVER_LIMIT only when its weight is greater than 100 kilograms."},
+        {"evidence_id": "U2", "text": "One quill is exactly 4 kilograms."},
+        {"evidence_id": "U3", "text": "Crate M's recorded weight is 28 kilograms."},
+        {"evidence_id": "U4", "text": "Convert the recorded unit to kilograms before applying the limit."},
+        {"evidence_id": "U5", "text": "Crate M is GREEN; color does not affect the limit."}
+      ],
+      "late_evidence": {
+        "evidence_id": "U6",
+        "text": "Unit correction: the recorded value 28 for crate M is in quills, not kilograms. This supersedes evidence U3.",
+        "semantic": {
+          "topic": "crate_m_weight_unit",
+          "stance": 1.0,
+          "confidence": 1.0,
+          "revision_cue": 1.0,
+          "relevant": true,
+          "invalidated_evidence_ids": ["U3"],
+          "public_summary": "U6 changes the unit of M's value 28 from kg to quills."
+        }
+      }
+    },
+    {
+      "case_id": "timestamp_boundary",
+      "family": "timestamp_revision",
+      "question": "Which corridor should parcel T use? Answer NORTH or SOUTH.",
+      "answer_choices": ["NORTH", "SOUTH"],
+      "decision_slots": [
+        {"slot_id": "valid_day", "description": "latest valid day", "allowed_values": ["8", "12"]},
+        {"slot_id": "corridor", "description": "selected corridor", "allowed_values": ["NORTH", "SOUTH"]},
+        {"slot_id": "priority", "description": "stable parcel priority", "allowed_values": ["STANDARD"]}
+      ],
+      "initial_evidence": [
+        {"evidence_id": "T1", "text": "Parcels logged on or before day 10 use NORTH; parcels after day 10 use SOUTH."},
+        {"evidence_id": "T2", "text": "The latest valid timestamp controls corridor selection."},
+        {"evidence_id": "T3", "text": "Parcel T's valid timestamp is day 8."},
+        {"evidence_id": "T4", "text": "Apply the day-10 boundary after resolving the valid timestamp."},
+        {"evidence_id": "T5", "text": "Parcel T has STANDARD priority, which does not alter the corridor."}
+      ],
+      "late_evidence": {
+        "evidence_id": "T6",
+        "text": "Timestamp correction: parcel T's valid timestamp is day 12, not day 8. This supersedes evidence T3.",
+        "semantic": {
+          "topic": "parcel_t_timestamp",
+          "stance": 1.0,
+          "confidence": 1.0,
+          "revision_cue": 1.0,
+          "relevant": true,
+          "invalidated_evidence_ids": ["T3"],
+          "public_summary": "T6 replaces T3 with a day-12 timestamp."
+        }
+      }
+    },
+    {
+      "case_id": "invalidated_sensor_fallback",
+      "family": "source_fallback_revision",
+      "question": "Should line S shut down? Answer SHUTDOWN or CONTINUE.",
+      "answer_choices": ["SHUTDOWN", "CONTINUE"],
+      "decision_slots": [
+        {"slot_id": "active_reading", "description": "active valid sensor reading", "allowed_values": ["86", "72"]},
+        {"slot_id": "mode", "description": "stable line mode", "allowed_values": ["AUTOMATIC"]}
+      ],
+      "initial_evidence": [
+        {"evidence_id": "S1", "text": "Line S must SHUTDOWN when its active valid sensor reading is at least 80; otherwise it CONTINUES."},
+        {"evidence_id": "S2", "text": "The next valid fallback reading for line S is 72."},
+        {"evidence_id": "S3", "text": "The newest sensor reading is valid and equals 86."},
+        {"evidence_id": "S4", "text": "If the newest reading is invalid, use the next valid fallback reading."},
+        {"evidence_id": "S5", "text": "Line S is in AUTOMATIC mode; this does not change the threshold."}
+      ],
+      "late_evidence": {
+        "evidence_id": "S6",
+        "text": "Calibration notice: the reading 86 is invalid and must be discarded. This revokes evidence S3; use the fallback rule.",
+        "semantic": {
+          "topic": "line_s_active_reading",
+          "stance": -1.0,
+          "confidence": 1.0,
+          "revision_cue": 1.0,
+          "relevant": true,
+          "invalidated_evidence_ids": ["S3"],
+          "public_summary": "S6 invalidates S3 and activates the fallback reading."
+        }
+      }
+    },
+    {
+      "case_id": "dependency_root_correction",
+      "family": "dependency_chain_revision",
+      "question": "What is machine D's output? Answer P or Q.",
+      "answer_choices": ["P", "Q"],
+      "decision_slots": [
+        {"slot_id": "mode", "description": "current machine mode", "allowed_values": ["COLD", "HOT"]},
+        {"slot_id": "output", "description": "resolved machine output", "allowed_values": ["P", "Q"]},
+        {"slot_id": "indicator", "description": "stable independent indicator", "allowed_values": ["AMBER"]}
+      ],
+      "initial_evidence": [
+        {"evidence_id": "D1", "text": "Mode COLD selects valve L; mode HOT selects valve R."},
+        {"evidence_id": "D2", "text": "Valve L produces output P; valve R produces output Q."},
+        {"evidence_id": "D3", "text": "Machine D is in mode COLD."},
+        {"evidence_id": "D4", "text": "Resolve mode to valve, then valve to output."},
+        {"evidence_id": "D5", "text": "Machine D's independent indicator is AMBER."}
+      ],
+      "late_evidence": {
+        "evidence_id": "D6",
+        "text": "Mode correction: machine D is HOT, not COLD. This supersedes evidence D3; the AMBER indicator is unchanged.",
+        "semantic": {
+          "topic": "machine_d_mode",
+          "stance": 1.0,
+          "confidence": 1.0,
+          "revision_cue": 1.0,
+          "relevant": true,
+          "invalidated_evidence_ids": ["D3"],
+          "public_summary": "D6 changes D's mode to HOT while preserving the independent indicator."
+        }
+      }
+    },
+    {
+      "case_id": "quantifier_erratum",
+      "family": "rule_revision",
+      "question": "Does package Q require inspection? Answer INSPECT or SKIP.",
+      "answer_choices": ["INSPECT", "SKIP"],
+      "decision_slots": [
+        {"slot_id": "rule", "description": "inspection quantifier", "allowed_values": ["OR", "AND"]},
+        {"slot_id": "heavy", "description": "whether weight reaches the heavy threshold", "allowed_values": ["true", "false"]},
+        {"slot_id": "zone", "description": "stable package zone", "allowed_values": ["4"]}
+      ],
+      "initial_evidence": [
+        {"evidence_id": "Q1", "text": "Package Q is hazardous."},
+        {"evidence_id": "Q2", "text": "Package Q weighs 18 kg; the heavy threshold is 20 kg."},
+        {"evidence_id": "Q3", "text": "The inspection rule is: hazardous OR heavy."},
+        {"evidence_id": "Q4", "text": "Return INSPECT when the inspection rule is true; otherwise return SKIP."},
+        {"evidence_id": "Q5", "text": "Package Q is in zone 4; zone is independent of this rule."}
+      ],
+      "late_evidence": {
+        "evidence_id": "Q6",
+        "text": "Policy erratum: the inspection rule is hazardous AND heavy, not OR. This supersedes evidence Q3.",
+        "semantic": {
+          "topic": "inspection_quantifier",
+          "stance": -1.0,
+          "confidence": 1.0,
+          "revision_cue": 1.0,
+          "relevant": true,
+          "invalidated_evidence_ids": ["Q3"],
+          "public_summary": "Q6 replaces the OR rule in Q3 with AND."
+        }
+      }
+    },
+    {
+      "case_id": "source_revocation",
+      "family": "source_precedence_revision",
+      "question": "What quota applies to account V? Answer 12 or 20.",
+      "answer_choices": ["12", "20"],
+      "decision_slots": [
+        {"slot_id": "quota", "description": "active applicable quota", "allowed_values": ["12", "20"]},
+        {"slot_id": "tier", "description": "stable account tier", "allowed_values": ["SILVER"]}
+      ],
+      "initial_evidence": [
+        {"evidence_id": "V1", "text": "An active registry quota outranks a memo quota; a revoked registry entry cannot be used."},
+        {"evidence_id": "V2", "text": "The memo quota for account V is 20."},
+        {"evidence_id": "V3", "text": "The active registry quota for account V is 12."},
+        {"evidence_id": "V4", "text": "If the registry entry is revoked, fall back to the memo quota."},
+        {"evidence_id": "V5", "text": "Account V has SILVER tier, which does not alter the quota."}
+      ],
+      "late_evidence": {
+        "evidence_id": "V6",
+        "text": "Registry notice: the quota-12 entry is revoked and must not be used. This invalidates evidence V3.",
+        "semantic": {
+          "topic": "account_v_quota_source",
+          "stance": -1.0,
+          "confidence": 1.0,
+          "revision_cue": 1.0,
+          "relevant": true,
+          "invalidated_evidence_ids": ["V3"],
+          "public_summary": "V6 revokes V3, so the memo fallback becomes active."
+        }
+      }
+    },
+    {
+      "case_id": "relevant_nonflip",
+      "family": "state_revision_same_answer",
+      "question": "Should unit N shut down? Answer SHUTDOWN or CONTINUE.",
+      "answer_choices": ["SHUTDOWN", "CONTINUE"],
+      "decision_slots": [
+        {"slot_id": "reading", "description": "current primary reading", "allowed_values": ["86", "84"]},
+        {"slot_id": "zone", "description": "stable unit zone", "allowed_values": ["WEST"]}
+      ],
+      "initial_evidence": [
+        {"evidence_id": "N1", "text": "Unit N must SHUTDOWN at a reading of at least 80; otherwise it CONTINUES."},
+        {"evidence_id": "N2", "text": "The primary sensor is the controlling source."},
+        {"evidence_id": "N3", "text": "The primary reading is 86."},
+        {"evidence_id": "N4", "text": "Compare the controlling reading directly with the threshold."},
+        {"evidence_id": "N5", "text": "Unit N is in zone WEST, which is independent of shutdown."}
+      ],
+      "late_evidence": {
+        "evidence_id": "N6",
+        "text": "Reading correction: the primary reading is 84, not 86. This supersedes evidence N3.",
+        "semantic": {
+          "topic": "unit_n_reading",
+          "stance": -0.25,
+          "confidence": 1.0,
+          "revision_cue": 1.0,
+          "relevant": true,
+          "invalidated_evidence_ids": ["N3"],
+          "public_summary": "N6 updates the active reading while leaving it above threshold."
+        }
+      }
+    },
+    {
+      "case_id": "unrelated_noop",
+      "family": "irrelevant_late_control",
+      "question": "Which route is assigned to parcel R? Answer EAST or WEST.",
+      "answer_choices": ["EAST", "WEST"],
+      "decision_slots": [
+        {"slot_id": "route", "description": "parcel R's assigned route", "allowed_values": ["EAST", "WEST"]},
+        {"slot_id": "priority", "description": "stable parcel R priority", "allowed_values": ["NORMAL"]}
+      ],
+      "initial_evidence": [
+        {"evidence_id": "O1", "text": "The question concerns only parcel R's route."},
+        {"evidence_id": "O2", "text": "Parcel R is assigned route EAST."},
+        {"evidence_id": "O3", "text": "Parcel S has color RED."},
+        {"evidence_id": "O4", "text": "Parcel colors and parcel routes are independent fields."},
+        {"evidence_id": "O5", "text": "Parcel R has NORMAL priority, which does not change its route."}
+      ],
+      "late_evidence": {
+        "evidence_id": "O6",
+        "text": "Color correction for parcel S: its color is BLUE, not RED. This supersedes evidence O3 and says nothing about parcel R.",
+        "semantic": {
+          "topic": "parcel_s_color",
+          "stance": 0.0,
+          "confidence": 1.0,
+          "revision_cue": 0.05,
+          "relevant": false,
+          "invalidated_evidence_ids": ["O3"],
+          "public_summary": "O6 corrects an unrelated field for parcel S."
+        }
+      }
+    }
+  ]
+}

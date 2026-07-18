@@ -1,0 +1,127 @@
+{
+  "schema_version": "ebrt-aperture-controls-policy-lock-v0.4.2",
+  "protocol_id": "aperture-controls-diagnostic-closure-dev-draft-2026-07-19",
+  "status": "DEV_DRAFT",
+  "promotion_eligible": false,
+  "predecessor": {
+    "runner": "benchmark_aperture_controls_v0_4_1.py",
+    "runner_sha256": "d5dd4a8a81172ad3603869d1f15f9649340ba7eab0c1627f5ab6ce2f9f752e66",
+    "policy_lock": "policy_lock_aperture_controls_v0_4_1.json",
+    "policy_lock_sha256": "4843d297ff854dde9a51eb0df3f195d45b56a9ca52b40ba53d03159c322891bc",
+    "artifact_manifest": "artifacts/benchmark_aperture_controls_v0_4_1_dev/manifest.json",
+    "artifact_manifest_sha256": "c24fd0767a303a5e5adb9fe9645afc4b9bc78f829f1731904132f33464529de0",
+    "result_interpretation": "v0_4_1_remains_byte_identical_and_is_not_re_adjudicated"
+  },
+  "protocol_inheritance": {
+    "arms_prompts_fixtures_gold_model_budget_and_order": "inherited_byte_for_byte_from_pinned_v0_4_1",
+    "provider_facing_change": false,
+    "local_changes": [
+      "stable_non_sensitive_local_contract_reason_codes",
+      "terminal_local_contract_rejection_primary_endpoint_policy",
+      "harmful_revision_envelope_direction_ordering",
+      "fixed_cli_execution_presets",
+      "result_report_and_manifest_schema_v0_4_2"
+    ],
+    "fresh_full_block_required_for_v0_4_2_decision": true
+  },
+  "execution_presets": {
+    "live_smoke": {
+      "case_ids": [
+        "route_code_supersession",
+        "unrelated_noop"
+      ],
+      "trials": 1,
+      "nominal_api_calls": 28,
+      "decision_eligible": false
+    },
+    "live_contract_smoke": {
+      "case_ids": [
+        "unit_reinterpretation",
+        "invalidated_sensor_fallback"
+      ],
+      "trials": 1,
+      "nominal_api_calls": 28,
+      "decision_eligible": false,
+      "full_run_launch_ready_requires": [
+        "exact_two_case_one_trial_coverage",
+        "receipt_validation_true",
+        "all_attempted_receipts_validated",
+        "each_arm_completed_or_allowlisted_terminal_local_contract_rejection",
+        "each_terminal_rejection_backed_by_completed_exact_usage_receipt",
+        "zero_provider_internal_or_other_non_assessable_failures"
+      ]
+    },
+    "live_dev": {
+      "case_selection": "all_ten_locked_cases",
+      "trials": 3,
+      "nominal_api_calls": 420,
+      "case_or_trial_override": "forbidden",
+      "contract_smoke_manifest": "required_same_source_and_revalidated_before_provider_calls",
+      "decision_eligible": true
+    },
+    "live_subset": {
+      "case_selection": "one_or_more_explicit_locked_dev_case_ids",
+      "trials_min": 1,
+      "trials_max": 3,
+      "decision_eligible": false
+    }
+  },
+  "terminal_contract_failure_policy": {
+    "local_contract_rejection_after_completed_provider_call": {
+      "arm_action": "terminal_no_retry_no_repair",
+      "remaining_calls_in_arm": "not_executed",
+      "remaining_preassigned_arms": "continue",
+      "receipt": "counted_retained_and_validated",
+      "rejected_card": "not_persisted",
+      "primary_endpoint": "assessed_strict_failure",
+      "detail_grading": "unavailable",
+      "run_endpoint": "assessed_if_every_arm_has_an_assessed_terminal_outcome"
+    },
+    "provider_contract_provider_call_receipt_audit_or_internal_failure": {
+      "primary_endpoint": "not_assessed",
+      "run_endpoint": "incomplete",
+      "cause_decision": "not_ready"
+    },
+    "no_post_hoc_retry_or_v0_4_1_reclassification": true
+  },
+  "local_contract_reason_codes": [
+    "answer_choice_violation",
+    "checkpoint_id_mismatch",
+    "claim_character_bound_exceeded",
+    "disallowed_decision_slot_value",
+    "duplicate_decision_slot",
+    "invalidated_active_support",
+    "invented_invalidation",
+    "missing_required_decision_slot",
+    "multiple_raw_chunks_copied",
+    "topic_character_bound_exceeded",
+    "unavailable_evidence_citation",
+    "unknown_decision_slot",
+    "unseen_active_support"
+  ],
+  "non_assessable_receipt_audit_reason_codes": [
+    "receipt_request_fingerprint_mismatch"
+  ],
+  "direction_rule_revision_envelope": {
+    "ordering": [
+      "mixed",
+      "contributes_on_this_dev",
+      "harmful_on_this_dev",
+      "not_needed_on_this_saturated_dev",
+      "no_detected_effect_below_ceiling"
+    ],
+    "mixed": "both_fixed_only_and_no_revision_only_stable_cases",
+    "contributes_on_this_dev": "one_or_more_fixed_only_stable_cases_and_no_no_revision_only_stable_case",
+    "harmful_on_this_dev": "one_or_more_no_revision_only_stable_cases_and_no_fixed_only_stable_case",
+    "not_needed_on_this_saturated_dev": "both_arms_stable_pass_all_locked_cases_and_no_directional_only_case",
+    "no_detected_effect_below_ceiling": "equal_stable_case_outcomes_below_ceiling_and_no_directional_only_case"
+  },
+  "claim_boundary_append": [
+    "A terminal local contract rejection is an adjudicated strict failure of the primary endpoint, not a valid final card and not missing data.",
+    "Provider-call, provider-contract, and internal failures remain non-assessable and keep the locked cause gate false.",
+    "A request/receipt fingerprint mismatch is a non-assessable audit invariant failure, never a model-card strict failure.",
+    "Reason codes identify only a predeclared validator rule; rejected card values and exception text are not persisted.",
+    "The v0.4.2 endpoint policy does not retrospectively change the frozen v0.4.1 artifact.",
+    "A fresh exact ten-case three-trial block is required for any v0.4.2 cause decision."
+  ]
+}

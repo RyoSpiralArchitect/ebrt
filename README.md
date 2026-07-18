@@ -30,12 +30,48 @@ while trajectory regularization uses `trajectory_anchor_floor`. A DEV-only
 cost lane changes the former and requires exact outcomes; a separate causal
 factorial changes the latter while keeping routing and generator work fixed.
 
+EBRT v0.4 adds the first live Language Replay Bridge. GPT-5.6 produces compact
+public Reasoning Cards, observes late evidence through a strict semantic
+schema, freezes a pre-outcome replay plan, and regenerates only a selected
+public suffix. A matched two-case DEV canary compares card-only continuation,
+full restart, and selective replay with exact API usage and independent gold.
+After closing observer and citation side channels, it exposes a concrete
+interaction between invalidated-anchor routing and public-state sufficiency.
+
+A subsequent 10-case × 3-trial calibration now tests that public-card scaffold
+against one stateless call over all raw evidence after the same fixed revision
+annotation. Direct passed 30/30 strict outputs; staged Full passed 4/30, with no
+Full-only win. This freezes a useful negative result: repair or bypass lossy
+public-state factorization before investing further in selective replay.
+
+EBRT v0.4.1 adds the two missing same-block controls: a one-shot raw arm with
+no revision envelope, and a staged arm that retains the cumulative raw prefix.
+It also adds a provisional local, read-only Inspector over normalized recorded
+artifacts. The Inspector is an observation-contract experiment, not a freeze of
+the eventual frontend, navigation, brand, or hosting model.
+
+The locked 30-run attempt produced a strong but non-decision-ready trend:
+cumulative-raw staging passed 30/30 strict outputs versus 2/28 completed
+card-only outputs. Two card-only runs stopped on a local contract error, so the
+manifest is `INCOMPLETE` and the preregistered cause conclusion remains closed.
+
+EBRT v0.4.2 prospectively added stable local-validator reason codes and treated
+allowlisted post-response rejections as assessed strict failures. Its passing
+contract smoke launched one fresh full block. That block again produced 30/30
+cumulative-raw strict successes and 2/30 card-only successes, but one API
+timeout and one SDK structured-output parse failure made two four-arm runs
+non-assessable. The new instrumentation separately identified one
+`invalidated_active_support` terminal rejection. The successor artifact is
+therefore also preserved as `INCOMPLETE`, without rerun or partial fill.
+
 > [!IMPORTANT]
-> v0.1-v0.3.1 are **not** a Transformer implementation, a GPT latent-state editor, or
-> evidence of improved language-model accuracy. Topic, stance, and revision
-> targets remain structured inputs in the committed harness. v0.2 exposes an
-> adapter boundary, but meaningful GPT-5.6 integration is a later milestone,
-> not a capability claimed by this release.
+> v0.1-v0.3.1 are **not** a Transformer implementation, a GPT latent-state
+> editor, or evidence of improved language-model accuracy. v0.4 meaningfully
+> executes GPT-5.6 at the public adapter/replay boundary, but still does not
+> access hidden states or private chain-of-thought, and its two-case DEV canary
+> does not establish a general accuracy improvement. The repeated calibration
+> is also contaminated DEV evidence; its Direct arm receives fixed revision
+> metadata and is not an unqualified plain-API baseline.
 
 ## Why EBRT?
 
@@ -70,17 +106,41 @@ dual_route_policy_v0_3_1.py   factorized execution-replay and loss-horizon polic
 benchmark_dual_route_v0_3_1.py DEV cost lane, trajectory factorial, runtime guards
 policy_lock_v0_3_1.json       non-promotional DEV_DRAFT contract and future gates
 fixtures/dual_route_v0_3_1_*.json fresh DEV and contaminated regression fixtures
+language_replay_bridge_v0_4.py public cards, pre-outcome plan, three replay lanes
+openai_reasoning_provider_v0_4.py strict GPT-5.6 Responses providers
+benchmark_language_replay_v0_4.py deterministic/live gates, grading, bundles
+policy_lock_v0_4.json        non-promotional Language Replay DEV contract
+fixtures/language_replay_v0_4_*.json separated DEV inputs and machine gold
+benchmark_direct_full_calibration_v0_4.py completion-ceiling Direct/Full runner
+policy_lock_direct_full_calibration_v0_4.json frozen two-arm DEV contract
+benchmark_aperture_controls_v0_4_1.py locked same-block four-arm control runner
+policy_lock_aperture_controls_v0_4_1.json non-promotional aperture-control contract
+benchmark_aperture_controls_v0_4_2.py prospective endpoint and diagnostic closure
+policy_lock_aperture_controls_v0_4_2.json fixed reason-code and launch-gate contract
+build_inspector_snapshot_v0_4_1.py validated public-artifact normalizer
+inspector/                    provisional local read-only artifact viewer
 docs/RND_BENCHMARK_V0_1.md    protocol, results, limits, and claim ledger
 docs/RND_INSTRUMENTATION_V0_2.md measurement contract and algorithm findings
 docs/RND_DUAL_ROUTE_V0_3.md   terminal invariant result and v0.3.1 direction
 docs/RND_DUAL_ROUTE_V0_3_1.md factorization design, DEV results, and next experiment
+docs/RND_LANGUAGE_REPLAY_V0_4.md live protocol, result, failure, and v0.4.1 axis
+docs/RND_DIRECT_FULL_CALIBRATION_V0_4.md repeated result and state-loss diagnosis
+docs/RND_APERTURE_CONTROLS_V0_4_1.md control result and causal boundary
+docs/RND_DIAGNOSTIC_CLOSURE_V0_4_2.md fresh successor result and failure taxonomy
 artifacts/benchmark_v0_1/     committed machine-readable benchmark evidence
 artifacts/demo_v0_1/trace.json committed no-build mechanism trace
 artifacts/benchmark_instrumentation_v0_2/ committed v0.2 measurement evidence
 artifacts/instrumentation_v0_2/ committed trace and standalone mirror figure
 artifacts/.dual_route_v0_3_holdout_ledger.json canonical terminal attempt record
 artifacts/benchmark_dual_route_v0_3_1_dev/ committed non-promotional DEV evidence
+artifacts/benchmark_language_replay_v0_4_fake_dev/ scripted plumbing evidence only
+artifacts/benchmark_language_replay_v0_4_live_smoke/ boundary-fixed GPT-5.6 DEV canary
+artifacts/benchmark_direct_full_calibration_v0_4_dev/ non-promotional 10-case DEV evidence
+artifacts/benchmark_aperture_controls_v0_4_1_dev/ incomplete locked four-arm attempt
+artifacts/benchmark_aperture_controls_v0_4_2_contract_smoke/ passing launch evidence
+artifacts/benchmark_aperture_controls_v0_4_2_dev/ fresh incomplete diagnostic block
 requirements.txt              runtime dependency declaration
+requirements-live.txt         separately pinned OpenAI/Pydantic live dependencies
 LICENSE                       Apache License 2.0
 ```
 
@@ -207,6 +267,85 @@ families and promotion rules are locked. DEV commands accept another supported
 CPython 3.11+/PyTorch 2.x CPU runtime, record every expected/actual mismatch,
 and remain non-promotional with no cross-runtime byte-reproducibility claim.
 
+Validate the dependency-free v0.4 public-state bridge first:
+
+```bash
+python3 language_replay_bridge_v0_4.py
+```
+
+The frozen v0.4 benchmark `self-test` also validates the exact
+OpenAI/Pydantic structured-output schemas. It makes no API call, but it requires
+the separately pinned schema dependencies:
+
+```bash
+python3 -m pip install -r requirements-live.txt
+python3 openai_reasoning_provider_v0_4.py
+python3 benchmark_language_replay_v0_4.py self-test
+python3 benchmark_language_replay_v0_4.py fake-dev \
+  --output benchmark_results/v0_4_fake_dev
+```
+
+The local provider is explicitly gold-backed and proves plumbing only. To run
+the locked two-case GPT-5.6 canary, additionally provide `OPENAI_API_KEY`
+through the process environment:
+
+```bash
+python3 benchmark_language_replay_v0_4.py live-smoke \
+  --output benchmark_results/v0_4_live_smoke
+```
+
+The live runner uses strict Responses structured outputs, disables SDK retry
+and persisted response state, and never writes the key or raw response object.
+Its output is still `DEV_DRAFT`, not a holdout or promotion result.
+
+Validate the separate Direct-vs-Full calibration without making an API call:
+
+```bash
+python3 benchmark_direct_full_calibration_v0_4.py self-test
+```
+
+With the live dependencies and `OPENAI_API_KEY` available, the two-case smoke
+and locked repeated DEV run are:
+
+```bash
+python3 benchmark_direct_full_calibration_v0_4.py live-smoke \
+  --output benchmark_results/v0_4_direct_full_live_smoke
+python3 benchmark_direct_full_calibration_v0_4.py live-dev \
+  --output benchmark_results/v0_4_direct_full_dev
+```
+
+The comparison matches only the cumulative `max_output_tokens` ceiling. Direct
+and Full use different call counts and realized token/latency budgets. The
+committed bundle is development evidence, never a promotion or general model
+benchmark.
+
+Validate the v0.4.2 diagnostic successor and Inspector exporter without making
+an API call:
+
+```bash
+python3 benchmark_aperture_controls_v0_4_2.py self-test
+python3 build_inspector_snapshot_v0_4_1.py self-test
+```
+
+The committed full block is intentionally not a resume target. Its passing
+contract-smoke launch evidence and incomplete full evidence are both preserved
+under `artifacts/`. To build their normalized read-only view:
+
+```bash
+python3 build_inspector_snapshot_v0_4_1.py build \
+  --bundle artifacts/benchmark_aperture_controls_v0_4_2_dev \
+  --output inspector/public/data/ebrt-public-inspector-v0.1.json
+cd inspector
+pnpm install
+pnpm dev
+```
+
+This viewer is read-only and unhosted. `Overview` replays already recorded final
+public outputs and their cross-arm diff without a model call; `Inspect` displays
+raw aperture, public-card support, grading availability, terminal reason/step,
+and provider-reported usage. It does not expose private chain-of-thought or
+model hidden state.
+
 ## Judge path: inspect first, rerun second
 
 No training or model build is required to inspect the submitted evidence.
@@ -249,6 +388,40 @@ For the v0.3.1 DEV factorization, inspect:
 3. `artifacts/benchmark_dual_route_v0_3_1_dev/` for deterministic lane rows,
    runtime metadata, source hashes, and the non-promotional manifest.
 
+For the v0.4 Language Replay Bridge, inspect:
+
+1. [`docs/RND_LANGUAGE_REPLAY_V0_4.md`](docs/RND_LANGUAGE_REPLAY_V0_4.md) for
+   the public-card contract, matched lanes, live result, failed quality
+   guardrail, and routing/sufficiency interaction;
+2. `policy_lock_v0_4.json` for the pre-outcome route, live provider settings,
+   accounting contract, and DEV claim boundary;
+3. `artifacts/benchmark_language_replay_v0_4_live_smoke/` for the sanitized
+   GPT-5.6 traces, exact usage, grades, and source hashes;
+4. `artifacts/benchmark_language_replay_v0_4_fake_dev/` only for deterministic
+   plumbing and failure-sentinel evidence, never model-performance evidence.
+
+For the repeated Direct-vs-Full calibration, inspect:
+
+1. [`docs/RND_DIRECT_FULL_CALIBRATION_V0_4.md`](docs/RND_DIRECT_FULL_CALIBRATION_V0_4.md)
+   for the locked contrast, result, state-loss diagnosis, and next controls;
+2. `policy_lock_direct_full_calibration_v0_4.json` for the fixed revision
+   envelope, nominal completion ceiling, trial rotation, and claim boundary;
+3. `artifacts/benchmark_direct_full_calibration_v0_4_dev/manifest.json` for all
+   source and artifact hashes;
+4. `benchmark_report.md` and `arm_rows.csv` for the compact result, then
+   `results.json`, `traces.jsonl`, and `calls.jsonl` for the full audit surface.
+
+For the v0.4.1 control block and provisional Inspector, inspect:
+
+1. [`docs/RND_APERTURE_CONTROLS_V0_4_1.md`](docs/RND_APERTURE_CONTROLS_V0_4_1.md)
+   for the paired questions, result, readiness status, and interpretation limit;
+2. `policy_lock_aperture_controls_v0_4_1.json` for the four arms, post-event
+   temporal semantics, output-ceiling scope, and cause-decision gate;
+3. `artifacts/benchmark_aperture_controls_v0_4_1_dev/` for sanitized calls,
+   traces, grades, exact receipts, and manifest hashes;
+4. `inspector/` for the replaceable local viewer and
+   `build_inspector_snapshot_v0_4_1.py` for its validated public data contract.
+
 There is intentionally no normal v0.3 result directory: the runner stopped
 before validated bundle publication, and the ledger stores no outcome rows.
 
@@ -263,6 +436,9 @@ python3 benchmark_instrumentation_v0_2.py --self-test
 python3 render_instrumentation_v0_2.py --self-test
 python3 dual_route_policy_v0_3_1.py --self-test
 python3 benchmark_dual_route_v0_3_1.py self-test
+python3 language_replay_bridge_v0_4.py
+python3 benchmark_language_replay_v0_4.py self-test
+python3 benchmark_direct_full_calibration_v0_4.py self-test
 ```
 
 The v0.3 self-tests are historical checks and must be run from a separate
@@ -447,6 +623,164 @@ cases are DEV; no v0.3.1 holdout or ledger exists. The next experiment can now
 learn or preregister trajectory horizon as a policy axis without confusing it
 with replay cost.
 
+## v0.4 Language Replay DEV result
+
+v0.4 runs a GPT-5.6 semantic observer and public-card generator end to end.
+The boundary-fixed canary contains one answer-flip case and one irrelevant
+no-op, with one trial each. The observer matched both DEV event/floor
+annotations. All 31 attempted calls completed under the locked model/tier with
+exact provider usage; full restart was the only lane to answer both cases
+exactly.
+
+| Lane | Machine success | Answer exact | Regenerated cards | Branch input | Branch output | Branch reasoning |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Card-only forward | 1/2 | 1/2 | 2 | 1,580 | 431 | 136 |
+| Full restart | 2/2 | 2/2 | 12 | 9,257 | 1,924 | 347 |
+| Selective replay | 1/2 | 1/2 | 5 | 4,106 | 1,204 | 412 |
+
+Selective replay used seven fewer public-card calls than full restart and
+5,151 fewer input plus 720 fewer output tokens, but used 65 **more** reasoning
+tokens and did **not** pass the quality guardrail. The fair counterfactual
+totals charge the shared initial trace and observer to every lane: card-only,
+full, and selective used 14, 24, and 17 calls respectively.
+
+On the route-code revision, the invalidated-anchor rule correctly selected the
+checkpoint after raw route table `R2`. That public card retained a bare `R2`
+citation but not the concrete `B2 -> BLUE` lookup edge. Selective preserved the
+late `B2` correction and stable seal but returned stale answer `AMBER` with
+`bay=UNKNOWN`; full restart reread raw `R2` and passed. The no-op passed in all
+lanes and selective replay correctly performed no backward replay.
+
+This is a successful live bridge and a failed sufficiency result—not evidence
+that selective replay already improves GPT reasoning. This canary initially
+nominated dependency-complete public state plus pre-outcome floor expansion.
+The subsequent calibration below pauses floor work and tests the representation
+first. See the [v0.4 R&D note](docs/RND_LANGUAGE_REPLAY_V0_4.md).
+
+## v0.4 Direct-vs-Full calibration result
+
+The follow-up calibration holds revision detection fixed and compares two
+generation paths over all 10 existing DEV cases, three trials each:
+
+- one stateless `direct_raw_fixed_revision` call over all ordered raw evidence;
+- six-step `full_restart` from an empty state using only the previous public
+  card plus the current raw chunk.
+
+Both arms use the same model, final schema, grader, reasoning setting, and
+nominal cumulative output-token ceiling of 4,608 per case. Actual calls, input,
+realized output/reasoning tokens, latency, price, and server compute are not
+matched. Direct receives the same fixed revision metadata, so it is not an
+unqualified plain-API control.
+
+All 210 calls completed with exact sanitized usage and balanced 15/15 arm
+order. The locked result was:
+
+| Metric | Direct | Full |
+| --- | ---: | ---: |
+| Strict machine success | 30/30 | 4/30 |
+| Answer exact | 30/30 | 15/30 |
+| Evidence consistent | 30/30 | 4/30 |
+| Stable case pass | 10/10 | 1/10 |
+| API calls | 30 | 180 |
+| Input tokens | 22,041 | 132,097 |
+| Output tokens | 4,442 | 41,864 |
+| Reasoning-token detail | 0 | 17,502 |
+
+There were 26 Direct-only outcomes, four both-pass outcomes, and no Full-only
+outcome. Full preserved stable facts and invalidation hygiene in all 30 runs,
+but retained required evidence in only 4/30. Its only stable strict pass was the
+irrelevant no-op.
+
+The traces reveal an irreversible aperture loss. Evidence that cannot fill a
+fixed decision slot when first seen—mapping tables, thresholds, conversion
+rules, dependency edges, and precedence rules—often disappears from the next
+public card. A later correction supplies the missing key, but the raw semantics
+cannot re-enter. A citation ID is not a lossless memory.
+
+This rejects the current staged public-card Full protocol as the primary
+quality scaffold on this DEV suite. It does not reject external scaffolding in
+general or formally rank selective replay. The next controls are a
+no-revision-envelope one-shot raw control and a six-call cumulative-raw restart
+that tests card-only information loss while holding staging fixed. See the
+[calibration R&D note](docs/RND_DIRECT_FULL_CALIBRATION_V0_4.md).
+
+## v0.4.1 Aperture-controls result
+
+The follow-up ran the two planned controls in the same block as fresh Direct
+and card-only anchors. The four arms were no-envelope one-shot raw,
+fixed-envelope one-shot raw, fixed-envelope card-only staging, and
+fixed-envelope cumulative-raw staging. All used the same exact model and
+reasoning setting and a nominal 4,608-token output ceiling per case; input
+tokens, call counts, realized output/reasoning tokens, latency, and compute were
+not matched.
+
+The 30 scheduled case-trials produced 28 complete four-arm runs. Both
+incomplete arms were card-only staging and stopped after their third completed
+provider call with a sanitized `local_contract_error`. The artifact preserves
+414 validated receipts, carries an `INCOMPLETE` manifest, and does not open its
+locked cause-decision gate.
+
+| Metric | No-envelope Direct | Fixed Direct | Card-only staged | Cumulative raw |
+| --- | ---: | ---: | ---: | ---: |
+| Completed outputs | 30/30 | 30/30 | 28/30 | 30/30 |
+| Strict machine success | 29/30 | 30/30 | 2/28 | 30/30 |
+| Answer exact | 30/30 | 30/30 | 11/28 | 30/30 |
+| Descriptive stable-pass cases | 10/10 | 10/10 | 1/10 | 10/10 |
+| API calls | 30 | 30 | 174 | 180 |
+| Input tokens | 22,041 | 22,911 | 131,308 | 148,222 |
+| Output tokens | 4,523 | 4,563 | 41,299 | 35,046 |
+| Reasoning-token detail | 87 | 0 | 17,861 | 9,232 |
+
+Among completed staged pairs, cumulative raw had 26 exclusive strict
+successes and shared two successes with card-only; card-only had no exclusive
+success. This strongly nominates raw aperture as the next bottleneck to study,
+but it is a descriptive result on contaminated DEV, not a completed causal
+estimate or a general model-quality claim. The exact local validator sub-rule
+for the two rejected cards was intentionally not retained, so stable
+non-sensitive failure reason codes are the next instrumentation requirement.
+Post-run review also found an unexercised harmful-envelope direction branch in
+the frozen helper. It does not affect this not-ready artifact or the observed
+10/10 one-shot stable parity, but a decision-ready successor must version the
+runner, repair that branch, and add its missing self-test rather than rerun this
+exact lock.
+
+The provisional Inspector renders this incomplete artifact honestly: grade
+unavailability is `NOT ASSESSED`, the header remains `Cause decision: NOT
+READY`, and envelope delivery is visible per arm. See the
+[v0.4.1 R&D note](docs/RND_APERTURE_CONTROLS_V0_4_1.md).
+
+## v0.4.2 Diagnostic-closure result
+
+The versioned successor preserved the v0.4.1 provider-facing protocol and
+added a prospective endpoint policy: a completed provider call rejected by an
+allowlisted local validator rule is an assessed strict failure, while provider,
+SDK, receipt-audit, and internal failures remain non-assessable. A fixed
+two-case contract smoke passed 28/28 calls before the exact 10-case x 3-trial
+block was launched.
+
+The full schedule ran once and produced 414 unique attempted receipts. It did
+not become decision-ready: an `APITimeoutError` affected fixed Direct in one
+`alias_rebind` trial, and an SDK structured-output `ValidationError` affected
+card-only staging in another. Separately, one card-only run reached a completed
+provider receipt and was rejected with `invalidated_active_support`; this is a
+measured strict failure rather than missing data.
+
+| Metric | No-envelope Direct | Fixed Direct | Card-only staged | Cumulative raw |
+| --- | ---: | ---: | ---: | ---: |
+| Accepted outputs | 30/30 | 29/30 | 28/30 | 30/30 |
+| Strict machine success | 29/30 | 29/30 | 2/30 | 30/30 |
+| Exact final answer | 30/30 | 29/30 | 11/30 | 30/30 |
+| Assessed stable-pass cases | 9/9 | 9/9 | 1/9 | 9/9 |
+| Attempted API calls | 30 | 30 | 174 | 180 |
+
+Within the 28 assessed staged pairs, cumulative raw won exclusively 26 times
+and shared two passes; card-only had no exclusive pass. This is consistent with
+the prior raw-aperture mechanism candidate, but the two non-assessable pairs
+keep both locked cause conclusions closed. Aggregate provider-token totals are
+exact only for no-envelope Direct and cumulative raw, because the other two
+arms include a receipt with unavailable usage. See the
+[v0.4.2 R&D note](docs/RND_DIAGNOSTIC_CLOSURE_V0_4_2.md).
+
 ## Current scope and claim boundary
 
 | Statement | Current status |
@@ -465,14 +799,25 @@ with replay cost.
 | Factorized cost-lane outcomes remain exact when the loss horizon is fixed | Supported on all 24 fresh DEV groups plus four contaminated regression groups; actual floor shortening is exercised on 12 fresh and four contaminated groups, not yet as a universal or held-out claim |
 | `trajectory_anchor_floor` is an independent causal policy axis in the toy mechanism | Supported mechanistically: changing it alone reproduced the historical divergence with matched accounting |
 | v0.3.1 improves held-out reasoning quality | Not evaluated; the lock is DEV_DRAFT and no fresh holdout exists |
-| Events are detected autonomously from natural language | Not implemented |
+| A GPT observer can detect a late-evidence event and select a public replay floor | Executed correctly on 2/2 annotated DEV canary cases; generalization is not established |
+| Selective public-card replay matches full-restart quality | Not established; it passed 1/2 full-success canary cases |
+| Selective replay uses fewer provider tokens than full restart | It used fewer input/output tokens in this two-case DEV canary, but 65 more reasoning tokens; no general or monotonic-compute claim |
+| The current staged Full protocol matches one-shot fixed-envelope Direct quality | Refuted on the locked contaminated DEV calibration: Full passed 4/30 versus Direct 30/30, with 0 Full-only outcomes |
+| One-shot fixed-envelope Direct is stable on the existing 10-case DEV suite | Supported at 3/3 trials for all 10 cases; the suite is saturated and not a fresh holdout |
+| The calibration proves an unassisted plain API is superior | Not supported; Direct receives fixed revision metadata and a strict output scaffold |
+| Public-card compression alone caused the Full deficit | Not formally established: both v0.4.1 and v0.4.2 show 30/30 cumulative-raw strict outputs versus 2 card-only successes, but each block has non-assessable paired runs and the intervention changes more than compression alone |
+| Retaining cumulative raw repairs this staged protocol | Strongly nominated on contaminated DEV and replicated descriptively at 30/30 strict outputs; the v0.4.2 locked cause gate remains closed because two paired runs were non-assessable |
+| Stable local-validator reason codes make every live failure assessable | Refuted by the fresh v0.4.2 block: one local rejection became an assessed `invalidated_active_support` failure, while an API timeout and an SDK parse `ValidationError` remained non-assessable |
+| The fixed revision envelope improves the saturated one-shot raw scaffold | Not established; fixed passed 30/30 versus no-envelope 29/30 at output level and both were stable on 10/10 cases, with no decision-ready cause estimate |
+| The Inspector is the final EBRT frontend or a hosted debugger | No; it is a provisional local read-only view over recorded public artifacts and may be replaced entirely |
+| Selective replay should be optimized before state sufficiency | Not supported by current evidence; it is paused as a quality direction and remains an unranked future efficiency ablation |
 | EBRT edits hidden states inside a trained Transformer or GPT model | Not implemented |
 | EBRT improves real-world LLM reasoning accuracy | Not established |
-| GPT-5.6 is meaningfully integrated | Not yet; explicit hackathon gate |
+| GPT-5.6 is meaningfully integrated | Yes at the public observer/replay boundary in a complete DEV canary; not yet promotion evidence |
 
 This project uses the term *reasoning state* only for the harness's explicit
-structured state. It does not claim access to private chain-of-thought or model
-internals.
+structured state and v0.4's public Reasoning Cards. It does not claim access to
+private chain-of-thought or model internals.
 
 ## OpenAI Build Week roadmap
 
@@ -497,12 +842,31 @@ category determination.
   the historical exact-cost invariant, and exposes loss horizon as a causal
   quality/leakage axis. Fresh promotion fixtures and a LOCKED holdout remain
   pending.
-- **Milestone 2 — meaningful GPT-5.6 adapter:** the versioned provider-neutral
-  interface exists; a live GPT-5.6 implementation and matched textual controls
-  remain pending.
-- **Milestone 3 — coherent evaluator experience:** the deterministic standalone
-  Mirror figure exists; a minimal editable or hosted judge sandbox remains
-  pending. A broad product UI is still intentionally deferred.
+- **Milestone 2 — meaningful GPT-5.6 Language Replay Bridge (DEV complete):**
+  the live observer, strict public-card adapter, three matched textual controls,
+  exact provider accounting, and two-case canary now execute end to end. The
+  boundary-fixed canary rejects quality parity and nominates dependency-complete
+  public state as the next representation question.
+- **Milestone 2.1 — Direct-vs-Full calibration (DEV complete):** the repeated
+  10-case run rejects current staged Full as a primary quality scaffold, freezes
+  Direct at 30/30 versus Full at 4/30, and pauses selective replay optimization.
+  A no-revision-envelope one-shot raw control, cumulative-raw staging control,
+  and fresh harder DEV suite come first; if the compression ablation supports
+  it, a generic evidence ledger follows. Promotion evidence is still pending.
+- **Milestone 2.2 — aperture controls and diagnostic successor (executed,
+  decision not ready):** v0.4.1 and a fresh v0.4.2 block are both preserved.
+  The successor converted one local stop into an assessed
+  `invalidated_active_support` strict failure and descriptively replicated
+  cumulative raw at 30/30 versus card-only at 2/30. An API timeout and an SDK
+  structured-output parse failure left two paired runs non-assessable, so no
+  cause decision is promoted and no run is filled or reinterpreted.
+- **Milestone 3 — coherent evaluator experience (provisional local viewer):**
+  the deterministic Mirror figure and a local read-only Inspector over
+  normalized recorded artifacts now exist. Its Overview reaches recorded final
+  output and public diff, while its detailed view distinguishes accepted
+  outputs, assessed terminal rejection, and non-assessable provider/SDK
+  failure. The first Inspector is deliberately replaceable; an editable or
+  hosted judge sandbox and the eventual product interaction remain pending.
 - **Milestone 4 — submission evidence:** document the Codex development record,
   provide an English demo under the event rules, include the required Codex
   feedback session, and audit every public claim against committed artifacts.
@@ -522,7 +886,9 @@ Human decisions remain explicit. In particular, the project owner chose to:
 - freeze the monolith before benchmarking;
 - separate public R&D evidence from the temporary submission checklist;
 - require matched controls and independent gold metrics;
-- defer UI work until the benchmark reveals the most informative interaction;
+- defer the final product UI until the benchmark reveals the most informative
+  interaction, while using a provisional read-only viewer to test the public
+  artifact and observation contract;
 - use instrumentation to generate and falsify new routing/revision policies,
   not only to police public claims;
 - keep semantic-cause routing separate from the narrower source-projection
@@ -531,7 +897,12 @@ Human decisions remain explicit. In particular, the project owner chose to:
   metrics, and turn its replay/loss coupling into the next causal experiment;
 - keep mechanism, model-integration, and accuracy claims separate;
 - require meaningful GPT-5.6 use before representing the project as
-  hackathon-ready.
+  hackathon-ready;
+- preserve a failed selective-quality guardrail and turn the observed public
+  routing/state-sufficiency interaction into the next algorithm experiment;
+- insert a one-shot Direct control before tuning selective replay, freeze its
+  negative result for staged Full, and prioritize causal compression controls
+  over preserving the preferred roadmap.
 
 Codex accelerated implementation and audit work; it did not decide whether the
 evidence is sufficient for a scientific or product claim.
@@ -544,9 +915,22 @@ dual-route policy is implemented, but its preregistered one-shot comparison is
 terminal and inconclusive after rejecting a replay-invariance assumption. It
 does not validate or quality-rank the dual route. The replay-factorized v0.3.1
 DEV harness is implemented and repairs the observed cost invariant, but it is
-not a fresh holdout or quality result. A LOCKED v0.3.1 promotion experiment,
-live GPT-5.6 adapter, matched language benchmark, and hosted judge sandbox are
-still pending; there is no hosted service in this release.
+not a fresh holdout or quality result. The live v0.4 GPT-5.6 Language Replay
+Bridge and matched two-case canary are implemented; full restart passed 2/2,
+while selective replay passed 1/2 and therefore did not clear its quality
+guardrail. Selective used fewer input/output tokens but more reasoning tokens.
+The subsequent locked 10-case × 3-trial calibration is also complete: one-shot
+fixed-envelope Direct passed 30/30 while staged public-card Full passed 4/30.
+This pauses both Full and selective as quality directions until a redesigned
+public state meets the Direct non-degradation gate. The v0.4.1 control attempt
+then found cumulative raw at 30/30 strict outputs versus card-only at 2/28
+completed outputs, while no-envelope and fixed-envelope Direct reached 29/30
+and 30/30. Two card-only arms failed a local contract after a completed third
+provider call, leaving the manifest incomplete and the cause decision not
+ready. The repository now includes a provisional local read-only Inspector for
+that recorded evidence. Stable validator reason codes, a fresh harder DEV and
+promotion suite, a compact replacement state, and any hosted judge sandbox
+remain pending; there is no hosted service in this release.
 
 Issues and pull requests that add reproducible tests, adversarial fixtures, or
 better controls are especially welcome. Please avoid expanding claims without
