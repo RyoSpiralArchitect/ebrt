@@ -1,0 +1,150 @@
+{
+  "schema_version": "ebrt-aperture-controls-unchanged-replication-meta-lock-v0.4.2-r01",
+  "protocol_id": "aperture-controls-v0.4.2-unchanged-replication-r01-2026-07-19",
+  "status": "PREREGISTERED_PROTOCOL",
+  "promotion_eligible": false,
+  "enforcement_boundary": "external_git_sealed_meta_lock_not_loaded_by_runner",
+  "prior_evidence_disclosure": {
+    "prior_v0_4_2_result_seen": true,
+    "contaminated_dev_reuse": true,
+    "confirmatory_holdout": false,
+    "interpretation": "fresh stochastic replication on the same seen DEV suite"
+  },
+  "base": {
+    "final_main_commit": "59f46a7d391fb698cd8edf59efdcbcff97be4fa5",
+    "final_main_tree": "61264b1a1af5683d640c68cfeacb8546c4729f8e",
+    "required_ancestor": "abb09bae4ca7aafe0a9ce6251e21bb0811b21474",
+    "preregistration_commit_seal": "the git commit containing this byte-identical file must be committed and pushed before the first live call"
+  },
+  "frozen_reference": {
+    "prior_v0_4_2_contract_smoke_manifest_sha256": "72b7571be7eca10d2f4d89949dd791d9613c2e36f8bd2024188d10329188c3df",
+    "prior_v0_4_2_incomplete_dev_manifest_sha256": "d3e7818cea39ffcf210ae0c6c21a23b39e6f666a526d3ba1cddac599808f5700",
+    "v0_4_1_dev_manifest_sha256": "c24fd0767a303a5e5adb9fe9645afc4b9bc78f829f1731904132f33464529de0",
+    "direct_full_parent_manifest_sha256": "184feaeb4982db864236d8dca6e98eeaadad66f1ae7e94905f34afe6a638e3b7"
+  },
+  "expected_execution_source_sha256": {
+    "artifacts/benchmark_aperture_controls_v0_4_1_dev/manifest.json": "c24fd0767a303a5e5adb9fe9645afc4b9bc78f829f1731904132f33464529de0",
+    "artifacts/benchmark_direct_full_calibration_v0_4_dev/manifest.json": "184feaeb4982db864236d8dca6e98eeaadad66f1ae7e94905f34afe6a638e3b7",
+    "benchmark_aperture_controls_v0_4_1.py": "d5dd4a8a81172ad3603869d1f15f9649340ba7eab0c1627f5ab6ce2f9f752e66",
+    "benchmark_aperture_controls_v0_4_2.py": "b6b2dc592a03726b1f680835aefe18c399b1cb6e97c87d44e3d18f2e24bfdbd0",
+    "benchmark_direct_full_calibration_v0_4.py": "f9574c5ed9c48bb827e5b90fe0ef0b6aeb27c558686e792576e57bcfd0184dd9",
+    "benchmark_language_replay_v0_4.py": "813ab885cecdacec034536a7dfeaa01c101554cc58663d1a79ad133595c6df91",
+    "fixtures/language_replay_v0_4_dev.json": "6b9ec912ae85c08ecdb76f71efecb24e4a05742b58330dda639cb4ed5d6fc5f6",
+    "fixtures/language_replay_v0_4_dev_gold.json": "ca0d89c0eb92a7c9addb61014f64730762a17cf6ac1d76f0b5ca8a205b13f32a",
+    "language_replay_bridge_v0_4.py": "5fd765ec5ca55562e7b712ec48adc6f54588080c276cbfa58aabcb72492666c2",
+    "openai_reasoning_provider_v0_4.py": "840d019811ecfab2b6bb25f2969d3c27e405b8cc148c068308393c2207c31689",
+    "policy_lock_aperture_controls_v0_4_1.json": "4843d297ff854dde9a51eb0df3f195d45b56a9ca52b40ba53d03159c322891bc",
+    "policy_lock_aperture_controls_v0_4_2.json": "5fdc2de14e13116ad37e4a7593680c9bdcb985f6d84db6778c5361ee820bbea1",
+    "policy_lock_direct_full_calibration_v0_4.json": "7f25f0cfb70e44ef307d5624054f88c2536b10276ab5d122ce735647f380378d",
+    "policy_lock_v0_4.json": "3687482c068094d8a9d861582ffaa0d861f1c9cf894db1592767db2947ebee5d",
+    "requirements-live.txt": "73a8bd6fd5d0a6aa2ec01c216b1ddc50f2c5f32746bcf907ec7ca3ab793e7c83",
+    "semantic_adapter_v0_2.py": "836b7afadabb2e2e5b6ea53afe2795e529ab20193b00d83af9a5624d4f32d2ca"
+  },
+  "runtime": {
+    "python": "3.13.13",
+    "openai": "2.45.0",
+    "pydantic": "2.12.5",
+    "provider": "openai",
+    "api": "responses.parse",
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "low",
+    "service_tier": "default",
+    "sdk_retries": 0,
+    "timeout_seconds": 60,
+    "store": false,
+    "previous_response_id": false,
+    "truncation": "disabled",
+    "provider_seed": "unset"
+  },
+  "research_question": "With byte-identical v0.4.2 execution sources and a fresh stochastic block, does the fixed contract smoke pass its launch gate and, if launched, is the exact full block decision-ready?",
+  "primary_endpoint": {
+    "classification": [
+      "smoke_gate_failed_full_not_launched",
+      "full_executed_incomplete_non_assessable",
+      "full_executed_decision_ready"
+    ],
+    "cause_conclusion_reported_only_when": "full_executed_decision_ready"
+  },
+  "secondary_descriptive_endpoints": [
+    "assessed_four_arm_runs",
+    "all_output_completed_runs",
+    "attempted_api_calls",
+    "non_assessable_failures",
+    "terminal_local_rejections_and_reason_codes",
+    "per_arm_accepted_and_strict_assessed_counts",
+    "stable_pass_case_counts",
+    "revision_envelope_contrast",
+    "raw_aperture_contrast",
+    "exact_total_token_accounting"
+  ],
+  "contract_smoke": {
+    "case_ids": [
+      "unit_reinterpretation",
+      "invalidated_sensor_fallback"
+    ],
+    "trials": 1,
+    "runs": 2,
+    "arm_endpoints": 8,
+    "nominal_api_calls": 28,
+    "expected_manifest_status": "COMPLETE_NON_DECISION_RUN",
+    "expected_execution_complete": true,
+    "expected_success_manifest": false,
+    "expected_locked_decision_ready": false,
+    "full_run_launch_ready_required": true,
+    "non_assessable_failures_required": 0,
+    "attempted_api_calls_exact_28_required": false
+  },
+  "full_block": {
+    "launch_condition": "fresh contract smoke full_run_launch_ready is true",
+    "cases": 10,
+    "trials": 3,
+    "runs": 30,
+    "arm_endpoints": 120,
+    "nominal_api_calls": 420,
+    "decision_ready_manifest_status": "COMPLETE_LOCKED_DEV",
+    "decision_ready_requires": [
+      "execution_complete_true",
+      "success_manifest_true",
+      "locked_decision_ready_true",
+      "exact_locked_case_trial_coverage_true",
+      "all_locked_primary_endpoints_assessed_true",
+      "live_receipts_validated_true",
+      "non_assessable_failures_zero"
+    ],
+    "attempted_api_calls_exact_420_required": false
+  },
+  "attempt_policy": {
+    "contract_smoke_attempts": 1,
+    "full_attempts_if_launched": 1,
+    "fresh_smoke_required": true,
+    "reuse_prior_passing_smoke": false,
+    "sdk_or_manual_retry": false,
+    "resume_or_partial_fill": false,
+    "arm_repair": false,
+    "copy_prior_receipts": false,
+    "replace_failed_output_with_new_attempt": false,
+    "live_subset_as_replacement": false,
+    "freeze_adverse_or_incomplete_result": true,
+    "future_attempt_requires_new_preregistered_protocol_id": true
+  },
+  "output_paths": {
+    "smoke_working": "benchmark_results/v0_4_2_unchanged_replication_r01_contract_smoke",
+    "full_working": "benchmark_results/v0_4_2_unchanged_replication_r01_dev",
+    "smoke_canonical": "artifacts/benchmark_aperture_controls_v0_4_2_unchanged_replication_r01_contract_smoke",
+    "full_canonical": "artifacts/benchmark_aperture_controls_v0_4_2_unchanged_replication_r01_dev"
+  },
+  "post_run_freeze": {
+    "policy_file_must_remain_byte_identical": true,
+    "working_bundle_copied_byte_identically_to_canonical": true,
+    "manifest_and_artifact_hashes_reverified": true,
+    "artifact_and_executed_note_share_one_freeze_commit": true,
+    "readme_or_ui_update_in_separate_commit": true
+  },
+  "claim_boundary": [
+    "This is a fresh stochastic replication on a seen contaminated DEV suite, not a holdout or generalization test.",
+    "A favorable replication does not establish a causal reasoning improvement or a compression-only mechanism.",
+    "A provider, SDK, receipt-audit, or internal failure remains non-assessable and closes the cause gate.",
+    "An allowlisted terminal local contract rejection is an assessed strict failure and may reduce attempted calls below the nominal count.",
+    "Differences from the prior independent stochastic block are descriptive, not an instrumentation effect."
+  ]
+}
