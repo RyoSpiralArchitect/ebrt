@@ -117,6 +117,7 @@ benchmark_aperture_controls_v0_4_1.py locked same-block four-arm control runner
 policy_lock_aperture_controls_v0_4_1.json non-promotional aperture-control contract
 benchmark_aperture_controls_v0_4_2.py prospective endpoint and diagnostic closure
 policy_lock_aperture_controls_v0_4_2.json fixed reason-code and launch-gate contract
+policy_lock_aperture_controls_v0_4_2_unchanged_replication_r01.json external one-shot replication meta-lock
 build_inspector_snapshot_v0_4_1.py validated public-artifact normalizer
 inspector/                    provisional local read-only artifact viewer
 docs/RND_BENCHMARK_V0_1.md    protocol, results, limits, and claim ledger
@@ -127,6 +128,7 @@ docs/RND_LANGUAGE_REPLAY_V0_4.md live protocol, result, failure, and v0.4.1 axis
 docs/RND_DIRECT_FULL_CALIBRATION_V0_4.md repeated result and state-loss diagnosis
 docs/RND_APERTURE_CONTROLS_V0_4_1.md control result and causal boundary
 docs/RND_DIAGNOSTIC_CLOSURE_V0_4_2.md fresh successor result and failure taxonomy
+docs/RND_APERTURE_CONTROLS_V0_4_2_UNCHANGED_REPLICATION_R01.md preregistered replication and frozen negative result
 artifacts/benchmark_v0_1/     committed machine-readable benchmark evidence
 artifacts/demo_v0_1/trace.json committed no-build mechanism trace
 artifacts/benchmark_instrumentation_v0_2/ committed v0.2 measurement evidence
@@ -139,6 +141,7 @@ artifacts/benchmark_direct_full_calibration_v0_4_dev/ non-promotional 10-case DE
 artifacts/benchmark_aperture_controls_v0_4_1_dev/ incomplete locked four-arm attempt
 artifacts/benchmark_aperture_controls_v0_4_2_contract_smoke/ passing launch evidence
 artifacts/benchmark_aperture_controls_v0_4_2_dev/ fresh incomplete diagnostic block
+artifacts/benchmark_aperture_controls_v0_4_2_unchanged_replication_r01_*/ unchanged-source smoke and full evidence
 requirements.txt              runtime dependency declaration
 requirements-live.txt         separately pinned OpenAI/Pydantic live dependencies
 LICENSE                       Apache License 2.0
@@ -781,6 +784,37 @@ exact only for no-envelope Direct and cumulative raw, because the other two
 arms include a receipt with unavailable usage. See the
 [v0.4.2 R&D note](docs/RND_DIAGNOSTIC_CLOSURE_V0_4_2.md).
 
+### v0.4.2 unchanged replication r01
+
+An externally sealed meta-lock then repeated the byte-identical v0.4.2 lane.
+The fresh two-case smoke again passed 28/28 calls and launched the full block.
+The full block did not become decision-ready: it produced 22/30 assessed
+four-arm runs, 20/30 all-output-completed runs, two assessed card-only
+`invalidated_active_support` rejections, and 31 non-assessable provider-call
+exceptions.
+
+Those 31 exceptions form one contiguous tail from receipt 314 through 344.
+Every frozen receipt records `failure_type=RateLimitError`, attempt 1, and retry
+0. The first 313 receipts completed; there was no successful recovery after the
+tail began. The v0.4.2 artifact does not retain an HTTP status or provider error
+code, so it cannot distinguish ordinary rate limiting from quota exhaustion,
+and the historical rows remain `provider_call_exception_unclassified`.
+
+| Predeclared endpoint | Prior v0.4.2 | r01 |
+| --- | ---: | ---: |
+| Assessed four-arm runs | 28/30 | 22/30 |
+| All-output-completed runs | 27/30 | 20/30 |
+| Attempted calls | 414 | 344 |
+| Non-assessable endpoints | 2 | 31 |
+| Terminal local rejections | 1 | 2 |
+
+The preregistered r01 classification is
+`full_executed_incomplete_non_assessable`. This is a valid frozen runtime
+negative result on a seen contaminated DEV suite, not an algorithm-quality
+comparison. It motivates prospective provider-boundary instrumentation without
+retrospectively relabeling failures. See the
+[unchanged-replication note](docs/RND_APERTURE_CONTROLS_V0_4_2_UNCHANGED_REPLICATION_R01.md).
+
 ## Current scope and claim boundary
 
 | Statement | Current status |
@@ -808,6 +842,8 @@ arms include a receipt with unavailable usage. See the
 | Public-card compression alone caused the Full deficit | Not formally established: both v0.4.1 and v0.4.2 show 30/30 cumulative-raw strict outputs versus 2 card-only successes, but each block has non-assessable paired runs and the intervention changes more than compression alone |
 | Retaining cumulative raw repairs this staged protocol | Strongly nominated on contaminated DEV and replicated descriptively at 30/30 strict outputs; the v0.4.2 locked cause gate remains closed because two paired runs were non-assessable |
 | Stable local-validator reason codes make every live failure assessable | Refuted by the fresh v0.4.2 block: one local rejection became an assessed `invalidated_active_support` failure, while an API timeout and an SDK parse `ValidationError` remained non-assessable |
+| Repeating unchanged v0.4.2 makes the locked cause estimate decision-ready | Refuted by r01: its smoke passed, but a contiguous 31-receipt `RateLimitError` tail left only 22/30 four-arm runs assessed and kept both cause conclusions closed |
+| The r01 rate-limit tail proves quota exhaustion or an HTTP-layer cause | Not established: v0.4.2 retained the SDK exception class but not HTTP status or provider error code, so prospective v0.4.3 instrumentation is required |
 | The fixed revision envelope improves the saturated one-shot raw scaffold | Not established; fixed passed 30/30 versus no-envelope 29/30 at output level and both were stable on 10/10 cases, with no decision-ready cause estimate |
 | The Inspector is the final EBRT frontend or a hosted debugger | No; it is a provisional local read-only view over recorded public artifacts and may be replaced entirely |
 | Selective replay should be optimized before state sufficiency | Not supported by current evidence; it is paused as a quality direction and remains an unranked future efficiency ablation |
@@ -859,7 +895,16 @@ category determination.
   `invalidated_active_support` strict failure and descriptively replicated
   cumulative raw at 30/30 versus card-only at 2/30. An API timeout and an SDK
   structured-output parse failure left two paired runs non-assessable, so no
-  cause decision is promoted and no run is filled or reinterpreted.
+  cause decision is promoted and no run is filled or reinterpreted. The
+  byte-identical r01 replication also remains not ready: its smoke passed, but
+  a late contiguous 31-receipt `RateLimitError` tail left only 22/30 four-arm
+  runs assessed. r01 is frozen without retry or partial fill.
+- **Milestone 2.3 — provider-boundary observability (next):** preserve all
+  prompts, arms, fixtures, budgets, endpoint adjudication, and no-retry
+  behavior while separating pre-HTTP acquisition, HTTP status, SDK structured
+  parsing, provider contract, and local public-card validation. The purpose is
+  diagnostic classification coverage, not to claim that instrumentation
+  improves model quality or prevents provider failures.
 - **Milestone 3 — coherent evaluator experience (provisional local viewer):**
   the deterministic Mirror figure and a local read-only Inspector over
   normalized recorded artifacts now exist. Its Overview reaches recorded final
