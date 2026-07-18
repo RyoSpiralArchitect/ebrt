@@ -1,0 +1,270 @@
+{
+  "schema_version": "ebrt-aperture-controls-policy-lock-v0.4.1",
+  "protocol_id": "aperture-controls-dev-draft-2026-07-19",
+  "status": "DEV_DRAFT",
+  "promotion_eligible": false,
+  "research_question": "In one same-block run, does a fixed revision envelope improve one-shot raw-context output, and does retaining the cumulative raw prefix repair staged public-card execution?",
+  "arms": [
+    "direct_raw_no_revision",
+    "direct_raw_fixed_revision_rerun",
+    "staged_card_only_rerun",
+    "staged_cumulative_raw"
+  ],
+  "contrasts": {
+    "revision_envelope": [
+      "direct_raw_no_revision",
+      "direct_raw_fixed_revision_rerun"
+    ],
+    "raw_aperture": [
+      "staged_card_only_rerun",
+      "staged_cumulative_raw"
+    ]
+  },
+  "execution": {
+    "primary_estimands": [
+      "one_shot_fixed_revision_envelope_effect_under_one_shared_prompt",
+      "staged_retained_raw_prefix_effect_under_one_shared_prompt"
+    ],
+    "arm_order": "four_by_four_williams_latin_square_by_trial_plus_original_case_index",
+    "williams_rows": [
+      [
+        "direct_raw_no_revision",
+        "direct_raw_fixed_revision_rerun",
+        "staged_cumulative_raw",
+        "staged_card_only_rerun"
+      ],
+      [
+        "direct_raw_fixed_revision_rerun",
+        "staged_card_only_rerun",
+        "direct_raw_no_revision",
+        "staged_cumulative_raw"
+      ],
+      [
+        "staged_card_only_rerun",
+        "staged_cumulative_raw",
+        "direct_raw_fixed_revision_rerun",
+        "direct_raw_no_revision"
+      ],
+      [
+        "staged_cumulative_raw",
+        "direct_raw_no_revision",
+        "staged_card_only_rerun",
+        "direct_raw_fixed_revision_rerun"
+      ]
+    ],
+    "case_order": "rotate_by_trial_index",
+    "api_seed": "not_set_not_claimed",
+    "trials": 3,
+    "smoke_trials": 1,
+    "retry_policy": "no_retry_failed_attempts_remain_counted",
+    "failed_call_receipt_boundary": "inherited_v0_4_sdk_call_exceptions_are_not_used_for_transport_or_usage_claims",
+    "private_chain_of_thought": "not_requested_not_persisted",
+    "hidden_model_state": "not_accessed",
+    "expected_api_calls_per_case_trial": 14,
+    "expected_full_locked_api_calls": 420,
+    "expected_two_case_smoke_api_calls": 28
+  },
+  "revision_envelope": {
+    "source": "input_fixture_late_evidence_semantic_annotation",
+    "status": "fixed_dev_annotation_and_validator_only_bound_not_observer_output",
+    "provider_fields": [
+      "late_evidence_id",
+      "relevant",
+      "revision_cue",
+      "invalidated_evidence_ids"
+    ],
+    "excluded_fields": [
+      "topic",
+      "stance",
+      "confidence",
+      "public_summary",
+      "answer",
+      "required_facts",
+      "required_evidence_ids",
+      "replay_floor",
+      "grader_output",
+      "gold",
+      "semantic"
+    ],
+    "direct_raw_no_revision_delivery": null,
+    "direct_raw_no_revision_local_validation": "fixture_annotation_bounds_invalidations_after_output_without_retry_or_provider_exposure",
+    "other_arms_delivery": "same_minimal_fixed_envelope",
+    "staged_temporal_semantics": "post_event_reconstruction_the_fixed_envelope_is_deliberately_available_from_the_first_rebuilt_chunk_not_online_event_discovery",
+    "late_raw_text": "present_once_in_each_one_shot_call_and_only_as_current_evidence_in_each_staged_final_call",
+    "observer_performance": "held_out_of_scope"
+  },
+  "public_card_aperture": {
+    "claim_max_characters": 256,
+    "topic_max_characters": 64,
+    "minimum_guarded_raw_characters": 16,
+    "maximum_verbatim_raw_chunk_matches": 1,
+    "verbatim_raw_copy": "at_most_one_full_seen_raw_chunk_in_claim_and_topic",
+    "semantic_compression": "allowed_and_is_the_intended_card_only_state_channel",
+    "paraphrase_elimination": "not_claimed"
+  },
+  "arm_contracts": {
+    "direct_raw_no_revision": {
+      "api_calls_per_case": 1,
+      "input": "question_choices_slots_all_raw_evidence_null_revision_context",
+      "state": "no_previous_public_card",
+      "evidence_aperture": "all_raw_case_evidence",
+      "shared_prompt_pair": "one_shot"
+    },
+    "direct_raw_fixed_revision_rerun": {
+      "api_calls_per_case": 1,
+      "input": "question_choices_slots_all_raw_evidence_fixed_revision_envelope",
+      "state": "no_previous_public_card",
+      "evidence_aperture": "all_raw_case_evidence",
+      "shared_prompt_pair": "one_shot"
+    },
+    "staged_card_only_rerun": {
+      "api_calls_per_case": 6,
+      "input": "question_choices_slots_previous_public_card_empty_retained_raw_current_raw_fixed_revision_envelope",
+      "state": "empty_start_then_public_card_only",
+      "evidence_aperture": "surviving_public_support_plus_current_plus_invalidated_roster",
+      "shared_prompt_pair": "staged"
+    },
+    "staged_cumulative_raw": {
+      "api_calls_per_case": 6,
+      "input": "question_choices_slots_previous_public_card_prior_raw_prefix_current_raw_fixed_revision_envelope",
+      "state": "empty_start_then_public_card_plus_prior_raw_prefix",
+      "evidence_aperture": "all_seen_raw_evidence_plus_invalidated_roster",
+      "shared_prompt_pair": "staged"
+    }
+  },
+  "live_provider": {
+    "provider": "openai",
+    "api": "responses.parse",
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "low",
+    "service_tier": "default",
+    "store": false,
+    "previous_response_id": false,
+    "truncation": "disabled",
+    "sdk_retries": 0,
+    "max_card_output_tokens": 768,
+    "timeout_seconds": 60
+  },
+  "budget_match": {
+    "scope": "nominal_generated_token_ceiling_per_arm_per_case",
+    "staged_formula": "evidence_chunk_count * max_card_output_tokens",
+    "one_shot_formula": "one_call * evidence_chunk_count * max_card_output_tokens",
+    "expected_ceiling_for_current_six_chunk_cases": 4608,
+    "input_tokens": "not_matched_measured",
+    "realized_output_tokens": "not_forced_measured",
+    "reasoning_tokens": "not_forced_measured",
+    "api_calls": "not_matched_measured",
+    "latency": "not_matched_measured",
+    "price_or_server_compute_parity": "not_claimed",
+    "padding": "forbidden"
+  },
+  "source_integrity": {
+    "parent_artifact_manifest": "artifacts/benchmark_direct_full_calibration_v0_4_dev/manifest.json",
+    "parent_manifest_status": "COMPLETE_LOCKED_DEV",
+    "parent_manifest_source_hashes_must_match": true,
+    "parent_pinned_files_must_not_be_modified": true
+  },
+  "fixtures": {
+    "input": "fixtures/language_replay_v0_4_dev.json",
+    "gold": "fixtures/language_replay_v0_4_dev_gold.json",
+    "case_count": 10,
+    "evidence_chunks_per_case": 6,
+    "live_canary_case_ids": [
+      "route_code_supersession",
+      "unrelated_noop"
+    ],
+    "all_cases_are_dev": true,
+    "contaminated_by_prior_development": true,
+    "future_holdout_must_be_fresh": true
+  },
+  "grading": {
+    "primary_endpoint": "final_card_machine_success",
+    "primary_decision_unit": "case_level_stable_pass_at_least_two_of_three_trials",
+    "machine_success_requires": [
+      "answer_exact",
+      "required_facts_exact",
+      "stable_facts_exact",
+      "required_evidence_present",
+      "forbidden_support_absent",
+      "expected_invalidated_evidence_marked"
+    ],
+    "secondary_endpoints": [
+      "answer_exact",
+      "evidence_consistent",
+      "each_machine_check",
+      "citation_precision",
+      "citation_recall",
+      "actual_provider_usage",
+      "api_calls",
+      "latency",
+      "incomplete_or_failed_attempts"
+    ],
+    "gold_attachment": "only_after_all_provider_calls_complete",
+    "private_reasoning_graded": false
+  },
+  "historical_reference_only": {
+    "source": "pr6_direct_full_locked_dev",
+    "direct_raw_fixed_revision_stable_pass_cases": 10,
+    "full_restart_stable_pass_cases": 1,
+    "use": "replication_context_only_not_primary_same_block_estimand"
+  },
+  "direction_rule": {
+    "precondition": "exact_locked_case_trial_coverage_all_arms_complete_and_live_receipts_validated",
+    "revision_envelope": {
+      "not_needed_on_this_dev": "no_revision_stable_passes_all_cases_and_no_fixed_only_stable_case",
+      "contributes_on_this_dev": "one_or_more_fixed_only_stable_cases",
+      "mixed": "both_fixed_only_and_no_revision_only_stable_cases",
+      "no_detected_effect": "equal_stable_case_outcomes_below_ceiling"
+    },
+    "raw_aperture": {
+      "rescue_candidate": "cumulative_raw_stable_passes_all_cases_no_card_only_stable_case_and_improves_stable_pass_count",
+      "partial_rescue": "cumulative_raw_improves_stable_pass_count_without_full_rescue",
+      "mixed": "both_cumulative_only_and_card_only_stable_cases",
+      "not_sufficient": "cumulative_raw_does_not_improve_stable_pass_count"
+    },
+    "selective_replay": "paused_no_same_block_rank",
+    "fresh_harder_suite": "required_before_quality_or_generalization_claim"
+  },
+  "cause_decision_outputs": {
+    "revision_envelope": [
+      "not_assessed_incomplete_or_subset_run",
+      "revision_envelope_effect_mixed_by_case",
+      "revision_envelope_contributes_on_this_dev",
+      "revision_envelope_not_needed_on_this_saturated_dev",
+      "no_revision_envelope_effect_detected_below_ceiling",
+      "no_revision_outperformed_fixed_on_this_dev"
+    ],
+    "raw_aperture": [
+      "not_assessed_incomplete_or_subset_run",
+      "raw_aperture_effect_mixed_by_case",
+      "raw_aperture_rescue_candidate_on_this_dev",
+      "partial_raw_aperture_rescue_on_this_dev",
+      "staged_ceiling_add_fresh_harder_dev",
+      "retained_raw_not_sufficient_under_this_protocol"
+    ],
+    "next_scaffold_step": [
+      "complete_exact_locked_same_block_run",
+      "test_staged_cumulative_raw_on_fresh_harder_holdout",
+      "stratify_partial_rescue_then_build_fresh_harder_dev",
+      "use_one_shot_raw_no_revision_as_primary_scaffold_control",
+      "use_one_shot_fixed_revision_as_primary_scaffold_control",
+      "add_fresh_harder_dev_before_architecture_choice"
+    ]
+  },
+  "claim_boundary": [
+    "This is a fixed contaminated 10-case DEV calibration, not a holdout or promotion experiment.",
+    "The two one-shot arms share one prompt and differ only in whether the minimal fixed revision_context is null or populated.",
+    "The two staged arms share one prompt and differ in retained raw prefix and its corresponding allowed evidence aperture.",
+    "Both staged arms are post-event reconstructions conditioned on the same fixed oracle envelope from their first rebuilt chunk; they do not model online temporal event discovery.",
+    "Card-only means bounded public semantic state rather than zero information: claim/topic length and multi-chunk verbatim copying are constrained and audited, but elimination of one quoted fact or semantic paraphrase is not claimed.",
+    "The no-revision arm still uses a strict public ReasoningCard schema and is not an unqualified unassisted plain-API baseline.",
+    "Fixture semantic annotation is never sent to the no-revision provider; it is used only after output as a no-retry local invalidation bound.",
+    "Matching max_output_tokens ceilings does not match realized tokens, input tokens, calls, latency, price, server compute, or reasoning effort consumed.",
+    "Cumulative raw intentionally repeats earlier raw evidence across staged calls and is expected to consume more input tokens.",
+    "A cumulative-raw failure cannot isolate information retention from sequential commitment, prompt dynamics, or per-call output-token allocation.",
+    "A cumulative-raw rescue would identify raw aperture as a causal bottleneck candidate in this protocol, not establish general LLM reasoning improvement.",
+    "The staged card-only rerun uses the new pair-shared staged interface and is not an exact byte-for-byte rerun of PR 6 Full Restart.",
+    "Selective replay is not executed and receives no same-block rank.",
+    "No private chain-of-thought, hidden-state edit, persisted response state, retry, or provider seed is used."
+  ]
+}
