@@ -1,0 +1,16 @@
+{
+  "attempts": [
+    {
+      "attempt": 1,
+      "benchmark_sha256": "1341585bb7e5e2d8f26b294b4aac9d7c110736290e69ccd694101f8c012dd91a",
+      "error_message": "native selected-min replay changed matched outcome: ('holdout_dual_repeated_stream_00', 0, 'S2')",
+      "error_type": "AssertionError",
+      "failure_note": "The ledger does not store outcome rows, but any started attempt is terminal even if failure occurred during bundle writing.",
+      "protocol_fingerprint": "60bf8c52450975bfe9866270812d26eb9ca8c0a1bdeb7dbe02ed8598ff122146",
+      "rerun_permitted": false,
+      "status": "failed_terminal_new_policy_version_required",
+      "traceback_fingerprint": "cee0f11c7866574cc54bf873fa326e8d283daf12e57fb9d188354cb51e6e98e3"
+    }
+  ],
+  "schema_version": "ebrt-holdout-ledger-v0.3"
+}
