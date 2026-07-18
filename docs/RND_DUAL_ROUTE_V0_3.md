@@ -209,6 +209,27 @@ new causal experiment about trajectory-loss support.
   bundle. Its absence is evidence that the runner stopped before validated
   bundle publication, not an omitted successful result.
 
-The self-tests and DEV-only quick path remain inspectable, but `full` must not
-be rerun for v0.3. A new full experiment belongs to v0.3.1 with new preregistered
-inputs.
+The frozen runner validates the exact recorded Python, PyTorch, platform,
+machine, device, and dtype for `self-test` and `quick` as well as `full`. That is
+stricter than necessary for DEV diagnostics and narrower than the repository's
+general CPython 3.11+/PyTorch 2.x installation surface. It is retained here as
+historical protocol behavior: changing `benchmark_dual_route_v0_3.py` after the
+terminal attempt would invalidate the source hash cited by the lock and ledger.
+
+The clean v0.3.1 runner corrects this contract without rewriting history.
+`full` must match its preregistered runtime exactly and fail before ledger or
+result publication on drift. `self-test`, `quick`, and epsilon-audit modes may
+run on another supported CPU runtime, but must record expected and actual
+environment fields, list every mismatch, and label their outputs DEV-only and
+ineligible for promotion or cross-runtime byte-reproducibility claims.
+
+After the terminal evidence commit `6b3dec8`, PR #2 corrected the v0.2 leverage
+probe at the frozen control boundary. The integrated branch consequently has a
+new `instrumentation_ebrt_v0_2.py` hash, so the historical v0.3 source guard is
+expected to reject it. Exact v0.3 inspection and DEV self-tests belong in a
+separate checkout of `6b3dec8`; the old lock must not be edited to accept the
+post-terminal source graph.
+
+The self-tests and DEV-only quick path remain inspectable at that evidence
+commit, but `full` must not be rerun for v0.3. A new full experiment belongs to
+v0.3.1 with new preregistered inputs.

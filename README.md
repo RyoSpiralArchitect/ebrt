@@ -148,14 +148,31 @@ Diagnostic generator calls are reported separately. Instrumentation timing is
 excluded from deterministic v0.2 artifacts and does not replace the frozen v0.1
 performance baseline.
 
-Validate the frozen v0.3 policy and runner, or run the DEV-only smoke path:
+Validate the frozen v0.3 policy and runner, or run the DEV-only smoke path from
+a separate checkout of terminal evidence commit `6b3dec8`:
 
 ```bash
+# Run these inside a detached clone/worktree at commit 6b3dec8.
 python3 dual_route_policy_v0_3.py --self-test
 python3 benchmark_dual_route_v0_3.py self-test
 python3 benchmark_dual_route_v0_3.py quick \
   --output benchmark_results/v0_3_quick --no-progress
 ```
+
+The terminal v0.3 runner applies its exact recorded runtime lock to `self-test`
+and `quick` as well as `full`. Those two DEV commands therefore run only in the
+environment recorded by `policy_lock_v0_3.json`; the repository-wide CPython
+3.11+/PyTorch 2.x requirements do not imply cross-runtime v0.3 artifact
+reproducibility. This over-strict DEV behavior is preserved because the runner
+and terminal ledger are historical protocol evidence. v0.3.1 separates the
+contract: `full` remains fail-closed on an exact runtime match, while DEV modes
+record actual/expected runtime and mark nonmatching outputs non-promotional.
+
+On the integrated post-v0.3 branch, the corrected v0.2 instrumentation SHA no
+longer matches the historical v0.3 lock. The frozen guard is therefore expected
+to reject v0.3 commands there. Do not update the old lock to silence that
+mismatch; use the evidence commit above for inspection and a new v0.3.1 source
+graph for new experiments.
 
 Do **not** rerun `full` for v0.3. Its canonical one-shot ledger is terminal.
 The next full experiment must use a new v0.3.1 policy version, ledger, and fresh
@@ -206,9 +223,11 @@ python3 benchmark_ebrt_v0_1.py --self-test
 python3 instrumentation_ebrt_v0_2.py --self-test
 python3 benchmark_instrumentation_v0_2.py --self-test
 python3 render_instrumentation_v0_2.py --self-test
-python3 dual_route_policy_v0_3.py --self-test
-python3 benchmark_dual_route_v0_3.py self-test
 ```
+
+The v0.3 self-tests are historical checks and must be run from a separate
+checkout of commit `6b3dec8`, as described above; they are intentionally not a
+current-tree smoke command after the v0.2 feasibility correction.
 
 The manifest is the source of truth for the exact platform used to produce the
 committed results. The v0.1 CLI requires CPython 3.11+ and PyTorch 2.x on a
