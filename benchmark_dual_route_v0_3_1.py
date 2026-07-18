@@ -1366,7 +1366,11 @@ def run_self_tests(lock: Mapping[str, Any]) -> dict[str, Any]:
         if ledger.exists() or output.exists():
             raise AssertionError("mismatched full runtime created ledger/output")
 
-        dev_draft_full_contract = runtime_contract_for_command(lock, "full")
+        dev_draft_full_contract = runtime_contract_for_command(
+            lock,
+            "full",
+            actual_environment=exact_runtime["expected_environment"],
+        )
         for callback, target in (
             (_start_holdout_attempt, ledger),
             (_write_full_bundle_guard, output),

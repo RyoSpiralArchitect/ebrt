@@ -10,7 +10,7 @@
     "semantic_adapter_v0_2.py": "836b7afadabb2e2e5b6ea53afe2795e529ab20193b00d83af9a5624d4f32d2ca",
     "instrumentation_ebrt_v0_2.py": "841325d2ba1f126c61750a9445710084a07530e5940b2246b36846a3c0cc3b88",
     "dual_route_policy_v0_3_1.py": "b371feae1be56943d89c2ce6418ce8e88f7c52256a4c7e0bb961a0abcbd5aeff",
-    "benchmark_dual_route_v0_3_1.py": "e20f2b14584d19a9398f8659f32045aed8148fce34f23890464c637a972319b1",
+    "benchmark_dual_route_v0_3_1.py": "9a47ccf8ff7b9555568907c4786fa137c9fccd6b7c20620cb27725182f61948c",
     "fixtures/dual_route_v0_3_1_dev.json": "8fde84304b45cc34cf9401ecd271e52a4d1f82e4da56d21c4356a10d22a150c4",
     "fixtures/dual_route_v0_3_1_regression.json": "5c0a28b49c2f3207249db50c8d66740aabe5d39719c8ef15c137b797b2ccd448"
   },
