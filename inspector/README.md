@@ -9,8 +9,21 @@ The viewer compares execution protocols over one recorded model. It renders
 the raw evidence recorded in the artifact, emitted public-card support,
 declared invalidations, final-card grading, and provider-reported usage.
 Declared support is not proof that uncited evidence had no semantic influence.
-An unavailable grade is rendered as `NOT ASSESSED`, never as `FAIL`, and the
-header keeps cause-decision readiness separate from execution progress.
+Detailed-grade availability is separate from endpoint adjudication. An
+unassessed endpoint is rendered as `NOT ASSESSED`; a v0.4.2 terminal local
+contract rejection is rendered as endpoint `FAIL` even though no accepted final
+card exists. The header keeps accepted-output completion, endpoint assessment,
+manifest execution status, and cause-decision readiness separate. For failed
+v0.4.2 endpoints it also projects the recorded failure position and the safe
+provider/SDK exception class when available; it never exposes an exception
+message or rejected card.
+
+`Overview` provides a recorded Replay-to-Output comparison using the final
+public Reasoning Cards already stored in the artifact. Its playback control
+only reveals recorded reference/candidate outputs and their public diff: it
+does not invoke a model, regenerate an answer, mutate the source bundle, or
+turn the Inspector into an editor. `Inspect` retains the detailed timeline,
+lineage, and usage view.
 
 The revision envelope shown above the evidence order is a fixture annotation.
 Its actual provider delivery is shown separately for each arm; the no-envelope
@@ -23,14 +36,17 @@ From the repository root:
 
 ```bash
 python3 build_inspector_snapshot_v0_4_1.py build \
-  --bundle artifacts/benchmark_aperture_controls_v0_4_1_dev \
+  --bundle artifacts/benchmark_aperture_controls_v0_4_2_dev \
   --output inspector/public/data/ebrt-public-inspector-v0.1.json
 ```
 
-The exporter can also read the locked two-arm PR #6 artifact while the new
-four-arm control bundle is not yet present:
+The exporter remains backward-compatible with the frozen v0.4.1 four-arm
+artifact and the locked two-arm calibration artifact:
 
 ```bash
+python3 build_inspector_snapshot_v0_4_1.py build \
+  --bundle artifacts/benchmark_aperture_controls_v0_4_1_dev \
+  --output inspector/public/data/ebrt-public-inspector-v0.1.json
 python3 build_inspector_snapshot_v0_4_1.py build \
   --bundle artifacts/benchmark_direct_full_calibration_v0_4_dev \
   --output inspector/public/data/ebrt-public-inspector-v0.1.json
