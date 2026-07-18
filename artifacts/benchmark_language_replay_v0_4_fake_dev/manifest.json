@@ -1,0 +1,49 @@
+{
+  "artifact_sha256": {
+    "benchmark_report.md": "5206984798344f15239c0e704d92523b9ce33a8ee3a5d25367e141199745b7ab",
+    "calls.jsonl": "b85043ce9be45b72b7b02bef17485d841fa341d88b253570ffb55ee51e4db360",
+    "lane_rows.csv": "573fc4ca7c2b8ef8a99b6c20ac69341c276c363f97942de56a8022ac9c3b0efd",
+    "results.json": "4b22163713cbb7521b90b1908124f189d8834850805d95d564a32ae02fc35a98",
+    "traces.jsonl": "a62cac74e70afb8fcd06c837db99a1d59b9a2ab36b21278cdfb99c9e775bdd20"
+  },
+  "case_ids": [
+    "route_code_supersession",
+    "alias_rebind",
+    "unit_reinterpretation",
+    "timestamp_boundary",
+    "invalidated_sensor_fallback",
+    "dependency_root_correction",
+    "quantifier_erratum",
+    "source_revocation",
+    "relevant_nonflip",
+    "unrelated_noop"
+  ],
+  "claim_boundary": [
+    "Scripted results prove bridge plumbing only, not language reasoning.",
+    "Live smoke results are DEV observations, not a promotion benchmark or a general accuracy claim.",
+    "Card-only forward is a public-card continuation control, not a universal chat-model baseline.",
+    "Token savings are reported only from exact provider usage; no price estimate is inferred."
+  ],
+  "complete": true,
+  "mode": "scripted_plumbing",
+  "promotion_eligible": false,
+  "result_fingerprint": "409bd5e238bfa829637778eab6646c878c255820401321ffb93a26d3878eec2c",
+  "runtime": {
+    "machine": "arm64",
+    "platform": "macOS-26.2-arm64-arm-64bit-Mach-O",
+    "python": "3.13.13"
+  },
+  "schema_version": "ebrt-language-replay-benchmark-v0.4",
+  "source_sha256": {
+    "benchmark_language_replay_v0_4.py": "813ab885cecdacec034536a7dfeaa01c101554cc58663d1a79ad133595c6df91",
+    "fixtures/language_replay_v0_4_dev.json": "6b9ec912ae85c08ecdb76f71efecb24e4a05742b58330dda639cb4ed5d6fc5f6",
+    "fixtures/language_replay_v0_4_dev_gold.json": "ca0d89c0eb92a7c9addb61014f64730762a17cf6ac1d76f0b5ca8a205b13f32a",
+    "language_replay_bridge_v0_4.py": "5fd765ec5ca55562e7b712ec48adc6f54588080c276cbfa58aabcb72492666c2",
+    "openai_reasoning_provider_v0_4.py": "840d019811ecfab2b6bb25f2969d3c27e405b8cc148c068308393c2207c31689",
+    "policy_lock_v0_4.json": "3687482c068094d8a9d861582ffaa0d861f1c9cf894db1592767db2947ebee5d",
+    "requirements-live.txt": "73a8bd6fd5d0a6aa2ec01c216b1ddc50f2c5f32746bcf907ec7ca3ab793e7c83",
+    "semantic_adapter_v0_2.py": "836b7afadabb2e2e5b6ea53afe2795e529ab20193b00d83af9a5624d4f32d2ca"
+  },
+  "status": "DEV_DRAFT",
+  "trials": 1
+}

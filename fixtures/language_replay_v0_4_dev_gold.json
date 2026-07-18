@@ -1,0 +1,440 @@
+{
+  "schema_version": "ebrt-language-replay-gold-v0.4",
+  "status": "DEV_DRAFT",
+  "provider_access": "FORBIDDEN_EXCEPT_LOCAL_SCRIPTED_PLUMBING_PROVIDER",
+  "cases": [
+    {
+      "case_id": "route_code_supersession",
+      "expected_plan": {"event_triggered": true, "execution_replay_floor": 2},
+      "initial": {
+        "answer": "AMBER",
+        "claim": "NERA's listed A1 code maps to AMBER.",
+        "topic": "nera_route_code",
+        "stance": 1.0,
+        "confidence": 0.9,
+        "revision_cue": 0.0,
+        "evidence_ids": ["R1", "R2", "R3", "R4", "R5"],
+        "invalidated_evidence_ids": [],
+        "decision_facts": [
+          {"slot": "current_code", "value": "A1", "evidence_ids": ["R3"]},
+          {"slot": "bay", "value": "AMBER", "evidence_ids": ["R2", "R3", "R4"]},
+          {"slot": "cargo_seal", "value": "SEALED", "evidence_ids": ["R5"]}
+        ]
+      },
+      "final": {
+        "answer": "BLUE",
+        "claim": "NERA's corrected B2 code maps to BLUE.",
+        "topic": "nera_route_code",
+        "stance": -1.0,
+        "confidence": 1.0,
+        "revision_cue": 1.0,
+        "evidence_ids": ["R2", "R5", "R6"],
+        "invalidated_evidence_ids": ["R3"],
+        "decision_facts": [
+          {"slot": "current_code", "value": "B2", "evidence_ids": ["R6"]},
+          {"slot": "bay", "value": "BLUE", "evidence_ids": ["R2", "R6"]},
+          {"slot": "cargo_seal", "value": "SEALED", "evidence_ids": ["R5"]}
+        ]
+      },
+      "grading": {
+        "required_evidence_ids": ["R2", "R6"],
+        "forbidden_support_evidence_ids": ["R3"],
+        "required_facts": [
+          {"slot": "current_code", "value": "B2", "evidence_ids": ["R6"]},
+          {"slot": "bay", "value": "BLUE", "evidence_ids": ["R2", "R6"]}
+        ],
+        "stable_facts": [
+          {"slot": "cargo_seal", "value": "SEALED", "evidence_ids": ["R5"]}
+        ]
+      }
+    },
+    {
+      "case_id": "alias_rebind",
+      "expected_plan": {"event_triggered": true, "execution_replay_floor": 2},
+      "initial": {
+        "answer": "INELIGIBLE",
+        "claim": "Luma resolves to AX4 with score 62.",
+        "topic": "luma_alias",
+        "stance": -1.0,
+        "confidence": 0.9,
+        "revision_cue": 0.0,
+        "evidence_ids": ["A1", "A2", "A3", "A4", "A5"],
+        "invalidated_evidence_ids": [],
+        "decision_facts": [
+          {"slot": "entity", "value": "AX4", "evidence_ids": ["A3"]},
+          {"slot": "score", "value": "62", "evidence_ids": ["A2", "A3"]},
+          {"slot": "region", "value": "EAST", "evidence_ids": ["A5"]}
+        ]
+      },
+      "final": {
+        "answer": "ELIGIBLE",
+        "claim": "Luma resolves to BX7 with score 81, above 70.",
+        "topic": "luma_alias",
+        "stance": 1.0,
+        "confidence": 1.0,
+        "revision_cue": 1.0,
+        "evidence_ids": ["A1", "A2", "A5", "A6"],
+        "invalidated_evidence_ids": ["A3"],
+        "decision_facts": [
+          {"slot": "entity", "value": "BX7", "evidence_ids": ["A6"]},
+          {"slot": "score", "value": "81", "evidence_ids": ["A2", "A6"]},
+          {"slot": "region", "value": "EAST", "evidence_ids": ["A5"]}
+        ]
+      },
+      "grading": {
+        "required_evidence_ids": ["A1", "A2", "A6"],
+        "forbidden_support_evidence_ids": ["A3"],
+        "required_facts": [
+          {"slot": "entity", "value": "BX7", "evidence_ids": ["A6"]},
+          {"slot": "score", "value": "81", "evidence_ids": ["A2", "A6"]}
+        ],
+        "stable_facts": [
+          {"slot": "region", "value": "EAST", "evidence_ids": ["A5"]}
+        ]
+      }
+    },
+    {
+      "case_id": "unit_reinterpretation",
+      "expected_plan": {"event_triggered": true, "execution_replay_floor": 2},
+      "initial": {
+        "answer": "WITHIN_LIMIT",
+        "claim": "The recorded 28 kg is within the 100 kg limit.",
+        "topic": "crate_m_weight_unit",
+        "stance": -1.0,
+        "confidence": 0.9,
+        "revision_cue": 0.0,
+        "evidence_ids": ["U1", "U2", "U3", "U4", "U5"],
+        "invalidated_evidence_ids": [],
+        "decision_facts": [
+          {"slot": "weight_kg", "value": "28", "evidence_ids": ["U3"]},
+          {"slot": "color", "value": "GREEN", "evidence_ids": ["U5"]}
+        ]
+      },
+      "final": {
+        "answer": "OVER_LIMIT",
+        "claim": "Twenty-eight quills equal 112 kg, above the limit.",
+        "topic": "crate_m_weight_unit",
+        "stance": 1.0,
+        "confidence": 1.0,
+        "revision_cue": 1.0,
+        "evidence_ids": ["U1", "U2", "U5", "U6"],
+        "invalidated_evidence_ids": ["U3"],
+        "decision_facts": [
+          {"slot": "weight_kg", "value": "112", "evidence_ids": ["U2", "U6"]},
+          {"slot": "color", "value": "GREEN", "evidence_ids": ["U5"]}
+        ]
+      },
+      "grading": {
+        "required_evidence_ids": ["U1", "U2", "U6"],
+        "forbidden_support_evidence_ids": ["U3"],
+        "required_facts": [
+          {"slot": "weight_kg", "value": "112", "evidence_ids": ["U2", "U6"]}
+        ],
+        "stable_facts": [
+          {"slot": "color", "value": "GREEN", "evidence_ids": ["U5"]}
+        ]
+      }
+    },
+    {
+      "case_id": "timestamp_boundary",
+      "expected_plan": {"event_triggered": true, "execution_replay_floor": 2},
+      "initial": {
+        "answer": "NORTH",
+        "claim": "Day 8 is on the NORTH side of the boundary.",
+        "topic": "parcel_t_timestamp",
+        "stance": -1.0,
+        "confidence": 0.9,
+        "revision_cue": 0.0,
+        "evidence_ids": ["T1", "T2", "T3", "T4", "T5"],
+        "invalidated_evidence_ids": [],
+        "decision_facts": [
+          {"slot": "valid_day", "value": "8", "evidence_ids": ["T3"]},
+          {"slot": "priority", "value": "STANDARD", "evidence_ids": ["T5"]}
+        ]
+      },
+      "final": {
+        "answer": "SOUTH",
+        "claim": "Day 12 is after the day-10 SOUTH boundary.",
+        "topic": "parcel_t_timestamp",
+        "stance": 1.0,
+        "confidence": 1.0,
+        "revision_cue": 1.0,
+        "evidence_ids": ["T1", "T5", "T6"],
+        "invalidated_evidence_ids": ["T3"],
+        "decision_facts": [
+          {"slot": "valid_day", "value": "12", "evidence_ids": ["T6"]},
+          {"slot": "corridor", "value": "SOUTH", "evidence_ids": ["T1", "T6"]},
+          {"slot": "priority", "value": "STANDARD", "evidence_ids": ["T5"]}
+        ]
+      },
+      "grading": {
+        "required_evidence_ids": ["T1", "T6"],
+        "forbidden_support_evidence_ids": ["T3"],
+        "required_facts": [
+          {"slot": "valid_day", "value": "12", "evidence_ids": ["T6"]},
+          {"slot": "corridor", "value": "SOUTH", "evidence_ids": ["T1", "T6"]}
+        ],
+        "stable_facts": [
+          {"slot": "priority", "value": "STANDARD", "evidence_ids": ["T5"]}
+        ]
+      }
+    },
+    {
+      "case_id": "invalidated_sensor_fallback",
+      "expected_plan": {"event_triggered": true, "execution_replay_floor": 2},
+      "initial": {
+        "answer": "SHUTDOWN",
+        "claim": "The active reading 86 reaches the shutdown threshold.",
+        "topic": "line_s_active_reading",
+        "stance": 1.0,
+        "confidence": 0.9,
+        "revision_cue": 0.0,
+        "evidence_ids": ["S1", "S2", "S3", "S4", "S5"],
+        "invalidated_evidence_ids": [],
+        "decision_facts": [
+          {"slot": "active_reading", "value": "86", "evidence_ids": ["S3"]},
+          {"slot": "mode", "value": "AUTOMATIC", "evidence_ids": ["S5"]}
+        ]
+      },
+      "final": {
+        "answer": "CONTINUE",
+        "claim": "The valid fallback 72 is below the shutdown threshold.",
+        "topic": "line_s_active_reading",
+        "stance": -1.0,
+        "confidence": 1.0,
+        "revision_cue": 1.0,
+        "evidence_ids": ["S1", "S2", "S5", "S6"],
+        "invalidated_evidence_ids": ["S3"],
+        "decision_facts": [
+          {"slot": "active_reading", "value": "72", "evidence_ids": ["S2", "S6"]},
+          {"slot": "mode", "value": "AUTOMATIC", "evidence_ids": ["S5"]}
+        ]
+      },
+      "grading": {
+        "required_evidence_ids": ["S1", "S2", "S6"],
+        "forbidden_support_evidence_ids": ["S3"],
+        "required_facts": [
+          {"slot": "active_reading", "value": "72", "evidence_ids": ["S2", "S6"]}
+        ],
+        "stable_facts": [
+          {"slot": "mode", "value": "AUTOMATIC", "evidence_ids": ["S5"]}
+        ]
+      }
+    },
+    {
+      "case_id": "dependency_root_correction",
+      "expected_plan": {"event_triggered": true, "execution_replay_floor": 2},
+      "initial": {
+        "answer": "P",
+        "claim": "COLD selects L, which produces P.",
+        "topic": "machine_d_mode",
+        "stance": -1.0,
+        "confidence": 0.9,
+        "revision_cue": 0.0,
+        "evidence_ids": ["D1", "D2", "D3", "D4", "D5"],
+        "invalidated_evidence_ids": [],
+        "decision_facts": [
+          {"slot": "mode", "value": "COLD", "evidence_ids": ["D3"]},
+          {"slot": "output", "value": "P", "evidence_ids": ["D1", "D2", "D3", "D4"]},
+          {"slot": "indicator", "value": "AMBER", "evidence_ids": ["D5"]}
+        ]
+      },
+      "final": {
+        "answer": "Q",
+        "claim": "HOT selects R, which produces Q.",
+        "topic": "machine_d_mode",
+        "stance": 1.0,
+        "confidence": 1.0,
+        "revision_cue": 1.0,
+        "evidence_ids": ["D1", "D2", "D5", "D6"],
+        "invalidated_evidence_ids": ["D3"],
+        "decision_facts": [
+          {"slot": "mode", "value": "HOT", "evidence_ids": ["D6"]},
+          {"slot": "output", "value": "Q", "evidence_ids": ["D1", "D2", "D6"]},
+          {"slot": "indicator", "value": "AMBER", "evidence_ids": ["D5"]}
+        ]
+      },
+      "grading": {
+        "required_evidence_ids": ["D1", "D2", "D6"],
+        "forbidden_support_evidence_ids": ["D3"],
+        "required_facts": [
+          {"slot": "mode", "value": "HOT", "evidence_ids": ["D6"]},
+          {"slot": "output", "value": "Q", "evidence_ids": ["D1", "D2", "D6"]}
+        ],
+        "stable_facts": [
+          {"slot": "indicator", "value": "AMBER", "evidence_ids": ["D5"]}
+        ]
+      }
+    },
+    {
+      "case_id": "quantifier_erratum",
+      "expected_plan": {"event_triggered": true, "execution_replay_floor": 2},
+      "initial": {
+        "answer": "INSPECT",
+        "claim": "Hazardous OR heavy is true because Q is hazardous.",
+        "topic": "inspection_quantifier",
+        "stance": 1.0,
+        "confidence": 0.9,
+        "revision_cue": 0.0,
+        "evidence_ids": ["Q1", "Q2", "Q3", "Q4", "Q5"],
+        "invalidated_evidence_ids": [],
+        "decision_facts": [
+          {"slot": "rule", "value": "OR", "evidence_ids": ["Q3"]},
+          {"slot": "zone", "value": "4", "evidence_ids": ["Q5"]}
+        ]
+      },
+      "final": {
+        "answer": "SKIP",
+        "claim": "Hazardous AND heavy is false because 18 is below 20.",
+        "topic": "inspection_quantifier",
+        "stance": -1.0,
+        "confidence": 1.0,
+        "revision_cue": 1.0,
+        "evidence_ids": ["Q1", "Q2", "Q4", "Q5", "Q6"],
+        "invalidated_evidence_ids": ["Q3"],
+        "decision_facts": [
+          {"slot": "rule", "value": "AND", "evidence_ids": ["Q6"]},
+          {"slot": "heavy", "value": "false", "evidence_ids": ["Q2"]},
+          {"slot": "zone", "value": "4", "evidence_ids": ["Q5"]}
+        ]
+      },
+      "grading": {
+        "required_evidence_ids": ["Q1", "Q2", "Q4", "Q6"],
+        "forbidden_support_evidence_ids": ["Q3"],
+        "required_facts": [
+          {"slot": "rule", "value": "AND", "evidence_ids": ["Q6"]},
+          {"slot": "heavy", "value": "false", "evidence_ids": ["Q2"]}
+        ],
+        "stable_facts": [
+          {"slot": "zone", "value": "4", "evidence_ids": ["Q5"]}
+        ]
+      }
+    },
+    {
+      "case_id": "source_revocation",
+      "expected_plan": {"event_triggered": true, "execution_replay_floor": 2},
+      "initial": {
+        "answer": "12",
+        "claim": "The active registry quota 12 outranks the memo.",
+        "topic": "account_v_quota_source",
+        "stance": 1.0,
+        "confidence": 0.9,
+        "revision_cue": 0.0,
+        "evidence_ids": ["V1", "V2", "V3", "V4", "V5"],
+        "invalidated_evidence_ids": [],
+        "decision_facts": [
+          {"slot": "quota", "value": "12", "evidence_ids": ["V1", "V3"]},
+          {"slot": "tier", "value": "SILVER", "evidence_ids": ["V5"]}
+        ]
+      },
+      "final": {
+        "answer": "20",
+        "claim": "The revoked registry entry yields to memo quota 20.",
+        "topic": "account_v_quota_source",
+        "stance": -1.0,
+        "confidence": 1.0,
+        "revision_cue": 1.0,
+        "evidence_ids": ["V1", "V2", "V5", "V6"],
+        "invalidated_evidence_ids": ["V3"],
+        "decision_facts": [
+          {"slot": "quota", "value": "20", "evidence_ids": ["V1", "V2", "V6"]},
+          {"slot": "tier", "value": "SILVER", "evidence_ids": ["V5"]}
+        ]
+      },
+      "grading": {
+        "required_evidence_ids": ["V1", "V2", "V6"],
+        "forbidden_support_evidence_ids": ["V3"],
+        "required_facts": [
+          {"slot": "quota", "value": "20", "evidence_ids": ["V1", "V2", "V6"]}
+        ],
+        "stable_facts": [
+          {"slot": "tier", "value": "SILVER", "evidence_ids": ["V5"]}
+        ]
+      }
+    },
+    {
+      "case_id": "relevant_nonflip",
+      "expected_plan": {"event_triggered": true, "execution_replay_floor": 2},
+      "initial": {
+        "answer": "SHUTDOWN",
+        "claim": "Reading 86 is above the shutdown threshold.",
+        "topic": "unit_n_reading",
+        "stance": 1.0,
+        "confidence": 0.9,
+        "revision_cue": 0.0,
+        "evidence_ids": ["N1", "N2", "N3", "N4", "N5"],
+        "invalidated_evidence_ids": [],
+        "decision_facts": [
+          {"slot": "reading", "value": "86", "evidence_ids": ["N3"]},
+          {"slot": "zone", "value": "WEST", "evidence_ids": ["N5"]}
+        ]
+      },
+      "final": {
+        "answer": "SHUTDOWN",
+        "claim": "Corrected reading 84 remains above the shutdown threshold.",
+        "topic": "unit_n_reading",
+        "stance": 1.0,
+        "confidence": 1.0,
+        "revision_cue": 1.0,
+        "evidence_ids": ["N1", "N5", "N6"],
+        "invalidated_evidence_ids": ["N3"],
+        "decision_facts": [
+          {"slot": "reading", "value": "84", "evidence_ids": ["N6"]},
+          {"slot": "zone", "value": "WEST", "evidence_ids": ["N5"]}
+        ]
+      },
+      "grading": {
+        "required_evidence_ids": ["N1", "N6"],
+        "forbidden_support_evidence_ids": ["N3"],
+        "required_facts": [
+          {"slot": "reading", "value": "84", "evidence_ids": ["N6"]}
+        ],
+        "stable_facts": [
+          {"slot": "zone", "value": "WEST", "evidence_ids": ["N5"]}
+        ]
+      }
+    },
+    {
+      "case_id": "unrelated_noop",
+      "expected_plan": {"event_triggered": false, "execution_replay_floor": 5},
+      "initial": {
+        "answer": "EAST",
+        "claim": "Parcel R's assigned route is EAST.",
+        "topic": "parcel_r_route",
+        "stance": 1.0,
+        "confidence": 0.95,
+        "revision_cue": 0.0,
+        "evidence_ids": ["O1", "O2", "O3", "O4", "O5"],
+        "invalidated_evidence_ids": [],
+        "decision_facts": [
+          {"slot": "route", "value": "EAST", "evidence_ids": ["O1", "O2"]},
+          {"slot": "priority", "value": "NORMAL", "evidence_ids": ["O5"]}
+        ]
+      },
+      "final": {
+        "answer": "EAST",
+        "claim": "Parcel S's color correction does not change R's EAST route.",
+        "topic": "parcel_r_route",
+        "stance": 1.0,
+        "confidence": 1.0,
+        "revision_cue": 0.05,
+        "evidence_ids": ["O2", "O5", "O6"],
+        "invalidated_evidence_ids": ["O3"],
+        "decision_facts": [
+          {"slot": "route", "value": "EAST", "evidence_ids": ["O2"]},
+          {"slot": "priority", "value": "NORMAL", "evidence_ids": ["O5"]}
+        ]
+      },
+      "grading": {
+        "required_evidence_ids": ["O2"],
+        "forbidden_support_evidence_ids": ["O3"],
+        "required_facts": [
+          {"slot": "route", "value": "EAST", "evidence_ids": ["O2"]}
+        ],
+        "stable_facts": [
+          {"slot": "priority", "value": "NORMAL", "evidence_ids": ["O5"]}
+        ]
+      }
+    }
+  ]
+}

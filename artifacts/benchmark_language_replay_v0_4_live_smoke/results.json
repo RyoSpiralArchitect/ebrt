@@ -1,0 +1,350 @@
+{
+  "case_ids": [
+    "route_code_supersession",
+    "unrelated_noop"
+  ],
+  "mode": "openai_live_smoke",
+  "promotion_eligible": false,
+  "runs": [
+    {
+      "case_id": "route_code_supersession",
+      "family": "lookup_key_revision",
+      "grade": {
+        "initial": {
+          "answer_exact": true,
+          "expected_answer": "AMBER",
+          "observed_answer": "AMBER"
+        },
+        "lanes": {
+          "card_only_forward": {
+            "checks": {
+              "answer_exact": false,
+              "expected_invalidated_evidence_marked": true,
+              "forbidden_support_absent": true,
+              "required_evidence_present": false,
+              "required_facts_exact": false,
+              "stable_facts_exact": true
+            },
+            "citation_precision": 0.6666666666666666,
+            "citation_recall": 0.6666666666666666,
+            "evidence_consistent": false,
+            "machine_success": false,
+            "missing_required_evidence_ids": [
+              "R2"
+            ],
+            "stale_historical_cards": 3,
+            "support_evidence_ids": [
+              "R4",
+              "R5",
+              "R6"
+            ],
+            "unexpected_support_evidence_ids": [
+              "R4"
+            ]
+          },
+          "full_restart": {
+            "checks": {
+              "answer_exact": true,
+              "expected_invalidated_evidence_marked": true,
+              "forbidden_support_absent": true,
+              "required_evidence_present": true,
+              "required_facts_exact": true,
+              "stable_facts_exact": true
+            },
+            "citation_precision": 0.75,
+            "citation_recall": 1.0,
+            "evidence_consistent": true,
+            "machine_success": true,
+            "missing_required_evidence_ids": [],
+            "stale_historical_cards": 0,
+            "support_evidence_ids": [
+              "R2",
+              "R4",
+              "R5",
+              "R6"
+            ],
+            "unexpected_support_evidence_ids": [
+              "R4"
+            ]
+          },
+          "selective_replay": {
+            "checks": {
+              "answer_exact": false,
+              "expected_invalidated_evidence_marked": true,
+              "forbidden_support_absent": true,
+              "required_evidence_present": false,
+              "required_facts_exact": false,
+              "stable_facts_exact": true
+            },
+            "citation_precision": 0.6666666666666666,
+            "citation_recall": 0.6666666666666666,
+            "evidence_consistent": false,
+            "machine_success": false,
+            "missing_required_evidence_ids": [
+              "R2"
+            ],
+            "stale_historical_cards": 0,
+            "support_evidence_ids": [
+              "R4",
+              "R5",
+              "R6"
+            ],
+            "unexpected_support_evidence_ids": [
+              "R4"
+            ]
+          }
+        },
+        "observer_route": {
+          "checks": {
+            "event_triggered": true,
+            "execution_replay_floor": true,
+            "pre_outcome": true,
+            "trajectory_horizon_shadow_only": true
+          },
+          "success": true
+        },
+        "paired": {
+          "forward_full_answer_match": false,
+          "selective_full_answer_match": false,
+          "selective_replay_cards_saved_vs_full": 2
+        }
+      },
+      "lane_order": [
+        "card_only_forward",
+        "full_restart",
+        "selective_replay"
+      ],
+      "mode": "openai_live_smoke",
+      "plan_fingerprint": "56477ce3887021b2cd4f4bd7ad93843de1d594d003f20305eb17a86e79d929b1",
+      "run_id": "openai_live_smoke:0:route_code_supersession",
+      "trace_fingerprint": "b8b7496fcc83d5726501f6dedbaa3472b5468594e9b0ed0a24e1dc2f43436841",
+      "trial_index": 0
+    },
+    {
+      "case_id": "unrelated_noop",
+      "family": "irrelevant_late_control",
+      "grade": {
+        "initial": {
+          "answer_exact": true,
+          "expected_answer": "EAST",
+          "observed_answer": "EAST"
+        },
+        "lanes": {
+          "card_only_forward": {
+            "checks": {
+              "answer_exact": true,
+              "expected_invalidated_evidence_marked": true,
+              "forbidden_support_absent": true,
+              "required_evidence_present": true,
+              "required_facts_exact": true,
+              "stable_facts_exact": true
+            },
+            "citation_precision": 1.0,
+            "citation_recall": 0.6666666666666666,
+            "evidence_consistent": true,
+            "machine_success": true,
+            "missing_required_evidence_ids": [],
+            "stale_historical_cards": 0,
+            "support_evidence_ids": [
+              "O2",
+              "O5"
+            ],
+            "unexpected_support_evidence_ids": []
+          },
+          "full_restart": {
+            "checks": {
+              "answer_exact": true,
+              "expected_invalidated_evidence_marked": true,
+              "forbidden_support_absent": true,
+              "required_evidence_present": true,
+              "required_facts_exact": true,
+              "stable_facts_exact": true
+            },
+            "citation_precision": 0.6666666666666666,
+            "citation_recall": 0.6666666666666666,
+            "evidence_consistent": true,
+            "machine_success": true,
+            "missing_required_evidence_ids": [],
+            "stale_historical_cards": 0,
+            "support_evidence_ids": [
+              "O2",
+              "O4",
+              "O5"
+            ],
+            "unexpected_support_evidence_ids": [
+              "O4"
+            ]
+          },
+          "selective_replay": {
+            "checks": {
+              "answer_exact": true,
+              "expected_invalidated_evidence_marked": true,
+              "forbidden_support_absent": true,
+              "required_evidence_present": true,
+              "required_facts_exact": true,
+              "stable_facts_exact": true
+            },
+            "citation_precision": 1.0,
+            "citation_recall": 0.6666666666666666,
+            "evidence_consistent": true,
+            "machine_success": true,
+            "missing_required_evidence_ids": [],
+            "stale_historical_cards": 0,
+            "support_evidence_ids": [
+              "O2",
+              "O5"
+            ],
+            "unexpected_support_evidence_ids": []
+          }
+        },
+        "observer_route": {
+          "checks": {
+            "event_triggered": true,
+            "execution_replay_floor": true,
+            "pre_outcome": true,
+            "trajectory_horizon_shadow_only": true
+          },
+          "success": true
+        },
+        "paired": {
+          "forward_full_answer_match": true,
+          "selective_full_answer_match": true,
+          "selective_replay_cards_saved_vs_full": 5
+        }
+      },
+      "lane_order": [
+        "full_restart",
+        "selective_replay",
+        "card_only_forward"
+      ],
+      "mode": "openai_live_smoke",
+      "plan_fingerprint": "ba7ee75f48338e966389ffe607fb314ae95b5abc542f3ab3147a389b5c93e2d4",
+      "run_id": "openai_live_smoke:0:unrelated_noop",
+      "trace_fingerprint": "17125638802dab1b74034d33f36beb7e76b5cf26279d19b3a279ec8d968a0a45",
+      "trial_index": 0
+    }
+  ],
+  "schema_version": "ebrt-language-replay-benchmark-v0.4",
+  "status": "DEV_DRAFT",
+  "summary": {
+    "claim_boundary": [
+      "Scripted results prove bridge plumbing only, not language reasoning.",
+      "Live smoke results are DEV observations, not a promotion benchmark or a general accuracy claim.",
+      "Card-only forward is a public-card continuation control, not a universal chat-model baseline.",
+      "Token savings are reported only from exact provider usage; no price estimate is inferred."
+    ],
+    "lane_summary": {
+      "card_only_forward": {
+        "answer_exact": 1,
+        "branch_api_calls": 2,
+        "branch_input_tokens": 1580,
+        "branch_logical_calls": 2,
+        "branch_output_tokens": 431,
+        "branch_reasoning_tokens": 136,
+        "counterfactual_api_calls": 14,
+        "counterfactual_exact_provider_tokens": true,
+        "counterfactual_input_tokens": 9616,
+        "counterfactual_logical_calls": 14,
+        "counterfactual_output_tokens": 2645,
+        "counterfactual_reasoning_tokens": 837,
+        "evidence_consistent": 1,
+        "exact_provider_tokens": true,
+        "machine_successes": 1,
+        "mean_citation_precision": 0.8333333333333333,
+        "mean_citation_recall": 0.6666666666666666,
+        "median_branch_latency_ms": 5090.389749999986,
+        "median_counterfactual_latency_ms": 35490.84489549989,
+        "regenerated_cards": 2,
+        "runs": 2
+      },
+      "full_restart": {
+        "answer_exact": 2,
+        "branch_api_calls": 12,
+        "branch_input_tokens": 9257,
+        "branch_logical_calls": 12,
+        "branch_output_tokens": 1924,
+        "branch_reasoning_tokens": 347,
+        "counterfactual_api_calls": 24,
+        "counterfactual_exact_provider_tokens": true,
+        "counterfactual_input_tokens": 17293,
+        "counterfactual_logical_calls": 24,
+        "counterfactual_output_tokens": 4138,
+        "counterfactual_reasoning_tokens": 1048,
+        "evidence_consistent": 2,
+        "exact_provider_tokens": true,
+        "machine_successes": 2,
+        "mean_citation_precision": 0.7083333333333333,
+        "mean_citation_recall": 0.8333333333333333,
+        "median_branch_latency_ms": 21356.724729500114,
+        "median_counterfactual_latency_ms": 51757.179875000016,
+        "regenerated_cards": 12,
+        "runs": 2
+      },
+      "selective_replay": {
+        "answer_exact": 1,
+        "branch_api_calls": 5,
+        "branch_input_tokens": 4106,
+        "branch_logical_calls": 5,
+        "branch_output_tokens": 1204,
+        "branch_reasoning_tokens": 412,
+        "counterfactual_api_calls": 17,
+        "counterfactual_exact_provider_tokens": true,
+        "counterfactual_input_tokens": 12142,
+        "counterfactual_logical_calls": 17,
+        "counterfactual_output_tokens": 3418,
+        "counterfactual_reasoning_tokens": 1113,
+        "evidence_consistent": 1,
+        "exact_provider_tokens": true,
+        "machine_successes": 1,
+        "mean_citation_precision": 0.8333333333333333,
+        "mean_citation_recall": 0.6666666666666666,
+        "median_branch_latency_ms": 12710.386208000045,
+        "median_counterfactual_latency_ms": 43110.84135349995,
+        "regenerated_cards": 5,
+        "runs": 2
+      }
+    },
+    "live_comparability": {
+      "all_attempts_completed": true,
+      "no_seed_claim": true,
+      "receipt_count": 31,
+      "returned_models": [
+        "gpt-5.6-sol"
+      ],
+      "service_tiers": [
+        "default"
+      ],
+      "single_returned_model": true,
+      "single_service_tier": true
+    },
+    "live_receipt_validation": {
+      "observer_receipt_count": 2,
+      "provider_receipt_count": 29,
+      "receipt_count": 31,
+      "requested_model": "gpt-5.6-sol",
+      "returned_model": "gpt-5.6-sol",
+      "service_tier": "default",
+      "status": "PASS"
+    },
+    "observer_route_successes": 2,
+    "paired": {
+      "forward_harmed_by_selective": 0,
+      "forward_rescued_by_selective": 0,
+      "selective_branch_token_savings_vs_full": {
+        "input_tokens": 5151,
+        "output_tokens": 720,
+        "reasoning_tokens": -65
+      },
+      "selective_counterfactual_token_savings_vs_full": {
+        "input_tokens": 5151,
+        "output_tokens": 720,
+        "reasoning_tokens": -65
+      },
+      "selective_machine_success_on_full_success": 0.5,
+      "selective_replay_card_ratio": 0.4166666666666667,
+      "selective_replay_cards_saved_vs_full": 7
+    },
+    "runs": 2
+  },
+  "trials": 1
+}

@@ -4,5 +4,7 @@ __pycache__/
 .ruff_cache/
 .venv/
 venv/
+.env
+.env.local
 benchmark_results/
 HACKATHON_ROADMAP_INTERNAL.md

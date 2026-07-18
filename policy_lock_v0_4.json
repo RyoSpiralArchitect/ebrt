@@ -1,0 +1,81 @@
+{
+  "schema_version": "ebrt-language-replay-policy-lock-v0.4",
+  "protocol_id": "language-replay-bridge-dev-draft-2026-07-18",
+  "status": "DEV_DRAFT",
+  "promotion_eligible": false,
+  "scope": {
+    "event_count_per_case": 1,
+    "checkpoint_type": "public_reasoning_card_after_each_evidence_chunk",
+    "private_chain_of_thought": "not_requested_not_persisted",
+    "hidden_model_state": "not_accessed",
+    "trajectory_horizon": "shadow_only_not_executed",
+    "observer_aperture": "question_choices_terminal_public_card_late_evidence_prior_id_roster",
+    "observer_raw_initial_evidence": "not_provided",
+    "observer_public_summary": "trace_only_not_provider_input",
+    "provider_support_aperture": "previous_public_card_support_plus_current_and_public_revision_ids"
+  },
+  "route": {
+    "event_threshold": 0.55,
+    "primary_selector": "observer_invalidated_evidence_id_to_earliest_public_card",
+    "missing_anchor_fallback": "full_restart",
+    "irrelevant_event_policy": "card_only_forward_continuation",
+    "decision_timing": "before_all_lane_execution",
+    "forbidden_decision_inputs": ["gold", "lane_output", "grader_output"]
+  },
+  "lanes": [
+    "card_only_forward",
+    "full_restart",
+    "selective_replay"
+  ],
+  "live_provider": {
+    "provider": "openai",
+    "api": "responses.parse",
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "low",
+    "service_tier": "default",
+    "store": false,
+    "previous_response_id": false,
+    "truncation": "disabled",
+    "sdk_retries": 0,
+    "max_card_output_tokens": 768,
+    "max_observer_output_tokens": 512,
+    "timeout_seconds": 60
+  },
+  "fixtures": {
+    "input": "fixtures/language_replay_v0_4_dev.json",
+    "gold": "fixtures/language_replay_v0_4_dev_gold.json",
+    "case_count": 10,
+    "live_canary_case_ids": [
+      "route_code_supersession",
+      "unrelated_noop"
+    ],
+    "all_cases_are_dev": true,
+    "future_holdout_must_be_fresh": true
+  },
+  "grading": {
+    "machine_success_requires": [
+      "answer_exact",
+      "required_facts_exact",
+      "stable_facts_exact",
+      "required_evidence_present",
+      "forbidden_support_absent",
+      "expected_invalidated_evidence_marked"
+    ],
+    "prose_exact_match": false,
+    "private_reasoning_graded": false
+  },
+  "accounting": {
+    "shared_initial_work_reported_separately": true,
+    "observer_cost_in_all_counterfactual_totals": true,
+    "logical_cards_and_api_tokens_reported_separately": true,
+    "fake_token_estimates_forbidden": true,
+    "price_estimates": "not_locked_not_reported"
+  },
+  "claim_boundary": [
+    "This is a DEV_DRAFT language bridge, not a locked promotion experiment.",
+    "Card-only forward is a public-card continuation control, not a universal baseline for chat models.",
+    "Live results may establish that the named model executed this public replay protocol; they do not establish general LLM reasoning improvement.",
+    "No private chain-of-thought, hidden-state edit, or persisted reasoning state is used.",
+    "The local scripted provider is plumbing evidence only and may not be cited as language reasoning performance."
+  ]
+}

@@ -30,12 +30,20 @@ while trajectory regularization uses `trajectory_anchor_floor`. A DEV-only
 cost lane changes the former and requires exact outcomes; a separate causal
 factorial changes the latter while keeping routing and generator work fixed.
 
+EBRT v0.4 adds the first live Language Replay Bridge. GPT-5.6 produces compact
+public Reasoning Cards, observes late evidence through a strict semantic
+schema, freezes a pre-outcome replay plan, and regenerates only a selected
+public suffix. A matched two-case DEV canary compares card-only continuation,
+full restart, and selective replay with exact API usage and independent gold.
+After closing observer and citation side channels, it exposes a concrete
+interaction between invalidated-anchor routing and public-state sufficiency.
+
 > [!IMPORTANT]
-> v0.1-v0.3.1 are **not** a Transformer implementation, a GPT latent-state editor, or
-> evidence of improved language-model accuracy. Topic, stance, and revision
-> targets remain structured inputs in the committed harness. v0.2 exposes an
-> adapter boundary, but meaningful GPT-5.6 integration is a later milestone,
-> not a capability claimed by this release.
+> v0.1-v0.3.1 are **not** a Transformer implementation, a GPT latent-state
+> editor, or evidence of improved language-model accuracy. v0.4 meaningfully
+> executes GPT-5.6 at the public adapter/replay boundary, but still does not
+> access hidden states or private chain-of-thought, and its two-case DEV canary
+> does not establish a general accuracy improvement.
 
 ## Why EBRT?
 
@@ -70,17 +78,26 @@ dual_route_policy_v0_3_1.py   factorized execution-replay and loss-horizon polic
 benchmark_dual_route_v0_3_1.py DEV cost lane, trajectory factorial, runtime guards
 policy_lock_v0_3_1.json       non-promotional DEV_DRAFT contract and future gates
 fixtures/dual_route_v0_3_1_*.json fresh DEV and contaminated regression fixtures
+language_replay_bridge_v0_4.py public cards, pre-outcome plan, three replay lanes
+openai_reasoning_provider_v0_4.py strict GPT-5.6 Responses providers
+benchmark_language_replay_v0_4.py offline gates, live canary, grading, bundles
+policy_lock_v0_4.json        non-promotional Language Replay DEV contract
+fixtures/language_replay_v0_4_*.json separated DEV inputs and machine gold
 docs/RND_BENCHMARK_V0_1.md    protocol, results, limits, and claim ledger
 docs/RND_INSTRUMENTATION_V0_2.md measurement contract and algorithm findings
 docs/RND_DUAL_ROUTE_V0_3.md   terminal invariant result and v0.3.1 direction
 docs/RND_DUAL_ROUTE_V0_3_1.md factorization design, DEV results, and next experiment
+docs/RND_LANGUAGE_REPLAY_V0_4.md live protocol, result, failure, and v0.4.1 axis
 artifacts/benchmark_v0_1/     committed machine-readable benchmark evidence
 artifacts/demo_v0_1/trace.json committed no-build mechanism trace
 artifacts/benchmark_instrumentation_v0_2/ committed v0.2 measurement evidence
 artifacts/instrumentation_v0_2/ committed trace and standalone mirror figure
 artifacts/.dual_route_v0_3_holdout_ledger.json canonical terminal attempt record
 artifacts/benchmark_dual_route_v0_3_1_dev/ committed non-promotional DEV evidence
+artifacts/benchmark_language_replay_v0_4_fake_dev/ scripted plumbing evidence only
+artifacts/benchmark_language_replay_v0_4_live_smoke/ boundary-fixed GPT-5.6 DEV canary
 requirements.txt              runtime dependency declaration
+requirements-live.txt         separately pinned OpenAI/Pydantic live dependencies
 LICENSE                       Apache License 2.0
 ```
 
@@ -207,6 +224,30 @@ families and promotion rules are locked. DEV commands accept another supported
 CPython 3.11+/PyTorch 2.x CPU runtime, record every expected/actual mismatch,
 and remain non-promotional with no cross-runtime byte-reproducibility claim.
 
+Validate the v0.4 public-state bridge and deterministic plumbing bundle:
+
+```bash
+python3 language_replay_bridge_v0_4.py
+python3 benchmark_language_replay_v0_4.py self-test
+python3 benchmark_language_replay_v0_4.py fake-dev \
+  --output benchmark_results/v0_4_fake_dev
+```
+
+The local provider is explicitly gold-backed and proves plumbing only. To run
+the locked two-case GPT-5.6 canary, install the separate live dependencies and
+provide `OPENAI_API_KEY` through the process environment:
+
+```bash
+python3 -m pip install -r requirements-live.txt
+python3 openai_reasoning_provider_v0_4.py
+python3 benchmark_language_replay_v0_4.py live-smoke \
+  --output benchmark_results/v0_4_live_smoke
+```
+
+The live runner uses strict Responses structured outputs, disables SDK retry
+and persisted response state, and never writes the key or raw response object.
+Its output is still `DEV_DRAFT`, not a holdout or promotion result.
+
 ## Judge path: inspect first, rerun second
 
 No training or model build is required to inspect the submitted evidence.
@@ -249,6 +290,18 @@ For the v0.3.1 DEV factorization, inspect:
 3. `artifacts/benchmark_dual_route_v0_3_1_dev/` for deterministic lane rows,
    runtime metadata, source hashes, and the non-promotional manifest.
 
+For the v0.4 Language Replay Bridge, inspect:
+
+1. [`docs/RND_LANGUAGE_REPLAY_V0_4.md`](docs/RND_LANGUAGE_REPLAY_V0_4.md) for
+   the public-card contract, matched lanes, live result, failed quality
+   guardrail, and routing/sufficiency interaction;
+2. `policy_lock_v0_4.json` for the pre-outcome route, live provider settings,
+   accounting contract, and DEV claim boundary;
+3. `artifacts/benchmark_language_replay_v0_4_live_smoke/` for the sanitized
+   GPT-5.6 traces, exact usage, grades, and source hashes;
+4. `artifacts/benchmark_language_replay_v0_4_fake_dev/` only for deterministic
+   plumbing and failure-sentinel evidence, never model-performance evidence.
+
 There is intentionally no normal v0.3 result directory: the runner stopped
 before validated bundle publication, and the ledger stores no outcome rows.
 
@@ -263,6 +316,8 @@ python3 benchmark_instrumentation_v0_2.py --self-test
 python3 render_instrumentation_v0_2.py --self-test
 python3 dual_route_policy_v0_3_1.py --self-test
 python3 benchmark_dual_route_v0_3_1.py self-test
+python3 language_replay_bridge_v0_4.py
+python3 benchmark_language_replay_v0_4.py self-test
 ```
 
 The v0.3 self-tests are historical checks and must be run from a separate
@@ -447,6 +502,40 @@ cases are DEV; no v0.3.1 holdout or ledger exists. The next experiment can now
 learn or preregister trajectory horizon as a policy axis without confusing it
 with replay cost.
 
+## v0.4 Language Replay DEV result
+
+v0.4 runs a GPT-5.6 semantic observer and public-card generator end to end.
+The boundary-fixed canary contains one answer-flip case and one irrelevant
+no-op, with one trial each. The observer matched both DEV event/floor
+annotations. All 31 attempted calls completed under the locked model/tier with
+exact provider usage; full restart was the only lane to answer both cases
+exactly.
+
+| Lane | Machine success | Answer exact | Regenerated cards | Branch input | Branch output | Branch reasoning |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Card-only forward | 1/2 | 1/2 | 2 | 1,580 | 431 | 136 |
+| Full restart | 2/2 | 2/2 | 12 | 9,257 | 1,924 | 347 |
+| Selective replay | 1/2 | 1/2 | 5 | 4,106 | 1,204 | 412 |
+
+Selective replay used seven fewer public-card calls than full restart and
+5,151 fewer input plus 720 fewer output tokens, but used 65 **more** reasoning
+tokens and did **not** pass the quality guardrail. The fair counterfactual
+totals charge the shared initial trace and observer to every lane: card-only,
+full, and selective used 14, 24, and 17 calls respectively.
+
+On the route-code revision, the invalidated-anchor rule correctly selected the
+checkpoint after raw route table `R2`. That public card retained a bare `R2`
+citation but not the concrete `B2 -> BLUE` lookup edge. Selective preserved the
+late `B2` correction and stable seal but returned stale answer `AMBER` with
+`bay=UNKNOWN`; full restart reread raw `R2` and passed. The no-op passed in all
+lanes and selective replay correctly performed no backward replay.
+
+This is a successful live bridge and a failed sufficiency result—not evidence
+that selective replay already improves GPT reasoning. The next algorithmic
+axis is a dependency-complete public state plus a pre-outcome fallback that
+expands the replay floor when required dependency edges cannot be certified.
+See the [v0.4 R&D note](docs/RND_LANGUAGE_REPLAY_V0_4.md).
+
 ## Current scope and claim boundary
 
 | Statement | Current status |
@@ -465,14 +554,16 @@ with replay cost.
 | Factorized cost-lane outcomes remain exact when the loss horizon is fixed | Supported on all 24 fresh DEV groups plus four contaminated regression groups; actual floor shortening is exercised on 12 fresh and four contaminated groups, not yet as a universal or held-out claim |
 | `trajectory_anchor_floor` is an independent causal policy axis in the toy mechanism | Supported mechanistically: changing it alone reproduced the historical divergence with matched accounting |
 | v0.3.1 improves held-out reasoning quality | Not evaluated; the lock is DEV_DRAFT and no fresh holdout exists |
-| Events are detected autonomously from natural language | Not implemented |
+| A GPT observer can detect a late-evidence event and select a public replay floor | Executed correctly on 2/2 annotated DEV canary cases; generalization is not established |
+| Selective public-card replay matches full-restart quality | Not established; it passed 1/2 full-success canary cases |
+| Selective replay uses fewer provider tokens than full restart | It used fewer input/output tokens in this two-case DEV canary, but 65 more reasoning tokens; no general or monotonic-compute claim |
 | EBRT edits hidden states inside a trained Transformer or GPT model | Not implemented |
 | EBRT improves real-world LLM reasoning accuracy | Not established |
-| GPT-5.6 is meaningfully integrated | Not yet; explicit hackathon gate |
+| GPT-5.6 is meaningfully integrated | Yes at the public observer/replay boundary in a complete DEV canary; not yet promotion evidence |
 
 This project uses the term *reasoning state* only for the harness's explicit
-structured state. It does not claim access to private chain-of-thought or model
-internals.
+structured state and v0.4's public Reasoning Cards. It does not claim access to
+private chain-of-thought or model internals.
 
 ## OpenAI Build Week roadmap
 
@@ -497,9 +588,12 @@ category determination.
   the historical exact-cost invariant, and exposes loss horizon as a causal
   quality/leakage axis. Fresh promotion fixtures and a LOCKED holdout remain
   pending.
-- **Milestone 2 — meaningful GPT-5.6 adapter:** the versioned provider-neutral
-  interface exists; a live GPT-5.6 implementation and matched textual controls
-  remain pending.
+- **Milestone 2 — meaningful GPT-5.6 Language Replay Bridge (DEV complete):**
+  the live observer, strict public-card adapter, three matched textual controls,
+  exact provider accounting, and two-case canary now execute end to end. The
+  boundary-fixed canary rejects quality parity and nominates dependency-complete
+  public state plus fail-closed floor expansion as the v0.4.1 algorithm target;
+  repeated 10-case DEV and fresh promotion evidence remain pending.
 - **Milestone 3 — coherent evaluator experience:** the deterministic standalone
   Mirror figure exists; a minimal editable or hosted judge sandbox remains
   pending. A broad product UI is still intentionally deferred.
@@ -531,7 +625,9 @@ Human decisions remain explicit. In particular, the project owner chose to:
   metrics, and turn its replay/loss coupling into the next causal experiment;
 - keep mechanism, model-integration, and accuracy claims separate;
 - require meaningful GPT-5.6 use before representing the project as
-  hackathon-ready.
+  hackathon-ready;
+- preserve a failed selective-quality guardrail and turn the observed public
+  routing/state-sufficiency interaction into the next algorithm experiment.
 
 Codex accelerated implementation and audit work; it did not decide whether the
 evidence is sufficient for a scientific or product claim.
@@ -544,9 +640,13 @@ dual-route policy is implemented, but its preregistered one-shot comparison is
 terminal and inconclusive after rejecting a replay-invariance assumption. It
 does not validate or quality-rank the dual route. The replay-factorized v0.3.1
 DEV harness is implemented and repairs the observed cost invariant, but it is
-not a fresh holdout or quality result. A LOCKED v0.3.1 promotion experiment,
-live GPT-5.6 adapter, matched language benchmark, and hosted judge sandbox are
-still pending; there is no hosted service in this release.
+not a fresh holdout or quality result. The live v0.4 GPT-5.6 Language Replay
+Bridge and matched two-case canary are implemented; full restart passed 2/2,
+while selective replay passed 1/2 and therefore did not clear its quality
+guardrail. Selective used fewer input/output tokens but more reasoning tokens.
+A dependency-complete state/fallback experiment, repeated 10-case DEV run,
+fresh promotion suite, and hosted judge sandbox remain pending; there is no
+hosted service in this release.
 
 Issues and pull requests that add reproducible tests, adversarial fixtures, or
 better controls are especially welcome. Please avoid expanding claims without
