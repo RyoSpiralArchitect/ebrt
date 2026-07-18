@@ -116,6 +116,8 @@ export type InspectorArm = {
   status: string;
   failure_category?: string | null;
   failure_reason_code?: string | null;
+  failure_sequence_offset?: number | null;
+  provider_failure_type?: string | null;
   terminal_outcome?: string;
   primary_endpoint_assessed?: boolean;
   configured_output_token_ceiling: number;
@@ -211,6 +213,7 @@ export type InspectorSnapshot = {
     source_schema_version: string;
     mode: string;
     status: string;
+    result_status?: string;
     promotion_eligible: boolean;
     execution_complete: boolean;
     all_outputs_completed?: boolean;

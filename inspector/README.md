@@ -13,7 +13,10 @@ Detailed-grade availability is separate from endpoint adjudication. An
 unassessed endpoint is rendered as `NOT ASSESSED`; a v0.4.2 terminal local
 contract rejection is rendered as endpoint `FAIL` even though no accepted final
 card exists. The header keeps accepted-output completion, endpoint assessment,
-and cause-decision readiness separate.
+manifest execution status, and cause-decision readiness separate. For failed
+v0.4.2 endpoints it also projects the recorded failure position and the safe
+provider/SDK exception class when available; it never exposes an exception
+message or rejected card.
 
 `Overview` provides a recorded Replay-to-Output comparison using the final
 public Reasoning Cards already stored in the artifact. Its playback control
@@ -33,14 +36,17 @@ From the repository root:
 
 ```bash
 python3 build_inspector_snapshot_v0_4_1.py build \
-  --bundle artifacts/benchmark_aperture_controls_v0_4_1_dev \
+  --bundle artifacts/benchmark_aperture_controls_v0_4_2_dev \
   --output inspector/public/data/ebrt-public-inspector-v0.1.json
 ```
 
-The exporter can also read the locked two-arm PR #6 artifact while the new
-four-arm control bundle is not yet present:
+The exporter remains backward-compatible with the frozen v0.4.1 four-arm
+artifact and the locked two-arm calibration artifact:
 
 ```bash
+python3 build_inspector_snapshot_v0_4_1.py build \
+  --bundle artifacts/benchmark_aperture_controls_v0_4_1_dev \
+  --output inspector/public/data/ebrt-public-inspector-v0.1.json
 python3 build_inspector_snapshot_v0_4_1.py build \
   --bundle artifacts/benchmark_direct_full_calibration_v0_4_dev \
   --output inspector/public/data/ebrt-public-inspector-v0.1.json

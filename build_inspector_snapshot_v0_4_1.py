@@ -844,6 +844,31 @@ def _normalize_arm(
             raise ValueError(f"{arm} final card did not match its final call record")
     elif final_card is not None:
         raise ValueError(f"{arm} failed arm unexpectedly exposed a final card")
+    failure_sequence_offset = _nonnegative_int_or_none(
+        arm_value.get("failure_sequence_offset"), "failure_sequence_offset"
+    )
+    if status == "completed" and failure_sequence_offset is not None:
+        raise ValueError(f"{arm} completed arm exposed a failure sequence offset")
+    if (
+        status == "failed"
+        and failure_sequence_offset is not None
+        and failure_sequence_offset != len(timeline)
+    ):
+        raise ValueError(f"{arm} failure sequence offset drifted from accepted cards")
+    receipt_values = [
+        _mapping(item, f"{arm} receipt")
+        for item in _list(arm_value.get("receipts", []), f"{arm} receipts")
+    ]
+    provider_failure_type: str | None = None
+    if status == "failed" and receipt_values:
+        metadata = _mapping(
+            receipt_values[-1].get("metadata", {}), f"{arm} final receipt metadata"
+        )
+        failure_type_value = metadata.get("failure_type")
+        if failure_type_value is not None:
+            provider_failure_type = _string(
+                failure_type_value, f"{arm} provider failure type"
+            )
     grade = _normalize_grade(arm_value.get("grade", {}), evidence_ids)
     if status == "failed" and grade["available"]:
         raise ValueError(f"{arm} failed arm unexpectedly exposed an available grade")
@@ -907,6 +932,8 @@ def _normalize_arm(
         "status": status,
         "failure_category": arm_value.get("failure_category"),
         "failure_reason_code": arm_value.get("failure_reason_code"),
+        "failure_sequence_offset": failure_sequence_offset,
+        "provider_failure_type": provider_failure_type,
         "terminal_outcome": terminal_outcome,
         "primary_endpoint_assessed": primary_endpoint_assessed,
         "configured_output_token_ceiling": _nonnegative_int_or_none(
@@ -1418,12 +1445,14 @@ def build_snapshot(
     observed_case_count = len({item["case_id"] for item in normalized_runs})
     if results.get("case_count") != observed_case_count:
         raise ValueError("results case_count did not match normalized runs")
+    manifest_status = manifest_validation.get("manifest_status")
     return {
         "schema_version": INSPECTOR_SCHEMA_VERSION,
         "artifact": {
             "source_schema_version": results.get("schema_version"),
             "mode": results.get("mode"),
-            "status": results.get("status"),
+            "status": manifest_status or results.get("status"),
+            "result_status": results.get("status"),
             "promotion_eligible": results.get("promotion_eligible"),
             "execution_complete": results.get("execution_complete"),
             "all_outputs_completed": results.get(
@@ -1529,6 +1558,10 @@ def run_self_tests() -> dict[str, Any]:
     snapshot = build_snapshot(results, validation)
     if snapshot["schema_version"] != INSPECTOR_SCHEMA_VERSION:
         raise AssertionError("inspector schema version drift")
+    if snapshot["artifact"]["status"] != validation.get("manifest_status"):
+        raise AssertionError("Inspector did not expose the manifest execution status")
+    if snapshot["artifact"]["result_status"] != results.get("status"):
+        raise AssertionError("Inspector lost the source result status")
     if len(snapshot["runs"]) != 30:
         raise AssertionError("frozen two-arm run count drift")
     summary = {item["arm"]: item for item in snapshot["summary"]["arms"]}

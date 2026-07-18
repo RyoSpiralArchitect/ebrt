@@ -91,9 +91,12 @@ function OutputCard({ arm, card, roleLabel, muted = false }: OutputCardProps) {
   const gradeLabel = endpointAssessed ? (passed ? "PASS" : "FAIL") : "NOT ASSESSED";
   const gradeClass = endpointAssessed ? (passed ? "pass" : "fail") : "not-assessed";
   const answer = card?.current_answer ?? "Unavailable";
+  const failurePosition = arm?.failure_sequence_offset == null
+    ? ""
+    : ` at call ${arm.failure_sequence_offset + 1}`;
   const missingCardCopy = endpointAssessed
-    ? `No final public card was accepted. Endpoint outcome: strict failure${arm?.failure_reason_code ? ` (${arm.failure_reason_code})` : ""}.`
-    : "No completed final Reasoning Card was recorded for this arm.";
+    ? `No final public card was accepted. Endpoint outcome: strict failure${arm?.failure_reason_code ? ` (${arm.failure_reason_code})` : ""}${failurePosition}.`
+    : `No completed final Reasoning Card was recorded. Non-assessable failure${arm?.provider_failure_type ? `: ${arm.provider_failure_type}` : ""}${failurePosition}.`;
 
   return (
     <article className={`replay-output-card ${muted ? "muted" : ""}`}>
