@@ -1,0 +1,41 @@
+{
+  "schema_version": "ebrt-dual-route-fixtures-v0.3.1",
+  "split": "dev",
+  "promotion_eligible": false,
+  "fresh_relative_to_v0_3_holdout": true,
+  "cases": [
+    {
+      "case_id": "dev031_interleaved_signal_00",
+      "family": "dev031_interleaved_signal",
+      "evaluation_role": "dev_factorization",
+      "observations": [
+        {"topic": "dev031_signal_alpha", "stance": 0.937, "text": "Early alpha support establishes the working premise.", "confidence": 0.983, "revision_cue": 1},
+        {"topic": "dev031_signal_beta", "stance": -0.193, "text": "A beta side stream remains locally stable.", "confidence": 0.763, "revision_cue": 1},
+        {"topic": "dev031_signal_alpha", "stance": 0.743, "text": "A later alpha checkpoint weakens but supports the premise.", "confidence": 0.917, "revision_cue": 1},
+        {"topic": "dev031_signal_beta", "stance": -0.137, "text": "The beta side stream changes only slightly.", "confidence": 0.797, "revision_cue": 1},
+        {"topic": "dev031_signal_alpha", "stance": 0.523, "text": "A midstream alpha checkpoint remains positive.", "confidence": 0.883, "revision_cue": 1},
+        {"topic": "dev031_signal_beta", "stance": -0.083, "text": "The beta stream still carries no reversal event.", "confidence": 0.817, "revision_cue": 1},
+        {"topic": "dev031_signal_alpha", "stance": 0.269, "text": "The nearest alpha checkpoint is weakly supportive.", "confidence": 0.857, "revision_cue": 1},
+        {"topic": "dev031_signal_alpha", "stance": -0.847, "text": "New alpha evidence reverses the premise.", "confidence": 0.997, "revision_cue": 1},
+        {"topic": "dev031_signal_gamma", "stance": 0.113, "text": "An unrelated gamma continuation tests propagation.", "confidence": 0.727, "revision_cue": 1}
+      ],
+      "config_overrides": {"event_threshold": 0.55, "top_k": 2, "max_events": 1},
+      "expected": {"minimum_candidate_count": 4, "requires_execution_floor_separation": true}
+    },
+    {
+      "case_id": "dev031_dense_decay_00",
+      "family": "dev031_dense_decay",
+      "evaluation_role": "dev_factorization",
+      "observations": [
+        {"topic": "dev031_decay_main", "stance": 0.913, "text": "The first estimate strongly favors the active hypothesis.", "confidence": 0.973, "revision_cue": 1},
+        {"topic": "dev031_decay_main", "stance": 0.737, "text": "The second estimate retains substantial support.", "confidence": 0.943, "revision_cue": 1},
+        {"topic": "dev031_decay_main", "stance": 0.493, "text": "The third estimate is moderately supportive.", "confidence": 0.903, "revision_cue": 1},
+        {"topic": "dev031_decay_main", "stance": 0.223, "text": "The nearest estimate is only weakly supportive.", "confidence": 0.873, "revision_cue": 1},
+        {"topic": "dev031_decay_main", "stance": -0.793, "text": "A high-confidence measurement overturns the estimate.", "confidence": 0.993, "revision_cue": 1},
+        {"topic": "dev031_decay_tail", "stance": -0.087, "text": "A separate tail topic remains unchanged after the event.", "confidence": 0.753, "revision_cue": 1}
+      ],
+      "config_overrides": {"event_threshold": 0.55, "top_k": 2, "max_events": 1},
+      "expected": {"minimum_candidate_count": 4, "requires_execution_floor_separation": true}
+    }
+  ]
+}

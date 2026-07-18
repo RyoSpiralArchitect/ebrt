@@ -1,0 +1,40 @@
+{
+  "artifact_sha256": {
+    "arm_rows.csv": "dc7c3363f09069161a603b035b85f14df0710cda10b3df048f22bbc5c0b7e26e",
+    "benchmark_report.md": "533bf9e126c4bf7972c093014020b53ced59cc9f6ae08ce5b170352d55edfbcb",
+    "calls.jsonl": "d5169357cdaae42b41585f0b85911f1256cd92cab5405ad90a6b4336079b9bbe",
+    "results.json": "2dce7c7f5aafae0a7f6a830b73083a1e1d3eaa16abf6d9fa17f6a5e94ddafa91",
+    "traces.jsonl": "be1a849f0bfd56f54e68a49a027d68393fb76bbcec12e06b87aca97f00b69946"
+  },
+  "claim_boundary": {
+    "general_reasoning_improvement": false,
+    "nominal_output_ceiling_only": true,
+    "observer_evaluated": false,
+    "selective_replay_executed": false
+  },
+  "execution_complete": true,
+  "fixture_sha256": "6b9ec912ae85c08ecdb76f71efecb24e4a05742b58330dda639cb4ed5d6fc5f6",
+  "gold_sha256": "ca0d89c0eb92a7c9addb61014f64730762a17cf6ac1d76f0b5ca8a205b13f32a",
+  "locked_decision_ready": true,
+  "mode": "openai_live_dev_calibration",
+  "promotion_eligible": false,
+  "runtime": {
+    "platform": "macOS-26.2-arm64-arm-64bit-Mach-O",
+    "python": "3.13.13"
+  },
+  "schema_version": "ebrt-direct-full-calibration-manifest-v0.4",
+  "source_sha256": {
+    "benchmark_direct_full_calibration_v0_4.py": "f9574c5ed9c48bb827e5b90fe0ef0b6aeb27c558686e792576e57bcfd0184dd9",
+    "benchmark_language_replay_v0_4.py": "813ab885cecdacec034536a7dfeaa01c101554cc58663d1a79ad133595c6df91",
+    "fixtures/language_replay_v0_4_dev.json": "6b9ec912ae85c08ecdb76f71efecb24e4a05742b58330dda639cb4ed5d6fc5f6",
+    "fixtures/language_replay_v0_4_dev_gold.json": "ca0d89c0eb92a7c9addb61014f64730762a17cf6ac1d76f0b5ca8a205b13f32a",
+    "language_replay_bridge_v0_4.py": "5fd765ec5ca55562e7b712ec48adc6f54588080c276cbfa58aabcb72492666c2",
+    "openai_reasoning_provider_v0_4.py": "840d019811ecfab2b6bb25f2969d3c27e405b8cc148c068308393c2207c31689",
+    "policy_lock_direct_full_calibration_v0_4.json": "7f25f0cfb70e44ef307d5624054f88c2536b10276ab5d122ce735647f380378d",
+    "policy_lock_v0_4.json": "3687482c068094d8a9d861582ffaa0d861f1c9cf894db1592767db2947ebee5d",
+    "requirements-live.txt": "73a8bd6fd5d0a6aa2ec01c216b1ddc50f2c5f32746bcf907ec7ca3ab793e7c83",
+    "semantic_adapter_v0_2.py": "836b7afadabb2e2e5b6ea53afe2795e529ab20193b00d83af9a5624d4f32d2ca"
+  },
+  "status": "COMPLETE_LOCKED_DEV",
+  "success_manifest": true
+}

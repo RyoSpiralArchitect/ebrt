@@ -1,0 +1,1970 @@
+{
+  "schema_version": "ebrt-dual-route-fixtures-v0.3",
+  "split": "dev",
+  "cases": [
+    {
+      "case_id": "dev_dense_semantic_ladder_00",
+      "family": "dev_dense_semantic_ladder",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "dev_dense_semantic_ladder_topic_00",
+          "stance": 0.96,
+          "text": "Initial high-support anchor for dense ladder variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_dense_semantic_ladder_topic_00",
+          "stance": 0.78,
+          "text": "Dense same-topic candidate one for variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_dense_semantic_ladder_topic_00",
+          "stance": 0.6,
+          "text": "Dense same-topic candidate two for variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_dense_semantic_ladder_topic_00",
+          "stance": 0.35,
+          "text": "Dense same-topic candidate three for variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_dense_semantic_ladder_topic_00",
+          "stance": -0.82,
+          "text": "Late contradiction creates the only event for variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_dense_semantic_ladder_post_event_00_unique",
+          "stance": 0.12,
+          "text": "One-step unrelated continuation after the revision event in dev_dense_semantic_ladder_00.",
+          "confidence": 1,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Dev structure: four contiguous eligible anchors form a monotone semantic ladder before one terminal contradiction. Post-event continuation: 1 unrelated observation make terminal propagation distinct from event-source gain."
+    },
+    {
+      "case_id": "dev_dense_semantic_ladder_01",
+      "family": "dev_dense_semantic_ladder",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "dev_dense_semantic_ladder_topic_01",
+          "stance": 0.94,
+          "text": "Initial high-support anchor for dense ladder variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_dense_semantic_ladder_topic_01",
+          "stance": 0.76,
+          "text": "Dense same-topic candidate one for variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_dense_semantic_ladder_topic_01",
+          "stance": 0.58,
+          "text": "Dense same-topic candidate two for variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_dense_semantic_ladder_topic_01",
+          "stance": 0.33,
+          "text": "Dense same-topic candidate three for variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_dense_semantic_ladder_topic_01",
+          "stance": -0.8,
+          "text": "Late contradiction creates the only event for variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_dense_semantic_ladder_post_event_01_unique",
+          "stance": 0.12,
+          "text": "One-step unrelated continuation after the revision event in dev_dense_semantic_ladder_01.",
+          "confidence": 1,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Dev structure: four contiguous eligible anchors form a monotone semantic ladder before one terminal contradiction. Post-event continuation: 1 unrelated observation make terminal propagation distinct from event-source gain."
+    },
+    {
+      "case_id": "dev_dense_semantic_ladder_02",
+      "family": "dev_dense_semantic_ladder",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "dev_dense_semantic_ladder_topic_02",
+          "stance": 0.92,
+          "text": "Initial high-support anchor for dense ladder variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_dense_semantic_ladder_topic_02",
+          "stance": 0.74,
+          "text": "Dense same-topic candidate one for variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_dense_semantic_ladder_topic_02",
+          "stance": 0.56,
+          "text": "Dense same-topic candidate two for variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_dense_semantic_ladder_topic_02",
+          "stance": 0.31,
+          "text": "Dense same-topic candidate three for variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_dense_semantic_ladder_topic_02",
+          "stance": -0.78,
+          "text": "Late contradiction creates the only event for variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_dense_semantic_ladder_post_event_02_unique",
+          "stance": 0.12,
+          "text": "One-step unrelated continuation after the revision event in dev_dense_semantic_ladder_02.",
+          "confidence": 1,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Dev structure: four contiguous eligible anchors form a monotone semantic ladder before one terminal contradiction. Post-event continuation: 1 unrelated observation make terminal propagation distinct from event-source gain."
+    },
+    {
+      "case_id": "dev_dense_semantic_ladder_03",
+      "family": "dev_dense_semantic_ladder",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "dev_dense_semantic_ladder_topic_03",
+          "stance": 0.9,
+          "text": "Initial high-support anchor for dense ladder variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_dense_semantic_ladder_topic_03",
+          "stance": 0.72,
+          "text": "Dense same-topic candidate one for variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_dense_semantic_ladder_topic_03",
+          "stance": 0.54,
+          "text": "Dense same-topic candidate two for variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_dense_semantic_ladder_topic_03",
+          "stance": 0.29,
+          "text": "Dense same-topic candidate three for variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_dense_semantic_ladder_topic_03",
+          "stance": -0.76,
+          "text": "Late contradiction creates the only event for variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_dense_semantic_ladder_post_event_03_unique",
+          "stance": 0.12,
+          "text": "One-step unrelated continuation after the revision event in dev_dense_semantic_ladder_03.",
+          "confidence": 1,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Dev structure: four contiguous eligible anchors form a monotone semantic ladder before one terminal contradiction. Post-event continuation: 1 unrelated observation make terminal propagation distinct from event-source gain."
+    },
+    {
+      "case_id": "dev_alternating_single_distractor_00",
+      "family": "dev_alternating_single_distractor",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "dev_alternating_single_distractor_topic_00",
+          "stance": 0.94,
+          "text": "Primary anchor for alternating dev variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_alternating_single_distractor_side_00",
+          "stance": -0.1,
+          "text": "Unrelated stream starts in variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_alternating_single_distractor_topic_00",
+          "stance": 0.76,
+          "text": "Primary candidate one in variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_alternating_single_distractor_side_00",
+          "stance": -0.04,
+          "text": "Unrelated stream remains stable in variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_alternating_single_distractor_topic_00",
+          "stance": 0.56,
+          "text": "Primary candidate two in variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_alternating_single_distractor_side_00",
+          "stance": 0.02,
+          "text": "Unrelated stream drifts without an event in variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_alternating_single_distractor_topic_00",
+          "stance": 0.32,
+          "text": "Primary candidate three in variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_alternating_single_distractor_topic_00",
+          "stance": 0.08,
+          "text": "Primary candidate four stays below threshold in variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_alternating_single_distractor_topic_00",
+          "stance": -0.78,
+          "text": "Only the final primary observation triggers revision in variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_alternating_single_distractor_post_event_00_stable_stream",
+          "stance": -0.18,
+          "text": "Two-step continuation stream begins after the revision event in dev_alternating_single_distractor_00.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_alternating_single_distractor_post_event_00_stable_stream",
+          "stance": -0.1,
+          "text": "The unrelated continuation stream remains stable at the terminal step in dev_alternating_single_distractor_00.",
+          "confidence": 1,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Dev structure: five eligible anchors are interleaved with one stable repeated distractor stream. Post-event continuation: 2 unrelated observations make terminal propagation distinct from event-source gain."
+    },
+    {
+      "case_id": "dev_alternating_single_distractor_01",
+      "family": "dev_alternating_single_distractor",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "dev_alternating_single_distractor_topic_01",
+          "stance": 0.93,
+          "text": "Primary anchor for alternating dev variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_alternating_single_distractor_side_01",
+          "stance": -0.08,
+          "text": "Unrelated stream starts in variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_alternating_single_distractor_topic_01",
+          "stance": 0.75,
+          "text": "Primary candidate one in variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_alternating_single_distractor_side_01",
+          "stance": -0.02,
+          "text": "Unrelated stream remains stable in variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_alternating_single_distractor_topic_01",
+          "stance": 0.55,
+          "text": "Primary candidate two in variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_alternating_single_distractor_side_01",
+          "stance": 0.04,
+          "text": "Unrelated stream drifts without an event in variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_alternating_single_distractor_topic_01",
+          "stance": 0.31,
+          "text": "Primary candidate three in variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_alternating_single_distractor_topic_01",
+          "stance": 0.07,
+          "text": "Primary candidate four stays below threshold in variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_alternating_single_distractor_topic_01",
+          "stance": -0.77,
+          "text": "Only the final primary observation triggers revision in variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_alternating_single_distractor_post_event_01_stable_stream",
+          "stance": -0.18,
+          "text": "Two-step continuation stream begins after the revision event in dev_alternating_single_distractor_01.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_alternating_single_distractor_post_event_01_stable_stream",
+          "stance": -0.1,
+          "text": "The unrelated continuation stream remains stable at the terminal step in dev_alternating_single_distractor_01.",
+          "confidence": 1,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Dev structure: five eligible anchors are interleaved with one stable repeated distractor stream. Post-event continuation: 2 unrelated observations make terminal propagation distinct from event-source gain."
+    },
+    {
+      "case_id": "dev_alternating_single_distractor_02",
+      "family": "dev_alternating_single_distractor",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "dev_alternating_single_distractor_topic_02",
+          "stance": 0.92,
+          "text": "Primary anchor for alternating dev variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_alternating_single_distractor_side_02",
+          "stance": -0.06,
+          "text": "Unrelated stream starts in variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_alternating_single_distractor_topic_02",
+          "stance": 0.74,
+          "text": "Primary candidate one in variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_alternating_single_distractor_side_02",
+          "stance": 0,
+          "text": "Unrelated stream remains stable in variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_alternating_single_distractor_topic_02",
+          "stance": 0.54,
+          "text": "Primary candidate two in variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_alternating_single_distractor_side_02",
+          "stance": 0.06,
+          "text": "Unrelated stream drifts without an event in variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_alternating_single_distractor_topic_02",
+          "stance": 0.3,
+          "text": "Primary candidate three in variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_alternating_single_distractor_topic_02",
+          "stance": 0.06,
+          "text": "Primary candidate four stays below threshold in variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_alternating_single_distractor_topic_02",
+          "stance": -0.76,
+          "text": "Only the final primary observation triggers revision in variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_alternating_single_distractor_post_event_02_stable_stream",
+          "stance": -0.18,
+          "text": "Two-step continuation stream begins after the revision event in dev_alternating_single_distractor_02.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_alternating_single_distractor_post_event_02_stable_stream",
+          "stance": -0.1,
+          "text": "The unrelated continuation stream remains stable at the terminal step in dev_alternating_single_distractor_02.",
+          "confidence": 1,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Dev structure: five eligible anchors are interleaved with one stable repeated distractor stream. Post-event continuation: 2 unrelated observations make terminal propagation distinct from event-source gain."
+    },
+    {
+      "case_id": "dev_alternating_single_distractor_03",
+      "family": "dev_alternating_single_distractor",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "dev_alternating_single_distractor_topic_03",
+          "stance": 0.91,
+          "text": "Primary anchor for alternating dev variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_alternating_single_distractor_side_03",
+          "stance": -0.04,
+          "text": "Unrelated stream starts in variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_alternating_single_distractor_topic_03",
+          "stance": 0.73,
+          "text": "Primary candidate one in variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_alternating_single_distractor_side_03",
+          "stance": 0.02,
+          "text": "Unrelated stream remains stable in variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_alternating_single_distractor_topic_03",
+          "stance": 0.53,
+          "text": "Primary candidate two in variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_alternating_single_distractor_side_03",
+          "stance": 0.08,
+          "text": "Unrelated stream drifts without an event in variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_alternating_single_distractor_topic_03",
+          "stance": 0.29,
+          "text": "Primary candidate three in variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_alternating_single_distractor_topic_03",
+          "stance": 0.05,
+          "text": "Primary candidate four stays below threshold in variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_alternating_single_distractor_topic_03",
+          "stance": -0.75,
+          "text": "Only the final primary observation triggers revision in variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_alternating_single_distractor_post_event_03_stable_stream",
+          "stance": -0.18,
+          "text": "Two-step continuation stream begins after the revision event in dev_alternating_single_distractor_03.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_alternating_single_distractor_post_event_03_stable_stream",
+          "stance": -0.1,
+          "text": "The unrelated continuation stream remains stable at the terminal step in dev_alternating_single_distractor_03.",
+          "confidence": 1,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Dev structure: five eligible anchors are interleaved with one stable repeated distractor stream. Post-event continuation: 2 unrelated observations make terminal propagation distinct from event-source gain."
+    },
+    {
+      "case_id": "dev_recency_plateau_six_00",
+      "family": "dev_recency_plateau_six",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "dev_recency_plateau_six_topic_00",
+          "stance": 0.92,
+          "text": "Recency plateau candidate 0 for dev variant 0; semantics are deliberately near-tied.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_recency_plateau_six_topic_00",
+          "stance": 0.71,
+          "text": "Recency plateau candidate 1 for dev variant 0; semantics are deliberately near-tied.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_recency_plateau_six_topic_00",
+          "stance": 0.69,
+          "text": "Recency plateau candidate 2 for dev variant 0; semantics are deliberately near-tied.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_recency_plateau_six_topic_00",
+          "stance": 0.67,
+          "text": "Recency plateau candidate 3 for dev variant 0; semantics are deliberately near-tied.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_recency_plateau_six_topic_00",
+          "stance": 0.65,
+          "text": "Recency plateau candidate 4 for dev variant 0; semantics are deliberately near-tied.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_recency_plateau_six_topic_00",
+          "stance": 0.63,
+          "text": "Recency plateau candidate 5 for dev variant 0; semantics are deliberately near-tied.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_recency_plateau_six_topic_00",
+          "stance": -0.76,
+          "text": "Final reversal ends the six-anchor recency plateau in variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_recency_plateau_six_post_event_00_stream_a",
+          "stance": 0.16,
+          "text": "Three-step continuation stream A begins after the revision event in dev_recency_plateau_six_00.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_recency_plateau_six_post_event_00_stream_b",
+          "stance": -0.14,
+          "text": "A distinct unrelated stream B interrupts the continuation in dev_recency_plateau_six_00.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_recency_plateau_six_post_event_00_stream_a",
+          "stance": 0.22,
+          "text": "Continuation stream A returns without an event at the terminal step in dev_recency_plateau_six_00.",
+          "confidence": 1,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Dev structure: six contiguous candidates contain a five-item near-tie plateau that emphasizes deterministic recency and tie handling. Post-event continuation: 3 unrelated observations make terminal propagation distinct from event-source gain."
+    },
+    {
+      "case_id": "dev_recency_plateau_six_01",
+      "family": "dev_recency_plateau_six",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "dev_recency_plateau_six_topic_01",
+          "stance": 0.91,
+          "text": "Recency plateau candidate 0 for dev variant 1; semantics are deliberately near-tied.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_recency_plateau_six_topic_01",
+          "stance": 0.7,
+          "text": "Recency plateau candidate 1 for dev variant 1; semantics are deliberately near-tied.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_recency_plateau_six_topic_01",
+          "stance": 0.68,
+          "text": "Recency plateau candidate 2 for dev variant 1; semantics are deliberately near-tied.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_recency_plateau_six_topic_01",
+          "stance": 0.66,
+          "text": "Recency plateau candidate 3 for dev variant 1; semantics are deliberately near-tied.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_recency_plateau_six_topic_01",
+          "stance": 0.64,
+          "text": "Recency plateau candidate 4 for dev variant 1; semantics are deliberately near-tied.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_recency_plateau_six_topic_01",
+          "stance": 0.62,
+          "text": "Recency plateau candidate 5 for dev variant 1; semantics are deliberately near-tied.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_recency_plateau_six_topic_01",
+          "stance": -0.75,
+          "text": "Final reversal ends the six-anchor recency plateau in variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_recency_plateau_six_post_event_01_stream_a",
+          "stance": 0.16,
+          "text": "Three-step continuation stream A begins after the revision event in dev_recency_plateau_six_01.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_recency_plateau_six_post_event_01_stream_b",
+          "stance": -0.14,
+          "text": "A distinct unrelated stream B interrupts the continuation in dev_recency_plateau_six_01.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_recency_plateau_six_post_event_01_stream_a",
+          "stance": 0.22,
+          "text": "Continuation stream A returns without an event at the terminal step in dev_recency_plateau_six_01.",
+          "confidence": 1,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Dev structure: six contiguous candidates contain a five-item near-tie plateau that emphasizes deterministic recency and tie handling. Post-event continuation: 3 unrelated observations make terminal propagation distinct from event-source gain."
+    },
+    {
+      "case_id": "dev_recency_plateau_six_02",
+      "family": "dev_recency_plateau_six",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "dev_recency_plateau_six_topic_02",
+          "stance": 0.9,
+          "text": "Recency plateau candidate 0 for dev variant 2; semantics are deliberately near-tied.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_recency_plateau_six_topic_02",
+          "stance": 0.69,
+          "text": "Recency plateau candidate 1 for dev variant 2; semantics are deliberately near-tied.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_recency_plateau_six_topic_02",
+          "stance": 0.67,
+          "text": "Recency plateau candidate 2 for dev variant 2; semantics are deliberately near-tied.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_recency_plateau_six_topic_02",
+          "stance": 0.65,
+          "text": "Recency plateau candidate 3 for dev variant 2; semantics are deliberately near-tied.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_recency_plateau_six_topic_02",
+          "stance": 0.63,
+          "text": "Recency plateau candidate 4 for dev variant 2; semantics are deliberately near-tied.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_recency_plateau_six_topic_02",
+          "stance": 0.61,
+          "text": "Recency plateau candidate 5 for dev variant 2; semantics are deliberately near-tied.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_recency_plateau_six_topic_02",
+          "stance": -0.74,
+          "text": "Final reversal ends the six-anchor recency plateau in variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_recency_plateau_six_post_event_02_stream_a",
+          "stance": 0.16,
+          "text": "Three-step continuation stream A begins after the revision event in dev_recency_plateau_six_02.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_recency_plateau_six_post_event_02_stream_b",
+          "stance": -0.14,
+          "text": "A distinct unrelated stream B interrupts the continuation in dev_recency_plateau_six_02.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_recency_plateau_six_post_event_02_stream_a",
+          "stance": 0.22,
+          "text": "Continuation stream A returns without an event at the terminal step in dev_recency_plateau_six_02.",
+          "confidence": 1,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Dev structure: six contiguous candidates contain a five-item near-tie plateau that emphasizes deterministic recency and tie handling. Post-event continuation: 3 unrelated observations make terminal propagation distinct from event-source gain."
+    },
+    {
+      "case_id": "dev_recency_plateau_six_03",
+      "family": "dev_recency_plateau_six",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "dev_recency_plateau_six_topic_03",
+          "stance": 0.89,
+          "text": "Recency plateau candidate 0 for dev variant 3; semantics are deliberately near-tied.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_recency_plateau_six_topic_03",
+          "stance": 0.68,
+          "text": "Recency plateau candidate 1 for dev variant 3; semantics are deliberately near-tied.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_recency_plateau_six_topic_03",
+          "stance": 0.66,
+          "text": "Recency plateau candidate 2 for dev variant 3; semantics are deliberately near-tied.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_recency_plateau_six_topic_03",
+          "stance": 0.64,
+          "text": "Recency plateau candidate 3 for dev variant 3; semantics are deliberately near-tied.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_recency_plateau_six_topic_03",
+          "stance": 0.62,
+          "text": "Recency plateau candidate 4 for dev variant 3; semantics are deliberately near-tied.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_recency_plateau_six_topic_03",
+          "stance": 0.6,
+          "text": "Recency plateau candidate 5 for dev variant 3; semantics are deliberately near-tied.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_recency_plateau_six_topic_03",
+          "stance": -0.73,
+          "text": "Final reversal ends the six-anchor recency plateau in variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_recency_plateau_six_post_event_03_stream_a",
+          "stance": 0.16,
+          "text": "Three-step continuation stream A begins after the revision event in dev_recency_plateau_six_03.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_recency_plateau_six_post_event_03_stream_b",
+          "stance": -0.14,
+          "text": "A distinct unrelated stream B interrupts the continuation in dev_recency_plateau_six_03.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_recency_plateau_six_post_event_03_stream_a",
+          "stance": 0.22,
+          "text": "Continuation stream A returns without an event at the terminal step in dev_recency_plateau_six_03.",
+          "confidence": 1,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Dev structure: six contiguous candidates contain a five-item near-tie plateau that emphasizes deterministic recency and tie handling. Post-event continuation: 3 unrelated observations make terminal propagation distinct from event-source gain."
+    },
+    {
+      "case_id": "dev_middle_confidence_dip_00",
+      "family": "dev_middle_confidence_dip",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "dev_middle_confidence_dip_topic_00",
+          "stance": 0.95,
+          "text": "High-confidence primary anchor for dev confidence variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_middle_confidence_dip_topic_00",
+          "stance": 0.72,
+          "text": "Candidate one has moderate confidence in variant 0.",
+          "confidence": 0.72,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_middle_confidence_dip_context_00",
+          "stance": 0.12,
+          "text": "Unique context separator for confidence variant 0.",
+          "confidence": 0.9,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_middle_confidence_dip_topic_00",
+          "stance": 0.5,
+          "text": "Candidate two is the confidence dip in variant 0.",
+          "confidence": 0.45,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_middle_confidence_dip_topic_00",
+          "stance": 0.28,
+          "text": "Candidate three recovers confidence in variant 0.",
+          "confidence": 0.82,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_middle_confidence_dip_topic_00",
+          "stance": 0.02,
+          "text": "Candidate four remains non-eventful in variant 0.",
+          "confidence": 0.68,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_middle_confidence_dip_topic_00",
+          "stance": -0.8,
+          "text": "Final high-confidence contradiction is the sole event in variant 0.",
+          "confidence": 0.96,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_middle_confidence_dip_post_event_00_unique",
+          "stance": 0.12,
+          "text": "One-step unrelated continuation after the revision event in dev_middle_confidence_dip_00.",
+          "confidence": 1,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Dev structure: five eligible anchors vary confidence non-monotonically around a unique context separator. Post-event continuation: 1 unrelated observation make terminal propagation distinct from event-source gain."
+    },
+    {
+      "case_id": "dev_middle_confidence_dip_01",
+      "family": "dev_middle_confidence_dip",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "dev_middle_confidence_dip_topic_01",
+          "stance": 0.94,
+          "text": "High-confidence primary anchor for dev confidence variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_middle_confidence_dip_topic_01",
+          "stance": 0.71,
+          "text": "Candidate one has moderate confidence in variant 1.",
+          "confidence": 0.74,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_middle_confidence_dip_context_01",
+          "stance": 0.12,
+          "text": "Unique context separator for confidence variant 1.",
+          "confidence": 0.9,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_middle_confidence_dip_topic_01",
+          "stance": 0.49,
+          "text": "Candidate two is the confidence dip in variant 1.",
+          "confidence": 0.47,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_middle_confidence_dip_topic_01",
+          "stance": 0.27,
+          "text": "Candidate three recovers confidence in variant 1.",
+          "confidence": 0.81,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_middle_confidence_dip_topic_01",
+          "stance": 0.01,
+          "text": "Candidate four remains non-eventful in variant 1.",
+          "confidence": 0.7,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_middle_confidence_dip_topic_01",
+          "stance": -0.79,
+          "text": "Final high-confidence contradiction is the sole event in variant 1.",
+          "confidence": 0.96,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_middle_confidence_dip_post_event_01_unique",
+          "stance": 0.12,
+          "text": "One-step unrelated continuation after the revision event in dev_middle_confidence_dip_01.",
+          "confidence": 1,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Dev structure: five eligible anchors vary confidence non-monotonically around a unique context separator. Post-event continuation: 1 unrelated observation make terminal propagation distinct from event-source gain."
+    },
+    {
+      "case_id": "dev_middle_confidence_dip_02",
+      "family": "dev_middle_confidence_dip",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "dev_middle_confidence_dip_topic_02",
+          "stance": 0.93,
+          "text": "High-confidence primary anchor for dev confidence variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_middle_confidence_dip_topic_02",
+          "stance": 0.7,
+          "text": "Candidate one has moderate confidence in variant 2.",
+          "confidence": 0.76,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_middle_confidence_dip_context_02",
+          "stance": 0.12,
+          "text": "Unique context separator for confidence variant 2.",
+          "confidence": 0.9,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_middle_confidence_dip_topic_02",
+          "stance": 0.48,
+          "text": "Candidate two is the confidence dip in variant 2.",
+          "confidence": 0.49,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_middle_confidence_dip_topic_02",
+          "stance": 0.26,
+          "text": "Candidate three recovers confidence in variant 2.",
+          "confidence": 0.8,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_middle_confidence_dip_topic_02",
+          "stance": 0,
+          "text": "Candidate four remains non-eventful in variant 2.",
+          "confidence": 0.72,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_middle_confidence_dip_topic_02",
+          "stance": -0.78,
+          "text": "Final high-confidence contradiction is the sole event in variant 2.",
+          "confidence": 0.96,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_middle_confidence_dip_post_event_02_unique",
+          "stance": 0.12,
+          "text": "One-step unrelated continuation after the revision event in dev_middle_confidence_dip_02.",
+          "confidence": 1,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Dev structure: five eligible anchors vary confidence non-monotonically around a unique context separator. Post-event continuation: 1 unrelated observation make terminal propagation distinct from event-source gain."
+    },
+    {
+      "case_id": "dev_middle_confidence_dip_03",
+      "family": "dev_middle_confidence_dip",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "dev_middle_confidence_dip_topic_03",
+          "stance": 0.92,
+          "text": "High-confidence primary anchor for dev confidence variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_middle_confidence_dip_topic_03",
+          "stance": 0.69,
+          "text": "Candidate one has moderate confidence in variant 3.",
+          "confidence": 0.78,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_middle_confidence_dip_context_03",
+          "stance": 0.12,
+          "text": "Unique context separator for confidence variant 3.",
+          "confidence": 0.9,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_middle_confidence_dip_topic_03",
+          "stance": 0.47,
+          "text": "Candidate two is the confidence dip in variant 3.",
+          "confidence": 0.51,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_middle_confidence_dip_topic_03",
+          "stance": 0.25,
+          "text": "Candidate three recovers confidence in variant 3.",
+          "confidence": 0.79,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_middle_confidence_dip_topic_03",
+          "stance": -0.01,
+          "text": "Candidate four remains non-eventful in variant 3.",
+          "confidence": 0.74,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_middle_confidence_dip_topic_03",
+          "stance": -0.77,
+          "text": "Final high-confidence contradiction is the sole event in variant 3.",
+          "confidence": 0.96,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_middle_confidence_dip_post_event_03_unique",
+          "stance": 0.12,
+          "text": "One-step unrelated continuation after the revision event in dev_middle_confidence_dip_03.",
+          "confidence": 1,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Dev structure: five eligible anchors vary confidence non-monotonically around a unique context separator. Post-event continuation: 1 unrelated observation make terminal propagation distinct from event-source gain."
+    },
+    {
+      "case_id": "dev_context_burst_four_00",
+      "family": "dev_context_burst_four",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "dev_context_burst_four_topic_00",
+          "stance": 0.93,
+          "text": "Primary anchor precedes a context burst in variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_context_burst_four_burst_a_00",
+          "stance": -0.25,
+          "text": "Burst context A starts for variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_context_burst_four_burst_b_00",
+          "stance": 0.3,
+          "text": "Burst context B starts for variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_context_burst_four_topic_00",
+          "stance": 0.7,
+          "text": "Primary candidate one follows the first burst in variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_context_burst_four_burst_a_00",
+          "stance": -0.18,
+          "text": "Burst context A remains stable for variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_context_burst_four_burst_b_00",
+          "stance": 0.24,
+          "text": "Burst context B remains stable for variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_context_burst_four_topic_00",
+          "stance": 0.46,
+          "text": "Primary candidate two follows the second burst in variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_context_burst_four_topic_00",
+          "stance": 0.18,
+          "text": "Primary candidate three precedes the event in variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_context_burst_four_topic_00",
+          "stance": -0.84,
+          "text": "Primary final contradiction creates one event in variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_context_burst_four_post_event_00_stable_stream",
+          "stance": -0.18,
+          "text": "Two-step continuation stream begins after the revision event in dev_context_burst_four_00.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_context_burst_four_post_event_00_stable_stream",
+          "stance": -0.1,
+          "text": "The unrelated continuation stream remains stable at the terminal step in dev_context_burst_four_00.",
+          "confidence": 1,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Dev structure: four eligible anchors are separated by a two-topic context burst with no distractor events. Post-event continuation: 2 unrelated observations make terminal propagation distinct from event-source gain."
+    },
+    {
+      "case_id": "dev_context_burst_four_01",
+      "family": "dev_context_burst_four",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "dev_context_burst_four_topic_01",
+          "stance": 0.92,
+          "text": "Primary anchor precedes a context burst in variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_context_burst_four_burst_a_01",
+          "stance": -0.25,
+          "text": "Burst context A starts for variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_context_burst_four_burst_b_01",
+          "stance": 0.3,
+          "text": "Burst context B starts for variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_context_burst_four_topic_01",
+          "stance": 0.69,
+          "text": "Primary candidate one follows the first burst in variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_context_burst_four_burst_a_01",
+          "stance": -0.18,
+          "text": "Burst context A remains stable for variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_context_burst_four_burst_b_01",
+          "stance": 0.24,
+          "text": "Burst context B remains stable for variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_context_burst_four_topic_01",
+          "stance": 0.45,
+          "text": "Primary candidate two follows the second burst in variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_context_burst_four_topic_01",
+          "stance": 0.17,
+          "text": "Primary candidate three precedes the event in variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_context_burst_four_topic_01",
+          "stance": -0.83,
+          "text": "Primary final contradiction creates one event in variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_context_burst_four_post_event_01_stable_stream",
+          "stance": -0.18,
+          "text": "Two-step continuation stream begins after the revision event in dev_context_burst_four_01.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_context_burst_four_post_event_01_stable_stream",
+          "stance": -0.1,
+          "text": "The unrelated continuation stream remains stable at the terminal step in dev_context_burst_four_01.",
+          "confidence": 1,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Dev structure: four eligible anchors are separated by a two-topic context burst with no distractor events. Post-event continuation: 2 unrelated observations make terminal propagation distinct from event-source gain."
+    },
+    {
+      "case_id": "dev_context_burst_four_02",
+      "family": "dev_context_burst_four",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "dev_context_burst_four_topic_02",
+          "stance": 0.91,
+          "text": "Primary anchor precedes a context burst in variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_context_burst_four_burst_a_02",
+          "stance": -0.25,
+          "text": "Burst context A starts for variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_context_burst_four_burst_b_02",
+          "stance": 0.3,
+          "text": "Burst context B starts for variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_context_burst_four_topic_02",
+          "stance": 0.68,
+          "text": "Primary candidate one follows the first burst in variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_context_burst_four_burst_a_02",
+          "stance": -0.18,
+          "text": "Burst context A remains stable for variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_context_burst_four_burst_b_02",
+          "stance": 0.24,
+          "text": "Burst context B remains stable for variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_context_burst_four_topic_02",
+          "stance": 0.44,
+          "text": "Primary candidate two follows the second burst in variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_context_burst_four_topic_02",
+          "stance": 0.16,
+          "text": "Primary candidate three precedes the event in variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_context_burst_four_topic_02",
+          "stance": -0.82,
+          "text": "Primary final contradiction creates one event in variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_context_burst_four_post_event_02_stable_stream",
+          "stance": -0.18,
+          "text": "Two-step continuation stream begins after the revision event in dev_context_burst_four_02.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_context_burst_four_post_event_02_stable_stream",
+          "stance": -0.1,
+          "text": "The unrelated continuation stream remains stable at the terminal step in dev_context_burst_four_02.",
+          "confidence": 1,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Dev structure: four eligible anchors are separated by a two-topic context burst with no distractor events. Post-event continuation: 2 unrelated observations make terminal propagation distinct from event-source gain."
+    },
+    {
+      "case_id": "dev_context_burst_four_03",
+      "family": "dev_context_burst_four",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "dev_context_burst_four_topic_03",
+          "stance": 0.9,
+          "text": "Primary anchor precedes a context burst in variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_context_burst_four_burst_a_03",
+          "stance": -0.25,
+          "text": "Burst context A starts for variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_context_burst_four_burst_b_03",
+          "stance": 0.3,
+          "text": "Burst context B starts for variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_context_burst_four_topic_03",
+          "stance": 0.67,
+          "text": "Primary candidate one follows the first burst in variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_context_burst_four_burst_a_03",
+          "stance": -0.18,
+          "text": "Burst context A remains stable for variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_context_burst_four_burst_b_03",
+          "stance": 0.24,
+          "text": "Burst context B remains stable for variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_context_burst_four_topic_03",
+          "stance": 0.43,
+          "text": "Primary candidate two follows the second burst in variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_context_burst_four_topic_03",
+          "stance": 0.15,
+          "text": "Primary candidate three precedes the event in variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_context_burst_four_topic_03",
+          "stance": -0.81,
+          "text": "Primary final contradiction creates one event in variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_context_burst_four_post_event_03_stable_stream",
+          "stance": -0.18,
+          "text": "Two-step continuation stream begins after the revision event in dev_context_burst_four_03.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_context_burst_four_post_event_03_stable_stream",
+          "stance": -0.1,
+          "text": "The unrelated continuation stream remains stable at the terminal step in dev_context_burst_four_03.",
+          "confidence": 1,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Dev structure: four eligible anchors are separated by a two-topic context burst with no distractor events. Post-event continuation: 2 unrelated observations make terminal propagation distinct from event-source gain."
+    },
+    {
+      "case_id": "dev_early_cluster_late_gap_00",
+      "family": "dev_early_cluster_late_gap",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "dev_early_cluster_late_gap_topic_00",
+          "stance": 0.97,
+          "text": "Early anchor for long-gap dev variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_topic_00",
+          "stance": 0.74,
+          "text": "Early clustered candidate one for variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_topic_00",
+          "stance": 0.51,
+          "text": "Early clustered candidate two for variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_topic_00",
+          "stance": 0.26,
+          "text": "Early clustered candidate three for variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_topic_00",
+          "stance": 0.02,
+          "text": "Early clustered candidate four for variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_gap_0_00",
+          "stance": -0.18,
+          "text": "Unique long-gap observation 0 for dev variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_gap_1_00",
+          "stance": -0.06,
+          "text": "Unique long-gap observation 1 for dev variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_gap_2_00",
+          "stance": 0.06,
+          "text": "Unique long-gap observation 2 for dev variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_gap_3_00",
+          "stance": 0.18,
+          "text": "Unique long-gap observation 3 for dev variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_topic_00",
+          "stance": -0.79,
+          "text": "Late return to the primary topic triggers the only event in variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_post_event_00_stream_a",
+          "stance": 0.16,
+          "text": "Three-step continuation stream A begins after the revision event in dev_early_cluster_late_gap_00.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_post_event_00_stream_b",
+          "stance": -0.14,
+          "text": "A distinct unrelated stream B interrupts the continuation in dev_early_cluster_late_gap_00.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_post_event_00_stream_a",
+          "stance": 0.22,
+          "text": "Continuation stream A returns without an event at the terminal step in dev_early_cluster_late_gap_00.",
+          "confidence": 1,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Dev structure: five primary anchors are front-clustered, followed by a four-observation unique-topic gap before the event. Post-event continuation: 3 unrelated observations make terminal propagation distinct from event-source gain."
+    },
+    {
+      "case_id": "dev_early_cluster_late_gap_01",
+      "family": "dev_early_cluster_late_gap",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "dev_early_cluster_late_gap_topic_01",
+          "stance": 0.96,
+          "text": "Early anchor for long-gap dev variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_topic_01",
+          "stance": 0.73,
+          "text": "Early clustered candidate one for variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_topic_01",
+          "stance": 0.5,
+          "text": "Early clustered candidate two for variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_topic_01",
+          "stance": 0.25,
+          "text": "Early clustered candidate three for variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_topic_01",
+          "stance": 0.01,
+          "text": "Early clustered candidate four for variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_gap_0_01",
+          "stance": -0.18,
+          "text": "Unique long-gap observation 0 for dev variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_gap_1_01",
+          "stance": -0.06,
+          "text": "Unique long-gap observation 1 for dev variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_gap_2_01",
+          "stance": 0.06,
+          "text": "Unique long-gap observation 2 for dev variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_gap_3_01",
+          "stance": 0.18,
+          "text": "Unique long-gap observation 3 for dev variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_topic_01",
+          "stance": -0.78,
+          "text": "Late return to the primary topic triggers the only event in variant 1.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_post_event_01_stream_a",
+          "stance": 0.16,
+          "text": "Three-step continuation stream A begins after the revision event in dev_early_cluster_late_gap_01.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_post_event_01_stream_b",
+          "stance": -0.14,
+          "text": "A distinct unrelated stream B interrupts the continuation in dev_early_cluster_late_gap_01.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_post_event_01_stream_a",
+          "stance": 0.22,
+          "text": "Continuation stream A returns without an event at the terminal step in dev_early_cluster_late_gap_01.",
+          "confidence": 1,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Dev structure: five primary anchors are front-clustered, followed by a four-observation unique-topic gap before the event. Post-event continuation: 3 unrelated observations make terminal propagation distinct from event-source gain."
+    },
+    {
+      "case_id": "dev_early_cluster_late_gap_02",
+      "family": "dev_early_cluster_late_gap",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "dev_early_cluster_late_gap_topic_02",
+          "stance": 0.95,
+          "text": "Early anchor for long-gap dev variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_topic_02",
+          "stance": 0.72,
+          "text": "Early clustered candidate one for variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_topic_02",
+          "stance": 0.49,
+          "text": "Early clustered candidate two for variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_topic_02",
+          "stance": 0.24,
+          "text": "Early clustered candidate three for variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_topic_02",
+          "stance": 0,
+          "text": "Early clustered candidate four for variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_gap_0_02",
+          "stance": -0.18,
+          "text": "Unique long-gap observation 0 for dev variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_gap_1_02",
+          "stance": -0.06,
+          "text": "Unique long-gap observation 1 for dev variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_gap_2_02",
+          "stance": 0.06,
+          "text": "Unique long-gap observation 2 for dev variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_gap_3_02",
+          "stance": 0.18,
+          "text": "Unique long-gap observation 3 for dev variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_topic_02",
+          "stance": -0.77,
+          "text": "Late return to the primary topic triggers the only event in variant 2.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_post_event_02_stream_a",
+          "stance": 0.16,
+          "text": "Three-step continuation stream A begins after the revision event in dev_early_cluster_late_gap_02.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_post_event_02_stream_b",
+          "stance": -0.14,
+          "text": "A distinct unrelated stream B interrupts the continuation in dev_early_cluster_late_gap_02.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_post_event_02_stream_a",
+          "stance": 0.22,
+          "text": "Continuation stream A returns without an event at the terminal step in dev_early_cluster_late_gap_02.",
+          "confidence": 1,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Dev structure: five primary anchors are front-clustered, followed by a four-observation unique-topic gap before the event. Post-event continuation: 3 unrelated observations make terminal propagation distinct from event-source gain."
+    },
+    {
+      "case_id": "dev_early_cluster_late_gap_03",
+      "family": "dev_early_cluster_late_gap",
+      "evaluation_role": "promotion_primary",
+      "observations": [
+        {
+          "topic": "dev_early_cluster_late_gap_topic_03",
+          "stance": 0.94,
+          "text": "Early anchor for long-gap dev variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_topic_03",
+          "stance": 0.71,
+          "text": "Early clustered candidate one for variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_topic_03",
+          "stance": 0.48,
+          "text": "Early clustered candidate two for variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_topic_03",
+          "stance": 0.23,
+          "text": "Early clustered candidate three for variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_topic_03",
+          "stance": -0.01,
+          "text": "Early clustered candidate four for variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_gap_0_03",
+          "stance": -0.18,
+          "text": "Unique long-gap observation 0 for dev variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_gap_1_03",
+          "stance": -0.06,
+          "text": "Unique long-gap observation 1 for dev variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_gap_2_03",
+          "stance": 0.06,
+          "text": "Unique long-gap observation 2 for dev variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_gap_3_03",
+          "stance": 0.18,
+          "text": "Unique long-gap observation 3 for dev variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_topic_03",
+          "stance": -0.76,
+          "text": "Late return to the primary topic triggers the only event in variant 3.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_post_event_03_stream_a",
+          "stance": 0.16,
+          "text": "Three-step continuation stream A begins after the revision event in dev_early_cluster_late_gap_03.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_post_event_03_stream_b",
+          "stance": -0.14,
+          "text": "A distinct unrelated stream B interrupts the continuation in dev_early_cluster_late_gap_03.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "dev_early_cluster_late_gap_post_event_03_stream_a",
+          "stance": 0.22,
+          "text": "Continuation stream A returns without an event at the terminal step in dev_early_cluster_late_gap_03.",
+          "confidence": 1,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "note": "Dev structure: five primary anchors are front-clustered, followed by a four-observation unique-topic gap before the event. Post-event continuation: 3 unrelated observations make terminal propagation distinct from event-source gain."
+    }
+  ]
+}

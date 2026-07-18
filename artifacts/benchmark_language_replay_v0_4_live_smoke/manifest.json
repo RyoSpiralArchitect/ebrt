@@ -1,0 +1,41 @@
+{
+  "artifact_sha256": {
+    "benchmark_report.md": "5589b307079667f9a15b7261f8f87b344c82eeef33753d204ecff3dd1f39b359",
+    "calls.jsonl": "88eadf842730ea87bfc6d6ce5e08b4d06e2ef505588bf54bcfb3fb4eaf6ab7b2",
+    "lane_rows.csv": "85885b77de70955a65c8f15ab1a3535bbd9ef0141f05d18e34d6f97e00f685b1",
+    "results.json": "ac8fdf871f17efade7a9f0f69268e1621efcf11980589a515d2b6fca2c559c96",
+    "traces.jsonl": "24096baae8404e62701b6ffa7dc423345ff1267f0a4dafc07f9f9bb02e7c95d5"
+  },
+  "case_ids": [
+    "route_code_supersession",
+    "unrelated_noop"
+  ],
+  "claim_boundary": [
+    "Scripted results prove bridge plumbing only, not language reasoning.",
+    "Live smoke results are DEV observations, not a promotion benchmark or a general accuracy claim.",
+    "Card-only forward is a public-card continuation control, not a universal chat-model baseline.",
+    "Token savings are reported only from exact provider usage; no price estimate is inferred."
+  ],
+  "complete": true,
+  "mode": "openai_live_smoke",
+  "promotion_eligible": false,
+  "result_fingerprint": "e6cfd4fe5b841a9a3577bc57fb807bfbbaa1e83fb7ab9637fc95b05207f48d14",
+  "runtime": {
+    "machine": "arm64",
+    "platform": "macOS-26.2-arm64-arm-64bit-Mach-O",
+    "python": "3.13.13"
+  },
+  "schema_version": "ebrt-language-replay-benchmark-v0.4",
+  "source_sha256": {
+    "benchmark_language_replay_v0_4.py": "813ab885cecdacec034536a7dfeaa01c101554cc58663d1a79ad133595c6df91",
+    "fixtures/language_replay_v0_4_dev.json": "6b9ec912ae85c08ecdb76f71efecb24e4a05742b58330dda639cb4ed5d6fc5f6",
+    "fixtures/language_replay_v0_4_dev_gold.json": "ca0d89c0eb92a7c9addb61014f64730762a17cf6ac1d76f0b5ca8a205b13f32a",
+    "language_replay_bridge_v0_4.py": "5fd765ec5ca55562e7b712ec48adc6f54588080c276cbfa58aabcb72492666c2",
+    "openai_reasoning_provider_v0_4.py": "840d019811ecfab2b6bb25f2969d3c27e405b8cc148c068308393c2207c31689",
+    "policy_lock_v0_4.json": "3687482c068094d8a9d861582ffaa0d861f1c9cf894db1592767db2947ebee5d",
+    "requirements-live.txt": "73a8bd6fd5d0a6aa2ec01c216b1ddc50f2c5f32746bcf907ec7ca3ab793e7c83",
+    "semantic_adapter_v0_2.py": "836b7afadabb2e2e5b6ea53afe2795e529ab20193b00d83af9a5624d4f32d2ca"
+  },
+  "status": "DEV_DRAFT",
+  "trials": 1
+}

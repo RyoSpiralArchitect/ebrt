@@ -1,0 +1,112 @@
+{
+  "artifacts": {
+    "lane_rows.csv": {
+      "bytes": 7819,
+      "sha256": "4d3cc68f2aff2dfe7f40b9295dd334dd8f976e72b50787f04228bbe6160eb4a4"
+    },
+    "results.json": {
+      "bytes": 54655,
+      "sha256": "a0694a5507b062af29d82cb9bd37dfb64414a7b045af4fd04f3850053af22783"
+    }
+  },
+  "bundle_fingerprint": "4912e3ce05f910e987855d03847dec8110cee0c7add0376e70bab8a7e0d16ade",
+  "claim_boundary": [
+    "This is a DEV_DRAFT structured-mechanism benchmark, not a promotion experiment.",
+    "The historical regression case is contaminated by the v0.3 terminal attempt.",
+    "Exact cost-lane equality is a tested software/mechanism invariant, not evidence of reasoning superiority.",
+    "Trajectory-factorial differences isolate a toy loss-horizon mechanism and do not establish LLM improvement.",
+    "A future full run requires a new LOCKED protocol and entirely fresh primary, stable, and sequential families."
+  ],
+  "dev_freshness": {
+    "case_count": 2,
+    "fields_checked": [
+      "case_id",
+      "family",
+      "topic",
+      "text",
+      "stance",
+      "confidence"
+    ],
+    "observation_count": 15,
+    "status": "PASS"
+  },
+  "floor_factorization_contract": {
+    "contract_fingerprint": "e282cbfce91f17a0085c872feb78c6885c860e67a7ab790d8d5046f6bf88448a",
+    "status": "PASS"
+  },
+  "historical_evidence_sha256": {
+    "artifacts/.dual_route_v0_3_holdout_ledger.json": "9d8e8813f3529606166e5ccd73b3c95fb2448b1dce677043e1b2c6f0af6c36b5",
+    "benchmark_dual_route_v0_3.py": "1341585bb7e5e2d8f26b294b4aac9d7c110736290e69ccd694101f8c012dd91a",
+    "dual_route_policy_v0_3.py": "5797e87727b17853088272a74a8affac4610a4bcc195664ed047642e5bd9763c",
+    "fixtures/dual_route_v0_3_dev.json": "ba6e6943d7295e6e5279335587b36aceb8776447bca4a731ad4ae0e87cdf69ec",
+    "fixtures/dual_route_v0_3_holdout.json": "68662d5ad6301ab175d5ad32e0ccfb5ed615a98eb48025ab887a999cfec6b670",
+    "fixtures/dual_route_v0_3_sequential.json": "095fdc0685ea590be83df87ef35024ef7aa0a814a3b87fd073eacbee699bd028",
+    "policy_lock_v0_3.json": "26b1d7266c00babf583052b7fe592f9401a57a21362394631a8f84336c1953f4"
+  },
+  "historical_regression_copy": {
+    "copied_input_fingerprint": "07f9b6caca3bfae813bd818646c10e49833d8c88e786ecc626f574bf54556570",
+    "source_case_id": "holdout_dual_repeated_stream_00",
+    "status": "PASS"
+  },
+  "mode": "quick",
+  "policy_lock_sha256": "e9ee000ad79ae205bda15bf7f1e691c87886b50cc5e374534a44e7ac3228c1ce",
+  "policy_lock_status": "DEV_DRAFT",
+  "promotion_status": "not_eligible_dev_draft",
+  "runtime_contract": {
+    "actual_environment": {
+      "machine": "arm64",
+      "platform": "macOS-26.2-arm64-arm-64bit-Mach-O",
+      "python_implementation": "CPython",
+      "python_version": "3.13.13",
+      "release": "25.2.0",
+      "system": "Darwin",
+      "torch_version": "2.11.0"
+    },
+    "artifact_scope": "dev_only_actual_runtime",
+    "byte_reproducibility_claim": "same_locked_runtime_only",
+    "command": "quick",
+    "command_promotion_capability": false,
+    "exact_runtime_required": false,
+    "expected_environment": {
+      "machine": "arm64",
+      "platform": "macOS-26.2-arm64-arm-64bit-Mach-O",
+      "python_implementation": "CPython",
+      "python_version": "3.13.13",
+      "release": "25.2.0",
+      "system": "Darwin",
+      "torch_version": "2.11.0"
+    },
+    "matched": true,
+    "mismatches": [],
+    "promotion_eligible": false,
+    "support_contract": {
+      "device": "cpu",
+      "dtype": "float32",
+      "python_implementation": "CPython",
+      "python_minimum": "3.11",
+      "torch_maximum_exclusive": "3.0",
+      "torch_minimum": "2.0"
+    },
+    "support_violations": [],
+    "supported_cpu_runtime": true,
+    "top_level_protocol_ready": false
+  },
+  "runtime_lock_schema": {
+    "schema_fingerprint": "ecf9ee690223b2dd9c95717a9b9fc08049d6a309320966730f3be1aa3cbe864a",
+    "status": "PASS"
+  },
+  "schema_version": "ebrt-dual-route-manifest-v0.3.1",
+  "source_validation": {
+    "actual_sha256": {
+      "benchmark_dual_route_v0_3_1.py": "9a47ccf8ff7b9555568907c4786fa137c9fccd6b7c20620cb27725182f61948c",
+      "dual_route_policy_v0_3_1.py": "b371feae1be56943d89c2ce6418ce8e88f7c52256a4c7e0bb961a0abcbd5aeff",
+      "ebrt_monolith_v0_1.py": "b1702f2868839d989cc3a9321d227436a23c3dad6cc86483edee9d5dbab3a529",
+      "fixtures/dual_route_v0_3_1_dev.json": "8fde84304b45cc34cf9401ecd271e52a4d1f82e4da56d21c4356a10d22a150c4",
+      "fixtures/dual_route_v0_3_1_regression.json": "5c0a28b49c2f3207249db50c8d66740aabe5d39719c8ef15c137b797b2ccd448",
+      "instrumentation_ebrt_v0_2.py": "841325d2ba1f126c61750a9445710084a07530e5940b2246b36846a3c0cc3b88",
+      "semantic_adapter_v0_2.py": "836b7afadabb2e2e5b6ea53afe2795e529ab20193b00d83af9a5624d4f32d2ca"
+    },
+    "pending": [],
+    "status": "PASS"
+  }
+}

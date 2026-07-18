@@ -1,0 +1,124 @@
+{
+  "schema_version": "ebrt-dual-route-fixtures-v0.3.1",
+  "split": "contaminated_historical_regression",
+  "promotion_eligible": false,
+  "source_evidence_commit": "6b3dec8",
+  "source_case_id": "holdout_dual_repeated_stream_00",
+  "reason": "Exact v0.3 terminal counterexample retained only as a regression for replay/loss factorization.",
+  "cases": [
+    {
+      "case_id": "holdout_dual_repeated_stream_00",
+      "family": "historical_v03_terminal_counterexample",
+      "evaluation_role": "contaminated_historical_regression",
+      "observations": [
+        {
+          "topic": "holdout_dual_repeated_stream_topic_00",
+          "stance": 0.96,
+          "text": "Primary stream anchor 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_parallel_00",
+          "stance": -0.28,
+          "text": "Parallel stream anchor 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_topic_00",
+          "stance": 0.78,
+          "text": "Primary stream candidate 0 in holdout variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_parallel_00",
+          "stance": -0.22,
+          "text": "Parallel stream non-event 0 in holdout variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_topic_00",
+          "stance": 0.59,
+          "text": "Primary stream candidate 1 in holdout variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_parallel_00",
+          "stance": -0.16,
+          "text": "Parallel stream non-event 1 in holdout variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_topic_00",
+          "stance": 0.39,
+          "text": "Primary stream candidate 2 in holdout variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_parallel_00",
+          "stance": -0.1,
+          "text": "Parallel stream non-event 2 in holdout variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_topic_00",
+          "stance": 0.17,
+          "text": "Primary stream candidate 3 in holdout variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_parallel_00",
+          "stance": -0.04,
+          "text": "Parallel stream non-event 3 in holdout variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_topic_00",
+          "stance": -0.81,
+          "text": "Primary stream alone reverses in holdout variant 0.",
+          "confidence": 1,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_post_event_00_a",
+          "stance": -0.22,
+          "text": "A stable unrelated topic starts after the revision event.",
+          "confidence": 0.69,
+          "revision_cue": 1
+        },
+        {
+          "topic": "holdout_dual_repeated_stream_post_event_00_a",
+          "stance": -0.17,
+          "text": "The unrelated continuation drifts slightly without revising its stance.",
+          "confidence": 0.73,
+          "revision_cue": 1
+        }
+      ],
+      "config_overrides": {
+        "event_threshold": 0.55,
+        "top_k": 2,
+        "max_events": 1
+      },
+      "expected": {
+        "event_source_step": 10,
+        "candidate_steps": [0, 2, 4, 6, 8],
+        "s2_control_steps": [2, 4],
+        "common_execution_replay_floor": 0,
+        "selected_execution_replay_floor": 2,
+        "trajectory_anchor_floor": 0,
+        "revision_steps": 32,
+        "common_optimizer_replay_steps": 374,
+        "selected_optimizer_replay_steps": 306
+      }
+    }
+  ]
+}
