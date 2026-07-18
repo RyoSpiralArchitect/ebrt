@@ -1,0 +1,149 @@
+{
+  "schema_version": "ebrt-direct-full-calibration-policy-lock-v0.4",
+  "protocol_id": "direct-full-calibration-dev-draft-2026-07-18",
+  "status": "DEV_DRAFT",
+  "promotion_eligible": false,
+  "research_question": "Does a staged public-card Full Restart produce better final public decision records than a one-shot raw-context call after the same fixed revision event is supplied?",
+  "arms": [
+    "direct_raw_fixed_revision",
+    "full_restart"
+  ],
+  "execution": {
+    "primary_estimand": "staged_public_card_execution_vs_one_shot_raw_context_conditional_on_a_fixed_revision_envelope",
+    "arm_order": "rotate_by_trial_plus_original_case_index",
+    "case_order": "rotate_by_trial_index",
+    "api_seed": "not_set_not_claimed",
+    "trials": 3,
+    "smoke_trials": 1,
+    "retry_policy": "no_retry_failed_attempts_remain_counted",
+    "failed_call_receipt_boundary": "inherited_v0_4_sdk_call_exceptions_are_not_used_for_transport_or_usage_claims",
+    "private_chain_of_thought": "not_requested_not_persisted",
+    "hidden_model_state": "not_accessed"
+  },
+  "revision_envelope": {
+    "source": "input_fixture_late_evidence_semantic_annotation",
+    "status": "fixed_dev_annotation_not_observer_output",
+    "provider_fields": [
+      "late_evidence_id",
+      "relevant",
+      "revision_cue",
+      "invalidated_evidence_ids"
+    ],
+    "excluded_fields": [
+      "topic",
+      "stance",
+      "confidence",
+      "public_summary",
+      "answer",
+      "required_facts",
+      "required_evidence_ids",
+      "replay_floor",
+      "grader_output",
+      "gold"
+    ],
+    "late_raw_text": "present_once_per_arm_outside_envelope",
+    "delivery_frequency": "once_in_direct_and_once_per_staged_call_in_full",
+    "observer_performance": "held_out_of_scope"
+  },
+  "arm_contracts": {
+    "direct_raw_fixed_revision": {
+      "api_calls_per_case": 1,
+      "input": "question_choices_slots_all_raw_evidence_fixed_revision_envelope",
+      "state": "no_previous_public_card",
+      "evidence_aperture": "all_case_evidence_ids"
+    },
+    "full_restart": {
+      "api_calls_per_case": 6,
+      "input": "question_choices_slots_previous_public_card_current_raw_chunk_fixed_revision_envelope",
+      "state": "empty_start_then_public_card_only",
+      "evidence_aperture": "surviving_public_support_plus_current_plus_invalidated_roster_with_late_id_citable_only_after_raw_presentation"
+    }
+  },
+  "live_provider": {
+    "provider": "openai",
+    "api": "responses.parse",
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "low",
+    "service_tier": "default",
+    "store": false,
+    "previous_response_id": false,
+    "truncation": "disabled",
+    "sdk_retries": 0,
+    "max_card_output_tokens": 768,
+    "timeout_seconds": 60
+  },
+  "budget_match": {
+    "scope": "nominal_generated_token_ceiling_per_case",
+    "full_formula": "evidence_chunk_count * max_card_output_tokens",
+    "direct_formula": "one_call * evidence_chunk_count * max_card_output_tokens",
+    "expected_ceiling_for_current_six_chunk_cases": 4608,
+    "input_tokens": "not_matched_measured",
+    "realized_output_tokens": "not_forced_measured",
+    "reasoning_tokens": "not_forced_measured",
+    "api_calls": "not_matched_measured",
+    "latency": "not_matched_measured",
+    "price_or_server_compute_parity": "not_claimed",
+    "padding": "forbidden"
+  },
+  "fixtures": {
+    "input": "fixtures/language_replay_v0_4_dev.json",
+    "gold": "fixtures/language_replay_v0_4_dev_gold.json",
+    "case_count": 10,
+    "live_canary_case_ids": [
+      "route_code_supersession",
+      "unrelated_noop"
+    ],
+    "all_cases_are_dev": true,
+    "contaminated_by_prior_development": true,
+    "future_holdout_must_be_fresh": true
+  },
+  "grading": {
+    "primary_endpoint": "paired_final_card_machine_success",
+    "primary_decision_unit": "case_level_stable_pass_at_least_two_of_three_trials",
+    "machine_success_requires": [
+      "answer_exact",
+      "required_facts_exact",
+      "stable_facts_exact",
+      "required_evidence_present",
+      "forbidden_support_absent",
+      "expected_invalidated_evidence_marked"
+    ],
+    "secondary_endpoints": [
+      "answer_exact",
+      "evidence_consistent",
+      "each_machine_check",
+      "citation_precision",
+      "citation_recall",
+      "actual_provider_usage",
+      "api_calls",
+      "latency",
+      "incomplete_or_failed_attempts"
+    ],
+    "free_form_prose_exact_match": false,
+    "private_reasoning_graded": false
+  },
+  "direction_rule": {
+    "full_primary_scaffold_candidate_requires": [
+      "full_stable_pass_cases_at_least_two_more_than_direct",
+      "full_stable_answer_exact_cases_not_below_direct",
+      "no_direct_only_stable_case",
+      "all_locked_runs_complete"
+    ],
+    "precedence": "ceiling_then_full_candidate_then_family_mixed_then_direct_equal_or_better_then_inconclusive",
+    "direct_equal_or_better": "repair_public_card_factorization_before_investing_in_selective_replay",
+    "family_mixed": "stratify_by_revision_family",
+    "ceiling_or_inconclusive": "add_fresh_harder_dev_cases",
+    "selective_status_if_full_wins": "optional_efficiency_ablation_pending_same_block_quality_guardrail"
+  },
+  "claim_boundary": [
+    "This is a fixed 10-case DEV calibration, not a holdout or promotion experiment.",
+    "The comparison begins after a fixed revision event annotation; it does not evaluate revision detection or an end-to-end observer.",
+    "Direct is a one-shot Responses call with the same fixed revision envelope, not an unqualified plain-API baseline.",
+    "Matching max_output_tokens ceilings does not match realized tokens, calls, latency, price, server compute, or reasoning effort consumed.",
+    "A Full advantage would support this staged public-card protocol on this DEV set; it would not isolate card structure from repeated calls or establish general LLM reasoning improvement.",
+    "Selective replay is not executed in this two-arm calibration and cannot receive a formal same-block rank from it.",
+    "The arm interfaces use different fixed instructions, and Full receives the same envelope metadata on each staged call while Direct receives it once.",
+    "Inherited v0.4 SDK call exceptions are counted but are not used to claim exact failed-call usage or a true transport-error classification.",
+    "No private chain-of-thought, hidden-state edit, persisted response state, or provider seed is used."
+  ]
+}

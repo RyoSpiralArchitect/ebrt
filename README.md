@@ -38,12 +38,20 @@ full restart, and selective replay with exact API usage and independent gold.
 After closing observer and citation side channels, it exposes a concrete
 interaction between invalidated-anchor routing and public-state sufficiency.
 
+A subsequent 10-case × 3-trial calibration now tests that public-card scaffold
+against one stateless call over all raw evidence after the same fixed revision
+annotation. Direct passed 30/30 strict outputs; staged Full passed 4/30, with no
+Full-only win. This freezes a useful negative result: repair or bypass lossy
+public-state factorization before investing further in selective replay.
+
 > [!IMPORTANT]
 > v0.1-v0.3.1 are **not** a Transformer implementation, a GPT latent-state
 > editor, or evidence of improved language-model accuracy. v0.4 meaningfully
 > executes GPT-5.6 at the public adapter/replay boundary, but still does not
 > access hidden states or private chain-of-thought, and its two-case DEV canary
-> does not establish a general accuracy improvement.
+> does not establish a general accuracy improvement. The repeated calibration
+> is also contaminated DEV evidence; its Direct arm receives fixed revision
+> metadata and is not an unqualified plain-API baseline.
 
 ## Why EBRT?
 
@@ -83,11 +91,14 @@ openai_reasoning_provider_v0_4.py strict GPT-5.6 Responses providers
 benchmark_language_replay_v0_4.py offline gates, live canary, grading, bundles
 policy_lock_v0_4.json        non-promotional Language Replay DEV contract
 fixtures/language_replay_v0_4_*.json separated DEV inputs and machine gold
+benchmark_direct_full_calibration_v0_4.py completion-ceiling Direct/Full runner
+policy_lock_direct_full_calibration_v0_4.json frozen two-arm DEV contract
 docs/RND_BENCHMARK_V0_1.md    protocol, results, limits, and claim ledger
 docs/RND_INSTRUMENTATION_V0_2.md measurement contract and algorithm findings
 docs/RND_DUAL_ROUTE_V0_3.md   terminal invariant result and v0.3.1 direction
 docs/RND_DUAL_ROUTE_V0_3_1.md factorization design, DEV results, and next experiment
 docs/RND_LANGUAGE_REPLAY_V0_4.md live protocol, result, failure, and v0.4.1 axis
+docs/RND_DIRECT_FULL_CALIBRATION_V0_4.md repeated result and state-loss diagnosis
 artifacts/benchmark_v0_1/     committed machine-readable benchmark evidence
 artifacts/demo_v0_1/trace.json committed no-build mechanism trace
 artifacts/benchmark_instrumentation_v0_2/ committed v0.2 measurement evidence
@@ -96,6 +107,7 @@ artifacts/.dual_route_v0_3_holdout_ledger.json canonical terminal attempt record
 artifacts/benchmark_dual_route_v0_3_1_dev/ committed non-promotional DEV evidence
 artifacts/benchmark_language_replay_v0_4_fake_dev/ scripted plumbing evidence only
 artifacts/benchmark_language_replay_v0_4_live_smoke/ boundary-fixed GPT-5.6 DEV canary
+artifacts/benchmark_direct_full_calibration_v0_4_dev/ non-promotional 10-case DEV evidence
 requirements.txt              runtime dependency declaration
 requirements-live.txt         separately pinned OpenAI/Pydantic live dependencies
 LICENSE                       Apache License 2.0
@@ -248,6 +260,27 @@ The live runner uses strict Responses structured outputs, disables SDK retry
 and persisted response state, and never writes the key or raw response object.
 Its output is still `DEV_DRAFT`, not a holdout or promotion result.
 
+Validate the separate Direct-vs-Full calibration without making an API call:
+
+```bash
+python3 benchmark_direct_full_calibration_v0_4.py self-test
+```
+
+With the live dependencies and `OPENAI_API_KEY` available, the two-case smoke
+and locked repeated DEV run are:
+
+```bash
+python3 benchmark_direct_full_calibration_v0_4.py live-smoke \
+  --output benchmark_results/v0_4_direct_full_live_smoke
+python3 benchmark_direct_full_calibration_v0_4.py live-dev \
+  --output benchmark_results/v0_4_direct_full_dev
+```
+
+The comparison matches only the cumulative `max_output_tokens` ceiling. Direct
+and Full use different call counts and realized token/latency budgets. The
+committed bundle is development evidence, never a promotion or general model
+benchmark.
+
 ## Judge path: inspect first, rerun second
 
 No training or model build is required to inspect the submitted evidence.
@@ -302,6 +335,17 @@ For the v0.4 Language Replay Bridge, inspect:
 4. `artifacts/benchmark_language_replay_v0_4_fake_dev/` only for deterministic
    plumbing and failure-sentinel evidence, never model-performance evidence.
 
+For the repeated Direct-vs-Full calibration, inspect:
+
+1. [`docs/RND_DIRECT_FULL_CALIBRATION_V0_4.md`](docs/RND_DIRECT_FULL_CALIBRATION_V0_4.md)
+   for the locked contrast, result, state-loss diagnosis, and next controls;
+2. `policy_lock_direct_full_calibration_v0_4.json` for the fixed revision
+   envelope, nominal completion ceiling, trial rotation, and claim boundary;
+3. `artifacts/benchmark_direct_full_calibration_v0_4_dev/manifest.json` for all
+   source and artifact hashes;
+4. `benchmark_report.md` and `arm_rows.csv` for the compact result, then
+   `results.json`, `traces.jsonl`, and `calls.jsonl` for the full audit surface.
+
 There is intentionally no normal v0.3 result directory: the runner stopped
 before validated bundle publication, and the ledger stores no outcome rows.
 
@@ -318,6 +362,7 @@ python3 dual_route_policy_v0_3_1.py --self-test
 python3 benchmark_dual_route_v0_3_1.py self-test
 python3 language_replay_bridge_v0_4.py
 python3 benchmark_language_replay_v0_4.py self-test
+python3 benchmark_direct_full_calibration_v0_4.py self-test
 ```
 
 The v0.3 self-tests are historical checks and must be run from a separate
@@ -531,10 +576,57 @@ late `B2` correction and stable seal but returned stale answer `AMBER` with
 lanes and selective replay correctly performed no backward replay.
 
 This is a successful live bridge and a failed sufficiency result—not evidence
-that selective replay already improves GPT reasoning. The next algorithmic
-axis is a dependency-complete public state plus a pre-outcome fallback that
-expands the replay floor when required dependency edges cannot be certified.
-See the [v0.4 R&D note](docs/RND_LANGUAGE_REPLAY_V0_4.md).
+that selective replay already improves GPT reasoning. This canary initially
+nominated dependency-complete public state plus pre-outcome floor expansion.
+The subsequent calibration below pauses floor work and tests the representation
+first. See the [v0.4 R&D note](docs/RND_LANGUAGE_REPLAY_V0_4.md).
+
+## v0.4 Direct-vs-Full calibration result
+
+The follow-up calibration holds revision detection fixed and compares two
+generation paths over all 10 existing DEV cases, three trials each:
+
+- one stateless `direct_raw_fixed_revision` call over all ordered raw evidence;
+- six-step `full_restart` from an empty state using only the previous public
+  card plus the current raw chunk.
+
+Both arms use the same model, final schema, grader, reasoning setting, and
+nominal cumulative output-token ceiling of 4,608 per case. Actual calls, input,
+realized output/reasoning tokens, latency, price, and server compute are not
+matched. Direct receives the same fixed revision metadata, so it is not an
+unqualified plain-API control.
+
+All 210 calls completed with exact sanitized usage and balanced 15/15 arm
+order. The locked result was:
+
+| Metric | Direct | Full |
+| --- | ---: | ---: |
+| Strict machine success | 30/30 | 4/30 |
+| Answer exact | 30/30 | 15/30 |
+| Evidence consistent | 30/30 | 4/30 |
+| Stable case pass | 10/10 | 1/10 |
+| API calls | 30 | 180 |
+| Input tokens | 22,041 | 132,097 |
+| Output tokens | 4,442 | 41,864 |
+| Reasoning-token detail | 0 | 17,502 |
+
+There were 26 Direct-only outcomes, four both-pass outcomes, and no Full-only
+outcome. Full preserved stable facts and invalidation hygiene in all 30 runs,
+but retained required evidence in only 4/30. Its only stable strict pass was the
+irrelevant no-op.
+
+The traces reveal an irreversible aperture loss. Evidence that cannot fill a
+fixed decision slot when first seen—mapping tables, thresholds, conversion
+rules, dependency edges, and precedence rules—often disappears from the next
+public card. A later correction supplies the missing key, but the raw semantics
+cannot re-enter. A citation ID is not a lossless memory.
+
+This rejects the current staged public-card Full protocol as the primary
+quality scaffold on this DEV suite. It does not reject external scaffolding in
+general or formally rank selective replay. The next controls are a
+no-revision-envelope one-shot raw control and a six-call cumulative-raw restart
+that tests card-only information loss while holding staging fixed. See the
+[calibration R&D note](docs/RND_DIRECT_FULL_CALIBRATION_V0_4.md).
 
 ## Current scope and claim boundary
 
@@ -557,6 +649,11 @@ See the [v0.4 R&D note](docs/RND_LANGUAGE_REPLAY_V0_4.md).
 | A GPT observer can detect a late-evidence event and select a public replay floor | Executed correctly on 2/2 annotated DEV canary cases; generalization is not established |
 | Selective public-card replay matches full-restart quality | Not established; it passed 1/2 full-success canary cases |
 | Selective replay uses fewer provider tokens than full restart | It used fewer input/output tokens in this two-case DEV canary, but 65 more reasoning tokens; no general or monotonic-compute claim |
+| The current staged Full protocol matches one-shot fixed-envelope Direct quality | Refuted on the locked contaminated DEV calibration: Full passed 4/30 versus Direct 30/30, with 0 Full-only outcomes |
+| One-shot fixed-envelope Direct is stable on the existing 10-case DEV suite | Supported at 3/3 trials for all 10 cases; the suite is saturated and not a fresh holdout |
+| The calibration proves an unassisted plain API is superior | Not supported; Direct receives fixed revision metadata and a strict output scaffold |
+| Public-card compression alone caused the Full deficit | Not yet isolated; a cumulative-raw staged control is required to separate compression from repeated-call/prompt effects |
+| Selective replay should be optimized before state sufficiency | Not supported by current evidence; it is paused as a quality direction and remains an unranked future efficiency ablation |
 | EBRT edits hidden states inside a trained Transformer or GPT model | Not implemented |
 | EBRT improves real-world LLM reasoning accuracy | Not established |
 | GPT-5.6 is meaningfully integrated | Yes at the public observer/replay boundary in a complete DEV canary; not yet promotion evidence |
@@ -592,8 +689,13 @@ category determination.
   the live observer, strict public-card adapter, three matched textual controls,
   exact provider accounting, and two-case canary now execute end to end. The
   boundary-fixed canary rejects quality parity and nominates dependency-complete
-  public state plus fail-closed floor expansion as the v0.4.1 algorithm target;
-  repeated 10-case DEV and fresh promotion evidence remain pending.
+  public state as the next representation question.
+- **Milestone 2.1 — Direct-vs-Full calibration (DEV complete):** the repeated
+  10-case run rejects current staged Full as a primary quality scaffold, freezes
+  Direct at 30/30 versus Full at 4/30, and pauses selective replay optimization.
+  A no-revision-envelope one-shot raw control, cumulative-raw staging control,
+  and fresh harder DEV suite come first; if the compression ablation supports
+  it, a generic evidence ledger follows. Promotion evidence is still pending.
 - **Milestone 3 — coherent evaluator experience:** the deterministic standalone
   Mirror figure exists; a minimal editable or hosted judge sandbox remains
   pending. A broad product UI is still intentionally deferred.
@@ -627,7 +729,10 @@ Human decisions remain explicit. In particular, the project owner chose to:
 - require meaningful GPT-5.6 use before representing the project as
   hackathon-ready;
 - preserve a failed selective-quality guardrail and turn the observed public
-  routing/state-sufficiency interaction into the next algorithm experiment.
+  routing/state-sufficiency interaction into the next algorithm experiment;
+- insert a one-shot Direct control before tuning selective replay, freeze its
+  negative result for staged Full, and prioritize causal compression controls
+  over preserving the preferred roadmap.
 
 Codex accelerated implementation and audit work; it did not decide whether the
 evidence is sufficient for a scientific or product claim.
@@ -644,9 +749,13 @@ not a fresh holdout or quality result. The live v0.4 GPT-5.6 Language Replay
 Bridge and matched two-case canary are implemented; full restart passed 2/2,
 while selective replay passed 1/2 and therefore did not clear its quality
 guardrail. Selective used fewer input/output tokens but more reasoning tokens.
-A dependency-complete state/fallback experiment, repeated 10-case DEV run,
-fresh promotion suite, and hosted judge sandbox remain pending; there is no
-hosted service in this release.
+The subsequent locked 10-case × 3-trial calibration is also complete: one-shot
+fixed-envelope Direct passed 30/30 while staged public-card Full passed 4/30.
+This pauses both Full and selective as quality directions until a redesigned
+public state meets the Direct non-degradation gate. A no-revision-envelope
+one-shot raw control, cumulative-raw staged control, generic evidence ledger,
+fresh harder DEV and promotion suites, and a hosted judge sandbox remain
+pending; there is no hosted service in this release.
 
 Issues and pull requests that add reproducible tests, adversarial fixtures, or
 better controls are especially welcome. Please avoid expanding claims without

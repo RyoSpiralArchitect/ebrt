@@ -7,6 +7,12 @@ version that executes a live GPT-5.6 public-state replay loop end to end. It
 does not edit hidden states, request or store private chain-of-thought, or
 establish a general LLM reasoning improvement.
 
+> **Follow-up:** the proposed repeated 10-case calibration is now complete.
+> One-shot fixed-envelope Direct passed 30/30 strict outputs while staged Full
+> passed 4/30. This supersedes the “improve selective replay next” direction:
+> repair or bypass public-card factorization first. See
+> [`RND_DIRECT_FULL_CALIBRATION_V0_4.md`](RND_DIRECT_FULL_CALIBRATION_V0_4.md).
+
 The v0.1-v0.3.1 mechanism, instrumentation, policies, locks, fixtures, and
 artifacts remain unchanged. v0.4 is a separate language bridge layered on the
 existing `SemanticAdapter` boundary.
@@ -235,7 +241,8 @@ content that the checkpoint omitted. This is an algorithmic failure mode
 revealed after closing the reporting and comparison leaks; two cases do not
 establish that it is the only bottleneck.
 
-The v0.4.1 candidate should remain pre-outcome and test two controls:
+At the time of this two-case canary, the v0.4.1 candidate was to remain
+pre-outcome and test two controls:
 
 1. a dependency-complete public state or evidence ledger that preserves
    machine-checkable edges such as `current_code -> route_table -> bay`, plus a
@@ -244,11 +251,17 @@ The v0.4.1 candidate should remain pre-outcome and test two controls:
    public dependency set can be reconstructed from retained state and the raw
    replay slice.
 
-The adaptive trajectory-horizon selector remains shadow-only until checkpoint
-sufficiency is resolved. After a new route-code canary passes without changing
-gold, the next meaningful experiment is the full 10-case DEV suite with
-repeated, rotated lane order. A later promotion suite must use entirely fresh
-names, texts, values, families, and gold.
+The adaptive trajectory-horizon selector remained shadow-only pending
+checkpoint sufficiency. At that time, the planned next experiment was the full
+10-case DEV suite with repeated, rotated lane order after a repaired route-code
+canary. Any later promotion suite still must use entirely fresh names, texts,
+values, families, and gold.
+
+That repeated 10-case experiment has since completed. Fixed-envelope Direct
+passed 30/30 while staged Full passed 4/30, so replay-floor expansion is now
+paused behind a no-revision-envelope one-shot control and a cumulative-raw
+staging ablation. The current decision and evidence are in
+[`RND_DIRECT_FULL_CALIBRATION_V0_4.md`](RND_DIRECT_FULL_CALIBRATION_V0_4.md).
 
 ## Claim ledger
 
