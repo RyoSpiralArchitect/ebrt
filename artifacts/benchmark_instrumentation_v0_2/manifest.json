@@ -1,24 +1,24 @@
 {
   "artifacts": {
     "benchmark_report.md": {
-      "bytes": 6117,
-      "sha256": "4680b52e9783f68d99826562acb9ffc4482175ebd4e5744c4dd168d30634b974"
+      "bytes": 6452,
+      "sha256": "2297613e0977e0c6fc9e97533a1b4e5470098da464d12dd031e3b1135e665450"
     },
     "candidates.csv": {
-      "bytes": 403854,
-      "sha256": "946a5c3e0dece239d32f01adc61c7a2af7f55d8debbcb19d967ac9049746f40d"
+      "bytes": 769526,
+      "sha256": "05e3bc30da63e20a765ec2dec93bc86f067946bb2568a6d67750a1010b7e16b3"
     },
     "events.csv": {
-      "bytes": 913764,
-      "sha256": "35b36ba52f514789f0246d21b00cf65013659c2c815773d9112fdb62be8a2027"
+      "bytes": 922785,
+      "sha256": "88f2aa8b11bca8f036de9d0fb0771521d01878acaec73306dfed2798625903bf"
     },
     "results.json": {
-      "bytes": 19194,
-      "sha256": "d4fc6785e27c1f444e226c229cbcee4affd5b6477b65a9fc533abaff982ef072"
+      "bytes": 20404,
+      "sha256": "db8375400296a3bd501d7f52f74c39ae8c7f7db676cdb8be128673b9de4996e8"
     },
     "trials.csv": {
       "bytes": 1066098,
-      "sha256": "fe5a8a716a01b254de8d8887565c6fd4caa05f8cc464a49ed90eeaf5190444d3"
+      "sha256": "773728da5e591f93ccfe2d107f1b0e30a3c6ba2a8113c5951e964d8152732d77"
     }
   },
   "claim_boundary": [
@@ -26,7 +26,7 @@
     "Event-local mirrors are matched counterfactual execution traces, not private chain-of-thought or model introspection.",
     "Turn angle and curvature are coordinate-sensitive geometric proxies; lower or higher values are not inherently better.",
     "Semantic attention and offline target-aligned source-projection leverage answer different questions: why a premise is implicated versus how one predefined local control direction changes the event-source belief projection.",
-    "Candidate control_leverage is a centered finite difference along one topic-aligned control direction; it is not full-state controllability, an objective gradient, or proof of causal optimality.",
+    "Candidate control_leverage uses a centered finite difference when both requested endpoints are feasible and a radially projected forward one-sided difference at the control boundary; it is not full-state controllability, an objective gradient, or proof of causal optimality.",
     "Outcome and leakage associations are descriptive on the fixed 48-case suite and do not establish external validity or causality.",
     "Paired seeds control the toy generator initialization but do not close case-selection, representation, or future hosted-model nondeterminism."
   ],
@@ -55,9 +55,9 @@
     "bootstrap_resamples": 2000,
     "bootstrap_seed": 20260718,
     "candidate_control_leverage": true,
-    "candidate_control_leverage_definition": "target_aligned_event_source_belief_projection_derivative_along_one_normalized_topic_aligned_control_direction",
+    "candidate_control_leverage_definition": "target_aligned_event_source_belief_projection_sensitivity_to_one_normalized_topic_aligned_requested_actuation_after_the_frozen_radial_control_projection",
     "candidate_control_leverage_epsilon": 0.001,
-    "candidate_control_leverage_method": "centered_finite_difference_topic_aligned_control",
+    "candidate_control_leverage_method": "feasible_centered_or_projected_forward_one_sided_topic_aligned_control",
     "case_suite": "frozen v0.1 48-case correctness suite",
     "geometry_epsilon": 1e-08,
     "model_seeds": [
@@ -104,10 +104,10 @@
   "schema_version": "ebrt-instrumentation-benchmark-v0.2",
   "source": {
     "benchmark_file": "benchmark_instrumentation_v0_2.py",
-    "benchmark_sha256": "5cb0f390b5b4f9daf3df973725cb3c43c674efa81e505344e3bd05dc0123451c",
+    "benchmark_sha256": "326ea266c65dd227fef4cfb6a5aa3c164fecf32be48b6f9c1a29fc58740fa949",
     "fixture_sha256": "c68e608c0176ae13a1c59a768fd38ee8b9d6a7d6bc4f0554a4e509def84a6a9b",
     "instrumentation_file": "instrumentation_ebrt_v0_2.py",
-    "instrumentation_sha256": "663b0e446e07d8c24be228f3e5e56a6a53665bd3a637979bf285597f7d0bbb7d",
+    "instrumentation_sha256": "841325d2ba1f126c61750a9445710084a07530e5940b2246b36846a3c0cc3b88",
     "monolith_file": "ebrt_monolith_v0_1.py",
     "monolith_sha256": "b1702f2868839d989cc3a9321d227436a23c3dad6cc86483edee9d5dbab3a529",
     "semantic_adapter_file": "semantic_adapter_v0_2.py",

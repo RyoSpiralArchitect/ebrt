@@ -4,7 +4,7 @@
     "Event-local mirrors are matched counterfactual execution traces, not private chain-of-thought or model introspection.",
     "Turn angle and curvature are coordinate-sensitive geometric proxies; lower or higher values are not inherently better.",
     "Semantic attention and offline target-aligned source-projection leverage answer different questions: why a premise is implicated versus how one predefined local control direction changes the event-source belief projection.",
-    "Candidate control_leverage is a centered finite difference along one topic-aligned control direction; it is not full-state controllability, an objective gradient, or proof of causal optimality.",
+    "Candidate control_leverage uses a centered finite difference when both requested endpoints are feasible and a radially projected forward one-sided difference at the control boundary; it is not full-state controllability, an objective gradient, or proof of causal optimality.",
     "Outcome and leakage associations are descriptive on the fixed 48-case suite and do not establish external validity or causality.",
     "Paired seeds control the toy generator initialization but do not close case-selection, representation, or future hosted-model nondeterminism."
   ],
@@ -18,14 +18,28 @@
   "schema_version": "ebrt-instrumentation-benchmark-v0.2",
   "status": "PASS",
   "summary": {
-    "candidate_control_leverage_definition": "Centered finite difference of the target-aligned event-source belief projection along one normalized topic-aligned control direction.",
+    "candidate_control_leverage_definition": "Feasible centered or radially projected forward one-sided finite difference of target-aligned event-source belief projection along one normalized topic-aligned control direction.",
     "candidate_metrics": {
-      "control_leverage": {
-        "mean": 0.1631144869832262,
-        "median": 0.16203522682189941,
+      "boundary_limited": {
+        "mean": 0.036290322580645164,
+        "median": 0.0,
         "n": 1984,
-        "p05": 0.03013014793395996,
-        "p95": 0.40323734283447266
+        "p05": 0.0,
+        "p95": 0.0
+      },
+      "control_leverage": {
+        "mean": 0.1631171503517356,
+        "median": 0.16203521192073822,
+        "n": 1984,
+        "p05": 0.03013014607131481,
+        "p95": 0.40323731303215027
+      },
+      "probe_control_norm_max": {
+        "mean": 0.13285825800730597,
+        "median": 0.0010000000474974513,
+        "n": 1984,
+        "p05": 0.0010000000474974513,
+        "p95": 1.5636978447437284
       },
       "semantic_attention": {
         "mean": 0.6612903228209864,
@@ -53,6 +67,20 @@
         "n": 512,
         "p05": -1.0,
         "p95": 1.0
+      },
+      "boundary_limited_candidate_count": {
+        "mean": 0.054878048780487805,
+        "median": 0.0,
+        "n": 1312,
+        "p05": 0.0,
+        "p95": 1.0
+      },
+      "boundary_limited_candidate_fraction": {
+        "mean": 0.018292682926829267,
+        "median": 0.0,
+        "n": 1312,
+        "p05": 0.0,
+        "p95": 0.3333333333333333
       },
       "control_delta_norm": {
         "mean": 1.6648651347836343,
@@ -153,11 +181,11 @@
         "p95": 1.0
       },
       "selected_leverage_regret": {
-        "mean": 0.015482397341146701,
+        "mean": 0.0154823957056534,
         "median": 0.0,
         "n": 1312,
         "p05": 0.0,
-        "p95": 0.1328885555267334
+        "p95": 0.1328885406255722
       },
       "semantic_gold_is_max_leverage": {
         "mean": 0.6585365853658537,
@@ -251,9 +279,9 @@
       },
       "selected_leverage_regret": {
         "case_count": 15,
-        "ci_high": 0.08145044557750225,
-        "ci_low": 0.0077789028485616045,
-        "estimate": 0.03967364318668842
+        "ci_high": 0.08145043766126037,
+        "ci_low": 0.0077789018551508585,
+        "estimate": 0.03967363899573684
       },
       "semantic_gold_is_max_leverage": {
         "case_count": 15,
@@ -285,11 +313,11 @@
         "p95": 1.0
       },
       "selected_leverage_regret": {
-        "mean": 0.03967364318668842,
+        "mean": 0.03967363899573684,
         "median": 0.0,
         "n": 512,
         "p05": 0.0,
-        "p95": 0.23487210273742676
+        "p95": 0.23487207293510437
       },
       "semantic_gold_is_max_leverage": {
         "mean": 0.125,
@@ -536,6 +564,15 @@
         "right_metric": "outcome_success"
       }
     ],
+    "probe_feasibility": {
+      "assertion_tolerance": 1e-05,
+      "boundary_limited_candidate_count": 72,
+      "boundary_limited_candidate_fraction": 0.036290322580645164,
+      "candidate_count": 1984,
+      "frozen_control_norm_max": 1.75,
+      "observed_probe_control_norm_max": 1.7500001192092896,
+      "within_frozen_control_bound": true
+    },
     "trial_metrics": {
       "source_distance_gain": {
         "mean": 0.26600676680912533,

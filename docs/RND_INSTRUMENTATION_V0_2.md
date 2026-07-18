@@ -56,10 +56,11 @@ The default trace is deliberately compact.
 - **Event:** semantic score decomposition, eligible anchors, selected route,
   event-local mirror, control update, energy change, replay span, and
   accept/rollback state.
-- **Diagnostic probe:** optional centered finite differences for eligible
-  candidates along one normalized topic-aligned control direction. Probe work
-  is reported separately from execution work and cannot change the committed
-  result.
+- **Diagnostic probe:** optional finite differences for eligible candidates
+  along one normalized topic-aligned requested actuation. The stencil is
+  centered when both endpoints are feasible and uses a radially projected
+  forward one-sided sample at the control boundary. Probe work is reported
+  separately from execution work and cannot change the committed result.
 
 Deep per-optimizer-step tensor capture is not enabled by default. It can grow as
 `events × revision steps × replay length × latent dimension`, and collecting it
@@ -110,11 +111,14 @@ a useful correction.
 The existing router combines topic similarity, contradiction, and recency into
 an attention score. v0.2 records those components separately.
 
-An optional diagnostic probe perturbs one normalized topic-aligned control
-direction at each eligible earlier state. `control_leverage` is the centered
-finite difference of the target-aligned belief projection at the event source.
-It is not the gradient of revision energy, an all-direction controllability
-measure, or terminal utility. It does not change the executed route.
+An optional diagnostic probe perturbs one normalized topic-aligned requested
+actuation at each eligible earlier state. `control_leverage` is the centered
+finite difference of the target-aligned belief projection at the event source
+when both endpoints are feasible. If either endpoint crosses the frozen control
+ball, the probe instead compares the feasible base with the radially projected
+forward target-oriented endpoint. It is not the gradient of revision energy,
+an all-direction controllability measure, or terminal utility. It does not
+change the executed route.
 
 This restricted signal can be compared with semantic relevance without
 assuming that the two ranks coincide. An epsilon sweep, direct reroute
@@ -150,19 +154,28 @@ it does not claim a second full-output equivalence pass for every session.
 ## Full v0.2 measurement run
 
 The committed full run uses the unchanged v0.1 48-case suite, model seeds
-`0..31`, 32 revision steps, CPU float32 execution, and a centered finite
-difference leverage probe with epsilon `1e-3`.
+`0..31`, 32 revision steps, CPU float32 execution, and a feasible
+centered/projected-forward leverage probe with requested epsilon `1e-3`.
 
 - 1,536 instrumented sessions;
 - 1,312 committed revision events;
 - 512 events with more than one eligible anchor, representing 15 case clusters,
   16 case-source fixtures, and two case families;
 - 1,984 candidate source-projection-leverage probes;
+- 72/1,984 probes (3.63%) were boundary-limited and therefore used the
+  projected-forward one-sided scheme; the largest evaluated control norm was
+  `1.750000119`, inside the frozen-core `1.75 + 1e-5` assertion tolerance;
 - 2,000 case-cluster bootstrap resamples;
 - 100% frozen-core, generator-accounting, and finite-output pass rates.
 
 The exact protocol, source hashes, environment, row counts, and artifact hashes
 are in `artifacts/benchmark_instrumentation_v0_2/manifest.json`.
+
+This feasibility correction changed continuous leverage values and regenerated
+artifact hashes. The four displayed multi-candidate rank/alignment estimates
+below are unchanged at their published precision, and the execution path remains
+observer-neutral; diagnostic rollouts are still excluded from execution
+counters.
 
 ### Semantic relevance and source-projection leverage nominate separate roles
 

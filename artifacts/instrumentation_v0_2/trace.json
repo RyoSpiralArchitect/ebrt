@@ -3140,7 +3140,7 @@
           "semantic_score": 5.6610002517700195,
           "attention": 1.0,
           "selected": true,
-          "control_leverage": 0.16544759273529053
+          "control_leverage": 0.16544757783412933
         }
       ],
       "detected": true,
@@ -3184,7 +3184,7 @@
           "semantic_score": 4.700392723083496,
           "attention": 0.17034459114074707,
           "selected": false,
-          "control_leverage": 0.16260147094726562
+          "control_leverage": 0.16260145604610443
         },
         {
           "step": 2,
@@ -3195,7 +3195,7 @@
           "semantic_score": 6.2835798263549805,
           "attention": 0.8296554684638977,
           "selected": true,
-          "control_leverage": 0.3611147403717041
+          "control_leverage": 0.3611147105693817
         }
       ],
       "detected": true,
@@ -4078,10 +4078,14 @@
   ],
   "candidate_control_leverage": {
     "enabled": true,
-    "method": "centered_finite_difference_topic_aligned_control",
+    "method": "feasible_centered_or_projected_forward_one_sided_topic_aligned_control",
     "metric": "target_aligned_source_belief_projection_derivative",
-    "definition": "Centered finite difference along one normalized topic-aligned control direction at the event source.",
+    "definition": "Centered finite difference when both requested topic-aligned endpoints are feasible; otherwise the forward target-oriented endpoint is radially projected through the frozen control bound and compared with the feasible base state.",
     "epsilon": 0.001,
+    "max_control_norm": 1.75,
+    "finite_difference_scheme_counts": {
+      "centered": 3
+    },
     "candidates": [
       {
         "source_step": 2,
@@ -4098,13 +4102,26 @@
           -0.7870273590087891,
           0.19924117624759674
         ],
-        "source_belief_derivative": -0.16544759273529053,
-        "terminal_belief_derivative": -0.029534101486206055,
-        "target_aligned_source_belief_derivative": 0.16544759273529053,
-        "target_aligned_terminal_belief_derivative": 0.029534101486206055,
+        "finite_difference_scheme": "centered",
+        "requested_epsilon": 0.001,
+        "actual_plus_delta_norm": 0.0010000001639127731,
+        "actual_minus_delta_norm": 0.0010000001639127731,
+        "plus_requested_feasible": true,
+        "minus_requested_feasible": true,
+        "boundary_limited": false,
+        "control_norm_before": 0.0,
+        "requested_plus_control_norm": 0.0010000001639127731,
+        "requested_minus_control_norm": 0.0010000001639127731,
+        "plus_control_norm": 0.0010000001639127731,
+        "minus_control_norm": 0.0010000001639127731,
+        "probe_control_norm_max": 0.0010000001639127731,
+        "source_belief_derivative": -0.16544757783412933,
+        "terminal_belief_derivative": -0.029534099623560905,
+        "target_aligned_source_belief_derivative": 0.16544757783412933,
+        "target_aligned_terminal_belief_derivative": 0.029534099623560905,
         "source_state_derivative_norm": 0.16932497918605804,
         "terminal_state_derivative_norm": 0.032141122967004776,
-        "control_leverage": 0.16544759273529053
+        "control_leverage": 0.16544757783412933
       },
       {
         "source_step": 3,
@@ -4121,13 +4138,26 @@
           0.7870273590087891,
           -0.19924117624759674
         ],
-        "source_belief_derivative": 0.16260147094726562,
-        "terminal_belief_derivative": 0.10070204734802246,
-        "target_aligned_source_belief_derivative": 0.16260147094726562,
-        "target_aligned_terminal_belief_derivative": 0.10070204734802246,
+        "finite_difference_scheme": "centered",
+        "requested_epsilon": 0.001,
+        "actual_plus_delta_norm": 0.0009999838657677174,
+        "actual_minus_delta_norm": 0.0009999838657677174,
+        "plus_requested_feasible": true,
+        "minus_requested_feasible": true,
+        "boundary_limited": false,
+        "control_norm_before": 1.6787384748458862,
+        "requested_plus_control_norm": 1.6778908967971802,
+        "requested_minus_control_norm": 1.6795862913131714,
+        "plus_control_norm": 1.6778908967971802,
+        "minus_control_norm": 1.6795862913131714,
+        "probe_control_norm_max": 1.6795862913131714,
+        "source_belief_derivative": 0.16260145604610443,
+        "terminal_belief_derivative": 0.10070203989744186,
+        "target_aligned_source_belief_derivative": 0.16260145604610443,
+        "target_aligned_terminal_belief_derivative": 0.10070203989744186,
         "source_state_derivative_norm": 0.16991502046585083,
         "terminal_state_derivative_norm": 0.10580146312713623,
-        "control_leverage": 0.16260147094726562
+        "control_leverage": 0.16260145604610443
       },
       {
         "source_step": 3,
@@ -4144,13 +4174,26 @@
           0.7870273590087891,
           -0.19924117624759674
         ],
-        "source_belief_derivative": 0.3611147403717041,
-        "terminal_belief_derivative": 0.22366642951965332,
-        "target_aligned_source_belief_derivative": 0.3611147403717041,
-        "target_aligned_terminal_belief_derivative": 0.22366642951965332,
+        "finite_difference_scheme": "centered",
+        "requested_epsilon": 0.001,
+        "actual_plus_delta_norm": 0.0010000001639127731,
+        "actual_minus_delta_norm": 0.0010000001639127731,
+        "plus_requested_feasible": true,
+        "minus_requested_feasible": true,
+        "boundary_limited": false,
+        "control_norm_before": 0.0,
+        "requested_plus_control_norm": 0.0010000001639127731,
+        "requested_minus_control_norm": 0.0010000001639127731,
+        "plus_control_norm": 0.0010000001639127731,
+        "minus_control_norm": 0.0010000001639127731,
+        "probe_control_norm_max": 0.0010000001639127731,
+        "source_belief_derivative": 0.3611147105693817,
+        "terminal_belief_derivative": 0.22366641461849213,
+        "target_aligned_source_belief_derivative": 0.3611147105693817,
+        "target_aligned_terminal_belief_derivative": 0.22366641461849213,
         "source_state_derivative_norm": 0.3677901029586792,
         "terminal_state_derivative_norm": 0.23014391958713531,
-        "control_leverage": 0.3611147403717041
+        "control_leverage": 0.3611147105693817
       }
     ],
     "diagnostic_generator_step_calls": 40,
@@ -4179,5 +4222,5 @@
     "Diagnostic source-projection leverage probes do not alter runtime routing or committed execution.",
     "No private chain-of-thought or hosted-model hidden state is observed."
   ],
-  "trace_fingerprint": "6a5bb5bdd1a6d6c970a559b653e9107394fc940951653fa3addada50c2c0b35c"
+  "trace_fingerprint": "fc9f6d3df58bdac184570e1c942d26cea34f6cbec7e53ce468722c50897bdf55"
 }

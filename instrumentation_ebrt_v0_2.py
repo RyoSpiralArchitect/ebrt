@@ -600,8 +600,9 @@ class InstrumentedEventDrivenBackwardReasoner(frozen.EventDrivenBackwardReasoner
                 "method": None,
                 "metric": "target_aligned_source_belief_projection_derivative",
                 "definition": (
-                    "Centered finite difference along one normalized topic-aligned "
-                    "control direction at the event source."
+                    "Feasible centered or radially projected forward one-sided "
+                    "finite difference along one normalized topic-aligned requested "
+                    "actuation at the event source."
                 ),
                 "epsilon": None,
                 "candidates": [],
@@ -770,38 +771,74 @@ class InstrumentedEventDrivenBackwardReasoner(frozen.EventDrivenBackwardReasoner
             direction = desired_sign * direction / direction_norm
             for candidate in candidate_record["candidates"]:
                 candidate_step = int(candidate["step"])
-                plus_controls = base.clone()
-                minus_controls = base.clone()
-                plus_controls[candidate_step] += epsilon * direction
-                minus_controls[candidate_step] -= epsilon * direction
-                plus_states = diagnostic.generator.rollout(
-                    encoded, plus_controls
-                ).detach()
-                minus_states = diagnostic.generator.rollout(
-                    encoded, minus_controls
-                ).detach()
-                source_derivative = (plus_states[source] - minus_states[source]) / (
-                    2.0 * epsilon
+                mask = torch.zeros_like(base)
+                mask[candidate_step] = 1.0
+                plus_delta = torch.zeros_like(base)
+                minus_delta = torch.zeros_like(base)
+                plus_delta[candidate_step] = epsilon * direction
+                minus_delta[candidate_step] = -epsilon * direction
+                raw_plus = base[candidate_step] + plus_delta[candidate_step]
+                raw_minus = base[candidate_step] + minus_delta[candidate_step]
+                requested_plus_norm = float(torch.linalg.vector_norm(raw_plus).item())
+                requested_minus_norm = float(torch.linalg.vector_norm(raw_minus).item())
+                max_control_norm = float(result.config.max_control_norm)
+                feasibility_tolerance = 1e-6
+                plus_requested_feasible = (
+                    requested_plus_norm <= max_control_norm + feasibility_tolerance
                 )
-                terminal_derivative = (plus_states[-1] - minus_states[-1]) / (
-                    2.0 * epsilon
+                minus_requested_feasible = (
+                    requested_minus_norm <= max_control_norm + feasibility_tolerance
                 )
+                diagnostic._project_controls_(base, plus_delta, mask)
+                diagnostic._project_controls_(base, minus_delta, mask)
+                plus_controls = base + mask * plus_delta
+                minus_controls = base + mask * minus_delta
+                actual_plus_delta_norm = float(
+                    torch.linalg.vector_norm(plus_delta[candidate_step]).item()
+                )
+                actual_minus_delta_norm = float(
+                    torch.linalg.vector_norm(minus_delta[candidate_step]).item()
+                )
+                boundary_limited = not (
+                    plus_requested_feasible and minus_requested_feasible
+                )
+                if not boundary_limited:
+                    scheme = "centered"
+                    plus_states = diagnostic.generator.rollout(
+                        encoded, plus_controls
+                    ).detach()
+                    minus_states = diagnostic.generator.rollout(
+                        encoded, minus_controls
+                    ).detach()
+                    source_derivative = (plus_states[source] - minus_states[source]) / (
+                        2.0 * epsilon
+                    )
+                    terminal_derivative = (plus_states[-1] - minus_states[-1]) / (
+                        2.0 * epsilon
+                    )
+                else:
+                    scheme = "projected_forward_one_sided"
+                    plus_states = diagnostic.generator.rollout(
+                        encoded, plus_controls
+                    ).detach()
+                    source_derivative = (
+                        plus_states[source] - base_states[source]
+                    ) / epsilon
+                    terminal_derivative = (plus_states[-1] - base_states[-1]) / epsilon
+                plus_control_norm = float(
+                    torch.linalg.vector_norm(plus_controls[candidate_step]).item()
+                )
+                minus_control_norm = float(
+                    torch.linalg.vector_norm(minus_controls[candidate_step]).item()
+                )
+                max_probe_control_norm = max(plus_control_norm, minus_control_norm)
+                if max_probe_control_norm > max_control_norm + 1e-5:
+                    raise AssertionError("diagnostic probe exceeded control bound")
                 source_belief_derivative = float(
-                    (
-                        (
-                            plus_states[source, q : 2 * q]
-                            - minus_states[source, q : 2 * q]
-                        )
-                        @ topic
-                    ).item()
-                    / (2.0 * epsilon)
+                    (source_derivative[q : 2 * q] @ topic).item()
                 )
                 terminal_belief_derivative = float(
-                    (
-                        (plus_states[-1, q : 2 * q] - minus_states[-1, q : 2 * q])
-                        @ topic
-                    ).item()
-                    / (2.0 * epsilon)
+                    (terminal_derivative[q : 2 * q] @ topic).item()
                 )
                 aligned_source = desired_sign * source_belief_derivative
                 aligned_terminal = desired_sign * terminal_belief_derivative
@@ -812,6 +849,21 @@ class InstrumentedEventDrivenBackwardReasoner(frozen.EventDrivenBackwardReasoner
                         "semantic_score": candidate["semantic_score"],
                         "attention": candidate["attention"],
                         "control_direction": _float_list(direction),
+                        "finite_difference_scheme": scheme,
+                        "requested_epsilon": epsilon,
+                        "actual_plus_delta_norm": actual_plus_delta_norm,
+                        "actual_minus_delta_norm": actual_minus_delta_norm,
+                        "plus_requested_feasible": plus_requested_feasible,
+                        "minus_requested_feasible": minus_requested_feasible,
+                        "boundary_limited": boundary_limited,
+                        "control_norm_before": float(
+                            torch.linalg.vector_norm(base[candidate_step]).item()
+                        ),
+                        "requested_plus_control_norm": requested_plus_norm,
+                        "requested_minus_control_norm": requested_minus_norm,
+                        "plus_control_norm": plus_control_norm,
+                        "minus_control_norm": minus_control_norm,
+                        "probe_control_norm_max": max_probe_control_norm,
                         "source_belief_derivative": source_belief_derivative,
                         "terminal_belief_derivative": terminal_belief_derivative,
                         "target_aligned_source_belief_derivative": aligned_source,
@@ -823,15 +875,25 @@ class InstrumentedEventDrivenBackwardReasoner(frozen.EventDrivenBackwardReasoner
                         "control_leverage": aligned_source,
                     }
                 )
+        scheme_counts: dict[str, int] = {}
+        for row in rows:
+            scheme = str(row["finite_difference_scheme"])
+            scheme_counts[scheme] = scheme_counts.get(scheme, 0) + 1
         return {
             "enabled": True,
-            "method": "centered_finite_difference_topic_aligned_control",
+            "method": (
+                "feasible_centered_or_projected_forward_one_sided_topic_aligned_control"
+            ),
             "metric": "target_aligned_source_belief_projection_derivative",
             "definition": (
-                "Centered finite difference along one normalized topic-aligned "
-                "control direction at the event source."
+                "Centered finite difference when both requested topic-aligned "
+                "endpoints are feasible; otherwise the forward target-oriented "
+                "endpoint is radially projected through the frozen control bound "
+                "and compared with the feasible base state."
             ),
             "epsilon": epsilon,
+            "max_control_norm": float(result.config.max_control_norm),
+            "finite_difference_scheme_counts": scheme_counts,
             "candidates": rows,
             "diagnostic_generator_step_calls": diagnostic.generator.step_call_count,
             "diagnostic_core_hash": diagnostic.generator.frozen_hash(),
@@ -1020,6 +1082,51 @@ def run_self_tests() -> dict[str, Any]:
         session.result.decode_call_count,
     ):
         raise AssertionError("probe changed execution counters")
+
+    committed_candidates = [
+        item for item in trace["event_candidates"] if item["status"] == "committed"
+    ]
+    boundary_candidate = committed_candidates[0]
+    boundary_source = int(boundary_candidate["source_step"])
+    boundary_step = int(boundary_candidate["candidates"][0]["step"])
+    boundary_snapshot = next(
+        item
+        for item in engine._revision_snapshots
+        if int(item["source_step"]) == boundary_source
+    )
+    boundary_codec = frozen.EventDrivenBackwardReasoner(config)
+    boundary_codec.codec.prepare_topics(session.result.observations)
+    boundary_topic = boundary_codec.codec.topic_vector(
+        session.result.observations[boundary_source].topic
+    )
+    boundary_direction = (
+        boundary_codec.generator.control_basis.transpose(0, 1) @ boundary_topic
+    )
+    boundary_direction = boundary_direction / torch.linalg.vector_norm(
+        boundary_direction
+    )
+    boundary_snapshot["controls_before"][boundary_step] = _float_list(
+        config.max_control_norm * boundary_direction
+    )
+    boundary_probe = engine._control_leverage_probe(session.result, epsilon=1e-3)
+    boundary_rows = [
+        item
+        for item in boundary_probe["candidates"]
+        if int(item["source_step"]) == boundary_source
+        and int(item["candidate_step"]) == boundary_step
+    ]
+    if len(boundary_rows) != 1:
+        raise AssertionError("boundary leverage fixture did not produce one row")
+    boundary_row = boundary_rows[0]
+    if boundary_row["finite_difference_scheme"] != "projected_forward_one_sided":
+        raise AssertionError(
+            "boundary leverage fixture did not use projected forward probe"
+        )
+    if boundary_row["boundary_limited"] is not True:
+        raise AssertionError("boundary leverage fixture was not marked limited")
+    if boundary_row["probe_control_norm_max"] > config.max_control_norm + 1e-5:
+        raise AssertionError("boundary leverage fixture exceeded control bound")
+
     repeated = InstrumentedEventDrivenBackwardReasoner(
         config, capture_deep=True
     ).run_instrumented(observations, candidate_control_leverage=True)
@@ -1059,7 +1166,8 @@ def run_self_tests() -> dict[str, Any]:
             "global delta reconstruction",
             "geometry straight/turn/reversal/zero-speed/invariance fixtures",
             "deep optimizer call accounting",
-            "separate-engine candidate source-projection leverage neutrality",
+            "feasible centered/projected-forward leverage neutrality",
+            "boundary leverage probes remain inside the frozen control ball",
             "deterministic trace fingerprint",
             "versioned structured-oracle provenance",
         ],

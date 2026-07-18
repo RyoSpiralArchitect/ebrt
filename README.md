@@ -242,15 +242,23 @@ and 32 model seeds. It recorded 1,312 revision events and 1,984 offline
 candidate probes while preserving a 100% frozen-core, generator-accounting, and
 finite-output pass rate.
 
+Of the 1,984 probes, 72 (3.63%) reached the frozen control boundary and used the
+projected-forward one-sided scheme. The largest evaluated control norm was
+`1.750000119`, within the core's `1.75 + 1e-5` assertion tolerance. Regenerating
+the feasible probes changed continuous leverage values and artifact hashes, but
+the four displayed multi-candidate rank/alignment estimates below were unchanged
+at their published precision.
+
 The most useful result is an algorithm-design hypothesis. The 512
 multi-candidate rows are repeated measurements of only 15 case clusters, 16
 case-source fixtures, and two case families; their alignment values were
 invariant across the 32 seeds within each fixture.
 
 Here `control_leverage` has a narrow definition: a centered finite difference
-of target-aligned event-source belief projection along one normalized
-topic-aligned control direction. It is not an objective gradient or a measure
-of full-state controllability.
+of target-aligned event-source belief projection when both requested endpoints
+are feasible, and a radially projected forward one-sided difference at the
+control boundary. It tests one normalized topic-aligned requested actuation and
+is not an objective gradient or a measure of full-state controllability.
 
 | Measurement | Estimate | Case-cluster 95% CI |
 | --- | ---: | ---: |
