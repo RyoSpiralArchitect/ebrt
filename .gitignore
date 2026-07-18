@@ -7,4 +7,6 @@ venv/
 .env
 .env.local
 benchmark_results/
+inspector/node_modules/
+inspector/dist/
 HACKATHON_ROADMAP_INTERNAL.md

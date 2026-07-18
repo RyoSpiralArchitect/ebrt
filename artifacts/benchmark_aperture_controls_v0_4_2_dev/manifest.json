@@ -1,0 +1,95 @@
+{
+  "all_outputs_completed": false,
+  "artifact_sha256": {
+    "arm_rows.csv": "4d8fdef0bfa134bc0a56c15d5fb87fbcac008e7e4eb5a39c211f03fdf2ead8c2",
+    "benchmark_report.md": "1bb3dd29b3179f528048342ec87d4b9e261db25008f83aa2242f2684c5820602",
+    "calls.jsonl": "0cb361fbb14af5bafa0a5c10c5a258d3b6fcec36f5c0a13d75638a4c3e059396",
+    "results.json": "547c51bf7444298cd17b18c124aed10fe88d8d3d7f46228656e5b2f64f148b76",
+    "traces.jsonl": "58ad4bc78c6495e77bce5d1805e895345992d0c62c4f2a0e415fa1788ec4a6ce"
+  },
+  "attempted_api_calls": 414,
+  "cause_decision": {
+    "claim": "mechanism_candidate_on_contaminated_dev_not_general_reasoning_improvement",
+    "decision_ready": false,
+    "historical_replication_context": {
+      "card_only_count_matches_historical": true,
+      "card_only_interface_is_not_exact_pr6_full": true,
+      "direct_fixed_ceiling_replication": false,
+      "direct_fixed_pr6_stable_pass_cases": 10,
+      "direct_fixed_same_block_stable_pass_cases": 9,
+      "new_card_only_stable_pass_cases": 1,
+      "pr6_full_stable_pass_cases": 1
+    },
+    "next_scaffold_step": "complete_exact_locked_same_block_run",
+    "raw_aperture_conclusion": "not_assessed_incomplete_or_subset_run",
+    "revision_envelope_conclusion": "not_assessed_incomplete_or_subset_run",
+    "selective_replay_status": "paused_no_same_block_rank",
+    "stable_pass_counts": {
+      "direct_raw_fixed_revision_rerun": 9,
+      "direct_raw_no_revision": 9,
+      "staged_card_only_rerun": 1,
+      "staged_cumulative_raw": 9
+    },
+    "terminal_local_contract_policy": "adjudicated_strict_failure_not_missing_data"
+  },
+  "claim_boundary": {
+    "contaminated_dev_only": true,
+    "general_reasoning_improvement": false,
+    "observer_evaluated": false,
+    "provider_facing_protocol_changed": false,
+    "selective_replay_executed": false,
+    "terminal_local_contract_rejection_is_strict_failure": true,
+    "v0_4_1_reinterpreted": false
+  },
+  "endpoint_policy": "terminal_local_contract_rejection_is_adjudicated_strict_failure",
+  "execution_complete": false,
+  "fixture_sha256": "6b9ec912ae85c08ecdb76f71efecb24e4a05742b58330dda639cb4ed5d6fc5f6",
+  "full_run_launch_ready": false,
+  "gold_sha256": "ca0d89c0eb92a7c9addb61014f64730762a17cf6ac1d76f0b5ca8a205b13f32a",
+  "launch_gate": {
+    "attempted_api_calls": 28,
+    "bundle_name": "v0_4_2_aperture_contract_smoke_20260718T203509Z",
+    "full_run_launch_ready": true,
+    "manifest_sha256": "72b7571be7eca10d2f4d89949dd791d9613c2e36f8bd2024188d10329188c3df",
+    "mode": "openai_live_contract_smoke",
+    "nominal_api_calls": 28,
+    "non_assessable_failures": 0,
+    "schema_version": "ebrt-aperture-controls-launch-gate-v0.4.2",
+    "terminal_local_contract_rejections": 0
+  },
+  "locked_decision_ready": false,
+  "mode": "openai_live_dev_aperture_controls_v0_4_2",
+  "nominal_api_calls": 420,
+  "non_assessable_failures": 2,
+  "parent_manifest_sha256": "184feaeb4982db864236d8dca6e98eeaadad66f1ae7e94905f34afe6a638e3b7",
+  "predecessor_artifact_manifest_sha256": "c24fd0767a303a5e5adb9fe9645afc4b9bc78f829f1731904132f33464529de0",
+  "predecessor_lock_sha256": "4843d297ff854dde9a51eb0df3f195d45b56a9ca52b40ba53d03159c322891bc",
+  "predecessor_runner_sha256": "d5dd4a8a81172ad3603869d1f15f9649340ba7eab0c1627f5ab6ce2f9f752e66",
+  "promotion_eligible": false,
+  "runtime": {
+    "platform": "macOS-26.2-arm64-arm-64bit-Mach-O",
+    "python": "3.13.13"
+  },
+  "schema_version": "ebrt-aperture-controls-manifest-v0.4.2",
+  "source_sha256": {
+    "artifacts/benchmark_aperture_controls_v0_4_1_dev/manifest.json": "c24fd0767a303a5e5adb9fe9645afc4b9bc78f829f1731904132f33464529de0",
+    "artifacts/benchmark_direct_full_calibration_v0_4_dev/manifest.json": "184feaeb4982db864236d8dca6e98eeaadad66f1ae7e94905f34afe6a638e3b7",
+    "benchmark_aperture_controls_v0_4_1.py": "d5dd4a8a81172ad3603869d1f15f9649340ba7eab0c1627f5ab6ce2f9f752e66",
+    "benchmark_aperture_controls_v0_4_2.py": "b6b2dc592a03726b1f680835aefe18c399b1cb6e97c87d44e3d18f2e24bfdbd0",
+    "benchmark_direct_full_calibration_v0_4.py": "f9574c5ed9c48bb827e5b90fe0ef0b6aeb27c558686e792576e57bcfd0184dd9",
+    "benchmark_language_replay_v0_4.py": "813ab885cecdacec034536a7dfeaa01c101554cc58663d1a79ad133595c6df91",
+    "fixtures/language_replay_v0_4_dev.json": "6b9ec912ae85c08ecdb76f71efecb24e4a05742b58330dda639cb4ed5d6fc5f6",
+    "fixtures/language_replay_v0_4_dev_gold.json": "ca0d89c0eb92a7c9addb61014f64730762a17cf6ac1d76f0b5ca8a205b13f32a",
+    "language_replay_bridge_v0_4.py": "5fd765ec5ca55562e7b712ec48adc6f54588080c276cbfa58aabcb72492666c2",
+    "openai_reasoning_provider_v0_4.py": "840d019811ecfab2b6bb25f2969d3c27e405b8cc148c068308393c2207c31689",
+    "policy_lock_aperture_controls_v0_4_1.json": "4843d297ff854dde9a51eb0df3f195d45b56a9ca52b40ba53d03159c322891bc",
+    "policy_lock_aperture_controls_v0_4_2.json": "5fdc2de14e13116ad37e4a7593680c9bdcb985f6d84db6778c5361ee820bbea1",
+    "policy_lock_direct_full_calibration_v0_4.json": "7f25f0cfb70e44ef307d5624054f88c2536b10276ab5d122ce735647f380378d",
+    "policy_lock_v0_4.json": "3687482c068094d8a9d861582ffaa0d861f1c9cf894db1592767db2947ebee5d",
+    "requirements-live.txt": "73a8bd6fd5d0a6aa2ec01c216b1ddc50f2c5f32746bcf907ec7ca3ab793e7c83",
+    "semantic_adapter_v0_2.py": "836b7afadabb2e2e5b6ea53afe2795e529ab20193b00d83af9a5624d4f32d2ca"
+  },
+  "status": "INCOMPLETE",
+  "success_manifest": false,
+  "terminal_local_contract_rejections": 1
+}
