@@ -10,11 +10,19 @@ The repository deliberately starts small. The frozen monolith demonstrates the
 mechanism over structured toy states, while a separate benchmark measures when
 backward routing helps, when it does not, and what it costs.
 
+EBRT v0.2 keeps that mechanism frozen and adds counterfactual instrumentation.
+For each revision it separates the semantic reason to revisit an earlier state
+from where one tested local control direction most changes the event-source
+belief projection.
+The purpose is to discover stronger routers, replay policies, and revision
+objectives—not merely to attach an explanation after execution.
+
 > [!IMPORTANT]
-> v0.1 is **not** a Transformer implementation, a GPT latent-state editor, or
+> v0.1/v0.2 are **not** a Transformer implementation, a GPT latent-state editor, or
 > evidence of improved language-model accuracy. Topic, stance, and revision
-> targets are structured inputs in the current harness. Meaningful GPT-5.6
-> integration is a later milestone, not a capability claimed by this release.
+> targets remain structured inputs in the committed harness. v0.2 exposes an
+> adapter boundary, but meaningful GPT-5.6 integration is a later milestone,
+> not a capability claimed by this release.
 
 ## Why EBRT?
 
@@ -37,9 +45,16 @@ is not yet a production inference engine.
 ```text
 ebrt_monolith_v0_1.py         frozen mechanism implementation and demo
 benchmark_ebrt_v0_1.py        independent matched-comparison benchmark
+semantic_adapter_v0_2.py      versioned semantic-input boundary and provenance
+instrumentation_ebrt_v0_2.py  event-local mirrors, geometry, and leverage probes
+benchmark_instrumentation_v0_2.py v0.2 measurement and discovery benchmark
+render_instrumentation_v0_2.py dependency-free mirror HTML/SVG renderer
 docs/RND_BENCHMARK_V0_1.md    protocol, results, limits, and claim ledger
+docs/RND_INSTRUMENTATION_V0_2.md measurement contract and algorithm findings
 artifacts/benchmark_v0_1/     committed machine-readable benchmark evidence
 artifacts/demo_v0_1/trace.json committed no-build mechanism trace
+artifacts/benchmark_instrumentation_v0_2/ committed v0.2 measurement evidence
+artifacts/instrumentation_v0_2/ committed trace and standalone mirror figure
 requirements.txt              runtime dependency declaration
 LICENSE                       Apache License 2.0
 ```
@@ -94,6 +109,32 @@ python3 benchmark_ebrt_v0_1.py --profile \
 The complete run is the reportable protocol. `--quick` is a smoke path and
 must not be presented as the final benchmark.
 
+Validate the v0.2 observer, generate a counterfactual trace, and render the
+standalone research figure:
+
+```bash
+python3 semantic_adapter_v0_2.py
+python3 instrumentation_ebrt_v0_2.py --self-test
+python3 instrumentation_ebrt_v0_2.py demo --control-leverage \
+  --output-json benchmark_results/v0_2_trace.json
+python3 render_instrumentation_v0_2.py benchmark_results/v0_2_trace.json \
+  --output-html benchmark_results/v0_2_mirror.html
+```
+
+Run the v0.2 discovery benchmark:
+
+```bash
+python3 benchmark_instrumentation_v0_2.py --self-test
+python3 benchmark_instrumentation_v0_2.py --quick \
+  --output-dir benchmark_results/v0_2_quick
+python3 benchmark_instrumentation_v0_2.py --full \
+  --output-dir benchmark_results/v0_2_full
+```
+
+Diagnostic generator calls are reported separately. Instrumentation timing is
+excluded from deterministic v0.2 artifacts and does not replace the frozen v0.1
+performance baseline.
+
 ## Judge path: inspect first, rerun second
 
 No training or model build is required to inspect the submitted evidence.
@@ -107,12 +148,26 @@ Start with:
 4. `artifacts/benchmark_v0_1/trials.csv` and `results.json` for auditable raw
    and aggregated evidence.
 
+For the v0.2 counterfactual observer, inspect:
+
+1. [`docs/RND_INSTRUMENTATION_V0_2.md`](docs/RND_INSTRUMENTATION_V0_2.md) for
+   the mirror contract, geometry semantics, full results, and next algorithm;
+2. `artifacts/instrumentation_v0_2/mirror.html` for the standalone generated
+   figure and `trace.json` for its embedded source data;
+3. `artifacts/benchmark_instrumentation_v0_2/manifest.json` and
+   `benchmark_report.md` for the full 32-seed measurement run;
+4. `events.csv` and `candidates.csv` for event-local effects and the separate
+   semantic-attention/source-projection-leverage surface.
+
 After installing the single runtime dependency, the shortest executable check
 is:
 
 ```bash
 python3 ebrt_monolith_v0_1.py --self-test
 python3 benchmark_ebrt_v0_1.py --self-test
+python3 instrumentation_ebrt_v0_2.py --self-test
+python3 benchmark_instrumentation_v0_2.py --self-test
+python3 render_instrumentation_v0_2.py --self-test
 ```
 
 The manifest is the source of truth for the exact platform used to produce the
@@ -180,14 +235,68 @@ length 2,048, a no-event D run took 328.794 ms versus A's 68.604 ms; one far
 event raised D to 4,908.228 ms and 75,776 generator steps. See the R&D note for
 revision-step, replay-distance, failure-cluster, and claim-ledger details.
 
+## Measured v0.2 instrumentation result
+
+The v0.2 full run executed 1,536 instrumented sessions over the same 48 cases
+and 32 model seeds. It recorded 1,312 revision events and 1,984 offline
+candidate probes while preserving a 100% frozen-core, generator-accounting, and
+finite-output pass rate.
+
+Of the 1,984 probes, 72 (3.63%) reached the frozen control boundary and used the
+projected-forward one-sided scheme. The largest evaluated control norm was
+`1.750000119`, within the core's `1.75 + 1e-5` assertion tolerance. Regenerating
+the feasible probes changed continuous leverage values and artifact hashes, but
+the four displayed multi-candidate rank/alignment estimates below were unchanged
+at their published precision.
+
+The most useful result is an algorithm-design hypothesis. The 512
+multi-candidate rows are repeated measurements of only 15 case clusters, 16
+case-source fixtures, and two case families; their alignment values were
+invariant across the 32 seeds within each fixture.
+
+Here `control_leverage` has a narrow definition: a centered finite difference
+of target-aligned event-source belief projection when both requested endpoints
+are feasible, and a radially projected forward one-sided difference at the
+control boundary. It tests one normalized topic-aligned requested actuation and
+is not an objective gradient or a measure of full-state controllability.
+
+| Measurement | Estimate | Case-cluster 95% CI |
+| --- | ---: | ---: |
+| Executed semantic route selected maximum source-projection leverage | 75.00% | [53.33%, 93.75%] |
+| Annotated semantic-gold anchor had maximum source-projection leverage | 12.50% | [0.00%, 33.33%] |
+| Executed route selected the semantic-gold anchor | 37.50% | [13.33%, 64.71%] |
+| Attention/source-projection-leverage Spearman correlation | 0.5000 | [0.0667, 0.8824] |
+
+The limited suite therefore nominates, but does not validate, a dual-route
+policy: retain an auditable semantic anchor for what is being revised, while
+testing whether a separately budgeted control anchor or window improves
+downstream effect, leakage, and compute efficiency. Replacing the semantic
+route with this one-direction leverage ranking is not promoted by the result.
+
+Trajectory geometry also found a narrower useful role. Excess turn angle and
+curvature tracked continuous source gain, but neither separated successful from
+unsuccessful target-topic outcomes. v0.2 treats them as intervention and
+propagation signals, not correctness rewards. Source gain per unit control norm
+was negatively associated with unrelated-state leakage (`rho=-0.7380`,
+case-cluster 95% CI `[-0.8615, -0.5444]`), motivating a leakage-aware efficiency
+objective for the next matched experiment.
+
+See the [v0.2 R&D note](docs/RND_INSTRUMENTATION_V0_2.md), generated
+[benchmark report](artifacts/benchmark_instrumentation_v0_2/benchmark_report.md),
+and standalone [Mirror figure](artifacts/instrumentation_v0_2/mirror.html).
+
 ## Current scope and claim boundary
 
-| Statement | v0.1 status |
+| Statement | Current status |
 | --- | --- |
 | A bounded event-triggered backward-revision loop executes end to end | Demonstrated by the structured harness and self-tests |
 | The frozen core can be evaluated through an external matched benchmark | Covered by the benchmark and SHA guard |
 | EBRT improves the labeled revision topic relative to forward-only on this suite | Supported by the committed full benchmark |
 | EBRT improves every topic in the trajectory | Not established; the all-topic CI crosses zero |
+| One revision's local and downstream effect can be isolated from earlier accepted revisions | Implemented by the v0.2 event-local mirror |
+| Semantic-anchor and source-projection-leverage rankings are identical | Not supported on the informative fixed-suite fixtures; they are measured separately |
+| Curvature measures reasoning correctness | Not established; currently an effect/geometry diagnostic |
+| The proposed dual-route policy improves outcomes | Not implemented; explicit next matched experiment |
 | Events are detected autonomously from natural language | Not implemented |
 | EBRT edits hidden states inside a trained Transformer or GPT model | Not implemented |
 | EBRT improves real-world LLM reasoning accuracy | Not established |
@@ -207,12 +316,16 @@ category determination.
   trace.
 - **Milestone 1 — measurable baseline (complete):** publish matched controls,
   raw evidence, bottleneck analysis, and this claim ledger.
-- **Milestone 2 — meaningful GPT-5.6 adapter:** replace structured-oracle
-  assumptions at a clearly defined boundary, benchmark it against matched
-  textual controls, and retain observable rollback behavior.
-- **Milestone 3 — coherent evaluator experience:** add the smallest useful
-  interface or sandbox after the benchmark defines what must be shown. UI work
-  is intentionally deferred during Milestone 1.
+- **Milestone 1.5 — counterfactual instrumentation (complete):** isolate each
+  revision through an event-local mirror, separate semantic relevance from
+  source-projection leverage, and measure propagation, geometry, leakage, and
+  efficiency.
+- **Milestone 2 — meaningful GPT-5.6 adapter:** the versioned provider-neutral
+  interface exists; a live GPT-5.6 implementation and matched textual controls
+  remain pending.
+- **Milestone 3 — coherent evaluator experience:** the deterministic standalone
+  Mirror figure exists; a minimal editable or hosted judge sandbox remains
+  pending. A broad product UI is still intentionally deferred.
 - **Milestone 4 — submission evidence:** document the Codex development record,
   provide an English demo under the event rules, include the required Codex
   feedback session, and audit every public claim against committed artifacts.
@@ -233,6 +346,10 @@ Human decisions remain explicit. In particular, the project owner chose to:
 - separate public R&D evidence from the temporary submission checklist;
 - require matched controls and independent gold metrics;
 - defer UI work until the benchmark reveals the most informative interaction;
+- use instrumentation to generate and falsify new routing/revision policies,
+  not only to police public claims;
+- keep semantic-cause routing separate from the narrower source-projection
+  leverage diagnostic;
 - keep mechanism, model-integration, and accuracy claims separate;
 - require meaningful GPT-5.6 use before representing the project as
   hackathon-ready.
@@ -242,9 +359,11 @@ evidence is sufficient for a scientific or product claim.
 
 ## Development status
 
-This repository is an early public R&D release. The benchmark and committed
-artifacts complete the first milestone. A product interface and meaningful
-GPT-5.6 adapter are still pending, and there is no hosted service in v0.1.
+This repository is an early public R&D release. The frozen mechanism baseline
+and counterfactual instrumentation milestones are complete. The current
+structured results nominate, but do not yet validate, a dual-route EBRT policy.
+A live GPT-5.6 adapter, matched language benchmark, and hosted judge sandbox are
+still pending; there is no hosted service in v0.2.
 
 Issues and pull requests that add reproducible tests, adversarial fixtures, or
 better controls are especially welcome. Please avoid expanding claims without

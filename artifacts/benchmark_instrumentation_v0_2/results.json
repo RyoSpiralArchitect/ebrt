@@ -1,0 +1,629 @@
+{
+  "claim_boundary": [
+    "This benchmark measures a structured synthetic mechanism, not natural-language reasoning quality.",
+    "Event-local mirrors are matched counterfactual execution traces, not private chain-of-thought or model introspection.",
+    "Turn angle and curvature are coordinate-sensitive geometric proxies; lower or higher values are not inherently better.",
+    "Semantic attention and offline target-aligned source-projection leverage answer different questions: why a premise is implicated versus how one predefined local control direction changes the event-source belief projection.",
+    "Candidate control_leverage uses a centered finite difference when both requested endpoints are feasible and a radially projected forward one-sided difference at the control boundary; it is not full-state controllability, an objective gradient, or proof of causal optimality.",
+    "Outcome and leakage associations are descriptive on the fixed 48-case suite and do not establish external validity or causality.",
+    "Paired seeds control the toy generator initialization but do not close case-selection, representation, or future hosted-model nondeterminism."
+  ],
+  "mode": "full",
+  "observer_neutrality": {
+    "core_unchanged_rate": 1.0,
+    "finite_output_rate": 1.0,
+    "generator_accounting_pass_rate": 1.0,
+    "note": "Full output equivalence is exercised by --self-test; these are run-wide invariants."
+  },
+  "schema_version": "ebrt-instrumentation-benchmark-v0.2",
+  "status": "PASS",
+  "summary": {
+    "candidate_control_leverage_definition": "Feasible centered or radially projected forward one-sided finite difference of target-aligned event-source belief projection along one normalized topic-aligned control direction.",
+    "candidate_metrics": {
+      "boundary_limited": {
+        "mean": 0.036290322580645164,
+        "median": 0.0,
+        "n": 1984,
+        "p05": 0.0,
+        "p95": 0.0
+      },
+      "control_leverage": {
+        "mean": 0.1631171503517356,
+        "median": 0.16203521192073822,
+        "n": 1984,
+        "p05": 0.03013014607131481,
+        "p95": 0.40323731303215027
+      },
+      "probe_control_norm_max": {
+        "mean": 0.13285825800730597,
+        "median": 0.0010000000474974513,
+        "n": 1984,
+        "p05": 0.0010000000474974513,
+        "p95": 1.5636978447437284
+      },
+      "semantic_attention": {
+        "mean": 0.6612903228209864,
+        "median": 0.6918688118457794,
+        "n": 1984,
+        "p05": 0.1245533749461174,
+        "p95": 1.0
+      }
+    },
+    "counts": {
+      "candidate_rows": 1984,
+      "cases": 48,
+      "event_rows": 1312,
+      "model_seeds": 32,
+      "multi_candidate_case_sources": 16,
+      "multi_candidate_cases": 15,
+      "multi_candidate_event_rows": 512,
+      "multi_candidate_families": 2,
+      "trial_rows": 1536
+    },
+    "event_metrics": {
+      "attention_leverage_spearman": {
+        "mean": 0.5,
+        "median": 1.0,
+        "n": 512,
+        "p05": -1.0,
+        "p95": 1.0
+      },
+      "boundary_limited_candidate_count": {
+        "mean": 0.054878048780487805,
+        "median": 0.0,
+        "n": 1312,
+        "p05": 0.0,
+        "p95": 1.0
+      },
+      "boundary_limited_candidate_fraction": {
+        "mean": 0.018292682926829267,
+        "median": 0.0,
+        "n": 1312,
+        "p05": 0.0,
+        "p95": 0.3333333333333333
+      },
+      "control_delta_norm": {
+        "mean": 1.6648651347836343,
+        "median": 1.7499998807907104,
+        "n": 1312,
+        "p05": 1.3501625537872313,
+        "p95": 1.7500001192092896
+      },
+      "control_efficiency": {
+        "mean": 0.18411914974123986,
+        "median": 0.17696141935440945,
+        "n": 1312,
+        "p05": 0.07305103351878633,
+        "p95": 0.3199277592805388
+      },
+      "excess_curvature_mean": {
+        "mean": 0.4266820754805902,
+        "median": 0.4667848507197194,
+        "n": 928,
+        "p05": -0.06318121154074696,
+        "p95": 0.9824648567784662
+      },
+      "excess_turn_angle_mean": {
+        "mean": 0.201405449365799,
+        "median": 0.2207402948088576,
+        "n": 928,
+        "p05": -0.0035258380841865604,
+        "p95": 0.46155740895639663
+      },
+      "mirror_curvature_mean": {
+        "mean": 2.4723888071253315,
+        "median": 2.475419437352854,
+        "n": 928,
+        "p05": 1.6763542960110307,
+        "p95": 3.116184287908683
+      },
+      "mirror_turn_angle_mean": {
+        "mean": 1.8438447679609264,
+        "median": 1.862383303982103,
+        "n": 928,
+        "p05": 1.6146923370357376,
+        "p95": 2.0737575638884307
+      },
+      "post_source_auc": {
+        "mean": 0.1100736289603136,
+        "median": 0.0,
+        "n": 1312,
+        "p05": 0.0,
+        "p95": 0.7867298781871797
+      },
+      "post_source_mean": {
+        "mean": 0.49299890495326004,
+        "median": 0.5035430043935776,
+        "n": 1312,
+        "p05": 0.18379845172166825,
+        "p95": 0.8081773489713668
+      },
+      "post_source_retention_ratio": {
+        "mean": 0.9210194085338264,
+        "median": 1.0,
+        "n": 1312,
+        "p05": 0.41404715814523396,
+        "p95": 1.0
+      },
+      "propagation_survival_ratio": {
+        "mean": 0.9191080905514287,
+        "median": 1.0,
+        "n": 1281,
+        "p05": 0.41397231060945444,
+        "p95": 1.0
+      },
+      "revised_curvature_mean": {
+        "mean": 2.8990708826059213,
+        "median": 2.9913727177646914,
+        "n": 928,
+        "p05": 2.2814359038794825,
+        "p95": 3.4564623278065794
+      },
+      "revised_turn_angle_mean": {
+        "mean": 2.0452502173267253,
+        "median": 2.1077552290782036,
+        "n": 928,
+        "p05": 1.813640901388491,
+        "p95": 2.3008859723476975
+      },
+      "selected_hits_semantic_gold": {
+        "mean": 0.7560975609756098,
+        "median": 1.0,
+        "n": 1312,
+        "p05": 0.0,
+        "p95": 1.0
+      },
+      "selected_is_max_leverage": {
+        "mean": 0.9024390243902439,
+        "median": 1.0,
+        "n": 1312,
+        "p05": 0.0,
+        "p95": 1.0
+      },
+      "selected_leverage_regret": {
+        "mean": 0.0154823957056534,
+        "median": 0.0,
+        "n": 1312,
+        "p05": 0.0,
+        "p95": 0.1328885406255722
+      },
+      "semantic_gold_is_max_leverage": {
+        "mean": 0.6585365853658537,
+        "median": 1.0,
+        "n": 1312,
+        "p05": 0.0,
+        "p95": 1.0
+      },
+      "separation_auc": {
+        "mean": 2.180496734277288,
+        "median": 2.1720846444368362,
+        "n": 1312,
+        "p05": 1.4509345673024654,
+        "p95": 3.1801882099360226
+      },
+      "separation_auc_per_step": {
+        "mean": 0.6222070138232372,
+        "median": 0.6098153173923493,
+        "n": 1312,
+        "p05": 0.39822392389178274,
+        "p95": 0.8996210001409053
+      },
+      "separation_max": {
+        "mean": 1.224731954450651,
+        "median": 1.2633630633354187,
+        "n": 1312,
+        "p05": 1.0075961589813232,
+        "p95": 1.3477827787399292
+      },
+      "separation_mean": {
+        "mean": 0.6031652270482737,
+        "median": 0.6161088719964027,
+        "n": 1312,
+        "p05": 0.37840911746025085,
+        "p95": 0.9024204378326734
+      },
+      "separation_terminal": {
+        "mean": 0.47101693193015925,
+        "median": 0.4935581833124161,
+        "n": 1312,
+        "p05": 0.18379845172166825,
+        "p95": 0.8081773489713668
+      },
+      "source_projection_gain": {
+        "mean": 0.3067511889305902,
+        "median": 0.2856655254960061,
+        "n": 1312,
+        "p05": 0.12783931344747543,
+        "p95": 0.5598735921084881
+      },
+      "target_projection_gain": {
+        "mean": 0.9933650719006859,
+        "median": 1.0056415051221848,
+        "n": 1312,
+        "p05": 0.7996275486424567,
+        "p95": 1.1461361676454547
+      },
+      "terminal_projection_gain": {
+        "mean": 0.286878181003046,
+        "median": 0.26058279424905784,
+        "n": 1312,
+        "p05": 0.12783931344747543,
+        "p95": 0.5598735921084881
+      },
+      "unrelated_state_leakage": {
+        "mean": 0.544578796207178,
+        "median": 0.7513748705387115,
+        "n": 1312,
+        "p05": 0.0,
+        "p95": 0.9066144794225692
+      }
+    },
+    "informative_alignment_case_cluster_bootstrap": {
+      "attention_leverage_spearman": {
+        "case_count": 15,
+        "ci_high": 0.8823529411764706,
+        "ci_low": 0.06666666666666667,
+        "estimate": 0.5
+      },
+      "selected_hits_semantic_gold": {
+        "case_count": 15,
+        "ci_high": 0.6470588235294118,
+        "ci_low": 0.13333333333333333,
+        "estimate": 0.375
+      },
+      "selected_is_max_leverage": {
+        "case_count": 15,
+        "ci_high": 0.9375,
+        "ci_low": 0.5333333333333333,
+        "estimate": 0.75
+      },
+      "selected_leverage_regret": {
+        "case_count": 15,
+        "ci_high": 0.08145043766126037,
+        "ci_low": 0.0077789018551508585,
+        "estimate": 0.03967363899573684
+      },
+      "semantic_gold_is_max_leverage": {
+        "case_count": 15,
+        "ci_high": 0.3333333333333333,
+        "ci_low": 0.0,
+        "estimate": 0.125
+      }
+    },
+    "informative_alignment_metrics": {
+      "attention_leverage_spearman": {
+        "mean": 0.5,
+        "median": 1.0,
+        "n": 512,
+        "p05": -1.0,
+        "p95": 1.0
+      },
+      "selected_hits_semantic_gold": {
+        "mean": 0.375,
+        "median": 0.0,
+        "n": 512,
+        "p05": 0.0,
+        "p95": 1.0
+      },
+      "selected_is_max_leverage": {
+        "mean": 0.75,
+        "median": 1.0,
+        "n": 512,
+        "p05": 0.0,
+        "p95": 1.0
+      },
+      "selected_leverage_regret": {
+        "mean": 0.03967363899573684,
+        "median": 0.0,
+        "n": 512,
+        "p05": 0.0,
+        "p95": 0.23487207293510437
+      },
+      "semantic_gold_is_max_leverage": {
+        "mean": 0.125,
+        "median": 0.0,
+        "n": 512,
+        "p05": 0.0,
+        "p95": 1.0
+      }
+    },
+    "informative_alignment_seed_invariant_by_case_source": {
+      "attention_leverage_spearman": true,
+      "selected_hits_semantic_gold": true,
+      "selected_is_max_leverage": true,
+      "selected_leverage_regret": true,
+      "semantic_gold_is_max_leverage": true
+    },
+    "outcome_associations": [
+      {
+        "case_cluster_bootstrap": {
+          "case_count": 36,
+          "ci_high": -0.6631254616290937,
+          "ci_low": -0.8788760052591201,
+          "estimate": -0.7961857576501921
+        },
+        "interpretation": "descriptive association; not a causal estimand",
+        "kind": "spearman_association",
+        "left_metric": "separation_auc",
+        "right_metric": "source_projection_gain"
+      },
+      {
+        "case_cluster_bootstrap": {
+          "case_count": 36,
+          "ci_high": 0.1575022843605863,
+          "ci_low": -0.5352731068142608,
+          "estimate": -0.22276188541369282
+        },
+        "interpretation": "descriptive association; not a causal estimand",
+        "kind": "spearman_association",
+        "left_metric": "separation_auc_per_step",
+        "right_metric": "source_projection_gain"
+      },
+      {
+        "case_cluster_bootstrap": {
+          "case_count": 36,
+          "ci_high": 0.15633634745704064,
+          "ci_low": -0.535192298742038,
+          "estimate": -0.23477638780470175
+        },
+        "interpretation": "descriptive association; not a causal estimand",
+        "kind": "spearman_association",
+        "left_metric": "separation_mean",
+        "right_metric": "source_projection_gain"
+      },
+      {
+        "case_cluster_bootstrap": {
+          "case_count": 36,
+          "ci_high": 0.23241484141462712,
+          "ci_low": -0.14220314362845543,
+          "estimate": 0.06040324980929294
+        },
+        "interpretation": "descriptive association; not a causal estimand",
+        "kind": "spearman_association",
+        "left_metric": "post_source_auc",
+        "right_metric": "source_projection_gain"
+      },
+      {
+        "case_cluster_bootstrap": {
+          "case_count": 36,
+          "ci_high": 0.8939518615483852,
+          "ci_low": 0.6520476057645045,
+          "estimate": 0.8120373017128459
+        },
+        "interpretation": "descriptive association; not a causal estimand",
+        "kind": "spearman_association",
+        "left_metric": "post_source_mean",
+        "right_metric": "source_projection_gain"
+      },
+      {
+        "case_cluster_bootstrap": {
+          "case_count": 36,
+          "ci_high": 0.15437198205861605,
+          "ci_low": -0.22314175715460474,
+          "estimate": -0.05902641757621484
+        },
+        "interpretation": "descriptive association; not a causal estimand",
+        "kind": "spearman_association",
+        "left_metric": "post_source_retention_ratio",
+        "right_metric": "source_projection_gain"
+      },
+      {
+        "case_cluster_bootstrap": {
+          "case_count": 36,
+          "ci_high": 0.8702849074456817,
+          "ci_low": 0.6060343159995949,
+          "estimate": 0.7761976003416526
+        },
+        "interpretation": "descriptive association; not a causal estimand",
+        "kind": "spearman_association",
+        "left_metric": "separation_terminal",
+        "right_metric": "source_projection_gain"
+      },
+      {
+        "case_cluster_bootstrap": {
+          "case_count": 36,
+          "ci_high": 0.7302553044815673,
+          "ci_low": 0.13706390276567773,
+          "estimate": 0.5214972134633056
+        },
+        "interpretation": "descriptive association; not a causal estimand",
+        "kind": "spearman_association",
+        "left_metric": "excess_turn_angle_mean",
+        "right_metric": "source_projection_gain"
+      },
+      {
+        "case_cluster_bootstrap": {
+          "case_count": 36,
+          "ci_high": 0.653733036916064,
+          "ci_low": 0.10006610759106115,
+          "estimate": 0.42628848042713613
+        },
+        "interpretation": "descriptive association; not a causal estimand",
+        "kind": "spearman_association",
+        "left_metric": "excess_curvature_mean",
+        "right_metric": "source_projection_gain"
+      },
+      {
+        "case_cluster_bootstrap": {
+          "case_count": 36,
+          "ci_high": 0.43840704270093384,
+          "ci_low": 0.09030959602406609,
+          "estimate": 0.2971298260014193
+        },
+        "interpretation": "descriptive association; not a causal estimand",
+        "kind": "spearman_association",
+        "left_metric": "control_delta_norm",
+        "right_metric": "source_projection_gain"
+      },
+      {
+        "case_cluster_bootstrap": {
+          "case_count": 36,
+          "ci_high": -0.5444152746250612,
+          "ci_low": -0.8614752172799779,
+          "estimate": -0.7380460065340917
+        },
+        "interpretation": "descriptive association; not a causal estimand",
+        "kind": "spearman_association",
+        "left_metric": "control_efficiency",
+        "right_metric": "unrelated_state_leakage"
+      },
+      {
+        "case_cluster_bootstrap": {
+          "case_count": 15,
+          "ci_high": 0.8641081360119351,
+          "ci_low": 0.4192656446520909,
+          "estimate": 0.7500014305155673
+        },
+        "interpretation": "descriptive association; not a causal estimand",
+        "kind": "spearman_association",
+        "left_metric": "attention_leverage_spearman",
+        "right_metric": "source_projection_gain"
+      },
+      {
+        "case_cluster_bootstrap": {
+          "case_count": 15,
+          "ci_high": 0.864107667193704,
+          "ci_low": 0.4192658320812324,
+          "estimate": 0.7500014305155673
+        },
+        "interpretation": "descriptive association; not a causal estimand",
+        "kind": "spearman_association",
+        "left_metric": "selected_is_max_leverage",
+        "right_metric": "source_projection_gain"
+      },
+      {
+        "case_cluster_bootstrap": {
+          "case_count": 36,
+          "ci_high": 0.9151556982829165,
+          "ci_low": 0.48807375862627855,
+          "estimate": 0.6743330413855182
+        },
+        "interpretation": "post-outcome descriptive split; not a randomized contrast",
+        "kind": "successful_minus_unsuccessful_mean",
+        "left_metric": "separation_auc",
+        "right_metric": "outcome_success"
+      },
+      {
+        "case_cluster_bootstrap": {
+          "case_count": 36,
+          "ci_high": -0.029764898277390706,
+          "ci_low": -0.3896132316203693,
+          "estimate": -0.26758072222879475
+        },
+        "interpretation": "post-outcome descriptive split; not a randomized contrast",
+        "kind": "successful_minus_unsuccessful_mean",
+        "left_metric": "separation_terminal",
+        "right_metric": "outcome_success"
+      },
+      {
+        "case_cluster_bootstrap": {
+          "case_count": 36,
+          "ci_high": 0.0431387374202409,
+          "ci_low": -0.0638492883773186,
+          "estimate": -0.008988417411672084
+        },
+        "interpretation": "post-outcome descriptive split; not a randomized contrast",
+        "kind": "successful_minus_unsuccessful_mean",
+        "left_metric": "excess_turn_angle_mean",
+        "right_metric": "outcome_success"
+      },
+      {
+        "case_cluster_bootstrap": {
+          "case_count": 36,
+          "ci_high": 0.09914490190271805,
+          "ci_low": -0.19968342511467385,
+          "estimate": -0.05384038768556948
+        },
+        "interpretation": "post-outcome descriptive split; not a randomized contrast",
+        "kind": "successful_minus_unsuccessful_mean",
+        "left_metric": "excess_curvature_mean",
+        "right_metric": "outcome_success"
+      },
+      {
+        "case_cluster_bootstrap": {
+          "case_count": 36,
+          "ci_high": -0.05609192962975276,
+          "ci_low": -0.11709421444743376,
+          "estimate": -0.08499692380873253
+        },
+        "interpretation": "post-outcome descriptive split; not a randomized contrast",
+        "kind": "successful_minus_unsuccessful_mean",
+        "left_metric": "control_efficiency",
+        "right_metric": "outcome_success"
+      },
+      {
+        "case_cluster_bootstrap": {
+          "case_count": 15,
+          "ci_high": -0.06543967280163598,
+          "ci_low": -0.48484848484848486,
+          "estimate": -0.26069246435845217
+        },
+        "interpretation": "post-outcome descriptive split; not a randomized contrast",
+        "kind": "successful_minus_unsuccessful_mean",
+        "left_metric": "selected_is_max_leverage",
+        "right_metric": "outcome_success"
+      }
+    ],
+    "probe_feasibility": {
+      "assertion_tolerance": 1e-05,
+      "boundary_limited_candidate_count": 72,
+      "boundary_limited_candidate_fraction": 0.036290322580645164,
+      "candidate_count": 1984,
+      "frozen_control_norm_max": 1.75,
+      "observed_probe_control_norm_max": 1.7500001192092896,
+      "within_frozen_control_bound": true
+    },
+    "trial_metrics": {
+      "source_distance_gain": {
+        "mean": 0.26600676680912533,
+        "median": 0.26526563838124284,
+        "n": 1152,
+        "p05": 0.0,
+        "p95": 0.5633610475659371
+      },
+      "source_gain_per_revision_step": {
+        "mean": 0.002638542458864768,
+        "median": 0.0022680194071943377,
+        "n": 1152,
+        "p05": 0.0,
+        "p95": 0.007824458993971349
+      },
+      "target_distance_gain": {
+        "mean": 0.7255305203495986,
+        "median": 0.9339749813079834,
+        "n": 1152,
+        "p05": 0.0,
+        "p95": 1.1039301639795303
+      },
+      "target_gain_per_backward_call": {
+        "mean": 0.0218955123886139,
+        "median": 0.02918671816587448,
+        "n": 1152,
+        "p05": 0.0,
+        "p95": 0.03449781762436032
+      },
+      "target_topic_success": {
+        "mean": 0.9765625,
+        "median": 1.0,
+        "n": 1152,
+        "p05": 1.0,
+        "p95": 1.0
+      },
+      "topic_accuracy": {
+        "mean": 0.7723524305555555,
+        "median": 0.75,
+        "n": 1536,
+        "p05": 0.5,
+        "p95": 1.0
+      },
+      "unrelated_topic_state_drift_max": {
+        "mean": 0.46516105509363115,
+        "median": 0.6380302906036377,
+        "n": 1536,
+        "p05": 0.0,
+        "p95": 0.9053559452295303
+      }
+    },
+    "uncertainty_note": "Intervals resample case clusters while retaining all paired model seeds and events within each selected case. They describe this fixed synthetic suite."
+  }
+}
