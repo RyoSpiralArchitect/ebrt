@@ -2,7 +2,7 @@
 """Build a deterministic public Inspector snapshot from EBRT benchmark bundles.
 
 The exporter accepts the frozen two-arm v0.4 Direct-vs-Full bundle and the
-planned four-arm v0.4.1 causal-control bundle.  It exposes only saved raw
+four-arm v0.4.1/v0.4.2 causal-control bundles.  It exposes only saved raw
 evidence, emitted public Reasoning Cards, machine grades, and sanitized provider
 accounting.  Card-to-card diffs describe public outputs, not model internals.
 """
@@ -742,6 +742,9 @@ def _normalize_grade(value: Any, evidence_ids: Sequence[str]) -> dict[str, Any]:
         raise ValueError("grade available must be boolean")
     machine_success = grade.get("machine_success")
     evidence_consistent = grade.get("evidence_consistent")
+    primary_endpoint_assessed = grade.get("primary_endpoint_assessed", available)
+    if not isinstance(primary_endpoint_assessed, bool):
+        raise ValueError("grade primary_endpoint_assessed must be boolean")
     for name, boolean in (
         ("machine_success", machine_success),
         ("evidence_consistent", evidence_consistent),
@@ -767,8 +770,9 @@ def _normalize_grade(value: Any, evidence_ids: Sequence[str]) -> dict[str, Any]:
             raise ValueError(f"grade {name} must be in [0, 1] or null")
     output = {
         "available": available,
-        "machine_success": machine_success if available else None,
-        "evidence_consistent": evidence_consistent if available else None,
+        "primary_endpoint_assessed": primary_endpoint_assessed,
+        "machine_success": machine_success,
+        "evidence_consistent": evidence_consistent,
         "checks": checks if available else None,
         "citation_precision": precision if available else None,
         "citation_recall": recall if available else None,
@@ -843,6 +847,25 @@ def _normalize_arm(
     grade = _normalize_grade(arm_value.get("grade", {}), evidence_ids)
     if status == "failed" and grade["available"]:
         raise ValueError(f"{arm} failed arm unexpectedly exposed an available grade")
+    primary_endpoint_assessed = arm_value.get(
+        "primary_endpoint_assessed", status == "completed"
+    )
+    if not isinstance(primary_endpoint_assessed, bool):
+        raise ValueError(f"{arm} primary_endpoint_assessed must be boolean")
+    if grade["primary_endpoint_assessed"] != primary_endpoint_assessed:
+        raise ValueError(f"{arm} arm/grade endpoint assessment drifted")
+    terminal_outcome = arm_value.get(
+        "terminal_outcome",
+        "accepted_output" if status == "completed" else "incomplete_error",
+    )
+    if not isinstance(terminal_outcome, str) or not terminal_outcome:
+        raise ValueError(f"{arm} terminal_outcome must be a nonempty string")
+    if status == "completed" and terminal_outcome != "accepted_output":
+        raise ValueError(f"{arm} completed with a non-output terminal outcome")
+    if terminal_outcome == "terminal_local_contract_rejection" and (
+        status != "failed" or not primary_endpoint_assessed
+    ):
+        raise ValueError(f"{arm} terminal strict failure contract drifted")
     if final_card is not None:
         final_support = _ordered_ids(_public_support(final_card), evidence_ids)
         if grade["available"] and grade["support_evidence_ids"] != final_support:
@@ -883,6 +906,9 @@ def _normalize_arm(
         "source_arm": source_arm,
         "status": status,
         "failure_category": arm_value.get("failure_category"),
+        "failure_reason_code": arm_value.get("failure_reason_code"),
+        "terminal_outcome": terminal_outcome,
+        "primary_endpoint_assessed": primary_endpoint_assessed,
         "configured_output_token_ceiling": _nonnegative_int_or_none(
             arm_value.get("configured_output_token_ceiling"),
             "configured_output_token_ceiling",
@@ -976,8 +1002,23 @@ def _run_contrasts(
                 **definition,
                 "available": True,
                 "outcome_relation": _outcome_relation(
-                    reference_outcome["machine_success"],
-                    candidate_outcome["machine_success"],
+                    (
+                        reference_outcome["machine_success"]
+                        if reference_outcome["primary_endpoint_assessed"]
+                        else None
+                    ),
+                    (
+                        candidate_outcome["machine_success"]
+                        if candidate_outcome["primary_endpoint_assessed"]
+                        else None
+                    ),
+                ),
+                "primary_endpoints_assessed": bool(
+                    reference_outcome["primary_endpoint_assessed"]
+                    and candidate_outcome["primary_endpoint_assessed"]
+                ),
+                "public_output_diff_available": bool(
+                    reference_card is not None and candidate_card is not None
                 ),
                 "final_answer": {
                     "reference": reference_outcome["final_answer"],
@@ -1059,6 +1100,25 @@ def _normalize_run(
             "revision envelope",
         )
     )
+    all_outputs_completed = run.get(
+        "all_outputs_completed",
+        all(item["status"] == "completed" for item in arms.values()),
+    )
+    primary_endpoint_assessed = run.get(
+        "primary_endpoint_assessed", bool(run.get("complete"))
+    )
+    if not isinstance(all_outputs_completed, bool) or not isinstance(
+        primary_endpoint_assessed, bool
+    ):
+        raise ValueError(f"{run_id}: run completion flags must be boolean")
+    if all_outputs_completed != all(
+        item["status"] == "completed" for item in arms.values()
+    ):
+        raise ValueError(f"{run_id}: all_outputs_completed drifted from arm status")
+    if primary_endpoint_assessed != all(
+        item["primary_endpoint_assessed"] for item in arms.values()
+    ):
+        raise ValueError(f"{run_id}: endpoint assessment drifted from arm status")
     return {
         "run_id": run_id,
         "trial_index": trial_index,
@@ -1068,6 +1128,8 @@ def _normalize_run(
         "arm_order": arm_order,
         "source_arm_order": source_arm_order,
         "complete": bool(run.get("complete")),
+        "primary_endpoint_assessed": primary_endpoint_assessed,
+        "all_outputs_completed": all_outputs_completed,
         "case": {
             "question": _string(case.get("question"), "case question"),
             "answer_choices": _string_list(
@@ -1131,15 +1193,17 @@ def _stable_case_rows(
             successes = sum(
                 item["outcome"]["machine_success"] is True for item in arm_values
             )
-            completed = sum(
-                item["status"] == "completed" and item["outcome"]["available"] is True
+            completed = sum(item["status"] == "completed" for item in arm_values)
+            assessed = sum(
+                item["outcome"]["primary_endpoint_assessed"] is True
                 for item in arm_values
             )
             row["arms"][arm] = {
                 "completed_trials": completed,
+                "assessed_trials": assessed,
                 "successes": successes,
                 "stable_pass": (
-                    successes >= threshold if completed == declared_trials else None
+                    successes >= threshold if assessed == declared_trials else None
                 ),
             }
         output.append(row)
@@ -1362,6 +1426,9 @@ def build_snapshot(
             "status": results.get("status"),
             "promotion_eligible": results.get("promotion_eligible"),
             "execution_complete": results.get("execution_complete"),
+            "all_outputs_completed": results.get(
+                "all_outputs_completed", results.get("execution_complete")
+            ),
             "case_count": results.get("case_count"),
             "trials": declared_trials,
             "run_count": len(normalized_runs),
@@ -1570,12 +1637,45 @@ def run_self_tests() -> dict[str, Any]:
     failed_normalized = _arm_map(incomplete_snapshot["runs"][0])[FULL_RESTART]
     if failed_normalized["outcome"]["available"] is not False:
         raise AssertionError("failed arm invented an available grade")
-    if failed_normalized["outcome"]["machine_success"] is not None:
-        raise AssertionError("failed arm was rendered as an adjudicated failure")
+    if (
+        failed_normalized["outcome"]["machine_success"] is not False
+        or failed_normalized["outcome"]["primary_endpoint_assessed"] is not False
+    ):
+        raise AssertionError("unassessed failure lost its endpoint boundary")
     if incomplete_snapshot["summary"]["cause_decision"]["status"] != (
         "incomplete_locked_trials"
     ):
         raise AssertionError("incomplete controls were causally classified")
+
+    terminal = copy.deepcopy(incomplete)
+    terminal["execution_complete"] = True
+    terminal["all_outputs_completed"] = False
+    terminal_run = terminal["runs"][0]
+    terminal_run["complete"] = True
+    terminal_run["primary_endpoint_assessed"] = True
+    terminal_run["all_outputs_completed"] = False
+    terminal_arm = terminal_run["arms"][STAGED_CARD_ONLY_RERUN]
+    terminal_arm["primary_endpoint_assessed"] = True
+    terminal_arm["terminal_outcome"] = "terminal_local_contract_rejection"
+    terminal_arm["failure_reason_code"] = "answer_choice_violation"
+    terminal_arm["grade"]["primary_endpoint_assessed"] = True
+    terminal_snapshot = build_snapshot(
+        terminal,
+        {
+            "manifest_present": False,
+            "artifact_files_verified": [],
+            "source_files_verified": [],
+        },
+    )
+    terminal_normalized = _arm_map(terminal_snapshot["runs"][0])[FULL_RESTART]
+    if (
+        terminal_normalized["outcome"]["available"] is not False
+        or terminal_normalized["outcome"]["primary_endpoint_assessed"] is not True
+        or terminal_normalized["outcome"]["machine_success"] is not False
+        or terminal_normalized["terminal_outcome"]
+        != "terminal_local_contract_rejection"
+    ):
+        raise AssertionError("terminal strict failure was not preserved")
 
     with tempfile.TemporaryDirectory() as temp_dir:
         corrupt = Path(temp_dir) / "corrupt_bundle"

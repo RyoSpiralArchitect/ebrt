@@ -124,10 +124,12 @@ export function EvidenceTimeline({
       </div>
       <div className="arm-lanes">
         {arms.map((arm) => {
-          const finalEntry = arm.timeline.at(-1);
+          const finalEntry = arm.status === "completed" ? arm.timeline.at(-1) : undefined;
           const selectedEntry = entryAtEvidenceStep(arm, evidence, selectedStep);
-          const gradeAvailable = arm.outcome.available;
-          const success = gradeAvailable && arm.outcome.machine_success === true;
+          const endpointAssessed = arm.outcome.primary_endpoint_assessed
+            ?? arm.primary_endpoint_assessed
+            ?? arm.outcome.available;
+          const success = endpointAssessed && arm.outcome.machine_success === true;
           const envelopeDelivered = arm.timeline.some((entry) => entry.revision_envelope_delivered === true);
           return (
             <button
@@ -138,8 +140,8 @@ export function EvidenceTimeline({
             >
               <span className="arm-summary">
                 <strong>{armLabel(arm.arm)}</strong>
-                <small className={gradeAvailable ? (success ? "pass" : "fail") : "not-assessed"}>
-                  Final strict grader: {gradeAvailable ? (success ? "PASS" : "FAIL") : "NOT ASSESSED"} · {arm.cost.api_calls} {arm.cost.api_calls === 1 ? "call" : "calls"}
+                <small className={endpointAssessed ? (success ? "pass" : "fail") : "not-assessed"}>
+                  Final endpoint: {endpointAssessed ? (success ? "PASS" : "FAIL") : "NOT ASSESSED"} · {arm.cost.api_calls} {arm.cost.api_calls === 1 ? "call" : "calls"}
                 </small>
                 <small>Envelope: {envelopeDelivered ? "delivered" : "null"}</small>
                 <small>{selectedEntry ? `Emitted card: ${selectedEntry.public_card.checkpoint_id}` : "No emitted card at this step"}</small>
@@ -155,7 +157,7 @@ export function EvidenceTimeline({
               </span>
               <span className="lane-answer">
                 <small>Final public answer</small>
-                <strong>{gradeAvailable ? (finalEntry?.public_card.current_answer ?? "Unavailable") : "Unavailable"}</strong>
+                <strong>{finalEntry?.public_card.current_answer ?? "Unavailable"}</strong>
               </span>
             </button>
           );

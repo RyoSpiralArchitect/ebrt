@@ -9,8 +9,18 @@ The viewer compares execution protocols over one recorded model. It renders
 the raw evidence recorded in the artifact, emitted public-card support,
 declared invalidations, final-card grading, and provider-reported usage.
 Declared support is not proof that uncited evidence had no semantic influence.
-An unavailable grade is rendered as `NOT ASSESSED`, never as `FAIL`, and the
-header keeps cause-decision readiness separate from execution progress.
+Detailed-grade availability is separate from endpoint adjudication. An
+unassessed endpoint is rendered as `NOT ASSESSED`; a v0.4.2 terminal local
+contract rejection is rendered as endpoint `FAIL` even though no accepted final
+card exists. The header keeps accepted-output completion, endpoint assessment,
+and cause-decision readiness separate.
+
+`Overview` provides a recorded Replay-to-Output comparison using the final
+public Reasoning Cards already stored in the artifact. Its playback control
+only reveals recorded reference/candidate outputs and their public diff: it
+does not invoke a model, regenerate an answer, mutate the source bundle, or
+turn the Inspector into an editor. `Inspect` retains the detailed timeline,
+lineage, and usage view.
 
 The revision envelope shown above the evidence order is a fixture annotation.
 Its actual provider delivery is shown separately for each arm; the no-envelope

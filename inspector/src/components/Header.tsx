@@ -1,4 +1,4 @@
-import type { ContrastDefinition, InspectorSnapshot } from "../types";
+import type { ContrastDefinition, InspectorSnapshot, InspectorViewMode } from "../types";
 import { Icon } from "./Icon";
 
 type HeaderProps = {
@@ -6,12 +6,14 @@ type HeaderProps = {
   contrasts: ContrastDefinition[];
   selectedContrastId: string;
   onContrastChange: (id: string) => void;
+  viewMode: InspectorViewMode;
+  onViewModeChange: (mode: InspectorViewMode) => void;
 };
 
 const CONTRAST_LABELS: Record<string, string> = {
   direct_full_recorded_calibration: "Direct / Full recorded calibration",
   revision_envelope_ablation: "Fixed envelope / No envelope",
-  raw_aperture_ablation: "Card-only / Cumulative raw",
+  raw_aperture_ablation: "Card-only / Retained evidence",
   staged_residual: "Fixed Direct / Cumulative staged",
 };
 
@@ -20,6 +22,8 @@ export function Header({
   contrasts,
   selectedContrastId,
   onContrastChange,
+  viewMode,
+  onViewModeChange,
 }: HeaderProps) {
   const models = Array.from(new Set(
     Object.values(snapshot.artifact.provider_provenance)
@@ -33,6 +37,8 @@ export function Header({
     .replace(/^openai_live_dev_/, "")
     .replaceAll("_", " ");
   const schemaLabel = snapshot.schema_version.replace("ebrt-public-inspector-", "");
+  const endpointsAssessed = snapshot.artifact.execution_complete;
+  const outputsCompleted = snapshot.artifact.all_outputs_completed ?? endpointsAssessed;
   return (
     <header className="topbar">
       <div className="brand-block">
@@ -40,6 +46,24 @@ export function Header({
         <div className="brand-subtitle">Read-only artifact view</div>
       </div>
       <div className="artifact-control">
+        <div className="view-switch" role="group" aria-label="Inspector view">
+          <button
+            type="button"
+            aria-pressed={viewMode === "overview"}
+            className={viewMode === "overview" ? "selected" : ""}
+            onClick={() => onViewModeChange("overview")}
+          >
+            Overview
+          </button>
+          <button
+            type="button"
+            aria-pressed={viewMode === "inspect"}
+            className={viewMode === "inspect" ? "selected" : ""}
+            onClick={() => onViewModeChange("inspect")}
+          >
+            Inspect
+          </button>
+        </div>
         <label htmlFor="contrast-select">Execution protocol contrast</label>
         <select
           id="contrast-select"
@@ -74,7 +98,8 @@ export function Header({
       <div className="boundary-strip" aria-label="Interpretation boundary">
         <strong>{snapshot.artifact.status} · {snapshot.artifact.promotion_eligible ? "promotion eligible" : "non-promotional"}</strong>
         <strong className={decisionReady ? "pass" : "not-assessed"}>Cause decision: {decisionReady ? "READY" : "NOT READY"}</strong>
-        <span>Execution: {snapshot.artifact.execution_complete ? "complete" : "incomplete"}</span>
+        <span>Endpoints: {endpointsAssessed ? "assessed" : "incomplete"}</span>
+        <span>Outputs: {outputsCompleted ? "complete" : "incomplete"}</span>
         <span>Recorded contaminated DEV</span>
         <span>Public state only</span>
         <span>Observer not evaluated</span>

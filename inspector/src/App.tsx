@@ -3,8 +3,14 @@ import { EvidenceLineage } from "./components/EvidenceLineage";
 import { EvidenceTimeline } from "./components/EvidenceTimeline";
 import { Header } from "./components/Header";
 import { OutcomeDock } from "./components/OutcomeDock";
+import { ReplayOverview } from "./components/ReplayOverview";
 import { RunRail } from "./components/RunRail";
-import type { ContrastDefinition, InspectorArm, InspectorSnapshot } from "./types";
+import type {
+  ContrastDefinition,
+  InspectorArm,
+  InspectorSnapshot,
+  InspectorViewMode,
+} from "./types";
 
 const SNAPSHOT_URL = "/data/ebrt-public-inspector-v0.1.json";
 
@@ -26,6 +32,7 @@ export default function App() {
   const [selectedContrastId, setSelectedContrastId] = useState("");
   const [selectedArm, setSelectedArm] = useState("");
   const [selectedStep, setSelectedStep] = useState(0);
+  const [viewMode, setViewMode] = useState<InspectorViewMode>("overview");
 
   useEffect(() => {
     fetch(SNAPSHOT_URL)
@@ -38,8 +45,9 @@ export default function App() {
         setSelectedRunId(value.runs[0]?.run_id ?? "");
         const available = value.contrast_definitions.filter((item) => item.available !== false);
         const contrasts = available.length ? available : fallbackContrasts(value);
-        setSelectedContrastId(contrasts[0]?.contrast_id ?? "");
-        setSelectedArm(contrasts[0]?.reference_arm ?? value.runs[0]?.arms[0]?.arm ?? "");
+        const preferred = contrasts.find((item) => item.contrast_id === "raw_aperture_ablation") ?? contrasts[0];
+        setSelectedContrastId(preferred?.contrast_id ?? "");
+        setSelectedArm(preferred?.reference_arm ?? value.runs[0]?.arms[0]?.arm ?? "");
       })
       .catch((cause: unknown) => setError(cause instanceof Error ? cause.message : "Artifact load failed"));
   }, []);
@@ -82,25 +90,33 @@ export default function App() {
   }
 
   return (
-    <div className="app-shell">
+    <div className={`app-shell ${viewMode === "overview" ? "overview-mode" : "inspect-mode"}`}>
       <Header
         snapshot={snapshot}
         contrasts={contrasts}
         selectedContrastId={selectedContrastId}
         onContrastChange={setSelectedContrastId}
+        viewMode={viewMode}
+        onViewModeChange={setViewMode}
       />
       <RunRail runs={snapshot.runs} selectedRunId={selectedRun.run_id} onSelect={setSelectedRunId} />
-      <EvidenceTimeline
-        evidence={selectedRun.case.evidence}
-        arms={visibleArms}
-        selectedArm={selectedArm}
-        selectedStep={selectedStep}
-        onSelectArm={setSelectedArm}
-        onSelectStep={setSelectedStep}
-        revisionEnvelope={selectedRun.case.revision_envelope}
-      />
-      <EvidenceLineage evidence={selectedRun.case.evidence} arms={visibleArms} selectedStep={selectedStep} />
-      <OutcomeDock arms={visibleArms} selectedArm={selectedArm} />
+      {viewMode === "overview" ? (
+        <ReplayOverview run={selectedRun} contrast={contrast} arms={visibleArms} />
+      ) : (
+        <>
+          <EvidenceTimeline
+            evidence={selectedRun.case.evidence}
+            arms={visibleArms}
+            selectedArm={selectedArm}
+            selectedStep={selectedStep}
+            onSelectArm={setSelectedArm}
+            onSelectStep={setSelectedStep}
+            revisionEnvelope={selectedRun.case.revision_envelope}
+          />
+          <EvidenceLineage evidence={selectedRun.case.evidence} arms={visibleArms} selectedStep={selectedStep} />
+          <OutcomeDock arms={visibleArms} selectedArm={selectedArm} />
+        </>
+      )}
     </div>
   );
 }
