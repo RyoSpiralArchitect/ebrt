@@ -24,8 +24,14 @@ result bundle was written. That terminal result reveals that the
 trajectory-anchor loss horizon changed when one variable also set the physical
 replay start; it does not rank the dual and control arms on quality.
 
+EBRT v0.3.1 keeps that terminal evidence immutable and factorizes the coupled
+variable. Physical suffix recomputation now uses `execution_replay_floor`,
+while trajectory regularization uses `trajectory_anchor_floor`. A DEV-only
+cost lane changes the former and requires exact outcomes; a separate causal
+factorial changes the latter while keeping routing and generator work fixed.
+
 > [!IMPORTANT]
-> v0.1-v0.3 are **not** a Transformer implementation, a GPT latent-state editor, or
+> v0.1-v0.3.1 are **not** a Transformer implementation, a GPT latent-state editor, or
 > evidence of improved language-model accuracy. Topic, stance, and revision
 > targets remain structured inputs in the committed harness. v0.2 exposes an
 > adapter boundary, but meaningful GPT-5.6 integration is a later milestone,
@@ -60,14 +66,20 @@ dual_route_policy_v0_3.py     frozen five-arm dual-route policy candidate
 benchmark_dual_route_v0_3.py preregistered matched/holdout runner
 policy_lock_v0_3.json         frozen policy, endpoint, fixture, and runtime lock
 fixtures/dual_route_v0_3_*.json DEV, holdout, and sequential case families
+dual_route_policy_v0_3_1.py   factorized execution-replay and loss-horizon policy
+benchmark_dual_route_v0_3_1.py DEV cost lane, trajectory factorial, runtime guards
+policy_lock_v0_3_1.json       non-promotional DEV_DRAFT contract and future gates
+fixtures/dual_route_v0_3_1_*.json fresh DEV and contaminated regression fixtures
 docs/RND_BENCHMARK_V0_1.md    protocol, results, limits, and claim ledger
 docs/RND_INSTRUMENTATION_V0_2.md measurement contract and algorithm findings
 docs/RND_DUAL_ROUTE_V0_3.md   terminal invariant result and v0.3.1 direction
+docs/RND_DUAL_ROUTE_V0_3_1.md factorization design, DEV results, and next experiment
 artifacts/benchmark_v0_1/     committed machine-readable benchmark evidence
 artifacts/demo_v0_1/trace.json committed no-build mechanism trace
 artifacts/benchmark_instrumentation_v0_2/ committed v0.2 measurement evidence
 artifacts/instrumentation_v0_2/ committed trace and standalone mirror figure
 artifacts/.dual_route_v0_3_holdout_ledger.json canonical terminal attempt record
+artifacts/benchmark_dual_route_v0_3_1_dev/ committed non-promotional DEV evidence
 requirements.txt              runtime dependency declaration
 LICENSE                       Apache License 2.0
 ```
@@ -178,6 +190,23 @@ Do **not** rerun `full` for v0.3. Its canonical one-shot ledger is terminal.
 The next full experiment must use a new v0.3.1 policy version, ledger, and fresh
 holdout.
 
+Run the current v0.3.1 factorization checks and non-promotional DEV matrix:
+
+```bash
+python3 dual_route_policy_v0_3_1.py --self-test
+python3 benchmark_dual_route_v0_3_1.py self-test
+python3 benchmark_dual_route_v0_3_1.py quick \
+  --output benchmark_results/v0_3_1_quick
+python3 benchmark_dual_route_v0_3_1.py epsilon-audit \
+  --output benchmark_results/v0_3_1_epsilon.json
+```
+
+The v0.3.1 lock is deliberately `DEV_DRAFT`. `full` fails before creating a
+ledger or output directory until fresh primary, stable, and sequential
+families and promotion rules are locked. DEV commands accept another supported
+CPython 3.11+/PyTorch 2.x CPU runtime, record every expected/actual mismatch,
+and remain non-promotional with no cross-runtime byte-reproducibility claim.
+
 ## Judge path: inspect first, rerun second
 
 No training or model build is required to inspect the submitted evidence.
@@ -211,6 +240,15 @@ For the v0.3 prospective experiment, inspect:
 3. `artifacts/.dual_route_v0_3_holdout_ledger.json` for the canonical attempt-1
    terminal record.
 
+For the v0.3.1 DEV factorization, inspect:
+
+1. [`docs/RND_DUAL_ROUTE_V0_3_1.md`](docs/RND_DUAL_ROUTE_V0_3_1.md) for the two
+   independent floors, causal lanes, measured result, and promotion boundary;
+2. `policy_lock_v0_3_1.json` for the runtime split, DEV protocol, pending fresh
+   inputs, and old-evidence hashes;
+3. `artifacts/benchmark_dual_route_v0_3_1_dev/` for deterministic lane rows,
+   runtime metadata, source hashes, and the non-promotional manifest.
+
 There is intentionally no normal v0.3 result directory: the runner stopped
 before validated bundle publication, and the ledger stores no outcome rows.
 
@@ -223,6 +261,8 @@ python3 benchmark_ebrt_v0_1.py --self-test
 python3 instrumentation_ebrt_v0_2.py --self-test
 python3 benchmark_instrumentation_v0_2.py --self-test
 python3 render_instrumentation_v0_2.py --self-test
+python3 dual_route_policy_v0_3_1.py --self-test
+python3 benchmark_dual_route_v0_3_1.py self-test
 ```
 
 The v0.3 self-tests are historical checks and must be run from a separate
@@ -376,6 +416,37 @@ See the [v0.3 R&D note](docs/RND_DUAL_ROUTE_V0_3.md), frozen
 [`policy_lock_v0_3.json`](policy_lock_v0_3.json), and canonical
 [`holdout ledger`](artifacts/.dual_route_v0_3_holdout_ledger.json).
 
+## v0.3.1 DEV factorization result
+
+v0.3.1 removes the ambiguous `replay_floor`. The cost lane keeps semantic
+objective, control sites, probe work, optimizer, and trajectory loss support
+fixed while moving only physical replay to the earliest selected control. The
+trajectory factorial keeps physical replay and accounting fixed while moving
+only the trajectory-anchor loss horizon.
+
+The committed combined bundle contains 24 lane groups over two fresh DEV cases
+plus four lane groups from the isolated, contaminated v0.3 terminal
+counterexample. It uses four seeds and S2/L2/D2 where applicable.
+
+- Exact cost-lane outcome equality passed for 28/28 groups.
+- In fresh DEV only, 12/24 groups had a shorter execution floor, saved 320
+  optimizer replay steps in total (26.67 per separated group), and changed
+  under the trajectory-only factorial.
+- In contaminated regression only, all 4/4 groups separated, saved 272 replay
+  steps in total, and changed under the trajectory-only factorial.
+- Combined, the same 16 groups both separated and changed; there were no
+  one-sided mismatches between those sets.
+- On the exact historical S2 counterexample, replay work fell from 374 to 306
+  with exactly equal events, controls, final states, and decoded output. Moving
+  only the loss horizon reproduced the old outcome divergence.
+- The tested L2 leverage rank was stable at epsilon `1e-4`, `1e-3`, and `1e-2`.
+
+This is stronger mechanism diagnosis and a cleaner reasoning-policy design, not
+a held-out quality result. The old case is explicitly contaminated; the new
+cases are DEV; no v0.3.1 holdout or ledger exists. The next experiment can now
+learn or preregister trajectory horizon as a policy axis without confusing it
+with replay cost.
+
 ## Current scope and claim boundary
 
 | Statement | Current status |
@@ -391,6 +462,9 @@ See the [v0.3 R&D note](docs/RND_DUAL_ROUTE_V0_3.md), frozen
 | The dual-route policy improves or degrades held-out outcomes | Not evaluated; attempt 1 terminated before validated metrics were published |
 | The coupled v0.3 minimum-selected lane preserves the matched outcome | Refuted as a universal exact invariant by the terminal v0.3 counterexample |
 | A changed coupled `replay_floor` is a cost-only exact-invariance optimization | Refuted by v0.3; execution replay start and trajectory-anchor loss horizon must be separated |
+| Factorized cost-lane outcomes remain exact when the loss horizon is fixed | Supported on all 24 fresh DEV groups plus four contaminated regression groups; actual floor shortening is exercised on 12 fresh and four contaminated groups, not yet as a universal or held-out claim |
+| `trajectory_anchor_floor` is an independent causal policy axis in the toy mechanism | Supported mechanistically: changing it alone reproduced the historical divergence with matched accounting |
+| v0.3.1 improves held-out reasoning quality | Not evaluated; the lock is DEV_DRAFT and no fresh holdout exists |
 | Events are detected autonomously from natural language | Not implemented |
 | EBRT edits hidden states inside a trained Transformer or GPT model | Not implemented |
 | EBRT improves real-world LLM reasoning accuracy | Not established |
@@ -418,11 +492,11 @@ category determination.
   freeze a five-arm matched protocol before opening a new holdout, preserve its
   one-shot terminal ledger, and publish the rejected replay-invariance premise
   without recovering partial outcome statistics.
-- **Milestone 1.8 — replay-policy factorization:** on a new v0.3.1 protocol and
-  fresh holdout, separate execution replay start from trajectory-anchor loss
-  horizon, keep the primary route comparison matched, and evaluate loss horizon
-  as a separate quality/leakage policy axis while exact-preserving execution
-  replay remains the cost axis.
+- **Milestone 1.8 — replay-policy factorization (DEV complete):** v0.3.1 now
+  separates execution replay start from trajectory-anchor loss horizon, repairs
+  the historical exact-cost invariant, and exposes loss horizon as a causal
+  quality/leakage axis. Fresh promotion fixtures and a LOCKED holdout remain
+  pending.
 - **Milestone 2 — meaningful GPT-5.6 adapter:** the versioned provider-neutral
   interface exists; a live GPT-5.6 implementation and matched textual controls
   remain pending.
@@ -468,9 +542,11 @@ This repository is an early public R&D release. The frozen mechanism baseline
 and counterfactual instrumentation milestones are complete. The v0.3
 dual-route policy is implemented, but its preregistered one-shot comparison is
 terminal and inconclusive after rejecting a replay-invariance assumption. It
-does not validate or quality-rank the dual route. A new replay-factorized
-v0.3.1, live GPT-5.6 adapter, matched language benchmark, and hosted judge
-sandbox are still pending; there is no hosted service in this release.
+does not validate or quality-rank the dual route. The replay-factorized v0.3.1
+DEV harness is implemented and repairs the observed cost invariant, but it is
+not a fresh holdout or quality result. A LOCKED v0.3.1 promotion experiment,
+live GPT-5.6 adapter, matched language benchmark, and hosted judge sandbox are
+still pending; there is no hosted service in this release.
 
 Issues and pull requests that add reproducible tests, adversarial fixtures, or
 better controls are especially welcome. Please avoid expanding claims without
