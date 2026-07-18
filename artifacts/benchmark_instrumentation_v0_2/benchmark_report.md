@@ -35,7 +35,10 @@ Single-candidate events make selection agreement mechanical, so the
 multi-candidate column is the informative routing comparison.
 Here `control_leverage` is only the target-aligned event-source belief
 projection finite difference along one predefined topic-aligned control
-direction; it is not an objective gradient or full controllability.
+direction. Boundary samples are radially projected through the frozen
+control constraint; this is not an objective gradient or full controllability.
+
+Boundary-limited probes: 72/1984 (3.63%). Maximum evaluated control norm: 1.750000119 against the frozen-core limit 1.75 with 1e-05 assertion tolerance; bound check: PASS.
 
 | Metric | All events (mean; n) | Multi-candidate only (mean; n) | Case-cluster 95% CI |
 | --- | ---: | ---: | ---: |
@@ -90,6 +93,6 @@ sequence-length, and representation confounds remain.
 - Event-local mirrors are matched counterfactual execution traces, not private chain-of-thought or model introspection.
 - Turn angle and curvature are coordinate-sensitive geometric proxies; lower or higher values are not inherently better.
 - Semantic attention and offline target-aligned source-projection leverage answer different questions: why a premise is implicated versus how one predefined local control direction changes the event-source belief projection.
-- Candidate control_leverage is a centered finite difference along one topic-aligned control direction; it is not full-state controllability, an objective gradient, or proof of causal optimality.
+- Candidate control_leverage uses a centered finite difference when both requested endpoints are feasible and a radially projected forward one-sided difference at the control boundary; it is not full-state controllability, an objective gradient, or proof of causal optimality.
 - Outcome and leakage associations are descriptive on the fixed 48-case suite and do not establish external validity or causality.
 - Paired seeds control the toy generator initialization but do not close case-selection, representation, or future hosted-model nondeterminism.

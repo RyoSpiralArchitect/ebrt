@@ -48,7 +48,7 @@ CLAIM_BOUNDARY = (
     "Event-local mirrors are matched counterfactual execution traces, not private chain-of-thought or model introspection.",
     "Turn angle and curvature are coordinate-sensitive geometric proxies; lower or higher values are not inherently better.",
     "Semantic attention and offline target-aligned source-projection leverage answer different questions: why a premise is implicated versus how one predefined local control direction changes the event-source belief projection.",
-    "Candidate control_leverage is a centered finite difference along one topic-aligned control direction; it is not full-state controllability, an objective gradient, or proof of causal optimality.",
+    "Candidate control_leverage uses a centered finite difference when both requested endpoints are feasible and a radially projected forward one-sided difference at the control boundary; it is not full-state controllability, an objective gradient, or proof of causal optimality.",
     "Outcome and leakage associations are descriptive on the fixed 48-case suite and do not establish external validity or causality.",
     "Paired seeds control the toy generator initialization but do not close case-selection, representation, or future hosted-model nondeterminism.",
 )
@@ -282,6 +282,9 @@ def candidate_alignment_metrics(
 ) -> dict[str, Any]:
     """Compare semantics with target-aligned source-projection leverage."""
 
+    boundary_limited_count = sum(
+        int(bool(item.get("boundary_limited", False))) for item in candidates
+    )
     clean = [
         item
         for item in candidates
@@ -293,6 +296,8 @@ def candidate_alignment_metrics(
     if not clean:
         return {
             "candidate_count": 0,
+            "boundary_limited_candidate_count": boundary_limited_count,
+            "boundary_limited_candidate_fraction": None,
             "attention_leverage_spearman": None,
             "selected_is_max_leverage": None,
             "selected_leverage_regret": None,
@@ -322,6 +327,8 @@ def candidate_alignment_metrics(
     ]
     return {
         "candidate_count": len(clean),
+        "boundary_limited_candidate_count": boundary_limited_count,
+        "boundary_limited_candidate_fraction": boundary_limited_count / len(clean),
         "attention_leverage_spearman": spearman_correlation(attention, leverage),
         "selected_is_max_leverage": int(bool(selected & max_steps)),
         "selected_leverage_regret": (
@@ -625,6 +632,17 @@ def summarize_measurements(
     *,
     bootstrap_resamples: int,
 ) -> dict[str, Any]:
+    boundary_flags = _numeric(candidate_rows, "boundary_limited")
+    probe_control_norms = _numeric(candidate_rows, "probe_control_norm_max")
+    control_norm_limits = _numeric(candidate_rows, "max_control_norm")
+    boundary_limited_count = sum(int(value > 0.5) for value in boundary_flags)
+    observed_probe_control_norm_max = (
+        max(probe_control_norms) if probe_control_norms else None
+    )
+    frozen_control_norm_max = (
+        max(control_norm_limits) if control_norm_limits else None
+    )
+    probe_bound_tolerance = 1e-5
     event_fields = (
         "separation_auc",
         "separation_auc_per_step",
@@ -647,6 +665,8 @@ def summarize_measurements(
         "mirror_curvature_mean",
         "revised_curvature_mean",
         "excess_curvature_mean",
+        "boundary_limited_candidate_count",
+        "boundary_limited_candidate_fraction",
         "attention_leverage_spearman",
         "selected_is_max_leverage",
         "selected_leverage_regret",
@@ -662,7 +682,12 @@ def summarize_measurements(
         "source_gain_per_revision_step",
         "target_gain_per_backward_call",
     )
-    candidate_fields = ("semantic_attention", "control_leverage")
+    candidate_fields = (
+        "semantic_attention",
+        "control_leverage",
+        "boundary_limited",
+        "probe_control_norm_max",
+    )
     alignment_fields = (
         "attention_leverage_spearman",
         "selected_is_max_leverage",
@@ -724,9 +749,29 @@ def summarize_measurements(
             for field in alignment_fields
         },
         "candidate_control_leverage_definition": (
-            "Centered finite difference of the target-aligned event-source belief "
-            "projection along one normalized topic-aligned control direction."
+            "Feasible centered or radially projected forward one-sided finite "
+            "difference of target-aligned event-source belief projection along "
+            "one normalized topic-aligned control direction."
         ),
+        "probe_feasibility": {
+            "candidate_count": len(candidate_rows),
+            "boundary_limited_candidate_count": boundary_limited_count,
+            "boundary_limited_candidate_fraction": (
+                boundary_limited_count / len(candidate_rows)
+                if candidate_rows
+                else None
+            ),
+            "observed_probe_control_norm_max": observed_probe_control_norm_max,
+            "frozen_control_norm_max": frozen_control_norm_max,
+            "assertion_tolerance": probe_bound_tolerance,
+            "within_frozen_control_bound": (
+                observed_probe_control_norm_max
+                <= frozen_control_norm_max + probe_bound_tolerance
+                if observed_probe_control_norm_max is not None
+                and frozen_control_norm_max is not None
+                else None
+            ),
+        },
         "candidate_metrics": {
             field: _distribution(_numeric(candidate_rows, field))
             for field in candidate_fields
@@ -757,6 +802,7 @@ def render_report(results: Mapping[str, Any]) -> str:
         "informative_alignment_seed_invariant_by_case_source"
     ]
     trial_metrics = summary["trial_metrics"]
+    probe_feasibility = summary["probe_feasibility"]
     lines = [
         "# EBRT v0.2 instrumentation benchmark",
         "",
@@ -811,7 +857,20 @@ def render_report(results: Mapping[str, Any]) -> str:
             "multi-candidate column is the informative routing comparison.",
             "Here `control_leverage` is only the target-aligned event-source belief",
             "projection finite difference along one predefined topic-aligned control",
-            "direction; it is not an objective gradient or full controllability.",
+            "direction. Boundary samples are radially projected through the frozen",
+            "control constraint; this is not an objective gradient or full controllability.",
+            "",
+            (
+                f"Boundary-limited probes: {probe_feasibility['boundary_limited_candidate_count']}/"
+                f"{probe_feasibility['candidate_count']} "
+                f"({_format_number(100.0 * probe_feasibility['boundary_limited_candidate_fraction'], 2)}%). "
+                f"Maximum evaluated control norm: "
+                f"{_format_number(probe_feasibility['observed_probe_control_norm_max'], 9)} "
+                f"against the frozen-core limit "
+                f"{_format_number(probe_feasibility['frozen_control_norm_max'], 2)} "
+                f"with {probe_feasibility['assertion_tolerance']:.0e} assertion tolerance; "
+                f"bound check: {'PASS' if probe_feasibility['within_frozen_control_bound'] else 'FAIL'}."
+            ),
             "",
             "| Metric | All events (mean; n) | Multi-candidate only (mean; n) | Case-cluster 95% CI |",
             "| --- | ---: | ---: | ---: |",
@@ -958,8 +1017,10 @@ def _normalise_leverage_rows(trace: Mapping[str, Any]) -> list[dict[str, Any]]:
         return []
     if isinstance(payload, Mapping):
         raw = payload.get("candidates", [])
+        max_control_norm = payload.get("max_control_norm")
     elif isinstance(payload, Sequence) and not isinstance(payload, (str, bytes)):
         raw = payload
+        max_control_norm = None
     else:
         raise TypeError("candidate_control_leverage must be a mapping or sequence")
     rows: list[dict[str, Any]] = []
@@ -981,6 +1042,7 @@ def _normalise_leverage_rows(trace: Mapping[str, Any]) -> list[dict[str, Any]]:
                 "source_step": int(item["source_step"]),
                 "candidate_step": int(item["candidate_step"]),
                 "control_leverage": float(leverage) if leverage is not None else None,
+                "max_control_norm": max_control_norm,
             }
         )
     return rows
@@ -1031,6 +1093,36 @@ def _candidate_rows_for_event(
                 if attention is not None
                 else None,
                 "control_leverage": leverage.get("control_leverage"),
+                "finite_difference_scheme": leverage.get("finite_difference_scheme"),
+                "boundary_limited": (
+                    int(bool(leverage["boundary_limited"]))
+                    if leverage.get("boundary_limited") is not None
+                    else None
+                ),
+                "plus_requested_feasible": (
+                    int(bool(leverage["plus_requested_feasible"]))
+                    if leverage.get("plus_requested_feasible") is not None
+                    else None
+                ),
+                "minus_requested_feasible": (
+                    int(bool(leverage["minus_requested_feasible"]))
+                    if leverage.get("minus_requested_feasible") is not None
+                    else None
+                ),
+                "requested_epsilon": leverage.get("requested_epsilon"),
+                "actual_plus_delta_norm": leverage.get("actual_plus_delta_norm"),
+                "actual_minus_delta_norm": leverage.get("actual_minus_delta_norm"),
+                "control_norm_before": leverage.get("control_norm_before"),
+                "requested_plus_control_norm": leverage.get(
+                    "requested_plus_control_norm"
+                ),
+                "requested_minus_control_norm": leverage.get(
+                    "requested_minus_control_norm"
+                ),
+                "plus_control_norm": leverage.get("plus_control_norm"),
+                "minus_control_norm": leverage.get("minus_control_norm"),
+                "probe_control_norm_max": leverage.get("probe_control_norm_max"),
+                "max_control_norm": leverage.get("max_control_norm"),
                 "semantic_score": leverage.get("semantic_score"),
                 "target_aligned_terminal_belief_derivative": leverage.get(
                     "target_aligned_terminal_belief_derivative"
@@ -1489,11 +1581,12 @@ def _source_manifest(
             "revision_steps": revision_steps,
             "candidate_control_leverage": True,
             "candidate_control_leverage_method": (
-                "centered_finite_difference_topic_aligned_control"
+                "feasible_centered_or_projected_forward_one_sided_topic_aligned_control"
             ),
             "candidate_control_leverage_definition": (
-                "target_aligned_event_source_belief_projection_derivative_"
-                "along_one_normalized_topic_aligned_control_direction"
+                "target_aligned_event_source_belief_projection_sensitivity_"
+                "to_one_normalized_topic_aligned_requested_actuation_after_"
+                "the_frozen_radial_control_projection"
             ),
             "candidate_control_leverage_epsilon": LEVERAGE_EPSILON,
             "geometry_epsilon": GEOMETRY_EPSILON,
@@ -1794,6 +1887,40 @@ def run_self_tests(
     if any(row["control_leverage"] is None for row in candidate_rows):
         raise AssertionError("candidate leverage field is missing")
 
+    boundary_case = by_id["weak_initial_anchor_promotion"]
+    boundary_trace = run_instrumented_case(
+        instrumentation,
+        base_module,
+        boundary_case,
+        model_seed=2,
+        revision_steps=32,
+        adapter_provenance=provenance,
+        candidate_control_leverage=True,
+    )[4]
+    raw_boundary_rows = boundary_trace["candidate_control_leverage"]["candidates"]
+    limited_rows = [row for row in raw_boundary_rows if row["boundary_limited"]]
+    if not limited_rows:
+        raise AssertionError("real boundary regression did not limit any probe")
+    if any(
+        row["finite_difference_scheme"] != "projected_forward_one_sided"
+        for row in limited_rows
+    ):
+        raise AssertionError("real boundary regression used an unsafe probe scheme")
+    boundary_config = v01._build_config(
+        base_module,
+        boundary_case,
+        model_seed=2,
+        revision_steps=32,
+        device="cpu",
+        dtype="float32",
+    )
+    if any(
+        float(row["probe_control_norm_max"])
+        > float(boundary_config.max_control_norm) + 1e-5
+        for row in raw_boundary_rows
+    ):
+        raise AssertionError("real boundary regression exceeded the control bound")
+
     repeated = run_instrumented_case(
         instrumentation,
         base_module,
@@ -1886,6 +2013,8 @@ def run_self_tests(
         "trial_count": len(trial_rows),
         "event_count": len(event_rows),
         "candidate_count": len(candidate_rows),
+        "boundary_regression_case": boundary_case.case_id,
+        "boundary_limited_candidate_count": len(limited_rows),
         "monolith_sha256": monolith_sha_after,
         "instrumentation_sha256": instrumentation_sha_after,
         "semantic_adapter_sha256": semantic_adapter_sha_after,
@@ -1898,6 +2027,7 @@ def run_self_tests(
             "deterministic case-cluster bootstrap",
             "instrumentation observer neutrality against frozen v0.1",
             "event-local mirrors and candidate leverage rows",
+            "real boundary leverage probes stay in the frozen control ball",
             "diagnostic execution-counter neutrality",
             "deterministic trace fingerprint and artifact bundle",
             "frozen source SHA guards before and after",
