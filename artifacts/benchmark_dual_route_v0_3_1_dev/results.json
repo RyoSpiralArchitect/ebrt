@@ -16,7 +16,7 @@
     ],
     "exact_rank_stable": true,
     "mode": "epsilon-audit",
-    "policy_lock_sha256": "5b3316a6ab17e1f84de4460f6f8bfccab2e71ddcbe1686cefef25eaa54fcda6b",
+    "policy_lock_sha256": "e9ee000ad79ae205bda15bf7f1e691c87886b50cc5e374534a44e7ac3228c1ce",
     "promotion_status": "not_eligible_dev_draft",
     "rows": [
       {
@@ -117,9 +117,9 @@
     "status": "PASS"
   },
   "mode": "quick",
-  "policy_lock_sha256": "5b3316a6ab17e1f84de4460f6f8bfccab2e71ddcbe1686cefef25eaa54fcda6b",
+  "policy_lock_sha256": "e9ee000ad79ae205bda15bf7f1e691c87886b50cc5e374534a44e7ac3228c1ce",
   "promotion_status": "not_eligible_dev_draft",
-  "result_fingerprint": "87368d65bf3631e50acc5497ffade77ece70cfe7a05acad075c6fcc2917951ef",
+  "result_fingerprint": "6751b3794cb999f4c15a17c4aceccc9e6f760003b871553e521122ba722779a5",
   "rows": [
     {
       "arm": "S2",

@@ -6,10 +6,10 @@
     },
     "results.json": {
       "bytes": 54655,
-      "sha256": "18b135941112495f641c8eedcd7f3b822935e7e43d9b37f50aacc39469bd56e3"
+      "sha256": "a0694a5507b062af29d82cb9bd37dfb64414a7b045af4fd04f3850053af22783"
     }
   },
-  "bundle_fingerprint": "097719af2a83935b1fa42d137b3931a410e09c01a735eeb10dba688c492826c8",
+  "bundle_fingerprint": "4912e3ce05f910e987855d03847dec8110cee0c7add0376e70bab8a7e0d16ade",
   "claim_boundary": [
     "This is a DEV_DRAFT structured-mechanism benchmark, not a promotion experiment.",
     "The historical regression case is contaminated by the v0.3 terminal attempt.",
@@ -49,7 +49,7 @@
     "status": "PASS"
   },
   "mode": "quick",
-  "policy_lock_sha256": "5b3316a6ab17e1f84de4460f6f8bfccab2e71ddcbe1686cefef25eaa54fcda6b",
+  "policy_lock_sha256": "e9ee000ad79ae205bda15bf7f1e691c87886b50cc5e374534a44e7ac3228c1ce",
   "policy_lock_status": "DEV_DRAFT",
   "promotion_status": "not_eligible_dev_draft",
   "runtime_contract": {
@@ -98,7 +98,7 @@
   "schema_version": "ebrt-dual-route-manifest-v0.3.1",
   "source_validation": {
     "actual_sha256": {
-      "benchmark_dual_route_v0_3_1.py": "e20f2b14584d19a9398f8659f32045aed8148fce34f23890464c637a972319b1",
+      "benchmark_dual_route_v0_3_1.py": "9a47ccf8ff7b9555568907c4786fa137c9fccd6b7c20620cb27725182f61948c",
       "dual_route_policy_v0_3_1.py": "b371feae1be56943d89c2ce6418ce8e88f7c52256a4c7e0bb961a0abcbd5aeff",
       "ebrt_monolith_v0_1.py": "b1702f2868839d989cc3a9321d227436a23c3dad6cc86483edee9d5dbab3a529",
       "fixtures/dual_route_v0_3_1_dev.json": "8fde84304b45cc34cf9401ecd271e52a4d1f82e4da56d21c4356a10d22a150c4",
