@@ -1,5 +1,14 @@
 type IconProps = {
-  name: "lock" | "runs" | "chevron" | "check" | "close" | "minus";
+  name:
+    | "lock"
+    | "runs"
+    | "chevron"
+    | "check"
+    | "close"
+    | "minus"
+    | "play"
+    | "arrow"
+    | "document";
   size?: number;
 };
 
@@ -52,6 +61,28 @@ export function Icon({ name, size = 18 }: IconProps) {
     return (
       <svg {...common}>
         <path d="m7 7 10 10M17 7 7 17" />
+      </svg>
+    );
+  }
+  if (name === "play") {
+    return (
+      <svg {...common}>
+        <path d="m8 5 11 7-11 7Z" />
+      </svg>
+    );
+  }
+  if (name === "arrow") {
+    return (
+      <svg {...common}>
+        <path d="M5 12h14M14 7l5 5-5 5" />
+      </svg>
+    );
+  }
+  if (name === "document") {
+    return (
+      <svg {...common}>
+        <path d="M6 3h8l4 4v14H6Z" />
+        <path d="M14 3v5h4M9 12h6M9 16h6" />
       </svg>
     );
   }
