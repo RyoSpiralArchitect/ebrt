@@ -1,6 +1,6 @@
 # EBRT v0.5.1 — Controlled Raw Restart
 
-Status: **pre-live canary design; non-promotional DEV work**
+Status: **first live canary preserved as incomplete; non-promotional DEV work**
 
 ## Question
 
@@ -124,9 +124,43 @@ hashes. They do not parse or attach gold semantics to provider execution. The
 strong boundary asserted here is therefore semantic parse/grade attachment
 after all attempts, not the absence of every pre-call filesystem byte read.
 
+## First live attempt: provider boundary stopped all four arms
+
+The design was committed and pushed at `725e1d2` before the first live block.
+On 2026-07-20 JST, the locked runner made exactly four API attempts in the
+declared `A, B, D, C` order, emitted four sanitized receipts, made no retry,
+and published a valid `INCOMPLETE_CANARY` bundle:
+
+- [`manifest.json`](../artifacts/benchmark_controlled_raw_restart_v0_5_1_live_canary/manifest.json)
+- [`results.json`](../artifacts/benchmark_controlled_raw_restart_v0_5_1_live_canary/results.json)
+- [`calls.jsonl`](../artifacts/benchmark_controlled_raw_restart_v0_5_1_live_canary/calls.jsonl)
+- [`report.md`](../artifacts/benchmark_controlled_raw_restart_v0_5_1_live_canary/report.md)
+
+| Arm | Receipt | HTTP status | Provider reason | Public card |
+| --- | --- | ---: | --- | --- |
+| raw-only | failed | 429 | `insufficient_quota` | unavailable |
+| textual envelope | failed | 429 | `insufficient_quota` | unavailable |
+| gradient-controlled | failed | 429 | `insufficient_quota` | unavailable |
+| matched permutation | failed | 429 | `insufficient_quota` | unavailable |
+
+All four failures occurred at the typed `http_status` boundary before SDK
+response parsing. No returned model, provider token counts, public Reasoning
+Card, strict output grade, or output diff exists. The local temporal surrogate
+did independently accept its bounded map and reduced its declared objective
+from `0.755433933319` to `0.294771509854`; actual output did not participate in
+that optimization.
+
+This attempt therefore validates failure accounting and artifact closure, not
+the semantic bridge or any arm comparison. It is neither positive nor negative
+evidence about controlled regeneration. The bundle must not be overwritten or
+partially filled. A quota-recovery attempt, if authorized, must use the same
+frozen sources and a new output directory, and must be reported as a distinct
+runtime episode.
+
 ## Decision rules
 
-The canary may establish only that the bridge executed as specified:
+A future complete canary may establish only that the bridge executed as
+specified:
 
 - the case-bound temporal controller produced a canonical control map;
 - the deterministic projection survived all tamper checks;

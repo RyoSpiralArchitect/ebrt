@@ -102,6 +102,15 @@ changed. This is a supplied-actuator mechanism record: terminal Jacobian scales
 are not matched, the cells are not independent replications, and no GPT output
 is generated.
 
+EBRT v0.5.1 builds the first horizontal bridge from that temporal control map
+to one full-context regeneration. It freezes raw-only, textual-only,
+gradient-controlled, and norm-matched permutation arms; provider-visible C/D
+payloads differ only in control placement. The first preregistered four-call
+block is preserved as `INCOMPLETE_CANARY`: all four attempts received HTTP 429
+`insufficient_quota` before response parsing. The local surrogate decreased its
+declared objective, but no public card, strict grade, output diff, or arm-quality
+comparison exists.
+
 > [!IMPORTANT]
 > v0.1-v0.3.1 are **not** a Transformer implementation, a GPT latent-state
 > editor, or evidence of improved language-model accuracy. v0.4 meaningfully
@@ -120,6 +129,9 @@ is generated.
 > count and L2 bounds, not equal terminal actuator scale; the positive
 > synthetic comparison therefore does not isolate temporal credit assignment
 > from supplied control-basis geometry.
+> v0.5.1 projects only allowlisted public controls and never differentiates the
+> hosted model. Its first live block is provider-incomplete and is not evidence
+> for or against controlled regeneration.
 
 ## Why EBRT?
 
@@ -183,6 +195,10 @@ benchmark_temporal_adjoint_state_control_v0_5_t.py matched A/B/C/D and exhaustiv
 policy_lock_temporal_adjoint_state_controller_v0_5_t.json locked v0.5-T mechanism contract
 build_temporal_adjoint_state_control_artifact_v0_5_t.py deterministic v0.5-T artifact builder
 fixtures/temporal_adjoint_state_controller_v0_5_t_*.json paired-order and no-event suites
+controlled_raw_restart_v0_5_1.py case-bound control projection and full-context payloads
+benchmark_controlled_raw_restart_v0_5_1.py four-arm one-shot live canary and artifact validator
+policy_lock_controlled_raw_restart_v0_5_1.json preregistered runtime/source/claim contract
+fixtures/controlled_raw_restart_v0_5_1_canary.json explicit temporal-to-language binding
 docs/RND_BENCHMARK_V0_1.md    protocol, results, limits, and claim ledger
 docs/RND_INSTRUMENTATION_V0_2.md measurement contract and algorithm findings
 docs/RND_DUAL_ROUTE_V0_3.md   terminal invariant result and v0.3.1 direction
@@ -196,6 +212,7 @@ docs/RND_PROVIDER_BOUNDARY_V0_4_3.md protocol, smoke result, correction lineage
 docs/RND_REASONING_WORKBENCH_V0_4_4.md workbench projection and claim gates
 docs/RND_DIFFERENTIABLE_EVIDENCE_CONTROL_V0_5.md mechanism, gradient, and claim boundaries
 docs/RND_TEMPORAL_ADJOINT_STATE_CONTROL_V0_5_T.md temporal mechanism, result, and actuator boundary
+docs/RND_CONTROLLED_RAW_RESTART_V0_5_1.md bridge design, incomplete live result, and recovery boundary
 artifacts/benchmark_v0_1/     committed machine-readable benchmark evidence
 artifacts/demo_v0_1/trace.json committed no-build mechanism trace
 artifacts/benchmark_instrumentation_v0_2/ committed v0.2 measurement evidence
@@ -214,6 +231,7 @@ artifacts/compare_provider_boundary_v0_4_3/ offline non-causal comparison
 artifacts/reasoning_workbench_v0_4_4/ canonical public projection and report
 artifacts/differentiable_evidence_control_v0_5/ canonical control maps and mechanism report
 artifacts/temporal_adjoint_state_control_v0_5_t/ temporal maps, audits, comparison, and manifest
+artifacts/benchmark_controlled_raw_restart_v0_5_1_live_canary/ preserved four-receipt incomplete block
 requirements.txt              runtime dependency declaration
 requirements-live.txt         separately pinned OpenAI/Pydantic live dependencies
 LICENSE                       Apache License 2.0
@@ -458,6 +476,23 @@ python3 build_temporal_adjoint_state_control_artifact_v0_5_t.py validate
 The sweep is one synthetic topology under eight nearby parameter settings and
 two evidence orders, not 16 independent benchmark tasks. Its execution map and
 adjoint audit are separate artifacts, and both stop before provider execution.
+
+Validate the v0.5.1 controlled full-context bridge and its preserved first live
+attempt without making a provider call:
+
+```bash
+python3 controlled_raw_restart_v0_5_1.py validate
+python3 controlled_raw_restart_v0_5_1.py self-test
+python3 benchmark_controlled_raw_restart_v0_5_1.py self-test
+python3 benchmark_controlled_raw_restart_v0_5_1.py preflight
+python3 benchmark_controlled_raw_restart_v0_5_1.py validate \
+  --artifact-dir artifacts/benchmark_controlled_raw_restart_v0_5_1_live_canary
+```
+
+`preflight` constructs no provider request. The committed live bundle contains
+four typed HTTP 429 `insufficient_quota` receipts and no model output. Do not
+overwrite or resume it; any quota-recovery run must use a new output directory
+and remain a separately reported runtime episode.
 
 ## Judge path: inspect first, rerun second
 
@@ -1013,6 +1048,9 @@ retrospectively relabeling failures. See the
 | v0.5-T proves temporal credit assignment alone beats evidence weighting | No; the arms share standardized coordinate bounds but not terminal Jacobian scale, so the positive C-vs-B result includes oracle actuator geometry |
 | The 16 v0.5-T ordered cells are independent replications or a general reasoning benchmark | No; they are two orders over eight nearby parameter settings on one synthetic topology, with gates locked after pilot implementation rather than preregistered |
 | A v0.5-T control map improves a regenerated GPT answer | Not evaluated; network/provider/generation calls are zero |
+| v0.5.1 projects a case-bound temporal map into blinded full-context arms | Supported offline: A is raw-only, B is textual-only, C/D differ only at six control `delta`/`role` paths, and no-event is byte-identical across arms |
+| The first v0.5.1 live block compares final GPT outputs | No; all four one-attempt calls stopped at HTTP 429 `insufficient_quota`, so no model response, public card, strict grade, or output diff exists |
+| The v0.5.1 surrogate decrease predicts an improved generated answer | Not evaluated; the surrogate moved from `0.755433933319` to `0.294771509854`, but actual output was unavailable and never participated in optimization |
 | Selective replay should be optimized before state sufficiency | Not supported by current evidence; it is paused as a quality direction and remains an unranked future efficiency ablation |
 | EBRT edits hidden states inside a trained Transformer or GPT model | Not implemented |
 | EBRT improves real-world LLM reasoning accuracy | Not established |
@@ -1080,8 +1118,9 @@ category determination.
   disconnected-padding invariance, no-event identity, bounded
   projection, deterministic bytes, and no separately supplied downstream
   grader-verdict/final-answer artifact leakage.
-  Semantic extraction and controlled full-context regeneration remain future
-  integration work.
+  Semantic extraction remains future integration work. v0.5.1 now implements
+  the controlled full-context bridge, while a completed output comparison is
+  still pending.
 - **Milestone 2.5 — temporal state-control vertical experiment (positive
   synthetic record):** v0.5-T leaves v0.5.0 frozen and adds exact local
   adjoints over a supplied smooth public-state recurrence. On one topology's
@@ -1089,9 +1128,18 @@ category determination.
   all five nonidentity floor permutations under the same standardized
   coordinate budget, while the top finite-leverage floor changes with order.
   Terminal actuator scales are not matched, so the result includes oracle
-  control-basis geometry and is not a GPT or reasoning-quality claim. The next
-  horizontal step remains controlled full-context generation with actual
-  output comparison.
+  control-basis geometry and is not a GPT or reasoning-quality claim. v0.5.1
+  implements the horizontal generation boundary, but its first live block did
+  not reach a model response or actual output comparison.
+- **Milestone 2.6 — controlled full-context bridge (implemented, first live
+  block provider-incomplete):** v0.5.1 binds one public language case to the
+  temporal program, blinds treatment labels at the provider boundary, and
+  preregisters raw-only, textual-only, matched-permutation, and gradient arms.
+  The first block emitted four exact receipts but every attempt stopped at HTTP
+  429 `insufficient_quota`; no semantic or quality comparison was possible.
+  Preserve that bundle unchanged. The next eligible action is one separately
+  named quota-recovery block from the frozen source graph, followed by an
+  actual public-card/output diff if and only if responses complete.
 - **Milestone 3 — coherent evaluator experience (provisional Workbench):** a
   deterministic allowlist projection and local read-only Workbench now connect
   Evidence, Event, Revision, every recorded Replay lane, and Final Output Diff.
@@ -1171,10 +1219,11 @@ v0.5-T experiment now adds a supplied temporal public-state recurrence, exact
 manual/autograd adjoints, order-sensitive finite leverage, transition controls,
 and exhaustive matched floor shams. Its positive 16-cell local-sweep record is
 explicitly bounded by unequal terminal actuator geometry and does not change a
-model answer. A fresh harder DEV
-and promotion suite, controlled full-context generation, live revision
-application, and any hosted judge sandbox remain pending; there is no hosted
-service in this release.
+model answer. v0.5.1 now implements the controlled full-context boundary and
+preserves its first four-receipt live block, but all attempts stopped on
+`insufficient_quota` before a model response. A quota-recovery output block,
+fresh harder DEV and promotion suite, live revision application, and any hosted
+judge sandbox remain pending; there is no hosted service in this release.
 
 Issues and pull requests that add reproducible tests, adversarial fixtures, or
 better controls are especially welcome. Please avoid expanding claims without
