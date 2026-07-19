@@ -201,6 +201,7 @@ build_temporal_adjoint_state_control_artifact_v0_5_t.py deterministic v0.5-T art
 fixtures/temporal_adjoint_state_controller_v0_5_t_*.json paired-order and no-event suites
 controlled_raw_restart_v0_5_1.py case-bound control projection and full-context payloads
 benchmark_controlled_raw_restart_v0_5_1.py four-arm one-shot live canary and artifact validator
+verify_controlled_raw_restart_v0_5_1_portable.py host-independent verifier for both frozen live bundles
 policy_lock_controlled_raw_restart_v0_5_1.json preregistered runtime/source/claim contract
 fixtures/controlled_raw_restart_v0_5_1_canary.json explicit temporal-to-language binding
 docs/RND_BENCHMARK_V0_1.md    protocol, results, limits, and claim ledger
@@ -482,8 +483,23 @@ The sweep is one synthetic topology under eight nearby parameter settings and
 two evidence orders, not 16 independent benchmark tasks. Its execution map and
 adjoint audit are separate artifacts, and both stop before provider execution.
 
-Validate the v0.5.1 controlled full-context bridge and its preserved first live
-attempt without making a provider call:
+Verify both preserved v0.5.1 live bundles without importing project/provider
+dependencies, matching the capture host, or making a provider call:
+
+```bash
+python3 -I -S verify_controlled_raw_restart_v0_5_1_portable.py self-test
+python3 -I -S verify_controlled_raw_restart_v0_5_1_portable.py verify \
+  --artifact-dir artifacts/benchmark_controlled_raw_restart_v0_5_1_live_canary
+python3 -I -S verify_controlled_raw_restart_v0_5_1_portable.py verify \
+  --artifact-dir artifacts/benchmark_controlled_raw_restart_v0_5_1_quota_recovery_r01
+```
+
+The portable verifier uses reviewed canonical hashes as its external root of
+trust. It checks frozen bytes, source/fixture lineage, recorded producer
+runtime and receipts, result fingerprints, execution accounting, and the exact
+calls ledger. It does not reproduce the local surrogate numerics or
+cryptographically authenticate provider bodies. The frozen runner remains the
+environment-coupled development and numerical-revalidation path:
 
 ```bash
 python3 controlled_raw_restart_v0_5_1.py validate
@@ -500,7 +516,9 @@ python3 benchmark_controlled_raw_restart_v0_5_1.py validate \
 four typed HTTP 429 `insufficient_quota` receipts and no model output. It was
 not overwritten or resumed. The separately preserved recovery bundle completes
 all four calls and strict endpoints, with one identical public card across all
-arms and therefore no observed output effect on this case.
+arms and therefore no observed output effect on this case. The portable
+verifier is a post-run inspection layer and is not part of either
+preregistered source snapshot.
 
 ## Judge path: inspect first, rerun second
 
