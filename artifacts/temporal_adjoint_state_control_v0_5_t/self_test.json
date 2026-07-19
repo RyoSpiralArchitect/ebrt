@@ -9,6 +9,7 @@
       "sham preserves exact control-value multiset and L2 norm",
       "exact linear witness separates supplied leaf and state reachable spans",
       "non-default loss weights remain consistent in rows and finite leverage",
+      "all four benchmark arms preserve no-event identity without backward optimization",
       "two identical comparisons are byte deterministic",
       "comparison completes while socket creation is denied"
     ],

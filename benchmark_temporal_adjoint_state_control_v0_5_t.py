@@ -254,6 +254,26 @@ class TemporalControlBenchmark:
         baseline_task = float(
             self._task_loss(program, baseline, baseline_stable).item()
         )
+        if not program.event_triggered:
+            zero_controls = torch.zeros(
+                len(program.leaf_control_ids), dtype=FLOAT_DTYPE
+            )
+            return ArmOutcome(
+                arm_id=ARM_A,
+                control_lane="leaf_static_collapsed",
+                program=program,
+                deltas=zero_controls,
+                baseline_terminal=baseline,
+                actual_terminal=baseline.clone(),
+                actual_task_loss_before=baseline_task,
+                actual_task_loss_after=baseline_task,
+                optimization_objective_after=baseline_task,
+                predicted_terminal=baseline.clone(),
+                predicted_task_loss_after=baseline_task,
+                backward_calls=0,
+                accepted=False,
+                top_finite_leverage_target_id=None,
+            )
         jacobian = self._collapsed_jacobian(program)
         logits = torch.zeros(
             len(program.leaf_control_ids), dtype=FLOAT_DTYPE, requires_grad=True
@@ -880,6 +900,24 @@ def run_self_tests(fixture_path: Path) -> dict[str, Any]:
         if not pair["expected_switch"] or not pair["minimum_margin_pass"]:
             raise AssertionError("one paired trace failed its floor-switch contract")
 
+    no_event_path = (
+        Path(__file__).resolve().parent
+        / "fixtures"
+        / "temporal_adjoint_state_controller_v0_5_t_no_event.json"
+    )
+    no_event_suite = TemporalPairedSuite.from_mapping(_load_json_exact(no_event_path))
+    no_event_program = no_event_suite.materialize("P00", "early_correction")
+    no_event_outcomes, _ = TemporalControlBenchmark(no_event_suite).run_program(
+        no_event_program
+    )
+    for arm_id, outcome in no_event_outcomes.items():
+        if outcome.backward_calls != 0 or outcome.accepted:
+            raise AssertionError(f"no-event arm {arm_id} invoked optimization")
+        if not torch.equal(outcome.deltas, torch.zeros_like(outcome.deltas)):
+            raise AssertionError(f"no-event arm {arm_id} emitted nonzero controls")
+        if not torch.equal(outcome.baseline_terminal, outcome.actual_terminal):
+            raise AssertionError(f"no-event arm {arm_id} changed terminal state")
+
     # Non-default weights guard the shared task-loss contract. Defaults of 1.0
     # would hide an accidental raw sum in either benchmark rows or leverage.
     weighted_config = ControllerConfig(
@@ -949,6 +987,7 @@ def run_self_tests(fixture_path: Path) -> dict[str, Any]:
             "sham preserves exact control-value multiset and L2 norm",
             "exact linear witness separates supplied leaf and state reachable spans",
             "non-default loss weights remain consistent in rows and finite leverage",
+            "all four benchmark arms preserve no-event identity without backward optimization",
             "two identical comparisons are byte deterministic",
             "comparison completes while socket creation is denied",
         ],
