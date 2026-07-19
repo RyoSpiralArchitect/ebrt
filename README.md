@@ -133,6 +133,16 @@ two-edge repair then closes exactly `final_priority:+R4` and
 classification change. The repaired local closure is `PASS`; this is a
 public-representation engineering result, not a new hosted-model result.
 
+EBRT v0.5.4 now compiles that sealed dependency program into a float64 public
+temporal recurrence. Under one matched normalized-control budget, the exact
+time-local adjoint arm is strictly below zero control, its node-tied projection,
+and every locked within-node timing permutation for both mechanically derived
+evidence schedules. Manual forward and reverse derivatives agree exactly with
+autograd, finite differences agree within `1.24e-10`, all 17 hard gates pass,
+and the sealed decision is `PROMOTE_V0_5_5_TEMPORAL_GATE`. This is a
+contaminated network-zero mechanism result over one supplied public program,
+not fresh benchmark or hosted-model evidence.
+
 > [!IMPORTANT]
 > v0.1-v0.3.1 are **not** a Transformer implementation, a GPT latent-state
 > editor, or evidence of improved language-model accuracy. v0.4 meaningfully
@@ -164,6 +174,11 @@ public-representation engineering result, not a new hosted-model result.
 > v0.5.2, discover semantics from language, or establish provider-output or
 > general reasoning improvement. The four support-role bindings are supplied
 > case annotations, and network/provider calls remain zero.
+> v0.5.4 adds exact local temporal credit only inside the compiled public
+> recurrence. Its positive comparison is implementation-gated rather than an
+> independent held-out preregistration, uses two schedules over one contaminated
+> synthetic program, and does not establish semantic discovery, GPT improvement,
+> general causal superiority, or access to model hidden states.
 
 ## Why EBRT?
 
@@ -186,8 +201,8 @@ latent-trajectory idea while defining the stricter reachable-control,
 stop-gradient, and nonclaim boundaries used by the current public substrate.
 The [v0.5.3-v0.5.5 roadmap](docs/ROADMAP_V0_5_3_TO_V0_5_5.md) separates the
 vertical work into dependency space, time, and sealed-trajectory multiplicity
-before any v0.6 execution or orchestration claim; its Space milestone is now
-complete.
+before any v0.6 execution or orchestration claim; its Space and Time milestones
+are now complete.
 
 ## Repository map
 
@@ -248,6 +263,11 @@ factorized_lineage_v0_5_3.py strict role-factorized DAG migration, closure, grad
 build_factorized_lineage_artifact_v0_5_3.py deterministic network-zero bundle builder and verifier
 policy_lock_factorized_lineage_v0_5_3.json frozen predecessor/fixture/schema/artifact contract
 fixtures/factorized_lineage_v0_5_3_*.json contaminated repair overlay and post-graph closure gold
+temporal_adjoint_lineage_v0_5_4.py compiled recurrence, manual derivatives, normalized controls, and hard gates
+benchmark_temporal_adjoint_lineage_v0_5_4.py deterministic A/B/C/D comparison and sealed-lane payloads
+build_temporal_adjoint_lineage_artifact_v0_5_4.py portable network-zero bundle builder and verifier
+policy_lock_temporal_adjoint_lineage_v0_5_4.json exact predecessor, source, schema, gate, and claim contract
+fixtures/temporal_adjoint_lineage_v0_5_4_*.json symbolic event and no-event policies only
 docs/RND_BENCHMARK_V0_1.md    protocol, results, limits, and claim ledger
 docs/RND_INSTRUMENTATION_V0_2.md measurement contract and algorithm findings
 docs/RND_DUAL_ROUTE_V0_3.md   terminal invariant result and v0.3.1 direction
@@ -265,6 +285,7 @@ docs/RND_CONTROLLED_RAW_RESTART_V0_5_1.md bridge design, incomplete live result,
 docs/RND_HACKATHON_STRATEGY_WALKTHROUGH_V0_5_2.md preregistration, live diff, strict near-pass
 docs/EBRT_CORE_THESIS.md       latent north star, corrected control math, and gradient boundaries
 docs/RND_FACTORIZED_LINEAGE_V0_5_3.md network-zero lineage result and contaminated repair boundary
+docs/RND_TEMPORAL_ADJOINT_LINEAGE_V0_5_4.md matched temporal result, derivative audits, and claim boundary
 docs/ROADMAP_V0_5_3_TO_V0_5_5.md Space/Time/Multiplicity gates through v0.6 execution design
 artifacts/benchmark_v0_1/     committed machine-readable benchmark evidence
 artifacts/demo_v0_1/trace.json committed no-build mechanism trace
@@ -273,6 +294,7 @@ artifacts/instrumentation_v0_2/ committed trace and standalone mirror figure
 artifacts/.dual_route_v0_3_holdout_ledger.json canonical terminal attempt record
 artifacts/benchmark_dual_route_v0_3_1_dev/ committed non-promotional DEV evidence
 artifacts/factorized_lineage_v0_5_3/ committed contaminated network-zero lineage regression
+artifacts/temporal_adjoint_lineage_v0_5_4/ committed sealed temporal mechanism and three v0.5.5-compatible lanes
 artifacts/benchmark_language_replay_v0_4_fake_dev/ scripted plumbing evidence only
 artifacts/benchmark_language_replay_v0_4_live_smoke/ boundary-fixed GPT-5.6 DEV canary
 artifacts/benchmark_direct_full_calibration_v0_4_dev/ non-promotional 10-case DEV evidence
@@ -1166,6 +1188,8 @@ retrospectively relabeling failures. See the
 | v0.5.3 repairs or regrades the frozen v0.5.2 endpoint | No; the predecessor remains `false`. v0.5.3 is a separately named, contaminated local migration/regression result |
 | The v0.5.3 typed DAG closes its local regression | Yes, narrowly: lossless migration remains `FAIL` with the exact two legacy gaps; the contaminated two-edge overlay adds only final/R4 and demo/R2, and the repaired exact closure is `PASS` under network-zero validation |
 | v0.5.3 autonomously discovers support roles or improves a GPT output | No; the four role bindings are explicit case annotations, the predecessor output is not rerun or regraded, and provider calls are zero |
+| The v0.5.4 exact temporal arm beats its matched controls | Supported only on the frozen contaminated public program: C is below A, node-tied B, and all three locked within-node timing shams for both schedules; 17/17 mechanism gates pass |
+| v0.5.4 proves general temporal reasoning or improves a hosted answer | No; it is network-zero, uses two schedules over one supplied program, and its gradients stop at the local public recurrence |
 | Selective replay should be optimized before state sufficiency | Not supported by current evidence; it is paused as a quality direction and remains an unranked future efficiency ablation |
 | EBRT edits hidden states inside a trained Transformer or GPT model | Not implemented |
 | EBRT improves real-world LLM reasoning accuracy | Not established |
@@ -1278,10 +1302,17 @@ category determination.
   edge-ablation, tamper, rollback, and socket-denied gates. Its only closure
   additions are final/R4 and demo/R2; the predecessor verdict remains false and
   provider calls are zero.
-- **Milestone 2.9 — Space to Time to Multiplicity (prospective):** after
-  v0.5.3, v0.5.4 may test exact temporal credit over the accepted factorized
-  program under matched actuator controls; v0.5.5 may test sealed-lane
-  composition, block credit, and lane isolation without agents or providers.
+- **Milestone 2.9 — temporal adjoint over factorized lineage (network-zero
+  complete):** v0.5.4 compiles the committed v0.5.3 program without accepting
+  fixture matrices, Jacobians, terminal gold, or arbitrary operator order. Its
+  manual forward/reverse derivatives, autograd, finite differences, normalized
+  actuator geometry, severance, identity, commutation, no-event, adversarial
+  sham, and deterministic artifact gates pass. C beats A, node-tied B, and all
+  locked within-node timing shams in both schedules, promoting the exact local
+  temporal-placement claim only.
+- **Milestone 2.10 — sealed-trajectory multiplicity (prospective):** v0.5.5 may
+  now test one-to-three sealed-lane composition, shared evidence receipts,
+  block credit, and lane isolation without agents or providers.
   v0.6 execution design is intentionally deferred until those artifacts reveal
   which substrate claims survive. The intended gates and stop rules are defined
   in the [vertical research roadmap](docs/ROADMAP_V0_5_3_TO_V0_5_5.md).
@@ -1375,9 +1406,12 @@ preserved as a judge-readable near-pass rather than presented as a successful
 causal intervention. The network-zero v0.5.3 successor now reproduces that
 exact defect without adding reachability, then passes a separately labeled
 contaminated dependency regression whose only additions are final/R4 and
-demo/R2. v0.5.4 temporal credit and v0.5.5 sealed-lane composition remain gated
-successor milestones, and the concrete v0.6 execution design follows only
-after their completion audit.
+demo/R2. The network-zero v0.5.4 successor then compiles that exact repaired
+program into a temporal recurrence: manual/autograd/finite-difference checks
+pass, C beats its matched node-tied and timing-placement controls in both
+schedules, and the sealed 17-gate decision promotes v0.5.5. Sealed-lane
+composition remains the next gated substrate milestone; the concrete v0.6
+execution design follows only after its completion audit.
 A promotion suite, matched hard-suite comparison, live
 revision application, and any hosted judge sandbox remain pending; there is no
 hosted service in this release.

@@ -1,0 +1,356 @@
+{
+  "closure_fingerprint_sha256": "899afdca968e3a3e1c1dd7f9eb5c4605e18c7c6b4188a8a4f4af1707a2859c9c",
+  "event_program": {
+    "channels": [
+      "direct",
+      "inherited"
+    ],
+    "closure_fingerprint_sha256": "899afdca968e3a3e1c1dd7f9eb5c4605e18c7c6b4188a8a4f4af1707a2859c9c",
+    "closure_partition": {
+      "constraint:video_constraint": {
+        "direct": [
+          "R5"
+        ],
+        "inherited": []
+      },
+      "fact:demo_centerpiece": {
+        "direct": [
+          "R4",
+          "R6"
+        ],
+        "inherited": [
+          "R2"
+        ]
+      },
+      "fact:final_priority": {
+        "direct": [
+          "R2",
+          "R4",
+          "R6"
+        ],
+        "inherited": []
+      }
+    },
+    "event_triggered": true,
+    "evidence_ids": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6"
+    ],
+    "fingerprint_sha256": "686ae870d0694fbecc387836911b13265c04f8cc1b9bc4430369479470b32cfb",
+    "fixture_id": "hackathon_strategy_temporal_adjoint_lineage_dev_v0_5_4",
+    "graph_fingerprint_sha256": "361d6961938dda2d69ccc0340fecb802c55af40d6cd551c628eb307462416333",
+    "node_ids": [
+      "constraint:video_constraint",
+      "evidence:R1",
+      "evidence:R2",
+      "evidence:R3",
+      "evidence:R4",
+      "evidence:R5",
+      "evidence:R6",
+      "fact:demo_centerpiece",
+      "fact:final_priority",
+      "support:demo_readiness",
+      "support:judging_basis",
+      "support:superseding_guidance",
+      "support:video_constraint"
+    ],
+    "positive_edges": [
+      {
+        "edge_id": "migration_inferred:R2->support:judging_basis",
+        "provenance": "migration_inferred",
+        "source_node_id": "evidence:R2",
+        "target_node_id": "support:judging_basis"
+      },
+      {
+        "edge_id": "migration_inferred:R4->support:demo_readiness",
+        "provenance": "migration_inferred",
+        "source_node_id": "evidence:R4",
+        "target_node_id": "support:demo_readiness"
+      },
+      {
+        "edge_id": "migration_inferred:R5->support:video_constraint",
+        "provenance": "migration_inferred",
+        "source_node_id": "evidence:R5",
+        "target_node_id": "support:video_constraint"
+      },
+      {
+        "edge_id": "migration_inferred:R6->support:superseding_guidance",
+        "provenance": "migration_inferred",
+        "source_node_id": "evidence:R6",
+        "target_node_id": "support:superseding_guidance"
+      },
+      {
+        "edge_id": "migration_inferred:support:demo_readiness->fact:demo_centerpiece",
+        "provenance": "migration_inferred",
+        "source_node_id": "support:demo_readiness",
+        "target_node_id": "fact:demo_centerpiece"
+      },
+      {
+        "edge_id": "migration_inferred:support:judging_basis->fact:final_priority",
+        "provenance": "migration_inferred",
+        "source_node_id": "support:judging_basis",
+        "target_node_id": "fact:final_priority"
+      },
+      {
+        "edge_id": "migration_inferred:support:superseding_guidance->fact:demo_centerpiece",
+        "provenance": "migration_inferred",
+        "source_node_id": "support:superseding_guidance",
+        "target_node_id": "fact:demo_centerpiece"
+      },
+      {
+        "edge_id": "migration_inferred:support:superseding_guidance->fact:final_priority",
+        "provenance": "migration_inferred",
+        "source_node_id": "support:superseding_guidance",
+        "target_node_id": "fact:final_priority"
+      },
+      {
+        "edge_id": "migration_inferred:support:video_constraint->constraint:video_constraint",
+        "provenance": "migration_inferred",
+        "source_node_id": "support:video_constraint",
+        "target_node_id": "constraint:video_constraint"
+      },
+      {
+        "edge_id": "repair:demo_readiness->final_priority",
+        "provenance": "repair_overlay",
+        "source_node_id": "support:demo_readiness",
+        "target_node_id": "fact:final_priority"
+      },
+      {
+        "edge_id": "repair:final_priority->demo_centerpiece",
+        "provenance": "repair_overlay",
+        "source_node_id": "fact:final_priority",
+        "target_node_id": "fact:demo_centerpiece"
+      }
+    ],
+    "schedules": {
+      "correction_early": [
+        "R1",
+        "R2",
+        "R3",
+        "R6",
+        "R4",
+        "R5"
+      ],
+      "correction_late": [
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "R6"
+      ]
+    },
+    "schema_version": "ebrt-compiled-temporal-lineage-program-v0.5.4",
+    "source_regression_fingerprint_sha256": "0335ede60f428ddf77f7266d1c2bea6483c4698e924f555e9be8a7d3422e2997",
+    "state_axis_order": [
+      "channel",
+      "evidence",
+      "node"
+    ],
+    "state_shape": [
+      2,
+      6,
+      13
+    ],
+    "sweep_order": [
+      "support:demo_readiness",
+      "support:judging_basis",
+      "support:superseding_guidance",
+      "fact:final_priority",
+      "fact:demo_centerpiece",
+      "support:video_constraint",
+      "constraint:video_constraint"
+    ],
+    "target_node_ids": [
+      "constraint:video_constraint",
+      "fact:demo_centerpiece",
+      "fact:final_priority"
+    ]
+  },
+  "fingerprint_sha256": "f8fd53f793e2285a079490ed013b8f2af1a2985425071e6787a41d9838e8df6a",
+  "graph_fingerprint_sha256": "361d6961938dda2d69ccc0340fecb802c55af40d6cd551c628eb307462416333",
+  "network_calls": 0,
+  "no_event_program": {
+    "channels": [
+      "direct",
+      "inherited"
+    ],
+    "closure_fingerprint_sha256": "899afdca968e3a3e1c1dd7f9eb5c4605e18c7c6b4188a8a4f4af1707a2859c9c",
+    "closure_partition": {
+      "constraint:video_constraint": {
+        "direct": [
+          "R5"
+        ],
+        "inherited": []
+      },
+      "fact:demo_centerpiece": {
+        "direct": [
+          "R4",
+          "R6"
+        ],
+        "inherited": [
+          "R2"
+        ]
+      },
+      "fact:final_priority": {
+        "direct": [
+          "R2",
+          "R4",
+          "R6"
+        ],
+        "inherited": []
+      }
+    },
+    "event_triggered": false,
+    "evidence_ids": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6"
+    ],
+    "fingerprint_sha256": "e7a1df43374765e9a96260f473275e16a91cc2ba6a24e56aa090bfa3efde2d72",
+    "fixture_id": "hackathon_strategy_temporal_adjoint_lineage_no_event_v0_5_4",
+    "graph_fingerprint_sha256": "361d6961938dda2d69ccc0340fecb802c55af40d6cd551c628eb307462416333",
+    "node_ids": [
+      "constraint:video_constraint",
+      "evidence:R1",
+      "evidence:R2",
+      "evidence:R3",
+      "evidence:R4",
+      "evidence:R5",
+      "evidence:R6",
+      "fact:demo_centerpiece",
+      "fact:final_priority",
+      "support:demo_readiness",
+      "support:judging_basis",
+      "support:superseding_guidance",
+      "support:video_constraint"
+    ],
+    "positive_edges": [
+      {
+        "edge_id": "migration_inferred:R2->support:judging_basis",
+        "provenance": "migration_inferred",
+        "source_node_id": "evidence:R2",
+        "target_node_id": "support:judging_basis"
+      },
+      {
+        "edge_id": "migration_inferred:R4->support:demo_readiness",
+        "provenance": "migration_inferred",
+        "source_node_id": "evidence:R4",
+        "target_node_id": "support:demo_readiness"
+      },
+      {
+        "edge_id": "migration_inferred:R5->support:video_constraint",
+        "provenance": "migration_inferred",
+        "source_node_id": "evidence:R5",
+        "target_node_id": "support:video_constraint"
+      },
+      {
+        "edge_id": "migration_inferred:R6->support:superseding_guidance",
+        "provenance": "migration_inferred",
+        "source_node_id": "evidence:R6",
+        "target_node_id": "support:superseding_guidance"
+      },
+      {
+        "edge_id": "migration_inferred:support:demo_readiness->fact:demo_centerpiece",
+        "provenance": "migration_inferred",
+        "source_node_id": "support:demo_readiness",
+        "target_node_id": "fact:demo_centerpiece"
+      },
+      {
+        "edge_id": "migration_inferred:support:judging_basis->fact:final_priority",
+        "provenance": "migration_inferred",
+        "source_node_id": "support:judging_basis",
+        "target_node_id": "fact:final_priority"
+      },
+      {
+        "edge_id": "migration_inferred:support:superseding_guidance->fact:demo_centerpiece",
+        "provenance": "migration_inferred",
+        "source_node_id": "support:superseding_guidance",
+        "target_node_id": "fact:demo_centerpiece"
+      },
+      {
+        "edge_id": "migration_inferred:support:superseding_guidance->fact:final_priority",
+        "provenance": "migration_inferred",
+        "source_node_id": "support:superseding_guidance",
+        "target_node_id": "fact:final_priority"
+      },
+      {
+        "edge_id": "migration_inferred:support:video_constraint->constraint:video_constraint",
+        "provenance": "migration_inferred",
+        "source_node_id": "support:video_constraint",
+        "target_node_id": "constraint:video_constraint"
+      },
+      {
+        "edge_id": "repair:demo_readiness->final_priority",
+        "provenance": "repair_overlay",
+        "source_node_id": "support:demo_readiness",
+        "target_node_id": "fact:final_priority"
+      },
+      {
+        "edge_id": "repair:final_priority->demo_centerpiece",
+        "provenance": "repair_overlay",
+        "source_node_id": "fact:final_priority",
+        "target_node_id": "fact:demo_centerpiece"
+      }
+    ],
+    "schedules": {
+      "correction_early": [
+        "R1",
+        "R2",
+        "R3",
+        "R6",
+        "R4",
+        "R5"
+      ],
+      "correction_late": [
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "R6"
+      ]
+    },
+    "schema_version": "ebrt-compiled-temporal-lineage-program-v0.5.4",
+    "source_regression_fingerprint_sha256": "0335ede60f428ddf77f7266d1c2bea6483c4698e924f555e9be8a7d3422e2997",
+    "state_axis_order": [
+      "channel",
+      "evidence",
+      "node"
+    ],
+    "state_shape": [
+      2,
+      6,
+      13
+    ],
+    "sweep_order": [
+      "support:demo_readiness",
+      "support:judging_basis",
+      "support:superseding_guidance",
+      "fact:final_priority",
+      "fact:demo_centerpiece",
+      "support:video_constraint",
+      "constraint:video_constraint"
+    ],
+    "target_node_ids": [
+      "constraint:video_constraint",
+      "fact:demo_centerpiece",
+      "fact:final_priority"
+    ]
+  },
+  "provider_calls": 0,
+  "schema_version": "ebrt-temporal-lineage-suite-v0.5.4",
+  "source_regression_fingerprint_sha256": "0335ede60f428ddf77f7266d1c2bea6483c4698e924f555e9be8a7d3422e2997",
+  "state_axis_order": [
+    "channel",
+    "evidence",
+    "node"
+  ]
+}

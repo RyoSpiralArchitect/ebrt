@@ -1,0 +1,133 @@
+{
+  "checks": {
+    "arm_b_c_d_exact_l2_and_raw_bound": true,
+    "c_beats_a_b_every_distinct_locked_d": true,
+    "canonical_outputs_byte_deterministic": true,
+    "compiled_structural_closure_exact": true,
+    "correction_schedules_mechanically_derived": true,
+    "early_late_top_credit_switches": true,
+    "fixture_arbitrary_operator_order_rejected": true,
+    "fixture_arbitrary_schedule_rejected": true,
+    "fixture_numeric_mechanism_rejected": true,
+    "identity_insertion_preserves_state_and_credit": true,
+    "independent_support_permutation_exact": true,
+    "locked_sham_geometry_exact": true,
+    "manual_autograd_fd_norm_gates_pass": true,
+    "no_event_zero_control_backward_identity": true,
+    "sever_final_to_demo_zeroes_r2_inherited_upstream_jacobian": true,
+    "sham_adversaries_rejected": true,
+    "state_axis_order_channel_evidence_node": true,
+    "v0_5_3_graph_closure_regression_exact": true,
+    "zero_network_and_provider_calls": true
+  },
+  "evidence": {
+    "adversarial_sham_rejection": {
+      "correction_early": {
+        "cross_node_audit_fingerprint_sha256": "b721b68b2eaec9a6d483fe9f3ae65735c1090bad88353d431c09e4baf96c90e3",
+        "cross_node_pair": {
+          "left_site_id": "q:correction_early:h02:R2:support:judging_basis",
+          "right_site_id": "q:correction_early:h02:R2:fact:final_priority"
+        },
+        "fingerprint_sha256": "aa3e4b00252a642e9533c90d5874d58fae59f7241b39957be76c9c9550c32e86",
+        "gates": {
+          "cross_node_sham_rejected": true,
+          "sign_flipped_sham_rejected": true
+        },
+        "lane_id": "correction_early",
+        "sign_flipped_audit_fingerprint_sha256": "a56a9615c8594067fe04c5d5a24a05f2572939777469d5b4e91be838b5665715",
+        "status": "PASS"
+      },
+      "correction_late": {
+        "cross_node_audit_fingerprint_sha256": "07d564a31c9e841e2b64247ba6ae29373cb631c5f348671450cc8ce85c76272c",
+        "cross_node_pair": {
+          "left_site_id": "q:correction_late:h02:R2:support:judging_basis",
+          "right_site_id": "q:correction_late:h02:R2:fact:final_priority"
+        },
+        "fingerprint_sha256": "65fa090299188592693ad3f45885d531a34d3b4cd49fba7adb3284d77c3eea11",
+        "gates": {
+          "cross_node_sham_rejected": true,
+          "sign_flipped_sham_rejected": true
+        },
+        "lane_id": "correction_late",
+        "sign_flipped_audit_fingerprint_sha256": "4c7ff8236061ed3ff6353f4d7aa1c2c57d60649022613e0776ff90b9d23b86e1",
+        "status": "PASS"
+      }
+    },
+    "lane_numeric_audits": {
+      "correction_early": {
+        "c_vs_b_loss_margin": 2.616038657043962e-05,
+        "c_vs_best_distinct_d_loss_margin": 3.945412322464703e-05,
+        "central_finite_difference_max_abs_error": 1.234212732015294e-10,
+        "manual_forward_max_abs_error": 0.0,
+        "manual_reverse_max_abs_error": 0.0,
+        "normalized_jacobian_max_norm_error": 1.1102230246251565e-16,
+        "top_credit_margin": 0.013797212052760965,
+        "top_credit_site": {
+          "admitted_evidence_id": "R5",
+          "horizon_index": 6,
+          "horizon_label_semantics": "admitted_evidence_id names the current horizon; it is not a direct gate on this site",
+          "normalized_abs_credit": 0.7133158631277372,
+          "raw_scale_s": 0.0884746222883291,
+          "runner_up_margin": 0.013797212052760965,
+          "site_id": "q:correction_early:h06:R5:support:demo_readiness",
+          "target_node_id": "support:demo_readiness",
+          "target_node_type": "support"
+        }
+      },
+      "correction_late": {
+        "c_vs_b_loss_margin": 3.8933870195045905e-05,
+        "c_vs_best_distinct_d_loss_margin": 9.004662320866164e-05,
+        "central_finite_difference_max_abs_error": 1.234212732015294e-10,
+        "manual_forward_max_abs_error": 0.0,
+        "manual_reverse_max_abs_error": 0.0,
+        "normalized_jacobian_max_norm_error": 1.1102230246251565e-16,
+        "top_credit_margin": 0.23053567123948882,
+        "top_credit_site": {
+          "admitted_evidence_id": "R6",
+          "horizon_index": 6,
+          "horizon_label_semantics": "admitted_evidence_id names the current horizon; it is not a direct gate on this site",
+          "normalized_abs_credit": 1.0281461554883407,
+          "raw_scale_s": 0.1795175827043134,
+          "runner_up_margin": 0.23053567123948882,
+          "site_id": "q:correction_late:h06:R6:support:superseding_guidance",
+          "target_node_id": "support:superseding_guidance",
+          "target_node_type": "support"
+        }
+      }
+    },
+    "network_calls": 0,
+    "original_r2_demo_upstream_jacobian_max_abs": 0.03515625,
+    "program_fingerprint_sha256": "686ae870d0694fbecc387836911b13265c04f8cc1b9bc4430369479470b32cfb",
+    "severed_r2_demo_upstream_jacobian_max_abs": 0.0,
+    "source_fingerprints": {
+      "closure": "899afdca968e3a3e1c1dd7f9eb5c4605e18c7c6b4188a8a4f4af1707a2859c9c",
+      "graph": "361d6961938dda2d69ccc0340fecb802c55af40d6cd551c628eb307462416333",
+      "regression": "0335ede60f428ddf77f7266d1c2bea6483c4698e924f555e9be8a7d3422e2997"
+    }
+  },
+  "fingerprint_sha256": "cde081b21e9cb99cd004362455cde802cf917c923b37f946c573cef393643511",
+  "hard_gates": {
+    "central_finite_difference_agreement": true,
+    "compiled_closure_exact": true,
+    "early_late_top_credit_switch": true,
+    "exact_credit_beats_all_timing_shams": true,
+    "exact_credit_beats_zero_and_node_tied": true,
+    "fixture_mechanism_injection_rejected": true,
+    "forward_sensitivity_agreement": true,
+    "identity_insertion_invariant": true,
+    "independent_operator_permutation_invariant": true,
+    "matched_control_geometry": true,
+    "no_event_exact_identity": true,
+    "normalized_jacobian_geometry": true,
+    "reverse_adjoint_agreement": true,
+    "severed_path_zero_credit": true,
+    "socket_denied_network_zero": true,
+    "two_build_byte_identity": true,
+    "v053_source_exact": true
+  },
+  "network_calls": 0,
+  "promotion_ready": true,
+  "provider_calls": 0,
+  "schema_version": "ebrt-temporal-lineage-bundle-self-test-v0.5.4",
+  "status": "PASS"
+}
