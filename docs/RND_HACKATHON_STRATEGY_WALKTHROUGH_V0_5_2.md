@@ -65,6 +65,24 @@ complete recovery result showed no output effect on its saturated DEV case.
 
 ## Commands
 
+Portable inspection of the committed canonical artifact requires only the
+Python standard library and does not compare the validator host with the
+recorded producer host:
+
+```bash
+python3 -I -S verify_hackathon_strategy_walkthrough_v0_5_2_portable.py verify \
+  --artifact-dir artifacts/demo_hackathon_strategy_walkthrough_v0_5_2_live_r01
+```
+
+The verifier is a post-run inspection layer anchored to reviewed canonical
+hashes. It validates artifact bytes, the frozen source/fixture graph, recorded
+runtime consistency, the call ledger, public output diff, and strict grades.
+It does not rerun the local autograd calculation, retrieve or cryptographically
+authenticate the provider response, or establish causal attribution.
+
+The frozen runner remains the environment-coupled development and numerical
+revalidation path:
+
 ```bash
 python3 demo_hackathon_strategy_walkthrough_v0_5_2.py self-test
 python3 demo_hackathon_strategy_walkthrough_v0_5_2.py preflight

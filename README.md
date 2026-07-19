@@ -218,6 +218,7 @@ benchmark_controlled_raw_restart_v0_5_1.py four-arm one-shot live canary and art
 policy_lock_controlled_raw_restart_v0_5_1.json preregistered runtime/source/claim contract
 fixtures/controlled_raw_restart_v0_5_1_canary.json explicit temporal-to-language binding
 demo_hackathon_strategy_walkthrough_v0_5_2.py sealed two-call English output-diff runner
+verify_hackathon_strategy_walkthrough_v0_5_2_portable.py host-independent canonical artifact verifier
 policy_lock_hackathon_strategy_walkthrough_v0_5_2.json exact prompt/runtime/source contract
 fixtures/hackathon_strategy_walkthrough_v0_5_2*.json separated public case and post-call gold
 docs/RND_BENCHMARK_V0_1.md    protocol, results, limits, and claim ledger
@@ -521,8 +522,21 @@ not overwritten or resumed. The separately preserved recovery bundle completes
 all four calls and strict endpoints, with one identical public card across all
 arms and therefore no observed output effect on this case.
 
-Validate the separate v0.5.2 English walkthrough and its preserved two-call
-artifact without making a provider call:
+Verify the separate v0.5.2 English walkthrough's preserved canonical artifact
+without importing project or provider dependencies and without making a
+provider call:
+
+```bash
+python3 -I -S verify_hackathon_strategy_walkthrough_v0_5_2_portable.py verify \
+  --artifact-dir artifacts/demo_hackathon_strategy_walkthrough_v0_5_2_live_r01
+```
+
+This portable verifier uses reviewed external hashes as its root of trust. It
+checks the canonical bytes, frozen source/fixture graph, recorded producer
+runtime, two-call ledger, public diff, and strict grades on the validator's
+current host. It does not require that host to match the recorded macOS/arm64
+producer. For environment-coupled mechanism development and exact numerical
+revalidation, use the frozen runner separately:
 
 ```bash
 python3 demo_hackathon_strategy_walkthrough_v0_5_2.py self-test
@@ -534,8 +548,10 @@ python3 demo_hackathon_strategy_walkthrough_v0_5_2.py validate \
 The committed artifact is `VALID` and both calls completed, but its
 walkthrough contract is `false`. It records an observed `POLISH → PROVE` public
 output diff with correct R3 invalidation and R5 preservation, while the final
-card misses the frozen slot-level citation closure. `preflight` constructs no
-provider request.
+card misses the frozen slot-level citation closure. The portable verifier is a
+post-run inspection layer, not part of the preregistered source snapshot; it
+does not reproduce local autograd or cryptographically attest the provider.
+`preflight` constructs no provider request.
 
 ## Judge path: inspect first, rerun second
 
