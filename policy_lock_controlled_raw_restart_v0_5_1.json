@@ -1,0 +1,118 @@
+{
+  "schema_version": "ebrt-controlled-raw-restart-policy-lock-v0.5.1",
+  "status": "PREREGISTERED_DEV_CANARY",
+  "promotion_eligible": false,
+  "arms": [
+    "raw_restart_zero_control",
+    "raw_restart_textual_envelope",
+    "raw_restart_matched_permutation",
+    "controlled_raw_restart"
+  ],
+  "execution": {
+    "arm_order": [
+      "raw_restart_zero_control",
+      "raw_restart_textual_envelope",
+      "controlled_raw_restart",
+      "raw_restart_matched_permutation"
+    ],
+    "case_ids": [
+      "route_code_supersession"
+    ],
+    "case_count": 1,
+    "trials": 1,
+    "expected_api_attempts": 4,
+    "calls_per_arm": 1,
+    "retry_policy": "one_attempt_no_retry",
+    "provider_seed": "unset_not_claimed",
+    "order_balance": "one_unbalanced_diagnostic_block",
+    "gold_boundary": "semantic_gold_json_parse_and_grade_attachment_only_after_all_four_provider_attempts; frozen_predecessor_imports_may_hash_bytes_for_source_integrity",
+    "private_chain_of_thought": "not_requested_not_persisted",
+    "hidden_model_state": "not_accessed"
+  },
+  "runtime": {
+    "python": "3.13.13",
+    "openai": "2.45.0",
+    "pydantic": "2.12.5",
+    "machine": "arm64",
+    "provider": "openai_responses",
+    "api": "responses.with_raw_response.parse+raw.parse",
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "low",
+    "service_tier": "default",
+    "max_output_tokens": 4608,
+    "timeout_seconds": 60,
+    "sdk_retries": 0,
+    "store": false,
+    "previous_response_id": false,
+    "truncation": "disabled"
+  },
+  "instructions_fingerprint_sha256": "3c6e9505c0a3a5cbb49456c49d799d44ea09b85c78d163382e226e1d1c68eb84",
+  "sources": {
+    "bridge": {
+      "path": "controlled_raw_restart_v0_5_1.py",
+      "sha256": "94d9f527334ef7b496db7afb3f6faf847b488e8b0ec043f486991e92092dde08"
+    },
+    "benchmark": {
+      "path": "benchmark_controlled_raw_restart_v0_5_1.py",
+      "sha256": "18ba54ebfd0cab2b3d35dab828a0fa2a8baf7edc0d965ce48b5ded3f09558a5c"
+    },
+    "temporal_controller": {
+      "path": "temporal_adjoint_state_controller_v0_5_t.py",
+      "sha256": "43df27a8595274f694e7c0741c4fe642a66ae37a0719e5d3256d4a0f37f6b7b5"
+    },
+    "aperture_v0_4_1": {
+      "path": "benchmark_aperture_controls_v0_4_1.py",
+      "sha256": "d5dd4a8a81172ad3603869d1f15f9649340ba7eab0c1627f5ab6ce2f9f752e66"
+    },
+    "public_card_validator_v0_4_2": {
+      "path": "benchmark_aperture_controls_v0_4_2.py",
+      "sha256": "b6b2dc592a03726b1f680835aefe18c399b1cb6e97c87d44e3d18f2e24bfdbd0"
+    },
+    "provider_boundary_v0_4_3": {
+      "path": "openai_response_boundary_v0_4_3.py",
+      "sha256": "7f78fce94cb141a4355d3c040010e11e049ff67a3a8c603099d0548a47b7cf03"
+    },
+    "strict_grader_v0_4": {
+      "path": "benchmark_language_replay_v0_4.py",
+      "sha256": "813ab885cecdacec034536a7dfeaa01c101554cc58663d1a79ad133595c6df91"
+    },
+    "public_card_schema_v0_4": {
+      "path": "language_replay_bridge_v0_4.py",
+      "sha256": "5fd765ec5ca55562e7b712ec48adc6f54588080c276cbfa58aabcb72492666c2"
+    }
+  },
+  "fixtures": {
+    "bridge": {
+      "path": "fixtures/controlled_raw_restart_v0_5_1_canary.json",
+      "sha256": "0a250924ba0a8dd6c34aa2ce0dd72fde4de826715d1d4a7995bea41bcc7821d8"
+    },
+    "source_cases": {
+      "path": "fixtures/language_replay_v0_4_dev.json",
+      "sha256": "6b9ec912ae85c08ecdb76f71efecb24e4a05742b58330dda639cb4ed5d6fc5f6"
+    },
+    "gold": {
+      "path": "fixtures/language_replay_v0_4_dev_gold.json",
+      "sha256": "ca0d89c0eb92a7c9addb61014f64730762a17cf6ac1d76f0b5ca8a205b13f32a"
+    }
+  },
+  "canary_decision_rules": {
+    "complete_bridge": "all_four_attempts_have_one_receipt_and_all_public_cards_pass_local_contract",
+    "strict_output_endpoint": "exact_answer_and_required_facts_and_required_support_and_forbidden_support_absent_and_stable_facts_and_expected_invalidation",
+    "identical_outputs": "bridge_complete_no_observed_output_effect_on_this_case",
+    "different_equal_grade_outputs": "observable_behavioral_effect_only",
+    "controlled_only_strict_pass": "single_case_canary_rescue_not_advantage_estimate",
+    "controlled_failure": "record_surrogate_to_language_projection_mismatch",
+    "incomplete": "no_arm_quality_comparison",
+    "next_quality_gate": "fresh_balanced_hard_suite_required"
+  },
+  "claim_boundary": [
+    "This is one development-contaminated case and one unbalanced four-call block.",
+    "The case-program binding, recurrence, semantic roles, event, evidence values, operator order, and terminal surrogate target are explicit oracle inputs.",
+    "The provider receives allowlisted public transition controls after a stop-gradient JSON projection; GPT and its hidden states are not differentiated.",
+    "Provider randomness and run position are not separated from arm behavior.",
+    "Surrogate improvement, provider completion, strict final-output grade, token usage, and latency are reported as separate observations.",
+    "Frozen predecessor imports may hash the gold file for source integrity before calls, but semantic gold JSON is parsed and attached only after all four provider attempts.",
+    "A changed output or controlled-only strict pass is a canary observation, not evidence of a general quality advantage.",
+    "No reasoning-quality, efficiency, reliability, causality, production-readiness, or generalization claim is promotion-eligible from this run."
+  ]
+}

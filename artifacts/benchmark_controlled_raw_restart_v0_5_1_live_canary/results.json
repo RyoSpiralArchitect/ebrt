@@ -1,0 +1,1074 @@
+{
+  "arms": {
+    "controlled_raw_restart": {
+      "arm_id": "controlled_raw_restart",
+      "failure": {
+        "category": "provider_boundary_error",
+        "exception_class": "OpenAIProviderBoundaryError",
+        "reason_code": "insufficient_quota"
+      },
+      "final_card": null,
+      "grade": {
+        "available": false,
+        "checks": null,
+        "citation_precision": null,
+        "citation_recall": null,
+        "evidence_consistent": false,
+        "machine_success": false,
+        "missing_required_evidence_ids": [],
+        "support_evidence_ids": [],
+        "unexpected_support_evidence_ids": []
+      },
+      "observed_receipt_count": 1,
+      "projection": {
+        "arm_id": "controlled_raw_restart",
+        "fingerprints": {
+          "binding_fingerprint_sha256": "4d3a5d7f78a12255c651cee8284cd87581e5d01ad0f0544bdc2c6d5207a70806",
+          "program_fingerprint_sha256": "25d6ef97c71dff48de00afaff0f03f1ffffceb510f8ea022363f6ecc0a957189",
+          "projected_controls_fingerprint_sha256": "ad875deeb66dd069b2101d095e3d9fd776ea52fb0cae50b707f87f4fba328f83",
+          "source_case_fingerprint_sha256": "800087ae6dd74c8c917c5c339cda0955f67137ef67568e851583e92629c88567",
+          "source_control_map_fingerprint_sha256": "29e055e388b5e2fcff54d610ee9a5e58c8e0cd929e4556ef517eb8e156b15577"
+        },
+        "guidance_mode": "gradient_temporal_control",
+        "prompt_envelope": {
+          "instructions_fragment": "Use the ordered raw evidence as the semantic authority. If revision_context is present, apply its explicit public invalidation lineage. Apply each temporal control only to its named public operation at its named floor. A zero control is exact identity; a nonzero control changes operation emphasis, not evidence truth.",
+          "revision_context": {
+            "invalidated_evidence_ids": [
+              "R3"
+            ],
+            "late_evidence_id": "R6",
+            "relevant": true,
+            "revision_cue": 1.0
+          },
+          "schema_version": "ebrt-controlled-raw-restart-envelope-v0.5.1",
+          "temporal_controls": [
+            {
+              "delta": -0.382718604863,
+              "floor_id": "F03:decision",
+              "floor_ordinal": 3,
+              "operator_name": "Write current route premise into decision state",
+              "role": "decrease",
+              "target_id": "decision_write",
+              "target_kind": "transition"
+            },
+            {
+              "delta": 0.395001860111,
+              "floor_id": "F05:revision",
+              "floor_ordinal": 5,
+              "operator_name": "Reconcile corrected route premise with prior decision",
+              "role": "increase",
+              "target_id": "revision_mix",
+              "target_kind": "transition"
+            },
+            {
+              "delta": 0.0,
+              "floor_id": "F06:stable_carry",
+              "floor_ordinal": 6,
+              "operator_name": "Carry unrelated stable cargo state",
+              "role": "preserve",
+              "target_id": "stable_carry",
+              "target_kind": "transition"
+            }
+          ]
+        },
+        "provenance": {
+          "binding_fingerprint_sha256": "4d3a5d7f78a12255c651cee8284cd87581e5d01ad0f0544bdc2c6d5207a70806",
+          "binding_id": "route_code_supersession_public_temporal_binding_v0_5_1",
+          "case_fingerprint_sha256": "800087ae6dd74c8c917c5c339cda0955f67137ef67568e851583e92629c88567",
+          "case_id": "route_code_supersession",
+          "event_id": "EV_ROUTE_PREMISE_CORRECTION_R6",
+          "event_triggered": true,
+          "fixture_id": "route_code_supersession_controlled_raw_restart_canary_v0_5_1",
+          "program_fingerprint_sha256": "25d6ef97c71dff48de00afaff0f03f1ffffceb510f8ea022363f6ecc0a957189",
+          "projected_controls_fingerprint_sha256": "ad875deeb66dd069b2101d095e3d9fd776ea52fb0cae50b707f87f4fba328f83",
+          "semantic_payload_sha256": "4eb7a8f99fbfdfd88d4f0334674372e3714dc664038804f0deae96bb0cbac43a",
+          "source_control_map_fingerprint_sha256": "29e055e388b5e2fcff54d610ee9a5e58c8e0cd929e4556ef517eb8e156b15577",
+          "source_control_status": "CONTROL_ACCEPTED"
+        }
+      },
+      "provider_input": {
+        "all_raw_evidence": [
+          {
+            "evidence_id": "R1",
+            "text": "The task is to assign a bay to shipment NERA using its current route code."
+          },
+          {
+            "evidence_id": "R2",
+            "text": "The route table maps code A1 to bay AMBER and code B2 to bay BLUE."
+          },
+          {
+            "evidence_id": "R3",
+            "text": "The registry currently lists NERA with route code A1."
+          },
+          {
+            "evidence_id": "R4",
+            "text": "The current registry code must be looked up in the route table."
+          },
+          {
+            "evidence_id": "R5",
+            "text": "NERA's cargo seal status is SEALED and does not change its bay assignment."
+          },
+          {
+            "evidence_id": "R6",
+            "text": "Registry correction: NERA's current route code is B2, not A1. This entry supersedes evidence R3."
+          }
+        ],
+        "allowed_evidence_ids": [
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6"
+        ],
+        "answer_choices": [
+          "AMBER",
+          "BLUE"
+        ],
+        "case_id": "route_code_supersession",
+        "checkpoint_id": "route_code_supersession:full_context_final",
+        "decision_slots": [
+          {
+            "allowed_values": [
+              "A1",
+              "B2",
+              "UNKNOWN"
+            ],
+            "description": "NERA's current route code",
+            "required": true,
+            "slot_id": "current_code"
+          },
+          {
+            "allowed_values": [
+              "AMBER",
+              "BLUE",
+              "UNKNOWN"
+            ],
+            "description": "assigned bay",
+            "required": true,
+            "slot_id": "bay"
+          },
+          {
+            "allowed_values": [
+              "SEALED",
+              "UNKNOWN"
+            ],
+            "description": "stable cargo seal status",
+            "required": true,
+            "slot_id": "cargo_seal"
+          }
+        ],
+        "question": "Which bay is assigned to shipment NERA? Answer AMBER or BLUE.",
+        "revision_control_envelope": {
+          "instructions_fragment": "Use the ordered raw evidence as the semantic authority. If revision_context is present, apply its explicit public invalidation lineage. Apply each temporal control only to its named public operation at its named floor. A zero control is exact identity; a nonzero control changes operation emphasis, not evidence truth.",
+          "revision_context": {
+            "invalidated_evidence_ids": [
+              "R3"
+            ],
+            "late_evidence_id": "R6",
+            "relevant": true,
+            "revision_cue": 1.0
+          },
+          "schema_version": "ebrt-controlled-raw-restart-envelope-v0.5.1",
+          "temporal_controls": [
+            {
+              "delta": -0.382718604863,
+              "floor_id": "F03:decision",
+              "floor_ordinal": 3,
+              "operator_name": "Write current route premise into decision state",
+              "role": "decrease",
+              "target_id": "decision_write",
+              "target_kind": "transition"
+            },
+            {
+              "delta": 0.395001860111,
+              "floor_id": "F05:revision",
+              "floor_ordinal": 5,
+              "operator_name": "Reconcile corrected route premise with prior decision",
+              "role": "increase",
+              "target_id": "revision_mix",
+              "target_kind": "transition"
+            },
+            {
+              "delta": 0.0,
+              "floor_id": "F06:stable_carry",
+              "floor_ordinal": 6,
+              "operator_name": "Carry unrelated stable cargo state",
+              "role": "preserve",
+              "target_id": "stable_carry",
+              "target_kind": "transition"
+            }
+          ]
+        },
+        "schema_version": "ebrt-controlled-raw-restart-request-v0.5.1"
+      },
+      "provider_input_fingerprint_sha256": "504d82086b91ec59663707df5d562b44ddfbe1602c76e6a4cd5c346b2883f45e",
+      "receipt": {
+        "api_calls": 1,
+        "latency_ms": 815.7407920225523,
+        "logical_calls": 1,
+        "metadata": {
+          "api_call_count_semantics": "attempted_client_call",
+          "attempt": 1,
+          "attempt_outcome": "http_status_error",
+          "client_request_id_sha256": "e35e16a2ac639d6fdc93585df1f8ed61fbd5949a658bbd2d5170f95002722837",
+          "failure_phase": "http_status",
+          "failure_reason_code": "insufficient_quota",
+          "failure_type": "insufficient_quota",
+          "http_observed": true,
+          "http_status_code": 429,
+          "max_output_tokens": 4608,
+          "parse_boundary": "not_entered",
+          "previous_response_id": false,
+          "provider_body_byte_count": 316,
+          "provider_body_sha256": "cfb3a3de133d72777ed937b64a1fb9f7ce510856aa53d7f492dcecb7848707bc",
+          "pydantic_version": "2.12.5",
+          "python_version": "3.13.13",
+          "reasoning_effort": "low",
+          "receipt_schema_version": "ebrt-provider-boundary-receipt-v0.4.3",
+          "refusal_count": 0,
+          "response_id_sha256": null,
+          "response_schema_fingerprint": "ac09c35f37c9d2ee06b2fc1714d1c940db4ff0d3b30df90c8830e4241512c3e4",
+          "retry_count": 0,
+          "sdk_version": "2.45.0",
+          "semantic_protocol_fingerprint": "8b0c48adfb8da3710db694cefaa58eb454b967851b0571ac74b144b4ca2569a2",
+          "server_request_id_sha256": "c89d0c4b2258c4cf0dc92530e659512e3f63da6bbc056ac1b12118ff22f9c8cd",
+          "service_tier": null,
+          "status": "http_status_error",
+          "store": false,
+          "truncation": "disabled"
+        },
+        "prompt_fingerprint": "3c6e9505c0a3a5cbb49456c49d799d44ea09b85c78d163382e226e1d1c68eb84",
+        "provider": "openai_responses",
+        "request_fingerprint": "504d82086b91ec59663707df5d562b44ddfbe1602c76e6a4cd5c346b2883f45e",
+        "requested_model": "gpt-5.6-sol",
+        "returned_model": null,
+        "usage": {
+          "cache_write_tokens": null,
+          "cached_input_tokens": null,
+          "exact_provider_tokens": false,
+          "input_tokens": null,
+          "output_tokens": null,
+          "reasoning_tokens": null,
+          "total_tokens": null
+        }
+      },
+      "rejected_candidate_card": null,
+      "run_position": 2,
+      "status": "failed"
+    },
+    "raw_restart_matched_permutation": {
+      "arm_id": "raw_restart_matched_permutation",
+      "failure": {
+        "category": "provider_boundary_error",
+        "exception_class": "OpenAIProviderBoundaryError",
+        "reason_code": "insufficient_quota"
+      },
+      "final_card": null,
+      "grade": {
+        "available": false,
+        "checks": null,
+        "citation_precision": null,
+        "citation_recall": null,
+        "evidence_consistent": false,
+        "machine_success": false,
+        "missing_required_evidence_ids": [],
+        "support_evidence_ids": [],
+        "unexpected_support_evidence_ids": []
+      },
+      "observed_receipt_count": 1,
+      "projection": {
+        "arm_id": "raw_restart_matched_permutation",
+        "fingerprints": {
+          "binding_fingerprint_sha256": "4d3a5d7f78a12255c651cee8284cd87581e5d01ad0f0544bdc2c6d5207a70806",
+          "program_fingerprint_sha256": "25d6ef97c71dff48de00afaff0f03f1ffffceb510f8ea022363f6ecc0a957189",
+          "projected_controls_fingerprint_sha256": "6e3e6f8006ab5c1f4a3109554db9c1a9ba5437cff2a1851705229ec81f50cd1f",
+          "source_case_fingerprint_sha256": "800087ae6dd74c8c917c5c339cda0955f67137ef67568e851583e92629c88567",
+          "source_control_map_fingerprint_sha256": "29e055e388b5e2fcff54d610ee9a5e58c8e0cd929e4556ef517eb8e156b15577"
+        },
+        "guidance_mode": "matched_permutation_temporal_control",
+        "prompt_envelope": {
+          "instructions_fragment": "Use the ordered raw evidence as the semantic authority. If revision_context is present, apply its explicit public invalidation lineage. Apply each temporal control only to its named public operation at its named floor. A zero control is exact identity; a nonzero control changes operation emphasis, not evidence truth.",
+          "revision_context": {
+            "invalidated_evidence_ids": [
+              "R3"
+            ],
+            "late_evidence_id": "R6",
+            "relevant": true,
+            "revision_cue": 1.0
+          },
+          "schema_version": "ebrt-controlled-raw-restart-envelope-v0.5.1",
+          "temporal_controls": [
+            {
+              "delta": 0.395001860111,
+              "floor_id": "F03:decision",
+              "floor_ordinal": 3,
+              "operator_name": "Write current route premise into decision state",
+              "role": "increase",
+              "target_id": "decision_write",
+              "target_kind": "transition"
+            },
+            {
+              "delta": 0.0,
+              "floor_id": "F05:revision",
+              "floor_ordinal": 5,
+              "operator_name": "Reconcile corrected route premise with prior decision",
+              "role": "preserve",
+              "target_id": "revision_mix",
+              "target_kind": "transition"
+            },
+            {
+              "delta": -0.382718604863,
+              "floor_id": "F06:stable_carry",
+              "floor_ordinal": 6,
+              "operator_name": "Carry unrelated stable cargo state",
+              "role": "decrease",
+              "target_id": "stable_carry",
+              "target_kind": "transition"
+            }
+          ]
+        },
+        "provenance": {
+          "binding_fingerprint_sha256": "4d3a5d7f78a12255c651cee8284cd87581e5d01ad0f0544bdc2c6d5207a70806",
+          "binding_id": "route_code_supersession_public_temporal_binding_v0_5_1",
+          "case_fingerprint_sha256": "800087ae6dd74c8c917c5c339cda0955f67137ef67568e851583e92629c88567",
+          "case_id": "route_code_supersession",
+          "event_id": "EV_ROUTE_PREMISE_CORRECTION_R6",
+          "event_triggered": true,
+          "fixture_id": "route_code_supersession_controlled_raw_restart_canary_v0_5_1",
+          "program_fingerprint_sha256": "25d6ef97c71dff48de00afaff0f03f1ffffceb510f8ea022363f6ecc0a957189",
+          "projected_controls_fingerprint_sha256": "6e3e6f8006ab5c1f4a3109554db9c1a9ba5437cff2a1851705229ec81f50cd1f",
+          "semantic_payload_sha256": "4eb7a8f99fbfdfd88d4f0334674372e3714dc664038804f0deae96bb0cbac43a",
+          "source_control_map_fingerprint_sha256": "29e055e388b5e2fcff54d610ee9a5e58c8e0cd929e4556ef517eb8e156b15577",
+          "source_control_status": "CONTROL_ACCEPTED"
+        }
+      },
+      "provider_input": {
+        "all_raw_evidence": [
+          {
+            "evidence_id": "R1",
+            "text": "The task is to assign a bay to shipment NERA using its current route code."
+          },
+          {
+            "evidence_id": "R2",
+            "text": "The route table maps code A1 to bay AMBER and code B2 to bay BLUE."
+          },
+          {
+            "evidence_id": "R3",
+            "text": "The registry currently lists NERA with route code A1."
+          },
+          {
+            "evidence_id": "R4",
+            "text": "The current registry code must be looked up in the route table."
+          },
+          {
+            "evidence_id": "R5",
+            "text": "NERA's cargo seal status is SEALED and does not change its bay assignment."
+          },
+          {
+            "evidence_id": "R6",
+            "text": "Registry correction: NERA's current route code is B2, not A1. This entry supersedes evidence R3."
+          }
+        ],
+        "allowed_evidence_ids": [
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6"
+        ],
+        "answer_choices": [
+          "AMBER",
+          "BLUE"
+        ],
+        "case_id": "route_code_supersession",
+        "checkpoint_id": "route_code_supersession:full_context_final",
+        "decision_slots": [
+          {
+            "allowed_values": [
+              "A1",
+              "B2",
+              "UNKNOWN"
+            ],
+            "description": "NERA's current route code",
+            "required": true,
+            "slot_id": "current_code"
+          },
+          {
+            "allowed_values": [
+              "AMBER",
+              "BLUE",
+              "UNKNOWN"
+            ],
+            "description": "assigned bay",
+            "required": true,
+            "slot_id": "bay"
+          },
+          {
+            "allowed_values": [
+              "SEALED",
+              "UNKNOWN"
+            ],
+            "description": "stable cargo seal status",
+            "required": true,
+            "slot_id": "cargo_seal"
+          }
+        ],
+        "question": "Which bay is assigned to shipment NERA? Answer AMBER or BLUE.",
+        "revision_control_envelope": {
+          "instructions_fragment": "Use the ordered raw evidence as the semantic authority. If revision_context is present, apply its explicit public invalidation lineage. Apply each temporal control only to its named public operation at its named floor. A zero control is exact identity; a nonzero control changes operation emphasis, not evidence truth.",
+          "revision_context": {
+            "invalidated_evidence_ids": [
+              "R3"
+            ],
+            "late_evidence_id": "R6",
+            "relevant": true,
+            "revision_cue": 1.0
+          },
+          "schema_version": "ebrt-controlled-raw-restart-envelope-v0.5.1",
+          "temporal_controls": [
+            {
+              "delta": 0.395001860111,
+              "floor_id": "F03:decision",
+              "floor_ordinal": 3,
+              "operator_name": "Write current route premise into decision state",
+              "role": "increase",
+              "target_id": "decision_write",
+              "target_kind": "transition"
+            },
+            {
+              "delta": 0.0,
+              "floor_id": "F05:revision",
+              "floor_ordinal": 5,
+              "operator_name": "Reconcile corrected route premise with prior decision",
+              "role": "preserve",
+              "target_id": "revision_mix",
+              "target_kind": "transition"
+            },
+            {
+              "delta": -0.382718604863,
+              "floor_id": "F06:stable_carry",
+              "floor_ordinal": 6,
+              "operator_name": "Carry unrelated stable cargo state",
+              "role": "decrease",
+              "target_id": "stable_carry",
+              "target_kind": "transition"
+            }
+          ]
+        },
+        "schema_version": "ebrt-controlled-raw-restart-request-v0.5.1"
+      },
+      "provider_input_fingerprint_sha256": "e4330e152028916895eccbfc41e4bf7cdeb27abffbf31443c84c13467886a65d",
+      "receipt": {
+        "api_calls": 1,
+        "latency_ms": 714.5302919961978,
+        "logical_calls": 1,
+        "metadata": {
+          "api_call_count_semantics": "attempted_client_call",
+          "attempt": 1,
+          "attempt_outcome": "http_status_error",
+          "client_request_id_sha256": "b75aae77d86b738f2682bd6890454625f2114b9a294ca761b0c56ea2d80468dd",
+          "failure_phase": "http_status",
+          "failure_reason_code": "insufficient_quota",
+          "failure_type": "insufficient_quota",
+          "http_observed": true,
+          "http_status_code": 429,
+          "max_output_tokens": 4608,
+          "parse_boundary": "not_entered",
+          "previous_response_id": false,
+          "provider_body_byte_count": 316,
+          "provider_body_sha256": "cfb3a3de133d72777ed937b64a1fb9f7ce510856aa53d7f492dcecb7848707bc",
+          "pydantic_version": "2.12.5",
+          "python_version": "3.13.13",
+          "reasoning_effort": "low",
+          "receipt_schema_version": "ebrt-provider-boundary-receipt-v0.4.3",
+          "refusal_count": 0,
+          "response_id_sha256": null,
+          "response_schema_fingerprint": "ac09c35f37c9d2ee06b2fc1714d1c940db4ff0d3b30df90c8830e4241512c3e4",
+          "retry_count": 0,
+          "sdk_version": "2.45.0",
+          "semantic_protocol_fingerprint": "5af30464074ef76d42751ef8ecde0a02b42e792e0a1ebabf9739e3b54e0af5fc",
+          "server_request_id_sha256": "fbc3af780d43618a6cfdc0007c95e340fa6d80930f7b16cba5aafc673a6f4503",
+          "service_tier": null,
+          "status": "http_status_error",
+          "store": false,
+          "truncation": "disabled"
+        },
+        "prompt_fingerprint": "3c6e9505c0a3a5cbb49456c49d799d44ea09b85c78d163382e226e1d1c68eb84",
+        "provider": "openai_responses",
+        "request_fingerprint": "e4330e152028916895eccbfc41e4bf7cdeb27abffbf31443c84c13467886a65d",
+        "requested_model": "gpt-5.6-sol",
+        "returned_model": null,
+        "usage": {
+          "cache_write_tokens": null,
+          "cached_input_tokens": null,
+          "exact_provider_tokens": false,
+          "input_tokens": null,
+          "output_tokens": null,
+          "reasoning_tokens": null,
+          "total_tokens": null
+        }
+      },
+      "rejected_candidate_card": null,
+      "run_position": 3,
+      "status": "failed"
+    },
+    "raw_restart_textual_envelope": {
+      "arm_id": "raw_restart_textual_envelope",
+      "failure": {
+        "category": "provider_boundary_error",
+        "exception_class": "OpenAIProviderBoundaryError",
+        "reason_code": "insufficient_quota"
+      },
+      "final_card": null,
+      "grade": {
+        "available": false,
+        "checks": null,
+        "citation_precision": null,
+        "citation_recall": null,
+        "evidence_consistent": false,
+        "machine_success": false,
+        "missing_required_evidence_ids": [],
+        "support_evidence_ids": [],
+        "unexpected_support_evidence_ids": []
+      },
+      "observed_receipt_count": 1,
+      "projection": {
+        "arm_id": "raw_restart_textual_envelope",
+        "fingerprints": {
+          "binding_fingerprint_sha256": "4d3a5d7f78a12255c651cee8284cd87581e5d01ad0f0544bdc2c6d5207a70806",
+          "program_fingerprint_sha256": "25d6ef97c71dff48de00afaff0f03f1ffffceb510f8ea022363f6ecc0a957189",
+          "projected_controls_fingerprint_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "source_case_fingerprint_sha256": "800087ae6dd74c8c917c5c339cda0955f67137ef67568e851583e92629c88567",
+          "source_control_map_fingerprint_sha256": "29e055e388b5e2fcff54d610ee9a5e58c8e0cd929e4556ef517eb8e156b15577"
+        },
+        "guidance_mode": "textual_revision_only",
+        "prompt_envelope": {
+          "instructions_fragment": "Use the ordered raw evidence as the semantic authority. If revision_context is present, apply its explicit public invalidation lineage. Apply each temporal control only to its named public operation at its named floor. A zero control is exact identity; a nonzero control changes operation emphasis, not evidence truth.",
+          "revision_context": {
+            "invalidated_evidence_ids": [
+              "R3"
+            ],
+            "late_evidence_id": "R6",
+            "relevant": true,
+            "revision_cue": 1.0
+          },
+          "schema_version": "ebrt-controlled-raw-restart-envelope-v0.5.1",
+          "temporal_controls": []
+        },
+        "provenance": {
+          "binding_fingerprint_sha256": "4d3a5d7f78a12255c651cee8284cd87581e5d01ad0f0544bdc2c6d5207a70806",
+          "binding_id": "route_code_supersession_public_temporal_binding_v0_5_1",
+          "case_fingerprint_sha256": "800087ae6dd74c8c917c5c339cda0955f67137ef67568e851583e92629c88567",
+          "case_id": "route_code_supersession",
+          "event_id": "EV_ROUTE_PREMISE_CORRECTION_R6",
+          "event_triggered": true,
+          "fixture_id": "route_code_supersession_controlled_raw_restart_canary_v0_5_1",
+          "program_fingerprint_sha256": "25d6ef97c71dff48de00afaff0f03f1ffffceb510f8ea022363f6ecc0a957189",
+          "projected_controls_fingerprint_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "semantic_payload_sha256": "4eb7a8f99fbfdfd88d4f0334674372e3714dc664038804f0deae96bb0cbac43a",
+          "source_control_map_fingerprint_sha256": "29e055e388b5e2fcff54d610ee9a5e58c8e0cd929e4556ef517eb8e156b15577",
+          "source_control_status": "CONTROL_ACCEPTED"
+        }
+      },
+      "provider_input": {
+        "all_raw_evidence": [
+          {
+            "evidence_id": "R1",
+            "text": "The task is to assign a bay to shipment NERA using its current route code."
+          },
+          {
+            "evidence_id": "R2",
+            "text": "The route table maps code A1 to bay AMBER and code B2 to bay BLUE."
+          },
+          {
+            "evidence_id": "R3",
+            "text": "The registry currently lists NERA with route code A1."
+          },
+          {
+            "evidence_id": "R4",
+            "text": "The current registry code must be looked up in the route table."
+          },
+          {
+            "evidence_id": "R5",
+            "text": "NERA's cargo seal status is SEALED and does not change its bay assignment."
+          },
+          {
+            "evidence_id": "R6",
+            "text": "Registry correction: NERA's current route code is B2, not A1. This entry supersedes evidence R3."
+          }
+        ],
+        "allowed_evidence_ids": [
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6"
+        ],
+        "answer_choices": [
+          "AMBER",
+          "BLUE"
+        ],
+        "case_id": "route_code_supersession",
+        "checkpoint_id": "route_code_supersession:full_context_final",
+        "decision_slots": [
+          {
+            "allowed_values": [
+              "A1",
+              "B2",
+              "UNKNOWN"
+            ],
+            "description": "NERA's current route code",
+            "required": true,
+            "slot_id": "current_code"
+          },
+          {
+            "allowed_values": [
+              "AMBER",
+              "BLUE",
+              "UNKNOWN"
+            ],
+            "description": "assigned bay",
+            "required": true,
+            "slot_id": "bay"
+          },
+          {
+            "allowed_values": [
+              "SEALED",
+              "UNKNOWN"
+            ],
+            "description": "stable cargo seal status",
+            "required": true,
+            "slot_id": "cargo_seal"
+          }
+        ],
+        "question": "Which bay is assigned to shipment NERA? Answer AMBER or BLUE.",
+        "revision_control_envelope": {
+          "instructions_fragment": "Use the ordered raw evidence as the semantic authority. If revision_context is present, apply its explicit public invalidation lineage. Apply each temporal control only to its named public operation at its named floor. A zero control is exact identity; a nonzero control changes operation emphasis, not evidence truth.",
+          "revision_context": {
+            "invalidated_evidence_ids": [
+              "R3"
+            ],
+            "late_evidence_id": "R6",
+            "relevant": true,
+            "revision_cue": 1.0
+          },
+          "schema_version": "ebrt-controlled-raw-restart-envelope-v0.5.1",
+          "temporal_controls": []
+        },
+        "schema_version": "ebrt-controlled-raw-restart-request-v0.5.1"
+      },
+      "provider_input_fingerprint_sha256": "54698a7e1dd574e4005669a7e91cc2faffdc3fc9b716a69deafbf380a65f396b",
+      "receipt": {
+        "api_calls": 1,
+        "latency_ms": 711.1904170014895,
+        "logical_calls": 1,
+        "metadata": {
+          "api_call_count_semantics": "attempted_client_call",
+          "attempt": 1,
+          "attempt_outcome": "http_status_error",
+          "client_request_id_sha256": "011efbb5a9462c4d27cbdf3db2e5d62d7b0dd3501cf12ae747af3edb7e06e21d",
+          "failure_phase": "http_status",
+          "failure_reason_code": "insufficient_quota",
+          "failure_type": "insufficient_quota",
+          "http_observed": true,
+          "http_status_code": 429,
+          "max_output_tokens": 4608,
+          "parse_boundary": "not_entered",
+          "previous_response_id": false,
+          "provider_body_byte_count": 316,
+          "provider_body_sha256": "cfb3a3de133d72777ed937b64a1fb9f7ce510856aa53d7f492dcecb7848707bc",
+          "pydantic_version": "2.12.5",
+          "python_version": "3.13.13",
+          "reasoning_effort": "low",
+          "receipt_schema_version": "ebrt-provider-boundary-receipt-v0.4.3",
+          "refusal_count": 0,
+          "response_id_sha256": null,
+          "response_schema_fingerprint": "ac09c35f37c9d2ee06b2fc1714d1c940db4ff0d3b30df90c8830e4241512c3e4",
+          "retry_count": 0,
+          "sdk_version": "2.45.0",
+          "semantic_protocol_fingerprint": "dd6c9a508786de2cf7947239a5630384bf5637ad816bce595d6f9bfc270c2dc5",
+          "server_request_id_sha256": "07dcc31d1b4e9eaea269b9619231dd4bea5d801f4a674e5878820c23363d4639",
+          "service_tier": null,
+          "status": "http_status_error",
+          "store": false,
+          "truncation": "disabled"
+        },
+        "prompt_fingerprint": "3c6e9505c0a3a5cbb49456c49d799d44ea09b85c78d163382e226e1d1c68eb84",
+        "provider": "openai_responses",
+        "request_fingerprint": "54698a7e1dd574e4005669a7e91cc2faffdc3fc9b716a69deafbf380a65f396b",
+        "requested_model": "gpt-5.6-sol",
+        "returned_model": null,
+        "usage": {
+          "cache_write_tokens": null,
+          "cached_input_tokens": null,
+          "exact_provider_tokens": false,
+          "input_tokens": null,
+          "output_tokens": null,
+          "reasoning_tokens": null,
+          "total_tokens": null
+        }
+      },
+      "rejected_candidate_card": null,
+      "run_position": 1,
+      "status": "failed"
+    },
+    "raw_restart_zero_control": {
+      "arm_id": "raw_restart_zero_control",
+      "failure": {
+        "category": "provider_boundary_error",
+        "exception_class": "OpenAIProviderBoundaryError",
+        "reason_code": "insufficient_quota"
+      },
+      "final_card": null,
+      "grade": {
+        "available": false,
+        "checks": null,
+        "citation_precision": null,
+        "citation_recall": null,
+        "evidence_consistent": false,
+        "machine_success": false,
+        "missing_required_evidence_ids": [],
+        "support_evidence_ids": [],
+        "unexpected_support_evidence_ids": []
+      },
+      "observed_receipt_count": 1,
+      "projection": {
+        "arm_id": "raw_restart_zero_control",
+        "fingerprints": {
+          "binding_fingerprint_sha256": "4d3a5d7f78a12255c651cee8284cd87581e5d01ad0f0544bdc2c6d5207a70806",
+          "program_fingerprint_sha256": "25d6ef97c71dff48de00afaff0f03f1ffffceb510f8ea022363f6ecc0a957189",
+          "projected_controls_fingerprint_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "source_case_fingerprint_sha256": "800087ae6dd74c8c917c5c339cda0955f67137ef67568e851583e92629c88567",
+          "source_control_map_fingerprint_sha256": "29e055e388b5e2fcff54d610ee9a5e58c8e0cd929e4556ef517eb8e156b15577"
+        },
+        "guidance_mode": "raw_only_full_context",
+        "prompt_envelope": null,
+        "provenance": {
+          "binding_fingerprint_sha256": "4d3a5d7f78a12255c651cee8284cd87581e5d01ad0f0544bdc2c6d5207a70806",
+          "binding_id": "route_code_supersession_public_temporal_binding_v0_5_1",
+          "case_fingerprint_sha256": "800087ae6dd74c8c917c5c339cda0955f67137ef67568e851583e92629c88567",
+          "case_id": "route_code_supersession",
+          "event_id": "EV_ROUTE_PREMISE_CORRECTION_R6",
+          "event_triggered": true,
+          "fixture_id": "route_code_supersession_controlled_raw_restart_canary_v0_5_1",
+          "program_fingerprint_sha256": "25d6ef97c71dff48de00afaff0f03f1ffffceb510f8ea022363f6ecc0a957189",
+          "projected_controls_fingerprint_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "semantic_payload_sha256": "4eb7a8f99fbfdfd88d4f0334674372e3714dc664038804f0deae96bb0cbac43a",
+          "source_control_map_fingerprint_sha256": "29e055e388b5e2fcff54d610ee9a5e58c8e0cd929e4556ef517eb8e156b15577",
+          "source_control_status": "CONTROL_ACCEPTED"
+        }
+      },
+      "provider_input": {
+        "all_raw_evidence": [
+          {
+            "evidence_id": "R1",
+            "text": "The task is to assign a bay to shipment NERA using its current route code."
+          },
+          {
+            "evidence_id": "R2",
+            "text": "The route table maps code A1 to bay AMBER and code B2 to bay BLUE."
+          },
+          {
+            "evidence_id": "R3",
+            "text": "The registry currently lists NERA with route code A1."
+          },
+          {
+            "evidence_id": "R4",
+            "text": "The current registry code must be looked up in the route table."
+          },
+          {
+            "evidence_id": "R5",
+            "text": "NERA's cargo seal status is SEALED and does not change its bay assignment."
+          },
+          {
+            "evidence_id": "R6",
+            "text": "Registry correction: NERA's current route code is B2, not A1. This entry supersedes evidence R3."
+          }
+        ],
+        "allowed_evidence_ids": [
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6"
+        ],
+        "answer_choices": [
+          "AMBER",
+          "BLUE"
+        ],
+        "case_id": "route_code_supersession",
+        "checkpoint_id": "route_code_supersession:full_context_final",
+        "decision_slots": [
+          {
+            "allowed_values": [
+              "A1",
+              "B2",
+              "UNKNOWN"
+            ],
+            "description": "NERA's current route code",
+            "required": true,
+            "slot_id": "current_code"
+          },
+          {
+            "allowed_values": [
+              "AMBER",
+              "BLUE",
+              "UNKNOWN"
+            ],
+            "description": "assigned bay",
+            "required": true,
+            "slot_id": "bay"
+          },
+          {
+            "allowed_values": [
+              "SEALED",
+              "UNKNOWN"
+            ],
+            "description": "stable cargo seal status",
+            "required": true,
+            "slot_id": "cargo_seal"
+          }
+        ],
+        "question": "Which bay is assigned to shipment NERA? Answer AMBER or BLUE.",
+        "revision_control_envelope": null,
+        "schema_version": "ebrt-controlled-raw-restart-request-v0.5.1"
+      },
+      "provider_input_fingerprint_sha256": "314d69c6d917e3bbd206ddaa255e54419efe872aef3e7910a55928ffd0d9419f",
+      "receipt": {
+        "api_calls": 1,
+        "latency_ms": 1710.2799170243088,
+        "logical_calls": 1,
+        "metadata": {
+          "api_call_count_semantics": "attempted_client_call",
+          "attempt": 1,
+          "attempt_outcome": "http_status_error",
+          "client_request_id_sha256": "9cf7ceb04cf99ecd952648e2f6fa97de2d820994e9f8765f1d182cff8c302e56",
+          "failure_phase": "http_status",
+          "failure_reason_code": "insufficient_quota",
+          "failure_type": "insufficient_quota",
+          "http_observed": true,
+          "http_status_code": 429,
+          "max_output_tokens": 4608,
+          "parse_boundary": "not_entered",
+          "previous_response_id": false,
+          "provider_body_byte_count": 316,
+          "provider_body_sha256": "cfb3a3de133d72777ed937b64a1fb9f7ce510856aa53d7f492dcecb7848707bc",
+          "pydantic_version": "2.12.5",
+          "python_version": "3.13.13",
+          "reasoning_effort": "low",
+          "receipt_schema_version": "ebrt-provider-boundary-receipt-v0.4.3",
+          "refusal_count": 0,
+          "response_id_sha256": null,
+          "response_schema_fingerprint": "ac09c35f37c9d2ee06b2fc1714d1c940db4ff0d3b30df90c8830e4241512c3e4",
+          "retry_count": 0,
+          "sdk_version": "2.45.0",
+          "semantic_protocol_fingerprint": "152693e132fdd7fe4f1798c3e5b5330203078fae19716c879ba799d5888e2556",
+          "server_request_id_sha256": "8e5bc5a4221caa404a37e3149975cb580610687cc8e6df82fa579bf5757ca956",
+          "service_tier": null,
+          "status": "http_status_error",
+          "store": false,
+          "truncation": "disabled"
+        },
+        "prompt_fingerprint": "3c6e9505c0a3a5cbb49456c49d799d44ea09b85c78d163382e226e1d1c68eb84",
+        "provider": "openai_responses",
+        "request_fingerprint": "314d69c6d917e3bbd206ddaa255e54419efe872aef3e7910a55928ffd0d9419f",
+        "requested_model": "gpt-5.6-sol",
+        "returned_model": null,
+        "usage": {
+          "cache_write_tokens": null,
+          "cached_input_tokens": null,
+          "exact_provider_tokens": false,
+          "input_tokens": null,
+          "output_tokens": null,
+          "reasoning_tokens": null,
+          "total_tokens": null
+        }
+      },
+      "rejected_candidate_card": null,
+      "run_position": 0,
+      "status": "failed"
+    }
+  },
+  "case": {
+    "case_id": "route_code_supersession",
+    "family": "lookup_key_revision",
+    "fixture_id": "route_code_supersession_controlled_raw_restart_canary_v0_5_1",
+    "public_context": {
+      "answer_choices": [
+        "AMBER",
+        "BLUE"
+      ],
+      "decision_slots": [
+        {
+          "allowed_values": [
+            "A1",
+            "B2",
+            "UNKNOWN"
+          ],
+          "description": "NERA's current route code",
+          "required": true,
+          "slot_id": "current_code"
+        },
+        {
+          "allowed_values": [
+            "AMBER",
+            "BLUE",
+            "UNKNOWN"
+          ],
+          "description": "assigned bay",
+          "required": true,
+          "slot_id": "bay"
+        },
+        {
+          "allowed_values": [
+            "SEALED",
+            "UNKNOWN"
+          ],
+          "description": "stable cargo seal status",
+          "required": true,
+          "slot_id": "cargo_seal"
+        }
+      ],
+      "initial_evidence": [
+        {
+          "evidence_id": "R1",
+          "text": "The task is to assign a bay to shipment NERA using its current route code."
+        },
+        {
+          "evidence_id": "R2",
+          "text": "The route table maps code A1 to bay AMBER and code B2 to bay BLUE."
+        },
+        {
+          "evidence_id": "R3",
+          "text": "The registry currently lists NERA with route code A1."
+        },
+        {
+          "evidence_id": "R4",
+          "text": "The current registry code must be looked up in the route table."
+        },
+        {
+          "evidence_id": "R5",
+          "text": "NERA's cargo seal status is SEALED and does not change its bay assignment."
+        }
+      ],
+      "late_evidence": {
+        "evidence_id": "R6",
+        "text": "Registry correction: NERA's current route code is B2, not A1. This entry supersedes evidence R3."
+      },
+      "question": "Which bay is assigned to shipment NERA? Answer AMBER or BLUE."
+    }
+  },
+  "claim_boundary": [
+    "This is one development-contaminated case and one unbalanced four-call block.",
+    "Provider randomness and run position are not separated from arm behavior.",
+    "The public temporal program and case binding are explicit oracle inputs.",
+    "GPT, provider parsing, and final generation remain outside the gradient graph.",
+    "A changed output or controlled-only pass is a canary observation, not an advantage estimate.",
+    "Frozen predecessor imports may hash the gold file for source integrity, but semantic gold JSON is parsed and attached only after all four provider attempts."
+  ],
+  "comparisons": {},
+  "decision": {
+    "bridge_complete": false,
+    "controlled_diff_available": false,
+    "promotion_eligible": false,
+    "strict_pass_arms": []
+  },
+  "execution": {
+    "arm_order": [
+      "raw_restart_zero_control",
+      "raw_restart_textual_envelope",
+      "controlled_raw_restart",
+      "raw_restart_matched_permutation"
+    ],
+    "expected_attempts": 4,
+    "observed_api_calls": 4,
+    "observed_receipts": 4,
+    "retry_policy": "one_attempt_no_retry",
+    "semantic_gold_parsed_after_all_attempts": true
+  },
+  "fingerprint_sha256": "0009deddb69b28b67cf1ee7aa846374dcd38994204b16ddb5347a1b3823c232b",
+  "mode": "openai_live_dev_canary",
+  "schema_version": "ebrt-controlled-raw-restart-benchmark-v0.5.1",
+  "source_snapshot_sha256": {
+    "aperture_v0_4_1": "d5dd4a8a81172ad3603869d1f15f9649340ba7eab0c1627f5ab6ce2f9f752e66",
+    "benchmark": "18ba54ebfd0cab2b3d35dab828a0fa2a8baf7edc0d965ce48b5ded3f09558a5c",
+    "bridge": "94d9f527334ef7b496db7afb3f6faf847b488e8b0ec043f486991e92092dde08",
+    "provider_boundary_v0_4_3": "7f78fce94cb141a4355d3c040010e11e049ff67a3a8c603099d0548a47b7cf03",
+    "public_card_schema_v0_4": "5fd765ec5ca55562e7b712ec48adc6f54588080c276cbfa58aabcb72492666c2",
+    "public_card_validator_v0_4_2": "b6b2dc592a03726b1f680835aefe18c399b1cb6e97c87d44e3d18f2e24bfdbd0",
+    "strict_grader_v0_4": "813ab885cecdacec034536a7dfeaa01c101554cc58663d1a79ad133595c6df91",
+    "temporal_controller": "43df27a8595274f694e7c0741c4fe642a66ae37a0719e5d3256d4a0f37f6b7b5"
+  },
+  "status": "INCOMPLETE_CANARY",
+  "surrogate_actual_separation": {
+    "actual_result_source": "post-call strict public-card grader",
+    "surrogate_result_source": "local temporal controller projection only",
+    "surrogate_success_implies_actual_success": false
+  },
+  "surrogate_diagnostic": {
+    "actual_output_participated": false,
+    "budget": {
+      "control_count": 3,
+      "max_control_abs": 0.75,
+      "max_control_l2_norm": 0.55,
+      "observed_control_l2_norm": 0.55
+    },
+    "controls": [
+      {
+        "applied_value": -0.382718604863,
+        "delta": -0.382718604863,
+        "floor_id": "F03:decision",
+        "floor_ordinal": 3,
+        "role": "decrease",
+        "target_id": "decision_write",
+        "target_kind": "transition"
+      },
+      {
+        "applied_value": 0.395001860111,
+        "delta": 0.395001860111,
+        "floor_id": "F05:revision",
+        "floor_ordinal": 5,
+        "role": "increase",
+        "target_id": "revision_mix",
+        "target_kind": "transition"
+      },
+      {
+        "applied_value": 0.0,
+        "delta": 0.0,
+        "floor_id": "F06:stable_carry",
+        "floor_ordinal": 6,
+        "role": "preserve",
+        "target_id": "stable_carry",
+        "target_kind": "transition"
+      }
+    ],
+    "gradient_boundary": "frozen public recurrence only; adapter, JSON, provider, and generation are stop-gradient boundaries",
+    "objective_after": {
+      "control_l2": 0.3025,
+      "revision_consistency": 0.291746509854,
+      "stable_state_drift": 0.0,
+      "total": 0.294771509854
+    },
+    "objective_before": {
+      "control_l2": 0.0,
+      "revision_consistency": 0.755433933319,
+      "stable_state_drift": 0.0,
+      "total": 0.755433933319
+    },
+    "schema_version": "ebrt-execution-control-map-v1.0.0",
+    "source": {
+      "event_id": "EV_ROUTE_PREMISE_CORRECTION_R6",
+      "event_triggered": true,
+      "order_variant": "late_correction",
+      "pair_id": "ROUTE_CANARY_01",
+      "semantic_payload_sha256": "4eb7a8f99fbfdfd88d4f0334674372e3714dc664038804f0deae96bb0cbac43a",
+      "suite_id": "route_code_supersession_temporal_canary_v0_5_1"
+    },
+    "source_control_map_fingerprint_sha256": "29e055e388b5e2fcff54d610ee9a5e58c8e0cd929e4556ef517eb8e156b15577",
+    "status": "CONTROL_ACCEPTED"
+  }
+}

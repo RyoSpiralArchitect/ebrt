@@ -1,0 +1,143 @@
+{
+  "schema_version": "ebrt-controlled-raw-restart-canary-v0.5.1",
+  "fixture_id": "route_code_supersession_controlled_raw_restart_canary_v0_5_1",
+  "status": "DEV_CANARY",
+  "case": {
+    "case_id": "route_code_supersession",
+    "family": "lookup_key_revision",
+    "question": "Which bay is assigned to shipment NERA? Answer AMBER or BLUE.",
+    "answer_choices": ["AMBER", "BLUE"],
+    "decision_slots": [
+      {
+        "slot_id": "current_code",
+        "description": "NERA's current route code",
+        "allowed_values": ["A1", "B2"]
+      },
+      {
+        "slot_id": "bay",
+        "description": "assigned bay",
+        "allowed_values": ["AMBER", "BLUE"]
+      },
+      {
+        "slot_id": "cargo_seal",
+        "description": "stable cargo seal status",
+        "allowed_values": ["SEALED"]
+      }
+    ],
+    "initial_evidence": [
+      {
+        "evidence_id": "R1",
+        "text": "The task is to assign a bay to shipment NERA using its current route code."
+      },
+      {
+        "evidence_id": "R2",
+        "text": "The route table maps code A1 to bay AMBER and code B2 to bay BLUE."
+      },
+      {
+        "evidence_id": "R3",
+        "text": "The registry currently lists NERA with route code A1."
+      },
+      {
+        "evidence_id": "R4",
+        "text": "The current registry code must be looked up in the route table."
+      },
+      {
+        "evidence_id": "R5",
+        "text": "NERA's cargo seal status is SEALED and does not change its bay assignment."
+      }
+    ],
+    "late_evidence": {
+      "evidence_id": "R6",
+      "text": "Registry correction: NERA's current route code is B2, not A1. This entry supersedes evidence R3."
+    }
+  },
+  "case_program_binding": {
+    "binding_id": "route_code_supersession_public_temporal_binding_v0_5_1",
+    "case_id": "route_code_supersession",
+    "suite_id": "route_code_supersession_temporal_canary_v0_5_1",
+    "pair_id": "ROUTE_CANARY_01",
+    "order_variant": "late_correction",
+    "state_axes": ["premise", "decision", "stable"],
+    "initial_state": [0.0, 0.0, 0.0],
+    "evidence_bindings": [
+      {
+        "role": "legacy_premise",
+        "evidence_id": "R3",
+        "public_summary": "The earlier registry entry supplies the legacy route premise.",
+        "source_kind": "raw_history",
+        "evidence_value": -0.93
+      },
+      {
+        "role": "correction_premise",
+        "evidence_id": "R6",
+        "public_summary": "The registry correction supplies the replacement route premise.",
+        "source_kind": "revision_event",
+        "evidence_value": 1.17
+      },
+      {
+        "role": "stable_context",
+        "evidence_id": "R5",
+        "public_summary": "The cargo seal is stable and independent of the route revision.",
+        "source_kind": "stable_context",
+        "evidence_value": 0.51
+      }
+    ],
+    "modeled_evidence_ids": ["R3", "R6", "R5"],
+    "passthrough_evidence_ids": ["R1", "R2", "R4"],
+    "transition_bindings": [
+      {
+        "operator_id": "decision",
+        "public_name": "Write current route premise into decision state",
+        "transition_control_id": "decision_write"
+      },
+      {
+        "operator_id": "revision",
+        "public_name": "Reconcile corrected route premise with prior decision",
+        "transition_control_id": "revision_mix"
+      },
+      {
+        "operator_id": "stable_carry",
+        "public_name": "Carry unrelated stable cargo state",
+        "transition_control_id": "stable_carry"
+      }
+    ],
+    "event": {
+      "event_id": "EV_ROUTE_PREMISE_CORRECTION_R6",
+      "triggered": true,
+      "correction_evidence_id": "R6",
+      "relevant": true,
+      "revision_cue": 1.0,
+      "invalidated_evidence_ids": ["R3"]
+    },
+    "terminal_decision_target": 0.72,
+    "sham_source_index_by_target": [1, 2, 0],
+    "program_spec_fingerprint_sha256": "16db128861e038271b3a9346a5544f1c9f988342df02334083ab07bc88256a50"
+  },
+  "projection_policy": {
+    "policy_id": "controlled_raw_restart_projection_v0_5_1",
+    "arm_order": [
+      "raw_restart_zero_control",
+      "raw_restart_textual_envelope",
+      "raw_restart_matched_permutation",
+      "controlled_raw_restart"
+    ],
+    "raw_context_delivery": "ordered_all_raw_evidence_exactly_once",
+    "control_lane": "transition",
+    "numeric_precision": 12,
+    "provider_envelope_allowlist": [
+      "schema_version",
+      "revision_context",
+      "temporal_controls",
+      "instructions_fragment"
+    ]
+  },
+  "source_case_fingerprint_sha256": "800087ae6dd74c8c917c5c339cda0955f67137ef67568e851583e92629c88567",
+  "binding_fingerprint_sha256": "4d3a5d7f78a12255c651cee8284cd87581e5d01ad0f0544bdc2c6d5207a70806",
+  "fixture_fingerprint_sha256": "4b68a58f1cc177fbe5f48b5937b437b6037c4f31f00b75aa2c0e329420f281c5",
+  "claim_boundary": [
+    "The case-program binding, public recurrence, evidence values, and terminal surrogate target are explicit DEV oracle inputs.",
+    "The temporal controller allocates bounded interventions over this supplied public program; it does not discover dependencies.",
+    "Provider-visible inputs are arm-blinded deterministic projections: the raw-only arm has no revision envelope, the textual arm has no control rows, and guided envelopes contain no arm label, provenance fingerprint, gold answer, downstream grade, provider output, or private reasoning.",
+    "A lower surrogate objective does not imply a better hosted-model output; actual outputs must be graded separately after generation."
+  ]
+}
