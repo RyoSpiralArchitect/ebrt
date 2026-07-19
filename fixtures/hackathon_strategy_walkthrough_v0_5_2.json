@@ -1,0 +1,178 @@
+{
+  "schema_version": "ebrt-controlled-raw-restart-canary-v0.5.1",
+  "fixture_id": "hackathon_strategy_walkthrough_controlled_raw_restart_v0_5_2",
+  "status": "DEV_CANARY",
+  "case": {
+    "case_id": "hackathon_strategy_walkthrough",
+    "family": "judging_guidance_supersession",
+    "question": "Which single final-build priority should Team Spiral choose to maximize its chance of winning? Follow the latest valid judging guidance. Answer POLISH or PROVE.",
+    "answer_choices": [
+      "POLISH",
+      "PROVE"
+    ],
+    "decision_slots": [
+      {
+        "slot_id": "final_priority",
+        "description": "Team Spiral's single final-build priority",
+        "allowed_values": [
+          "ADDITIONAL_UI_POLISH",
+          "END_TO_END_PROOF"
+        ]
+      },
+      {
+        "slot_id": "demo_centerpiece",
+        "description": "the centerpiece shown to hackathon judges",
+        "allowed_values": [
+          "POLISHED_SCREENS",
+          "LIVE_REASONING_DIFF"
+        ]
+      },
+      {
+        "slot_id": "video_constraint",
+        "description": "the stable submission-video format constraint",
+        "allowed_values": [
+          "THREE_MINUTE_NARRATED"
+        ]
+      }
+    ],
+    "initial_evidence": [
+      {
+        "evidence_id": "R1",
+        "text": "Team Spiral must choose exactly one final-build priority for its hackathon submission."
+      },
+      {
+        "evidence_id": "R2",
+        "text": "Decision rule: follow the latest valid judging weights. If one criterion is dominant, optimize for that criterion; if Technological Implementation, Design, Potential Impact, and Quality of the Idea are equally weighted, prioritize an end-to-end proof that demonstrates all four in one flow."
+      },
+      {
+        "evidence_id": "R3",
+        "text": "Current internal brief: Design is the dominant judging criterion, so spend the remaining build time on additional UI polish and make polished screens the demo centerpiece. This brief remains operative unless a later correction explicitly supersedes it."
+      },
+      {
+        "evidence_id": "R4",
+        "text": "The screens are already judge-readable; a live before-to-after reasoning diff is the missing element needed for an end-to-end proof."
+      },
+      {
+        "evidence_id": "R5",
+        "text": "The submission video must remain a narrated three-minute demo regardless of which final-build priority is chosen."
+      }
+    ],
+    "late_evidence": {
+      "evidence_id": "R6",
+      "text": "Latest judging correction: Technological Implementation, Design, Potential Impact, and Quality of the Idea are equally weighted. This guidance explicitly supersedes evidence R3; use the existing readable UI and prioritize an end-to-end proof with a live reasoning diff."
+    }
+  },
+  "case_program_binding": {
+    "binding_id": "hackathon_strategy_walkthrough_public_temporal_binding_v0_5_2",
+    "case_id": "hackathon_strategy_walkthrough",
+    "suite_id": "hackathon_strategy_walkthrough_temporal_demo_v0_5_2",
+    "pair_id": "HACKATHON_DEMO_01",
+    "order_variant": "late_correction",
+    "state_axes": [
+      "premise",
+      "decision",
+      "stable"
+    ],
+    "initial_state": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "evidence_bindings": [
+      {
+        "role": "legacy_premise",
+        "evidence_id": "R3",
+        "public_summary": "The currently operative design-dominant brief supplies the legacy judging premise.",
+        "source_kind": "raw_history",
+        "evidence_value": -0.93
+      },
+      {
+        "role": "correction_premise",
+        "evidence_id": "R6",
+        "public_summary": "The latest equal-weight judging guidance supplies the replacement premise.",
+        "source_kind": "revision_event",
+        "evidence_value": 1.17
+      },
+      {
+        "role": "stable_context",
+        "evidence_id": "R5",
+        "public_summary": "The narrated three-minute video constraint remains stable across the revision.",
+        "source_kind": "stable_context",
+        "evidence_value": 0.51
+      }
+    ],
+    "modeled_evidence_ids": [
+      "R3",
+      "R6",
+      "R5"
+    ],
+    "passthrough_evidence_ids": [
+      "R1",
+      "R2",
+      "R4"
+    ],
+    "transition_bindings": [
+      {
+        "operator_id": "decision",
+        "public_name": "Write current judging premise into priority state",
+        "transition_control_id": "decision_write"
+      },
+      {
+        "operator_id": "revision",
+        "public_name": "Reconcile latest judging guidance with prior priority",
+        "transition_control_id": "revision_mix"
+      },
+      {
+        "operator_id": "stable_carry",
+        "public_name": "Carry stable three-minute narration constraint",
+        "transition_control_id": "stable_carry"
+      }
+    ],
+    "event": {
+      "event_id": "EV_JUDGING_GUIDANCE_CORRECTION_R6",
+      "triggered": true,
+      "correction_evidence_id": "R6",
+      "relevant": true,
+      "revision_cue": 1.0,
+      "invalidated_evidence_ids": [
+        "R3"
+      ]
+    },
+    "terminal_decision_target": 0.72,
+    "sham_source_index_by_target": [
+      1,
+      2,
+      0
+    ],
+    "program_spec_fingerprint_sha256": "cc3140c8680cdd5c89a0699406e7d8fce3de86a799e9b1651a60d4b63d2477d5"
+  },
+  "projection_policy": {
+    "policy_id": "hackathon_strategy_walkthrough_projection_v0_5_2",
+    "arm_order": [
+      "raw_restart_zero_control",
+      "raw_restart_textual_envelope",
+      "raw_restart_matched_permutation",
+      "controlled_raw_restart"
+    ],
+    "raw_context_delivery": "ordered_all_raw_evidence_exactly_once",
+    "control_lane": "transition",
+    "numeric_precision": 12,
+    "provider_envelope_allowlist": [
+      "schema_version",
+      "revision_context",
+      "temporal_controls",
+      "instructions_fragment"
+    ]
+  },
+  "source_case_fingerprint_sha256": "72f67d31d2ceb4271318ca0d6a7b63e0a875e369917dd93ef9ae6bd2be6477a7",
+  "binding_fingerprint_sha256": "cfcd754401d1e579ffa35ba63ba0e6ec7a63ce67c96e9f06b8154843f9c037b3",
+  "fixture_fingerprint_sha256": "6fd092005a849b493fa0c812a83e5ba604e84e0870cc72337bb408bdbaccb2ad",
+  "claim_boundary": [
+    "This is a synthetic English product-walkthrough case, not a causal benchmark or fresh quality evaluation.",
+    "Evidence R3 is valid within the pre-event horizon and becomes invalid only after R6 explicitly supersedes it.",
+    "The premise/decision/stable program, oracle evidence values, event scope, operator order, and terminal surrogate target are explicitly supplied rather than discovered.",
+    "The fixed v0.5.1 temporal topology is reused only as a public mechanism scaffold for this hackathon strategy scenario.",
+    "No field from the separate gold artifact, downstream grade, provider output, or private reasoning enters the controller or provider request; the surrogate target remains an explicit oracle input.",
+    "A before-to-after output change cannot isolate the effect of the control map because the visible evidence horizon and revision envelope also change."
+  ]
+}
