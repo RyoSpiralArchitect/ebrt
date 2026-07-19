@@ -1275,7 +1275,10 @@ def _demo_payload() -> dict[str, Any]:
         },
         "claim_boundary": [
             "Synthetic public mechanism fixture only.",
-            "No downstream grader, answer key, or provider output enters the controller.",
+            (
+                "No separately supplied downstream grader verdict, final-answer "
+                "artifact, or provider output enters the controller."
+            ),
             "This is a synthetic structured oracle graph, not a learned adapter output.",
             "This cannot establish improved hosted-model reasoning.",
         ],
@@ -1371,7 +1374,10 @@ def run_self_tests() -> dict[str, Any]:
         raise AssertionError("R3 lacks graph-routed suppression credit")
     for evidence_id in ("R1", "R5", "R7"):
         if credit[evidence_id] != 0.0:
-            raise AssertionError(f"{evidence_id} violates exact gradient locality")
+            raise AssertionError(
+                f"{evidence_id} violates revision-only terminal-credit locality "
+                "on the locked topology"
+            )
 
     severed_payload = _demo_payload()
     severed_payload["dependency_edges"] = [
@@ -1618,10 +1624,13 @@ def run_self_tests() -> dict[str, Any]:
             "UTF-8 canonical hashing is unescaped and byte deterministic",
             "terminal_graph_credit_assignment",
             "finite-difference agrees with float64 autograd",
-            "gradient locality is exact outside affected ancestors",
+            (
+                "revision-only terminal credit is local on the locked topology "
+                "and severed-edge ablation"
+            ),
             "zero-event path is identity with zero backward calls",
             "all gates and projected control L2 remain bounded",
-            "accepted control lowers energy and unrelated state remains exact",
+            "accepted control lowers energy and locked unrelated state remains exact",
             "energy-regressing proposal rolls back to neutral",
             "two identical runs emit byte-identical control-map JSON",
             "recursive unknown, gold-field, and semantic-hash tampering is rejected",
@@ -1644,7 +1653,8 @@ def run_self_tests() -> dict[str, Any]:
         },
         "claim_boundary": (
             "Mechanism/plumbing validation over a synthetic structured oracle "
-            "graph only; no downstream grader or answer enters the controller, "
+            "graph only; no separately supplied downstream grader verdict, "
+            "final-answer artifact, or provider output enters the controller, "
             "and this is not a hosted-model reasoning benchmark."
         ),
     }

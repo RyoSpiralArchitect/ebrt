@@ -3,7 +3,7 @@
   "status": "LOCKED_MECHANISM_ONLY",
   "controller": {
     "core_path": "differentiable_evidence_controller_v0_5.py",
-    "core_sha256": "080bd83d407a84bcbb03794583031bfc6578884cddf3388b70019ef15ccfc2d9",
+    "core_sha256": "f35e07b2a92d3e532277e52d92ca31ed3a9fb906c296882bc0bf3ef160fbe310",
     "controller_name": "EBRT Differentiable Evidence Controller",
     "controller_version": "0.5.0-mechanism",
     "graph_schema_version": "ebrt-public-semantic-graph-v0.5.0",
@@ -100,7 +100,7 @@
   "claim_boundary": [
     "The controller uses real local autograd only inside a frozen one-hop public surrogate.",
     "The fixture graph topology, signed effects, event scope, invalidation, and replacement targets are synthetic oracle annotations, not learned semantics.",
-    "No answer key, provider output, downstream grader verdict, or final generation enters the controller.",
+    "No separately supplied downstream grader verdict, final-answer artifact, provider output, or final generation enters the controller.",
     "The v0.1 implementation and v0.4.1 manifest are lineage references only and are not empirical evidence for this mechanism result.",
     "This lock does not support a hosted-model reasoning-improvement, causal, efficiency, or production-readiness claim."
   ]
