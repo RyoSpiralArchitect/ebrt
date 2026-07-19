@@ -184,6 +184,7 @@ def _validate_policy(value: Mapping[str, Any]) -> None:
 
     runtime = value.get("runtime", {})
     expected_runtime = {
+        "python": platform.python_version(),
         "api": "responses.parse_via_with_raw_response",
         "model": "gpt-5.6-sol",
         "reasoning_effort": "low",
@@ -521,6 +522,7 @@ def _validate_boundary_receipt_fields(receipt: Mapping[str, Any]) -> None:
         metadata["sdk_version"] != provider_boundary.EXPECTED_OPENAI_SDK_VERSION
         or metadata["pydantic_version"]
         != provider_boundary.EXPECTED_PYDANTIC_VERSION
+        or metadata["python_version"] != platform.python_version()
         or metadata["reasoning_effort"] != "low"
     ):
         raise RuntimeError("provider receipt pinned runtime drifted")
@@ -561,6 +563,23 @@ def _validate_boundary_receipt_fields(receipt: Mapping[str, Any]) -> None:
         metadata["provider_body_byte_count"]
     ) < 0:
         raise RuntimeError("provider body byte count is negative")
+    returned_model = receipt["returned_model"]
+    if returned_model is not None and (
+        not isinstance(returned_model, str)
+        or not returned_model
+        or len(returned_model) > 128
+    ):
+        raise RuntimeError("provider receipt returned-model shape drifted")
+    if metadata["service_tier"] not in {
+        None,
+        "auto",
+        "default",
+        "flex",
+        "scale",
+        "priority",
+        "other",
+    }:
+        raise RuntimeError("provider receipt service-tier shape drifted")
 
     phase = metadata["failure_phase"]
     reason = metadata["failure_reason_code"]
@@ -632,11 +651,14 @@ def _validate_boundary_receipt_fields(receipt: Mapping[str, Any]) -> None:
         status = metadata["http_status_code"]
         if not isinstance(status, int) or not 200 <= status <= 299:
             raise RuntimeError("post-HTTP boundary failure lacks a successful status")
-    if phase == "provider_contract":
-        if metadata["http_observed"] is not True:
-            raise RuntimeError("provider-contract failure lost its HTTP observation")
-        if receipt["returned_model"] not in {None, "gpt-5.6-sol"}:
-            raise RuntimeError("provider-contract receipt returned-model drifted")
+    if phase == "provider_contract" and metadata["http_observed"] is not True:
+        raise RuntimeError("provider-contract failure lost its HTTP observation")
+    # The adapter owns provider-contract reason priority.  In particular, a
+    # safely recorded model/tier mismatch is evidence for ``wrong_runtime``; it
+    # must not be reclassified as a receipt-audit failure here.  Likewise, a
+    # higher-priority refusal/error/incomplete reason remains authoritative even
+    # when a lower-priority runtime field also differs.  Completed receipts still
+    # require the exact requested model/default tier above.
     if phase in {"request_call", "http_status", "sdk_response_parse"} and receipt[
         "usage"
     ].get("exact_provider_tokens") is not False:
@@ -2140,6 +2162,204 @@ class _OfflineBoundaryFailureProvider:
         )
 
 
+def _self_test_runner_audits_adapter_wrong_runtime_receipts() -> dict[str, Any]:
+    """Pass real-adapter runtime failures through the runner receipt audit."""
+
+    import httpx
+    from openai import OpenAI
+
+    instructions = "Return the offline strict public card."
+    input_payload = {
+        "question": "Choose A or B.",
+        "answer_choices": ["A", "B"],
+        "decision_slots": [],
+        "checkpoint_id": "card:E1",
+        "all_raw_evidence": [{"evidence_id": "E1", "text": "offline"}],
+        "revision_context": None,
+        "allowed_evidence_ids": ["E1"],
+    }
+    valid_card = {
+        "checkpoint_id": "card:E1",
+        "claim": "Bounded offline public card.",
+        "topic": "offline",
+        "stance": 0.0,
+        "confidence": 0.5,
+        "evidence_ids": ["E1"],
+        "current_answer": "A",
+        "revision_cue": 0.0,
+        "decision_facts": [],
+        "invalidated_evidence_ids": [],
+    }
+    scenarios = (
+        (
+            "wrong_model",
+            {"model": "gpt-5.6-terra"},
+            "gpt-5.6-terra",
+            "default",
+            "wrong_runtime",
+        ),
+        (
+            "wrong_tier",
+            {"service_tier": "priority"},
+            "gpt-5.6-sol",
+            "priority",
+            "wrong_runtime",
+        ),
+        ("missing_tier", {}, "gpt-5.6-sol", None, "wrong_runtime"),
+        (
+            "refusal_priority_over_wrong_model",
+            {"model": "gpt-5.6-terra"},
+            "gpt-5.6-terra",
+            "default",
+            "provider_refusal",
+        ),
+    )
+    observed: dict[str, dict[str, Any]] = {}
+    wrong_model_receipt: dict[str, Any] | None = None
+    for name, changes, expected_model, expected_tier, expected_reason in scenarios:
+        body = provider_boundary._offline_response(valid_card, **changes)
+        if name == "missing_tier":
+            del body["service_tier"]
+        elif name == "refusal_priority_over_wrong_model":
+            body["output"][0]["content"] = [
+                {"type": "refusal", "refusal": "OFFLINE_PRIORITY_SENTINEL"}
+            ]
+        attempts = 0
+
+        def handler(request: Any, *, response_body: Mapping[str, Any] = body) -> Any:
+            nonlocal attempts
+            attempts += 1
+            return httpx.Response(200, json=response_body, request=request)
+
+        http_client = httpx.Client(transport=httpx.MockTransport(handler))
+        client = OpenAI(
+            api_key="sk-offline-runner-audit-not-a-credential",
+            base_url="https://offline.invalid/v1",
+            max_retries=0,
+            timeout=60.0,
+            http_client=http_client,
+        )
+        provider = make_openai_mapping_provider_v0_4_3(
+            model="gpt-5.6-sol",
+            reasoning_effort="low",
+            timeout_seconds=60.0,
+            max_output_tokens=768,
+            instructions=instructions,
+            client=client,
+        )
+        try:
+            provider.generate(input_payload)
+        except OpenAIProviderBoundaryError as error:
+            if (
+                error.phase != "provider_contract"
+                or error.reason_code != expected_reason
+            ):
+                raise AssertionError(
+                    f"real-adapter runtime classification drifted: {name}"
+                ) from None
+        else:
+            raise AssertionError(f"real-adapter runtime mismatch was accepted: {name}")
+        finally:
+            client.close()
+            http_client.close()
+
+        receipts = provider.audit_receipts
+        if attempts != 1 or len(receipts) != 1:
+            raise AssertionError(f"real-adapter receipt cardinality drifted: {name}")
+        if "OFFLINE_PRIORITY_SENTINEL" in canonical_json(receipts):
+            raise AssertionError("higher-priority refusal text leaked into its receipt")
+        receipt = receipts[0]
+        metadata = receipt["metadata"]
+        if (
+            metadata["attempt"] != 1
+            or metadata["retry_count"] != 0
+            or metadata["failure_phase"] != "provider_contract"
+            or metadata["failure_reason_code"] != expected_reason
+            or receipt["returned_model"] != expected_model
+            or metadata["service_tier"] != expected_tier
+        ):
+            raise AssertionError(f"real-adapter runtime receipt drifted: {name}")
+
+        _validate_boundary_receipt(receipt)
+        payload = {
+            "terminal_outcome": "provider_boundary_failure",
+            "primary_endpoint_assessed": False,
+            "failure_category": "provider_boundary_error",
+            "failure_phase": "provider_contract",
+            "failure_reason_code": expected_reason,
+            "failure_sequence_offset": 0,
+            "failure_request_fingerprint": receipt["request_fingerprint"],
+            "final_card": None,
+            "call_records": [],
+            "receipts": receipts,
+        }
+        if _validate_provider_boundary_payload(payload) is not True:
+            raise AssertionError(f"runner lost runtime classification: {name}")
+        observed[name] = {
+            "attempts": attempts,
+            "receipts": len(receipts),
+            "retry_count": metadata["retry_count"],
+            "classification": f"provider_contract/{expected_reason}",
+        }
+        if name == "wrong_model":
+            wrong_model_receipt = copy.deepcopy(receipt)
+
+    if wrong_model_receipt is None:
+        raise AssertionError("wrong-model adapter receipt was not exercised")
+    invalid_shape = copy.deepcopy(wrong_model_receipt)
+    invalid_shape["returned_model"] = "x" * 129
+    try:
+        _validate_boundary_receipt(invalid_shape)
+    except RunnerAuditError as error:
+        if error.reason_code != "receipt_field_violation":
+            raise AssertionError("unsafe returned-model shape used the wrong audit code")
+    else:
+        raise AssertionError("unsafe returned-model shape passed receipt audit")
+
+    for field in ("returned_model", "service_tier"):
+        completed = _synthetic_receipt(phase=None, reason=None).to_dict()
+        if field == "returned_model":
+            completed[field] = "gpt-5.6-terra"
+        else:
+            completed["metadata"][field] = "priority"
+        try:
+            _validate_boundary_receipt(completed)
+        except RunnerAuditError as error:
+            if error.reason_code != "receipt_field_violation":
+                raise AssertionError("completed runtime drift used wrong audit code")
+        else:
+            raise AssertionError(f"completed receipt accepted wrong {field}")
+    return observed
+
+
+def _self_test_python_runtime_pin(policy: Mapping[str, Any]) -> dict[str, Any]:
+    if policy["runtime"]["python"] != platform.python_version():
+        raise AssertionError("active policy Python pin differs from this interpreter")
+    tampered_policy = copy.deepcopy(policy)
+    tampered_policy["runtime"]["python"] = "0.0.0-offline-tamper"
+    try:
+        _validate_policy(tampered_policy)
+    except RuntimeError:
+        pass
+    else:
+        raise AssertionError("tampered policy Python version passed preflight validation")
+
+    tampered_receipt = _synthetic_receipt(phase=None, reason=None).to_dict()
+    tampered_receipt["metadata"]["python_version"] = "0.0.0-offline-tamper"
+    try:
+        _validate_boundary_receipt(tampered_receipt)
+    except RunnerAuditError as error:
+        if error.reason_code != "receipt_field_violation":
+            raise AssertionError("receipt Python drift used the wrong audit code")
+    else:
+        raise AssertionError("tampered receipt Python version passed receipt audit")
+    return {
+        "active_python": platform.python_version(),
+        "policy_tamper_rejected": True,
+        "receipt_tamper_rejected": True,
+    }
+
+
 def _self_test_phase_code_matrix(policy: Mapping[str, Any]) -> int:
     _validate_policy(policy)
     observed = 0
@@ -2806,6 +3026,12 @@ def run_self_tests() -> dict[str, Any]:
 
     matrix_count = _self_test_phase_code_matrix(policy) if policy is not None else 0
     lock = _load_lock(allow_missing_policy=True)
+    adapter_runtime_receipts = (
+        _self_test_runner_audits_adapter_wrong_runtime_receipts()
+    )
+    python_runtime_pin = (
+        _self_test_python_runtime_pin(policy) if policy is not None else None
+    )
     continuation = _self_test_remaining_arms_continue(lock)
     _self_test_gate_separation()
     _self_test_cli_contract()
@@ -2901,6 +3127,8 @@ def run_self_tests() -> dict[str, Any]:
         "provider_adapter_checks": len(adapter.get("checks", ())),
         "policy": "validated" if policy is not None else "missing_self_test_only",
         "phase_reason_pairs_exercised": matrix_count,
+        "adapter_runtime_receipts_audited": adapter_runtime_receipts,
+        "python_runtime_pin": python_runtime_pin,
         "catch_all_acquisition": "request_call/request_unclassified",
         "remaining_arms_continue": continuation,
         "manifest_schema": manifest_schema,

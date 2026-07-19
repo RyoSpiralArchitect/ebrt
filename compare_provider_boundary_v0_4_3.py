@@ -117,6 +117,15 @@ def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def _git_blob(commit: str, path: str) -> bytes:
+    return subprocess.run(
+        ["git", "show", f"{commit}:{path}"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+    ).stdout
+
+
 def _json_bytes(value: Any) -> bytes:
     return (
         json.dumps(value, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
@@ -275,16 +284,19 @@ def _validate_schedule(results: Mapping[str, Any]) -> str:
 def _validate_hash_pins(
     r01_policy: Mapping[str, Any], v043_policy: Mapping[str, Any], v043: Mapping[str, Any]
 ) -> dict[str, Any]:
+    prereg_commit = str(v043["manifest"]["preregistration_commit"])
     paths = {
         "r01_policy": R01_POLICY,
         "r01_smoke_manifest": R01_SMOKE_CANONICAL / "manifest.json",
         "r01_full_manifest": R01_FULL_CANONICAL / "manifest.json",
         "v043_policy": V043_POLICY,
-        "v043_runner": ROOT / "benchmark_aperture_controls_v0_4_3.py",
         "v043_adapter": ROOT / "openai_response_boundary_v0_4_3.py",
         "v043_smoke_manifest": V043_SMOKE_CANONICAL / "manifest.json",
     }
     observed = {name: _sha256(path) for name, path in paths.items()}
+    observed["v043_runner"] = hashlib.sha256(
+        _git_blob(prereg_commit, "benchmark_aperture_controls_v0_4_3.py")
+    ).hexdigest()
     _require(observed == PINS, "top-level comparison pin drifted")
 
     predecessor = v043_policy["predecessor"]
@@ -311,9 +323,15 @@ def _validate_hash_pins(
         "v0.4.3 boot path set drifted",
     )
     for path, expected in boot_map.items():
-        _require(_sha256(ROOT / path) == expected, f"v0.4.3 boot source drifted: {path}")
+        if path == "benchmark_aperture_controls_v0_4_3.py":
+            # The live smoke is permanently tied to the preregistered runner
+            # blob. Post-freeze audit maintenance may change the working runner
+            # without changing the bytes that actually generated the artifact.
+            observed_source = hashlib.sha256(_git_blob(prereg_commit, path)).hexdigest()
+        else:
+            observed_source = _sha256(ROOT / path)
+        _require(observed_source == expected, f"v0.4.3 boot source drifted: {path}")
 
-    prereg_commit = v043["manifest"]["preregistration_commit"]
     prereg_tree = subprocess.run(
         ["git", "rev-parse", f"{prereg_commit}^{{tree}}"],
         cwd=ROOT,
@@ -323,12 +341,7 @@ def _validate_hash_pins(
     ).stdout.strip()
     _require(prereg_tree == v043["manifest"]["preregistration_tree"], "preregistration tree drifted")
     for path, expected in boot_map.items():
-        committed = subprocess.run(
-            ["git", "show", f"{prereg_commit}:{path}"],
-            cwd=ROOT,
-            check=True,
-            capture_output=True,
-        ).stdout
+        committed = _git_blob(prereg_commit, path)
         _require(hashlib.sha256(committed).hexdigest() == expected, f"preregistration source mismatch: {path}")
     return observed
 
@@ -439,6 +452,7 @@ def build_comparison() -> dict[str, Any]:
         "deterministic_schedule_valid": True,
         "full_v0_4_3_block_absent": True,
         "pinned_hashes_valid": True,
+        "post_freeze_runner_verified_from_preregistration_blob": True,
         "privacy_audit_valid": True,
         "r01_native_rows_not_reclassified": True,
         "receipt_cardinality_valid": True,
@@ -523,6 +537,10 @@ def build_comparison() -> dict[str, Any]:
                 "v0_4_3_contract_smoke": v043["artifact_sha256"],
             },
             "pinned_sha256": pins,
+            "source_pin_scope": {
+                "v0_4_3_runner": "preregistration_commit_blob",
+                "other_v0_4_3_boot_sources": "working_tree_and_preregistration_commit_blob",
+            },
         },
         "interpretation": [
             "The frozen r01 block natively classified 0 of 31 non-assessable endpoints at the prospective phase/reason boundary.",

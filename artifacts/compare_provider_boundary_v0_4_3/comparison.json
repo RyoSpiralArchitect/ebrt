@@ -96,6 +96,7 @@
       "deterministic_schedule_valid": true,
       "full_v0_4_3_block_absent": true,
       "pinned_hashes_valid": true,
+      "post_freeze_runner_verified_from_preregistration_blob": true,
       "privacy_audit_valid": true,
       "r01_native_rows_not_reclassified": true,
       "receipt_cardinality_valid": true,
@@ -134,6 +135,10 @@
       "v043_policy": "ed69464c5065ec081a9ca117a08e3e53eac2a4e235968e7392f514fbd23ffa65",
       "v043_runner": "e8d065eebbbc8289c4afac91a4d40649bd7ff6305a54e888a6cf30ebe6fd09e9",
       "v043_smoke_manifest": "1aabd709e95f8f45c94a31dda6d443cdcd80ab4f03e93a03de3d6bac2cb36f3c"
+    },
+    "source_pin_scope": {
+      "other_v0_4_3_boot_sources": "working_tree_and_preregistration_commit_blob",
+      "v0_4_3_runner": "preregistration_commit_blob"
     }
   }
 }

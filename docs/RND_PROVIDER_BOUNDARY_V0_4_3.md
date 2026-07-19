@@ -52,6 +52,28 @@ The smoke and full protocols are one-shot. Restoring quota does not authorize a
 second v0.4.3 smoke or a fill/resume. Any future live attempt requires a new
 preregistered protocol id.
 
+## Post-freeze maintenance note (2026-07-19)
+
+After the smoke and diagnostic comparison were frozen, the runner's offline
+receipt audit was hardened in two bounded ways:
+
+- a real-adapter `provider_contract/wrong_runtime` receipt may retain a safely
+  shaped returned model or service tier that differs from the request without
+  being converted into `receipt_audit/receipt_field_violation`; provider-contract
+  reason priority remains owned by the adapter, while a completed receipt still
+  requires exact `gpt-5.6-sol` and `default` values; and
+- the locked Python version must equal the interpreter before any provider is
+  constructed, and every receipt must carry that exact Python version.
+
+Offline regressions cover wrong model, wrong tier, missing tier, higher-priority
+refusal plus wrong model, unsafe field shape, completed-receipt mismatch,
+policy-version tamper, and receipt-version tamper. This maintenance made **no
+new live call**, does not change the policy lock, and does not mutate or
+reclassify the frozen smoke or r01 artifacts. The
+comparison verifier resolves the v0.4.3 runner from the smoke manifest's
+preregistration commit, so post-freeze working-source maintenance cannot alter
+which runner bytes are attributed to the live evidence.
+
 ## Why v0.4.3 exists
 
 The unchanged v0.4.2 replication r01 passed its fixed two-case contract smoke,
