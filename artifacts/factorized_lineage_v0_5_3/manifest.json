@@ -1,0 +1,107 @@
+{
+  "artifacts": {
+    "factorized_lineage_regression.json": {
+      "bytes": 43579,
+      "sha256": "85094e65b9181b893b80bf42c3db859b66a66320a080defefc514ce75fbe910f"
+    },
+    "lossless_migration.json": {
+      "bytes": 19072,
+      "sha256": "41b19e6210aa387a54b6db24256b1eb1943f685bb4acb226ac8ed0415e50b38a"
+    },
+    "mechanism_report.md": {
+      "bytes": 2488,
+      "sha256": "f70d9c06a47451467e62309535c1d163ecabc8e1e71f58bd943fb1f416a3541e"
+    },
+    "self_test.json": {
+      "bytes": 4928,
+      "sha256": "19646001667eae28ae38a9f2d9f3cff2974bbe36a68236f13f5bc0a73f41d616"
+    }
+  },
+  "claim_boundary": [
+    "This is a deterministic network-zero migration and contaminated repair regression over one frozen synthetic v0.5.2 walkthrough.",
+    "The canonical v0.5.2 artifact, its strict walkthrough_contract_passed=false verdict, public card, raw evidence, receipts, and provider output remain byte-frozen and are not regraded or rewritten.",
+    "The lossless typed graph must reproduce both known fact-local lineage gaps before the separately pinned two-edge repair overlay is applied.",
+    "The repair overlay was designed after observing the v0.5.2 defect and is contaminated engineering evidence, not fresh generalization evidence.",
+    "Closure gold is a post-graph grading input only and is excluded from migration, graph construction, and overlay application.",
+    "No provider, semantic adapter, hidden model state, final generation, token usage, latency, or server behavior participates in v0.5.3.",
+    "A repaired exact closure PASS establishes this local public-lineage representation contract only; it does not establish causal superiority, reasoning-quality improvement, autonomous dependency discovery, or production readiness.",
+    "Canonical artifacts contain no observed runtime, timestamp, hostname, or absolute repository path; cross-runtime identity is claimed only where independently executed and compared."
+  ],
+  "legacy": {
+    "migration_status": "EXPECTED_LEGACY_DEFECT_REPRODUCED",
+    "source_result_fingerprint_sha256": "2e641e0f11f17bb16cbe629048e9cc8cff49706147616d888487f38b243430d4",
+    "walkthrough_contract_passed": false
+  },
+  "network_calls": 0,
+  "regression": {
+    "overlay_contaminated": true,
+    "status": "PASS"
+  },
+  "runtime_contract": "Standard-library-only deterministic graph closure over strings, integers, and booleans; validator host and wall-clock time are excluded from canonical bytes and are not validation gates.",
+  "schema_version": "ebrt-factorized-lineage-manifest-v0.5.3",
+  "source_ledger": {
+    "fixture:closure_gold": {
+      "path": "fixtures/factorized_lineage_v0_5_3_closure_gold.json",
+      "relationship": "grading input only; excluded from graph construction and closure",
+      "schema_version": "ebrt-factorized-lineage-closure-gold-v0.5.3",
+      "sha256": "0e30dfe19b926990fd8eac77c781f4ac2087a81da11b74e0f25becf3ffa7447b"
+    },
+    "fixture:repair_overlay": {
+      "edge_ids": [
+        "repair:demo_readiness->final_priority",
+        "repair:final_priority->demo_centerpiece"
+      ],
+      "overlay_id": "hackathon_strategy_factorized_lineage_repair_v0_5_3",
+      "path": "fixtures/factorized_lineage_v0_5_3_repair_overlay.json",
+      "schema_version": "ebrt-factorized-lineage-repair-overlay-v0.5.3",
+      "sha256": "9425bda87e5aa859ec6c8016035c599a0d1f3d8704ec7d012ddf44e6ca05e22e"
+    },
+    "fixture:source_fixture": {
+      "path": "fixtures/hackathon_strategy_walkthrough_v0_5_2.json",
+      "relationship": "frozen raw-evidence and public temporal binding input to lossless migration only",
+      "sha256": "ef0b1d44ece10e7412460d9abac4791fe3f3a0172e398bca7a0d8957094f56d2"
+    },
+    "policy_lock": {
+      "path": "policy_lock_factorized_lineage_v0_5_3.json",
+      "sha256": "dfaab71441ea3f511bb6186cce547f025372c049064421a1711d006efdbab63f"
+    },
+    "predecessor_artifact:calls.jsonl": {
+      "bytes": 3820,
+      "path": "artifacts/demo_hackathon_strategy_walkthrough_v0_5_2_live_r01/calls.jsonl",
+      "sha256": "0d7794f1b6f3010e3d8171d46f4574ad7801e1e96eef84850dc52519cf0b634e"
+    },
+    "predecessor_artifact:demo.json": {
+      "bytes": 27548,
+      "path": "artifacts/demo_hackathon_strategy_walkthrough_v0_5_2_live_r01/demo.json",
+      "sha256": "f6df3c0a371027fd6ed35cfcc75f0b05dc540ebb6d08efeb3764ab62b4616f6b"
+    },
+    "predecessor_artifact:manifest.json": {
+      "bytes": 2758,
+      "path": "artifacts/demo_hackathon_strategy_walkthrough_v0_5_2_live_r01/manifest.json",
+      "sha256": "ab86d111d1fc0d2b679a0f6ca001e9d33ae1bfc86468aee404887e3da934299f"
+    },
+    "predecessor_artifact:report.md": {
+      "bytes": 2759,
+      "path": "artifacts/demo_hackathon_strategy_walkthrough_v0_5_2_live_r01/report.md",
+      "sha256": "81868e378daab3498edbe758ceff9910e7ac0f8c7b444e6913b4ec3e0203fe1d"
+    },
+    "predecessor_policy_lock": {
+      "path": "policy_lock_hackathon_strategy_walkthrough_v0_5_2.json",
+      "sha256": "551190c872d3b9bb9db4f2d6fd1aa15f3f9102084e057e90b80d9259ac429c6c"
+    },
+    "source:builder": {
+      "path": "build_factorized_lineage_artifact_v0_5_3.py",
+      "sha256": "db9061e20333d6ef1863521cd6d65b99ed521341589bf0230acd48e036a6a9e2"
+    },
+    "source:core": {
+      "path": "factorized_lineage_v0_5_3.py",
+      "sha256": "ccb6e770b140e81f1b61a75b5e2c7cdfe0d11147ad2edc553510252a01e41633"
+    },
+    "source:v0_5_2_verifier": {
+      "path": "verify_hackathon_strategy_walkthrough_v0_5_2_portable.py",
+      "sha256": "2053ce641d30ef9f5e1c15abae46d4ee1a1be20596be94c27dbf2327722cb681"
+    }
+  },
+  "status": "COMPLETE_NETWORK_ZERO_LINEAGE_REGRESSION",
+  "validator_host_used_as_gate": false
+}

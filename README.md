@@ -122,7 +122,16 @@ three-minute video fact. The block completed 2/2 calls with retry disabled, but
 the locked walkthrough contract is a strict near-pass, not a pass: the final
 card failed only `required_facts_exact` because R2/R4/R6 were present globally
 but not repeated on both changed decision facts. The artifact is preserved
-without rerun or post-hoc grading relaxation.
+without rerun or post-hoc grading relaxation. The merged checkpoint is retained
+as `v0.5.2-inspector-breakpoint`.
+
+EBRT v0.5.3 now completes a network-zero factorized-lineage regression. Its
+lossless migration reproduces the same two fact-local gaps while preserving the
+frozen v0.5.2 `false` verdict. A separately hashed, explicitly contaminated
+two-edge repair then closes exactly `final_priority:+R4` and
+`demo_centerpiece:+R2`, with no other reachability or direct/inherited
+classification change. The repaired local closure is `PASS`; this is a
+public-representation engineering result, not a new hosted-model result.
 
 > [!IMPORTANT]
 > v0.1-v0.3.1 are **not** a Transformer implementation, a GPT latent-state
@@ -150,6 +159,11 @@ without rerun or post-hoc grading relaxation.
 > `PROVE`, but it changes evidence horizon, event envelope, and run position
 > together. Its strict final endpoint fails on slot-level evidence attribution;
 > it does not establish control-map causality, general quality, or reliability.
+> The completed v0.5.3 migration and repair are explicitly contaminated by that
+> known failure. Its passing local regression does not retroactively pass
+> v0.5.2, discover semantics from language, or establish provider-output or
+> general reasoning improvement. The four support-role bindings are supplied
+> case annotations, and network/provider calls remain zero.
 
 ## Why EBRT?
 
@@ -166,6 +180,14 @@ or restart everything. EBRT explores a third option:
 
 This is a research harness for making that loop measurable and falsifiable. It
 is not yet a production inference engine.
+
+The [EBRT Core Thesis](docs/EBRT_CORE_THESIS.md) preserves the originating
+latent-trajectory idea while defining the stricter reachable-control,
+stop-gradient, and nonclaim boundaries used by the current public substrate.
+The [v0.5.3-v0.5.5 roadmap](docs/ROADMAP_V0_5_3_TO_V0_5_5.md) separates the
+vertical work into dependency space, time, and sealed-trajectory multiplicity
+before any v0.6 execution or orchestration claim; its Space milestone is now
+complete.
 
 ## Repository map
 
@@ -222,6 +244,10 @@ demo_hackathon_strategy_walkthrough_v0_5_2.py sealed two-call English output-dif
 verify_hackathon_strategy_walkthrough_v0_5_2_portable.py host-independent canonical artifact verifier
 policy_lock_hackathon_strategy_walkthrough_v0_5_2.json exact prompt/runtime/source contract
 fixtures/hackathon_strategy_walkthrough_v0_5_2*.json separated public case and post-call gold
+factorized_lineage_v0_5_3.py strict role-factorized DAG migration, closure, grading, and ablations
+build_factorized_lineage_artifact_v0_5_3.py deterministic network-zero bundle builder and verifier
+policy_lock_factorized_lineage_v0_5_3.json frozen predecessor/fixture/schema/artifact contract
+fixtures/factorized_lineage_v0_5_3_*.json contaminated repair overlay and post-graph closure gold
 docs/RND_BENCHMARK_V0_1.md    protocol, results, limits, and claim ledger
 docs/RND_INSTRUMENTATION_V0_2.md measurement contract and algorithm findings
 docs/RND_DUAL_ROUTE_V0_3.md   terminal invariant result and v0.3.1 direction
@@ -237,12 +263,16 @@ docs/RND_DIFFERENTIABLE_EVIDENCE_CONTROL_V0_5.md mechanism, gradient, and claim 
 docs/RND_TEMPORAL_ADJOINT_STATE_CONTROL_V0_5_T.md temporal mechanism, result, and actuator boundary
 docs/RND_CONTROLLED_RAW_RESTART_V0_5_1.md bridge design, incomplete live result, and recovery boundary
 docs/RND_HACKATHON_STRATEGY_WALKTHROUGH_V0_5_2.md preregistration, live diff, strict near-pass
+docs/EBRT_CORE_THESIS.md       latent north star, corrected control math, and gradient boundaries
+docs/RND_FACTORIZED_LINEAGE_V0_5_3.md network-zero lineage result and contaminated repair boundary
+docs/ROADMAP_V0_5_3_TO_V0_5_5.md Space/Time/Multiplicity gates through v0.6 execution design
 artifacts/benchmark_v0_1/     committed machine-readable benchmark evidence
 artifacts/demo_v0_1/trace.json committed no-build mechanism trace
 artifacts/benchmark_instrumentation_v0_2/ committed v0.2 measurement evidence
 artifacts/instrumentation_v0_2/ committed trace and standalone mirror figure
 artifacts/.dual_route_v0_3_holdout_ledger.json canonical terminal attempt record
 artifacts/benchmark_dual_route_v0_3_1_dev/ committed non-promotional DEV evidence
+artifacts/factorized_lineage_v0_5_3/ committed contaminated network-zero lineage regression
 artifacts/benchmark_language_replay_v0_4_fake_dev/ scripted plumbing evidence only
 artifacts/benchmark_language_replay_v0_4_live_smoke/ boundary-fixed GPT-5.6 DEV canary
 artifacts/benchmark_direct_full_calibration_v0_4_dev/ non-promotional 10-case DEV evidence
@@ -1133,6 +1163,9 @@ retrospectively relabeling failures. See the
 | The v0.5.2 English walkthrough reaches a changed final output | Supported for one synthetic non-matched episode: 2/2 calls completed and the public answer changed `POLISH → PROVE`, with R3 dropped/invalidated, R4/R6 added, and R5 preserved |
 | The v0.5.2 walkthrough passes its frozen strict contract | No; 6/7 walkthrough checks passed, but the controlled final card failed `required_facts_exact` because its two changed facts split R2 and R4 rather than each citing R2+R4+R6 |
 | The v0.5.2 diff proves the gradient control caused the output change | No; evidence horizon, event envelope, and run position change together, and no matched no-control after-event call exists in this product walkthrough |
+| v0.5.3 repairs or regrades the frozen v0.5.2 endpoint | No; the predecessor remains `false`. v0.5.3 is a separately named, contaminated local migration/regression result |
+| The v0.5.3 typed DAG closes its local regression | Yes, narrowly: lossless migration remains `FAIL` with the exact two legacy gaps; the contaminated two-edge overlay adds only final/R4 and demo/R2, and the repaired exact closure is `PASS` under network-zero validation |
+| v0.5.3 autonomously discovers support roles or improves a GPT output | No; the four role bindings are explicit case annotations, the predecessor output is not rerun or regraded, and provider calls are zero |
 | Selective replay should be optimized before state sufficiency | Not supported by current evidence; it is paused as a quality direction and remains an unranked future efficiency ablation |
 | EBRT edits hidden states inside a trained Transformer or GPT model | Not implemented |
 | EBRT improves real-world LLM reasoning accuracy | Not established |
@@ -1234,6 +1267,24 @@ category determination.
   R5. The frozen endpoint remains failed because the two changed facts split
   their required evidence rather than each closing R2+R4+R6. No rerun,
   endpoint relaxation, or causal claim is permitted from this artifact.
+- **Milestone 2.8 — factorized lineage regression (network-zero complete):**
+  v0.5.3 separates a lossless migration that reproduces the frozen two
+  fact-local gaps from a separately hashed contaminated two-edge repair. The
+  minimal public program admits only Evidence, Support, Fact, and Constraint
+  nodes. Its exact grammar is Evidence-to-Support `supports`,
+  Support-to-Fact/Constraint or Fact-to-Fact `depends_on`, and
+  Evidence-to-Evidence `invalidates`; direct Evidence-to-Fact shortcuts are
+  invalid. The canonical bundle passes deterministic witness, exact-set,
+  edge-ablation, tamper, rollback, and socket-denied gates. Its only closure
+  additions are final/R4 and demo/R2; the predecessor verdict remains false and
+  provider calls are zero.
+- **Milestone 2.9 — Space to Time to Multiplicity (prospective):** after
+  v0.5.3, v0.5.4 may test exact temporal credit over the accepted factorized
+  program under matched actuator controls; v0.5.5 may test sealed-lane
+  composition, block credit, and lane isolation without agents or providers.
+  v0.6 execution design is intentionally deferred until those artifacts reveal
+  which substrate claims survive. The intended gates and stop rules are defined
+  in the [vertical research roadmap](docs/ROADMAP_V0_5_3_TO_V0_5_5.md).
 - **Milestone 3 — coherent evaluator experience (provisional Workbench):** a
   deterministic allowlist projection and local read-only Workbench now connect
   Evidence, Event, Revision, every recorded Replay lane, and Final Output Diff.
@@ -1321,7 +1372,13 @@ The separate v0.5.2 English walkthrough then completed two more calls and
 recorded `POLISH → PROVE`, R3 invalidation, R4/R6 support, and R5 preservation.
 Its final strict contract still failed on fact-level evidence closure, so it is
 preserved as a judge-readable near-pass rather than presented as a successful
-causal intervention. A promotion suite, matched hard-suite comparison, live
+causal intervention. The network-zero v0.5.3 successor now reproduces that
+exact defect without adding reachability, then passes a separately labeled
+contaminated dependency regression whose only additions are final/R4 and
+demo/R2. v0.5.4 temporal credit and v0.5.5 sealed-lane composition remain gated
+successor milestones, and the concrete v0.6 execution design follows only
+after their completion audit.
+A promotion suite, matched hard-suite comparison, live
 revision application, and any hosted judge sandbox remain pending; there is no
 hosted service in this release.
 

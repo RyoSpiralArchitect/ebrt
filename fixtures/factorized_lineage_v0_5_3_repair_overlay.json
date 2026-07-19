@@ -1,0 +1,28 @@
+{
+  "claim_boundary": [
+    "This two-edge overlay was designed after observing the frozen v0.5.2 lineage failure and is contaminated engineering evidence.",
+    "It does not alter the frozen v0.5.2 artifact, public card, legacy grade, raw evidence, or provider output.",
+    "Its only purpose is to test whether typed transitive closure repairs the two known fact-local support gaps without citation duplication."
+  ],
+  "edges": [
+    {
+      "edge_id": "repair:demo_readiness->final_priority",
+      "edge_type": "depends_on",
+      "provenance": "repair_overlay",
+      "source_node_id": "support:demo_readiness",
+      "target_node_id": "fact:final_priority"
+    },
+    {
+      "edge_id": "repair:final_priority->demo_centerpiece",
+      "edge_type": "depends_on",
+      "provenance": "repair_overlay",
+      "source_node_id": "fact:final_priority",
+      "target_node_id": "fact:demo_centerpiece"
+    }
+  ],
+  "fingerprint_sha256": "26d79ad024374a4ca1cfdd039a457b2578b3cde0ab699b194a7ff6c448dfd20b",
+  "overlay_id": "hackathon_strategy_factorized_lineage_repair_v0_5_3",
+  "schema_version": "ebrt-factorized-lineage-repair-overlay-v0.5.3",
+  "source_graph_fingerprint_sha256": "8afb3d03084dc33f92ea6d12dbe7c3cfdb53f4642a5d6a937075a53dcb9a74ca",
+  "status": "LOCKED_CONTAMINATED_ENGINEERING_REPAIR"
+}

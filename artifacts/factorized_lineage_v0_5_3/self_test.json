@@ -1,0 +1,107 @@
+{
+  "checks": {
+    "canonical_order_and_fingerprints_verified": true,
+    "core_self_test_passed": true,
+    "deterministic_witness_paths_verified": true,
+    "invalidated_R3_excluded_from_active_closure": true,
+    "lossless_migration_reproduced_both_legacy_gaps": true,
+    "no_host_or_time_metadata_in_artifacts": true,
+    "overlay_exactly_two_pinned_edges": true,
+    "predecessor_verdict_false_preserved": true,
+    "removing_each_overlay_edge_reopens_declared_gap": true,
+    "repaired_direct_and_inherited_closure_exact": true,
+    "stable_R5_constraint_preserved": true
+  },
+  "claim_boundary": [
+    "This is a deterministic network-zero migration and contaminated repair regression over one frozen synthetic v0.5.2 walkthrough.",
+    "The canonical v0.5.2 artifact, its strict walkthrough_contract_passed=false verdict, public card, raw evidence, receipts, and provider output remain byte-frozen and are not regraded or rewritten.",
+    "The lossless typed graph must reproduce both known fact-local lineage gaps before the separately pinned two-edge repair overlay is applied.",
+    "The repair overlay was designed after observing the v0.5.2 defect and is contaminated engineering evidence, not fresh generalization evidence.",
+    "Closure gold is a post-graph grading input only and is excluded from migration, graph construction, and overlay application.",
+    "No provider, semantic adapter, hidden model state, final generation, token usage, latency, or server behavior participates in v0.5.3.",
+    "A repaired exact closure PASS establishes this local public-lineage representation contract only; it does not establish causal superiority, reasoning-quality improvement, autonomous dependency discovery, or production readiness.",
+    "Canonical artifacts contain no observed runtime, timestamp, hostname, or absolute repository path; cross-runtime identity is claimed only where independently executed and compared."
+  ],
+  "core_self_test": {
+    "checks": {
+      "cycle_dangling_type_direction_rejected": true,
+      "duplicate_and_nonfinite_rejected": true,
+      "each_repair_edge_ablation_reopens_exact_gap": true,
+      "exact_set_overclosure_rejected": true,
+      "fabricated_witness_rejected": true,
+      "forbidden_shortcut_and_hidden_r6_rejected": true,
+      "gold_delayed_until_graph_seal": true,
+      "legacy_two_gap_reproduced": true,
+      "order_deterministic": true,
+      "r3_invalidated_r5_preserved": true,
+      "repaired_closure_pass": true,
+      "socket_denied_execution_passed": true,
+      "witness_ranking_prefers_nonrepair": true
+    },
+    "observed_graph_fingerprint_sha256": "8afb3d03084dc33f92ea6d12dbe7c3cfdb53f4642a5d6a937075a53dcb9a74ca",
+    "repaired_graph_fingerprint_sha256": "361d6961938dda2d69ccc0340fecb802c55af40d6cd551c628eb307462416333",
+    "schema_version": "ebrt-factorized-lineage-self-test-v0.5.3",
+    "status": "PASS"
+  },
+  "legacy": {
+    "missing_evidence": {
+      "demo_centerpiece": [
+        "R2"
+      ],
+      "final_priority": [
+        "R4"
+      ]
+    },
+    "status": "EXPECTED_LEGACY_DEFECT_REPRODUCED",
+    "walkthrough_contract_passed": false
+  },
+  "network_calls": 0,
+  "regression": {
+    "active_closure": {
+      "demo_centerpiece": [
+        "R2",
+        "R4",
+        "R6"
+      ],
+      "final_priority": [
+        "R2",
+        "R4",
+        "R6"
+      ],
+      "video_constraint": [
+        "R5"
+      ]
+    },
+    "overlay_contaminated": true,
+    "status": "PASS"
+  },
+  "repair_edge_ablation": {
+    "cases": [
+      {
+        "closure_fingerprint_sha256": "d8f506fbdc7fddb6e7ee0e96ea5e06d172c58fb6db29317b0e81f9a5bd615cbd",
+        "expected_reopened_evidence_id": "R4",
+        "expected_reopened_target_id": "fact:final_priority",
+        "grade_fingerprint_sha256": "f8966e7967c7afc590e1d0f4483a8fa9321e12a9f6c6ac8e7a4e97fda57c838c",
+        "grade_status": "FAIL",
+        "removed_edge_id": "repair:demo_readiness->final_priority"
+      },
+      {
+        "closure_fingerprint_sha256": "a98c3c55554126894866ec1ea77dc6fdd3e879d9dc37d3a6265a6372fd270efb",
+        "expected_reopened_evidence_id": "R2",
+        "expected_reopened_target_id": "fact:demo_centerpiece",
+        "grade_fingerprint_sha256": "1b1ac7dc261167932ef72aac1bae974ca46904ac2e03b6514c07bf4e0e63cb82",
+        "grade_status": "FAIL",
+        "removed_edge_id": "repair:final_priority->demo_centerpiece"
+      }
+    ],
+    "claim_boundary": [
+      "Ablations are local diagnostics over the contaminated repair overlay, not independent evaluation cases."
+    ],
+    "fingerprint_sha256": "1fd5530f07a00c7d01a1f806de28ca3373536f0bcf8151fe718d1159694891aa",
+    "repaired_graph_fingerprint_sha256": "361d6961938dda2d69ccc0340fecb802c55af40d6cd551c628eb307462416333",
+    "schema_version": "ebrt-factorized-lineage-overlay-ablation-v0.5.3",
+    "status": "PASS"
+  },
+  "schema_version": "ebrt-factorized-lineage-self-test-v0.5.3",
+  "status": "PASS"
+}
