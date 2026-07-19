@@ -1,6 +1,6 @@
 # EBRT v0.4.3 — prospective provider-boundary protocol
 
-Status: **PREREGISTERED PROTOCOL; NO v0.4.3 LIVE CALL MADE**
+Status: **FROZEN CONTRACT SMOKE; FULL BLOCK NOT LAUNCHED**
 
 Promotion eligible: `false`
 
@@ -12,6 +12,45 @@ The executable lock is
 [`policy_lock_aperture_controls_v0_4_3.json`](../policy_lock_aperture_controls_v0_4_3.json).
 No live execution may begin until the provider adapter, runner, lock, and this
 protocol are sealed together in a pushed preregistration commit.
+
+## Frozen execution outcome
+
+The implementation and this protocol were preregistered and pushed before the
+first live call:
+
+```text
+preregistration commit  3ff8ba9b1fd21bb39c230a5b65a7a232c1d67b6f
+preregistration tree    42e0031e60cbcadaa4cd06333bfa7659c7c0b10d
+smoke manifest          1aabd709e95f8f45c94a31dda6d443cdcd80ab4f03e93a03de3d6bac2cb36f3c
+```
+
+The locked two-case by one-trial smoke was then executed exactly once. Its
+eight scheduled arm endpoints each stopped on the first attempted provider
+call, so the run used 8 attempted calls against the preregistered 28-call
+nominal ceiling. All eight receipts preserved an observed HTTP 429 with the
+typed SDK error code `insufficient_quota`:
+
+```text
+attempted calls                         8
+terminal receipts                       8
+classified failed receipts              8
+classified non-assessable endpoints     8
+unclassified non-assessable endpoints   0
+HTTP acquired / status retained         8 / 8
+diagnostic_integrity_ready               true
+locked_decision_ready                    false
+full_launch_ready                        false
+primary execution classification        smoke_gate_failed_full_not_launched
+```
+
+This is a successful diagnostic artifact and an unsuccessful launch gate. The
+exact full block was not run, no reasoning contrast is assessed, and no token
+or quality conclusion is emitted. The observed subtype is evidence about these
+new attempts only; it does not retrospectively relabel the frozen r01 tail.
+
+The smoke and full protocols are one-shot. Restoring quota does not authorize a
+second v0.4.3 smoke or a fill/resume. Any future live attempt requires a new
+preregistered protocol id.
 
 ## Why v0.4.3 exists
 
