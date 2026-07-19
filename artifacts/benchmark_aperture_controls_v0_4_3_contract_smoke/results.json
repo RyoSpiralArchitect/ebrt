@@ -36,6 +36,29 @@
     "Exact token claims require exact provider usage for the complete declared population; no partial or favorable post-hoc subset is promoted.",
     "Rate-limit subtype labels are prospective operational diagnostics and do not prove provider-side cause beyond the typed fields observed by the SDK."
   ],
+  "derived_artifact_lineage": {
+    "artifact_bytes_postdate_preregistration": true,
+    "authority": "v0.4.3_policy_exact_schedule_projection",
+    "corrected_fields": [
+      "derived_artifact_lineage",
+      "summary.live_receipt_validation.contract_smoke_exact_coverage",
+      "summary.live_receipt_validation.contract_smoke_coverage_authority",
+      "summary.live_receipt_validation.inherited_v0_4_2_smoke_namespace_projection_validated"
+    ],
+    "correction_id": "post_freeze_inherited_v0_4_2_smoke_namespace_projection",
+    "no_live_call": true,
+    "observation_artifacts_unchanged": {
+      "arm_rows.csv": "994efb3aa5ca9bcc188442aba02c287840f483863de5c6a7eb6f2a7bc341e505",
+      "benchmark_report.md": "fd0f3a99fc03e1a48abca4fd4b65d2197d0ef255ae866c28514aff002d21f79d",
+      "calls.jsonl": "68989d17874f2da14964733f003aedcd6f4e8e99e35284f2def19f2873575d5e",
+      "traces.jsonl": "1cfd67fe6f8894a2c82f023a1624c223df76656e3a056ae632bc5228714ba0a5"
+    },
+    "original_manifest_sha256": "1aabd709e95f8f45c94a31dda6d443cdcd80ab4f03e93a03de3d6bac2cb36f3c",
+    "original_results_sha256": "f519d253228d037092037b1592c46ac0443d1684ad223b0701420225223b544e",
+    "provider_observations_unchanged": true,
+    "provider_receipt_projection_sha256": "ba735cd7ec08a9644636ac665bf3514d8d1fd460a103214e40da0afeeba658e9",
+    "schema_version": "ebrt-post-freeze-derived-correction-v0.4.3"
+  },
   "execution_complete": false,
   "launch_gate": null,
   "mode": "openai_live_provider_boundary_smoke_v0_4_3",
@@ -1279,10 +1302,12 @@
     "live_receipt_validation": {
       "all_runs_complete": false,
       "attempted_api_calls": 8,
-      "contract_smoke_exact_coverage": false,
+      "contract_smoke_coverage_authority": "v0.4.3_policy_exact_schedule_projection",
+      "contract_smoke_exact_coverage": true,
       "diagnostic_integrity_ready": true,
       "failed_call_usage_or_transport_classification_claimed": false,
       "full_run_launch_ready": false,
+      "inherited_v0_4_2_smoke_namespace_projection_validated": true,
       "locked_decision_ready": false,
       "nominal_api_calls": 28,
       "nominal_ceiling_only": true,

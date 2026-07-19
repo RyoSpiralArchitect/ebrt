@@ -68,8 +68,8 @@ receipt audit was hardened in two bounded ways:
 Offline regressions cover wrong model, wrong tier, missing tier, higher-priority
 refusal plus wrong model, unsafe field shape, completed-receipt mismatch,
 policy-version tamper, and receipt-version tamper. This maintenance made **no
-new live call**, does not change the policy lock, and does not mutate or
-reclassify the frozen smoke or r01 artifacts. The
+new live call**, does not change the policy lock, and does not alter or
+reclassify the frozen provider observations or r01 artifacts. The
 comparison verifier resolves the v0.4.3 runner from the smoke manifest's
 preregistration commit, so post-freeze working-source maintenance cannot alter
 which runner bytes are attributed to the live evidence.
@@ -81,8 +81,40 @@ privacy audits. Ignored `benchmark_results/` working bundles are optional; when
 one is present, every expected file must still be byte-identical to its
 canonical counterpart. Offline tests exercise canonical-only validation plus
 canonical tamper, working-copy tamper, and malformed working-path rejection.
-This verifier maintenance made no live or network call and changes no frozen
-input bundle.
+This verifier maintenance made no live or network call. The later derived-field
+correction below is its only explicit change to the smoke bundle bytes.
+
+### Post-freeze smoke coverage derivation correction
+
+The inherited v0.4.2 validator recognized only its historical
+`openai_live_contract_smoke` mode and run-id prefix. The v0.4.3 compatibility
+copy retained the v0.4.3 names, so the nested inherited field
+`contract_smoke_exact_coverage` was `false` even though the authoritative
+v0.4.3 policy/schedule audit was exactly covered. This was a namespace
+projection defect, not a failed or missing provider observation.
+
+The compatibility copy now maps only the mode and run-id namespace before the
+frozen v0.4.2 validator consumes it, then cross-checks that answer against the
+unchanged v0.4.3 policy schedule. A run-id or schedule tamper fails closed. The
+canonical and working smoke `results.json` and `manifest.json` correct that
+derived coverage field to `true`, name
+`v0.4.3_policy_exact_schedule_projection` as its authority, and carry an
+explicit `ebrt-post-freeze-derived-correction-v0.4.3` lineage.
+
+```text
+original manifest  1aabd709e95f8f45c94a31dda6d443cdcd80ab4f03e93a03de3d6bac2cb36f3c
+corrected manifest 42172d684de6541fc6b26e23cf7e9ae7fde92395dd81db8fbeb53ed8a32021ec
+original results   f519d253228d037092037b1592c46ac0443d1684ad223b0701420225223b544e
+corrected results  fb9a863b82d4caaf6afc60446c852d6e1c2de09c463239508b02a28a39316819
+calls.jsonl        68989d17874f2da14964733f003aedcd6f4e8e99e35284f2def19f2873575d5e
+traces.jsonl       1cfd67fe6f8894a2c82f023a1624c223df76656e3a056ae632bc5228714ba0a5
+receipt projection ba735cd7ec08a9644636ac665bf3514d8d1fd460a103214e40da0afeeba658e9
+```
+
+No live call, retry, provider receipt, trace, call row, score, failure label, or
+reasoning conclusion changed. All eight endpoints remain non-assessable
+`http_status/insufficient_quota`; `full_run_launch_ready` and
+`locked_decision_ready` remain `false`, and the full block remains unexecuted.
 
 ## Why v0.4.3 exists
 

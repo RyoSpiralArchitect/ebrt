@@ -46,7 +46,7 @@
         "http_status/insufficient_quota": 8
       },
       "full_launch_ready": false,
-      "manifest_sha256": "1aabd709e95f8f45c94a31dda6d443cdcd80ab4f03e93a03de3d6bac2cb36f3c",
+      "manifest_sha256": "42172d684de6541fc6b26e23cf7e9ae7fde92395dd81db8fbeb53ed8a32021ec",
       "non_assessable_endpoints": 8,
       "receipt_count": 8,
       "schedule_sha256": "05b586414582e799dc827e76a7389375f49e0c0f721b234f783f3a9373fd460d",
@@ -106,6 +106,8 @@
       "r01_native_rows_not_reclassified": true,
       "receipt_cardinality_valid": true,
       "v0_4_3_phase_reason_allowlist_valid": true,
+      "v0_4_3_post_freeze_coverage_lineage_valid": true,
+      "v0_4_3_provider_receipts_unchanged_by_coverage_correction": true,
       "working_bundles_optional_for_clean_checkout": true,
       "working_canonical_byte_identity_valid_when_available": true,
       "zero_retry_valid": true
@@ -129,7 +131,7 @@
         "arm_rows.csv": "994efb3aa5ca9bcc188442aba02c287840f483863de5c6a7eb6f2a7bc341e505",
         "benchmark_report.md": "fd0f3a99fc03e1a48abca4fd4b65d2197d0ef255ae866c28514aff002d21f79d",
         "calls.jsonl": "68989d17874f2da14964733f003aedcd6f4e8e99e35284f2def19f2873575d5e",
-        "results.json": "f519d253228d037092037b1592c46ac0443d1684ad223b0701420225223b544e",
+        "results.json": "fb9a863b82d4caaf6afc60446c852d6e1c2de09c463239508b02a28a39316819",
         "traces.jsonl": "1cfd67fe6f8894a2c82f023a1624c223df76656e3a056ae632bc5228714ba0a5"
       }
     },
@@ -140,11 +142,18 @@
       "v043_adapter": "7f78fce94cb141a4355d3c040010e11e049ff67a3a8c603099d0548a47b7cf03",
       "v043_policy": "ed69464c5065ec081a9ca117a08e3e53eac2a4e235968e7392f514fbd23ffa65",
       "v043_runner": "e8d065eebbbc8289c4afac91a4d40649bd7ff6305a54e888a6cf30ebe6fd09e9",
-      "v043_smoke_manifest": "1aabd709e95f8f45c94a31dda6d443cdcd80ab4f03e93a03de3d6bac2cb36f3c"
+      "v043_smoke_manifest": "42172d684de6541fc6b26e23cf7e9ae7fde92395dd81db8fbeb53ed8a32021ec"
     },
     "source_pin_scope": {
       "other_v0_4_3_boot_sources": "working_tree_and_preregistration_commit_blob",
       "v0_4_3_runner": "preregistration_commit_blob"
+    },
+    "v0_4_3_derived_coverage_lineage": {
+      "authority": "v0.4.3_policy_exact_schedule_projection",
+      "corrected_results_sha256": "fb9a863b82d4caaf6afc60446c852d6e1c2de09c463239508b02a28a39316819",
+      "no_live_call": true,
+      "original_manifest_sha256": "1aabd709e95f8f45c94a31dda6d443cdcd80ab4f03e93a03de3d6bac2cb36f3c",
+      "provider_receipt_projection_sha256": "ba735cd7ec08a9644636ac665bf3514d8d1fd460a103214e40da0afeeba658e9"
     }
   }
 }

@@ -8,6 +8,7 @@ network endpoint, mutates either input bundle, or reclassifies an r01 row.
 from __future__ import annotations
 
 import argparse
+import copy
 import hashlib
 import json
 import re
@@ -82,8 +83,18 @@ PINS = {
     "v043_policy": "ed69464c5065ec081a9ca117a08e3e53eac2a4e235968e7392f514fbd23ffa65",
     "v043_runner": "e8d065eebbbc8289c4afac91a4d40649bd7ff6305a54e888a6cf30ebe6fd09e9",
     "v043_adapter": "7f78fce94cb141a4355d3c040010e11e049ff67a3a8c603099d0548a47b7cf03",
-    "v043_smoke_manifest": "1aabd709e95f8f45c94a31dda6d443cdcd80ab4f03e93a03de3d6bac2cb36f3c",
+    "v043_smoke_manifest": "42172d684de6541fc6b26e23cf7e9ae7fde92395dd81db8fbeb53ed8a32021ec",
 }
+
+V043_PRE_CORRECTION_SMOKE_MANIFEST_SHA256 = (
+    "1aabd709e95f8f45c94a31dda6d443cdcd80ab4f03e93a03de3d6bac2cb36f3c"
+)
+V043_PRE_CORRECTION_RESULTS_SHA256 = (
+    "f519d253228d037092037b1592c46ac0443d1684ad223b0701420225223b544e"
+)
+V043_PROVIDER_RECEIPT_PROJECTION_SHA256 = (
+    "ba735cd7ec08a9644636ac665bf3514d8d1fd460a103214e40da0afeeba658e9"
+)
 
 FORBIDDEN_KEYS = frozenset(
     {
@@ -254,6 +265,134 @@ def _validate_bundle(
     }
 
 
+def _receipt_projection_sha256(results: Mapping[str, Any]) -> str:
+    receipts = [
+        receipt
+        for run in results["runs"]
+        for arm in run["arm_order"]
+        for receipt in run["arms"][arm]["receipts"]
+    ]
+    return hashlib.sha256(_canonical_json(receipts).encode("utf-8")).hexdigest()
+
+
+def _validate_v043_derived_coverage(bundle: Mapping[str, Any]) -> dict[str, Any]:
+    manifest = bundle["manifest"]
+    results = bundle["results"]
+    authority = "v0.4.3_policy_exact_schedule_projection"
+    coverage_records = (
+        manifest,
+        manifest["execution_record"],
+        manifest["comparison_record"],
+        results["summary"]["live_receipt_validation"],
+    )
+    for record in coverage_records:
+        _require(
+            record.get("contract_smoke_exact_coverage") is True,
+            "authoritative v0.4.3 smoke coverage is not exact",
+        )
+        _require(
+            record.get("contract_smoke_coverage_authority") == authority,
+            "v0.4.3 smoke coverage authority drifted",
+        )
+        _require(
+            record.get(
+                "inherited_v0_4_2_smoke_namespace_projection_validated"
+            )
+            is True,
+            "v0.4.2 smoke namespace projection was not validated",
+        )
+
+    result_lineage = results.get("derived_artifact_lineage", {})
+    manifest_lineage = manifest.get("derived_artifact_lineage", {})
+    _require(
+        result_lineage.get("corrected_fields")
+        == [
+            "derived_artifact_lineage",
+            "summary.live_receipt_validation.contract_smoke_exact_coverage",
+            "summary.live_receipt_validation.contract_smoke_coverage_authority",
+            "summary.live_receipt_validation.inherited_v0_4_2_smoke_namespace_projection_validated",
+        ],
+        "v0.4.3 corrected results field lineage drifted",
+    )
+    _require(
+        manifest_lineage.get("corrected_fields")
+        == [
+            "artifact_sha256.results.json",
+            "claim_boundary.post_freeze_derived_coverage_correction_only",
+            "comparison_record.coverage_projection_fields",
+            "contract_smoke_coverage_authority",
+            "contract_smoke_exact_coverage",
+            "derived_artifact_lineage",
+            "execution_record.coverage_projection_fields",
+            "inherited_v0_4_2_smoke_namespace_projection_validated",
+            "results.json.derived_artifact_lineage",
+            "results.json.summary.live_receipt_validation.coverage_projection_fields",
+        ],
+        "v0.4.3 corrected manifest field lineage drifted",
+    )
+    for lineage in (result_lineage, manifest_lineage):
+        _require(
+            lineage.get("schema_version")
+            == "ebrt-post-freeze-derived-correction-v0.4.3"
+            and lineage.get("correction_id")
+            == "post_freeze_inherited_v0_4_2_smoke_namespace_projection"
+            and lineage.get("authority") == authority
+            and lineage.get("no_live_call") is True
+            and lineage.get("artifact_bytes_postdate_preregistration") is True
+            and lineage.get("provider_observations_unchanged") is True,
+            "v0.4.3 post-freeze derivation lineage drifted",
+        )
+        _require(
+            lineage.get("original_manifest_sha256")
+            == V043_PRE_CORRECTION_SMOKE_MANIFEST_SHA256
+            and lineage.get("original_results_sha256")
+            == V043_PRE_CORRECTION_RESULTS_SHA256
+            and lineage.get("provider_receipt_projection_sha256")
+            == V043_PROVIDER_RECEIPT_PROJECTION_SHA256,
+            "v0.4.3 pre-correction evidence lineage drifted",
+        )
+        _require(
+            lineage.get("observation_artifacts_unchanged")
+            == {
+                name: bundle["artifact_sha256"][name]
+                for name in (
+                    "arm_rows.csv",
+                    "benchmark_report.md",
+                    "calls.jsonl",
+                    "traces.jsonl",
+                )
+            },
+            "v0.4.3 observation-artifact lineage drifted",
+        )
+    _require(
+        manifest_lineage.get("corrected_results_sha256")
+        == bundle["artifact_sha256"]["results.json"],
+        "corrected v0.4.3 results hash is absent from its lineage",
+    )
+    _require(
+        _receipt_projection_sha256(results)
+        == V043_PROVIDER_RECEIPT_PROJECTION_SHA256,
+        "frozen v0.4.3 provider receipts changed during derived correction",
+    )
+    _require(
+        manifest["full_run_launch_ready"] is False
+        and manifest["full_launch_ready"] is False
+        and manifest["provider_boundary_failures"] == 8
+        and manifest["primary_execution_classification"]
+        == "smoke_gate_failed_full_not_launched",
+        "derived coverage correction changed the frozen launch decision",
+    )
+    return {
+        "authority": authority,
+        "corrected_results_sha256": bundle["artifact_sha256"]["results.json"],
+        "no_live_call": True,
+        "original_manifest_sha256": V043_PRE_CORRECTION_SMOKE_MANIFEST_SHA256,
+        "provider_receipt_projection_sha256": (
+            V043_PROVIDER_RECEIPT_PROJECTION_SHA256
+        ),
+    }
+
+
 def _schedule_projection(results: Mapping[str, Any]) -> list[dict[str, Any]]:
     return [
         {
@@ -416,6 +555,7 @@ def build_comparison() -> dict[str, Any]:
         manifest_sha256=PINS["v043_smoke_manifest"],
     )
     pins = _validate_hash_pins(r01_policy, v043_policy, v043)
+    coverage_lineage = _validate_v043_derived_coverage(v043)
 
     _require(not V043_FULL_WORKING.exists(), "unexpected v0.4.3 working full block")
     _require(not V043_FULL_CANONICAL.exists(), "unexpected v0.4.3 canonical full block")
@@ -471,6 +611,8 @@ def build_comparison() -> dict[str, Any]:
         "r01_native_rows_not_reclassified": True,
         "receipt_cardinality_valid": True,
         "v0_4_3_phase_reason_allowlist_valid": True,
+        "v0_4_3_post_freeze_coverage_lineage_valid": True,
+        "v0_4_3_provider_receipts_unchanged_by_coverage_correction": True,
         "working_bundles_optional_for_clean_checkout": True,
         "working_canonical_byte_identity_valid_when_available": True,
         "zero_retry_valid": True,
@@ -560,6 +702,7 @@ def build_comparison() -> dict[str, Any]:
                 "v0_4_3_runner": "preregistration_commit_blob",
                 "other_v0_4_3_boot_sources": "working_tree_and_preregistration_commit_blob",
             },
+            "v0_4_3_derived_coverage_lineage": coverage_lineage,
         },
         "interpretation": [
             "The frozen r01 block natively classified 0 of 31 non-assessable endpoints at the prospective phase/reason boundary.",
@@ -774,6 +917,42 @@ def _self_test_optional_working_bundle(
     }
 
 
+def _self_test_v043_coverage_tamper() -> dict[str, int | bool]:
+    bundle = _validate_bundle(
+        canonical=V043_SMOKE_CANONICAL,
+        working=V043_SMOKE_WORKING,
+        manifest_sha256=PINS["v043_smoke_manifest"],
+    )
+    _validate_v043_derived_coverage(bundle)
+    tampers: list[dict[str, Any]] = []
+
+    result_tamper = copy.deepcopy(bundle)
+    result_tamper["results"]["summary"]["live_receipt_validation"][
+        "contract_smoke_exact_coverage"
+    ] = False
+    tampers.append(result_tamper)
+
+    manifest_tamper = copy.deepcopy(bundle)
+    manifest_tamper["manifest"]["contract_smoke_exact_coverage"] = False
+    tampers.append(manifest_tamper)
+
+    lineage_tamper = copy.deepcopy(bundle)
+    lineage_tamper["manifest"]["derived_artifact_lineage"]["no_live_call"] = False
+    tampers.append(lineage_tamper)
+
+    for tampered in tampers:
+        try:
+            _validate_v043_derived_coverage(tampered)
+        except RuntimeError:
+            pass
+        else:
+            raise AssertionError("v0.4.3 derived coverage tamper passed validation")
+    return {
+        "authoritative_exact_coverage_passed": True,
+        "tamper_cases_rejected": len(tampers),
+    }
+
+
 def _self_test() -> dict[str, Any]:
     first = build_comparison()
     second = build_comparison()
@@ -808,6 +987,7 @@ def _self_test() -> dict[str, Any]:
         "bounded decision fields drifted",
     )
     optional_working = _self_test_optional_working_bundle(first)
+    coverage_tamper = _self_test_v043_coverage_tamper()
     if OUTPUT.exists():
         _validate_existing()
     return {
@@ -815,6 +995,7 @@ def _self_test() -> dict[str, Any]:
         "network_calls": 0,
         "primary_metric": first["primary_metric"],
         "optional_working_bundle": optional_working,
+        "v0_4_3_coverage_tamper": coverage_tamper,
         "verification_checks": len(first["verification"]["checks"]),
     }
 

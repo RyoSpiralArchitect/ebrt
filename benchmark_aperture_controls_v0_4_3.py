@@ -724,15 +724,25 @@ def _v042_receipt_compatibility_projection(
     result: Mapping[str, Any],
     audit_receipts_by_arm: Mapping[str, Sequence[Mapping[str, Any]]],
 ) -> tuple[dict[str, Any], dict[str, list[dict[str, Any]]]]:
-    """Project only attempt-outcome labels for frozen v0.4.2 audit reuse.
+    """Project v0.4.3 labels into the frozen v0.4.2 audit namespace.
 
     Exact v0.4.3 validation runs first.  The returned copies are never persisted;
     they exist solely because the frozen validator predates the two new outcome
-    labels while all request, trace, receipt, and accounting geometry is shared.
+    labels and recognizes only its historical smoke mode/run-id prefix.  All
+    request, trace, receipt, schedule, and accounting geometry remains shared.
     """
 
     projected_result = copy.deepcopy(result)
     projected_audit = copy.deepcopy(dict(audit_receipts_by_arm))
+
+    if projected_result.get("mode") == MODE_SMOKE:
+        legacy_mode = "openai_live_contract_smoke"
+        projected_result["mode"] = legacy_mode
+        for run in projected_result["runs"]:
+            run["mode"] = legacy_mode
+            run["run_id"] = (
+                f"{legacy_mode}:{int(run['trial_index'])}:{run['case_id']}"
+            )
 
     def project(receipt: dict[str, Any]) -> None:
         outcome = receipt["metadata"]["attempt_outcome"]
@@ -820,8 +830,29 @@ def validate_live_receipts(
         )
     except RuntimeError:
         raise RunnerAuditError("receipt_field_violation") from None
+    policy = lock.get("v0_4_3_policy")
+    if not isinstance(policy, Mapping):
+        raise RunnerAuditError("receipt_field_violation")
+    authoritative_contract_smoke_coverage = bool(
+        result.get("mode") == MODE_SMOKE
+        and _exact_protocol_coverage(result, policy=policy)
+    )
+    if (
+        check.get("contract_smoke_exact_coverage")
+        is not authoritative_contract_smoke_coverage
+    ):
+        # The compatibility namespace must never conceal a v0.4.3 schedule or
+        # run-id tamper.  The v0.4.3 policy projection is authoritative.
+        raise RunnerAuditError("receipt_field_violation")
     check.update(
         {
+            "contract_smoke_exact_coverage": (
+                authoritative_contract_smoke_coverage
+            ),
+            "contract_smoke_coverage_authority": (
+                "v0.4.3_policy_exact_schedule_projection"
+            ),
+            "inherited_v0_4_2_smoke_namespace_projection_validated": True,
             "provider_boundary_receipts_validated": True,
             "provider_boundary_failures": boundary_failures,
             "provider_boundary_failures_by_phase": dict(by_phase),
@@ -1261,6 +1292,17 @@ def _execution_diagnostics(
         "exact_protocol_coverage": _exact_protocol_coverage(
             result, policy=policy
         ),
+        "contract_smoke_exact_coverage": bool(
+            receipt_validation["contract_smoke_exact_coverage"]
+        ),
+        "contract_smoke_coverage_authority": receipt_validation[
+            "contract_smoke_coverage_authority"
+        ],
+        "inherited_v0_4_2_smoke_namespace_projection_validated": bool(
+            receipt_validation[
+                "inherited_v0_4_2_smoke_namespace_projection_validated"
+            ]
+        ),
         "nominal_calls": int(receipt_validation["nominal_api_calls"]),
         "attempted_calls": int(receipt_validation["attempted_api_calls"]),
         "receipt_count": len(receipts),
@@ -1618,6 +1660,15 @@ def _write_bundle_directory(
             "exact_case_trial_run_arm_coverage"
         ],
         "exact_protocol_coverage": execution["exact_protocol_coverage"],
+        "contract_smoke_exact_coverage": execution[
+            "contract_smoke_exact_coverage"
+        ],
+        "contract_smoke_coverage_authority": execution[
+            "contract_smoke_coverage_authority"
+        ],
+        "inherited_v0_4_2_smoke_namespace_projection_validated": execution[
+            "inherited_v0_4_2_smoke_namespace_projection_validated"
+        ],
         "nominal_api_calls": receipt["nominal_api_calls"],
         "attempted_api_calls": receipt["attempted_api_calls"],
         "receipt_count": execution["receipt_count"],
@@ -2576,6 +2627,29 @@ def _self_test_manifest_schema(
     receipt_validation = validate_live_receipts(
         result, lock, audit_receipts_by_arm=audit
     )
+    if (
+        receipt_validation["contract_smoke_exact_coverage"] is not True
+        or receipt_validation["contract_smoke_coverage_authority"]
+        != "v0.4.3_policy_exact_schedule_projection"
+        or receipt_validation[
+            "inherited_v0_4_2_smoke_namespace_projection_validated"
+        ]
+        is not True
+    ):
+        raise AssertionError("v0.4.3 smoke coverage projection drifted")
+    tampered_run_id = copy.deepcopy(result)
+    tampered_run_id["runs"][0]["run_id"] = "self-test-wrong-run-id"
+    try:
+        validate_live_receipts(
+            tampered_run_id,
+            lock,
+            audit_receipts_by_arm=audit,
+        )
+    except RunnerAuditError as error:
+        if error.reason_code != "receipt_field_violation":
+            raise AssertionError("coverage tamper used the wrong audit code")
+    else:
+        raise AssertionError("v0.4.2 namespace projection concealed a run-id tamper")
     expected_schedule, _, _ = _expected_schedule(result, policy)
     expected_schedule_hash = hashlib.sha256(
         canonical_json(expected_schedule).encode("utf-8")
@@ -2792,6 +2866,9 @@ def _self_test_manifest_schema(
         "trials",
         "scheduled_arm_endpoints",
         "exact_protocol_coverage",
+        "contract_smoke_exact_coverage",
+        "contract_smoke_coverage_authority",
+        "inherited_v0_4_2_smoke_namespace_projection_validated",
         "failed_receipt_count",
         "classified_failed_receipt_count",
         "classified_nonassessable_endpoint_count",
@@ -2851,6 +2928,9 @@ def _self_test_manifest_schema(
         "diagnostic_integrity_ready",
         "locked_decision_ready",
         "full_launch_ready",
+        "contract_smoke_exact_coverage",
+        "contract_smoke_coverage_authority",
+        "inherited_v0_4_2_smoke_namespace_projection_validated",
         "calls_rows_equal_receipts_equal_attempted_calls",
         "sibling_staging_directory_fully_audited_before_atomic_publish",
         "comparison_available_false_for_terminal_failure_bundle",
@@ -2873,6 +2953,13 @@ def _self_test_manifest_schema(
         first_manifest["receipt_count"] != 28
         or first_manifest["scheduled_arm_endpoints"] != 8
         or first_manifest["exact_protocol_coverage"] is not True
+        or first_manifest["contract_smoke_exact_coverage"] is not True
+        or first_manifest["contract_smoke_coverage_authority"]
+        != "v0.4.3_policy_exact_schedule_projection"
+        or first_manifest[
+            "inherited_v0_4_2_smoke_namespace_projection_validated"
+        ]
+        is not True
         or first_manifest["run_and_arm_order_sha256"]
         != first_manifest["expected_run_and_arm_order_sha256"]
         or set(first_manifest["provider_boundary_failures_by_phase"])

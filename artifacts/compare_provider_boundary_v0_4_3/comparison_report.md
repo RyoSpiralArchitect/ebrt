@@ -47,6 +47,8 @@ The v0.4.3 boundary classified all eight non-assessable smoke endpoints with dia
 - `r01_native_rows_not_reclassified`: `true`
 - `receipt_cardinality_valid`: `true`
 - `v0_4_3_phase_reason_allowlist_valid`: `true`
+- `v0_4_3_post_freeze_coverage_lineage_valid`: `true`
+- `v0_4_3_provider_receipts_unchanged_by_coverage_correction`: `true`
 - `working_bundles_optional_for_clean_checkout`: `true`
 - `working_canonical_byte_identity_valid_when_available`: `true`
 - `zero_retry_valid`: `true`
