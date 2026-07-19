@@ -539,7 +539,7 @@ python3 language_replay_bridge_v0_4.py
 python3 benchmark_language_replay_v0_4.py self-test
 python3 benchmark_direct_full_calibration_v0_4.py self-test
 python3 differentiable_evidence_controller_v0_5.py self-test
-python3 build_differentiable_evidence_control_artifact_v0_5.py validate
+python3 build_differentiable_evidence_control_artifact_v0_5.py self-test
 ```
 
 The v0.3 self-tests are historical checks and must be run from a separate
