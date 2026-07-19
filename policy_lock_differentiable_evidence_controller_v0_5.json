@@ -1,0 +1,114 @@
+{
+  "schema_version": "ebrt-differentiable-evidence-control-policy-lock-v0.5.0",
+  "status": "LOCKED_MECHANISM_ONLY",
+  "controller": {
+    "core_path": "differentiable_evidence_controller_v0_5.py",
+    "core_sha256": "960dd29b90a319c032019ff0724d65134bf8f3baa294d9088823dce91cfe0e31",
+    "controller_name": "EBRT Differentiable Evidence Controller",
+    "controller_version": "0.5.0-mechanism",
+    "graph_schema_version": "ebrt-public-semantic-graph-v0.5.0",
+    "control_map_schema_version": "ebrt-evidence-control-map-v0.5.0",
+    "dtype": "float64",
+    "gate_parameterization": "g=2*sigmoid(u)",
+    "claim_activation": "h=tanh(A^T*g)",
+    "control_regularizer": "squared_l2_sum",
+    "optimizer": "Adam",
+    "randomness": "deterministic_no_rng",
+    "config": {
+      "revision_steps": 120,
+      "learning_rate": 0.08,
+      "revision_consistency_weight": 4.0,
+      "support_preservation_weight": 1.0,
+      "invalidation_suppression_weight": 1.5,
+      "stable_claim_drift_weight": 2.0,
+      "control_l2_weight": 0.05,
+      "max_control_l2_norm": 1.25,
+      "role_delta": 0.05,
+      "gate_epsilon": 1e-12,
+      "acceptance_tolerance": 1e-12,
+      "numeric_precision": 12
+    },
+    "finite_difference": {
+      "epsilon": 1e-6,
+      "absolute_tolerance": 2e-8,
+      "terms": [
+        "revision_consistency",
+        "support_preservation",
+        "invalidation_suppression",
+        "stable_claim_drift",
+        "control_l2",
+        "total"
+      ]
+    },
+    "padding_invariance": {
+      "extra_nodes": 8,
+      "absolute_tolerance": 1e-14
+    },
+    "canonicalization": {
+      "encoding": "utf-8",
+      "ensure_ascii": false,
+      "sort_keys": true,
+      "separators": [
+        ",",
+        ":"
+      ],
+      "allow_nan": false,
+      "trailing_newline": true
+    },
+    "projection": {
+      "role_delta": 0.05,
+      "numeric_precision": 12,
+      "stable_order": [
+        "ordinal",
+        "evidence_id"
+      ]
+    }
+  },
+  "fixtures": {
+    "event": {
+      "path": "fixtures/differentiable_evidence_controller_v0_5_dev.json",
+      "sha256": "6d9fa014e41185cd227c58833055f1382027199e3a6937812022b60c32eea0da",
+      "semantic_payload_sha256": "6c1b88ae49afb2102a7a98f3a17c1a0412ac627c43c9dbe1aad462231cc6b796",
+      "graph_id": "route_code_supersession_public_graph_dev_v0_5",
+      "event_triggered": true
+    },
+    "no_event": {
+      "path": "fixtures/differentiable_evidence_controller_v0_5_no_event.json",
+      "sha256": "195b84b21bd0d620b8a2c0bc79dfb7ce16758734b4d4d1fe0f299487129ee497",
+      "semantic_payload_sha256": "cc757cda1c8403cbcd55ae2ca460e91a22d22b5031f4a246867b293dd6b868ad",
+      "graph_id": "route_code_no_event_public_graph_dev_v0_5",
+      "event_triggered": false
+    }
+  },
+  "lineage_reference_only": {
+    "v0_1_impl": {
+      "path": "ebrt_monolith_v0_1.py",
+      "sha256": "b1702f2868839d989cc3a9321d227436a23c3dad6cc86483edee9d5dbab3a529",
+      "relationship": "historical differentiable mechanism reference only; not an optimization input"
+    },
+    "v0_4_1_manifest": {
+      "path": "artifacts/benchmark_aperture_controls_v0_4_1_dev/manifest.json",
+      "sha256": "c24fd0767a303a5e5adb9fe9645afc4b9bc78f829f1731904132f33464529de0",
+      "relationship": "historical aperture observation reference only; not an optimization input"
+    }
+  },
+  "artifact": {
+    "directory": "artifacts/differentiable_evidence_control_v0_5",
+    "files": [
+      "event_control_map.json",
+      "no_event_control_map.json",
+      "self_test.json",
+      "mechanism_report.md"
+    ],
+    "network_calls": 0
+  },
+  "claim_boundary": [
+    "The controller uses real local autograd only inside a frozen one-hop public surrogate.",
+    "The squared-L2-sum control penalty is invariant to eight disconnected neutral padding nodes within the locked 1e-14 tolerance on the built-in synthetic graph.",
+    "The fixture graph topology, signed effects, event scope, invalidation, and replacement targets are synthetic oracle annotations, not learned semantics.",
+    "No separately supplied downstream grader verdict, final-answer artifact, provider output, or final generation enters the controller.",
+    "The v0.1 implementation and v0.4.1 manifest are lineage references only and are not empirical evidence for this mechanism result.",
+    "Byte-identical artifact reproduction is evidenced only for the runtime recorded in the manifest, not across arbitrary Python, PyTorch, operating-system, or hardware versions.",
+    "This lock does not support a hosted-model reasoning-improvement, causal, efficiency, or production-readiness claim."
+  ]
+}
