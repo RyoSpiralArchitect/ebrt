@@ -80,6 +80,17 @@ the final public-card diff. A separate Provider Failure Atlas shows where the
 v0.4.3 runtime episode stopped. The UI is still read-only and replaceable: its
 playback control reveals recorded public cards and makes no model call.
 
+EBRT v0.5.0 begins the algorithmic mainline rebuild. It freezes a typed,
+one-hop public dependency graph, optimizes bounded scalar evidence gates with
+real float64 autograd inside a local surrogate, and emits a deterministic
+public control map. A built-in synthetic graph, isomorphic to the locked event
+topology, verifies terminal credit, finite-difference agreement,
+locked-topology locality, disconnected-padding invariance, and bounded control.
+The external triggered fixture reproduces an accepted objective decrease and
+canonical map; a separate no-event fixture is exact identity with zero backward
+calls. This is a synthetic oracle mechanism result, not yet a GPT generation
+or reasoning-quality result.
+
 > [!IMPORTANT]
 > v0.1-v0.3.1 are **not** a Transformer implementation, a GPT latent-state
 > editor, or evidence of improved language-model accuracy. v0.4 meaningfully
@@ -89,7 +100,10 @@ playback control reveals recorded public cards and makes no model call.
 > is also contaminated DEV evidence; its Direct arm receives fixed revision
 > metadata and is not an unqualified plain-API baseline. v0.4.3 improves
 > failure classification coverage, not reasoning quality; v0.4.4 projects
-> recorded public evidence and does not execute or edit a live agent.
+> recorded public evidence and does not execute or edit a live agent. v0.5.0
+> differentiates only through its frozen public surrogate: graph annotations
+> are scripted, no gradient crosses an adapter/JSON/provider boundary, and no
+> final answer is generated.
 
 ## Why EBRT?
 
@@ -144,6 +158,10 @@ build_inspector_snapshot_v0_4_1.py validated public-artifact normalizer
 build_reasoning_workbench_snapshot_v0_4_4.py deterministic allowlist projection
 projection_lock_reasoning_workbench_v0_4_4.json source/hash/privacy projection lock
 inspector/                    provisional recorded Revision Workbench
+differentiable_evidence_controller_v0_5.py typed graph, local autograd, control projection
+policy_lock_differentiable_evidence_controller_v0_5.json frozen numeric/source/artifact contract
+build_differentiable_evidence_control_artifact_v0_5.py deterministic mechanism artifact builder
+fixtures/differentiable_evidence_controller_v0_5_*.json event and no-event public graphs
 docs/RND_BENCHMARK_V0_1.md    protocol, results, limits, and claim ledger
 docs/RND_INSTRUMENTATION_V0_2.md measurement contract and algorithm findings
 docs/RND_DUAL_ROUTE_V0_3.md   terminal invariant result and v0.3.1 direction
@@ -155,6 +173,7 @@ docs/RND_DIAGNOSTIC_CLOSURE_V0_4_2.md fresh successor result and failure taxonom
 docs/RND_APERTURE_CONTROLS_V0_4_2_UNCHANGED_REPLICATION_R01.md preregistered replication and frozen negative result
 docs/RND_PROVIDER_BOUNDARY_V0_4_3.md protocol, smoke result, correction lineage
 docs/RND_REASONING_WORKBENCH_V0_4_4.md workbench projection and claim gates
+docs/RND_DIFFERENTIABLE_EVIDENCE_CONTROL_V0_5.md mechanism, gradient, and claim boundaries
 artifacts/benchmark_v0_1/     committed machine-readable benchmark evidence
 artifacts/demo_v0_1/trace.json committed no-build mechanism trace
 artifacts/benchmark_instrumentation_v0_2/ committed v0.2 measurement evidence
@@ -171,6 +190,7 @@ artifacts/benchmark_aperture_controls_v0_4_2_unchanged_replication_r01_*/ unchan
 artifacts/benchmark_aperture_controls_v0_4_3_contract_smoke/ frozen diagnostic smoke
 artifacts/compare_provider_boundary_v0_4_3/ offline non-causal comparison
 artifacts/reasoning_workbench_v0_4_4/ canonical public projection and report
+artifacts/differentiable_evidence_control_v0_5/ canonical control maps and mechanism report
 requirements.txt              runtime dependency declaration
 requirements-live.txt         separately pinned OpenAI/Pydantic live dependencies
 LICENSE                       Apache License 2.0
@@ -381,6 +401,25 @@ already recorded public cards, grades, and their output diff without a model
 call. The Provider Failure Atlas is a separate runtime-health episode. Neither
 surface exposes private chain-of-thought or model hidden state.
 
+Validate the v0.5.0 mechanism core. On the runtime recorded in the artifact
+manifest, also reproduce its committed zero-network bytes:
+
+```bash
+python3 differentiable_evidence_controller_v0_5.py self-test
+python3 differentiable_evidence_controller_v0_5.py validate \
+  --input-json fixtures/differentiable_evidence_controller_v0_5_dev.json
+python3 differentiable_evidence_controller_v0_5.py validate \
+  --input-json fixtures/differentiable_evidence_controller_v0_5_no_event.json
+python3 build_differentiable_evidence_control_artifact_v0_5.py self-test
+python3 build_differentiable_evidence_control_artifact_v0_5.py validate
+```
+
+The controller makes no provider call. Its adapter output is a frozen,
+oracle-scripted public graph, and its JSON control map stops before full-context
+regeneration. The committed artifact proves mechanism integrity and byte
+identity only on its recorded Python/PyTorch/platform runtime; no cross-runtime
+numerical identity is claimed.
+
 ## Judge path: inspect first, rerun second
 
 No training or model build is required to inspect the submitted evidence.
@@ -470,6 +509,18 @@ For the provider-boundary diagnostic and Recorded Revision Workbench, inspect:
 4. `artifacts/reasoning_workbench_v0_4_4/` for the canonical snapshot, manifest,
    and report, then `inspector/` for the replaceable product surface.
 
+For the v0.5.0 differentiable controller core, inspect:
+
+1. [`docs/RND_DIFFERENTIABLE_EVIDENCE_CONTROL_V0_5.md`](docs/RND_DIFFERENTIABLE_EVIDENCE_CONTROL_V0_5.md)
+   for the graph, loss, gradient boundary, numerical policy, and claim limits;
+2. `policy_lock_differentiable_evidence_controller_v0_5.json` for the exact
+   source, fixture, optimizer, finite-difference, and projection contract;
+3. `artifacts/differentiable_evidence_control_v0_5/mechanism_report.md` for the
+   compact result and the two canonical control maps for triggered/no-event
+   behavior;
+4. `artifacts/differentiable_evidence_control_v0_5/self_test.json` for the
+   per-term numerical checks and mechanism metrics.
+
 There is intentionally no normal v0.3 result directory: the runner stopped
 before validated bundle publication, and the ledger stores no outcome rows.
 
@@ -487,6 +538,8 @@ python3 benchmark_dual_route_v0_3_1.py self-test
 python3 language_replay_bridge_v0_4.py
 python3 benchmark_language_replay_v0_4.py self-test
 python3 benchmark_direct_full_calibration_v0_4.py self-test
+python3 differentiable_evidence_controller_v0_5.py self-test
+python3 build_differentiable_evidence_control_artifact_v0_5.py validate
 ```
 
 The v0.3 self-tests are historical checks and must be run from a separate
@@ -895,6 +948,11 @@ retrospectively relabeling failures. See the
 | The fixed revision envelope improves the saturated one-shot raw scaffold | Not established; fixed passed 30/30 versus no-envelope 29/30 at output level and both were stable on 10/10 cases, with no decision-ready cause estimate |
 | The Workbench can trace one recorded revision through final public output | Supported for its mechanically selected v0.4 episode; it preserves all three replay lanes and derives the diff from emitted public cards only |
 | The Inspector or Workbench is the final EBRT frontend or a hosted debugger | No; it is a provisional local read-only view over recorded public artifacts and may be replaced entirely |
+| EBRT v0.5.0 computes evidence controls with real gradients | Supported inside the frozen float64 public surrogate; per-term and total finite differences pass the locked tolerance |
+| v0.5.0 discovers semantic dependencies from raw language | No; its one-hop graph, signed effects, affected claim, invalidation, and target are synthetic oracle annotations |
+| v0.5.0 preserves a non-triggered episode | Supported by the separate locked fixture: exact neutral gates, unchanged activations/objective, and zero backward calls |
+| v0.5.0 is invariant to disconnected neutral graph padding | Supported numerically for eight added edge-less nodes on the built-in synthetic graph within the locked `1e-14` tolerance; not a generic total-objective locality theorem |
+| The v0.5.0 control map improves a regenerated GPT answer | Not evaluated; no provider or final generation is part of this milestone |
 | Selective replay should be optimized before state sufficiency | Not supported by current evidence; it is paused as a quality direction and remains an unranked future efficiency ablation |
 | EBRT edits hidden states inside a trained Transformer or GPT model | Not implemented |
 | EBRT improves real-world LLM reasoning accuracy | Not established |
@@ -955,6 +1013,15 @@ category determination.
   non-assessable endpoints as `http_status/insufficient_quota`; its zero-
   provider-failure gate prevented the full block, so no reasoning comparison
   or promotion claim is available.
+- **Milestone 2.4 — external differentiable control (mechanism core
+  complete):** v0.5.0 freezes a typed one-hop public graph, optimizes bounded
+  evidence gates with local float64 autograd, and verifies numerical gradient
+  agreement, revision-only terminal-credit locality on the locked topology,
+  disconnected-padding invariance, no-event identity, bounded
+  projection, deterministic bytes, and no separately supplied downstream
+  grader-verdict/final-answer artifact leakage.
+  Semantic extraction and controlled full-context regeneration remain future
+  integration work.
 - **Milestone 3 — coherent evaluator experience (provisional Workbench):** a
   deterministic allowlist projection and local read-only Workbench now connect
   Evidence, Event, Revision, every recorded Replay lane, and Final Output Diff.
@@ -1025,8 +1092,12 @@ ready. The unchanged r01 replication also remained incomplete. v0.4.3 then
 classified all eight endpoints in its contract smoke at the typed provider
 boundary, but the resulting HTTP 429 failures correctly prevented a full run.
 The repository now includes a deterministic v0.4.4 Recorded Revision Workbench
-that reaches final public output and a separate Provider Failure Atlas. A fresh
-harder DEV and promotion suite, a compact replacement state, live revision
+that reaches final public output and a separate Provider Failure Atlas. The
+v0.5.0 mechanism core now adds a frozen typed graph, real local autograd,
+bounded evidence gates, deterministic public projection, and a zero-network
+reproduction artifact. Its graph is synthetic and oracle-scripted, and it does
+not yet consume raw language or regenerate a model answer. A fresh harder DEV
+and promotion suite, controlled full-context generation, live revision
 application, and any hosted judge sandbox remain pending; there is no hosted
 service in this release.
 
