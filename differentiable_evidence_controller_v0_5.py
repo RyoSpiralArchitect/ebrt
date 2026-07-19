@@ -49,9 +49,12 @@ GRAPH_SCHEMA_VERSION = "ebrt-public-semantic-graph-v0.5.0"
 CONTROL_MAP_SCHEMA_VERSION = "ebrt-evidence-control-map-v0.5.0"
 CONTROLLER_NAME = "EBRT Differentiable Evidence Controller"
 CONTROLLER_VERSION = "0.5.0-mechanism"
+CONTROL_REGULARIZER = "squared_l2_sum"
 FLOAT_DTYPE = torch.float64
 FINITE_DIFFERENCE_EPSILON = 1e-6
 FINITE_DIFFERENCE_ABS_TOLERANCE = 2e-8
+PADDING_INVARIANCE_EXTRA_NODES = 8
+PADDING_INVARIANCE_ABS_TOLERANCE = 1e-14
 
 _SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 _ALLOWED_SOURCE_KINDS = frozenset({"raw_history", "revision_event"})
@@ -785,6 +788,7 @@ class OptimizationResult:
                 "dtype": "float64",
                 "gate_parameterization": "g=2*sigmoid(u)",
                 "claim_activation": "h=tanh(A^T*g)",
+                "control_regularizer": CONTROL_REGULARIZER,
                 "optimizer": "Adam",
                 "randomness": "deterministic_no_rng",
                 "best_checkpoint_rule": (
@@ -980,7 +984,9 @@ class DifferentiableEvidenceController:
         else:
             stable = zero
 
-        control = torch.mean((gates - 1.0).square())
+        # Squared L2, not a mean over graph nodes: neutral disconnected padding
+        # must not dilute regularization or move the eligible-control optimum.
+        control = torch.sum((gates - 1.0).square())
         total = (
             self.config.revision_consistency_weight * revision
             + self.config.support_preservation_weight * support
@@ -1489,6 +1495,41 @@ def run_self_tests() -> dict[str, Any]:
     ):
         raise AssertionError("unaffected claim activation drifted")
 
+    # Adding neutral, edge-less public nodes must not dilute L2 regularization
+    # or move any original control merely by changing graph cardinality.
+    padded_payload = _demo_payload()
+    first_padding_ordinal = len(padded_payload["evidence_nodes"]) + 1
+    for offset in range(PADDING_INVARIANCE_EXTRA_NODES):
+        padded_payload["evidence_nodes"].append(
+            {
+                "evidence_id": f"PAD_{offset + 1}",
+                "ordinal": first_padding_ordinal + offset,
+                "public_summary": f"Disconnected padding node {offset + 1}.",
+                "source_kind": "raw_history",
+            }
+        )
+    _refresh_provenance_hash(padded_payload)
+    padded_graph = PublicSemanticGraph.from_mapping(padded_payload)
+    padded = controller.optimize(padded_graph)
+    padded_index = {
+        evidence_id: index for index, evidence_id in enumerate(padded.evidence_ids)
+    }
+    padding_gate_errors = {
+        evidence_id: abs(
+            float(first.final_gates[original_index].item())
+            - float(padded.final_gates[padded_index[evidence_id]].item())
+        )
+        for evidence_id, original_index in result_index.items()
+    }
+    max_padding_gate_error = max(padding_gate_errors.values())
+    if max_padding_gate_error > PADDING_INVARIANCE_ABS_TOLERANCE:
+        raise AssertionError(
+            "original control changed under disconnected neutral padding: "
+            f"{max_padding_gate_error:.3e}"
+        )
+    if first.loss_after != padded.loss_after:
+        raise AssertionError("objective changed under disconnected neutral padding")
+
     # A non-triggered event is an exact identity path and performs no backward.
     no_event_payload = _demo_payload()
     no_event_payload["revision_event"].update(
@@ -1628,6 +1669,7 @@ def run_self_tests() -> dict[str, Any]:
                 "revision-only terminal credit is local on the locked topology "
                 "and severed-edge ablation"
             ),
+            "disconnected neutral padding leaves original controls numerically invariant",
             "zero-event path is identity with zero backward calls",
             "all gates and projected control L2 remain bounded",
             "accepted control lowers energy and locked unrelated state remains exact",
@@ -1643,6 +1685,9 @@ def run_self_tests() -> dict[str, Any]:
             "finite_difference_error_by_term": finite_difference_error_by_term,
             "finite_difference_epsilon": FINITE_DIFFERENCE_EPSILON,
             "finite_difference_abs_tolerance": FINITE_DIFFERENCE_ABS_TOLERANCE,
+            "padding_invariance_extra_nodes": PADDING_INVARIANCE_EXTRA_NODES,
+            "padding_invariance_abs_tolerance": PADDING_INVARIANCE_ABS_TOLERANCE,
+            "max_disconnected_padding_gate_error": max_padding_gate_error,
             "energy_before": first.loss_before["total"],
             "energy_after": first.loss_after["total"],
             "control_l2_norm": final_norm,
