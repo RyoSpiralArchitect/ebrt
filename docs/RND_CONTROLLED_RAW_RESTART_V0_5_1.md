@@ -124,6 +124,26 @@ hashes. They do not parse or attach gold semantics to provider execution. The
 strong boundary asserted here is therefore semantic parse/grade attachment
 after all attempts, not the absence of every pre-call filesystem byte read.
 
+## Portable artifact verification
+
+Both committed live bundles can be inspected with the Python standard library
+on a host that does not match the recorded macOS/arm64 producer:
+
+```bash
+python3 -I -S verify_controlled_raw_restart_v0_5_1_portable.py self-test
+python3 -I -S verify_controlled_raw_restart_v0_5_1_portable.py verify \
+  --artifact-dir artifacts/benchmark_controlled_raw_restart_v0_5_1_live_canary
+python3 -I -S verify_controlled_raw_restart_v0_5_1_portable.py verify \
+  --artifact-dir artifacts/benchmark_controlled_raw_restart_v0_5_1_quota_recovery_r01
+```
+
+This verifier was added after the runs and is not retroactively included in
+their preregistered source snapshots. Reviewed canonical hashes are its root of
+trust. It validates frozen artifact bytes, the source/fixture graph, recorded
+runtime and receipt consistency, result fingerprints, execution accounting,
+and the exact calls ledger. It neither reproduces the local surrogate numerics
+nor cryptographically authenticates the provider bodies.
+
 ## First live attempt: provider boundary stopped all four arms
 
 The design was committed and pushed at `725e1d2` before the first live block.
