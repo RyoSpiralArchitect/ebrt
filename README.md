@@ -64,6 +64,22 @@ non-assessable. The new instrumentation separately identified one
 `invalidated_active_support` terminal rejection. The successor artifact is
 therefore also preserved as `INCOMPLETE`, without rerun or partial fill.
 
+EBRT v0.4.3 adds a prospective provider-boundary receipt around the unchanged
+v0.4.2/r01 reasoning protocol. Its one-shot contract smoke recorded eight HTTP
+429 `insufficient_quota` failures and classified all 8/8 at the native
+phase/reason boundary. Diagnostic integrity passed, but the zero-provider-
+failure launch gate correctly prevented the full block. No v0.4.3 reasoning
+comparison exists. A post-freeze correction changes only an inherited derived
+coverage field, with explicit lineage; calls, traces, receipts, failure labels,
+and the closed launch/decision gates remain unchanged.
+
+EBRT v0.4.4 turns the accumulated evidence into a provisional **Recorded
+Revision Workbench**. A deterministic allowlist projection shows one complete
+public episode from Evidence through Event, Revision, every Replay lane, and
+the final public-card diff. A separate Provider Failure Atlas shows where the
+v0.4.3 runtime episode stopped. The UI is still read-only and replaceable: its
+playback control reveals recorded public cards and makes no model call.
+
 > [!IMPORTANT]
 > v0.1-v0.3.1 are **not** a Transformer implementation, a GPT latent-state
 > editor, or evidence of improved language-model accuracy. v0.4 meaningfully
@@ -71,7 +87,9 @@ therefore also preserved as `INCOMPLETE`, without rerun or partial fill.
 > access hidden states or private chain-of-thought, and its two-case DEV canary
 > does not establish a general accuracy improvement. The repeated calibration
 > is also contaminated DEV evidence; its Direct arm receives fixed revision
-> metadata and is not an unqualified plain-API baseline.
+> metadata and is not an unqualified plain-API baseline. v0.4.3 improves
+> failure classification coverage, not reasoning quality; v0.4.4 projects
+> recorded public evidence and does not execute or edit a live agent.
 
 ## Why EBRT?
 
@@ -118,8 +136,14 @@ policy_lock_aperture_controls_v0_4_1.json non-promotional aperture-control contr
 benchmark_aperture_controls_v0_4_2.py prospective endpoint and diagnostic closure
 policy_lock_aperture_controls_v0_4_2.json fixed reason-code and launch-gate contract
 policy_lock_aperture_controls_v0_4_2_unchanged_replication_r01.json external one-shot replication meta-lock
+openai_response_boundary_v0_4_3.py typed raw-response/provider failure boundary
+benchmark_aperture_controls_v0_4_3.py frozen-protocol diagnostic smoke/full gate
+policy_lock_aperture_controls_v0_4_3.json preregistered provider-boundary lock
+compare_provider_boundary_v0_4_3.py offline frozen-block diagnostic comparison
 build_inspector_snapshot_v0_4_1.py validated public-artifact normalizer
-inspector/                    provisional local read-only artifact viewer
+build_reasoning_workbench_snapshot_v0_4_4.py deterministic allowlist projection
+projection_lock_reasoning_workbench_v0_4_4.json source/hash/privacy projection lock
+inspector/                    provisional recorded Revision Workbench
 docs/RND_BENCHMARK_V0_1.md    protocol, results, limits, and claim ledger
 docs/RND_INSTRUMENTATION_V0_2.md measurement contract and algorithm findings
 docs/RND_DUAL_ROUTE_V0_3.md   terminal invariant result and v0.3.1 direction
@@ -129,6 +153,8 @@ docs/RND_DIRECT_FULL_CALIBRATION_V0_4.md repeated result and state-loss diagnosi
 docs/RND_APERTURE_CONTROLS_V0_4_1.md control result and causal boundary
 docs/RND_DIAGNOSTIC_CLOSURE_V0_4_2.md fresh successor result and failure taxonomy
 docs/RND_APERTURE_CONTROLS_V0_4_2_UNCHANGED_REPLICATION_R01.md preregistered replication and frozen negative result
+docs/RND_PROVIDER_BOUNDARY_V0_4_3.md protocol, smoke result, correction lineage
+docs/RND_REASONING_WORKBENCH_V0_4_4.md workbench projection and claim gates
 artifacts/benchmark_v0_1/     committed machine-readable benchmark evidence
 artifacts/demo_v0_1/trace.json committed no-build mechanism trace
 artifacts/benchmark_instrumentation_v0_2/ committed v0.2 measurement evidence
@@ -142,6 +168,9 @@ artifacts/benchmark_aperture_controls_v0_4_1_dev/ incomplete locked four-arm att
 artifacts/benchmark_aperture_controls_v0_4_2_contract_smoke/ passing launch evidence
 artifacts/benchmark_aperture_controls_v0_4_2_dev/ fresh incomplete diagnostic block
 artifacts/benchmark_aperture_controls_v0_4_2_unchanged_replication_r01_*/ unchanged-source smoke and full evidence
+artifacts/benchmark_aperture_controls_v0_4_3_contract_smoke/ frozen diagnostic smoke
+artifacts/compare_provider_boundary_v0_4_3/ offline non-causal comparison
+artifacts/reasoning_workbench_v0_4_4/ canonical public projection and report
 requirements.txt              runtime dependency declaration
 requirements-live.txt         separately pinned OpenAI/Pydantic live dependencies
 LICENSE                       Apache License 2.0
@@ -322,32 +351,35 @@ and Full use different call counts and realized token/latency budgets. The
 committed bundle is development evidence, never a promotion or general model
 benchmark.
 
-Validate the v0.4.2 diagnostic successor and Inspector exporter without making
-an API call:
+Validate the v0.4.2 diagnostic successor, v0.4.3 provider-boundary evidence,
+and both public exporters without making an API call:
 
 ```bash
 python3 benchmark_aperture_controls_v0_4_2.py self-test
+python3 benchmark_aperture_controls_v0_4_3.py self-test
+python3 compare_provider_boundary_v0_4_3.py validate
+python3 compare_provider_boundary_v0_4_3.py self-test
 python3 build_inspector_snapshot_v0_4_1.py self-test
+python3 build_reasoning_workbench_snapshot_v0_4_4.py self-test
+python3 build_reasoning_workbench_snapshot_v0_4_4.py validate
 ```
 
-The committed full block is intentionally not a resume target. Its passing
+The committed v0.4.2 full block is intentionally not a resume target. Its passing
 contract-smoke launch evidence and incomplete full evidence are both preserved
-under `artifacts/`. To build their normalized read-only view:
+under `artifacts/`. The v0.4.3 full block was never launched because its smoke
+gate closed. To run the normalized v0.4.4 read-only workbench:
 
 ```bash
-python3 build_inspector_snapshot_v0_4_1.py build \
-  --bundle artifacts/benchmark_aperture_controls_v0_4_2_dev \
-  --output inspector/public/data/ebrt-public-inspector-v0.1.json
+python3 build_reasoning_workbench_snapshot_v0_4_4.py validate
 cd inspector
 pnpm install
 pnpm dev
 ```
 
-This viewer is read-only and unhosted. `Overview` replays already recorded final
-public outputs and their cross-arm diff without a model call; `Inspect` displays
-raw aperture, public-card support, grading availability, terminal reason/step,
-and provider-reported usage. It does not expose private chain-of-thought or
-model hidden state.
+This workbench is read-only and unhosted. `Play recorded revision` reveals
+already recorded public cards, grades, and their output diff without a model
+call. The Provider Failure Atlas is a separate runtime-health episode. Neither
+surface exposes private chain-of-thought or model hidden state.
 
 ## Judge path: inspect first, rerun second
 
@@ -424,6 +456,19 @@ For the v0.4.1 control block and provisional Inspector, inspect:
    traces, grades, exact receipts, and manifest hashes;
 4. `inspector/` for the replaceable local viewer and
    `build_inspector_snapshot_v0_4_1.py` for its validated public data contract.
+
+For the provider-boundary diagnostic and Recorded Revision Workbench, inspect:
+
+1. [`docs/RND_PROVIDER_BOUNDARY_V0_4_3.md`](docs/RND_PROVIDER_BOUNDARY_V0_4_3.md)
+   for the preregistered smoke, 8/8 typed failure coverage, closed launch gate,
+   and post-freeze derived-field lineage;
+2. `artifacts/benchmark_aperture_controls_v0_4_3_contract_smoke/` and
+   `artifacts/compare_provider_boundary_v0_4_3/` for the frozen receipts and
+   non-causal diagnostic comparison;
+3. [`docs/RND_REASONING_WORKBENCH_V0_4_4.md`](docs/RND_REASONING_WORKBENCH_V0_4_4.md)
+   for the deterministic episode-selection and public projection contract;
+4. `artifacts/reasoning_workbench_v0_4_4/` for the canonical snapshot, manifest,
+   and report, then `inspector/` for the replaceable product surface.
 
 There is intentionally no normal v0.3 result directory: the runner stopped
 before validated bundle publication, and the ledger stores no outcome rows.
@@ -844,8 +889,12 @@ retrospectively relabeling failures. See the
 | Stable local-validator reason codes make every live failure assessable | Refuted by the fresh v0.4.2 block: one local rejection became an assessed `invalidated_active_support` failure, while an API timeout and an SDK parse `ValidationError` remained non-assessable |
 | Repeating unchanged v0.4.2 makes the locked cause estimate decision-ready | Refuted by r01: its smoke passed, but a contiguous 31-receipt `RateLimitError` tail left only 22/30 four-arm runs assessed and kept both cause conclusions closed |
 | The r01 rate-limit tail proves quota exhaustion or an HTTP-layer cause | Not established: v0.4.2 retained the SDK exception class but not HTTP status or provider error code, so prospective v0.4.3 instrumentation is required |
+| v0.4.3 improves native provider-failure classification coverage | Supported descriptively within its frozen two-case smoke: 8/8 non-assessable endpoints received a prospective phase/reason code, versus frozen r01 native 0/31; the blocks have different populations and the cross-block effect is `null` |
+| The v0.4.3 HTTP 429 observations are reasoning failures or prove current provider health | Not supported; they are a recorded runtime-health episode, all reasoning endpoints were non-assessable, and the full block was not launched |
+| The v0.4.3 derived coverage correction changed provider observations or the launch decision | No; explicit lineage retains the original hashes, while calls, traces, receipt projection, eight failure labels, closed gates, and absent full block remain unchanged |
 | The fixed revision envelope improves the saturated one-shot raw scaffold | Not established; fixed passed 30/30 versus no-envelope 29/30 at output level and both were stable on 10/10 cases, with no decision-ready cause estimate |
-| The Inspector is the final EBRT frontend or a hosted debugger | No; it is a provisional local read-only view over recorded public artifacts and may be replaced entirely |
+| The Workbench can trace one recorded revision through final public output | Supported for its mechanically selected v0.4 episode; it preserves all three replay lanes and derives the diff from emitted public cards only |
+| The Inspector or Workbench is the final EBRT frontend or a hosted debugger | No; it is a provisional local read-only view over recorded public artifacts and may be replaced entirely |
 | Selective replay should be optimized before state sufficiency | Not supported by current evidence; it is paused as a quality direction and remains an unranked future efficiency ablation |
 | EBRT edits hidden states inside a trained Transformer or GPT model | Not implemented |
 | EBRT improves real-world LLM reasoning accuracy | Not established |
@@ -899,19 +948,19 @@ category determination.
   byte-identical r01 replication also remains not ready: its smoke passed, but
   a late contiguous 31-receipt `RateLimitError` tail left only 22/30 four-arm
   runs assessed. r01 is frozen without retry or partial fill.
-- **Milestone 2.3 — provider-boundary observability (next):** preserve all
-  prompts, arms, fixtures, budgets, endpoint adjudication, and no-retry
-  behavior while separating pre-HTTP acquisition, HTTP status, SDK structured
-  parsing, provider contract, and local public-card validation. The purpose is
-  diagnostic classification coverage, not to claim that instrumentation
-  improves model quality or prevents provider failures.
-- **Milestone 3 — coherent evaluator experience (provisional local viewer):**
-  the deterministic Mirror figure and a local read-only Inspector over
-  normalized recorded artifacts now exist. Its Overview reaches recorded final
-  output and public diff, while its detailed view distinguishes accepted
-  outputs, assessed terminal rejection, and non-assessable provider/SDK
-  failure. The first Inspector is deliberately replaceable; an editable or
-  hosted judge sandbox and the eventual product interaction remain pending.
+- **Milestone 2.3 — provider-boundary observability (diagnostic smoke
+  complete):** the unchanged reasoning protocol now separates pre-HTTP
+  acquisition, HTTP status, SDK structured parsing, provider contract, and
+  local public-card validation. The smoke prospectively classified 8/8
+  non-assessable endpoints as `http_status/insufficient_quota`; its zero-
+  provider-failure gate prevented the full block, so no reasoning comparison
+  or promotion claim is available.
+- **Milestone 3 — coherent evaluator experience (provisional Workbench):** a
+  deterministic allowlist projection and local read-only Workbench now connect
+  Evidence, Event, Revision, every recorded Replay lane, and Final Output Diff.
+  A separate Failure Atlas keeps runtime diagnostics out of the reasoning
+  episode. The first Workbench is deliberately replaceable; live Apply,
+  editing, hosting, and the eventual product interaction remain pending.
 - **Milestone 4 — submission evidence:** document the Codex development record,
   provide an English demo under the event rules, include the required Codex
   feedback session, and audit every public claim against committed artifacts.
@@ -972,10 +1021,14 @@ then found cumulative raw at 30/30 strict outputs versus card-only at 2/28
 completed outputs, while no-envelope and fixed-envelope Direct reached 29/30
 and 30/30. Two card-only arms failed a local contract after a completed third
 provider call, leaving the manifest incomplete and the cause decision not
-ready. The repository now includes a provisional local read-only Inspector for
-that recorded evidence. Stable validator reason codes, a fresh harder DEV and
-promotion suite, a compact replacement state, and any hosted judge sandbox
-remain pending; there is no hosted service in this release.
+ready. The unchanged r01 replication also remained incomplete. v0.4.3 then
+classified all eight endpoints in its contract smoke at the typed provider
+boundary, but the resulting HTTP 429 failures correctly prevented a full run.
+The repository now includes a deterministic v0.4.4 Recorded Revision Workbench
+that reaches final public output and a separate Provider Failure Atlas. A fresh
+harder DEV and promotion suite, a compact replacement state, live revision
+application, and any hosted judge sandbox remain pending; there is no hosted
+service in this release.
 
 Issues and pull requests that add reproducible tests, adversarial fixtures, or
 better controls are especially welcome. Please avoid expanding claims without
