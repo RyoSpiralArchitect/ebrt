@@ -1,0 +1,274 @@
+{
+  "schema_version": "ebrt-temporal-paired-suite-v0.5-t.0",
+  "suite_id": "route_revision_order_pairs_dev_v0_5_t",
+  "state_axes": [
+    "premise",
+    "decision",
+    "stable"
+  ],
+  "initial_state": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "evidence_specs": [
+    {
+      "evidence_id": "legacy_record",
+      "public_summary": "A superseded registry record favors the legacy route.",
+      "source_kind": "raw_history"
+    },
+    {
+      "evidence_id": "registry_correction",
+      "public_summary": "A public correction replaces the legacy route premise.",
+      "source_kind": "revision_event"
+    },
+    {
+      "evidence_id": "stable_seal",
+      "public_summary": "The cargo seal is stable and independent of route revision.",
+      "source_kind": "stable_context"
+    }
+  ],
+  "operators": [
+    {
+      "operator_id": "legacy",
+      "public_name": "Read legacy route premise",
+      "activation": "tanh",
+      "evidence_id": "legacy_record",
+      "transition_control_id": null,
+      "base_matrix": [
+        [0.65, 0.0, 0.0],
+        [0.0, 0.8, 0.0],
+        [0.0, 0.0, 0.8]
+      ],
+      "evidence_direction": [1.0, 0.0, 0.0],
+      "transition_basis": [
+        [0.0, 0.0, 0.0],
+        [0.0, 0.0, 0.0],
+        [0.0, 0.0, 0.0]
+      ]
+    },
+    {
+      "operator_id": "correction",
+      "public_name": "Integrate registry correction",
+      "activation": "tanh",
+      "evidence_id": "registry_correction",
+      "transition_control_id": null,
+      "base_matrix": [
+        [0.65, 0.0, 0.0],
+        [0.0, 0.8, 0.0],
+        [0.0, 0.0, 0.8]
+      ],
+      "evidence_direction": [1.0, 0.0, 0.0],
+      "transition_basis": [
+        [0.0, 0.0, 0.0],
+        [0.0, 0.0, 0.0],
+        [0.0, 0.0, 0.0]
+      ]
+    },
+    {
+      "operator_id": "decision",
+      "public_name": "Write current premise into decision state",
+      "activation": "tanh",
+      "evidence_id": null,
+      "transition_control_id": "decision_write",
+      "base_matrix": [
+        [0.9, 0.0, 0.0],
+        [0.9, 0.1, 0.0],
+        [0.0, 0.0, 0.8]
+      ],
+      "evidence_direction": [0.0, 0.0, 0.0],
+      "transition_basis": [
+        [0.0, 0.0, 0.0],
+        [1.0, 0.0, 0.0],
+        [0.0, 0.0, 0.0]
+      ]
+    },
+    {
+      "operator_id": "revision",
+      "public_name": "Reconcile premise and prior decision",
+      "activation": "tanh",
+      "evidence_id": null,
+      "transition_control_id": "revision_mix",
+      "base_matrix": [
+        [0.9, 0.0, 0.0],
+        [0.15, 0.6, 0.0],
+        [0.0, 0.0, 0.8]
+      ],
+      "evidence_direction": [0.0, 0.0, 0.0],
+      "transition_basis": [
+        [0.0, 0.0, 0.0],
+        [0.7071067811865476, -0.7071067811865476, 0.0],
+        [0.0, 0.0, 0.0]
+      ]
+    },
+    {
+      "operator_id": "stable_read",
+      "public_name": "Read unrelated stable cargo state",
+      "activation": "tanh",
+      "evidence_id": "stable_seal",
+      "transition_control_id": null,
+      "base_matrix": [
+        [1.0, 0.0, 0.0],
+        [0.0, 1.0, 0.0],
+        [0.0, 0.0, 1.0]
+      ],
+      "evidence_direction": [0.0, 0.0, 1.0],
+      "transition_basis": [
+        [0.0, 0.0, 0.0],
+        [0.0, 0.0, 0.0],
+        [0.0, 0.0, 0.0]
+      ]
+    },
+    {
+      "operator_id": "stable_carry",
+      "public_name": "Carry unrelated stable cargo state",
+      "activation": "tanh",
+      "evidence_id": null,
+      "transition_control_id": "stable_carry",
+      "base_matrix": [
+        [0.95, 0.0, 0.0],
+        [0.0, 0.95, 0.0],
+        [0.0, 0.0, 0.7]
+      ],
+      "evidence_direction": [0.0, 0.0, 0.0],
+      "transition_basis": [
+        [0.0, 0.0, 0.0],
+        [0.0, 0.0, 0.0],
+        [0.0, 0.0, 1.0]
+      ]
+    }
+  ],
+  "leaf_control_ids": [
+    "legacy_record",
+    "registry_correction",
+    "stable_seal"
+  ],
+  "transition_control_ids": [
+    "decision_write",
+    "revision_mix",
+    "stable_carry"
+  ],
+  "trace_orders": [
+    {
+      "order_variant": "early_correction",
+      "operator_ids": [
+        "stable_read",
+        "legacy",
+        "correction",
+        "decision",
+        "revision",
+        "stable_carry"
+      ]
+    },
+    {
+      "order_variant": "late_correction",
+      "operator_ids": [
+        "stable_read",
+        "legacy",
+        "decision",
+        "correction",
+        "revision",
+        "stable_carry"
+      ]
+    }
+  ],
+  "pair_parameters": [
+    {
+      "pair_id": "P01",
+      "evidence_values": {
+        "legacy_record": -0.9,
+        "registry_correction": 1.1,
+        "stable_seal": 0.45
+      },
+      "terminal_decision_target": 0.7
+    },
+    {
+      "pair_id": "P02",
+      "evidence_values": {
+        "legacy_record": -0.95,
+        "registry_correction": 1.15,
+        "stable_seal": 0.48
+      },
+      "terminal_decision_target": 0.72
+    },
+    {
+      "pair_id": "P03",
+      "evidence_values": {
+        "legacy_record": -1.0,
+        "registry_correction": 1.2,
+        "stable_seal": 0.5
+      },
+      "terminal_decision_target": 0.75
+    },
+    {
+      "pair_id": "P04",
+      "evidence_values": {
+        "legacy_record": -1.05,
+        "registry_correction": 1.22,
+        "stable_seal": 0.52
+      },
+      "terminal_decision_target": 0.77
+    },
+    {
+      "pair_id": "P05",
+      "evidence_values": {
+        "legacy_record": -1.1,
+        "registry_correction": 1.25,
+        "stable_seal": 0.55
+      },
+      "terminal_decision_target": 0.78
+    },
+    {
+      "pair_id": "P06",
+      "evidence_values": {
+        "legacy_record": -0.85,
+        "registry_correction": 1.05,
+        "stable_seal": 0.42
+      },
+      "terminal_decision_target": 0.68
+    },
+    {
+      "pair_id": "P07",
+      "evidence_values": {
+        "legacy_record": -1.02,
+        "registry_correction": 1.18,
+        "stable_seal": 0.47
+      },
+      "terminal_decision_target": 0.74
+    },
+    {
+      "pair_id": "P08",
+      "evidence_values": {
+        "legacy_record": -0.92,
+        "registry_correction": 1.22,
+        "stable_seal": 0.53
+      },
+      "terminal_decision_target": 0.76
+    }
+  ],
+  "sham_source_index_by_target": [
+    1,
+    2,
+    0
+  ],
+  "revision_event": {
+    "event_id": "EV_ROUTE_PREMISE_CORRECTION",
+    "triggered": true,
+    "correction_evidence_id": "registry_correction",
+    "decision_state_axis": "decision",
+    "stable_state_axis": "stable"
+  },
+  "provenance": {
+    "adapter_name": "synthetic-temporal-public-state-adapter",
+    "adapter_version": "0.5-t.0-dev-contract",
+    "semantic_source": "synthetic_order_paired_contract_fixture",
+    "deterministic": true,
+    "semantic_payload_sha256": "4782b16974698438afb5aee153f488ea95377f7a53c2192bb268067123126218"
+  },
+  "claim_boundary": [
+    "The recurrence, matrices, evidence values, event, control bases, and terminal targets are synthetic oracle inputs.",
+    "The suite tests bounded intervention allocation over a supplied public state program, not dependency discovery.",
+    "No provider output, downstream grade, or final generated answer enters the controller.",
+    "Order-paired mechanism results do not establish hosted-model reasoning improvement or real-world causality."
+  ]
+}

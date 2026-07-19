@@ -1,0 +1,102 @@
+{
+  "schema_version": "ebrt-temporal-adjoint-state-control-policy-lock-v0.5-t.0",
+  "status": "LOCKED_SYNTHETIC_MECHANISM",
+  "sources": {
+    "core": {
+      "path": "temporal_adjoint_state_controller_v0_5_t.py",
+      "sha256": "43df27a8595274f694e7c0741c4fe642a66ae37a0719e5d3256d4a0f37f6b7b5"
+    },
+    "benchmark": {
+      "path": "benchmark_temporal_adjoint_state_control_v0_5_t.py",
+      "sha256": "3ba15e9752db9b6beeea11e8865d7515e7c015a5735673e347c39f0fdbc2bb9d"
+    },
+    "builder": {
+      "path": "build_temporal_adjoint_state_control_artifact_v0_5_t.py",
+      "sha256": "a18ab7379d9e581b8786766af840a8f1988e49550821b5c5fe77c7ae201522c2"
+    }
+  },
+  "fixtures": {
+    "event": {
+      "path": "fixtures/temporal_adjoint_state_controller_v0_5_t_dev.json",
+      "sha256": "7ad53f319c4cb2d284c1a21011c1d0c07dd58d16f9d8a25659ef6fae26a55f80",
+      "semantic_payload_sha256": "4782b16974698438afb5aee153f488ea95377f7a53c2192bb268067123126218",
+      "suite_id": "route_revision_order_pairs_dev_v0_5_t"
+    },
+    "no_event": {
+      "path": "fixtures/temporal_adjoint_state_controller_v0_5_t_no_event.json",
+      "sha256": "41dec8272cd4d450ced610e592fde24128aadb1ae4832e5384c8bfa5d4fc60ff",
+      "semantic_payload_sha256": "855b82e5ef4477bebc58a6ed6e6ea39cb35605c26f3511cb7647220f254d32d5",
+      "suite_id": "route_revision_no_event_v0_5_t"
+    }
+  },
+  "controller_config": {
+    "revision_steps": 300,
+    "learning_rate": 0.06,
+    "max_control_abs": 0.75,
+    "max_control_l2_norm": 0.55,
+    "revision_consistency_weight": 1.0,
+    "stable_state_drift_weight": 1.0,
+    "control_l2_weight": 0.01,
+    "finite_control_step": 0.1,
+    "active_leverage_relative_threshold": 0.25,
+    "role_delta": 0.02,
+    "acceptance_tolerance": 1e-12,
+    "numeric_precision": 12
+  },
+  "comparison_gates": {
+    "collapsed_gradient_abs_tolerance": 2e-12,
+    "sham_norm_abs_tolerance": 1e-15,
+    "minimum_C_win_fraction_vs_B": 0.875,
+    "minimum_C_win_fraction_vs_locked_D": 0.875,
+    "minimum_aggregate_relative_reduction_vs_B": 0.25,
+    "minimum_order_switch_fraction": 1.0,
+    "minimum_top_leverage_margin": 0.01,
+    "expected_early_top_control": "decision_write",
+    "expected_early_top_floor_ordinal": 4,
+    "expected_late_top_control": "revision_mix",
+    "expected_late_top_floor_ordinal": 5,
+    "require_C_beat_every_nonidentity_sham_aggregate": true,
+    "minimum_C_win_fraction_against_every_nonidentity_sham": 1.0
+  },
+  "representative": {
+    "pair_id": "P03",
+    "early_order_variant": "early_correction",
+    "late_order_variant": "late_correction",
+    "lane": "transition"
+  },
+  "canonicalization": {
+    "encoding": "utf-8",
+    "ensure_ascii": false,
+    "sort_keys": true,
+    "separators": [",", ":"],
+    "allow_nan": false,
+    "trailing_newline": true
+  },
+  "artifact": {
+    "directory": "artifacts/temporal_adjoint_state_control_v0_5_t",
+    "files": [
+      "representative_early_execution_control_map.json",
+      "representative_early_temporal_adjoint_audit.json",
+      "representative_late_execution_control_map.json",
+      "representative_late_temporal_adjoint_audit.json",
+      "no_event_execution_control_map.json",
+      "no_event_temporal_adjoint_audit.json",
+      "arm_comparison.json",
+      "self_test.json",
+      "mechanism_report.md",
+      "manifest.json"
+    ],
+    "network_calls": 0
+  },
+  "claim_boundary": [
+    "The v0.5.0 controller, policy lock, fixtures, documentation, and committed artifact remain immutable historical inputs and are not rewritten by v0.5-T.",
+    "The temporal recurrence, matrices, evidence values, operator order, event flag, control bases, and terminal targets are synthetic oracle inputs.",
+    "Exact local adjoints allocate bounded controls only inside the supplied public recurrence; they do not discover semantic dependencies or differentiate a hosted model.",
+    "The eight parameter cells are a local sweep of one topology, not independent replications, and the gates were locked after pilot implementation rather than preregistered.",
+    "Leaf and transition controls share standardized coordinate count and L2 bounds, but not matched terminal Jacobian scale; the positive comparison includes the supplied oracle actuator geometry and does not isolate temporal credit assignment alone.",
+    "The reachable-subspace witness distinguishes the supplied leaf and state intervention classes, but does not claim universal algebraic non-collapsibility after adding state-control pseudo-leaves.",
+    "No semantic adapter, provider API, hidden model state, final generated answer, downstream grade, token count, latency, or server behavior participates.",
+    "Passing the locked synthetic gates supports a temporal public-state mechanism result only, not hosted-model reasoning quality, efficiency, causality, production readiness, or benchmark generality.",
+    "Byte-identical artifact reproduction is asserted only for the runtime recorded in the manifest."
+  ]
+}

@@ -1,0 +1,99 @@
+{
+  "benchmark": {
+    "benchmark": "EBRT Temporal State-Control Matched Benchmark 0.5-t.0-experiment",
+    "checks": [
+      "A/B neutral collapsed-Jacobian gradient equivalence",
+      "same standardized control count and L2 coordinate budget across all four arms",
+      "C beats B, locked D, and every nonidentity floor permutation under locked gates",
+      "top finite-leverage control changes with evidence order",
+      "sham preserves exact control-value multiset and L2 norm",
+      "exact linear witness separates supplied leaf and state reachable spans",
+      "non-default loss weights remain consistent in rows and finite leverage",
+      "two identical comparisons are byte deterministic",
+      "comparison completes while socket creation is denied"
+    ],
+    "claim_boundary": [
+      "All public transitions, control bases, evidence values, ordering, event flags, and terminal targets are synthetic oracle inputs.",
+      "A and B have the same neutral local gradient by construction; finite controls can diverge because A is a linearization.",
+      "The eight parameter cells are a local sweep of one topology, not eight independent replications.",
+      "Leaf and transition arms share standardized coordinate count and L2 bounds, not matched terminal Jacobian scale; C versus B therefore includes oracle actuator-geometry leverage and does not isolate temporal credit assignment alone.",
+      "C winning under that shared coordinate budget supports a supplied-intervention-class result, not dependency discovery or universal non-collapsibility.",
+      "Adjoint sensitivity and finite leverage are local surrogate diagnostics, not causal importance or model attention.",
+      "No provider, hidden state, final natural-language output, downstream grader, latency, or token count participates.",
+      "No hosted-model reasoning-quality, efficiency, production-readiness, or real-world causal claim is supported."
+    ],
+    "comparison_fingerprint_sha256": "b856f9531ef093c850637109f3310f24f227dbce04e110db003d7923222f7eb6",
+    "observed": {
+      "C_aggregate_relative_reduction_vs_B": {
+        "observed": 0.4460871367425163
+      },
+      "C_beats_every_nonidentity_sham_aggregate": {},
+      "C_win_fraction_against_every_nonidentity_sham": {
+        "observed_minimum": 1.0
+      },
+      "C_win_fraction_vs_B_cells": {
+        "observed": 1.0,
+        "total": 16,
+        "wins": 16
+      },
+      "C_win_fraction_vs_locked_D_cells": {
+        "observed": 1.0,
+        "total": 16,
+        "wins": 16
+      },
+      "collapsed_A_B_neutral_gradient_equivalence": {
+        "observed_max_abs_error": 8.326672684688674e-17
+      },
+      "matched_sham_L2_norm": {
+        "observed_max_abs_error": 1.1102230246251565e-16
+      },
+      "matched_sham_exact_value_multiset": {
+        "observed_all": true
+      },
+      "order_sensitive_top_floor_parameter_cells": {
+        "observed": 1.0,
+        "total": 8
+      },
+      "top_finite_leverage_margin_parameter_cells": {
+        "observed_fraction_passing": 1.0,
+        "total": 8
+      }
+    },
+    "status": "PASS"
+  },
+  "claim_boundary": "Synthetic mechanism and artifact integrity only; no hosted model executed.",
+  "controller": {
+    "checks": [
+      "exact typed temporal suite and canonical semantic hash",
+      "float64 autograd matches central finite differences",
+      "manual temporal adjoint recurrence matches autograd",
+      "edge severing removes upstream terminal credit",
+      "identity-node split preserves terminal state and gradients",
+      "paired order changes the top finite-leverage transition floor",
+      "bounded optimization lowers the terminal-only objective",
+      "audit sidecar leaves execution-control-map bytes unchanged",
+      "no-event path is exact identity with zero backward calls",
+      "recursive forbidden-key and semantic-hash tampering are rejected",
+      "pure local optimization completes while sockets are denied"
+    ],
+    "claim_boundary": "Synthetic supplied public recurrence only; exact local adjoints do not discover dependencies, establish causality, or evidence a hosted-model reasoning improvement.",
+    "controller": "EBRT Temporal Adjoint State Controller 0.5-t.0-experiment",
+    "mechanism_metrics": {
+      "early_objective_after": 0.11102569928017145,
+      "early_objective_before": 0.17909124632562834,
+      "early_top_control": "decision_write",
+      "finite_difference_abs_tolerance": 3e-08,
+      "late_objective_after": 0.3276455601418431,
+      "late_objective_before": 0.8176214824864535,
+      "late_top_control": "revision_mix",
+      "manual_adjoint_abs_tolerance": 2e-12,
+      "max_finite_difference_error": 7.759481945868174e-11,
+      "max_manual_adjoint_error": 2.220446049250313e-16,
+      "semantic_payload_sha256": "4782b16974698438afb5aee153f488ea95377f7a53c2192bb268067123126218"
+    },
+    "status": "PASS"
+  },
+  "network_calls": 0,
+  "schema_version": "ebrt-temporal-state-control-self-test-v0.5-t.0",
+  "status": "PASS"
+}

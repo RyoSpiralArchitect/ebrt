@@ -1,0 +1,92 @@
+{
+  "budget": {
+    "control_count": 3,
+    "max_control_abs": 0.75,
+    "max_control_l2_norm": 0.55,
+    "observed_control_l2_norm": 0.55
+  },
+  "claim_boundary": [
+    "Actionable controls are projections of a synthetic public surrogate.",
+    "No provider or final generation is executed by this map.",
+    "A lower surrogate objective is not evidence of better hosted-model reasoning."
+  ],
+  "controller": {
+    "control_parameterization": "delta=max_control_abs*tanh(u), projected to shared L2 budget",
+    "dtype": "float64",
+    "gradient_boundary": "frozen public recurrence only; adapter, JSON, provider, and generation are stop-gradient boundaries",
+    "lane": "transition",
+    "name": "EBRT Temporal Adjoint State Controller",
+    "version": "0.5-t.0-experiment"
+  },
+  "controls": [
+    {
+      "applied_value": -0.383944295176,
+      "delta": -0.383944295176,
+      "floor_id": "F03:decision",
+      "floor_ordinal": 3,
+      "role": "decrease",
+      "target_id": "decision_write",
+      "target_kind": "transition"
+    },
+    {
+      "applied_value": 0.393810586706,
+      "delta": 0.393810586706,
+      "floor_id": "F05:revision",
+      "floor_ordinal": 5,
+      "role": "increase",
+      "target_id": "revision_mix",
+      "target_kind": "transition"
+    },
+    {
+      "applied_value": 0.0,
+      "delta": 0.0,
+      "floor_id": "F06:stable_carry",
+      "floor_ordinal": 6,
+      "role": "preserve",
+      "target_id": "stable_carry",
+      "target_kind": "transition"
+    }
+  ],
+  "fingerprint_sha256": "5792e74422a766170ceb0bcf4fd762fd2bee43294499099719a2028fbd28e69f",
+  "optimization": {
+    "accepted": true,
+    "backward_calls": 300,
+    "best_iteration": 45,
+    "max_observed_control_l2_norm": 0.55,
+    "rolled_back": false
+  },
+  "schema_version": "ebrt-execution-control-map-v1.0.0",
+  "source": {
+    "event_id": "EV_ROUTE_PREMISE_CORRECTION",
+    "event_triggered": true,
+    "order_variant": "late_correction",
+    "pair_id": "P03",
+    "semantic_payload_sha256": "4782b16974698438afb5aee153f488ea95377f7a53c2192bb268067123126218",
+    "suite_id": "route_revision_order_pairs_dev_v0_5_t"
+  },
+  "status": "CONTROL_ACCEPTED",
+  "surrogate": {
+    "objective_after": {
+      "control_l2": 0.3025,
+      "revision_consistency": 0.324620560142,
+      "stable_state_drift": 0.0,
+      "total": 0.327645560142
+    },
+    "objective_before": {
+      "control_l2": 0.0,
+      "revision_consistency": 0.817621482486,
+      "stable_state_drift": 0.0,
+      "total": 0.817621482486
+    },
+    "terminal_state_after": {
+      "decision": 0.180245175412,
+      "premise": 0.472317240328,
+      "stable": 0.119747983008
+    },
+    "terminal_state_before": {
+      "decision": -0.154224243474,
+      "premise": 0.472317240328,
+      "stable": 0.119747983008
+    }
+  }
+}
