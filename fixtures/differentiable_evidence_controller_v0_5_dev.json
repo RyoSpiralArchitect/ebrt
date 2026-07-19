@@ -1,0 +1,140 @@
+{
+  "schema_version": "ebrt-public-semantic-graph-v0.5.0",
+  "graph_id": "route_code_supersession_public_graph_dev_v0_5",
+  "evidence_nodes": [
+    {
+      "evidence_id": "R1",
+      "ordinal": 1,
+      "public_summary": "The task is to resolve NERA's bay from its current route code.",
+      "source_kind": "raw_history"
+    },
+    {
+      "evidence_id": "R2",
+      "ordinal": 2,
+      "public_summary": "The public route table maps code B2 to bay BLUE.",
+      "source_kind": "raw_history"
+    },
+    {
+      "evidence_id": "R3",
+      "ordinal": 3,
+      "public_summary": "A superseded registry entry associates NERA with route code A1 and bay AMBER.",
+      "source_kind": "raw_history"
+    },
+    {
+      "evidence_id": "R4",
+      "ordinal": 4,
+      "public_summary": "Bay assignment should follow the current registry code through the route table.",
+      "source_kind": "raw_history"
+    },
+    {
+      "evidence_id": "R5",
+      "ordinal": 5,
+      "public_summary": "NERA's cargo seal remains SEALED and is independent of its bay assignment.",
+      "source_kind": "raw_history"
+    },
+    {
+      "evidence_id": "R6",
+      "ordinal": 6,
+      "public_summary": "A registry correction replaces R3 and establishes B2 as NERA's current route code.",
+      "source_kind": "revision_event"
+    },
+    {
+      "evidence_id": "R7",
+      "ordinal": 7,
+      "public_summary": "Shipment NERO, a different shipment with a similar name, is assigned to bay BLUE.",
+      "source_kind": "raw_history"
+    }
+  ],
+  "claim_nodes": [
+    {
+      "claim_id": "bay_assignment",
+      "public_name": "NERA current bay assignment",
+      "affected_by_event": true
+    },
+    {
+      "claim_id": "cargo_seal",
+      "public_name": "NERA cargo seal status",
+      "affected_by_event": false
+    },
+    {
+      "claim_id": "other_shipment_bay",
+      "public_name": "NERO bay assignment",
+      "affected_by_event": false
+    }
+  ],
+  "dependency_edges": [
+    {
+      "edge_id": "E_R2_BAY",
+      "evidence_id": "R2",
+      "claim_id": "bay_assignment",
+      "relation": "supports",
+      "effect": 0.9
+    },
+    {
+      "edge_id": "E_R3_BAY",
+      "evidence_id": "R3",
+      "claim_id": "bay_assignment",
+      "relation": "contradicts",
+      "effect": -0.9
+    },
+    {
+      "edge_id": "E_R4_BAY",
+      "evidence_id": "R4",
+      "claim_id": "bay_assignment",
+      "relation": "supports",
+      "effect": 0.2
+    },
+    {
+      "edge_id": "E_R5_SEAL",
+      "evidence_id": "R5",
+      "claim_id": "cargo_seal",
+      "relation": "supports",
+      "effect": 1.0
+    },
+    {
+      "edge_id": "E_R6_BAY",
+      "evidence_id": "R6",
+      "claim_id": "bay_assignment",
+      "relation": "supports",
+      "effect": 1.0
+    },
+    {
+      "edge_id": "E_R7_OTHER_BAY",
+      "evidence_id": "R7",
+      "claim_id": "other_shipment_bay",
+      "relation": "supports",
+      "effect": 0.9
+    }
+  ],
+  "revision_event": {
+    "event_id": "EV_ROUTE_CODE_SUPERSESSION",
+    "source_evidence_id": "R6",
+    "triggered": true,
+    "affected_claim_ids": [
+      "bay_assignment"
+    ],
+    "invalidated_evidence_ids": [
+      "R3"
+    ],
+    "replacement_targets": [
+      {
+        "claim_id": "bay_assignment",
+        "target": 1.0
+      }
+    ]
+  },
+  "provenance": {
+    "adapter_name": "synthetic-public-semantic-graph-adapter",
+    "adapter_version": "0.5.0-dev-contract",
+    "semantic_source": "synthetic_public_contract_fixture",
+    "deterministic": true,
+    "semantic_payload_sha256": "6c1b88ae49afb2102a7a98f3a17c1a0412ac627c43c9dbe1aad462231cc6b796"
+  },
+  "claim_boundary": [
+    "This synthetic fixture exercises a public dependency-graph controller contract only.",
+    "Dependency effects are public signed fixture values, not hidden model states or provider internals.",
+    "The fixture contains no evaluation labels, target decision, or provider-generated answer.",
+    "A controller result on this fixture cannot establish improved reasoning or production behavior.",
+    "The provenance semantic-payload hash excludes provenance and claim-boundary metadata; a separate policy lock pins the full fixture bytes."
+  ]
+}
