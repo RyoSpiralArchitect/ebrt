@@ -1,0 +1,98 @@
+{
+  "schema_version": "ebrt-hackathon-strategy-walkthrough-policy-lock-v0.5.2",
+  "status": "PREREGISTERED_PRODUCT_WALKTHROUGH",
+  "promotion_eligible": false,
+  "execution": {
+    "phase_order": [
+      "before_event",
+      "controlled_after_event"
+    ],
+    "evidence_horizons": {
+      "before_event": "ordered R1-R5 exactly once; no R6; no revision envelope",
+      "controlled_after_event": "ordered R1-R6 exactly once; fixed gradient temporal-control envelope"
+    },
+    "expected_api_attempts": 2,
+    "calls_per_phase": 1,
+    "retry_policy": "one_attempt_no_retry",
+    "provider_seed": "unset_not_claimed",
+    "order_balance": "fixed_story_order_not_a_comparison_block",
+    "semantic_gold_boundary": "gold JSON is parsed and grading is attached only after both provider attempts; pre-call integrity checks may hash locked bytes",
+    "private_chain_of_thought": "not_requested_not_persisted",
+    "hidden_model_state": "not_accessed"
+  },
+  "runtime": {
+    "python": "3.13.13",
+    "openai": "2.45.0",
+    "pydantic": "2.12.5",
+    "machine": "arm64",
+    "provider": "openai_responses",
+    "api": "responses.with_raw_response.parse+raw.parse",
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "low",
+    "service_tier": "default",
+    "max_output_tokens": 4608,
+    "timeout_seconds": 60,
+    "sdk_retries": 0,
+    "store": false,
+    "previous_response_id": false,
+    "truncation": "disabled"
+  },
+  "instructions_fingerprint_sha256": "3c6e9505c0a3a5cbb49456c49d799d44ea09b85c78d163382e226e1d1c68eb84",
+  "sources": {
+    "walkthrough_runner": {
+      "path": "demo_hackathon_strategy_walkthrough_v0_5_2.py",
+      "sha256": "f39d565d7a6048d025d6151dc286e93457c73ca641332166ab87219aa70878fe"
+    },
+    "controlled_restart_bridge": {
+      "path": "controlled_raw_restart_v0_5_1.py",
+      "sha256": "94d9f527334ef7b496db7afb3f6faf847b488e8b0ec043f486991e92092dde08"
+    },
+    "sealed_receipt_harness": {
+      "path": "benchmark_controlled_raw_restart_v0_5_1.py",
+      "sha256": "18ba54ebfd0cab2b3d35dab828a0fa2a8baf7edc0d965ce48b5ded3f09558a5c"
+    },
+    "temporal_controller": {
+      "path": "temporal_adjoint_state_controller_v0_5_t.py",
+      "sha256": "43df27a8595274f694e7c0741c4fe642a66ae37a0719e5d3256d4a0f37f6b7b5"
+    },
+    "provider_boundary": {
+      "path": "openai_response_boundary_v0_4_3.py",
+      "sha256": "7f78fce94cb141a4355d3c040010e11e049ff67a3a8c603099d0548a47b7cf03"
+    },
+    "strict_grader": {
+      "path": "benchmark_language_replay_v0_4.py",
+      "sha256": "813ab885cecdacec034536a7dfeaa01c101554cc58663d1a79ad133595c6df91"
+    },
+    "public_card_schema": {
+      "path": "language_replay_bridge_v0_4.py",
+      "sha256": "5fd765ec5ca55562e7b712ec48adc6f54588080c276cbfa58aabcb72492666c2"
+    }
+  },
+  "fixtures": {
+    "fixture": {
+      "path": "fixtures/hackathon_strategy_walkthrough_v0_5_2.json",
+      "sha256": "ef0b1d44ece10e7412460d9abac4791fe3f3a0172e398bca7a0d8957094f56d2"
+    },
+    "gold": {
+      "path": "fixtures/hackathon_strategy_walkthrough_v0_5_2_gold.json",
+      "sha256": "c9aea1cc992b9bec8b6b00ec4ed941543e3a87f48786dc1729df876cd08d29f3"
+    }
+  },
+  "walkthrough_decision_rules": {
+    "call_block_complete": "both fixed provider attempts produce one sealed receipt and locally valid public card",
+    "before_phase_pass": "POLISH plus pre-event required support and stable video fact under the R1-R5 horizon",
+    "before_stale_regrade": "the unchanged before card fails the separate post-event final contract",
+    "after_phase_pass": "PROVE plus required corrected support, R3 invalidation, and stable video fact under R1-R6",
+    "walkthrough_contract_passed": "all call, phase, stale-regrade, output-diff, invalidation, and stability checks pass",
+    "causal_interpretation": "forbidden because evidence horizon, event envelope, and run position change together",
+    "quality_promotion": "forbidden; the frozen v0.5.1 A/B/C/D block remains the control-placement test"
+  },
+  "claim_boundary": [
+    "This is one synthetic English product walkthrough, not a matched causal benchmark or fresh quality evaluation.",
+    "The before and after calls have different visible evidence horizons; the after call also has a revision envelope and later run position.",
+    "The public temporal program, semantic roles, evidence values, event scope, operator order, and terminal surrogate target are explicit oracle inputs.",
+    "The provider receives a stop-gradient JSON projection; GPT, provider parsing, and final generation remain outside the gradient graph.",
+    "Surrogate objective movement and actual public-output movement are reported separately; neither implies the other.",
+    "A POLISH to PROVE change demonstrates this sealed walkthrough contract only, not a general reasoning, quality, efficiency, or causal advantage."
+  ]
+}

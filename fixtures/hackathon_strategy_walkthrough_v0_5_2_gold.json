@@ -1,0 +1,178 @@
+{
+  "schema_version": "ebrt-hackathon-strategy-walkthrough-gold-v0.5.2",
+  "status": "LOCKED_DEMO_EXPECTATIONS_NOT_PROVIDER_INPUT",
+  "case_id": "hackathon_strategy_walkthrough",
+  "pre_event": {
+    "checkpoint_id": "hackathon_strategy_walkthrough:pre_event",
+    "answer": "POLISH",
+    "claim": "Under the current design-dominant brief, Team Spiral should prioritize UI polish.",
+    "topic": "hackathon_final_build_priority",
+    "stance": 1.0,
+    "confidence": 0.9,
+    "revision_cue": 0.0,
+    "evidence_ids": [
+      "R2",
+      "R3",
+      "R5"
+    ],
+    "invalidated_evidence_ids": [],
+    "decision_facts": [
+      {
+        "slot": "final_priority",
+        "value": "ADDITIONAL_UI_POLISH",
+        "evidence_ids": [
+          "R2",
+          "R3"
+        ]
+      },
+      {
+        "slot": "demo_centerpiece",
+        "value": "POLISHED_SCREENS",
+        "evidence_ids": [
+          "R3"
+        ]
+      },
+      {
+        "slot": "video_constraint",
+        "value": "THREE_MINUTE_NARRATED",
+        "evidence_ids": [
+          "R5"
+        ]
+      }
+    ]
+  },
+  "final": {
+    "checkpoint_id": "hackathon_strategy_walkthrough:full_context_final",
+    "answer": "PROVE",
+    "claim": "Under the corrected equal-weight guidance, Team Spiral should prioritize an end-to-end proof.",
+    "topic": "hackathon_final_build_priority",
+    "stance": -1.0,
+    "confidence": 1.0,
+    "revision_cue": 1.0,
+    "evidence_ids": [
+      "R2",
+      "R4",
+      "R5",
+      "R6"
+    ],
+    "invalidated_evidence_ids": [
+      "R3"
+    ],
+    "decision_facts": [
+      {
+        "slot": "final_priority",
+        "value": "END_TO_END_PROOF",
+        "evidence_ids": [
+          "R2",
+          "R4",
+          "R6"
+        ]
+      },
+      {
+        "slot": "demo_centerpiece",
+        "value": "LIVE_REASONING_DIFF",
+        "evidence_ids": [
+          "R2",
+          "R4",
+          "R6"
+        ]
+      },
+      {
+        "slot": "video_constraint",
+        "value": "THREE_MINUTE_NARRATED",
+        "evidence_ids": [
+          "R5"
+        ]
+      }
+    ]
+  },
+  "grading": {
+    "pre_event": {
+      "required_evidence_ids": [
+        "R2",
+        "R3",
+        "R5"
+      ],
+      "forbidden_support_evidence_ids": [
+        "R6"
+      ],
+      "required_facts": [
+        {
+          "slot": "final_priority",
+          "value": "ADDITIONAL_UI_POLISH",
+          "evidence_ids": [
+            "R2",
+            "R3"
+          ]
+        },
+        {
+          "slot": "demo_centerpiece",
+          "value": "POLISHED_SCREENS",
+          "evidence_ids": [
+            "R3"
+          ]
+        }
+      ],
+      "stable_facts": [
+        {
+          "slot": "video_constraint",
+          "value": "THREE_MINUTE_NARRATED",
+          "evidence_ids": [
+            "R5"
+          ]
+        }
+      ],
+      "expected_invalidated_evidence_ids": []
+    },
+    "final": {
+      "required_evidence_ids": [
+        "R2",
+        "R4",
+        "R5",
+        "R6"
+      ],
+      "forbidden_support_evidence_ids": [
+        "R3"
+      ],
+      "required_facts": [
+        {
+          "slot": "final_priority",
+          "value": "END_TO_END_PROOF",
+          "evidence_ids": [
+            "R2",
+            "R4",
+            "R6"
+          ]
+        },
+        {
+          "slot": "demo_centerpiece",
+          "value": "LIVE_REASONING_DIFF",
+          "evidence_ids": [
+            "R2",
+            "R4",
+            "R6"
+          ]
+        }
+      ],
+      "stable_facts": [
+        {
+          "slot": "video_constraint",
+          "value": "THREE_MINUTE_NARRATED",
+          "evidence_ids": [
+            "R5"
+          ]
+        }
+      ],
+      "expected_invalidated_evidence_ids": [
+        "R3"
+      ]
+    }
+  },
+  "claim_boundary": [
+    "This file is a separate post-call grading oracle and must never be included in a provider request or controller input.",
+    "Evidence R3 is valid within the pre-event horizon and becomes invalid only after R6 explicitly supersedes it.",
+    "The pre_event and final expectations grade different evidence horizons in a product walkthrough; their contrast is not a matched causal estimate.",
+    "A scripted or live match demonstrates contract completion for this synthetic case only, not a general reasoning-quality advantage."
+  ],
+  "fingerprint_sha256": "8fc8ec377c2999724ca5c303b6d138e5b54e87f009e6e91182dfc79b342f7105"
+}
