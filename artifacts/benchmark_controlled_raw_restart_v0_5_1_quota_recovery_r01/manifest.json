@@ -1,0 +1,52 @@
+{
+  "artifacts": {
+    "calls.jsonl": {
+      "bytes": 7562,
+      "sha256": "6c68152d6440816a28a3c5495643257870d862ab346eb80f84741a75855e73ec"
+    },
+    "report.md": {
+      "bytes": 1562,
+      "sha256": "41a79dff01e12ce2389d9c77fb91d85d0d650b5430bd3774234ba0db1deb8a28"
+    },
+    "results.json": {
+      "bytes": 50575,
+      "sha256": "e4b8009e392d5e4b6045307e5932668827060e8fe7f9cc8e382f6f6b746df035"
+    }
+  },
+  "claim_boundary": [
+    "This is one development-contaminated case and one unbalanced four-call block.",
+    "The case-program binding, recurrence, semantic roles, event, evidence values, operator order, and terminal surrogate target are explicit oracle inputs.",
+    "The provider receives allowlisted public transition controls after a stop-gradient JSON projection; GPT and its hidden states are not differentiated.",
+    "Provider randomness and run position are not separated from arm behavior.",
+    "Surrogate improvement, provider completion, strict final-output grade, token usage, and latency are reported as separate observations.",
+    "Frozen predecessor imports may hash the gold file for source integrity before calls, but semantic gold JSON is parsed and attached only after all four provider attempts.",
+    "A changed output or controlled-only strict pass is a canary observation, not evidence of a general quality advantage.",
+    "No reasoning-quality, efficiency, reliability, causality, production-readiness, or generalization claim is promotion-eligible from this run."
+  ],
+  "policy_lock": {
+    "path": "policy_lock_controlled_raw_restart_v0_5_1.json",
+    "sha256": "5173ce5aaa1f28d6e27cbdfffec5c38e0785e27d67cb4667abc5f07d200e8f2c"
+  },
+  "result_fingerprint_sha256": "69a9518c709c5d8e26583c5b440fb9f855fab611f803041c597109f06b44787c",
+  "runtime": {
+    "machine": "arm64",
+    "openai": "2.45.0",
+    "operating_system": "Darwin",
+    "operating_system_release": "25.2.0",
+    "pydantic": "2.12.5",
+    "python": "3.13.13"
+  },
+  "schema_version": "ebrt-controlled-raw-restart-artifact-v0.5.1",
+  "source_snapshot_sha256": {
+    "aperture_v0_4_1": "d5dd4a8a81172ad3603869d1f15f9649340ba7eab0c1627f5ab6ce2f9f752e66",
+    "benchmark": "18ba54ebfd0cab2b3d35dab828a0fa2a8baf7edc0d965ce48b5ded3f09558a5c",
+    "bridge": "94d9f527334ef7b496db7afb3f6faf847b488e8b0ec043f486991e92092dde08",
+    "provider_boundary_v0_4_3": "7f78fce94cb141a4355d3c040010e11e049ff67a3a8c603099d0548a47b7cf03",
+    "public_card_schema_v0_4": "5fd765ec5ca55562e7b712ec48adc6f54588080c276cbfa58aabcb72492666c2",
+    "public_card_validator_v0_4_2": "b6b2dc592a03726b1f680835aefe18c399b1cb6e97c87d44e3d18f2e24bfdbd0",
+    "strict_grader_v0_4": "813ab885cecdacec034536a7dfeaa01c101554cc58663d1a79ad133595c6df91",
+    "temporal_controller": "43df27a8595274f694e7c0741c4fe642a66ae37a0719e5d3256d4a0f37f6b7b5"
+  },
+  "status": "COMPLETE_CANARY",
+  "success_manifest": true
+}

@@ -109,7 +109,10 @@ payloads differ only in control placement. The first preregistered four-call
 block is preserved as `INCOMPLETE_CANARY`: all four attempts received HTTP 429
 `insufficient_quota` before response parsing. The local surrogate decreased its
 declared objective, but no public card, strict grade, output diff, or arm-quality
-comparison exists.
+comparison exists. A separately named quota-recovery block then completed 4/4
+calls and all four arms passed strictly, but their public cards were exactly
+identical. The bridge therefore completed with a null observed output effect on
+this saturated DEV case; no controlled advantage is established.
 
 > [!IMPORTANT]
 > v0.1-v0.3.1 are **not** a Transformer implementation, a GPT latent-state
@@ -130,8 +133,9 @@ comparison exists.
 > synthetic comparison therefore does not isolate temporal credit assignment
 > from supplied control-basis geometry.
 > v0.5.1 projects only allowlisted public controls and never differentiates the
-> hosted model. Its first live block is provider-incomplete and is not evidence
-> for or against controlled regeneration.
+> hosted model. Its first live block is provider-incomplete; the separately
+> preserved recovery block completes but produces identical public outputs.
+> Neither episode establishes a controlled advantage.
 
 ## Why EBRT?
 
@@ -232,6 +236,7 @@ artifacts/reasoning_workbench_v0_4_4/ canonical public projection and report
 artifacts/differentiable_evidence_control_v0_5/ canonical control maps and mechanism report
 artifacts/temporal_adjoint_state_control_v0_5_t/ temporal maps, audits, comparison, and manifest
 artifacts/benchmark_controlled_raw_restart_v0_5_1_live_canary/ preserved four-receipt incomplete block
+artifacts/benchmark_controlled_raw_restart_v0_5_1_quota_recovery_r01/ complete null-diff recovery block
 requirements.txt              runtime dependency declaration
 requirements-live.txt         separately pinned OpenAI/Pydantic live dependencies
 LICENSE                       Apache License 2.0
@@ -487,12 +492,15 @@ python3 benchmark_controlled_raw_restart_v0_5_1.py self-test
 python3 benchmark_controlled_raw_restart_v0_5_1.py preflight
 python3 benchmark_controlled_raw_restart_v0_5_1.py validate \
   --artifact-dir artifacts/benchmark_controlled_raw_restart_v0_5_1_live_canary
+python3 benchmark_controlled_raw_restart_v0_5_1.py validate \
+  --artifact-dir artifacts/benchmark_controlled_raw_restart_v0_5_1_quota_recovery_r01
 ```
 
 `preflight` constructs no provider request. The committed live bundle contains
-four typed HTTP 429 `insufficient_quota` receipts and no model output. Do not
-overwrite or resume it; any quota-recovery run must use a new output directory
-and remain a separately reported runtime episode.
+four typed HTTP 429 `insufficient_quota` receipts and no model output. It was
+not overwritten or resumed. The separately preserved recovery bundle completes
+all four calls and strict endpoints, with one identical public card across all
+arms and therefore no observed output effect on this case.
 
 ## Judge path: inspect first, rerun second
 
@@ -1050,7 +1058,9 @@ retrospectively relabeling failures. See the
 | A v0.5-T control map improves a regenerated GPT answer | Not evaluated; network/provider/generation calls are zero |
 | v0.5.1 projects a case-bound temporal map into blinded full-context arms | Supported offline: A is raw-only, B is textual-only, C/D differ only at six control `delta`/`role` paths, and no-event is byte-identical across arms |
 | The first v0.5.1 live block compares final GPT outputs | No; all four one-attempt calls stopped at HTTP 429 `insufficient_quota`, so no model response, public card, strict grade, or output diff exists |
-| The v0.5.1 surrogate decrease predicts an improved generated answer | Not evaluated; the surrogate moved from `0.755433933319` to `0.294771509854`, but actual output was unavailable and never participated in optimization |
+| The v0.5.1 quota-recovery block completes the language bridge | Supported for one contaminated case: all four one-attempt calls completed, all strict endpoints passed, and receipts/output diffs validate |
+| The v0.5.1 controlled arm changes or improves the recovery output | No observed effect on this case: all four public cards are canonically identical and the baseline-to-controlled diff is empty |
+| The v0.5.1 surrogate decrease predicts an improved generated answer | Not supported here; the surrogate moved from `0.755433933319` to `0.294771509854`, actual output never participated in optimization, and the recovery outputs were identical |
 | Selective replay should be optimized before state sufficiency | Not supported by current evidence; it is paused as a quality direction and remains an unranked future efficiency ablation |
 | EBRT edits hidden states inside a trained Transformer or GPT model | Not implemented |
 | EBRT improves real-world LLM reasoning accuracy | Not established |
@@ -1131,15 +1141,17 @@ category determination.
   control-basis geometry and is not a GPT or reasoning-quality claim. v0.5.1
   implements the horizontal generation boundary, but its first live block did
   not reach a model response or actual output comparison.
-- **Milestone 2.6 — controlled full-context bridge (implemented, first live
-  block provider-incomplete):** v0.5.1 binds one public language case to the
+- **Milestone 2.6 — controlled full-context bridge (implemented, recovery
+  complete with null output effect):** v0.5.1 binds one public language case to the
   temporal program, blinds treatment labels at the provider boundary, and
   preregisters raw-only, textual-only, matched-permutation, and gradient arms.
   The first block emitted four exact receipts but every attempt stopped at HTTP
   429 `insufficient_quota`; no semantic or quality comparison was possible.
-  Preserve that bundle unchanged. The next eligible action is one separately
-  named quota-recovery block from the frozen source graph, followed by an
-  actual public-card/output diff if and only if responses complete.
+  That bundle remains unchanged. A separately named recovery block from the
+  frozen source graph then completed 4/4 strict outputs. All four public cards
+  were canonically identical, so the bridge is demonstrated but no controlled
+  output effect or advantage is observed. The next eligible experiment is a
+  separately frozen harder English suite, not tuning this contaminated case.
 - **Milestone 3 — coherent evaluator experience (provisional Workbench):** a
   deterministic allowlist projection and local read-only Workbench now connect
   Evidence, Event, Revision, every recorded Replay lane, and Final Output Diff.
@@ -1221,9 +1233,11 @@ and exhaustive matched floor shams. Its positive 16-cell local-sweep record is
 explicitly bounded by unequal terminal actuator geometry and does not change a
 model answer. v0.5.1 now implements the controlled full-context boundary and
 preserves its first four-receipt live block, but all attempts stopped on
-`insufficient_quota` before a model response. A quota-recovery output block,
-fresh harder DEV and promotion suite, live revision application, and any hosted
-judge sandbox remain pending; there is no hosted service in this release.
+`insufficient_quota` before a model response. Its separately preserved recovery
+block then completed all four strict outputs with an empty public-card diff.
+A harder English DEV/demo suite, promotion suite, live revision application,
+and any hosted judge sandbox remain pending; there is no hosted service in this
+release.
 
 Issues and pull requests that add reproducible tests, adversarial fixtures, or
 better controls are especially welcome. Please avoid expanding claims without

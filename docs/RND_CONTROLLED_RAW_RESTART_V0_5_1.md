@@ -1,6 +1,6 @@
 # EBRT v0.5.1 — Controlled Raw Restart
 
-Status: **first live canary preserved as incomplete; non-promotional DEV work**
+Status: **quota-recovery canary complete with a null observed output effect; non-promotional DEV work**
 
 ## Question
 
@@ -153,9 +153,49 @@ that optimization.
 This attempt therefore validates failure accounting and artifact closure, not
 the semantic bridge or any arm comparison. It is neither positive nor negative
 evidence about controlled regeneration. The bundle must not be overwritten or
-partially filled. A quota-recovery attempt, if authorized, must use the same
-frozen sources and a new output directory, and must be reported as a distinct
-runtime episode.
+partially filled. The subsequently authorized quota-recovery attempt used the
+same frozen sources and a new output directory and is reported below as a
+distinct runtime episode.
+
+## Quota-recovery r01: complete bridge, identical public outputs
+
+After quota recovery, the unchanged frozen source graph was executed once in a
+separately named output directory. The runner again used the declared
+`A, B, D, C` order, one call per arm, and no retry. The resulting bundle is a
+valid `COMPLETE_CANARY`:
+
+- [`manifest.json`](../artifacts/benchmark_controlled_raw_restart_v0_5_1_quota_recovery_r01/manifest.json)
+- [`results.json`](../artifacts/benchmark_controlled_raw_restart_v0_5_1_quota_recovery_r01/results.json)
+- [`calls.jsonl`](../artifacts/benchmark_controlled_raw_restart_v0_5_1_quota_recovery_r01/calls.jsonl)
+- [`report.md`](../artifacts/benchmark_controlled_raw_restart_v0_5_1_quota_recovery_r01/report.md)
+
+| Arm | Strict pass | Answer | Input tokens | Output tokens | Latency ms |
+| --- | ---: | --- | ---: | ---: | ---: |
+| raw-only | yes | `BLUE` | 843 | 155 | 3296.146 |
+| textual envelope | yes | `BLUE` | 960 | 161 | 1883.245 |
+| gradient-controlled | yes | `BLUE` | 1110 | 161 | 2248.174 |
+| matched permutation | yes | `BLUE` | 1110 | 161 | 2548.500 |
+
+All four public cards have the same canonical SHA-256,
+`6fd045995cf70fee01d134d4961ec93d64ddaf6f48e6e97ffbd04cc8a30ae858`.
+The baseline-to-controlled diff is exactly empty: `BLUE` remains `BLUE`, and
+there are no decision-fact, support, or invalidation additions or removals.
+Every arm passed all locked strict checks. Total exact provider usage was 4,023
+input tokens, 638 output tokens, 4,661 total tokens, and zero reported reasoning
+tokens across four calls.
+
+This establishes that the case-bound bridge completed, that the distinct
+allowlisted payloads reached the provider boundary, and that every arm produced
+a valid final public card. It does not establish a controlled advantage. On
+this single contaminated and evidently saturated case, the observed output
+effect is null. The local surrogate decrease remains a separate mechanism
+observation and did not predict a changed generated output here.
+
+The next hard or product-facing scenario must be frozen as a separate suite and
+block. In particular, an English hackathon-strategy demonstration may show an
+intuitive pre-event output, an explicit rubric-correction event, and a revised
+full-context output, but it must not be presented as a reinterpretation of this
+null-diff run or as a causal control benchmark.
 
 ## Decision rules
 
