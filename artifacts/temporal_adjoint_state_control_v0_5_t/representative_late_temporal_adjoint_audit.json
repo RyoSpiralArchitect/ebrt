@@ -1,0 +1,124 @@
+{
+  "adjoint_rows": [
+    {
+      "finite_control_leverage": 0.032823627234,
+      "finite_control_step": -0.1,
+      "floor_id": "F03:decision",
+      "floor_ordinal": 3,
+      "normalized_absolute_sensitivity": 0.194085434535,
+      "signed_adjoint_sensitivity": 0.309760464049,
+      "structurally_reaches_terminal_objective": true,
+      "target_id": "decision_write",
+      "target_kind": "transition"
+    },
+    {
+      "finite_control_leverage": 0.126015654708,
+      "finite_control_step": 0.1,
+      "floor_id": "F05:revision",
+      "floor_ordinal": 5,
+      "normalized_absolute_sensitivity": 0.805914565465,
+      "signed_adjoint_sensitivity": -1.286240105447,
+      "structurally_reaches_terminal_objective": true,
+      "target_id": "revision_mix",
+      "target_kind": "transition"
+    },
+    {
+      "finite_control_leverage": 0.0,
+      "finite_control_step": 0.0,
+      "floor_id": "F06:stable_carry",
+      "floor_ordinal": 6,
+      "normalized_absolute_sensitivity": 0.0,
+      "signed_adjoint_sensitivity": 0.0,
+      "structurally_reaches_terminal_objective": true,
+      "target_id": "stable_carry",
+      "target_kind": "transition"
+    }
+  ],
+  "diagnostic_boundary": [
+    "Adjoint sensitivity is local and parameterization-dependent; it is not attention or causal importance.",
+    "Finite control leverage is measured only inside the supplied synthetic recurrence.",
+    "The audit is a sidecar and does not alter execution-control-map bytes."
+  ],
+  "fingerprint_sha256": "ab316532ede8fd8e4630d041d8b6c379b4a6f4e35b621ace73460addb62ddae3",
+  "floor_summary": {
+    "active_earliest_control_floor_ordinal": 3,
+    "active_leverage_relative_threshold": 0.25,
+    "structural_earliest_control_floor_ordinal": 3,
+    "top_finite_leverage_floor_id": "F05:revision",
+    "top_finite_leverage_floor_ordinal": 5,
+    "top_finite_leverage_margin_over_second": 0.093192027473,
+    "top_finite_leverage_target_id": "revision_mix"
+  },
+  "gradient_checks": {
+    "manual_adjoint_abs_tolerance": 2e-12,
+    "manual_adjoint_max_abs_error": 2.220446049250313e-16
+  },
+  "lane": "transition",
+  "schema_version": "ebrt-temporal-adjoint-audit-v0.5-t.0",
+  "source": {
+    "event_id": "EV_ROUTE_PREMISE_CORRECTION",
+    "event_triggered": true,
+    "order_variant": "late_correction",
+    "pair_id": "P03",
+    "semantic_payload_sha256": "4782b16974698438afb5aee153f488ea95377f7a53c2192bb268067123126218",
+    "suite_id": "route_revision_order_pairs_dev_v0_5_t"
+  },
+  "trajectory": [
+    {
+      "floor_id": "F00:initial",
+      "state": {
+        "decision": 0.0,
+        "premise": 0.0,
+        "stable": 0.0
+      }
+    },
+    {
+      "floor_id": "F01:stable_read",
+      "state": {
+        "decision": 0.0,
+        "premise": 0.0,
+        "stable": 0.46211715726
+      }
+    },
+    {
+      "floor_id": "F02:legacy",
+      "state": {
+        "decision": 0.0,
+        "premise": -0.761594155956,
+        "stable": 0.353723788505
+      }
+    },
+    {
+      "floor_id": "F03:decision",
+      "state": {
+        "decision": -0.595041189875,
+        "premise": -0.595041189875,
+        "stable": 0.275659993671
+      }
+    },
+    {
+      "floor_id": "F04:correction",
+      "state": {
+        "decision": -0.443060916234,
+        "premise": 0.671364513554,
+        "stable": 0.217021246419
+      }
+    },
+    {
+      "floor_id": "F05:revision",
+      "state": {
+        "decision": -0.16364709756,
+        "premise": 0.540051328114,
+        "stable": 0.171893338843
+      }
+    },
+    {
+      "floor_id": "F06:stable_carry",
+      "state": {
+        "decision": -0.154224243474,
+        "premise": 0.472317240328,
+        "stable": 0.119747983008
+      }
+    }
+  ]
+}

@@ -1,0 +1,128 @@
+{
+  "schema_version": "ebrt-temporal-paired-suite-v0.5-t.0",
+  "suite_id": "route_revision_no_event_v0_5_t",
+  "state_axes": ["premise", "decision", "stable"],
+  "initial_state": [0.0, 0.0, 0.0],
+  "evidence_specs": [
+    {
+      "evidence_id": "legacy_record",
+      "public_summary": "A registry premise is read without a triggered revision.",
+      "source_kind": "raw_history"
+    },
+    {
+      "evidence_id": "registry_correction",
+      "public_summary": "A recorded correction exists but is not activated as an event.",
+      "source_kind": "revision_event"
+    },
+    {
+      "evidence_id": "stable_seal",
+      "public_summary": "The cargo seal remains stable.",
+      "source_kind": "stable_context"
+    }
+  ],
+  "operators": [
+    {
+      "operator_id": "legacy",
+      "public_name": "Read route premise",
+      "activation": "tanh",
+      "evidence_id": "legacy_record",
+      "transition_control_id": null,
+      "base_matrix": [[0.65, 0.0, 0.0], [0.0, 0.8, 0.0], [0.0, 0.0, 0.8]],
+      "evidence_direction": [1.0, 0.0, 0.0],
+      "transition_basis": [[0.0, 0.0, 0.0], [0.0, 0.0, 0.0], [0.0, 0.0, 0.0]]
+    },
+    {
+      "operator_id": "correction",
+      "public_name": "Carry inactive correction record",
+      "activation": "tanh",
+      "evidence_id": "registry_correction",
+      "transition_control_id": null,
+      "base_matrix": [[0.65, 0.0, 0.0], [0.0, 0.8, 0.0], [0.0, 0.0, 0.8]],
+      "evidence_direction": [1.0, 0.0, 0.0],
+      "transition_basis": [[0.0, 0.0, 0.0], [0.0, 0.0, 0.0], [0.0, 0.0, 0.0]]
+    },
+    {
+      "operator_id": "decision",
+      "public_name": "Write premise into decision state",
+      "activation": "tanh",
+      "evidence_id": null,
+      "transition_control_id": "decision_write",
+      "base_matrix": [[0.9, 0.0, 0.0], [0.9, 0.1, 0.0], [0.0, 0.0, 0.8]],
+      "evidence_direction": [0.0, 0.0, 0.0],
+      "transition_basis": [[0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [0.0, 0.0, 0.0]]
+    },
+    {
+      "operator_id": "revision",
+      "public_name": "Carry decision through inactive revision point",
+      "activation": "tanh",
+      "evidence_id": null,
+      "transition_control_id": "revision_mix",
+      "base_matrix": [[0.9, 0.0, 0.0], [0.15, 0.6, 0.0], [0.0, 0.0, 0.8]],
+      "evidence_direction": [0.0, 0.0, 0.0],
+      "transition_basis": [[0.0, 0.0, 0.0], [0.7071067811865476, -0.7071067811865476, 0.0], [0.0, 0.0, 0.0]]
+    },
+    {
+      "operator_id": "stable_read",
+      "public_name": "Read stable cargo state",
+      "activation": "tanh",
+      "evidence_id": "stable_seal",
+      "transition_control_id": null,
+      "base_matrix": [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]],
+      "evidence_direction": [0.0, 0.0, 1.0],
+      "transition_basis": [[0.0, 0.0, 0.0], [0.0, 0.0, 0.0], [0.0, 0.0, 0.0]]
+    },
+    {
+      "operator_id": "stable_carry",
+      "public_name": "Carry stable cargo state",
+      "activation": "tanh",
+      "evidence_id": null,
+      "transition_control_id": "stable_carry",
+      "base_matrix": [[0.95, 0.0, 0.0], [0.0, 0.95, 0.0], [0.0, 0.0, 0.7]],
+      "evidence_direction": [0.0, 0.0, 0.0],
+      "transition_basis": [[0.0, 0.0, 0.0], [0.0, 0.0, 0.0], [0.0, 0.0, 1.0]]
+    }
+  ],
+  "leaf_control_ids": ["legacy_record", "registry_correction", "stable_seal"],
+  "transition_control_ids": ["decision_write", "revision_mix", "stable_carry"],
+  "trace_orders": [
+    {
+      "order_variant": "early_correction",
+      "operator_ids": ["stable_read", "legacy", "correction", "decision", "revision", "stable_carry"]
+    },
+    {
+      "order_variant": "late_correction",
+      "operator_ids": ["stable_read", "legacy", "decision", "correction", "revision", "stable_carry"]
+    }
+  ],
+  "pair_parameters": [
+    {
+      "pair_id": "P00",
+      "evidence_values": {
+        "legacy_record": -1.0,
+        "registry_correction": 1.2,
+        "stable_seal": 0.5
+      },
+      "terminal_decision_target": 0.75
+    }
+  ],
+  "sham_source_index_by_target": [1, 2, 0],
+  "revision_event": {
+    "event_id": "EV_ROUTE_PREMISE_CORRECTION_INACTIVE",
+    "triggered": false,
+    "correction_evidence_id": "registry_correction",
+    "decision_state_axis": "decision",
+    "stable_state_axis": "stable"
+  },
+  "provenance": {
+    "adapter_name": "synthetic-temporal-public-state-adapter",
+    "adapter_version": "0.5-t.0-no-event-contract",
+    "semantic_source": "synthetic_no_event_contract_fixture",
+    "deterministic": true,
+    "semantic_payload_sha256": "855b82e5ef4477bebc58a6ed6e6ea39cb35605c26f3511cb7647220f254d32d5"
+  },
+  "claim_boundary": [
+    "This fixture validates exact no-event identity only.",
+    "No event detector is calibrated by the recorded triggered=false sentinel.",
+    "No provider or final generation is executed."
+  ]
+}

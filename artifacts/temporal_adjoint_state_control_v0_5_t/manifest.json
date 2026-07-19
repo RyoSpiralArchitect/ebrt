@@ -1,0 +1,95 @@
+{
+  "artifact_directory": "artifacts/temporal_adjoint_state_control_v0_5_t",
+  "artifacts": {
+    "arm_comparison.json": {
+      "bytes": 67967,
+      "sha256": "e4d1fc1646caa417b04a51a9cd4d41308b696d73fe2b183b0498b3f15d7f6d23"
+    },
+    "mechanism_report.md": {
+      "bytes": 3409,
+      "sha256": "ee3b0417ae2a923a623f246e7d4ed43718f92d12a3d8c8753e1bf7fd0ede4266"
+    },
+    "no_event_execution_control_map.json": {
+      "bytes": 2743,
+      "sha256": "88b0d24a58d183874b19e37bbe636b52a25bb75d96a742ee80469ade3934bb42"
+    },
+    "no_event_temporal_adjoint_audit.json": {
+      "bytes": 3554,
+      "sha256": "a1ce0bceac25f729bbc70e94d4ae34a33f16e9039ae22e7fada17bf894eb30b4"
+    },
+    "representative_early_execution_control_map.json": {
+      "bytes": 2790,
+      "sha256": "25a090c16b0951f8a4650d338dff3895856b92a401f819c7660f0494dc953d7c"
+    },
+    "representative_early_temporal_adjoint_audit.json": {
+      "bytes": 3597,
+      "sha256": "01c46f6cef3970d905f9d70503b379965226f817fb45145257323298950bc052"
+    },
+    "representative_late_execution_control_map.json": {
+      "bytes": 2792,
+      "sha256": "815a8d84020fe089d75e8da1801bc5334de23d7b9608abfd23c162abf674115f"
+    },
+    "representative_late_temporal_adjoint_audit.json": {
+      "bytes": 3677,
+      "sha256": "f5793daeb6a44723518efcd247e1253e17357241991699df8127d6f41122c007"
+    },
+    "self_test.json": {
+      "bytes": 5100,
+      "sha256": "1a2e427488296cdf09075a1d911d1ed955b5e4d1e2bf71826d6dd858b842076b"
+    }
+  },
+  "claim_boundary": [
+    "The v0.5.0 controller, policy lock, fixtures, documentation, and committed artifact remain immutable historical inputs and are not rewritten by v0.5-T.",
+    "The temporal recurrence, matrices, evidence values, operator order, event flag, control bases, and terminal targets are synthetic oracle inputs.",
+    "Exact local adjoints allocate bounded controls only inside the supplied public recurrence; they do not discover semantic dependencies or differentiate a hosted model.",
+    "The eight parameter cells are a local sweep of one topology, not independent replications, and the gates were locked after pilot implementation rather than preregistered.",
+    "Leaf and transition controls share standardized coordinate count and L2 bounds, but not matched terminal Jacobian scale; the positive comparison includes the supplied oracle actuator geometry and does not isolate temporal credit assignment alone.",
+    "The reachable-subspace witness distinguishes the supplied leaf and state intervention classes, but does not claim universal algebraic non-collapsibility after adding state-control pseudo-leaves.",
+    "No semantic adapter, provider API, hidden model state, final generated answer, downstream grade, token count, latency, or server behavior participates.",
+    "Passing the locked synthetic gates supports a temporal public-state mechanism result only, not hosted-model reasoning quality, efficiency, causality, production readiness, or benchmark generality.",
+    "Byte-identical artifact reproduction is asserted only for the runtime recorded in the manifest."
+  ],
+  "controller": {
+    "benchmark_name": "EBRT Temporal State-Control Matched Benchmark",
+    "benchmark_version": "0.5-t.0-experiment",
+    "name": "EBRT Temporal Adjoint State Controller",
+    "version": "0.5-t.0-experiment"
+  },
+  "network_calls": 0,
+  "reproduction_boundary": "Canonical byte identity is asserted for the recorded runtime; arbitrary cross-runtime floating-point byte identity is not claimed.",
+  "runtime": {
+    "machine": "arm64",
+    "operating_system": "Darwin",
+    "operating_system_release": "25.2.0",
+    "python": "3.13.13",
+    "pytorch": "2.11.0"
+  },
+  "schema_version": "ebrt-temporal-state-control-manifest-v0.5-t.0",
+  "source_ledger": {
+    "fixture:event": {
+      "path": "fixtures/temporal_adjoint_state_controller_v0_5_t_dev.json",
+      "sha256": "7ad53f319c4cb2d284c1a21011c1d0c07dd58d16f9d8a25659ef6fae26a55f80"
+    },
+    "fixture:no_event": {
+      "path": "fixtures/temporal_adjoint_state_controller_v0_5_t_no_event.json",
+      "sha256": "41dec8272cd4d450ced610e592fde24128aadb1ae4832e5384c8bfa5d4fc60ff"
+    },
+    "policy_lock": {
+      "path": "policy_lock_temporal_adjoint_state_controller_v0_5_t.json",
+      "sha256": "b1e1f2b50f86d863f76860c4216f3a7ef30ab5dd3235f927f7b708cb88c01f9a"
+    },
+    "source:benchmark": {
+      "path": "benchmark_temporal_adjoint_state_control_v0_5_t.py",
+      "sha256": "7c2d50174bbb6806322cab546c74d10daaf8315bea5aac0a6b591ae35583e8ca"
+    },
+    "source:builder": {
+      "path": "build_temporal_adjoint_state_control_artifact_v0_5_t.py",
+      "sha256": "a18ab7379d9e581b8786766af840a8f1988e49550821b5c5fe77c7ae201522c2"
+    },
+    "source:core": {
+      "path": "temporal_adjoint_state_controller_v0_5_t.py",
+      "sha256": "43df27a8595274f694e7c0741c4fe642a66ae37a0719e5d3256d4a0f37f6b7b5"
+    }
+  },
+  "status": "COMPLETE_LOCKED_SYNTHETIC_MECHANISM"
+}

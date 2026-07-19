@@ -91,6 +91,17 @@ canonical map; a separate no-event fixture is exact identity with zero backward
 calls. This is a synthetic oracle mechanism result, not yet a GPT generation
 or reasoning-quality result.
 
+The experimental v0.5-T branch adds time-indexed public state transitions
+without changing v0.5.0. Exact local adjoints allocate either evidence-leaf or
+transition-basis controls through a smooth frozen recurrence. On one synthetic
+oracle topology and its eight-cell parameter sweep, the transition arm reduced
+aggregate terminal task loss by 44.61% versus the leaf arm and beat every
+nonidentity floor permutation. The same evidence moved the top finite-leverage
+transition from `decision_write` to `revision_mix` when correction order
+changed. This is a supplied-actuator mechanism record: terminal Jacobian scales
+are not matched, the cells are not independent replications, and no GPT output
+is generated.
+
 > [!IMPORTANT]
 > v0.1-v0.3.1 are **not** a Transformer implementation, a GPT latent-state
 > editor, or evidence of improved language-model accuracy. v0.4 meaningfully
@@ -104,6 +115,11 @@ or reasoning-quality result.
 > differentiates only through its frozen public surrogate: graph annotations
 > are scripted, no gradient crosses an adapter/JSON/provider boundary, and no
 > final answer is generated.
+> v0.5-T likewise differentiates only through an oracle-specified public
+> recurrence. Its leaf and transition lanes share standardized coordinate
+> count and L2 bounds, not equal terminal actuator scale; the positive
+> synthetic comparison therefore does not isolate temporal credit assignment
+> from supplied control-basis geometry.
 
 ## Why EBRT?
 
@@ -162,6 +178,11 @@ differentiable_evidence_controller_v0_5.py typed graph, local autograd, control 
 policy_lock_differentiable_evidence_controller_v0_5.json frozen numeric/source/artifact contract
 build_differentiable_evidence_control_artifact_v0_5.py deterministic mechanism artifact builder
 fixtures/differentiable_evidence_controller_v0_5_*.json event and no-event public graphs
+temporal_adjoint_state_controller_v0_5_t.py experimental temporal public-state core
+benchmark_temporal_adjoint_state_control_v0_5_t.py matched A/B/C/D and exhaustive-sham sweep
+policy_lock_temporal_adjoint_state_controller_v0_5_t.json locked v0.5-T mechanism contract
+build_temporal_adjoint_state_control_artifact_v0_5_t.py deterministic v0.5-T artifact builder
+fixtures/temporal_adjoint_state_controller_v0_5_t_*.json paired-order and no-event suites
 docs/RND_BENCHMARK_V0_1.md    protocol, results, limits, and claim ledger
 docs/RND_INSTRUMENTATION_V0_2.md measurement contract and algorithm findings
 docs/RND_DUAL_ROUTE_V0_3.md   terminal invariant result and v0.3.1 direction
@@ -174,6 +195,7 @@ docs/RND_APERTURE_CONTROLS_V0_4_2_UNCHANGED_REPLICATION_R01.md preregistered rep
 docs/RND_PROVIDER_BOUNDARY_V0_4_3.md protocol, smoke result, correction lineage
 docs/RND_REASONING_WORKBENCH_V0_4_4.md workbench projection and claim gates
 docs/RND_DIFFERENTIABLE_EVIDENCE_CONTROL_V0_5.md mechanism, gradient, and claim boundaries
+docs/RND_TEMPORAL_ADJOINT_STATE_CONTROL_V0_5_T.md temporal mechanism, result, and actuator boundary
 artifacts/benchmark_v0_1/     committed machine-readable benchmark evidence
 artifacts/demo_v0_1/trace.json committed no-build mechanism trace
 artifacts/benchmark_instrumentation_v0_2/ committed v0.2 measurement evidence
@@ -191,6 +213,7 @@ artifacts/benchmark_aperture_controls_v0_4_3_contract_smoke/ frozen diagnostic s
 artifacts/compare_provider_boundary_v0_4_3/ offline non-causal comparison
 artifacts/reasoning_workbench_v0_4_4/ canonical public projection and report
 artifacts/differentiable_evidence_control_v0_5/ canonical control maps and mechanism report
+artifacts/temporal_adjoint_state_control_v0_5_t/ temporal maps, audits, comparison, and manifest
 requirements.txt              runtime dependency declaration
 requirements-live.txt         separately pinned OpenAI/Pydantic live dependencies
 LICENSE                       Apache License 2.0
@@ -420,6 +443,22 @@ regeneration. The committed artifact proves mechanism integrity and byte
 identity only on its recorded Python/PyTorch/platform runtime; no cross-runtime
 numerical identity is claimed.
 
+Run the experimental v0.5-T temporal core, its 16-cell four-arm sweep, and the
+same-runtime artifact validator:
+
+```bash
+python3 temporal_adjoint_state_controller_v0_5_t.py self-test
+python3 temporal_adjoint_state_controller_v0_5_t.py validate \
+  --input-json fixtures/temporal_adjoint_state_controller_v0_5_t_dev.json
+python3 benchmark_temporal_adjoint_state_control_v0_5_t.py self-test
+python3 build_temporal_adjoint_state_control_artifact_v0_5_t.py self-test
+python3 build_temporal_adjoint_state_control_artifact_v0_5_t.py validate
+```
+
+The sweep is one synthetic topology under eight nearby parameter settings and
+two evidence orders, not 16 independent benchmark tasks. Its execution map and
+adjoint audit are separate artifacts, and both stop before provider execution.
+
 ## Judge path: inspect first, rerun second
 
 No training or model build is required to inspect the submitted evidence.
@@ -520,6 +559,21 @@ For the v0.5.0 differentiable controller core, inspect:
    behavior;
 4. `artifacts/differentiable_evidence_control_v0_5/self_test.json` for the
    per-term numerical checks and mechanism metrics.
+
+For the experimental v0.5-T temporal state-control record, inspect:
+
+1. [`docs/RND_TEMPORAL_ADJOINT_STATE_CONTROL_V0_5_T.md`](docs/RND_TEMPORAL_ADJOINT_STATE_CONTROL_V0_5_T.md)
+   for the recurrence, exact adjoint, comparison design, actuator-scale caveat,
+   result, and claim ledger;
+2. `policy_lock_temporal_adjoint_state_controller_v0_5_t.json` for the exact
+   sources, fixtures, numeric policy, post-pilot locked gates, and artifact set;
+3. `artifacts/temporal_adjoint_state_control_v0_5_t/mechanism_report.md` and
+   `arm_comparison.json` for the compact result, all five nonidentity shams, and
+   terminal Jacobian norms;
+4. the separate representative `execution_control_map` and
+   `temporal_adjoint_audit` files for actionable controls versus diagnostics;
+5. `self_test.json` and `manifest.json` for numerical, no-event, network-zero,
+   source-integrity, and same-runtime byte evidence.
 
 There is intentionally no normal v0.3 result directory: the runner stopped
 before validated bundle publication, and the ledger stores no outcome rows.
@@ -953,6 +1007,12 @@ retrospectively relabeling failures. See the
 | v0.5.0 preserves a typed non-triggered episode | Supported by the separate locked control-flow sentinel: exact neutral gates, unchanged activations/objective, and zero backward calls; this does not calibrate an event detector |
 | v0.5.0 is invariant to disconnected neutral graph padding | Supported numerically for eight added edge-less nodes on the built-in synthetic graph within the locked `1e-14` tolerance; not a generic total-objective locality theorem |
 | The v0.5.0 control map improves a regenerated GPT answer | Not evaluated; no provider or final generation is part of this milestone |
+| v0.5-T sends exact local adjoints through a supplied temporal public-state recurrence | Supported on one locked synthetic topology; manual recurrence and autograd differ by at most `2.220446049250313e-16`, and central finite differences remain within tolerance |
+| v0.5-T adds a supplied transition-control direction absent from its supplied leaf-control class | Supported by an exact witness using the same `(M + cD)h + bxg` intervention equation; adding equivalent pseudo-leaves could still algebraically collapse the enlarged class |
+| v0.5-T identifies a different useful control floor when evidence order changes | Supported in all eight cells of one local topology sweep: early correction selects floor 4 `decision_write`, late correction selects floor 5 `revision_mix` |
+| v0.5-T proves temporal credit assignment alone beats evidence weighting | No; the arms share standardized coordinate bounds but not terminal Jacobian scale, so the positive C-vs-B result includes oracle actuator geometry |
+| The 16 v0.5-T ordered cells are independent replications or a general reasoning benchmark | No; they are two orders over eight nearby parameter settings on one synthetic topology, with gates locked after pilot implementation rather than preregistered |
+| A v0.5-T control map improves a regenerated GPT answer | Not evaluated; network/provider/generation calls are zero |
 | Selective replay should be optimized before state sufficiency | Not supported by current evidence; it is paused as a quality direction and remains an unranked future efficiency ablation |
 | EBRT edits hidden states inside a trained Transformer or GPT model | Not implemented |
 | EBRT improves real-world LLM reasoning accuracy | Not established |
@@ -1022,6 +1082,16 @@ category determination.
   grader-verdict/final-answer artifact leakage.
   Semantic extraction and controlled full-context regeneration remain future
   integration work.
+- **Milestone 2.5 — temporal state-control vertical experiment (positive
+  synthetic record):** v0.5-T leaves v0.5.0 frozen and adds exact local
+  adjoints over a supplied smooth public-state recurrence. On one topology's
+  eight-cell, two-order sweep, transition-basis controls beat leaf controls and
+  all five nonidentity floor permutations under the same standardized
+  coordinate budget, while the top finite-leverage floor changes with order.
+  Terminal actuator scales are not matched, so the result includes oracle
+  control-basis geometry and is not a GPT or reasoning-quality claim. The next
+  horizontal step remains controlled full-context generation with actual
+  output comparison.
 - **Milestone 3 — coherent evaluator experience (provisional Workbench):** a
   deterministic allowlist projection and local read-only Workbench now connect
   Evidence, Event, Revision, every recorded Replay lane, and Final Output Diff.
@@ -1096,7 +1166,12 @@ that reaches final public output and a separate Provider Failure Atlas. The
 v0.5.0 mechanism core now adds a frozen typed graph, real local autograd,
 bounded evidence gates, deterministic public projection, and a zero-network
 reproduction artifact. Its graph is synthetic and oracle-scripted, and it does
-not yet consume raw language or regenerate a model answer. A fresh harder DEV
+not yet consume raw language or regenerate a model answer. The separate
+v0.5-T experiment now adds a supplied temporal public-state recurrence, exact
+manual/autograd adjoints, order-sensitive finite leverage, transition controls,
+and exhaustive matched floor shams. Its positive 16-cell local-sweep record is
+explicitly bounded by unequal terminal actuator geometry and does not change a
+model answer. A fresh harder DEV
 and promotion suite, controlled full-context generation, live revision
 application, and any hosted judge sandbox remain pending; there is no hosted
 service in this release.
