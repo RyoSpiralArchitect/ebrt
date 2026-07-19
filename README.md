@@ -950,7 +950,7 @@ retrospectively relabeling failures. See the
 | The Inspector or Workbench is the final EBRT frontend or a hosted debugger | No; it is a provisional local read-only view over recorded public artifacts and may be replaced entirely |
 | EBRT v0.5.0 computes evidence controls with real gradients | Supported inside the frozen float64 public surrogate; per-term and total finite differences pass the locked tolerance |
 | v0.5.0 discovers semantic dependencies from raw language | No; its one-hop graph, signed effects, affected claim, invalidation, and target are synthetic oracle annotations |
-| v0.5.0 preserves a non-triggered episode | Supported by the separate locked fixture: exact neutral gates, unchanged activations/objective, and zero backward calls |
+| v0.5.0 preserves a typed non-triggered episode | Supported by the separate locked control-flow sentinel: exact neutral gates, unchanged activations/objective, and zero backward calls; this does not calibrate an event detector |
 | v0.5.0 is invariant to disconnected neutral graph padding | Supported numerically for eight added edge-less nodes on the built-in synthetic graph within the locked `1e-14` tolerance; not a generic total-objective locality theorem |
 | The v0.5.0 control map improves a regenerated GPT answer | Not evaluated; no provider or final generation is part of this milestone |
 | Selective replay should be optimized before state sufficiency | Not supported by current evidence; it is paused as a quality direction and remains an unranked future efficiency ablation |

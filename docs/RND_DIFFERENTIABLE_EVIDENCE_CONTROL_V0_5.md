@@ -276,6 +276,11 @@ fixture emitted exact neutral controls, unchanged public activations and
 objective, and zero backward calls. The artifact builder denied socket creation
 throughout materialization and reports `network_calls=0`.
 
+The no-event fixture is a controller control-flow sentinel, not an event-
+detector calibration: it deliberately retains correction-like public wording
+while the typed `triggered` field is false. v0.5.0 tests that the controller
+honors that frozen field; it does not infer whether an event occurred.
+
 These are mechanism checks, not model-output comparisons. In particular, the
 finite-difference, terminal-credit, severed-edge, and padding tests belong to
 the built-in graph; the external fixture separately validates the locked input,
