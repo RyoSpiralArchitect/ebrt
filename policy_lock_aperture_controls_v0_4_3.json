@@ -1,0 +1,451 @@
+{
+  "schema_version": "ebrt-provider-boundary-policy-lock-v0.4.3",
+  "protocol_id": "aperture-controls-provider-boundary-dev-2026-07-19",
+  "status": "PREREGISTERED_PROTOCOL",
+  "promotion_eligible": false,
+  "research_question": "Can the SDK acquisition and structured-parse boundary be observed with stable non-sensitive reason codes while leaving the v0.4.2 reasoning experiment unchanged, and can a fresh exact block reach both diagnostic integrity and locked decision readiness?",
+  "predecessor": {
+    "frozen_commit": "56225784d51b97243b2fdd0a615379418444631d",
+    "frozen_tree": "2faa99c945e2fcd13fe3bb98f5be7f52ac7b7128",
+    "r01_preregistration_policy": "policy_lock_aperture_controls_v0_4_2_unchanged_replication_r01.json",
+    "r01_preregistration_policy_sha256": "2fdecd663df2efd713a242268108e7f7ee131e074191c72bc650c5ab48886584",
+    "r01_contract_smoke_manifest": "artifacts/benchmark_aperture_controls_v0_4_2_unchanged_replication_r01_contract_smoke/manifest.json",
+    "r01_contract_smoke_manifest_sha256": "fb623a28eb61d7c9dea971ff8018645890b141f79b048e38e109fb32765d15a5",
+    "r01_full_manifest": "artifacts/benchmark_aperture_controls_v0_4_2_unchanged_replication_r01_dev/manifest.json",
+    "r01_full_manifest_sha256": "dde2d872ead686fa5d4b8074536e0d44acc1678036937f834fbe6389a3971671",
+    "r01_full_status": "INCOMPLETE",
+    "r01_failure_interpretation": "The 31 frozen provider_call_exception_unclassified endpoints remain non-assessable and are never retrospectively relabeled by v0.4.3."
+  },
+  "protocol_inheritance": {
+    "unchanged": [
+      "four_arm_definitions",
+      "provider_prompts_and_response_schema",
+      "fixtures_and_gold",
+      "model_and_reasoning_effort",
+      "service_tier_store_previous_response_id_and_truncation",
+      "per_call_output_token_budgets",
+      "Williams_run_and_arm_order",
+      "case_trial_schedule",
+      "local_public_card_validator_and_13_reason_codes",
+      "primary_endpoint_grading",
+      "terminal_local_rejection_policy",
+      "no_retry_no_repair_no_resume_no_fill"
+    ],
+    "only_intended_change": "SDK response acquisition and structured-parse observation boundary plus its sanitized receipt classification.",
+    "provider_request_equivalence": "Every provider request has the same semantic payload, response format, model, budget, and runtime settings as v0.4.2; no observation-only call is added.",
+    "forbidden_changes": [
+      "prompt_or_fixture_edit",
+      "gold_or_endpoint_edit",
+      "arm_or_order_edit",
+      "model_or_budget_edit",
+      "retry_or_repair",
+      "response_replacement",
+      "v0_4_2_artifact_reclassification"
+    ]
+  },
+  "runtime": {
+    "python": "3.13.13",
+    "openai": "2.45.0",
+    "pydantic": "2.12.5",
+    "provider": "openai",
+    "api": "responses.parse_via_with_raw_response",
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "low",
+    "service_tier": "default",
+    "sdk_retries": 0,
+    "timeout_seconds": 60,
+    "store": false,
+    "previous_response_id": false,
+    "truncation": "disabled",
+    "provider_seed": "unset"
+  },
+  "source_seal": {
+    "strategy": "pushed_preregistration_commit_plus_runtime_boot_source_snapshot",
+    "new_runner_or_provider_hashes_embedded_in_this_policy": false,
+    "required_preregistration_state": [
+      "policy_and_protocol_document_committed",
+      "implementation_committed",
+      "preregistration_commit_pushed_before_first_live_call",
+      "worktree_clean",
+      "output_paths_absent"
+    ],
+    "boot_source_paths": [
+      "benchmark_aperture_controls_v0_4_3.py",
+      "openai_response_boundary_v0_4_3.py",
+      "policy_lock_aperture_controls_v0_4_3.json",
+      "benchmark_aperture_controls_v0_4_2.py",
+      "openai_reasoning_provider_v0_4.py",
+      "benchmark_aperture_controls_v0_4_1.py",
+      "benchmark_direct_full_calibration_v0_4.py",
+      "benchmark_language_replay_v0_4.py",
+      "language_replay_bridge_v0_4.py",
+      "semantic_adapter_v0_2.py",
+      "fixtures/language_replay_v0_4_dev.json",
+      "fixtures/language_replay_v0_4_dev_gold.json",
+      "policy_lock_aperture_controls_v0_4_2.json",
+      "policy_lock_aperture_controls_v0_4_1.json",
+      "policy_lock_direct_full_calibration_v0_4.json",
+      "policy_lock_v0_4.json",
+      "requirements-live.txt",
+      "artifacts/benchmark_aperture_controls_v0_4_2_unchanged_replication_r01_contract_smoke/manifest.json",
+      "artifacts/benchmark_aperture_controls_v0_4_2_unchanged_replication_r01_dev/manifest.json"
+    ],
+    "snapshot_contract": "Preflight computes SHA-256 for every boot source, records the complete map with git commit and tree in the smoke manifest, and requires byte equality before full launch and through artifact freeze.",
+    "self_reference_avoidance": "The policy names the new files but does not embed their hashes; their bytes are sealed by the pushed preregistration commit and the artifact-recorded boot snapshot."
+  },
+  "observation_boundary": {
+    "request_acquisition": "client.responses.with_raw_response.parse(...) returns the HTTP response wrapper or raises a typed transport/status/SDK exception.",
+    "structured_parse": "The acquired wrapper is parsed exactly once with raw_response.parse(); this is the only structured-output parse.",
+    "wrong_runtime_boundary": "After a successful structured parse and before a completed receipt, a returned model unequal to the requested model or a returned service tier unequal to default, including unavailable, is one provider_contract/wrong_runtime failure.",
+    "phases": [
+      "request_call",
+      "http_status",
+      "sdk_response_parse",
+      "provider_contract",
+      "local_public_card_validation",
+      "receipt_audit",
+      "internal"
+    ],
+    "arm_continuation": "A failed attempt terminates its arm without retry or repair; remaining preassigned arms and scheduled runs continue so the frozen block preserves diagnostic coverage.",
+    "no_extra_provider_calls": true
+  },
+  "failure_code_allowlist": {
+    "non_assessable_by_phase": {
+      "request_call": [
+        "timeout",
+        "connection",
+        "request_unclassified"
+      ],
+      "http_status": [
+        "authentication",
+        "permission_denied",
+        "not_found",
+        "bad_request",
+        "conflict",
+        "unprocessable_entity",
+        "insufficient_quota",
+        "rate_limit",
+        "unknown429",
+        "server_error",
+        "http_other"
+      ],
+      "sdk_response_parse": [
+        "sdk_http_envelope_validation",
+        "sdk_structured_parse_validation",
+        "sdk_response_decode",
+        "sdk_parse_unclassified"
+      ],
+      "provider_contract": [
+        "provider_refusal",
+        "provider_status_non_completed",
+        "provider_error",
+        "provider_incomplete",
+        "missing_structured_output",
+        "missing_exact_usage",
+        "wrong_runtime"
+      ],
+      "receipt_audit": [
+        "receipt_request_fingerprint_mismatch",
+        "receipt_missing",
+        "receipt_duplicate",
+        "receipt_field_violation",
+        "boot_source_snapshot_mismatch",
+        "artifact_hash_mismatch"
+      ],
+      "internal": [
+        "internal_invariant_failure"
+      ]
+    },
+    "assessed_strict_local_public_card_validation": [
+      "answer_choice_violation",
+      "checkpoint_id_mismatch",
+      "claim_character_bound_exceeded",
+      "disallowed_decision_slot_value",
+      "duplicate_decision_slot",
+      "invalidated_active_support",
+      "invented_invalidation",
+      "missing_required_decision_slot",
+      "multiple_raw_chunks_copied",
+      "topic_character_bound_exceeded",
+      "unavailable_evidence_citation",
+      "unknown_decision_slot",
+      "unseen_active_support"
+    ],
+    "unknown_code_policy": "Any unknown, missing, or phase-incompatible failure code is non-assessable, sets diagnostic_integrity_ready=false, and may not be rewritten after execution."
+  },
+  "rate_limit_classification": {
+    "scope": "prospective_v0_4_3_attempts_only",
+    "sdk_exception": "RateLimitError",
+    "mapping": {
+      "insufficient_quota": "Use only when the typed SDK error code equals insufficient_quota.",
+      "rate_limit": "Use only when the typed SDK error code is an allowlisted ordinary rate-limit code.",
+      "unknown429": "Use for every other HTTP 429, including absent or unrecognized typed error code."
+    },
+    "ordinary_rate_limit_typed_codes": [
+      "rate_limit",
+      "rate_limit_exceeded"
+    ],
+    "persisted_error_data": "Only the allowlisted reason code and numeric HTTP status are retained; error body, message, args, traceback, and arbitrary headers are forbidden.",
+    "historical_r01_policy": "The frozen r01 provider_call_exception_unclassified and coarse transport_error rows remain unchanged and are not backfilled with v0.4.3 codes."
+  },
+  "receipt_contract": {
+    "cardinality": "exactly_one_terminal_receipt_per_attempted_client_call",
+    "attempt_semantics": "attempt_equals_one_and_retry_count_equals_zero",
+    "required_fields": [
+      "receipt_schema_version",
+      "provider",
+      "requested_model",
+      "request_fingerprint",
+      "prompt_fingerprint",
+      "response_schema_fingerprint",
+      "semantic_protocol_fingerprint",
+      "attempt",
+      "retry_count",
+      "attempt_outcome",
+      "failure_phase",
+      "failure_reason_code",
+      "http_observed",
+      "http_status_code",
+      "parse_boundary",
+      "latency_ms",
+      "python_version",
+      "sdk_version",
+      "pydantic_version",
+      "store",
+      "previous_response_id",
+      "truncation"
+    ],
+    "conditional_safe_fields": [
+      "returned_model_after_successful_parse",
+      "service_tier_after_successful_parse",
+      "exact_usage_after_validated_extraction",
+      "response_id_sha256",
+      "server_request_id_sha256",
+      "client_request_id_sha256",
+      "provider_body_sha256",
+      "provider_body_byte_count"
+    ],
+    "conditional_null_policy": "Unavailable conditional fields are null, never inferred or filled.",
+    "forbidden_persistence": [
+      "provider_raw_response_body",
+      "exception_message_args_or_traceback",
+      "arbitrary_response_headers",
+      "credentials_or_bearer_tokens",
+      "rejected_public_reasoning_card",
+      "rejected_card_slot_or_evidence_values"
+    ],
+    "provider_body_digest_policy": "A SHA-256 digest and byte count may be computed in memory and retained; the body bytes themselves are never persisted.",
+    "local_rejection_separation": "A completed provider receipt remains completed; any later allowlisted local rejection is recorded once as the arm terminal endpoint without a second provider receipt."
+  },
+  "endpoint_policy": {
+    "accepted_provider_output": "assessed_and_graded",
+    "allowlisted_terminal_local_rejection": "assessed_strict_failure",
+    "provider_sdk_receipt_or_internal_failure": "non_assessable",
+    "remaining_arm_calls_after_terminal_outcome": "not_executed",
+    "remaining_preassigned_arms": "continue",
+    "no_retrospective_adjudication": true
+  },
+  "readiness_gates": {
+    "diagnostic_integrity_ready": {
+      "meaning": "The execution is trustworthy as a diagnostic artifact even when provider/model endpoints are non-assessable.",
+      "requires": [
+        "pushed_preregistration_commit_and_clean_preflight",
+        "boot_source_snapshot_matches_preregistration_commit",
+        "exact_scheduled_case_trial_and_arm_order_coverage",
+        "exactly_one_allowlisted_receipt_for_every_attempted_call",
+        "attempted_call_count_equals_receipt_count",
+        "all_receipt_phases_codes_and_fields_validate",
+        "no_retry_repair_resume_fill_or_prior_receipt_reuse",
+        "no_forbidden_payload_persisted",
+        "artifact_hash_map_validates"
+      ],
+      "provider_failures_permitted_when_classified": true
+    },
+    "locked_decision_ready": {
+      "meaning": "The unchanged reasoning endpoints may be used for the locked v0.4.3 cause conclusion.",
+      "requires": [
+        "diagnostic_integrity_ready_true",
+        "full_exact_ten_case_three_trial_coverage",
+        "every_arm_endpoint_assessed_as_accepted_output_or_allowlisted_terminal_local_rejection",
+        "zero_provider_sdk_receipt_audit_or_internal_non_assessable_failures",
+        "all_locked_primary_endpoints_assessed",
+        "receipt_validation_true"
+      ],
+      "terminal_local_strict_failures_permitted": true,
+      "cause_conclusion_policy": "A cause conclusion is emitted only when locked_decision_ready is true; otherwise both locked contrasts remain not_assessed_incomplete_or_subset_run."
+    }
+  },
+  "execution_sequence": {
+    "offline_gate": "benchmark_aperture_controls_v0_4_3.py self-test",
+    "contract_smoke": {
+      "case_ids": [
+        "unit_reinterpretation",
+        "invalidated_sensor_fallback"
+      ],
+      "trials": 1,
+      "runs": 2,
+      "arm_endpoints": 8,
+      "run_and_arm_order_sha256": "05b586414582e799dc827e76a7389375f49e0c0f721b234f783f3a9373fd460d",
+      "nominal_api_calls": 28,
+      "attempts": 1,
+      "decision_eligible": false,
+      "full_launch_requires": [
+        "diagnostic_integrity_ready_true",
+        "exact_two_case_one_trial_coverage",
+        "all_eight_arm_endpoints_assessed",
+        "zero_provider_sdk_receipt_audit_or_internal_non_assessable_failures",
+        "all_attempted_receipts_valid",
+        "source_snapshot_equal_to_preregistration"
+      ]
+    },
+    "full_block": {
+      "launch_condition": "fresh_v0_4_3_contract_smoke_full_launch_ready_true",
+      "cases": 10,
+      "trials": 3,
+      "runs": 30,
+      "arm_endpoints": 120,
+      "run_and_arm_order_sha256": "d586e073f31aedf46bafcf391a42330abc508db3610d3bd75adb6d660f66e957",
+      "nominal_api_calls": 420,
+      "attempts": 1,
+      "case_or_trial_override": "forbidden",
+      "decision_eligible": true
+    },
+    "primary_execution_classification": [
+      "offline_gate_failed_no_live_call",
+      "smoke_gate_failed_full_not_launched",
+      "full_executed_diagnostic_integrity_failed",
+      "full_executed_diagnostic_integrity_ready_decision_not_ready",
+      "full_executed_decision_ready"
+    ]
+  },
+  "attempt_policy": {
+    "sdk_retry": false,
+    "manual_retry": false,
+    "repair": false,
+    "resume": false,
+    "partial_fill": false,
+    "failed_output_replacement": false,
+    "prior_receipt_reuse": false,
+    "subset_substitution": false,
+    "freeze_adverse_or_incomplete_result": true,
+    "future_attempt_requires_new_preregistered_protocol_id": true
+  },
+  "offline_test_matrix": [
+    "success_acquisition_parse_contract_usage_and_one_receipt",
+    "timeout_classification",
+    "connection_classification",
+    "authentication_http_classification",
+    "permission_http_classification",
+    "not_found_http_classification",
+    "bad_request_http_classification",
+    "conflict_http_classification",
+    "unprocessable_entity_http_classification",
+    "rate_limit_insufficient_quota_classification",
+    "rate_limit_ordinary_classification",
+    "rate_limit_unknown429_classification",
+    "server_and_other_http_classification",
+    "sdk_http_envelope_validation_classification",
+    "post_http_pydantic_structured_parse_validation_classification",
+    "response_decode_and_unclassified_parse_classification",
+    "provider_refusal_status_error_incomplete_missing_output_usage_and_wrong_runtime",
+    "wrong_returned_model_and_service_tier_each_fail_at_provider_contract_with_one_receipt",
+    "all_13_local_validator_codes_remain_assessed_strict_failures",
+    "provider_and_sdk_codes_remain_non_assessable",
+    "exactly_one_receipt_per_attempt_and_no_retry",
+    "remaining_arms_continue_after_failed_arm",
+    "raw_body_exception_headers_credentials_and_rejected_card_leakage_sentinels",
+    "request_prompt_schema_and_semantic_fingerprint_tamper_detection",
+    "missing_duplicate_unknown_and_phase_incompatible_receipt_rejection",
+    "boot_source_snapshot_and_artifact_hash_tamper_detection",
+    "exact_williams_schedule_run_id_position_index_and_arm_order_tamper_detection",
+    "comparison_manifest_exact_field_name_and_accounting_identity_validation",
+    "staged_bundle_fault_injection_and_atomic_publish_validation",
+    "smoke_zero_provider_failure_launch_gate",
+    "diagnostic_integrity_ready_true_with_classified_provider_failure_but_locked_decision_ready_false",
+    "full_decision_gate_requires_exact_10x3_and_zero_non_assessable_endpoints",
+    "historical_r01_rows_are_not_reclassified",
+    "deterministic_report_and_manifest_regeneration"
+  ],
+  "execution_record_fields": {
+    "seal": [
+      "preregistration_commit",
+      "preregistration_tree",
+      "policy_sha256",
+      "boot_source_sha256_map",
+      "predecessor_manifest_sha256s",
+      "runtime_versions"
+    ],
+    "coverage": [
+      "mode",
+      "case_count",
+      "case_ids",
+      "trials",
+      "trial_ids",
+      "run_and_arm_order",
+      "run_and_arm_order_sha256",
+      "scheduled_arm_endpoints",
+      "exact_protocol_coverage",
+      "nominal_calls",
+      "attempted_calls",
+      "receipt_count"
+    ],
+    "diagnostics": [
+      "failure_counts_by_phase_and_allowlisted_code",
+      "failed_receipt_count",
+      "classified_failed_receipt_count",
+      "classified_nonassessable_endpoint_count",
+      "unclassified_nonassessable_failure_count",
+      "http_observation_recorded_count",
+      "http_acquired_count",
+      "http_observed_count",
+      "http_status_code_available_count",
+      "structured_parse_attempted_count",
+      "structured_parse_success_count",
+      "exact_usage_available_count",
+      "non_assessable_endpoint_count",
+      "terminal_local_rejection_count_and_reason_codes",
+      "receipt_and_artifact_audit_results"
+    ],
+    "endpoints": [
+      "per_arm_accepted_assessed_strict_counts",
+      "accepted_endpoint_count",
+      "assessed_endpoint_count",
+      "assessed_four_arm_runs",
+      "all_output_completed_runs",
+      "stable_pass_case_counts",
+      "revision_envelope_contrast",
+      "raw_aperture_contrast",
+      "exact_total_tokens_only_when_complete"
+    ],
+    "gates": [
+      "diagnostic_integrity_ready",
+      "locked_decision_ready",
+      "full_launch_ready",
+      "primary_execution_classification",
+      "cause_conclusion_or_not_assessed"
+    ],
+    "publication": [
+      "artifact_hash_map_validated",
+      "calls_rows_equal_receipts_equal_attempted_calls",
+      "sibling_staging_directory_fully_audited_before_atomic_publish",
+      "comparison_available_false_for_terminal_failure_bundle"
+    ]
+  },
+  "output_paths": {
+    "contract_smoke_working": "benchmark_results/v0_4_3_provider_boundary_contract_smoke",
+    "full_working": "benchmark_results/v0_4_3_provider_boundary_dev",
+    "contract_smoke_canonical": "artifacts/benchmark_aperture_controls_v0_4_3_contract_smoke",
+    "full_canonical": "artifacts/benchmark_aperture_controls_v0_4_3_dev"
+  },
+  "claim_boundary": [
+    "v0.4.3 changes only prospective SDK acquisition and parse observation; it does not change the reasoning arms or model request semantics.",
+    "The frozen v0.4.2 and r01 artifacts are never reclassified, repaired, filled, or used as v0.4.3 endpoints.",
+    "v0.4.2 and v0.4.3 are independent stochastic blocks; any quality, token, latency, failure-rate, or contrast difference between them is descriptive and is not an instrumentation effect.",
+    "This is a contaminated ten-case DEV suite, not a holdout, generalization, or promotion experiment.",
+    "A classified provider or SDK failure may preserve diagnostic_integrity_ready but always keeps locked_decision_ready false.",
+    "A terminal allowlisted local contract rejection is an assessed strict failure, not missing data; a provider, SDK, receipt-audit, or internal failure is non-assessable.",
+    "No result establishes general LLM reasoning improvement, a compression-only mechanism, private chain-of-thought access, hidden-state editing, or model-weight change.",
+    "Exact token claims require exact provider usage for the complete declared population; no partial or favorable post-hoc subset is promoted.",
+    "Rate-limit subtype labels are prospective operational diagnostics and do not prove provider-side cause beyond the typed fields observed by the SDK."
+  ]
+}

@@ -1,0 +1,159 @@
+{
+  "claim_boundary": [
+    "The r01 rows remain frozen and are not retrospectively relabeled.",
+    "r01 and v0.4.3 are independent stochastic blocks; the two proportions are descriptive and are not a causal instrumentation effect.",
+    "The blocks have different declared populations: r01 is a 10-case by 3-trial full block, while v0.4.3 is a 2-case by 1-trial contract smoke.",
+    "No quality, token, latency, failure-rate, or reasoning conclusion is assessed by this diagnostic comparison.",
+    "This does not establish general reasoning improvement, provider-side root cause beyond typed observations, private chain-of-thought access, hidden-state editing, or model-weight change."
+  ],
+  "decision": {
+    "bounded_smoke_level_decision": "The v0.4.3 boundary classified all eight non-assessable smoke endpoints with diagnostic integrity, but the failed smoke launch gate closed the full block and every reasoning conclusion.",
+    "diagnostic_integrity_ready": true,
+    "locked_reasoning_ready": false,
+    "primary_execution_classification": "smoke_gate_failed_full_not_launched"
+  },
+  "diagnostic_comparison": {
+    "available": true,
+    "cross_block_effect_estimate": null,
+    "scope": "native_phase_reason_coverage_within_each_frozen_block"
+  },
+  "generation": {
+    "deterministic": true,
+    "markdown_source": "comparison.json_only",
+    "network_calls": 0,
+    "timestamp_recorded": false
+  },
+  "inputs": {
+    "r01_contract_smoke": {
+      "canonical_path": "artifacts/benchmark_aperture_controls_v0_4_2_unchanged_replication_r01_contract_smoke",
+      "manifest_sha256": "fb623a28eb61d7c9dea971ff8018645890b141f79b048e38e109fb32765d15a5",
+      "status": "COMPLETE_NON_DECISION_RUN"
+    },
+    "r01_full": {
+      "attempted_api_calls": 344,
+      "canonical_path": "artifacts/benchmark_aperture_controls_v0_4_2_unchanged_replication_r01_dev",
+      "manifest_sha256": "dde2d872ead686fa5d4b8074536e0d44acc1678036937f834fbe6389a3971671",
+      "non_assessable_endpoints": 31,
+      "receipt_count": 344,
+      "schedule_sha256": "c090d7d7b98ab3157c5df8501c7cfe3981fa700bec624a77269da78ac508fe88",
+      "status": "INCOMPLETE"
+    },
+    "v0_4_3_contract_smoke": {
+      "attempted_api_calls": 8,
+      "canonical_path": "artifacts/benchmark_aperture_controls_v0_4_3_contract_smoke",
+      "diagnostic_integrity_ready": true,
+      "failure_counts_by_phase_and_reason": {
+        "http_status/insufficient_quota": 8
+      },
+      "full_launch_ready": false,
+      "manifest_sha256": "42172d684de6541fc6b26e23cf7e9ae7fde92395dd81db8fbeb53ed8a32021ec",
+      "non_assessable_endpoints": 8,
+      "receipt_count": 8,
+      "schedule_sha256": "05b586414582e799dc827e76a7389375f49e0c0f721b234f783f3a9373fd460d",
+      "status": "COMPLETE_DIAGNOSTIC_NON_DECISION"
+    },
+    "v0_4_3_full": {
+      "executed": false,
+      "reason": "contract_smoke_full_launch_ready_false"
+    }
+  },
+  "interpretation": [
+    "The frozen r01 block natively classified 0 of 31 non-assessable endpoints at the prospective phase/reason boundary.",
+    "The v0.4.3 smoke natively classified 8 of 8 non-assessable endpoints and retained diagnostic integrity.",
+    "The v0.4.3 smoke failed its full-launch gate, so no v0.4.3 full block exists and no reasoning endpoint comparison is available."
+  ],
+  "primary_metric": {
+    "definition": "Prospective native phase/reason coverage among each block's non-assessable arm endpoints.",
+    "name": "classified_nonassessable_endpoints/all_nonassessable_endpoints",
+    "r01_frozen_native": {
+      "defined": true,
+      "denominator": 31,
+      "fraction": "0/31",
+      "numerator": 0,
+      "ratio": 0.0
+    },
+    "v0_4_3_contract_smoke": {
+      "defined": true,
+      "denominator": 8,
+      "fraction": "8/8",
+      "numerator": 8,
+      "ratio": 1.0
+    }
+  },
+  "promotion_eligible": false,
+  "reasoning": {
+    "comparison_available": false,
+    "cross_block_effect_estimate": null,
+    "raw_aperture_conclusion": "not_assessed_incomplete_or_subset_run",
+    "revision_envelope_conclusion": "not_assessed_incomplete_or_subset_run"
+  },
+  "schema_version": "ebrt-provider-boundary-diagnostic-comparison-v0.4.3",
+  "status": "COMPLETE_DIAGNOSTIC_NON_CAUSAL",
+  "verification": {
+    "all_passed": true,
+    "bundle_path_policy": {
+      "canonical_bundles": "required_and_fully_validated",
+      "working_bundles": "optional_but_byte_identical_when_present"
+    },
+    "checks": {
+      "artifact_hash_maps_valid": true,
+      "canonical_bundles_required": true,
+      "deterministic_schedule_valid": true,
+      "full_v0_4_3_block_absent": true,
+      "pinned_hashes_valid": true,
+      "post_freeze_runner_verified_from_preregistration_blob": true,
+      "privacy_audit_valid": true,
+      "r01_native_rows_not_reclassified": true,
+      "receipt_cardinality_valid": true,
+      "v0_4_3_phase_reason_allowlist_valid": true,
+      "v0_4_3_post_freeze_coverage_lineage_valid": true,
+      "v0_4_3_provider_receipts_unchanged_by_coverage_correction": true,
+      "working_bundles_optional_for_clean_checkout": true,
+      "working_canonical_byte_identity_valid_when_available": true,
+      "zero_retry_valid": true
+    },
+    "input_artifact_sha256": {
+      "r01_contract_smoke": {
+        "arm_rows.csv": "be97060bdeca9a7e16ec937f15f31ebcffefa26121ad694afdf71cdcdb231b0a",
+        "benchmark_report.md": "22da8f2727ab7fe7325c9e160db937fdd0d159a7f110e1ad34735ec9bd99023b",
+        "calls.jsonl": "86b194a4b9cf00206747ce940912d88c3477cc67759ea706b9747ea448266045",
+        "results.json": "763868acd12b7022f7f682fb0698b1ca1ae439b33a86864387810eb9f99311f7",
+        "traces.jsonl": "3a68e848d7b56f74f8401a5665428b6a7f7a8c3debd745673c6d551b4c849787"
+      },
+      "r01_full": {
+        "arm_rows.csv": "1408c5b24c62b635d4361978e6c9be1e6082f140630a6237514310927f39c69c",
+        "benchmark_report.md": "eeb553867dd6a10ffcac916492f6c888cbb9df69b11d78209526586e738872c0",
+        "calls.jsonl": "f9d3e750fc5db354e29db2742aa0eebe35898596440b2f24a995be964d9edbfb",
+        "results.json": "a123bf3ff9fdf70a1cee6a7ea06508fa216dfb380efdf7e4e02c855d6ea3c4e7",
+        "traces.jsonl": "c8e1656de8531aa53f3e6e801ace20276b66f66b16e360c08d5db3a89412951c"
+      },
+      "v0_4_3_contract_smoke": {
+        "arm_rows.csv": "994efb3aa5ca9bcc188442aba02c287840f483863de5c6a7eb6f2a7bc341e505",
+        "benchmark_report.md": "fd0f3a99fc03e1a48abca4fd4b65d2197d0ef255ae866c28514aff002d21f79d",
+        "calls.jsonl": "68989d17874f2da14964733f003aedcd6f4e8e99e35284f2def19f2873575d5e",
+        "results.json": "fb9a863b82d4caaf6afc60446c852d6e1c2de09c463239508b02a28a39316819",
+        "traces.jsonl": "1cfd67fe6f8894a2c82f023a1624c223df76656e3a056ae632bc5228714ba0a5"
+      }
+    },
+    "pinned_sha256": {
+      "r01_full_manifest": "dde2d872ead686fa5d4b8074536e0d44acc1678036937f834fbe6389a3971671",
+      "r01_policy": "2fdecd663df2efd713a242268108e7f7ee131e074191c72bc650c5ab48886584",
+      "r01_smoke_manifest": "fb623a28eb61d7c9dea971ff8018645890b141f79b048e38e109fb32765d15a5",
+      "v043_adapter": "7f78fce94cb141a4355d3c040010e11e049ff67a3a8c603099d0548a47b7cf03",
+      "v043_policy": "ed69464c5065ec081a9ca117a08e3e53eac2a4e235968e7392f514fbd23ffa65",
+      "v043_runner": "e8d065eebbbc8289c4afac91a4d40649bd7ff6305a54e888a6cf30ebe6fd09e9",
+      "v043_smoke_manifest": "42172d684de6541fc6b26e23cf7e9ae7fde92395dd81db8fbeb53ed8a32021ec"
+    },
+    "source_pin_scope": {
+      "other_v0_4_3_boot_sources": "working_tree_and_preregistration_commit_blob",
+      "v0_4_3_runner": "preregistration_commit_blob"
+    },
+    "v0_4_3_derived_coverage_lineage": {
+      "authority": "v0.4.3_policy_exact_schedule_projection",
+      "corrected_results_sha256": "fb9a863b82d4caaf6afc60446c852d6e1c2de09c463239508b02a28a39316819",
+      "no_live_call": true,
+      "original_manifest_sha256": "1aabd709e95f8f45c94a31dda6d443cdcd80ab4f03e93a03de3d6bac2cb36f3c",
+      "provider_receipt_projection_sha256": "ba735cd7ec08a9644636ac665bf3514d8d1fd460a103214e40da0afeeba658e9"
+    }
+  }
+}

@@ -1,0 +1,1418 @@
+{
+  "all_outputs_completed": false,
+  "case_count": 2,
+  "case_ids": [
+    "unit_reinterpretation",
+    "invalidated_sensor_fallback"
+  ],
+  "claim_boundary": [
+    "This is a fixed contaminated 10-case DEV calibration, not a holdout or promotion experiment.",
+    "The two one-shot arms share one prompt and differ only in whether the minimal fixed revision_context is null or populated.",
+    "The two staged arms share one prompt and differ in retained raw prefix and its corresponding allowed evidence aperture.",
+    "Both staged arms are post-event reconstructions conditioned on the same fixed oracle envelope from their first rebuilt chunk; they do not model online temporal event discovery.",
+    "Card-only means bounded public semantic state rather than zero information: claim/topic length and multi-chunk verbatim copying are constrained and audited, but elimination of one quoted fact or semantic paraphrase is not claimed.",
+    "The no-revision arm still uses a strict public ReasoningCard schema and is not an unqualified unassisted plain-API baseline.",
+    "Fixture semantic annotation is never sent to the no-revision provider; it is used only after output as a no-retry local invalidation bound.",
+    "Matching max_output_tokens ceilings does not match realized tokens, input tokens, calls, latency, price, server compute, or reasoning effort consumed.",
+    "Cumulative raw intentionally repeats earlier raw evidence across staged calls and is expected to consume more input tokens.",
+    "A cumulative-raw failure cannot isolate information retention from sequential commitment, prompt dynamics, or per-call output-token allocation.",
+    "A cumulative-raw rescue would identify raw aperture as a causal bottleneck candidate in this protocol, not establish general LLM reasoning improvement.",
+    "The staged card-only rerun uses the new pair-shared staged interface and is not an exact byte-for-byte rerun of PR 6 Full Restart.",
+    "Selective replay is not executed and receives no same-block rank.",
+    "No private chain-of-thought, hidden-state edit, persisted response state, retry, or provider seed is used.",
+    "A terminal local contract rejection is an adjudicated strict failure of the primary endpoint, not a valid final card and not missing data.",
+    "Provider-call, provider-contract, and internal failures remain non-assessable and keep the locked cause gate false.",
+    "A request/receipt fingerprint mismatch is a non-assessable audit invariant failure, never a model-card strict failure.",
+    "Reason codes identify only a predeclared validator rule; rejected card values and exception text are not persisted.",
+    "The v0.4.2 endpoint policy does not retrospectively change the frozen v0.4.1 artifact.",
+    "A fresh exact ten-case three-trial block is required for any v0.4.2 cause decision.",
+    "v0.4.3 changes only prospective SDK acquisition and parse observation; it does not change the reasoning arms or model request semantics.",
+    "The frozen v0.4.2 and r01 artifacts are never reclassified, repaired, filled, or used as v0.4.3 endpoints.",
+    "v0.4.2 and v0.4.3 are independent stochastic blocks; any quality, token, latency, failure-rate, or contrast difference between them is descriptive and is not an instrumentation effect.",
+    "This is a contaminated ten-case DEV suite, not a holdout, generalization, or promotion experiment.",
+    "A classified provider or SDK failure may preserve diagnostic_integrity_ready but always keeps locked_decision_ready false.",
+    "A terminal allowlisted local contract rejection is an assessed strict failure, not missing data; a provider, SDK, receipt-audit, or internal failure is non-assessable.",
+    "No result establishes general LLM reasoning improvement, a compression-only mechanism, private chain-of-thought access, hidden-state editing, or model-weight change.",
+    "Exact token claims require exact provider usage for the complete declared population; no partial or favorable post-hoc subset is promoted.",
+    "Rate-limit subtype labels are prospective operational diagnostics and do not prove provider-side cause beyond the typed fields observed by the SDK."
+  ],
+  "derived_artifact_lineage": {
+    "artifact_bytes_postdate_preregistration": true,
+    "authority": "v0.4.3_policy_exact_schedule_projection",
+    "corrected_fields": [
+      "derived_artifact_lineage",
+      "summary.live_receipt_validation.contract_smoke_exact_coverage",
+      "summary.live_receipt_validation.contract_smoke_coverage_authority",
+      "summary.live_receipt_validation.inherited_v0_4_2_smoke_namespace_projection_validated"
+    ],
+    "correction_id": "post_freeze_inherited_v0_4_2_smoke_namespace_projection",
+    "no_live_call": true,
+    "observation_artifacts_unchanged": {
+      "arm_rows.csv": "994efb3aa5ca9bcc188442aba02c287840f483863de5c6a7eb6f2a7bc341e505",
+      "benchmark_report.md": "fd0f3a99fc03e1a48abca4fd4b65d2197d0ef255ae866c28514aff002d21f79d",
+      "calls.jsonl": "68989d17874f2da14964733f003aedcd6f4e8e99e35284f2def19f2873575d5e",
+      "traces.jsonl": "1cfd67fe6f8894a2c82f023a1624c223df76656e3a056ae632bc5228714ba0a5"
+    },
+    "original_manifest_sha256": "1aabd709e95f8f45c94a31dda6d443cdcd80ab4f03e93a03de3d6bac2cb36f3c",
+    "original_results_sha256": "f519d253228d037092037b1592c46ac0443d1684ad223b0701420225223b544e",
+    "provider_observations_unchanged": true,
+    "provider_receipt_projection_sha256": "ba735cd7ec08a9644636ac665bf3514d8d1fd460a103214e40da0afeeba658e9",
+    "schema_version": "ebrt-post-freeze-derived-correction-v0.4.3"
+  },
+  "execution_complete": false,
+  "launch_gate": null,
+  "mode": "openai_live_provider_boundary_smoke_v0_4_3",
+  "preregistration": {
+    "preregistration_commit": "3ff8ba9b1fd21bb39c230a5b65a7a232c1d67b6f",
+    "preregistration_tree": "42e0031e60cbcadaa4cd06333bfa7659c7c0b10d",
+    "source_snapshot_matches_preregistration_commit": true,
+    "target_output_paths_absent": true,
+    "upstream": "origin/agent/add-v043-provider-boundary",
+    "worktree_clean_except_verified_smoke_bundle": true
+  },
+  "promotion_eligible": false,
+  "provider_provenance": {
+    "direct_raw_fixed_revision_rerun": {
+      "api": "responses.with_raw_response.parse+raw.parse",
+      "instructions_fingerprint": "c7e152e013db478443425bf907ccd2998efc438cc1e0246908d0ffe1ed13121a",
+      "max_output_tokens": 4608,
+      "model": "gpt-5.6-sol",
+      "previous_response_id": false,
+      "provider": "openai_responses",
+      "reasoning_effort": "low",
+      "receipt_schema_version": "ebrt-provider-boundary-receipt-v0.4.3",
+      "request_shape": "responses.parse_v0_4_compatible",
+      "retries": 0,
+      "sdk_version": "2.45.0",
+      "service_tier": "default",
+      "store": false,
+      "structured_output": "pydantic_v2",
+      "truncation": "disabled"
+    },
+    "direct_raw_no_revision": {
+      "api": "responses.with_raw_response.parse+raw.parse",
+      "instructions_fingerprint": "c7e152e013db478443425bf907ccd2998efc438cc1e0246908d0ffe1ed13121a",
+      "max_output_tokens": 4608,
+      "model": "gpt-5.6-sol",
+      "previous_response_id": false,
+      "provider": "openai_responses",
+      "reasoning_effort": "low",
+      "receipt_schema_version": "ebrt-provider-boundary-receipt-v0.4.3",
+      "request_shape": "responses.parse_v0_4_compatible",
+      "retries": 0,
+      "sdk_version": "2.45.0",
+      "service_tier": "default",
+      "store": false,
+      "structured_output": "pydantic_v2",
+      "truncation": "disabled"
+    },
+    "staged_card_only_rerun": {
+      "api": "responses.with_raw_response.parse+raw.parse",
+      "instructions_fingerprint": "43879f34b890cfe515972ec442cd2636f1311f7b26a470671188bcc3c1715947",
+      "max_output_tokens": 768,
+      "model": "gpt-5.6-sol",
+      "previous_response_id": false,
+      "provider": "openai_responses",
+      "reasoning_effort": "low",
+      "receipt_schema_version": "ebrt-provider-boundary-receipt-v0.4.3",
+      "request_shape": "responses.parse_v0_4_compatible",
+      "retries": 0,
+      "sdk_version": "2.45.0",
+      "service_tier": "default",
+      "store": false,
+      "structured_output": "pydantic_v2",
+      "truncation": "disabled"
+    },
+    "staged_cumulative_raw": {
+      "api": "responses.with_raw_response.parse+raw.parse",
+      "instructions_fingerprint": "43879f34b890cfe515972ec442cd2636f1311f7b26a470671188bcc3c1715947",
+      "max_output_tokens": 768,
+      "model": "gpt-5.6-sol",
+      "previous_response_id": false,
+      "provider": "openai_responses",
+      "reasoning_effort": "low",
+      "receipt_schema_version": "ebrt-provider-boundary-receipt-v0.4.3",
+      "request_shape": "responses.parse_v0_4_compatible",
+      "retries": 0,
+      "sdk_version": "2.45.0",
+      "service_tier": "default",
+      "store": false,
+      "structured_output": "pydantic_v2",
+      "truncation": "disabled"
+    }
+  },
+  "runs": [
+    {
+      "all_outputs_completed": false,
+      "arm_order": [
+        "direct_raw_no_revision",
+        "direct_raw_fixed_revision_rerun",
+        "staged_cumulative_raw",
+        "staged_card_only_rerun"
+      ],
+      "arms": {
+        "direct_raw_fixed_revision_rerun": {
+          "accounting": {
+            "api_calls": 1,
+            "cache_write_tokens": null,
+            "cached_input_tokens": null,
+            "exact_provider_tokens": false,
+            "input_tokens": null,
+            "latency_ms": 1712.698832998285,
+            "logical_calls": 1,
+            "output_tokens": null,
+            "reasoning_tokens": null,
+            "total_tokens": null
+          },
+          "arm": "direct_raw_fixed_revision_rerun",
+          "call_records": [],
+          "cards": [],
+          "configured_output_token_ceiling": 4608,
+          "expected_api_calls": 1,
+          "failure_category": "provider_boundary_error",
+          "failure_phase": "http_status",
+          "failure_reason_code": "insufficient_quota",
+          "failure_request_fingerprint": "0157c9b1ec77105a12274f5daee5fb5e0934ae91973f8a658eff1d7671570d6f",
+          "failure_sequence_offset": 0,
+          "final_card": null,
+          "grade": {
+            "available": false,
+            "checks": null,
+            "citation_precision": null,
+            "citation_recall": null,
+            "evidence_consistent": false,
+            "machine_success": false,
+            "missing_required_evidence_ids": [],
+            "primary_endpoint_assessed": false,
+            "support_evidence_ids": [],
+            "unexpected_support_evidence_ids": []
+          },
+          "primary_endpoint_assessed": false,
+          "receipts": [
+            {
+              "api_calls": 1,
+              "latency_ms": 1712.698832998285,
+              "logical_calls": 1,
+              "metadata": {
+                "api_call_count_semantics": "attempted_client_call",
+                "attempt": 1,
+                "attempt_outcome": "http_status_error",
+                "client_request_id_sha256": "eaa42a8aeacb132a27e0d757181acf83c26b9c7b96e89138dd3749f84ed6e006",
+                "failure_phase": "http_status",
+                "failure_reason_code": "insufficient_quota",
+                "failure_type": "insufficient_quota",
+                "http_observed": true,
+                "http_status_code": 429,
+                "max_output_tokens": 4608,
+                "parse_boundary": "not_entered",
+                "previous_response_id": false,
+                "provider_body_byte_count": 316,
+                "provider_body_sha256": "cfb3a3de133d72777ed937b64a1fb9f7ce510856aa53d7f492dcecb7848707bc",
+                "pydantic_version": "2.12.5",
+                "python_version": "3.13.13",
+                "reasoning_effort": "low",
+                "receipt_schema_version": "ebrt-provider-boundary-receipt-v0.4.3",
+                "refusal_count": 0,
+                "response_id_sha256": null,
+                "response_schema_fingerprint": "ac09c35f37c9d2ee06b2fc1714d1c940db4ff0d3b30df90c8830e4241512c3e4",
+                "retry_count": 0,
+                "sdk_version": "2.45.0",
+                "semantic_protocol_fingerprint": "7c8660962f620f3332397d76ad6fb2cf17fd456607db98c93100fa40a9c89170",
+                "server_request_id_sha256": "6740f24ddd0f4e172cd6ff1eb7038ed5ee4bd2e1247e893e23381c0e786093c5",
+                "service_tier": null,
+                "status": "http_status_error",
+                "store": false,
+                "truncation": "disabled"
+              },
+              "prompt_fingerprint": "c7e152e013db478443425bf907ccd2998efc438cc1e0246908d0ffe1ed13121a",
+              "provider": "openai_responses",
+              "request_fingerprint": "0157c9b1ec77105a12274f5daee5fb5e0934ae91973f8a658eff1d7671570d6f",
+              "requested_model": "gpt-5.6-sol",
+              "returned_model": null,
+              "usage": {
+                "cache_write_tokens": null,
+                "cached_input_tokens": null,
+                "exact_provider_tokens": false,
+                "input_tokens": null,
+                "output_tokens": null,
+                "reasoning_tokens": null,
+                "total_tokens": null
+              }
+            }
+          ],
+          "status": "failed",
+          "terminal_outcome": "provider_boundary_failure"
+        },
+        "direct_raw_no_revision": {
+          "accounting": {
+            "api_calls": 1,
+            "cache_write_tokens": null,
+            "cached_input_tokens": null,
+            "exact_provider_tokens": false,
+            "input_tokens": null,
+            "latency_ms": 3399.8302499967394,
+            "logical_calls": 1,
+            "output_tokens": null,
+            "reasoning_tokens": null,
+            "total_tokens": null
+          },
+          "arm": "direct_raw_no_revision",
+          "call_records": [],
+          "cards": [],
+          "configured_output_token_ceiling": 4608,
+          "expected_api_calls": 1,
+          "failure_category": "provider_boundary_error",
+          "failure_phase": "http_status",
+          "failure_reason_code": "insufficient_quota",
+          "failure_request_fingerprint": "b3188548ef30befec0b555bfb4eac7d4427f3d32e88161668c0a54b11770df09",
+          "failure_sequence_offset": 0,
+          "final_card": null,
+          "grade": {
+            "available": false,
+            "checks": null,
+            "citation_precision": null,
+            "citation_recall": null,
+            "evidence_consistent": false,
+            "machine_success": false,
+            "missing_required_evidence_ids": [],
+            "primary_endpoint_assessed": false,
+            "support_evidence_ids": [],
+            "unexpected_support_evidence_ids": []
+          },
+          "primary_endpoint_assessed": false,
+          "receipts": [
+            {
+              "api_calls": 1,
+              "latency_ms": 3399.8302499967394,
+              "logical_calls": 1,
+              "metadata": {
+                "api_call_count_semantics": "attempted_client_call",
+                "attempt": 1,
+                "attempt_outcome": "http_status_error",
+                "client_request_id_sha256": "721553e64fd33cf1e15ceb23faedf7199613e072005b3f78de07528042b4610f",
+                "failure_phase": "http_status",
+                "failure_reason_code": "insufficient_quota",
+                "failure_type": "insufficient_quota",
+                "http_observed": true,
+                "http_status_code": 429,
+                "max_output_tokens": 4608,
+                "parse_boundary": "not_entered",
+                "previous_response_id": false,
+                "provider_body_byte_count": 316,
+                "provider_body_sha256": "cfb3a3de133d72777ed937b64a1fb9f7ce510856aa53d7f492dcecb7848707bc",
+                "pydantic_version": "2.12.5",
+                "python_version": "3.13.13",
+                "reasoning_effort": "low",
+                "receipt_schema_version": "ebrt-provider-boundary-receipt-v0.4.3",
+                "refusal_count": 0,
+                "response_id_sha256": null,
+                "response_schema_fingerprint": "ac09c35f37c9d2ee06b2fc1714d1c940db4ff0d3b30df90c8830e4241512c3e4",
+                "retry_count": 0,
+                "sdk_version": "2.45.0",
+                "semantic_protocol_fingerprint": "732652e10e333f78d50552901c1785d917096f20ac99020563dd213f2478a675",
+                "server_request_id_sha256": "1fe9a36ac9c744fa8428a92027c0228ddf4faa4202950c20e78ec20ec94c3be9",
+                "service_tier": null,
+                "status": "http_status_error",
+                "store": false,
+                "truncation": "disabled"
+              },
+              "prompt_fingerprint": "c7e152e013db478443425bf907ccd2998efc438cc1e0246908d0ffe1ed13121a",
+              "provider": "openai_responses",
+              "request_fingerprint": "b3188548ef30befec0b555bfb4eac7d4427f3d32e88161668c0a54b11770df09",
+              "requested_model": "gpt-5.6-sol",
+              "returned_model": null,
+              "usage": {
+                "cache_write_tokens": null,
+                "cached_input_tokens": null,
+                "exact_provider_tokens": false,
+                "input_tokens": null,
+                "output_tokens": null,
+                "reasoning_tokens": null,
+                "total_tokens": null
+              }
+            }
+          ],
+          "status": "failed",
+          "terminal_outcome": "provider_boundary_failure"
+        },
+        "staged_card_only_rerun": {
+          "accounting": {
+            "api_calls": 1,
+            "cache_write_tokens": null,
+            "cached_input_tokens": null,
+            "exact_provider_tokens": false,
+            "input_tokens": null,
+            "latency_ms": 1374.810624998645,
+            "logical_calls": 1,
+            "output_tokens": null,
+            "reasoning_tokens": null,
+            "total_tokens": null
+          },
+          "arm": "staged_card_only_rerun",
+          "call_records": [],
+          "cards": [],
+          "configured_output_token_ceiling": 4608,
+          "expected_api_calls": 6,
+          "failure_category": "provider_boundary_error",
+          "failure_phase": "http_status",
+          "failure_reason_code": "insufficient_quota",
+          "failure_request_fingerprint": "fb2bce814e59d83b812e0d260a7c704afeed9957b6dd83d16e0df182aa172cc8",
+          "failure_sequence_offset": 0,
+          "final_card": null,
+          "grade": {
+            "available": false,
+            "checks": null,
+            "citation_precision": null,
+            "citation_recall": null,
+            "evidence_consistent": false,
+            "machine_success": false,
+            "missing_required_evidence_ids": [],
+            "primary_endpoint_assessed": false,
+            "support_evidence_ids": [],
+            "unexpected_support_evidence_ids": []
+          },
+          "primary_endpoint_assessed": false,
+          "receipts": [
+            {
+              "api_calls": 1,
+              "latency_ms": 1374.810624998645,
+              "logical_calls": 1,
+              "metadata": {
+                "api_call_count_semantics": "attempted_client_call",
+                "attempt": 1,
+                "attempt_outcome": "http_status_error",
+                "client_request_id_sha256": "7d0524471dba57cdce797eb9d9bc86ad645c9badc4af01fbde3357f691bd560a",
+                "failure_phase": "http_status",
+                "failure_reason_code": "insufficient_quota",
+                "failure_type": "insufficient_quota",
+                "http_observed": true,
+                "http_status_code": 429,
+                "max_output_tokens": 768,
+                "parse_boundary": "not_entered",
+                "previous_response_id": false,
+                "provider_body_byte_count": 316,
+                "provider_body_sha256": "cfb3a3de133d72777ed937b64a1fb9f7ce510856aa53d7f492dcecb7848707bc",
+                "pydantic_version": "2.12.5",
+                "python_version": "3.13.13",
+                "reasoning_effort": "low",
+                "receipt_schema_version": "ebrt-provider-boundary-receipt-v0.4.3",
+                "refusal_count": 0,
+                "response_id_sha256": null,
+                "response_schema_fingerprint": "ac09c35f37c9d2ee06b2fc1714d1c940db4ff0d3b30df90c8830e4241512c3e4",
+                "retry_count": 0,
+                "sdk_version": "2.45.0",
+                "semantic_protocol_fingerprint": "bdc5f048b734460b8f70792db11f5a1ac00f3b23036d63def6e0e24c037b3e42",
+                "server_request_id_sha256": "c587b931a3de912b551d7867b6f95f8c2df417feb8263f4ab8a73dbdce582c64",
+                "service_tier": null,
+                "status": "http_status_error",
+                "store": false,
+                "truncation": "disabled"
+              },
+              "prompt_fingerprint": "43879f34b890cfe515972ec442cd2636f1311f7b26a470671188bcc3c1715947",
+              "provider": "openai_responses",
+              "request_fingerprint": "fb2bce814e59d83b812e0d260a7c704afeed9957b6dd83d16e0df182aa172cc8",
+              "requested_model": "gpt-5.6-sol",
+              "returned_model": null,
+              "usage": {
+                "cache_write_tokens": null,
+                "cached_input_tokens": null,
+                "exact_provider_tokens": false,
+                "input_tokens": null,
+                "output_tokens": null,
+                "reasoning_tokens": null,
+                "total_tokens": null
+              }
+            }
+          ],
+          "status": "failed",
+          "terminal_outcome": "provider_boundary_failure"
+        },
+        "staged_cumulative_raw": {
+          "accounting": {
+            "api_calls": 1,
+            "cache_write_tokens": null,
+            "cached_input_tokens": null,
+            "exact_provider_tokens": false,
+            "input_tokens": null,
+            "latency_ms": 1735.3152080031577,
+            "logical_calls": 1,
+            "output_tokens": null,
+            "reasoning_tokens": null,
+            "total_tokens": null
+          },
+          "arm": "staged_cumulative_raw",
+          "call_records": [],
+          "cards": [],
+          "configured_output_token_ceiling": 4608,
+          "expected_api_calls": 6,
+          "failure_category": "provider_boundary_error",
+          "failure_phase": "http_status",
+          "failure_reason_code": "insufficient_quota",
+          "failure_request_fingerprint": "fb2bce814e59d83b812e0d260a7c704afeed9957b6dd83d16e0df182aa172cc8",
+          "failure_sequence_offset": 0,
+          "final_card": null,
+          "grade": {
+            "available": false,
+            "checks": null,
+            "citation_precision": null,
+            "citation_recall": null,
+            "evidence_consistent": false,
+            "machine_success": false,
+            "missing_required_evidence_ids": [],
+            "primary_endpoint_assessed": false,
+            "support_evidence_ids": [],
+            "unexpected_support_evidence_ids": []
+          },
+          "primary_endpoint_assessed": false,
+          "receipts": [
+            {
+              "api_calls": 1,
+              "latency_ms": 1735.3152080031577,
+              "logical_calls": 1,
+              "metadata": {
+                "api_call_count_semantics": "attempted_client_call",
+                "attempt": 1,
+                "attempt_outcome": "http_status_error",
+                "client_request_id_sha256": "465148686980a72f7d7b0fc3e550ec78e4e9db8714f2ad3694f7400176d2c63a",
+                "failure_phase": "http_status",
+                "failure_reason_code": "insufficient_quota",
+                "failure_type": "insufficient_quota",
+                "http_observed": true,
+                "http_status_code": 429,
+                "max_output_tokens": 768,
+                "parse_boundary": "not_entered",
+                "previous_response_id": false,
+                "provider_body_byte_count": 316,
+                "provider_body_sha256": "cfb3a3de133d72777ed937b64a1fb9f7ce510856aa53d7f492dcecb7848707bc",
+                "pydantic_version": "2.12.5",
+                "python_version": "3.13.13",
+                "reasoning_effort": "low",
+                "receipt_schema_version": "ebrt-provider-boundary-receipt-v0.4.3",
+                "refusal_count": 0,
+                "response_id_sha256": null,
+                "response_schema_fingerprint": "ac09c35f37c9d2ee06b2fc1714d1c940db4ff0d3b30df90c8830e4241512c3e4",
+                "retry_count": 0,
+                "sdk_version": "2.45.0",
+                "semantic_protocol_fingerprint": "bdc5f048b734460b8f70792db11f5a1ac00f3b23036d63def6e0e24c037b3e42",
+                "server_request_id_sha256": "2aade5b163ed7ce22b4c467a95c3d312d4b120bec026e24f6804d9b4d3a23f06",
+                "service_tier": null,
+                "status": "http_status_error",
+                "store": false,
+                "truncation": "disabled"
+              },
+              "prompt_fingerprint": "43879f34b890cfe515972ec442cd2636f1311f7b26a470671188bcc3c1715947",
+              "provider": "openai_responses",
+              "request_fingerprint": "fb2bce814e59d83b812e0d260a7c704afeed9957b6dd83d16e0df182aa172cc8",
+              "requested_model": "gpt-5.6-sol",
+              "returned_model": null,
+              "usage": {
+                "cache_write_tokens": null,
+                "cached_input_tokens": null,
+                "exact_provider_tokens": false,
+                "input_tokens": null,
+                "output_tokens": null,
+                "reasoning_tokens": null,
+                "total_tokens": null
+              }
+            }
+          ],
+          "status": "failed",
+          "terminal_outcome": "provider_boundary_failure"
+        }
+      },
+      "budget_match": {
+        "direct_raw_fixed_revision_rerun": 4608,
+        "direct_raw_no_revision": 4608,
+        "equal": true,
+        "realized_tokens_forced_equal": false,
+        "scope": "nominal_generated_token_ceiling_per_arm_per_case",
+        "staged_card_only_rerun": 4608,
+        "staged_cumulative_raw": 4608
+      },
+      "case": {
+        "answer_choices": [
+          "OVER_LIMIT",
+          "WITHIN_LIMIT"
+        ],
+        "case_id": "unit_reinterpretation",
+        "decision_slots": [
+          {
+            "allowed_values": [
+              "28",
+              "112",
+              "UNKNOWN"
+            ],
+            "description": "converted weight in kilograms",
+            "required": true,
+            "slot_id": "weight_kg"
+          },
+          {
+            "allowed_values": [
+              "GREEN",
+              "UNKNOWN"
+            ],
+            "description": "stable crate color",
+            "required": true,
+            "slot_id": "color"
+          }
+        ],
+        "family": "unit_revision",
+        "initial_evidence": [
+          {
+            "evidence_id": "U1",
+            "text": "A crate is OVER_LIMIT only when its weight is greater than 100 kilograms."
+          },
+          {
+            "evidence_id": "U2",
+            "text": "One quill is exactly 4 kilograms."
+          },
+          {
+            "evidence_id": "U3",
+            "text": "Crate M's recorded weight is 28 kilograms."
+          },
+          {
+            "evidence_id": "U4",
+            "text": "Convert the recorded unit to kilograms before applying the limit."
+          },
+          {
+            "evidence_id": "U5",
+            "text": "Crate M is GREEN; color does not affect the limit."
+          }
+        ],
+        "late_evidence": {
+          "evidence_id": "U6",
+          "text": "Unit correction: the recorded value 28 for crate M is in quills, not kilograms. This supersedes evidence U3."
+        },
+        "question": "Is crate M over the 100 kg limit? Answer OVER_LIMIT or WITHIN_LIMIT."
+      },
+      "case_id": "unit_reinterpretation",
+      "case_input_fingerprint": "35b1c874c1be62141e9dcc30e42cd9f694ae2fab0682c33790a60ca9c91f429a",
+      "complete": false,
+      "contrast_outcomes": {
+        "raw_aperture": "incomplete",
+        "revision_envelope": "incomplete"
+      },
+      "family": "unit_revision",
+      "fixed_revision_envelope": {
+        "invalidated_evidence_ids": [
+          "U3"
+        ],
+        "late_evidence_id": "U6",
+        "relevant": true,
+        "revision_cue": 1.0
+      },
+      "fixed_revision_envelope_fingerprint": "3b9a5db5bdef64f4bc10ae38595484f8e66fe4e482f1f6f1c7828a018da7af52",
+      "mode": "openai_live_provider_boundary_smoke_v0_4_3",
+      "no_revision_provider_context": null,
+      "original_case_index": 0,
+      "pre_execution_fingerprint": "e4c570cd9398bcd33e130eb4436cb6099a103df231b0dfb608eea5fb362e3ab9",
+      "primary_endpoint_assessed": false,
+      "run_id": "openai_live_provider_boundary_smoke_v0_4_3:0:unit_reinterpretation",
+      "run_position": 0,
+      "trial_index": 0
+    },
+    {
+      "all_outputs_completed": false,
+      "arm_order": [
+        "direct_raw_fixed_revision_rerun",
+        "staged_card_only_rerun",
+        "direct_raw_no_revision",
+        "staged_cumulative_raw"
+      ],
+      "arms": {
+        "direct_raw_fixed_revision_rerun": {
+          "accounting": {
+            "api_calls": 1,
+            "cache_write_tokens": null,
+            "cached_input_tokens": null,
+            "exact_provider_tokens": false,
+            "input_tokens": null,
+            "latency_ms": 1058.5412500076927,
+            "logical_calls": 1,
+            "output_tokens": null,
+            "reasoning_tokens": null,
+            "total_tokens": null
+          },
+          "arm": "direct_raw_fixed_revision_rerun",
+          "call_records": [],
+          "cards": [],
+          "configured_output_token_ceiling": 4608,
+          "expected_api_calls": 1,
+          "failure_category": "provider_boundary_error",
+          "failure_phase": "http_status",
+          "failure_reason_code": "insufficient_quota",
+          "failure_request_fingerprint": "1db995bcf1ea8dc882f5bdd9767615e32a750c23f3a3ddf96becbc53f3047591",
+          "failure_sequence_offset": 0,
+          "final_card": null,
+          "grade": {
+            "available": false,
+            "checks": null,
+            "citation_precision": null,
+            "citation_recall": null,
+            "evidence_consistent": false,
+            "machine_success": false,
+            "missing_required_evidence_ids": [],
+            "primary_endpoint_assessed": false,
+            "support_evidence_ids": [],
+            "unexpected_support_evidence_ids": []
+          },
+          "primary_endpoint_assessed": false,
+          "receipts": [
+            {
+              "api_calls": 1,
+              "latency_ms": 1058.5412500076927,
+              "logical_calls": 1,
+              "metadata": {
+                "api_call_count_semantics": "attempted_client_call",
+                "attempt": 1,
+                "attempt_outcome": "http_status_error",
+                "client_request_id_sha256": "1a38a4569bb1ed53518d7dd81d4d5152659ca62b1fe1302b9b606e3c2e16dff5",
+                "failure_phase": "http_status",
+                "failure_reason_code": "insufficient_quota",
+                "failure_type": "insufficient_quota",
+                "http_observed": true,
+                "http_status_code": 429,
+                "max_output_tokens": 4608,
+                "parse_boundary": "not_entered",
+                "previous_response_id": false,
+                "provider_body_byte_count": 316,
+                "provider_body_sha256": "cfb3a3de133d72777ed937b64a1fb9f7ce510856aa53d7f492dcecb7848707bc",
+                "pydantic_version": "2.12.5",
+                "python_version": "3.13.13",
+                "reasoning_effort": "low",
+                "receipt_schema_version": "ebrt-provider-boundary-receipt-v0.4.3",
+                "refusal_count": 0,
+                "response_id_sha256": null,
+                "response_schema_fingerprint": "ac09c35f37c9d2ee06b2fc1714d1c940db4ff0d3b30df90c8830e4241512c3e4",
+                "retry_count": 0,
+                "sdk_version": "2.45.0",
+                "semantic_protocol_fingerprint": "8f9c92c5176b6d555264140831c4500f643c570497e56db21c82d15e52d8faff",
+                "server_request_id_sha256": "5dba65282ee356e8f40019d3313a40280edbfa8475f14d01695ef81ce6a1b600",
+                "service_tier": null,
+                "status": "http_status_error",
+                "store": false,
+                "truncation": "disabled"
+              },
+              "prompt_fingerprint": "c7e152e013db478443425bf907ccd2998efc438cc1e0246908d0ffe1ed13121a",
+              "provider": "openai_responses",
+              "request_fingerprint": "1db995bcf1ea8dc882f5bdd9767615e32a750c23f3a3ddf96becbc53f3047591",
+              "requested_model": "gpt-5.6-sol",
+              "returned_model": null,
+              "usage": {
+                "cache_write_tokens": null,
+                "cached_input_tokens": null,
+                "exact_provider_tokens": false,
+                "input_tokens": null,
+                "output_tokens": null,
+                "reasoning_tokens": null,
+                "total_tokens": null
+              }
+            }
+          ],
+          "status": "failed",
+          "terminal_outcome": "provider_boundary_failure"
+        },
+        "direct_raw_no_revision": {
+          "accounting": {
+            "api_calls": 1,
+            "cache_write_tokens": null,
+            "cached_input_tokens": null,
+            "exact_provider_tokens": false,
+            "input_tokens": null,
+            "latency_ms": 3865.585416991962,
+            "logical_calls": 1,
+            "output_tokens": null,
+            "reasoning_tokens": null,
+            "total_tokens": null
+          },
+          "arm": "direct_raw_no_revision",
+          "call_records": [],
+          "cards": [],
+          "configured_output_token_ceiling": 4608,
+          "expected_api_calls": 1,
+          "failure_category": "provider_boundary_error",
+          "failure_phase": "http_status",
+          "failure_reason_code": "insufficient_quota",
+          "failure_request_fingerprint": "f1c6ce2d125a8354d3d14af755119c48f5cb5b0fd7d1f5b729efd0049e9f826c",
+          "failure_sequence_offset": 0,
+          "final_card": null,
+          "grade": {
+            "available": false,
+            "checks": null,
+            "citation_precision": null,
+            "citation_recall": null,
+            "evidence_consistent": false,
+            "machine_success": false,
+            "missing_required_evidence_ids": [],
+            "primary_endpoint_assessed": false,
+            "support_evidence_ids": [],
+            "unexpected_support_evidence_ids": []
+          },
+          "primary_endpoint_assessed": false,
+          "receipts": [
+            {
+              "api_calls": 1,
+              "latency_ms": 3865.585416991962,
+              "logical_calls": 1,
+              "metadata": {
+                "api_call_count_semantics": "attempted_client_call",
+                "attempt": 1,
+                "attempt_outcome": "http_status_error",
+                "client_request_id_sha256": "ab41f6f8e30c552b6f84cdf72c342e157f5123591b5f989e914bb672fc856388",
+                "failure_phase": "http_status",
+                "failure_reason_code": "insufficient_quota",
+                "failure_type": "insufficient_quota",
+                "http_observed": true,
+                "http_status_code": 429,
+                "max_output_tokens": 4608,
+                "parse_boundary": "not_entered",
+                "previous_response_id": false,
+                "provider_body_byte_count": 316,
+                "provider_body_sha256": "cfb3a3de133d72777ed937b64a1fb9f7ce510856aa53d7f492dcecb7848707bc",
+                "pydantic_version": "2.12.5",
+                "python_version": "3.13.13",
+                "reasoning_effort": "low",
+                "receipt_schema_version": "ebrt-provider-boundary-receipt-v0.4.3",
+                "refusal_count": 0,
+                "response_id_sha256": null,
+                "response_schema_fingerprint": "ac09c35f37c9d2ee06b2fc1714d1c940db4ff0d3b30df90c8830e4241512c3e4",
+                "retry_count": 0,
+                "sdk_version": "2.45.0",
+                "semantic_protocol_fingerprint": "9bdd821f0d683b9381e5a6f41124306a60d606c8a2f26421eb32c4c62d7156b3",
+                "server_request_id_sha256": "88ddabf344d16166ebb28a0fcb75bfdcc54feb6faba3d07b305e3d05be73a743",
+                "service_tier": null,
+                "status": "http_status_error",
+                "store": false,
+                "truncation": "disabled"
+              },
+              "prompt_fingerprint": "c7e152e013db478443425bf907ccd2998efc438cc1e0246908d0ffe1ed13121a",
+              "provider": "openai_responses",
+              "request_fingerprint": "f1c6ce2d125a8354d3d14af755119c48f5cb5b0fd7d1f5b729efd0049e9f826c",
+              "requested_model": "gpt-5.6-sol",
+              "returned_model": null,
+              "usage": {
+                "cache_write_tokens": null,
+                "cached_input_tokens": null,
+                "exact_provider_tokens": false,
+                "input_tokens": null,
+                "output_tokens": null,
+                "reasoning_tokens": null,
+                "total_tokens": null
+              }
+            }
+          ],
+          "status": "failed",
+          "terminal_outcome": "provider_boundary_failure"
+        },
+        "staged_card_only_rerun": {
+          "accounting": {
+            "api_calls": 1,
+            "cache_write_tokens": null,
+            "cached_input_tokens": null,
+            "exact_provider_tokens": false,
+            "input_tokens": null,
+            "latency_ms": 912.1025420026854,
+            "logical_calls": 1,
+            "output_tokens": null,
+            "reasoning_tokens": null,
+            "total_tokens": null
+          },
+          "arm": "staged_card_only_rerun",
+          "call_records": [],
+          "cards": [],
+          "configured_output_token_ceiling": 4608,
+          "expected_api_calls": 6,
+          "failure_category": "provider_boundary_error",
+          "failure_phase": "http_status",
+          "failure_reason_code": "insufficient_quota",
+          "failure_request_fingerprint": "3cddbcac7bda96b301b3c0ad3f7525de703bf144182e737004702d692cc7b069",
+          "failure_sequence_offset": 0,
+          "final_card": null,
+          "grade": {
+            "available": false,
+            "checks": null,
+            "citation_precision": null,
+            "citation_recall": null,
+            "evidence_consistent": false,
+            "machine_success": false,
+            "missing_required_evidence_ids": [],
+            "primary_endpoint_assessed": false,
+            "support_evidence_ids": [],
+            "unexpected_support_evidence_ids": []
+          },
+          "primary_endpoint_assessed": false,
+          "receipts": [
+            {
+              "api_calls": 1,
+              "latency_ms": 912.1025420026854,
+              "logical_calls": 1,
+              "metadata": {
+                "api_call_count_semantics": "attempted_client_call",
+                "attempt": 1,
+                "attempt_outcome": "http_status_error",
+                "client_request_id_sha256": "2957e5c2e61122ec52e4d7a2d75706515f6522e0d89f8478e903459c4e46fcf7",
+                "failure_phase": "http_status",
+                "failure_reason_code": "insufficient_quota",
+                "failure_type": "insufficient_quota",
+                "http_observed": true,
+                "http_status_code": 429,
+                "max_output_tokens": 768,
+                "parse_boundary": "not_entered",
+                "previous_response_id": false,
+                "provider_body_byte_count": 316,
+                "provider_body_sha256": "cfb3a3de133d72777ed937b64a1fb9f7ce510856aa53d7f492dcecb7848707bc",
+                "pydantic_version": "2.12.5",
+                "python_version": "3.13.13",
+                "reasoning_effort": "low",
+                "receipt_schema_version": "ebrt-provider-boundary-receipt-v0.4.3",
+                "refusal_count": 0,
+                "response_id_sha256": null,
+                "response_schema_fingerprint": "ac09c35f37c9d2ee06b2fc1714d1c940db4ff0d3b30df90c8830e4241512c3e4",
+                "retry_count": 0,
+                "sdk_version": "2.45.0",
+                "semantic_protocol_fingerprint": "fea25531b6e6716faa81b668328e041ee0286526e78b7eb9bc7cf0e6cf2f026f",
+                "server_request_id_sha256": "f758d5b9568a6abcc46a92473c9610edd96d02975af20baccd502e1e1e0588ef",
+                "service_tier": null,
+                "status": "http_status_error",
+                "store": false,
+                "truncation": "disabled"
+              },
+              "prompt_fingerprint": "43879f34b890cfe515972ec442cd2636f1311f7b26a470671188bcc3c1715947",
+              "provider": "openai_responses",
+              "request_fingerprint": "3cddbcac7bda96b301b3c0ad3f7525de703bf144182e737004702d692cc7b069",
+              "requested_model": "gpt-5.6-sol",
+              "returned_model": null,
+              "usage": {
+                "cache_write_tokens": null,
+                "cached_input_tokens": null,
+                "exact_provider_tokens": false,
+                "input_tokens": null,
+                "output_tokens": null,
+                "reasoning_tokens": null,
+                "total_tokens": null
+              }
+            }
+          ],
+          "status": "failed",
+          "terminal_outcome": "provider_boundary_failure"
+        },
+        "staged_cumulative_raw": {
+          "accounting": {
+            "api_calls": 1,
+            "cache_write_tokens": null,
+            "cached_input_tokens": null,
+            "exact_provider_tokens": false,
+            "input_tokens": null,
+            "latency_ms": 1700.778917002026,
+            "logical_calls": 1,
+            "output_tokens": null,
+            "reasoning_tokens": null,
+            "total_tokens": null
+          },
+          "arm": "staged_cumulative_raw",
+          "call_records": [],
+          "cards": [],
+          "configured_output_token_ceiling": 4608,
+          "expected_api_calls": 6,
+          "failure_category": "provider_boundary_error",
+          "failure_phase": "http_status",
+          "failure_reason_code": "insufficient_quota",
+          "failure_request_fingerprint": "3cddbcac7bda96b301b3c0ad3f7525de703bf144182e737004702d692cc7b069",
+          "failure_sequence_offset": 0,
+          "final_card": null,
+          "grade": {
+            "available": false,
+            "checks": null,
+            "citation_precision": null,
+            "citation_recall": null,
+            "evidence_consistent": false,
+            "machine_success": false,
+            "missing_required_evidence_ids": [],
+            "primary_endpoint_assessed": false,
+            "support_evidence_ids": [],
+            "unexpected_support_evidence_ids": []
+          },
+          "primary_endpoint_assessed": false,
+          "receipts": [
+            {
+              "api_calls": 1,
+              "latency_ms": 1700.778917002026,
+              "logical_calls": 1,
+              "metadata": {
+                "api_call_count_semantics": "attempted_client_call",
+                "attempt": 1,
+                "attempt_outcome": "http_status_error",
+                "client_request_id_sha256": "08908e366afe765737ea8e17e16f11281775c688e9b31480338600408fa27a74",
+                "failure_phase": "http_status",
+                "failure_reason_code": "insufficient_quota",
+                "failure_type": "insufficient_quota",
+                "http_observed": true,
+                "http_status_code": 429,
+                "max_output_tokens": 768,
+                "parse_boundary": "not_entered",
+                "previous_response_id": false,
+                "provider_body_byte_count": 316,
+                "provider_body_sha256": "cfb3a3de133d72777ed937b64a1fb9f7ce510856aa53d7f492dcecb7848707bc",
+                "pydantic_version": "2.12.5",
+                "python_version": "3.13.13",
+                "reasoning_effort": "low",
+                "receipt_schema_version": "ebrt-provider-boundary-receipt-v0.4.3",
+                "refusal_count": 0,
+                "response_id_sha256": null,
+                "response_schema_fingerprint": "ac09c35f37c9d2ee06b2fc1714d1c940db4ff0d3b30df90c8830e4241512c3e4",
+                "retry_count": 0,
+                "sdk_version": "2.45.0",
+                "semantic_protocol_fingerprint": "fea25531b6e6716faa81b668328e041ee0286526e78b7eb9bc7cf0e6cf2f026f",
+                "server_request_id_sha256": "7007552772d872541b9b354e48f9e14c1d32b7602eadcd158ff382077d235c2f",
+                "service_tier": null,
+                "status": "http_status_error",
+                "store": false,
+                "truncation": "disabled"
+              },
+              "prompt_fingerprint": "43879f34b890cfe515972ec442cd2636f1311f7b26a470671188bcc3c1715947",
+              "provider": "openai_responses",
+              "request_fingerprint": "3cddbcac7bda96b301b3c0ad3f7525de703bf144182e737004702d692cc7b069",
+              "requested_model": "gpt-5.6-sol",
+              "returned_model": null,
+              "usage": {
+                "cache_write_tokens": null,
+                "cached_input_tokens": null,
+                "exact_provider_tokens": false,
+                "input_tokens": null,
+                "output_tokens": null,
+                "reasoning_tokens": null,
+                "total_tokens": null
+              }
+            }
+          ],
+          "status": "failed",
+          "terminal_outcome": "provider_boundary_failure"
+        }
+      },
+      "budget_match": {
+        "direct_raw_fixed_revision_rerun": 4608,
+        "direct_raw_no_revision": 4608,
+        "equal": true,
+        "realized_tokens_forced_equal": false,
+        "scope": "nominal_generated_token_ceiling_per_arm_per_case",
+        "staged_card_only_rerun": 4608,
+        "staged_cumulative_raw": 4608
+      },
+      "case": {
+        "answer_choices": [
+          "SHUTDOWN",
+          "CONTINUE"
+        ],
+        "case_id": "invalidated_sensor_fallback",
+        "decision_slots": [
+          {
+            "allowed_values": [
+              "86",
+              "72",
+              "UNKNOWN"
+            ],
+            "description": "active valid sensor reading",
+            "required": true,
+            "slot_id": "active_reading"
+          },
+          {
+            "allowed_values": [
+              "AUTOMATIC",
+              "UNKNOWN"
+            ],
+            "description": "stable line mode",
+            "required": true,
+            "slot_id": "mode"
+          }
+        ],
+        "family": "source_fallback_revision",
+        "initial_evidence": [
+          {
+            "evidence_id": "S1",
+            "text": "Line S must SHUTDOWN when its active valid sensor reading is at least 80; otherwise it CONTINUES."
+          },
+          {
+            "evidence_id": "S2",
+            "text": "The next valid fallback reading for line S is 72."
+          },
+          {
+            "evidence_id": "S3",
+            "text": "The newest sensor reading is valid and equals 86."
+          },
+          {
+            "evidence_id": "S4",
+            "text": "If the newest reading is invalid, use the next valid fallback reading."
+          },
+          {
+            "evidence_id": "S5",
+            "text": "Line S is in AUTOMATIC mode; this does not change the threshold."
+          }
+        ],
+        "late_evidence": {
+          "evidence_id": "S6",
+          "text": "Calibration notice: the reading 86 is invalid and must be discarded. This revokes evidence S3; use the fallback rule."
+        },
+        "question": "Should line S shut down? Answer SHUTDOWN or CONTINUE."
+      },
+      "case_id": "invalidated_sensor_fallback",
+      "case_input_fingerprint": "f27d7f0315b8b3f050cab2d77930dc84253cae743e3f9450ce7fc9cc7984f839",
+      "complete": false,
+      "contrast_outcomes": {
+        "raw_aperture": "incomplete",
+        "revision_envelope": "incomplete"
+      },
+      "family": "source_fallback_revision",
+      "fixed_revision_envelope": {
+        "invalidated_evidence_ids": [
+          "S3"
+        ],
+        "late_evidence_id": "S6",
+        "relevant": true,
+        "revision_cue": 1.0
+      },
+      "fixed_revision_envelope_fingerprint": "2e60c3cbe1bc6c563389d5a1af175b8bae5685d9b1244cae98bceb09595d6055",
+      "mode": "openai_live_provider_boundary_smoke_v0_4_3",
+      "no_revision_provider_context": null,
+      "original_case_index": 1,
+      "pre_execution_fingerprint": "8e962c545cd961f42ffe72cf0b999fa6f4fee11b77364f37babb7c27ede4fc1f",
+      "primary_endpoint_assessed": false,
+      "run_id": "openai_live_provider_boundary_smoke_v0_4_3:0:invalidated_sensor_fallback",
+      "run_position": 1,
+      "trial_index": 0
+    }
+  ],
+  "schema_version": "ebrt-aperture-controls-benchmark-v0.4.3",
+  "status": "DEV_DRAFT",
+  "summary": {
+    "all_locked_outputs_completed": false,
+    "all_locked_primary_endpoints_assessed": false,
+    "all_locked_runs_complete": false,
+    "arm_summary": {
+      "direct_raw_fixed_revision_rerun": {
+        "answer_exact": 0,
+        "api_calls": 2,
+        "attempted_runs": 2,
+        "cached_input_tokens": null,
+        "check_successes": {
+          "answer_exact": 0,
+          "expected_invalidated_evidence_marked": 0,
+          "forbidden_support_absent": 0,
+          "required_evidence_present": 0,
+          "required_facts_exact": 0,
+          "stable_facts_exact": 0
+        },
+        "completed_outputs": 0,
+        "configured_output_token_ceiling": 9216,
+        "evidence_consistent": 0,
+        "exact_provider_tokens": false,
+        "failed_or_incomplete_outputs": 2,
+        "failure_reason_code_counts": {},
+        "input_tokens": null,
+        "logical_calls": 2,
+        "machine_successes": 0,
+        "mean_citation_precision": null,
+        "mean_citation_recall": null,
+        "median_latency_ms_per_arm_run": 1385.620041502989,
+        "non_assessable_outputs": 2,
+        "output_tokens": null,
+        "primary_endpoint_assessed_outputs": 0,
+        "reasoning_tokens": null,
+        "strict_failures": 0,
+        "terminal_local_contract_rejections": 0
+      },
+      "direct_raw_no_revision": {
+        "answer_exact": 0,
+        "api_calls": 2,
+        "attempted_runs": 2,
+        "cached_input_tokens": null,
+        "check_successes": {
+          "answer_exact": 0,
+          "expected_invalidated_evidence_marked": 0,
+          "forbidden_support_absent": 0,
+          "required_evidence_present": 0,
+          "required_facts_exact": 0,
+          "stable_facts_exact": 0
+        },
+        "completed_outputs": 0,
+        "configured_output_token_ceiling": 9216,
+        "evidence_consistent": 0,
+        "exact_provider_tokens": false,
+        "failed_or_incomplete_outputs": 2,
+        "failure_reason_code_counts": {},
+        "input_tokens": null,
+        "logical_calls": 2,
+        "machine_successes": 0,
+        "mean_citation_precision": null,
+        "mean_citation_recall": null,
+        "median_latency_ms_per_arm_run": 3632.707833494351,
+        "non_assessable_outputs": 2,
+        "output_tokens": null,
+        "primary_endpoint_assessed_outputs": 0,
+        "reasoning_tokens": null,
+        "strict_failures": 0,
+        "terminal_local_contract_rejections": 0
+      },
+      "staged_card_only_rerun": {
+        "answer_exact": 0,
+        "api_calls": 2,
+        "attempted_runs": 2,
+        "cached_input_tokens": null,
+        "check_successes": {
+          "answer_exact": 0,
+          "expected_invalidated_evidence_marked": 0,
+          "forbidden_support_absent": 0,
+          "required_evidence_present": 0,
+          "required_facts_exact": 0,
+          "stable_facts_exact": 0
+        },
+        "completed_outputs": 0,
+        "configured_output_token_ceiling": 9216,
+        "evidence_consistent": 0,
+        "exact_provider_tokens": false,
+        "failed_or_incomplete_outputs": 2,
+        "failure_reason_code_counts": {},
+        "input_tokens": null,
+        "logical_calls": 2,
+        "machine_successes": 0,
+        "mean_citation_precision": null,
+        "mean_citation_recall": null,
+        "median_latency_ms_per_arm_run": 1143.4565835006651,
+        "non_assessable_outputs": 2,
+        "output_tokens": null,
+        "primary_endpoint_assessed_outputs": 0,
+        "reasoning_tokens": null,
+        "strict_failures": 0,
+        "terminal_local_contract_rejections": 0
+      },
+      "staged_cumulative_raw": {
+        "answer_exact": 0,
+        "api_calls": 2,
+        "attempted_runs": 2,
+        "cached_input_tokens": null,
+        "check_successes": {
+          "answer_exact": 0,
+          "expected_invalidated_evidence_marked": 0,
+          "forbidden_support_absent": 0,
+          "required_evidence_present": 0,
+          "required_facts_exact": 0,
+          "stable_facts_exact": 0
+        },
+        "completed_outputs": 0,
+        "configured_output_token_ceiling": 9216,
+        "evidence_consistent": 0,
+        "exact_provider_tokens": false,
+        "failed_or_incomplete_outputs": 2,
+        "failure_reason_code_counts": {},
+        "input_tokens": null,
+        "logical_calls": 2,
+        "machine_successes": 0,
+        "mean_citation_precision": null,
+        "mean_citation_recall": null,
+        "median_latency_ms_per_arm_run": 1718.0470625025919,
+        "non_assessable_outputs": 2,
+        "output_tokens": null,
+        "primary_endpoint_assessed_outputs": 0,
+        "reasoning_tokens": null,
+        "strict_failures": 0,
+        "terminal_local_contract_rejections": 0
+      }
+    },
+    "assessed_four_arm_runs": 0,
+    "case_level": [
+      {
+        "case_id": "unit_reinterpretation",
+        "complete_trials": 0,
+        "direct_raw_fixed_revision_rerun_answer_exact": 0,
+        "direct_raw_fixed_revision_rerun_stable_answer_exact": null,
+        "direct_raw_fixed_revision_rerun_stable_pass": null,
+        "direct_raw_fixed_revision_rerun_successes": 0,
+        "direct_raw_no_revision_answer_exact": 0,
+        "direct_raw_no_revision_stable_answer_exact": null,
+        "direct_raw_no_revision_stable_pass": null,
+        "direct_raw_no_revision_successes": 0,
+        "family": "unit_revision",
+        "primary_endpoint_assessed": false,
+        "raw_aperture_stable_outcome": "not_assessed",
+        "revision_envelope_stable_outcome": "not_assessed",
+        "stable_assessed": false,
+        "staged_card_only_rerun_answer_exact": 0,
+        "staged_card_only_rerun_stable_answer_exact": null,
+        "staged_card_only_rerun_stable_pass": null,
+        "staged_card_only_rerun_successes": 0,
+        "staged_cumulative_raw_answer_exact": 0,
+        "staged_cumulative_raw_stable_answer_exact": null,
+        "staged_cumulative_raw_stable_pass": null,
+        "staged_cumulative_raw_successes": 0,
+        "trials": 1
+      },
+      {
+        "case_id": "invalidated_sensor_fallback",
+        "complete_trials": 0,
+        "direct_raw_fixed_revision_rerun_answer_exact": 0,
+        "direct_raw_fixed_revision_rerun_stable_answer_exact": null,
+        "direct_raw_fixed_revision_rerun_stable_pass": null,
+        "direct_raw_fixed_revision_rerun_successes": 0,
+        "direct_raw_no_revision_answer_exact": 0,
+        "direct_raw_no_revision_stable_answer_exact": null,
+        "direct_raw_no_revision_stable_pass": null,
+        "direct_raw_no_revision_successes": 0,
+        "family": "source_fallback_revision",
+        "primary_endpoint_assessed": false,
+        "raw_aperture_stable_outcome": "not_assessed",
+        "revision_envelope_stable_outcome": "not_assessed",
+        "stable_assessed": false,
+        "staged_card_only_rerun_answer_exact": 0,
+        "staged_card_only_rerun_stable_answer_exact": null,
+        "staged_card_only_rerun_stable_pass": null,
+        "staged_card_only_rerun_successes": 0,
+        "staged_cumulative_raw_answer_exact": 0,
+        "staged_cumulative_raw_stable_answer_exact": null,
+        "staged_cumulative_raw_stable_pass": null,
+        "staged_cumulative_raw_successes": 0,
+        "trials": 1
+      }
+    ],
+    "cause_decision": {
+      "claim": "mechanism_candidate_on_contaminated_dev_not_general_reasoning_improvement",
+      "decision_ready": false,
+      "historical_replication_context": {
+        "card_only_count_matches_historical": false,
+        "card_only_interface_is_not_exact_pr6_full": true,
+        "direct_fixed_ceiling_replication": false,
+        "direct_fixed_pr6_stable_pass_cases": 10,
+        "direct_fixed_same_block_stable_pass_cases": 0,
+        "new_card_only_stable_pass_cases": 0,
+        "pr6_full_stable_pass_cases": 1
+      },
+      "next_scaffold_step": "complete_exact_locked_same_block_run",
+      "raw_aperture_conclusion": "not_assessed_incomplete_or_subset_run",
+      "revision_envelope_conclusion": "not_assessed_incomplete_or_subset_run",
+      "selective_replay_status": "paused_no_same_block_rank",
+      "stable_pass_counts": {
+        "direct_raw_fixed_revision_rerun": 0,
+        "direct_raw_no_revision": 0,
+        "staged_card_only_rerun": 0,
+        "staged_cumulative_raw": 0
+      },
+      "terminal_local_contract_policy": "adjudicated_strict_failure_not_missing_data"
+    },
+    "completed_four_arm_runs": 0,
+    "diagnostic_integrity_ready": true,
+    "exact_locked_case_trial_coverage": false,
+    "live_receipt_validation": {
+      "all_runs_complete": false,
+      "attempted_api_calls": 8,
+      "contract_smoke_coverage_authority": "v0.4.3_policy_exact_schedule_projection",
+      "contract_smoke_exact_coverage": true,
+      "diagnostic_integrity_ready": true,
+      "failed_call_usage_or_transport_classification_claimed": false,
+      "full_run_launch_ready": false,
+      "inherited_v0_4_2_smoke_namespace_projection_validated": true,
+      "locked_decision_ready": false,
+      "nominal_api_calls": 28,
+      "nominal_ceiling_only": true,
+      "non_assessable_failures": 8,
+      "pair_shared_prompts_validated": true,
+      "privacy_audit_validated": true,
+      "provider_boundary_failures": 8,
+      "provider_boundary_failures_by_phase": {
+        "http_status": 8,
+        "provider_contract": 0,
+        "request_call": 0,
+        "sdk_response_parse": 0
+      },
+      "provider_boundary_failures_by_reason": {
+        "authentication": 0,
+        "bad_request": 0,
+        "conflict": 0,
+        "connection": 0,
+        "http_other": 0,
+        "insufficient_quota": 8,
+        "missing_exact_usage": 0,
+        "missing_structured_output": 0,
+        "not_found": 0,
+        "permission_denied": 0,
+        "provider_error": 0,
+        "provider_incomplete": 0,
+        "provider_refusal": 0,
+        "provider_status_non_completed": 0,
+        "rate_limit": 0,
+        "request_unclassified": 0,
+        "sdk_http_envelope_validation": 0,
+        "sdk_parse_unclassified": 0,
+        "sdk_response_decode": 0,
+        "sdk_structured_parse_validation": 0,
+        "server_error": 0,
+        "timeout": 0,
+        "unknown429": 0,
+        "unprocessable_entity": 0,
+        "wrong_runtime": 0
+      },
+      "provider_boundary_receipts_validated": true,
+      "receipts_by_arm": {
+        "direct_raw_fixed_revision_rerun": 2,
+        "direct_raw_no_revision": 2,
+        "staged_card_only_rerun": 2,
+        "staged_cumulative_raw": 2
+      },
+      "terminal_local_contract_rejections": 0,
+      "terminal_policy_validated": true,
+      "unclassified_non_assessable_failures": 0,
+      "validated": true
+    },
+    "live_receipts_validated": true,
+    "locked_decision_ready": false,
+    "runs": 2,
+    "stable_case_summary": {
+      "direct_raw_fixed_revision_rerun": {
+        "answer_exact_cases": 0,
+        "pass_cases": 0
+      },
+      "direct_raw_no_revision": {
+        "answer_exact_cases": 0,
+        "pass_cases": 0
+      },
+      "staged_card_only_rerun": {
+        "answer_exact_cases": 0,
+        "pass_cases": 0
+      },
+      "staged_cumulative_raw": {
+        "answer_exact_cases": 0,
+        "pass_cases": 0
+      }
+    },
+    "stable_contrast_outcomes": {
+      "raw_aperture": {
+        "both": 0,
+        "card_only_only": 0,
+        "cumulative_raw_only": 0,
+        "neither": 0,
+        "not_assessed": 2
+      },
+      "revision_envelope": {
+        "both": 0,
+        "fixed_revision_only": 0,
+        "neither": 0,
+        "no_revision_only": 0,
+        "not_assessed": 2
+      }
+    },
+    "trial_contrast_outcomes": {
+      "raw_aperture": {
+        "both_pass": 0,
+        "card_only_only": 0,
+        "cumulative_raw_only": 0,
+        "incomplete": 2,
+        "neither_pass": 0
+      },
+      "revision_envelope": {
+        "both_pass": 0,
+        "fixed_revision_only": 0,
+        "incomplete": 2,
+        "neither_pass": 0,
+        "no_revision_only": 0
+      }
+    }
+  },
+  "trials": 1
+}
