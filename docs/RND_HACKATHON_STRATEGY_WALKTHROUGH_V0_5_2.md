@@ -1,6 +1,8 @@
 # EBRT v0.5.2 — Hackathon Strategy Walkthrough
 
-Status: **PREREGISTERED PRODUCT WALKTHROUGH — NO LIVE RESULT ATTACHED**
+Status: **COMPLETE TWO-CALL BLOCK — STRICT NEAR-PASS PRESERVED**
+
+Frozen endpoint: **`walkthrough_contract_passed=false`**
 
 ## Why this exists
 
@@ -78,4 +80,51 @@ directory, validates the complete bundle, and then publishes it atomically.
 
 ## Live result
 
-Not run at preregistration time.
+The preregistered block was run exactly once after commit `62cb3ed`, with the
+fixed phase order and no retries.  Both hosted calls completed and the sealed
+artifact validates.
+
+| Observation | Before | Controlled after |
+| --- | ---: | ---: |
+| Answer | `POLISH` | `PROVE` |
+| Phase strict pass | yes | no |
+| API calls | 1 | 1 |
+| Input tokens | 925 | 1,256 |
+| Output tokens | 171 | 182 |
+| Reasoning tokens | 0 | 0 |
+| Latency | 4,091.33 ms | 3,538.94 ms |
+
+The generated public diff has the intended product shape:
+
+- answer: `POLISH → PROVE`;
+- `final_priority`: `ADDITIONAL_UI_POLISH → END_TO_END_PROOF`;
+- `demo_centerpiece`: `POLISHED_SCREENS → LIVE_REASONING_DIFF`;
+- R3 active support was dropped and R3 was marked invalid;
+- R4 and R6 entered active support;
+- `THREE_MINUTE_NARRATED` remained unchanged;
+- the Before card passed its own horizon and failed when regraded unchanged
+  against the post-event contract.
+
+The overall walkthrough contract is nevertheless `false`.  Exactly one strict
+check failed: `required_facts_exact` on the controlled After card.  The model
+cited R2+R6 on `final_priority` and R4+R6 on `demo_centerpiece`; the locked gold
+required R2+R4+R6 on each individual fact.  The answer, aggregate required
+evidence, forbidden-support exclusion, R3 invalidation, and stable fact all
+passed.  This is a fact-level support-lineage mismatch: the answer and
+invalidation checks passed, while the overall frozen revision contract failed.
+
+The public diff is not a complete semantic-state comparison.  In particular,
+claim, topic, stance, and confidence are not graded by this endpoint or shown
+in the diff.  The observed After stance is `+1.0` while the frozen gold stance
+is `-1.0`; no belief-polarity claim should be made from that ungraded field.
+
+The local surrogate objective moved from `0.755433933319` to
+`0.294771509854`.  Actual provider output did not participate in that
+optimization, so this numeric movement and the observed output change remain
+separate observations.
+
+No rerun, gold relaxation, or post-hoc regrading was used.  The canonical
+bundle is
+`artifacts/demo_hackathon_strategy_walkthrough_v0_5_2_live_r01/`, with result
+fingerprint
+`2e641e0f11f17bb16cbe629048e9cc8cff49706147616d888487f38b243430d4`.

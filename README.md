@@ -114,6 +114,16 @@ calls and all four arms passed strictly, but their public cards were exactly
 identical. The bridge therefore completed with a null observed output effect on
 this saturated DEV case; no controlled advantage is established.
 
+EBRT v0.5.2 adds a separate English, two-call product walkthrough rather than
+retuning that null result. Under the R1-R5 horizon, GPT-5.6 emitted `POLISH`;
+after R6 superseded R3, one controlled full-context regeneration emitted
+`PROVE`, dropped and invalidated R3, added R4/R6 support, and preserved the
+three-minute video fact. The block completed 2/2 calls with retry disabled, but
+the locked walkthrough contract is a strict near-pass, not a pass: the final
+card failed only `required_facts_exact` because R2/R4/R6 were present globally
+but not repeated on both changed decision facts. The artifact is preserved
+without rerun or post-hoc grading relaxation.
+
 > [!IMPORTANT]
 > v0.1-v0.3.1 are **not** a Transformer implementation, a GPT latent-state
 > editor, or evidence of improved language-model accuracy. v0.4 meaningfully
@@ -136,6 +146,10 @@ this saturated DEV case; no controlled advantage is established.
 > hosted model. Its first live block is provider-incomplete; the separately
 > preserved recovery block completes but produces identical public outputs.
 > Neither episode establishes a controlled advantage.
+> v0.5.2 visibly changes one synthetic walkthrough output from `POLISH` to
+> `PROVE`, but it changes evidence horizon, event envelope, and run position
+> together. Its strict final endpoint fails on slot-level evidence attribution;
+> it does not establish control-map causality, general quality, or reliability.
 
 ## Why EBRT?
 
@@ -203,6 +217,9 @@ controlled_raw_restart_v0_5_1.py case-bound control projection and full-context 
 benchmark_controlled_raw_restart_v0_5_1.py four-arm one-shot live canary and artifact validator
 policy_lock_controlled_raw_restart_v0_5_1.json preregistered runtime/source/claim contract
 fixtures/controlled_raw_restart_v0_5_1_canary.json explicit temporal-to-language binding
+demo_hackathon_strategy_walkthrough_v0_5_2.py sealed two-call English output-diff runner
+policy_lock_hackathon_strategy_walkthrough_v0_5_2.json exact prompt/runtime/source contract
+fixtures/hackathon_strategy_walkthrough_v0_5_2*.json separated public case and post-call gold
 docs/RND_BENCHMARK_V0_1.md    protocol, results, limits, and claim ledger
 docs/RND_INSTRUMENTATION_V0_2.md measurement contract and algorithm findings
 docs/RND_DUAL_ROUTE_V0_3.md   terminal invariant result and v0.3.1 direction
@@ -217,6 +234,7 @@ docs/RND_REASONING_WORKBENCH_V0_4_4.md workbench projection and claim gates
 docs/RND_DIFFERENTIABLE_EVIDENCE_CONTROL_V0_5.md mechanism, gradient, and claim boundaries
 docs/RND_TEMPORAL_ADJOINT_STATE_CONTROL_V0_5_T.md temporal mechanism, result, and actuator boundary
 docs/RND_CONTROLLED_RAW_RESTART_V0_5_1.md bridge design, incomplete live result, and recovery boundary
+docs/RND_HACKATHON_STRATEGY_WALKTHROUGH_V0_5_2.md preregistration, live diff, strict near-pass
 artifacts/benchmark_v0_1/     committed machine-readable benchmark evidence
 artifacts/demo_v0_1/trace.json committed no-build mechanism trace
 artifacts/benchmark_instrumentation_v0_2/ committed v0.2 measurement evidence
@@ -237,6 +255,7 @@ artifacts/differentiable_evidence_control_v0_5/ canonical control maps and mecha
 artifacts/temporal_adjoint_state_control_v0_5_t/ temporal maps, audits, comparison, and manifest
 artifacts/benchmark_controlled_raw_restart_v0_5_1_live_canary/ preserved four-receipt incomplete block
 artifacts/benchmark_controlled_raw_restart_v0_5_1_quota_recovery_r01/ complete null-diff recovery block
+artifacts/demo_hackathon_strategy_walkthrough_v0_5_2_live_r01/ complete two-call near-pass and output diff
 requirements.txt              runtime dependency declaration
 requirements-live.txt         separately pinned OpenAI/Pydantic live dependencies
 LICENSE                       Apache License 2.0
@@ -501,6 +520,22 @@ four typed HTTP 429 `insufficient_quota` receipts and no model output. It was
 not overwritten or resumed. The separately preserved recovery bundle completes
 all four calls and strict endpoints, with one identical public card across all
 arms and therefore no observed output effect on this case.
+
+Validate the separate v0.5.2 English walkthrough and its preserved two-call
+artifact without making a provider call:
+
+```bash
+python3 demo_hackathon_strategy_walkthrough_v0_5_2.py self-test
+python3 demo_hackathon_strategy_walkthrough_v0_5_2.py preflight
+python3 demo_hackathon_strategy_walkthrough_v0_5_2.py validate \
+  --artifact-dir artifacts/demo_hackathon_strategy_walkthrough_v0_5_2_live_r01
+```
+
+The committed artifact is `VALID` and both calls completed, but its
+walkthrough contract is `false`. It records an observed `POLISH → PROVE` public
+output diff with correct R3 invalidation and R5 preservation, while the final
+card misses the frozen slot-level citation closure. `preflight` constructs no
+provider request.
 
 ## Judge path: inspect first, rerun second
 
@@ -1061,6 +1096,9 @@ retrospectively relabeling failures. See the
 | The v0.5.1 quota-recovery block completes the language bridge | Supported for one contaminated case: all four one-attempt calls completed, all strict endpoints passed, and receipts/output diffs validate |
 | The v0.5.1 controlled arm changes or improves the recovery output | No observed effect on this case: all four public cards are canonically identical and the baseline-to-controlled diff is empty |
 | The v0.5.1 surrogate decrease predicts an improved generated answer | Not supported here; the surrogate moved from `0.755433933319` to `0.294771509854`, actual output never participated in optimization, and the recovery outputs were identical |
+| The v0.5.2 English walkthrough reaches a changed final output | Supported for one synthetic non-matched episode: 2/2 calls completed and the public answer changed `POLISH → PROVE`, with R3 dropped/invalidated, R4/R6 added, and R5 preserved |
+| The v0.5.2 walkthrough passes its frozen strict contract | No; 6/7 walkthrough checks passed, but the controlled final card failed `required_facts_exact` because its two changed facts split R2 and R4 rather than each citing R2+R4+R6 |
+| The v0.5.2 diff proves the gradient control caused the output change | No; evidence horizon, event envelope, and run position change together, and no matched no-control after-event call exists in this product walkthrough |
 | Selective replay should be optimized before state sufficiency | Not supported by current evidence; it is paused as a quality direction and remains an unranked future efficiency ablation |
 | EBRT edits hidden states inside a trained Transformer or GPT model | Not implemented |
 | EBRT improves real-world LLM reasoning accuracy | Not established |
@@ -1128,9 +1166,11 @@ category determination.
   disconnected-padding invariance, no-event identity, bounded
   projection, deterministic bytes, and no separately supplied downstream
   grader-verdict/final-answer artifact leakage.
-  Semantic extraction remains future integration work. v0.5.1 now implements
-  the controlled full-context bridge, while a completed output comparison is
-  still pending.
+  Semantic extraction remains future integration work. v0.5.1 implements the
+  controlled full-context bridge and its recovery block completed with a null
+  output effect on one saturated case; v0.5.2 separately carries a synthetic
+  English walkthrough to a changed generated output without turning it into a
+  causal comparison.
 - **Milestone 2.5 — temporal state-control vertical experiment (positive
   synthetic record):** v0.5-T leaves v0.5.0 frozen and adds exact local
   adjoints over a supplied smooth public-state recurrence. On one topology's
@@ -1152,6 +1192,14 @@ category determination.
   were canonically identical, so the bridge is demonstrated but no controlled
   output effect or advantage is observed. The next eligible experiment is a
   separately frozen harder English suite, not tuning this contaminated case.
+- **Milestone 2.7 — English final-output walkthrough (complete strict
+  near-pass):** v0.5.2 freezes a product-readable question, R1-R5 Before
+  horizon, R1-R6 controlled After horizon, separate post-call gold, exact
+  receipts, and public output diff. Its one allowed run completed 2/2 calls and
+  visibly moved `POLISH → PROVE`, invalidated R3, added R4/R6, and preserved
+  R5. The frozen endpoint remains failed because the two changed facts split
+  their required evidence rather than each closing R2+R4+R6. No rerun,
+  endpoint relaxation, or causal claim is permitted from this artifact.
 - **Milestone 3 — coherent evaluator experience (provisional Workbench):** a
   deterministic allowlist projection and local read-only Workbench now connect
   Evidence, Event, Revision, every recorded Replay lane, and Final Output Diff.
@@ -1235,9 +1283,13 @@ model answer. v0.5.1 now implements the controlled full-context boundary and
 preserves its first four-receipt live block, but all attempts stopped on
 `insufficient_quota` before a model response. Its separately preserved recovery
 block then completed all four strict outputs with an empty public-card diff.
-A harder English DEV/demo suite, promotion suite, live revision application,
-and any hosted judge sandbox remain pending; there is no hosted service in this
-release.
+The separate v0.5.2 English walkthrough then completed two more calls and
+recorded `POLISH → PROVE`, R3 invalidation, R4/R6 support, and R5 preservation.
+Its final strict contract still failed on fact-level evidence closure, so it is
+preserved as a judge-readable near-pass rather than presented as a successful
+causal intervention. A promotion suite, matched hard-suite comparison, live
+revision application, and any hosted judge sandbox remain pending; there is no
+hosted service in this release.
 
 Issues and pull requests that add reproducible tests, adversarial fixtures, or
 better controls are especially welcome. Please avoid expanding claims without

@@ -1,0 +1,51 @@
+{
+  "artifacts": {
+    "calls.jsonl": {
+      "bytes": 3820,
+      "sha256": "0d7794f1b6f3010e3d8171d46f4574ad7801e1e96eef84850dc52519cf0b634e"
+    },
+    "demo.json": {
+      "bytes": 27548,
+      "sha256": "f6df3c0a371027fd6ed35cfcc75f0b05dc540ebb6d08efeb3764ab62b4616f6b"
+    },
+    "report.md": {
+      "bytes": 2759,
+      "sha256": "81868e378daab3498edbe758ceff9910e7ac0f8c7b444e6913b4ec3e0203fe1d"
+    }
+  },
+  "claim_boundary": [
+    "This is one synthetic English product walkthrough, not a matched causal benchmark or fresh quality evaluation.",
+    "The before and after calls have different visible evidence horizons; the after call also has a revision envelope and later run position.",
+    "The public temporal program, semantic roles, evidence values, event scope, operator order, and terminal surrogate target are explicit oracle inputs.",
+    "The provider receives a stop-gradient JSON projection; GPT, provider parsing, and final generation remain outside the gradient graph.",
+    "Surrogate objective movement and actual public-output movement are reported separately; neither implies the other.",
+    "A POLISH to PROVE change demonstrates this sealed walkthrough contract only, not a general reasoning, quality, efficiency, or causal advantage."
+  ],
+  "policy_lock": {
+    "path": "policy_lock_hackathon_strategy_walkthrough_v0_5_2.json",
+    "sha256": "551190c872d3b9bb9db4f2d6fd1aa15f3f9102084e057e90b80d9259ac429c6c"
+  },
+  "result_fingerprint_sha256": "2e641e0f11f17bb16cbe629048e9cc8cff49706147616d888487f38b243430d4",
+  "runtime": {
+    "machine": "arm64",
+    "openai": "2.45.0",
+    "operating_system": "Darwin",
+    "operating_system_release": "25.2.0",
+    "pydantic": "2.12.5",
+    "python": "3.13.13"
+  },
+  "schema_version": "ebrt-hackathon-strategy-artifact-v0.5.2",
+  "source_snapshot_sha256": {
+    "controlled_restart_bridge": "94d9f527334ef7b496db7afb3f6faf847b488e8b0ec043f486991e92092dde08",
+    "fixture:fixture": "ef0b1d44ece10e7412460d9abac4791fe3f3a0172e398bca7a0d8957094f56d2",
+    "fixture:gold": "c9aea1cc992b9bec8b6b00ec4ed941543e3a87f48786dc1729df876cd08d29f3",
+    "provider_boundary": "7f78fce94cb141a4355d3c040010e11e049ff67a3a8c603099d0548a47b7cf03",
+    "public_card_schema": "5fd765ec5ca55562e7b712ec48adc6f54588080c276cbfa58aabcb72492666c2",
+    "sealed_receipt_harness": "18ba54ebfd0cab2b3d35dab828a0fa2a8baf7edc0d965ce48b5ded3f09558a5c",
+    "strict_grader": "813ab885cecdacec034536a7dfeaa01c101554cc58663d1a79ad133595c6df91",
+    "temporal_controller": "43df27a8595274f694e7c0741c4fe642a66ae37a0719e5d3256d4a0f37f6b7b5",
+    "walkthrough_runner": "f39d565d7a6048d025d6151dc286e93457c73ca641332166ab87219aa70878fe"
+  },
+  "status": "COMPLETE_CALL_BLOCK",
+  "walkthrough_contract_passed": false
+}
