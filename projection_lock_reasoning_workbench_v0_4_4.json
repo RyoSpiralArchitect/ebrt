@@ -1,0 +1,204 @@
+{
+  "claim_boundary": [
+    "This is a deterministic read-only projection of recorded public artifacts; it does not execute a model or apply a live revision.",
+    "The selected v0.4 episode is a DEV smoke case and does not establish general reasoning improvement.",
+    "Public Reasoning Cards, evidence, grades, and sanitized accounting are observable outputs, not private chain-of-thought or hidden model state.",
+    "The v0.4.1 and v0.4.2 aperture blocks are context from separate experiments and are not the same causal episode as the recorded replay.",
+    "The v0.4.3 Provider Failure Atlas measures diagnostic classification coverage, not reasoning quality or a cross-block causal effect.",
+    "The authoritative v0.4.3 coverage fields are a post-freeze derived correction with no live call; the recorded provider-observation artifact hashes remain unchanged.",
+    "No model weights, hidden states, or persisted provider response state are modified."
+  ],
+  "expected": {
+    "event_evidence_id": "R6",
+    "initial_answer": "AMBER",
+    "initial_evidence_count": 5,
+    "invalidated_evidence_ids": [
+      "R3"
+    ],
+    "lane_outcomes": {
+      "card_only_forward": {
+        "answer": "AMBER",
+        "branch_calls": 1,
+        "machine_success": false,
+        "regenerated_cards": 1
+      },
+      "full_restart": {
+        "answer": "BLUE",
+        "branch_calls": 6,
+        "machine_success": true,
+        "regenerated_cards": 6
+      },
+      "selective_replay": {
+        "answer": "AMBER",
+        "branch_calls": 4,
+        "machine_success": false,
+        "regenerated_cards": 4
+      }
+    },
+    "plan": {
+      "execution_replay_floor": 2,
+      "pre_outcome": true,
+      "selected_anchor_evidence_id": "R3",
+      "selected_anchor_step": 2,
+      "selection_mode": "public_invalidated_evidence"
+    },
+    "provider_diagnostic": {
+      "corrected_results_sha256": "fb9a863b82d4caaf6afc60446c852d6e1c2de09c463239508b02a28a39316819",
+      "correction_id": "post_freeze_inherited_v0_4_2_smoke_namespace_projection",
+      "coverage_authority": "v0.4.3_policy_exact_schedule_projection",
+      "http_status_counts": {
+        "429": 8
+      },
+      "observation_artifacts_unchanged": {
+        "arm_rows.csv": "994efb3aa5ca9bcc188442aba02c287840f483863de5c6a7eb6f2a7bc341e505",
+        "benchmark_report.md": "fd0f3a99fc03e1a48abca4fd4b65d2197d0ef255ae866c28514aff002d21f79d",
+        "calls.jsonl": "68989d17874f2da14964733f003aedcd6f4e8e99e35284f2def19f2873575d5e",
+        "traces.jsonl": "1cfd67fe6f8894a2c82f023a1624c223df76656e3a056ae632bc5228714ba0a5"
+      },
+      "original_manifest_sha256": "1aabd709e95f8f45c94a31dda6d443cdcd80ab4f03e93a03de3d6bac2cb36f3c",
+      "original_results_sha256": "f519d253228d037092037b1592c46ac0443d1684ad223b0701420225223b544e",
+      "provider_receipt_projection_sha256": "ba735cd7ec08a9644636ac665bf3514d8d1fd460a103214e40da0afeeba658e9",
+      "r01_fraction": "0/31",
+      "v0_4_3_fraction": "8/8"
+    },
+    "selected_case_id": "route_code_supersession",
+    "trial_index": 0
+  },
+  "forbidden_output_keys": [
+    "authorization",
+    "exception",
+    "headers",
+    "raw_response",
+    "reasoning_text",
+    "response_body",
+    "chain_of_thought"
+  ],
+  "forbidden_paths": [
+    "artifacts/benchmark_aperture_controls_v0_4_3_dev",
+    "benchmark_results/v0_4_3_provider_boundary_dev"
+  ],
+  "gates": {
+    "live_execution_ready": false,
+    "locked_reasoning_decision_ready": false,
+    "promotion_eligible": false,
+    "provider_diagnostic_integrity_ready": true,
+    "projection_integrity_ready": true,
+    "reasoning_improvement_claim_ready": false,
+    "recorded_demo_ready": true,
+    "recorded_episode_integrity_ready": true
+  },
+  "outputs": {
+    "artifact_directory": "artifacts/reasoning_workbench_v0_4_4",
+    "public_snapshot": "inspector/public/data/ebrt-reasoning-workbench-v0.4.4.json"
+  },
+  "projection_allowlist": {
+    "accounting": [
+      "api_calls",
+      "logical_calls",
+      "latency_ms",
+      "input_tokens",
+      "output_tokens",
+      "total_tokens",
+      "cached_input_tokens",
+      "cache_write_tokens",
+      "reasoning_tokens",
+      "exact_provider_tokens"
+    ],
+    "public_card": [
+      "schema_version",
+      "checkpoint_id",
+      "claim",
+      "topic",
+      "stance",
+      "confidence",
+      "evidence_ids",
+      "current_answer",
+      "revision_cue",
+      "decision_facts",
+      "invalidated_evidence_ids"
+    ],
+    "receipt": [
+      "provider",
+      "requested_model",
+      "returned_model",
+      "status",
+      "service_tier",
+      "attempt_outcome",
+      "retry_count",
+      "refusal_count",
+      "usage"
+    ],
+    "receipt_usage": [
+      "api_calls",
+      "logical_calls",
+      "latency_ms",
+      "input_tokens",
+      "output_tokens",
+      "total_tokens",
+      "cached_input_tokens",
+      "cache_write_tokens",
+      "reasoning_tokens",
+      "exact_provider_tokens"
+    ]
+  },
+  "schema_version": "ebrt-reasoning-workbench-projection-lock-v0.4.4",
+  "selection": {
+    "case_rule": "episode_manifest.case_ids[0]",
+    "trial_index": 0
+  },
+  "sources": {
+    "aperture_v0_4_1": {
+      "manifest": {
+        "path": "artifacts/benchmark_aperture_controls_v0_4_1_dev/manifest.json",
+        "sha256": "c24fd0767a303a5e5adb9fe9645afc4b9bc78f829f1731904132f33464529de0"
+      },
+      "results": {
+        "path": "artifacts/benchmark_aperture_controls_v0_4_1_dev/results.json",
+        "sha256": "fc541d8cc3c4e438162396f29db93924340263f1ccb1403aaebdd6c0979474d1"
+      }
+    },
+    "aperture_v0_4_2_r01": {
+      "manifest": {
+        "path": "artifacts/benchmark_aperture_controls_v0_4_2_unchanged_replication_r01_dev/manifest.json",
+        "sha256": "dde2d872ead686fa5d4b8074536e0d44acc1678036937f834fbe6389a3971671"
+      },
+      "results": {
+        "path": "artifacts/benchmark_aperture_controls_v0_4_2_unchanged_replication_r01_dev/results.json",
+        "sha256": "a123bf3ff9fdf70a1cee6a7ea06508fa216dfb380efdf7e4e02c855d6ea3c4e7"
+      }
+    },
+    "episode_v0_4": {
+      "manifest": {
+        "path": "artifacts/benchmark_language_replay_v0_4_live_smoke/manifest.json",
+        "sha256": "ff843c7f56e9f7692faddad82e1d2af6b48ac5863f1557d94fbec1aa71a84a23"
+      },
+      "results": {
+        "path": "artifacts/benchmark_language_replay_v0_4_live_smoke/results.json",
+        "sha256": "ac8fdf871f17efade7a9f0f69268e1621efcf11980589a515d2b6fca2c559c96"
+      },
+      "traces": {
+        "path": "artifacts/benchmark_language_replay_v0_4_live_smoke/traces.jsonl",
+        "sha256": "24096baae8404e62701b6ffa7dc423345ff1267f0a4dafc07f9f9bb02e7c95d5"
+      }
+    },
+    "provider_comparison_v0_4_3": {
+      "calls": {
+        "path": "artifacts/benchmark_aperture_controls_v0_4_3_contract_smoke/calls.jsonl",
+        "sha256": "68989d17874f2da14964733f003aedcd6f4e8e99e35284f2def19f2873575d5e"
+      },
+      "comparison": {
+        "path": "artifacts/compare_provider_boundary_v0_4_3/comparison.json",
+        "sha256": "99b65af8bc4825147511b103764521720b4969979e067c7e4f19f6900b511065"
+      },
+      "manifest": {
+        "path": "artifacts/benchmark_aperture_controls_v0_4_3_contract_smoke/manifest.json",
+        "sha256": "42172d684de6541fc6b26e23cf7e9ae7fde92395dd81db8fbeb53ed8a32021ec"
+      },
+      "results": {
+        "path": "artifacts/benchmark_aperture_controls_v0_4_3_contract_smoke/results.json",
+        "sha256": "fb9a863b82d4caaf6afc60446c852d6e1c2de09c463239508b02a28a39316819"
+      }
+    }
+  },
+  "status": "LOCKED_READ_ONLY_PROJECTION"
+}
