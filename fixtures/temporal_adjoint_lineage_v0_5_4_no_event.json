@@ -1,0 +1,24 @@
+{
+  "claim_boundary": [
+    "This fixture validates the exact no-event identity contract for the disconnected stable constraint lane only.",
+    "No event detector, provider, generated output, optimizer, or grader is executed.",
+    "The stable input is derived mechanically from the repaired v0.5.3 constraint closure."
+  ],
+  "control_policy": "exact_zero_no_event_v0_5_4",
+  "event": {
+    "correction_evidence_id": "R6",
+    "triggered": false
+  },
+  "fixture_id": "hackathon_strategy_temporal_adjoint_lineage_no_event_v0_5_4",
+  "lane": {
+    "kind": "constraint_only_identity",
+    "target_node_id": "constraint:video_constraint"
+  },
+  "lineage_source": {
+    "closure_status": "COMPUTED",
+    "graph_status": "CONTAMINATED_REPAIR_OVERLAY",
+    "version": "v0.5.3"
+  },
+  "schema_version": "ebrt-temporal-adjoint-lineage-no-event-fixture-v0.5.4",
+  "terminal_contract": "stable_constraint_identity_v0_5_4"
+}

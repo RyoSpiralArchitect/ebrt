@@ -1,0 +1,93 @@
+{
+  "backward_calls": 0,
+  "control_count": 0,
+  "controlled_output": [
+    [
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0
+    ],
+    [
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0
+    ]
+  ],
+  "event_triggered": false,
+  "exact_identity": true,
+  "fingerprint_sha256": "0c32f58f45b9588970c2073fc026455621d8ee478008a6c964f86bdf268cc2fb",
+  "invalidation_operations": 0,
+  "network_calls": 0,
+  "neutral_equals_controlled": true,
+  "neutral_output": [
+    [
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0
+    ],
+    [
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0
+    ]
+  ],
+  "output_identity": true,
+  "provider_calls": 0,
+  "schema_version": "ebrt-temporal-lineage-adjoint-audit-v0.5.4",
+  "stable_input": [
+    [
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0
+    ],
+    [
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0
+    ]
+  ],
+  "status": "PASS",
+  "target_node_id": "constraint:video_constraint"
+}

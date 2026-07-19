@@ -192,7 +192,9 @@ The word has deliberately different, bounded meanings:
   temporal recurrence;
 - in v0.5.3, it means deterministic dependency traversal and fact-level
   direct/inherited closure over a role-factorized public program;
-- in v0.5.4, it is planned to mean temporal credit over that factorized program;
+- in v0.5.4, it means exact normalized temporal credit over the compiled
+  factorized program, checked against autograd, finite differences, and matched
+  within-node timing shams;
   and
 - in v0.5.5, it is planned to mean block credit over multiple sealed public
   trajectories.

@@ -1,0 +1,111 @@
+{
+  "fingerprint_sha256": "04dcc60ade46003f23f451b068e8041307dcb94ccd2cd6ac211e9576fc452b8c",
+  "fixtures": {
+    "event": {
+      "bytes": 1050,
+      "fixture_id": "hackathon_strategy_temporal_adjoint_lineage_dev_v0_5_4",
+      "path": "fixtures/temporal_adjoint_lineage_v0_5_4_dev.json",
+      "schema_version": "ebrt-temporal-adjoint-lineage-fixture-v0.5.4",
+      "sha256": "a1d4b2d55d403c13e89548dbe54ba4ebc80401a1e70b1972541039afeb1b7749"
+    },
+    "no_event": {
+      "bytes": 915,
+      "fixture_id": "hackathon_strategy_temporal_adjoint_lineage_no_event_v0_5_4",
+      "path": "fixtures/temporal_adjoint_lineage_v0_5_4_no_event.json",
+      "schema_version": "ebrt-temporal-adjoint-lineage-no-event-fixture-v0.5.4",
+      "sha256": "e3ff041d8983f43cb0cfa7d60dd1baca041c7c714bd4af381f2690e08c4580a7"
+    }
+  },
+  "network_calls": 0,
+  "policy_lock": {
+    "bytes": 10154,
+    "path": "policy_lock_temporal_adjoint_lineage_v0_5_4.json",
+    "sha256": "d2866441aeffab6bc81c74f53cd77822ff35b6620e3dadd9b9ba71b509bd6dec"
+  },
+  "predecessor": {
+    "artifact_receipts": {
+      "factorized_lineage_regression.json": {
+        "bytes": 43579,
+        "path": "artifacts/factorized_lineage_v0_5_3/factorized_lineage_regression.json",
+        "sha256": "85094e65b9181b893b80bf42c3db859b66a66320a080defefc514ce75fbe910f"
+      },
+      "lossless_migration.json": {
+        "bytes": 19072,
+        "path": "artifacts/factorized_lineage_v0_5_3/lossless_migration.json",
+        "sha256": "41b19e6210aa387a54b6db24256b1eb1943f685bb4acb226ac8ed0415e50b38a"
+      },
+      "manifest.json": {
+        "bytes": 5668,
+        "path": "artifacts/factorized_lineage_v0_5_3/manifest.json",
+        "sha256": "e7cbd1388e23bb86fc32e1b4b4e306af90c0e151f1388348ca67dd01f94c75e4"
+      },
+      "mechanism_report.md": {
+        "bytes": 2488,
+        "path": "artifacts/factorized_lineage_v0_5_3/mechanism_report.md",
+        "sha256": "f70d9c06a47451467e62309535c1d163ecabc8e1e71f58bd943fb1f416a3541e"
+      },
+      "self_test.json": {
+        "bytes": 4928,
+        "path": "artifacts/factorized_lineage_v0_5_3/self_test.json",
+        "sha256": "19646001667eae28ae38a9f2d9f3cff2974bbe36a68236f13f5bc0a73f41d616"
+      }
+    },
+    "commit_sha": "79e047b7e2b500b6fb2b73385ea2f59a7dcde881",
+    "fingerprints": {
+      "observed_graph_sha256": "8afb3d03084dc33f92ea6d12dbe7c3cfdb53f4642a5d6a937075a53dcb9a74ca",
+      "regression_sha256": "0335ede60f428ddf77f7266d1c2bea6483c4698e924f555e9be8a7d3422e2997",
+      "repaired_closure_sha256": "899afdca968e3a3e1c1dd7f9eb5c4605e18c7c6b4188a8a4f4af1707a2859c9c",
+      "repaired_grade_sha256": "2cf9e0d55ec892c187d7763507931c661ef1358578176e3b051cdff8b170d103",
+      "repaired_graph_sha256": "361d6961938dda2d69ccc0340fecb802c55af40d6cd551c628eb307462416333"
+    },
+    "relationship": "Immutable committed v0.5.3 factorized-lineage checkpoint and contaminated repaired public dependency program; source and artifact bytes are compilation inputs and provenance only.",
+    "source_receipts": {
+      "builder": {
+        "bytes": 55087,
+        "path": "build_factorized_lineage_artifact_v0_5_3.py",
+        "sha256": "db9061e20333d6ef1863521cd6d65b99ed521341589bf0230acd48e036a6a9e2"
+      },
+      "closure_gold": {
+        "bytes": 1981,
+        "path": "fixtures/factorized_lineage_v0_5_3_closure_gold.json",
+        "sha256": "0e30dfe19b926990fd8eac77c781f4ac2087a81da11b74e0f25becf3ffa7447b"
+      },
+      "core": {
+        "bytes": 96449,
+        "path": "factorized_lineage_v0_5_3.py",
+        "sha256": "ccb6e770b140e81f1b61a75b5e2c7cdfe0d11147ad2edc553510252a01e41633"
+      },
+      "policy_lock": {
+        "bytes": 6112,
+        "path": "policy_lock_factorized_lineage_v0_5_3.json",
+        "sha256": "dfaab71441ea3f511bb6186cce547f025372c049064421a1711d006efdbab63f"
+      },
+      "repair_overlay": {
+        "bytes": 1306,
+        "path": "fixtures/factorized_lineage_v0_5_3_repair_overlay.json",
+        "sha256": "9425bda87e5aa859ec6c8016035c599a0d1f3d8704ec7d012ddf44e6ca05e22e"
+      }
+    },
+    "tree_sha": "38389d8521f93c7a11c58b4d9be48fde2c1350c6"
+  },
+  "provider_calls": 0,
+  "schema_version": "ebrt-temporal-lineage-source-receipt-v0.5.4",
+  "sources": {
+    "benchmark": {
+      "bytes": 9522,
+      "path": "benchmark_temporal_adjoint_lineage_v0_5_4.py",
+      "sha256": "3c97f451e9128fdcbc3c7aadf64bbca47ca7d2a9798ace172cda083942f1e693"
+    },
+    "builder": {
+      "bytes": 51126,
+      "path": "build_temporal_adjoint_lineage_artifact_v0_5_4.py",
+      "sha256": "5faa79b5ebbd7463e30a3d6bf08d862f0c176b4284a19a5f5d8bd3a51be91060"
+    },
+    "core": {
+      "bytes": 95541,
+      "path": "temporal_adjoint_lineage_v0_5_4.py",
+      "sha256": "0e900c9f0535d32b4994f41cafa71792c43c8dfb687bcd4b654dccecc906a1d4"
+    }
+  },
+  "status": "SEALED"
+}

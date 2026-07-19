@@ -1,6 +1,6 @@
 # EBRT v0.5.3-v0.5.5 Research Roadmap
 
-Status: **v0.5.3 COMPLETE; v0.5.4-v0.5.5 PROSPECTIVE — EACH MILESTONE HAS ITS OWN LOCK**
+Status: **v0.5.3-v0.5.4 COMPLETE; v0.5.5 PROSPECTIVE — EACH MILESTONE HAS ITS OWN LOCK**
 
 This roadmap translates the [Core Thesis](EBRT_CORE_THESIS.md) through three
 orthogonal axes before any multi-agent execution claim:
@@ -151,11 +151,11 @@ replace the local migration artifact.
 ### Question
 
 Once the spatial dependency program is explicit, does an exact temporal
-adjoint place bounded intervention on useful earlier operations under matched
+adjoint place a bounded intervention over operator-time sites under matched
 actuator geometry, rather than merely reflecting a stronger supplied control
 basis?
 
-### Planned mechanism
+### Completed mechanism
 
 Compile a frozen v0.5.3 program and evidence order into a smooth public
 recurrence
@@ -164,22 +164,25 @@ recurrence
 s_t = F_{o_t}(s_{t-1}, e_t, u_t;G),
 \]
 
-then compute terminal credit through that recurrence. The compiler, operator
-bases, neutral controls, normalization, terminal contract, and event order are
-fixture inputs fixed before comparison.
+then compute terminal credit through that recurrence. The fixtures select only
+symbolic event, schedule, terminal, and control policies. The compiler derives
+the state axes, operator order, terminal target, neutral controls, Jacobians,
+normalization, and control maps from the committed v0.5.3 artifact and
+byte-pinned implementation.
 
 The minimum matched comparison is:
 
 - A — zero control;
 - B — static terminal-closure control;
 - C — exact temporal-adjoint placement; and
-- D — type-, sign-, sparsity-, norm-, and finite-leverage-matched placement
-  sham.
+- D — three type-, sign-, sparsity-, norm-, finite-leverage-, and within-node
+  value-multiset-matched timing permutations of C.
 
-Where possible, intervention coordinates are normalized by a preregistered
-neutral terminal-Jacobian or fixed-step leverage scale. If equalization is not
-achieved, actuator geometry remains an explicit confound and no isolated
-temporal-credit claim is permitted.
+Every eligible intervention coordinate is normalized by its neutral terminal
+Jacobian norm; zero-leverage sites remain fixed at zero. A single exact adjoint
+step is compared at the same normalized L2 radius. The validator independently
+reconstructs the locked timing shams and rejects sign-flipped or cross-node
+substitutions even when their global norm, sign count, and sparsity match.
 
 ### Hard gates
 
@@ -189,10 +192,25 @@ temporal-credit claim is permitted.
 - an inserted identity operation preserves state and credit;
 - independent operations commute under the declared ordering rule;
 - no-event input is exact identity with zero backward calls;
-- moving a late invalidation changes the preregistered top eligible control
+- moving a late invalidation changes the locked top eligible control
   site on the paired fixture;
 - projected controls remain bounded and byte deterministic; and
-- C clears a preregistered margin against B and every eligible matched sham.
+- C clears the locked strict boundary against B and every eligible matched sham.
+
+### Completed result
+
+All 17 exact hard gates passed. Manual forward and reverse derivatives matched
+autograd at maximum error `0.0`; central finite differences agreed within
+`1.234212732015294e-10`; normalized Jacobian columns agreed with unit norm
+within `1.1102230246251565e-16`; and severing the declared Fact dependency made
+the corresponding upstream Jacobian exactly zero. At normalized L2 radius
+`0.000390625`, C was below A, node-tied B, and every locked within-node timing
+permutation in both early and late schedules. The sealed decision is
+`PROMOTE_V0_5_5_TEMPORAL_GATE`.
+
+This is an implementation-gated, contaminated result over one public program,
+not an independently held-out or formally preregistered experiment. It permits
+the v0.5.5 substrate question and no broader temporal-reasoning claim.
 
 ### Stop rule
 
