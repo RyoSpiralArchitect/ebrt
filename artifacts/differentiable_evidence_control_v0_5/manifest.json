@@ -1,0 +1,117 @@
+{
+  "artifact_sha256": {
+    "event_control_map.json": "462f8ed454287544d6ef2faed296c10d1069395b5636cbe680c4586a9fef9399",
+    "mechanism_report.md": "36905982b85a2e23a382f0ec6e63a6a908387b3bbb5562cb1bfeff1b55f5e67d",
+    "no_event_control_map.json": "29f9f3633438afa0599f2dfba8a3319d9a398045faeb35bf6c4e8a9993c32c7b",
+    "self_test.json": "c6c904cd26a05fce6c832c0a8ade4c11ca0bca1dedbb8dc8363070a6fe70951b"
+  },
+  "claim_boundary": [
+    "The controller uses real local autograd only inside a frozen one-hop public surrogate.",
+    "The squared-L2-sum control penalty is invariant to eight disconnected neutral padding nodes within the locked 1e-14 tolerance on the built-in synthetic graph.",
+    "The fixture graph topology, signed effects, event scope, invalidation, and replacement targets are synthetic oracle annotations, not learned semantics.",
+    "No separately supplied downstream grader verdict, final-answer artifact, provider output, or final generation enters the controller.",
+    "The v0.1 implementation and v0.4.1 manifest are lineage references only and are not empirical evidence for this mechanism result.",
+    "Byte-identical artifact reproduction is evidenced only for the runtime recorded in the manifest, not across arbitrary Python, PyTorch, operating-system, or hardware versions.",
+    "This lock does not support a hosted-model reasoning-improvement, causal, efficiency, or production-readiness claim."
+  ],
+  "controller": {
+    "canonicalization": {
+      "allow_nan": false,
+      "encoding": "utf-8",
+      "ensure_ascii": false,
+      "separators": [
+        ",",
+        ":"
+      ],
+      "sort_keys": true,
+      "trailing_newline": true
+    },
+    "config": {
+      "acceptance_tolerance": 1e-12,
+      "control_l2_weight": 0.05,
+      "gate_epsilon": 1e-12,
+      "invalidation_suppression_weight": 1.5,
+      "learning_rate": 0.08,
+      "max_control_l2_norm": 1.25,
+      "numeric_precision": 12,
+      "revision_consistency_weight": 4.0,
+      "revision_steps": 120,
+      "role_delta": 0.05,
+      "stable_claim_drift_weight": 2.0,
+      "support_preservation_weight": 1.0
+    },
+    "finite_difference": {
+      "absolute_tolerance": 2e-08,
+      "epsilon": 1e-06,
+      "terms": [
+        "revision_consistency",
+        "support_preservation",
+        "invalidation_suppression",
+        "stable_claim_drift",
+        "control_l2",
+        "total"
+      ]
+    },
+    "name": "EBRT Differentiable Evidence Controller",
+    "padding_invariance": {
+      "absolute_tolerance": 1e-14,
+      "extra_nodes": 8
+    },
+    "projection": {
+      "numeric_precision": 12,
+      "role_delta": 0.05,
+      "stable_order": [
+        "ordinal",
+        "evidence_id"
+      ]
+    },
+    "version": "0.5.0-mechanism"
+  },
+  "fixtures": {
+    "event": {
+      "event_triggered": true,
+      "graph_id": "route_code_supersession_public_graph_dev_v0_5",
+      "path": "fixtures/differentiable_evidence_controller_v0_5_dev.json",
+      "semantic_payload_sha256": "6c1b88ae49afb2102a7a98f3a17c1a0412ac627c43c9dbe1aad462231cc6b796",
+      "sha256": "6d9fa014e41185cd227c58833055f1382027199e3a6937812022b60c32eea0da"
+    },
+    "no_event": {
+      "event_triggered": false,
+      "graph_id": "route_code_no_event_public_graph_dev_v0_5",
+      "path": "fixtures/differentiable_evidence_controller_v0_5_no_event.json",
+      "semantic_payload_sha256": "cc757cda1c8403cbcd55ae2ca460e91a22d22b5031f4a246867b293dd6b868ad",
+      "sha256": "195b84b21bd0d620b8a2c0bc79dfb7ce16758734b4d4d1fe0f299487129ee497"
+    }
+  },
+  "network_calls": 0,
+  "runtime_observed": {
+    "machine": "arm64",
+    "python": "3.13.13",
+    "release": "25.2.0",
+    "system": "Darwin",
+    "torch": "2.11.0"
+  },
+  "schema_version": "ebrt-differentiable-evidence-control-manifest-v0.5.0",
+  "source_sha256": {
+    "artifacts/benchmark_aperture_controls_v0_4_1_dev/manifest.json": "c24fd0767a303a5e5adb9fe9645afc4b9bc78f829f1731904132f33464529de0",
+    "build_differentiable_evidence_control_artifact_v0_5.py": "66a4ecda4f375a00a89acbf88b5879c58b0296cb9c640f3e0be70409d7bd1311",
+    "differentiable_evidence_controller_v0_5.py": "960dd29b90a319c032019ff0724d65134bf8f3baa294d9088823dce91cfe0e31",
+    "ebrt_monolith_v0_1.py": "b1702f2868839d989cc3a9321d227436a23c3dad6cc86483edee9d5dbab3a529",
+    "fixtures/differentiable_evidence_controller_v0_5_dev.json": "6d9fa014e41185cd227c58833055f1382027199e3a6937812022b60c32eea0da",
+    "fixtures/differentiable_evidence_controller_v0_5_no_event.json": "195b84b21bd0d620b8a2c0bc79dfb7ce16758734b4d4d1fe0f299487129ee497",
+    "policy_lock_differentiable_evidence_controller_v0_5.json": "f769368493b9408b0c2d3006a7ca826c76f8596e55a1cccbfc2bf10d6a8f48d9"
+  },
+  "status": "COMPLETE_MECHANISM_ONLY_NETWORK_ZERO",
+  "validation": {
+    "canonical_projection_and_fingerprints_verified": true,
+    "core_self_test_passed": true,
+    "event_control_accepted_and_objective_decreased": true,
+    "finite_difference_constants_and_terms_exact": true,
+    "lineage_references_excluded_from_controller_inputs": true,
+    "manifest_has_no_timestamp": true,
+    "no_event_identity_and_zero_backward_calls": true,
+    "policy_lock_exact": true,
+    "public_graph_schema_and_provenance_verified": true,
+    "source_hashes_verified": true
+  }
+}

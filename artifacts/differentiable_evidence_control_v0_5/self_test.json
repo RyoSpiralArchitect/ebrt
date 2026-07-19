@@ -1,0 +1,97 @@
+{
+  "checks": {
+    "canonical_control_map_projection_verified": true,
+    "core_self_test_passed": true,
+    "disconnected_padding_invariance_verified": true,
+    "event_fixture_accepted_local_control": true,
+    "event_objective_decreased": true,
+    "finite_difference_term_coverage_exact": true,
+    "lineage_sources_excluded_from_controller_inputs": true,
+    "no_event_exact_identity": true
+  },
+  "claim_boundary": [
+    "The controller uses real local autograd only inside a frozen one-hop public surrogate.",
+    "The squared-L2-sum control penalty is invariant to eight disconnected neutral padding nodes within the locked 1e-14 tolerance on the built-in synthetic graph.",
+    "The fixture graph topology, signed effects, event scope, invalidation, and replacement targets are synthetic oracle annotations, not learned semantics.",
+    "No separately supplied downstream grader verdict, final-answer artifact, provider output, or final generation enters the controller.",
+    "The v0.1 implementation and v0.4.1 manifest are lineage references only and are not empirical evidence for this mechanism result.",
+    "Byte-identical artifact reproduction is evidenced only for the runtime recorded in the manifest, not across arbitrary Python, PyTorch, operating-system, or hardware versions.",
+    "This lock does not support a hosted-model reasoning-improvement, causal, efficiency, or production-readiness claim."
+  ],
+  "core_self_test": {
+    "checks": [
+      "exact typed public graph and canonical provenance hash",
+      "UTF-8 canonical hashing is unescaped and byte deterministic",
+      "terminal_graph_credit_assignment",
+      "finite-difference agrees with float64 autograd",
+      "revision-only terminal credit is local on the locked topology and severed-edge ablation",
+      "disconnected neutral padding leaves original controls numerically invariant",
+      "zero-event path is identity with zero backward calls",
+      "all gates and projected control L2 remain bounded",
+      "accepted control lowers energy and locked unrelated state remains exact",
+      "energy-regressing proposal rolls back to neutral",
+      "two identical runs emit byte-identical control-map JSON",
+      "recursive unknown, gold-field, and semantic-hash tampering is rejected",
+      "event-source, temporal invalidation, and duplicate-edge tampering is rejected",
+      "pure optimize path completes while socket creation is denied"
+    ],
+    "claim_boundary": "Mechanism/plumbing validation over a synthetic structured oracle graph only; no separately supplied downstream grader verdict, final-answer artifact, or provider output enters the controller, and this is not a hosted-model reasoning benchmark.",
+    "controller": "EBRT Differentiable Evidence Controller 0.5.0-mechanism",
+    "mechanism_metrics": {
+      "backward_calls": 120,
+      "control_l2_norm": 0.9074954816638033,
+      "control_map_fingerprint": "81c58108d82d144eccf5bf5f25f210630952733ccecb95b7b14e7b8ec5bda55a",
+      "energy_after": 0.05931580594950074,
+      "energy_before": 1.6106831590731219,
+      "finite_difference_abs_tolerance": 2e-08,
+      "finite_difference_epsilon": 1e-06,
+      "finite_difference_error_by_term": {
+        "control_l2": 8.903350279254596e-12,
+        "invalidation_suppression": 1.5962720034679023e-10,
+        "revision_consistency": 2.9548558044822926e-11,
+        "stable_claim_drift": 4.1946567747030983e-13,
+        "support_preservation": 6.337846913950784e-13,
+        "total": 2.4067525750126606e-10
+      },
+      "max_disconnected_padding_gate_error": 2.220446049250313e-16,
+      "max_finite_difference_error": 2.4067525750126606e-10,
+      "max_observed_control_l2_norm": 0.9074954816638033,
+      "padding_invariance_abs_tolerance": 1e-14,
+      "padding_invariance_extra_nodes": 8,
+      "semantic_payload_sha256": "8895d5169886161a3535f0ccfac7a91d72f0cba68e1ae43857bb7bd2ae59a349",
+      "terminal_credit_gradient": {
+        "R1": 0.0,
+        "R2": -0.045664804024445095,
+        "R3": 0.045664804024445095,
+        "R4": -0.010147734227654465,
+        "R5": 0.0,
+        "R6": -0.05073867113827232,
+        "R7": 0.0
+      }
+    },
+    "status": "PASS"
+  },
+  "fixture_results": {
+    "event": {
+      "backward_calls": 120,
+      "control_map_fingerprint": "44e1c4d727286380b30fb9316618c6c3affaf23ab612fdd8be7180b2040779f8",
+      "graph_id": "route_code_supersession_public_graph_dev_v0_5",
+      "objective_after": 0.05931580595,
+      "objective_before": 1.610683159073,
+      "semantic_payload_sha256": "6c1b88ae49afb2102a7a98f3a17c1a0412ac627c43c9dbe1aad462231cc6b796",
+      "status": "ACCEPTED_LOCAL_CONTROL"
+    },
+    "no_event": {
+      "backward_calls": 0,
+      "control_map_fingerprint": "f0a38a9bc1faf24434fd6445b34f5f1d1cbd718f03825430de19a0cfbbdeece3",
+      "graph_id": "route_code_no_event_public_graph_dev_v0_5",
+      "objective_after": 0.0,
+      "objective_before": 0.0,
+      "semantic_payload_sha256": "cc757cda1c8403cbcd55ae2ca460e91a22d22b5031f4a246867b293dd6b868ad",
+      "status": "NO_EVENT_IDENTITY"
+    }
+  },
+  "network_calls": 0,
+  "schema_version": "ebrt-differentiable-evidence-control-self-test-v0.5.0",
+  "status": "PASS"
+}
