@@ -1,0 +1,1925 @@
+{
+  "aperture_context": {
+    "claim_boundary": "These blocks describe separate frozen experiments and do not explain the selected v0.4 episode causally.",
+    "relationship_to_recorded_episode": "context_only_not_same_causal_episode",
+    "v0_4_1": {
+      "arms": {
+        "direct_raw_fixed_revision_rerun": {
+          "api_calls": 30,
+          "attempted_runs": 30,
+          "completed_outputs": 30,
+          "input_tokens": 22911,
+          "machine_successes": 30,
+          "output_tokens": 4563,
+          "reasoning_tokens": 0
+        },
+        "direct_raw_no_revision": {
+          "api_calls": 30,
+          "attempted_runs": 30,
+          "completed_outputs": 30,
+          "input_tokens": 22041,
+          "machine_successes": 29,
+          "output_tokens": 4523,
+          "reasoning_tokens": 87
+        },
+        "staged_card_only_rerun": {
+          "api_calls": 174,
+          "attempted_runs": 30,
+          "completed_outputs": 28,
+          "input_tokens": 131308,
+          "machine_successes": 2,
+          "output_tokens": 41299,
+          "reasoning_tokens": 17861
+        },
+        "staged_cumulative_raw": {
+          "api_calls": 180,
+          "attempted_runs": 30,
+          "completed_outputs": 30,
+          "input_tokens": 148222,
+          "machine_successes": 30,
+          "output_tokens": 35046,
+          "reasoning_tokens": 9232
+        }
+      },
+      "artifact": "artifacts/benchmark_aperture_controls_v0_4_1_dev",
+      "execution_complete": false,
+      "interpretation": "Descriptive incomplete-DEV context only: cumulative raw recorded 30/30 machine successes while card-only recorded 2/28 completed; the locked cause gate remained closed.",
+      "locked_decision_ready": false,
+      "status": "INCOMPLETE"
+    },
+    "v0_4_2_unchanged_replication_r01": {
+      "arms": {
+        "direct_raw_fixed_revision_rerun": {
+          "api_calls": 30,
+          "attempted_runs": 30,
+          "completed_outputs": 22,
+          "input_tokens": null,
+          "machine_successes": 22,
+          "output_tokens": null,
+          "reasoning_tokens": null
+        },
+        "direct_raw_no_revision": {
+          "api_calls": 30,
+          "attempted_runs": 30,
+          "completed_outputs": 22,
+          "input_tokens": null,
+          "machine_successes": 20,
+          "output_tokens": null,
+          "reasoning_tokens": null
+        },
+        "staged_card_only_rerun": {
+          "api_calls": 139,
+          "attempted_runs": 30,
+          "completed_outputs": 21,
+          "input_tokens": null,
+          "machine_successes": 1,
+          "output_tokens": null,
+          "reasoning_tokens": null
+        },
+        "staged_cumulative_raw": {
+          "api_calls": 145,
+          "attempted_runs": 30,
+          "completed_outputs": 22,
+          "input_tokens": null,
+          "machine_successes": 22,
+          "output_tokens": null,
+          "reasoning_tokens": null
+        }
+      },
+      "artifact": "artifacts/benchmark_aperture_controls_v0_4_2_unchanged_replication_r01_dev",
+      "attempted_api_calls": 344,
+      "execution_complete": false,
+      "interpretation": "Unchanged replication remained incomplete with 31 non-assessable endpoints; no locked aperture or reasoning decision was available.",
+      "locked_decision_ready": false,
+      "nominal_api_calls": 420,
+      "non_assessable_endpoints": 31,
+      "status": "INCOMPLETE"
+    }
+  },
+  "claim_boundary": [
+    "This is a deterministic read-only projection of recorded public artifacts; it does not execute a model or apply a live revision.",
+    "The selected v0.4 episode is a DEV smoke case and does not establish general reasoning improvement.",
+    "Public Reasoning Cards, evidence, grades, and sanitized accounting are observable outputs, not private chain-of-thought or hidden model state.",
+    "The v0.4.1 and v0.4.2 aperture blocks are context from separate experiments and are not the same causal episode as the recorded replay.",
+    "The v0.4.3 Provider Failure Atlas measures diagnostic classification coverage, not reasoning quality or a cross-block causal effect.",
+    "The authoritative v0.4.3 coverage fields are a post-freeze derived correction with no live call; the recorded provider-observation artifact hashes remain unchanged.",
+    "No model weights, hidden states, or persisted provider response state are modified."
+  ],
+  "field_semantics": {
+    "aperture_context": "separate experiments; not the selected episode",
+    "evidence": "recorded public raw evidence from the selected fixture",
+    "initial": "pre-event answer match only; it has no post-event PASS/FAIL label",
+    "latency_ms": "recorded client latency; not server compute",
+    "provider_failure_atlas": "status and failure counts derived from pinned receipt rows; not reasoning-quality evidence",
+    "public_output_diff": "deterministic difference between emitted public Reasoning Cards",
+    "public_reasoning_card": "provider-emitted public structured output; not private reasoning text",
+    "reasoning_tokens": "provider-reported usage detail; not reasoning content or quality",
+    "sanitized_observer_receipt": "exact lock allowlist; raw bodies, headers, IDs, and exceptions omitted"
+  },
+  "gates": {
+    "live_execution_ready": false,
+    "locked_reasoning_decision_ready": false,
+    "projection_integrity_ready": true,
+    "promotion_eligible": false,
+    "provider_diagnostic_integrity_ready": true,
+    "reasoning_improvement_claim_ready": false,
+    "recorded_demo_ready": true,
+    "recorded_episode_integrity_ready": true
+  },
+  "generation": {
+    "builder_sha256": "9d906c2f9e5cb1ace14ed12ab35dd4f1cc03c1e3f50a4a131c53fb7354bbcce6",
+    "deterministic": true,
+    "network_calls": 0,
+    "projection_lock_sha256": "e48eb520b15fd0c96a654721e76f08923439ed1e9f74b7cccb81372f81653385",
+    "projection_mode": "allowlist_only",
+    "source_sha256": {
+      "artifacts/benchmark_aperture_controls_v0_4_1_dev/manifest.json": "c24fd0767a303a5e5adb9fe9645afc4b9bc78f829f1731904132f33464529de0",
+      "artifacts/benchmark_aperture_controls_v0_4_1_dev/results.json": "fc541d8cc3c4e438162396f29db93924340263f1ccb1403aaebdd6c0979474d1",
+      "artifacts/benchmark_aperture_controls_v0_4_2_unchanged_replication_r01_dev/manifest.json": "dde2d872ead686fa5d4b8074536e0d44acc1678036937f834fbe6389a3971671",
+      "artifacts/benchmark_aperture_controls_v0_4_2_unchanged_replication_r01_dev/results.json": "a123bf3ff9fdf70a1cee6a7ea06508fa216dfb380efdf7e4e02c855d6ea3c4e7",
+      "artifacts/benchmark_aperture_controls_v0_4_3_contract_smoke/calls.jsonl": "68989d17874f2da14964733f003aedcd6f4e8e99e35284f2def19f2873575d5e",
+      "artifacts/benchmark_aperture_controls_v0_4_3_contract_smoke/manifest.json": "42172d684de6541fc6b26e23cf7e9ae7fde92395dd81db8fbeb53ed8a32021ec",
+      "artifacts/benchmark_aperture_controls_v0_4_3_contract_smoke/results.json": "fb9a863b82d4caaf6afc60446c852d6e1c2de09c463239508b02a28a39316819",
+      "artifacts/benchmark_language_replay_v0_4_live_smoke/manifest.json": "ff843c7f56e9f7692faddad82e1d2af6b48ac5863f1557d94fbec1aa71a84a23",
+      "artifacts/benchmark_language_replay_v0_4_live_smoke/results.json": "ac8fdf871f17efade7a9f0f69268e1621efcf11980589a515d2b6fca2c559c96",
+      "artifacts/benchmark_language_replay_v0_4_live_smoke/traces.jsonl": "24096baae8404e62701b6ffa7dc423345ff1267f0a4dafc07f9f9bb02e7c95d5",
+      "artifacts/compare_provider_boundary_v0_4_3/comparison.json": "99b65af8bc4825147511b103764521720b4969979e067c7e4f19f6900b511065",
+      "build_reasoning_workbench_snapshot_v0_4_4.py": "9d906c2f9e5cb1ace14ed12ab35dd4f1cc03c1e3f50a4a131c53fb7354bbcce6",
+      "projection_lock_reasoning_workbench_v0_4_4.json": "e48eb520b15fd0c96a654721e76f08923439ed1e9f74b7cccb81372f81653385"
+    },
+    "timestamp_recorded": false
+  },
+  "projection_fingerprint": "6c5cf6d62546fd4c3a2029f63b6468e0ad21dc0868f09aa90d411cc46089ab6a",
+  "provider_failure_atlas": {
+    "artifact": "artifacts/benchmark_aperture_controls_v0_4_3_contract_smoke",
+    "claim_boundary": "Coverage is descriptive within each frozen block. The populations differ, the cross-block effect is null, and no reasoning endpoint was available in v0.4.3.",
+    "classified_failure": {
+      "allowlisted_reason_code": "insufficient_quota",
+      "count": 8,
+      "phase": "http_status",
+      "phase_count": 8,
+      "unclassified_count": 0
+    },
+    "coverage_lineage": {
+      "artifact_bytes_postdate_preregistration": true,
+      "authority": "v0.4.3_policy_exact_schedule_projection",
+      "corrected_manifest_sha256": "42172d684de6541fc6b26e23cf7e9ae7fde92395dd81db8fbeb53ed8a32021ec",
+      "corrected_results_sha256": "fb9a863b82d4caaf6afc60446c852d6e1c2de09c463239508b02a28a39316819",
+      "correction_id": "post_freeze_inherited_v0_4_2_smoke_namespace_projection",
+      "no_live_call": true,
+      "observation_artifacts_unchanged": {
+        "arm_rows.csv": "994efb3aa5ca9bcc188442aba02c287840f483863de5c6a7eb6f2a7bc341e505",
+        "benchmark_report.md": "fd0f3a99fc03e1a48abca4fd4b65d2197d0ef255ae866c28514aff002d21f79d",
+        "calls.jsonl": "68989d17874f2da14964733f003aedcd6f4e8e99e35284f2def19f2873575d5e",
+        "traces.jsonl": "1cfd67fe6f8894a2c82f023a1624c223df76656e3a056ae632bc5228714ba0a5"
+      },
+      "original_manifest_sha256": "1aabd709e95f8f45c94a31dda6d443cdcd80ab4f03e93a03de3d6bac2cb36f3c",
+      "original_results_sha256": "f519d253228d037092037b1592c46ac0443d1684ad223b0701420225223b544e",
+      "provider_observations_unchanged": true,
+      "provider_receipt_projection_sha256": "ba735cd7ec08a9644636ac665bf3514d8d1fd460a103214e40da0afeeba658e9",
+      "schema_version": "ebrt-post-freeze-derived-correction-v0.4.3"
+    },
+    "gates": {
+      "diagnostic_integrity_ready": true,
+      "full_launch_ready": false,
+      "locked_reasoning_ready": false,
+      "reasoning_comparison_available": false
+    },
+    "native_diagnostic_coverage": {
+      "authority": "v0.4.3_policy_exact_schedule_projection",
+      "cross_block_effect_estimate": null,
+      "r01_frozen_native": {
+        "denominator": 31,
+        "fraction": "0/31",
+        "numerator": 0
+      },
+      "scope": "native_phase_reason_coverage_within_each_frozen_block",
+      "v0_4_3_contract_smoke": {
+        "denominator": 8,
+        "fraction": "8/8",
+        "numerator": 8
+      }
+    },
+    "pipeline": [
+      {
+        "count": 8,
+        "label": "Client attempts",
+        "stage_id": "client_attempt"
+      },
+      {
+        "count": 8,
+        "label": "HTTP observations",
+        "stage_id": "http_observation",
+        "status_code": 429,
+        "status_count": 8
+      },
+      {
+        "count": 0,
+        "label": "Structured parses",
+        "stage_id": "structured_parse"
+      },
+      {
+        "count": 0,
+        "label": "Accepted outputs",
+        "stage_id": "provider_contract_acceptance"
+      },
+      {
+        "count": 0,
+        "label": "Assessed endpoints",
+        "stage_id": "reasoning_assessment"
+      }
+    ],
+    "primary_execution_classification": "smoke_gate_failed_full_not_launched",
+    "receipt_observations": {
+      "http_observed_count": 8,
+      "http_status_counts": {
+        "429": 8
+      },
+      "receipt_count": 8,
+      "source": "pinned_calls_jsonl_cross_checked_to_results_json"
+    },
+    "status": "COMPLETE_DIAGNOSTIC_NON_DECISION"
+  },
+  "recorded_episode": {
+    "answer_choices": [
+      "AMBER",
+      "BLUE"
+    ],
+    "decision_slots": [
+      {
+        "allowed_values": [
+          "A1",
+          "B2",
+          "UNKNOWN"
+        ],
+        "description": "NERA's current route code",
+        "required": true,
+        "slot_id": "current_code"
+      },
+      {
+        "allowed_values": [
+          "AMBER",
+          "BLUE",
+          "UNKNOWN"
+        ],
+        "description": "assigned bay",
+        "required": true,
+        "slot_id": "bay"
+      },
+      {
+        "allowed_values": [
+          "SEALED",
+          "UNKNOWN"
+        ],
+        "description": "stable cargo seal status",
+        "required": true,
+        "slot_id": "cargo_seal"
+      }
+    ],
+    "event": {
+      "event_evidence_id": "R6",
+      "invalidated_evidence_ids": [
+        "R3"
+      ],
+      "projection_fingerprint": "fda02ed8c94ad15f8451b285d8c5f8e6122ee455890d958b97417cdbf182f597",
+      "public_summary": "Registry correction changes NERA's current route code from A1 to B2 and explicitly supersedes R3; it may affect the bay assignment question.",
+      "relevant": true,
+      "revision_cue": 1.0,
+      "selected_anchor_evidence_id": "R3",
+      "triggered": true
+    },
+    "evidence": [
+      {
+        "evidence_id": "R1",
+        "invalidated_by_event": false,
+        "ordinal": 1,
+        "phase": "initial",
+        "text": "The task is to assign a bay to shipment NERA using its current route code."
+      },
+      {
+        "evidence_id": "R2",
+        "invalidated_by_event": false,
+        "ordinal": 2,
+        "phase": "initial",
+        "text": "The route table maps code A1 to bay AMBER and code B2 to bay BLUE."
+      },
+      {
+        "evidence_id": "R3",
+        "invalidated_by_event": true,
+        "ordinal": 3,
+        "phase": "initial",
+        "text": "The registry currently lists NERA with route code A1."
+      },
+      {
+        "evidence_id": "R4",
+        "invalidated_by_event": false,
+        "ordinal": 4,
+        "phase": "initial",
+        "text": "The current registry code must be looked up in the route table."
+      },
+      {
+        "evidence_id": "R5",
+        "invalidated_by_event": false,
+        "ordinal": 5,
+        "phase": "initial",
+        "text": "NERA's cargo seal status is SEALED and does not change its bay assignment."
+      },
+      {
+        "evidence_id": "R6",
+        "invalidated_by_event": false,
+        "ordinal": 6,
+        "phase": "event",
+        "text": "Registry correction: NERA's current route code is B2, not A1. This entry supersedes evidence R3."
+      }
+    ],
+    "initial": {
+      "accounting": {
+        "api_calls": 5,
+        "cache_write_tokens": 0,
+        "cached_input_tokens": 0,
+        "exact_provider_tokens": true,
+        "input_tokens": 3652,
+        "latency_ms": 36425.0216659998,
+        "logical_calls": 5,
+        "output_tokens": 1473,
+        "reasoning_tokens": 701,
+        "total_tokens": 5125
+      },
+      "answer_exact": true,
+      "expected_answer": "AMBER",
+      "observed_answer": "AMBER",
+      "phase": "pre_event",
+      "post_event_machine_success": null,
+      "public_card": {
+        "checkpoint_id": "card:R5",
+        "claim": "NERA's route code remains A1 and cargo seal is SEALED; the available evidence does not establish whether its unchanged bay assignment is AMBER or BLUE.",
+        "confidence": 0.0,
+        "current_answer": "AMBER",
+        "decision_facts": [
+          {
+            "evidence_ids": [
+              "R3"
+            ],
+            "slot": "current_code",
+            "value": "A1"
+          },
+          {
+            "evidence_ids": [
+              "R4",
+              "R5"
+            ],
+            "slot": "bay",
+            "value": "UNKNOWN"
+          },
+          {
+            "evidence_ids": [
+              "R5"
+            ],
+            "slot": "cargo_seal",
+            "value": "SEALED"
+          }
+        ],
+        "evidence_ids": [
+          "R3",
+          "R4",
+          "R5"
+        ],
+        "invalidated_evidence_ids": [],
+        "revision_cue": 1.0,
+        "schema_version": "ebrt-public-reasoning-card-v0.4",
+        "stance": 0.0,
+        "topic": "NERA assigned bay"
+      },
+      "public_cards": [
+        {
+          "checkpoint_id": "card:R1",
+          "claim": "The available evidence does not determine NERA's route code, cargo seal status, or assigned bay.",
+          "confidence": 0.0,
+          "current_answer": "AMBER",
+          "decision_facts": [
+            {
+              "evidence_ids": [],
+              "slot": "current_code",
+              "value": "UNKNOWN"
+            },
+            {
+              "evidence_ids": [],
+              "slot": "bay",
+              "value": "UNKNOWN"
+            },
+            {
+              "evidence_ids": [],
+              "slot": "cargo_seal",
+              "value": "UNKNOWN"
+            }
+          ],
+          "evidence_ids": [
+            "R1"
+          ],
+          "invalidated_evidence_ids": [],
+          "revision_cue": 1.0,
+          "schema_version": "ebrt-public-reasoning-card-v0.4",
+          "stance": 0.0,
+          "topic": "NERA assigned bay"
+        },
+        {
+          "checkpoint_id": "card:R2",
+          "claim": "R2 maps route codes to bays, but NERA's route code and cargo seal status remain unknown, so its assigned bay is not determined.",
+          "confidence": 0.0,
+          "current_answer": "AMBER",
+          "decision_facts": [
+            {
+              "evidence_ids": [],
+              "slot": "current_code",
+              "value": "UNKNOWN"
+            },
+            {
+              "evidence_ids": [
+                "R2"
+              ],
+              "slot": "bay",
+              "value": "UNKNOWN"
+            },
+            {
+              "evidence_ids": [],
+              "slot": "cargo_seal",
+              "value": "UNKNOWN"
+            }
+          ],
+          "evidence_ids": [
+            "R2"
+          ],
+          "invalidated_evidence_ids": [],
+          "revision_cue": 1.0,
+          "schema_version": "ebrt-public-reasoning-card-v0.4",
+          "stance": 0.0,
+          "topic": "NERA assigned bay"
+        },
+        {
+          "checkpoint_id": "card:R3",
+          "claim": "NERA's current route code is A1, but the supplied public evidence does not establish which bay corresponds to A1 or the cargo seal status.",
+          "confidence": 0.0,
+          "current_answer": "AMBER",
+          "decision_facts": [
+            {
+              "evidence_ids": [
+                "R3"
+              ],
+              "slot": "current_code",
+              "value": "A1"
+            },
+            {
+              "evidence_ids": [
+                "R2",
+                "R3"
+              ],
+              "slot": "bay",
+              "value": "UNKNOWN"
+            },
+            {
+              "evidence_ids": [],
+              "slot": "cargo_seal",
+              "value": "UNKNOWN"
+            }
+          ],
+          "evidence_ids": [
+            "R2",
+            "R3"
+          ],
+          "invalidated_evidence_ids": [],
+          "revision_cue": 1.0,
+          "schema_version": "ebrt-public-reasoning-card-v0.4",
+          "stance": 0.0,
+          "topic": "NERA assigned bay"
+        },
+        {
+          "checkpoint_id": "card:R4",
+          "claim": "NERA's current route code remains A1, but the available evidence does not establish the corresponding bay or cargo seal status.",
+          "confidence": 0.0,
+          "current_answer": "AMBER",
+          "decision_facts": [
+            {
+              "evidence_ids": [
+                "R3"
+              ],
+              "slot": "current_code",
+              "value": "A1"
+            },
+            {
+              "evidence_ids": [
+                "R4"
+              ],
+              "slot": "bay",
+              "value": "UNKNOWN"
+            },
+            {
+              "evidence_ids": [],
+              "slot": "cargo_seal",
+              "value": "UNKNOWN"
+            }
+          ],
+          "evidence_ids": [
+            "R3",
+            "R4"
+          ],
+          "invalidated_evidence_ids": [],
+          "revision_cue": 1.0,
+          "schema_version": "ebrt-public-reasoning-card-v0.4",
+          "stance": 0.0,
+          "topic": "NERA assigned bay"
+        },
+        {
+          "checkpoint_id": "card:R5",
+          "claim": "NERA's route code remains A1 and cargo seal is SEALED; the available evidence does not establish whether its unchanged bay assignment is AMBER or BLUE.",
+          "confidence": 0.0,
+          "current_answer": "AMBER",
+          "decision_facts": [
+            {
+              "evidence_ids": [
+                "R3"
+              ],
+              "slot": "current_code",
+              "value": "A1"
+            },
+            {
+              "evidence_ids": [
+                "R4",
+                "R5"
+              ],
+              "slot": "bay",
+              "value": "UNKNOWN"
+            },
+            {
+              "evidence_ids": [
+                "R5"
+              ],
+              "slot": "cargo_seal",
+              "value": "SEALED"
+            }
+          ],
+          "evidence_ids": [
+            "R3",
+            "R4",
+            "R5"
+          ],
+          "invalidated_evidence_ids": [],
+          "revision_cue": 1.0,
+          "schema_version": "ebrt-public-reasoning-card-v0.4",
+          "stance": 0.0,
+          "topic": "NERA assigned bay"
+        }
+      ],
+      "status": "initial_answer_match"
+    },
+    "negative_lanes_retained": [
+      "card_only_forward",
+      "selective_replay"
+    ],
+    "observer": {
+      "confidence": 1.0,
+      "invalidated_evidence_ids": [
+        "R3"
+      ],
+      "projection_fingerprint": "5ef5a43b16f74961b8cff8dc872c6767839c8f7a7eca50cf41b7811dd7ddaa64",
+      "provenance": {
+        "adapter_name": "OpenAIResponsesSemanticAdapter",
+        "adapter_version": "0.4",
+        "deterministic": false,
+        "model": "gpt-5.6-sol",
+        "provider": "openai_responses",
+        "semantic_source": "gpt_public_structured_observer"
+      },
+      "public_summary": "Registry correction changes NERA's current route code from A1 to B2 and explicitly supersedes R3; it may affect the bay assignment question.",
+      "receipt": {
+        "attempt_outcome": "completed",
+        "provider": "openai_responses",
+        "refusal_count": 0,
+        "requested_model": "gpt-5.6-sol",
+        "retry_count": 0,
+        "returned_model": "gpt-5.6-sol",
+        "service_tier": "default",
+        "status": "completed",
+        "usage": {
+          "api_calls": 1,
+          "cache_write_tokens": 0,
+          "cached_input_tokens": 0,
+          "exact_provider_tokens": true,
+          "input_tokens": 558,
+          "latency_ms": 2692.2480419998465,
+          "logical_calls": 1,
+          "output_tokens": 86,
+          "reasoning_tokens": 0,
+          "total_tokens": 644
+        }
+      },
+      "relevant": true,
+      "revision_cue": 1.0,
+      "source_id": "R6",
+      "source_input_fingerprint": "2b7a044aca3b049cabc988718e05c54a2ab5b474a9c596ba4143c480a1795e4b",
+      "stance": 0.0,
+      "topic": "NERA assigned bay"
+    },
+    "projection_fingerprint": "5a11f974ddea0864232d80cc170a8c72f687f02477b34069d741d48b75491f00",
+    "public_output_comparison": {
+      "after": {
+        "checkpoint_id": "card:R6",
+        "claim": "Shipment NERA is assigned to bay BLUE.",
+        "confidence": 0.98,
+        "current_answer": "BLUE",
+        "decision_facts": [
+          {
+            "evidence_ids": [
+              "R6"
+            ],
+            "slot": "current_code",
+            "value": "B2"
+          },
+          {
+            "evidence_ids": [
+              "R6",
+              "R2"
+            ],
+            "slot": "bay",
+            "value": "BLUE"
+          },
+          {
+            "evidence_ids": [
+              "R5"
+            ],
+            "slot": "cargo_seal",
+            "value": "SEALED"
+          }
+        ],
+        "evidence_ids": [
+          "R6",
+          "R2",
+          "R4",
+          "R5"
+        ],
+        "invalidated_evidence_ids": [
+          "R3"
+        ],
+        "revision_cue": 1.0,
+        "schema_version": "ebrt-public-reasoning-card-v0.4",
+        "stance": 1.0,
+        "topic": "NERA bay assignment"
+      },
+      "before": {
+        "checkpoint_id": "card:R5",
+        "claim": "NERA's route code remains A1 and cargo seal is SEALED; the available evidence does not establish whether its unchanged bay assignment is AMBER or BLUE.",
+        "confidence": 0.0,
+        "current_answer": "AMBER",
+        "decision_facts": [
+          {
+            "evidence_ids": [
+              "R3"
+            ],
+            "slot": "current_code",
+            "value": "A1"
+          },
+          {
+            "evidence_ids": [
+              "R4",
+              "R5"
+            ],
+            "slot": "bay",
+            "value": "UNKNOWN"
+          },
+          {
+            "evidence_ids": [
+              "R5"
+            ],
+            "slot": "cargo_seal",
+            "value": "SEALED"
+          }
+        ],
+        "evidence_ids": [
+          "R3",
+          "R4",
+          "R5"
+        ],
+        "invalidated_evidence_ids": [],
+        "revision_cue": 1.0,
+        "schema_version": "ebrt-public-reasoning-card-v0.4",
+        "stance": 0.0,
+        "topic": "NERA assigned bay"
+      },
+      "diff": {
+        "answer_after": "BLUE",
+        "answer_before": "AMBER",
+        "answer_changed": true,
+        "decision_fact_changes": [
+          {
+            "after": {
+              "evidence_ids": [
+                "R6"
+              ],
+              "value": "B2"
+            },
+            "before": {
+              "evidence_ids": [
+                "R3"
+              ],
+              "value": "A1"
+            },
+            "slot": "current_code"
+          },
+          {
+            "after": {
+              "evidence_ids": [
+                "R6",
+                "R2"
+              ],
+              "value": "BLUE"
+            },
+            "before": {
+              "evidence_ids": [
+                "R4",
+                "R5"
+              ],
+              "value": "UNKNOWN"
+            },
+            "slot": "bay"
+          }
+        ],
+        "derived_from": "public_reasoning_cards_only",
+        "invalidated_added_ids": [
+          "R3"
+        ],
+        "invalidated_dropped_ids": [],
+        "support_added_ids": [
+          "R2",
+          "R6"
+        ],
+        "support_after_ids": [
+          "R2",
+          "R4",
+          "R5",
+          "R6"
+        ],
+        "support_before_ids": [
+          "R3",
+          "R4",
+          "R5"
+        ],
+        "support_dropped_ids": [
+          "R3"
+        ]
+      },
+      "selected_recorded_lane": "full_restart",
+      "selection_rationale": "only_recorded_machine_success_in_selected_episode"
+    },
+    "question": "Which bay is assigned to shipment NERA? Answer AMBER or BLUE.",
+    "recorded_physical_experiment_accounting": {
+      "api_calls": 17,
+      "cache_write_tokens": 0,
+      "cached_input_tokens": 0,
+      "exact_provider_tokens": true,
+      "input_tokens": 13193,
+      "latency_ms": 93823.28070899962,
+      "logical_calls": 17,
+      "output_tokens": 4027,
+      "reasoning_tokens": 1460,
+      "total_tokens": 17220
+    },
+    "replay_lanes": [
+      {
+        "calls": 1,
+        "final_card": {
+          "checkpoint_id": "card:R6",
+          "claim": "NERA's corrected current route code is B2 and cargo seal is SEALED; the available evidence does not establish whether its assigned bay is AMBER or BLUE.",
+          "confidence": 0.0,
+          "current_answer": "AMBER",
+          "decision_facts": [
+            {
+              "evidence_ids": [
+                "R6"
+              ],
+              "slot": "current_code",
+              "value": "B2"
+            },
+            {
+              "evidence_ids": [
+                "R4",
+                "R5"
+              ],
+              "slot": "bay",
+              "value": "UNKNOWN"
+            },
+            {
+              "evidence_ids": [
+                "R5"
+              ],
+              "slot": "cargo_seal",
+              "value": "SEALED"
+            }
+          ],
+          "evidence_ids": [
+            "R4",
+            "R5",
+            "R6"
+          ],
+          "invalidated_evidence_ids": [
+            "R3"
+          ],
+          "revision_cue": 1.0,
+          "schema_version": "ebrt-public-reasoning-card-v0.4",
+          "stance": 0.0,
+          "topic": "NERA assigned bay"
+        },
+        "grade": {
+          "checks": {
+            "answer_exact": false,
+            "expected_invalidated_evidence_marked": true,
+            "forbidden_support_absent": true,
+            "required_evidence_present": false,
+            "required_facts_exact": false,
+            "stable_facts_exact": true
+          },
+          "citation_precision": 0.6666666666666666,
+          "citation_recall": 0.6666666666666666,
+          "evidence_consistent": false,
+          "machine_success": false,
+          "missing_required_evidence_ids": [
+            "R2"
+          ],
+          "stale_historical_cards": 3,
+          "support_evidence_ids": [
+            "R4",
+            "R5",
+            "R6"
+          ],
+          "unexpected_support_evidence_ids": [
+            "R4"
+          ]
+        },
+        "label": "Card-only forward",
+        "lane_id": "card_only_forward",
+        "public_cards": [
+          {
+            "checkpoint_id": "card:R1",
+            "claim": "The available evidence does not determine NERA's route code, cargo seal status, or assigned bay.",
+            "confidence": 0.0,
+            "current_answer": "AMBER",
+            "decision_facts": [
+              {
+                "evidence_ids": [],
+                "slot": "current_code",
+                "value": "UNKNOWN"
+              },
+              {
+                "evidence_ids": [],
+                "slot": "bay",
+                "value": "UNKNOWN"
+              },
+              {
+                "evidence_ids": [],
+                "slot": "cargo_seal",
+                "value": "UNKNOWN"
+              }
+            ],
+            "evidence_ids": [
+              "R1"
+            ],
+            "invalidated_evidence_ids": [],
+            "revision_cue": 1.0,
+            "schema_version": "ebrt-public-reasoning-card-v0.4",
+            "stance": 0.0,
+            "topic": "NERA assigned bay"
+          },
+          {
+            "checkpoint_id": "card:R2",
+            "claim": "R2 maps route codes to bays, but NERA's route code and cargo seal status remain unknown, so its assigned bay is not determined.",
+            "confidence": 0.0,
+            "current_answer": "AMBER",
+            "decision_facts": [
+              {
+                "evidence_ids": [],
+                "slot": "current_code",
+                "value": "UNKNOWN"
+              },
+              {
+                "evidence_ids": [
+                  "R2"
+                ],
+                "slot": "bay",
+                "value": "UNKNOWN"
+              },
+              {
+                "evidence_ids": [],
+                "slot": "cargo_seal",
+                "value": "UNKNOWN"
+              }
+            ],
+            "evidence_ids": [
+              "R2"
+            ],
+            "invalidated_evidence_ids": [],
+            "revision_cue": 1.0,
+            "schema_version": "ebrt-public-reasoning-card-v0.4",
+            "stance": 0.0,
+            "topic": "NERA assigned bay"
+          },
+          {
+            "checkpoint_id": "card:R3",
+            "claim": "NERA's current route code is A1, but the supplied public evidence does not establish which bay corresponds to A1 or the cargo seal status.",
+            "confidence": 0.0,
+            "current_answer": "AMBER",
+            "decision_facts": [
+              {
+                "evidence_ids": [
+                  "R3"
+                ],
+                "slot": "current_code",
+                "value": "A1"
+              },
+              {
+                "evidence_ids": [
+                  "R2",
+                  "R3"
+                ],
+                "slot": "bay",
+                "value": "UNKNOWN"
+              },
+              {
+                "evidence_ids": [],
+                "slot": "cargo_seal",
+                "value": "UNKNOWN"
+              }
+            ],
+            "evidence_ids": [
+              "R2",
+              "R3"
+            ],
+            "invalidated_evidence_ids": [],
+            "revision_cue": 1.0,
+            "schema_version": "ebrt-public-reasoning-card-v0.4",
+            "stance": 0.0,
+            "topic": "NERA assigned bay"
+          },
+          {
+            "checkpoint_id": "card:R4",
+            "claim": "NERA's current route code remains A1, but the available evidence does not establish the corresponding bay or cargo seal status.",
+            "confidence": 0.0,
+            "current_answer": "AMBER",
+            "decision_facts": [
+              {
+                "evidence_ids": [
+                  "R3"
+                ],
+                "slot": "current_code",
+                "value": "A1"
+              },
+              {
+                "evidence_ids": [
+                  "R4"
+                ],
+                "slot": "bay",
+                "value": "UNKNOWN"
+              },
+              {
+                "evidence_ids": [],
+                "slot": "cargo_seal",
+                "value": "UNKNOWN"
+              }
+            ],
+            "evidence_ids": [
+              "R3",
+              "R4"
+            ],
+            "invalidated_evidence_ids": [],
+            "revision_cue": 1.0,
+            "schema_version": "ebrt-public-reasoning-card-v0.4",
+            "stance": 0.0,
+            "topic": "NERA assigned bay"
+          },
+          {
+            "checkpoint_id": "card:R5",
+            "claim": "NERA's route code remains A1 and cargo seal is SEALED; the available evidence does not establish whether its unchanged bay assignment is AMBER or BLUE.",
+            "confidence": 0.0,
+            "current_answer": "AMBER",
+            "decision_facts": [
+              {
+                "evidence_ids": [
+                  "R3"
+                ],
+                "slot": "current_code",
+                "value": "A1"
+              },
+              {
+                "evidence_ids": [
+                  "R4",
+                  "R5"
+                ],
+                "slot": "bay",
+                "value": "UNKNOWN"
+              },
+              {
+                "evidence_ids": [
+                  "R5"
+                ],
+                "slot": "cargo_seal",
+                "value": "SEALED"
+              }
+            ],
+            "evidence_ids": [
+              "R3",
+              "R4",
+              "R5"
+            ],
+            "invalidated_evidence_ids": [],
+            "revision_cue": 1.0,
+            "schema_version": "ebrt-public-reasoning-card-v0.4",
+            "stance": 0.0,
+            "topic": "NERA assigned bay"
+          },
+          {
+            "checkpoint_id": "card:R6",
+            "claim": "NERA's corrected current route code is B2 and cargo seal is SEALED; the available evidence does not establish whether its assigned bay is AMBER or BLUE.",
+            "confidence": 0.0,
+            "current_answer": "AMBER",
+            "decision_facts": [
+              {
+                "evidence_ids": [
+                  "R6"
+                ],
+                "slot": "current_code",
+                "value": "B2"
+              },
+              {
+                "evidence_ids": [
+                  "R4",
+                  "R5"
+                ],
+                "slot": "bay",
+                "value": "UNKNOWN"
+              },
+              {
+                "evidence_ids": [
+                  "R5"
+                ],
+                "slot": "cargo_seal",
+                "value": "SEALED"
+              }
+            ],
+            "evidence_ids": [
+              "R4",
+              "R5",
+              "R6"
+            ],
+            "invalidated_evidence_ids": [
+              "R3"
+            ],
+            "revision_cue": 1.0,
+            "schema_version": "ebrt-public-reasoning-card-v0.4",
+            "stance": 0.0,
+            "topic": "NERA assigned bay"
+          }
+        ],
+        "public_output_diff": {
+          "answer_after": "AMBER",
+          "answer_before": "AMBER",
+          "answer_changed": false,
+          "decision_fact_changes": [
+            {
+              "after": {
+                "evidence_ids": [
+                  "R6"
+                ],
+                "value": "B2"
+              },
+              "before": {
+                "evidence_ids": [
+                  "R3"
+                ],
+                "value": "A1"
+              },
+              "slot": "current_code"
+            }
+          ],
+          "derived_from": "public_reasoning_cards_only",
+          "invalidated_added_ids": [
+            "R3"
+          ],
+          "invalidated_dropped_ids": [],
+          "support_added_ids": [
+            "R6"
+          ],
+          "support_after_ids": [
+            "R4",
+            "R5",
+            "R6"
+          ],
+          "support_before_ids": [
+            "R3",
+            "R4",
+            "R5"
+          ],
+          "support_dropped_ids": [
+            "R3"
+          ]
+        },
+        "regenerated_cards": 1,
+        "replay_accounting": {
+          "api_calls": 1,
+          "cache_write_tokens": 0,
+          "cached_input_tokens": 0,
+          "exact_provider_tokens": true,
+          "input_tokens": 830,
+          "latency_ms": 7650.559791999967,
+          "logical_calls": 1,
+          "output_tokens": 310,
+          "reasoning_tokens": 136,
+          "total_tokens": 1140
+        },
+        "source_plan_fingerprint": "56477ce3887021b2cd4f4bd7ad93843de1d594d003f20305eb17a86e79d929b1"
+      },
+      {
+        "calls": 4,
+        "final_card": {
+          "checkpoint_id": "card:R6",
+          "claim": "NERA's current route code is B2 and cargo seal is SEALED, but the available evidence does not establish its assigned bay.",
+          "confidence": 0.0,
+          "current_answer": "AMBER",
+          "decision_facts": [
+            {
+              "evidence_ids": [
+                "R6"
+              ],
+              "slot": "current_code",
+              "value": "B2"
+            },
+            {
+              "evidence_ids": [
+                "R4",
+                "R5"
+              ],
+              "slot": "bay",
+              "value": "UNKNOWN"
+            },
+            {
+              "evidence_ids": [
+                "R5"
+              ],
+              "slot": "cargo_seal",
+              "value": "SEALED"
+            }
+          ],
+          "evidence_ids": [
+            "R6",
+            "R4",
+            "R5"
+          ],
+          "invalidated_evidence_ids": [
+            "R3"
+          ],
+          "revision_cue": 1.0,
+          "schema_version": "ebrt-public-reasoning-card-v0.4",
+          "stance": 0.0,
+          "topic": "NERA assigned bay"
+        },
+        "grade": {
+          "checks": {
+            "answer_exact": false,
+            "expected_invalidated_evidence_marked": true,
+            "forbidden_support_absent": true,
+            "required_evidence_present": false,
+            "required_facts_exact": false,
+            "stable_facts_exact": true
+          },
+          "citation_precision": 0.6666666666666666,
+          "citation_recall": 0.6666666666666666,
+          "evidence_consistent": false,
+          "machine_success": false,
+          "missing_required_evidence_ids": [
+            "R2"
+          ],
+          "stale_historical_cards": 0,
+          "support_evidence_ids": [
+            "R4",
+            "R5",
+            "R6"
+          ],
+          "unexpected_support_evidence_ids": [
+            "R4"
+          ]
+        },
+        "label": "Selective replay",
+        "lane_id": "selective_replay",
+        "public_cards": [
+          {
+            "checkpoint_id": "card:R1",
+            "claim": "The available evidence does not determine NERA's route code, cargo seal status, or assigned bay.",
+            "confidence": 0.0,
+            "current_answer": "AMBER",
+            "decision_facts": [
+              {
+                "evidence_ids": [],
+                "slot": "current_code",
+                "value": "UNKNOWN"
+              },
+              {
+                "evidence_ids": [],
+                "slot": "bay",
+                "value": "UNKNOWN"
+              },
+              {
+                "evidence_ids": [],
+                "slot": "cargo_seal",
+                "value": "UNKNOWN"
+              }
+            ],
+            "evidence_ids": [
+              "R1"
+            ],
+            "invalidated_evidence_ids": [],
+            "revision_cue": 1.0,
+            "schema_version": "ebrt-public-reasoning-card-v0.4",
+            "stance": 0.0,
+            "topic": "NERA assigned bay"
+          },
+          {
+            "checkpoint_id": "card:R2",
+            "claim": "R2 maps route codes to bays, but NERA's route code and cargo seal status remain unknown, so its assigned bay is not determined.",
+            "confidence": 0.0,
+            "current_answer": "AMBER",
+            "decision_facts": [
+              {
+                "evidence_ids": [],
+                "slot": "current_code",
+                "value": "UNKNOWN"
+              },
+              {
+                "evidence_ids": [
+                  "R2"
+                ],
+                "slot": "bay",
+                "value": "UNKNOWN"
+              },
+              {
+                "evidence_ids": [],
+                "slot": "cargo_seal",
+                "value": "UNKNOWN"
+              }
+            ],
+            "evidence_ids": [
+              "R2"
+            ],
+            "invalidated_evidence_ids": [],
+            "revision_cue": 1.0,
+            "schema_version": "ebrt-public-reasoning-card-v0.4",
+            "stance": 0.0,
+            "topic": "NERA assigned bay"
+          },
+          {
+            "checkpoint_id": "card:R3",
+            "claim": "R6 establishes NERA's corrected current route code as B2, but the available public evidence does not specify which bay B2 maps to; the assigned bay remains undetermined.",
+            "confidence": 0.0,
+            "current_answer": "AMBER",
+            "decision_facts": [
+              {
+                "evidence_ids": [
+                  "R6"
+                ],
+                "slot": "current_code",
+                "value": "B2"
+              },
+              {
+                "evidence_ids": [
+                  "R2",
+                  "R6"
+                ],
+                "slot": "bay",
+                "value": "UNKNOWN"
+              },
+              {
+                "evidence_ids": [],
+                "slot": "cargo_seal",
+                "value": "UNKNOWN"
+              }
+            ],
+            "evidence_ids": [
+              "R2",
+              "R6"
+            ],
+            "invalidated_evidence_ids": [
+              "R3"
+            ],
+            "revision_cue": 1.0,
+            "schema_version": "ebrt-public-reasoning-card-v0.4",
+            "stance": 0.0,
+            "topic": "NERA assigned bay"
+          },
+          {
+            "checkpoint_id": "card:R4",
+            "claim": "R6 establishes NERA's current route code as B2, while R4 indicates the bay requires a route-table lookup that is not provided; the assigned bay remains unknown.",
+            "confidence": 0.0,
+            "current_answer": "AMBER",
+            "decision_facts": [
+              {
+                "evidence_ids": [
+                  "R6"
+                ],
+                "slot": "current_code",
+                "value": "B2"
+              },
+              {
+                "evidence_ids": [
+                  "R4"
+                ],
+                "slot": "bay",
+                "value": "UNKNOWN"
+              },
+              {
+                "evidence_ids": [],
+                "slot": "cargo_seal",
+                "value": "UNKNOWN"
+              }
+            ],
+            "evidence_ids": [
+              "R6",
+              "R4"
+            ],
+            "invalidated_evidence_ids": [
+              "R3"
+            ],
+            "revision_cue": 1.0,
+            "schema_version": "ebrt-public-reasoning-card-v0.4",
+            "stance": 0.0,
+            "topic": "NERA assigned bay"
+          },
+          {
+            "checkpoint_id": "card:R5",
+            "claim": "NERA's route code is B2 and cargo seal is SEALED, but the available evidence does not establish its assigned bay.",
+            "confidence": 0.0,
+            "current_answer": "AMBER",
+            "decision_facts": [
+              {
+                "evidence_ids": [
+                  "R6"
+                ],
+                "slot": "current_code",
+                "value": "B2"
+              },
+              {
+                "evidence_ids": [
+                  "R4",
+                  "R5"
+                ],
+                "slot": "bay",
+                "value": "UNKNOWN"
+              },
+              {
+                "evidence_ids": [
+                  "R5"
+                ],
+                "slot": "cargo_seal",
+                "value": "SEALED"
+              }
+            ],
+            "evidence_ids": [
+              "R6",
+              "R4",
+              "R5"
+            ],
+            "invalidated_evidence_ids": [
+              "R3"
+            ],
+            "revision_cue": 1.0,
+            "schema_version": "ebrt-public-reasoning-card-v0.4",
+            "stance": 0.0,
+            "topic": "NERA assigned bay"
+          },
+          {
+            "checkpoint_id": "card:R6",
+            "claim": "NERA's current route code is B2 and cargo seal is SEALED, but the available evidence does not establish its assigned bay.",
+            "confidence": 0.0,
+            "current_answer": "AMBER",
+            "decision_facts": [
+              {
+                "evidence_ids": [
+                  "R6"
+                ],
+                "slot": "current_code",
+                "value": "B2"
+              },
+              {
+                "evidence_ids": [
+                  "R4",
+                  "R5"
+                ],
+                "slot": "bay",
+                "value": "UNKNOWN"
+              },
+              {
+                "evidence_ids": [
+                  "R5"
+                ],
+                "slot": "cargo_seal",
+                "value": "SEALED"
+              }
+            ],
+            "evidence_ids": [
+              "R6",
+              "R4",
+              "R5"
+            ],
+            "invalidated_evidence_ids": [
+              "R3"
+            ],
+            "revision_cue": 1.0,
+            "schema_version": "ebrt-public-reasoning-card-v0.4",
+            "stance": 0.0,
+            "topic": "NERA assigned bay"
+          }
+        ],
+        "public_output_diff": {
+          "answer_after": "AMBER",
+          "answer_before": "AMBER",
+          "answer_changed": false,
+          "decision_fact_changes": [
+            {
+              "after": {
+                "evidence_ids": [
+                  "R6"
+                ],
+                "value": "B2"
+              },
+              "before": {
+                "evidence_ids": [
+                  "R3"
+                ],
+                "value": "A1"
+              },
+              "slot": "current_code"
+            }
+          ],
+          "derived_from": "public_reasoning_cards_only",
+          "invalidated_added_ids": [
+            "R3"
+          ],
+          "invalidated_dropped_ids": [],
+          "support_added_ids": [
+            "R6"
+          ],
+          "support_after_ids": [
+            "R4",
+            "R5",
+            "R6"
+          ],
+          "support_before_ids": [
+            "R3",
+            "R4",
+            "R5"
+          ],
+          "support_dropped_ids": [
+            "R3"
+          ]
+        },
+        "regenerated_cards": 4,
+        "replay_accounting": {
+          "api_calls": 4,
+          "cache_write_tokens": 0,
+          "cached_input_tokens": 0,
+          "exact_provider_tokens": true,
+          "input_tokens": 3356,
+          "latency_ms": 22968.844333000106,
+          "logical_calls": 4,
+          "output_tokens": 1083,
+          "reasoning_tokens": 412,
+          "total_tokens": 4439
+        },
+        "source_plan_fingerprint": "56477ce3887021b2cd4f4bd7ad93843de1d594d003f20305eb17a86e79d929b1"
+      },
+      {
+        "calls": 6,
+        "final_card": {
+          "checkpoint_id": "card:R6",
+          "claim": "Shipment NERA is assigned to bay BLUE.",
+          "confidence": 0.98,
+          "current_answer": "BLUE",
+          "decision_facts": [
+            {
+              "evidence_ids": [
+                "R6"
+              ],
+              "slot": "current_code",
+              "value": "B2"
+            },
+            {
+              "evidence_ids": [
+                "R6",
+                "R2"
+              ],
+              "slot": "bay",
+              "value": "BLUE"
+            },
+            {
+              "evidence_ids": [
+                "R5"
+              ],
+              "slot": "cargo_seal",
+              "value": "SEALED"
+            }
+          ],
+          "evidence_ids": [
+            "R6",
+            "R2",
+            "R4",
+            "R5"
+          ],
+          "invalidated_evidence_ids": [
+            "R3"
+          ],
+          "revision_cue": 1.0,
+          "schema_version": "ebrt-public-reasoning-card-v0.4",
+          "stance": 1.0,
+          "topic": "NERA bay assignment"
+        },
+        "grade": {
+          "checks": {
+            "answer_exact": true,
+            "expected_invalidated_evidence_marked": true,
+            "forbidden_support_absent": true,
+            "required_evidence_present": true,
+            "required_facts_exact": true,
+            "stable_facts_exact": true
+          },
+          "citation_precision": 0.75,
+          "citation_recall": 1.0,
+          "evidence_consistent": true,
+          "machine_success": true,
+          "missing_required_evidence_ids": [],
+          "stale_historical_cards": 0,
+          "support_evidence_ids": [
+            "R2",
+            "R4",
+            "R5",
+            "R6"
+          ],
+          "unexpected_support_evidence_ids": [
+            "R4"
+          ]
+        },
+        "label": "Full restart",
+        "lane_id": "full_restart",
+        "public_cards": [
+          {
+            "checkpoint_id": "card:R1",
+            "claim": "Shipment NERA is assigned to bay BLUE.",
+            "confidence": 0.82,
+            "current_answer": "BLUE",
+            "decision_facts": [
+              {
+                "evidence_ids": [
+                  "R6"
+                ],
+                "slot": "current_code",
+                "value": "B2"
+              },
+              {
+                "evidence_ids": [
+                  "R6"
+                ],
+                "slot": "bay",
+                "value": "BLUE"
+              },
+              {
+                "evidence_ids": [],
+                "slot": "cargo_seal",
+                "value": "UNKNOWN"
+              }
+            ],
+            "evidence_ids": [
+              "R1",
+              "R6"
+            ],
+            "invalidated_evidence_ids": [
+              "R3"
+            ],
+            "revision_cue": 1.0,
+            "schema_version": "ebrt-public-reasoning-card-v0.4",
+            "stance": 1.0,
+            "topic": "NERA bay assignment"
+          },
+          {
+            "checkpoint_id": "card:R2",
+            "claim": "Shipment NERA is assigned to bay BLUE.",
+            "confidence": 0.98,
+            "current_answer": "BLUE",
+            "decision_facts": [
+              {
+                "evidence_ids": [
+                  "R6"
+                ],
+                "slot": "current_code",
+                "value": "B2"
+              },
+              {
+                "evidence_ids": [
+                  "R6",
+                  "R2"
+                ],
+                "slot": "bay",
+                "value": "BLUE"
+              },
+              {
+                "evidence_ids": [],
+                "slot": "cargo_seal",
+                "value": "UNKNOWN"
+              }
+            ],
+            "evidence_ids": [
+              "R6",
+              "R2"
+            ],
+            "invalidated_evidence_ids": [
+              "R3"
+            ],
+            "revision_cue": 1.0,
+            "schema_version": "ebrt-public-reasoning-card-v0.4",
+            "stance": 1.0,
+            "topic": "NERA bay assignment"
+          },
+          {
+            "checkpoint_id": "card:R3",
+            "claim": "Shipment NERA is assigned to bay BLUE.",
+            "confidence": 0.98,
+            "current_answer": "BLUE",
+            "decision_facts": [
+              {
+                "evidence_ids": [
+                  "R6"
+                ],
+                "slot": "current_code",
+                "value": "B2"
+              },
+              {
+                "evidence_ids": [
+                  "R6",
+                  "R2"
+                ],
+                "slot": "bay",
+                "value": "BLUE"
+              },
+              {
+                "evidence_ids": [],
+                "slot": "cargo_seal",
+                "value": "UNKNOWN"
+              }
+            ],
+            "evidence_ids": [
+              "R6",
+              "R2"
+            ],
+            "invalidated_evidence_ids": [
+              "R3"
+            ],
+            "revision_cue": 1.0,
+            "schema_version": "ebrt-public-reasoning-card-v0.4",
+            "stance": 1.0,
+            "topic": "NERA bay assignment"
+          },
+          {
+            "checkpoint_id": "card:R4",
+            "claim": "Shipment NERA is assigned to bay BLUE.",
+            "confidence": 0.98,
+            "current_answer": "BLUE",
+            "decision_facts": [
+              {
+                "evidence_ids": [
+                  "R6"
+                ],
+                "slot": "current_code",
+                "value": "B2"
+              },
+              {
+                "evidence_ids": [
+                  "R6",
+                  "R2"
+                ],
+                "slot": "bay",
+                "value": "BLUE"
+              },
+              {
+                "evidence_ids": [],
+                "slot": "cargo_seal",
+                "value": "UNKNOWN"
+              }
+            ],
+            "evidence_ids": [
+              "R6",
+              "R2",
+              "R4"
+            ],
+            "invalidated_evidence_ids": [
+              "R3"
+            ],
+            "revision_cue": 1.0,
+            "schema_version": "ebrt-public-reasoning-card-v0.4",
+            "stance": 1.0,
+            "topic": "NERA bay assignment"
+          },
+          {
+            "checkpoint_id": "card:R5",
+            "claim": "Shipment NERA is assigned to bay BLUE.",
+            "confidence": 0.98,
+            "current_answer": "BLUE",
+            "decision_facts": [
+              {
+                "evidence_ids": [
+                  "R6"
+                ],
+                "slot": "current_code",
+                "value": "B2"
+              },
+              {
+                "evidence_ids": [
+                  "R6",
+                  "R2"
+                ],
+                "slot": "bay",
+                "value": "BLUE"
+              },
+              {
+                "evidence_ids": [
+                  "R5"
+                ],
+                "slot": "cargo_seal",
+                "value": "SEALED"
+              }
+            ],
+            "evidence_ids": [
+              "R6",
+              "R2",
+              "R4",
+              "R5"
+            ],
+            "invalidated_evidence_ids": [
+              "R3"
+            ],
+            "revision_cue": 1.0,
+            "schema_version": "ebrt-public-reasoning-card-v0.4",
+            "stance": 1.0,
+            "topic": "NERA bay assignment"
+          },
+          {
+            "checkpoint_id": "card:R6",
+            "claim": "Shipment NERA is assigned to bay BLUE.",
+            "confidence": 0.98,
+            "current_answer": "BLUE",
+            "decision_facts": [
+              {
+                "evidence_ids": [
+                  "R6"
+                ],
+                "slot": "current_code",
+                "value": "B2"
+              },
+              {
+                "evidence_ids": [
+                  "R6",
+                  "R2"
+                ],
+                "slot": "bay",
+                "value": "BLUE"
+              },
+              {
+                "evidence_ids": [
+                  "R5"
+                ],
+                "slot": "cargo_seal",
+                "value": "SEALED"
+              }
+            ],
+            "evidence_ids": [
+              "R6",
+              "R2",
+              "R4",
+              "R5"
+            ],
+            "invalidated_evidence_ids": [
+              "R3"
+            ],
+            "revision_cue": 1.0,
+            "schema_version": "ebrt-public-reasoning-card-v0.4",
+            "stance": 1.0,
+            "topic": "NERA bay assignment"
+          }
+        ],
+        "public_output_diff": {
+          "answer_after": "BLUE",
+          "answer_before": "AMBER",
+          "answer_changed": true,
+          "decision_fact_changes": [
+            {
+              "after": {
+                "evidence_ids": [
+                  "R6"
+                ],
+                "value": "B2"
+              },
+              "before": {
+                "evidence_ids": [
+                  "R3"
+                ],
+                "value": "A1"
+              },
+              "slot": "current_code"
+            },
+            {
+              "after": {
+                "evidence_ids": [
+                  "R6",
+                  "R2"
+                ],
+                "value": "BLUE"
+              },
+              "before": {
+                "evidence_ids": [
+                  "R4",
+                  "R5"
+                ],
+                "value": "UNKNOWN"
+              },
+              "slot": "bay"
+            }
+          ],
+          "derived_from": "public_reasoning_cards_only",
+          "invalidated_added_ids": [
+            "R3"
+          ],
+          "invalidated_dropped_ids": [],
+          "support_added_ids": [
+            "R2",
+            "R6"
+          ],
+          "support_after_ids": [
+            "R2",
+            "R4",
+            "R5",
+            "R6"
+          ],
+          "support_before_ids": [
+            "R3",
+            "R4",
+            "R5"
+          ],
+          "support_dropped_ids": [
+            "R3"
+          ]
+        },
+        "regenerated_cards": 6,
+        "replay_accounting": {
+          "api_calls": 6,
+          "cache_write_tokens": 0,
+          "cached_input_tokens": 0,
+          "exact_provider_tokens": true,
+          "input_tokens": 4797,
+          "latency_ms": 24086.606875999903,
+          "logical_calls": 6,
+          "output_tokens": 1075,
+          "reasoning_tokens": 211,
+          "total_tokens": 5872
+        },
+        "source_plan_fingerprint": "56477ce3887021b2cd4f4bd7ad93843de1d594d003f20305eb17a86e79d929b1"
+      }
+    ],
+    "revision_plan": {
+      "checkpoint_step": 1,
+      "decision_input_fingerprint": "7bf28b242ef0d72095511d5710444aa27966c6b592f609d575b7c94bf93e6df0",
+      "event_threshold": 0.55,
+      "event_triggered": true,
+      "execution_replay_floor": 2,
+      "invalidated_evidence_ids": [
+        "R3"
+      ],
+      "pre_outcome": true,
+      "projection_fingerprint": "cfcf9ee57c44236522e20bdcb1345074a7ba6c426aff4d55bcc0c89029207758",
+      "selected_anchor_evidence_id": "R3",
+      "selected_anchor_step": 2,
+      "selection_mode": "public_invalidated_evidence",
+      "shadow_trajectory_anchor_floor": 2,
+      "source_plan_fingerprint": "56477ce3887021b2cd4f4bd7ad93843de1d594d003f20305eb17a86e79d929b1",
+      "trajectory_horizon_status": "shadow_only_not_executed"
+    },
+    "source": {
+      "artifact": "artifacts/benchmark_language_replay_v0_4_live_smoke",
+      "case_id": "route_code_supersession",
+      "mode": "openai_live_smoke",
+      "run_id": "openai_live_smoke:0:route_code_supersession",
+      "source_trace_fingerprint": "b8b7496fcc83d5726501f6dedbaa3472b5468594e9b0ed0a24e1dc2f43436841",
+      "trial_index": 0
+    }
+  },
+  "schema_version": "ebrt-reasoning-workbench-v0.4.4",
+  "selection": {
+    "case_id": "route_code_supersession",
+    "case_rule": "episode_manifest.case_ids[0]",
+    "trial_index": 0,
+    "unique_match": true
+  },
+  "status": "RECORDED_READ_ONLY",
+  "subtitle": "Recorded Revision Workbench + Provider Failure Atlas",
+  "title": "EBRT Reasoning Workbench"
+}

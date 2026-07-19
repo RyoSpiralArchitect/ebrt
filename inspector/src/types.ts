@@ -240,3 +240,223 @@ export type InspectorSnapshot = {
   };
   runs: InspectorRun[];
 };
+
+export type WorkbenchAccounting = {
+  logical_calls: number;
+  api_calls: number;
+  latency_ms: number;
+  input_tokens: number;
+  output_tokens: number;
+  reasoning_tokens: number;
+  total_tokens: number;
+  cached_input_tokens?: number;
+  cache_write_tokens?: number;
+  exact_provider_tokens: boolean;
+};
+
+export type WorkbenchEvidence = {
+  evidence_id: string;
+  ordinal: number;
+  phase: "initial" | "event" | string;
+  text: string;
+  invalidated_by_event: boolean;
+};
+
+export type WorkbenchInitial = {
+  phase: "pre_event" | string;
+  status: string;
+  expected_answer: string;
+  observed_answer: string;
+  answer_exact: boolean;
+  post_event_machine_success: null;
+  public_card: PublicCard;
+  public_cards: PublicCard[];
+  accounting: WorkbenchAccounting;
+};
+
+export type WorkbenchLaneGrade = {
+  machine_success: boolean;
+  evidence_consistent: boolean;
+  checks: Record<string, boolean>;
+  citation_precision: number;
+  citation_recall: number;
+  missing_required_evidence_ids: string[];
+  support_evidence_ids: string[];
+  unexpected_support_evidence_ids: string[];
+  stale_historical_cards: number;
+};
+
+export type WorkbenchPublicDiff = {
+  answer_before: string;
+  answer_after: string;
+  answer_changed: boolean;
+  support_before_ids: string[];
+  support_after_ids: string[];
+  support_added_ids: string[];
+  support_dropped_ids: string[];
+  invalidated_added_ids: string[];
+  invalidated_dropped_ids: string[];
+  decision_fact_changes: DecisionFactChange[];
+  derived_from: string;
+};
+
+export type WorkbenchLane = {
+  lane_id: "card_only_forward" | "selective_replay" | "full_restart" | string;
+  label: string;
+  source_plan_fingerprint: string;
+  calls: number;
+  regenerated_cards: number;
+  replay_accounting: WorkbenchAccounting;
+  public_cards: PublicCard[];
+  final_card: PublicCard;
+  grade: WorkbenchLaneGrade;
+  public_output_diff: WorkbenchPublicDiff;
+};
+
+export type WorkbenchObserver = {
+  source_id: string;
+  relevant: boolean;
+  public_summary: string;
+  invalidated_evidence_ids: string[];
+  topic?: string;
+  confidence?: number;
+  revision_cue?: number;
+  provenance: {
+    adapter_name: string;
+    adapter_version: string;
+    deterministic: boolean;
+    model: string;
+    provider: string;
+    semantic_source: string;
+  };
+  receipt: {
+    status: string;
+    attempt_outcome: string;
+    requested_model: string;
+    returned_model: string;
+    service_tier: string;
+    retry_count: number;
+    refusal_count: number;
+    provider: string;
+    usage: WorkbenchAccounting;
+  };
+  [key: string]: unknown;
+};
+
+export type WorkbenchEvent = {
+  event_evidence_id: string;
+  relevant: boolean;
+  invalidated_evidence_ids: string[];
+  public_summary: string;
+  triggered: boolean;
+  selected_anchor_evidence_id: string;
+  [key: string]: unknown;
+};
+
+export type WorkbenchRevisionPlan = {
+  pre_outcome: boolean;
+  event_triggered: boolean;
+  selected_anchor_evidence_id: string;
+  selected_anchor_step: number;
+  checkpoint_step: number;
+  execution_replay_floor: number;
+  selection_mode: string;
+  invalidated_evidence_ids: string[];
+  source_plan_fingerprint: string;
+  trajectory_horizon_status: string;
+  [key: string]: unknown;
+};
+
+export type ProviderPipelineStage = {
+  stage_id: string;
+  label: string;
+  count: number;
+  detail?: string;
+  status?: string;
+  status_code?: number;
+};
+
+export type ProviderFailureAtlas = {
+  artifact: string;
+  status: string;
+  primary_execution_classification: string;
+  pipeline: ProviderPipelineStage[];
+  classified_failure: {
+    phase: string;
+    allowlisted_reason_code: string;
+    phase_count: number;
+    count: number;
+    unclassified_count: number;
+    [key: string]: unknown;
+  };
+  native_diagnostic_coverage: {
+    v0_4_3_contract_smoke: { numerator: number; denominator: number; fraction: string };
+    r01_frozen_native: { numerator: number; denominator: number; fraction: string };
+    cross_block_effect_estimate: null;
+    [key: string]: unknown;
+  };
+  gates: Record<string, boolean>;
+  claim_boundary: string;
+};
+
+export type ApertureArmContext = {
+  label?: string;
+  machine_successes?: number;
+  assessed_endpoints?: number;
+  completed_endpoints?: number;
+  fraction?: string;
+  reasoning_tokens?: number;
+  [key: string]: unknown;
+};
+
+export type WorkbenchSnapshot = {
+  schema_version: string;
+  status: string;
+  generation: {
+    builder_sha256: string;
+    deterministic: boolean;
+    network_calls: number;
+    projection_lock_sha256: string;
+    projection_mode: string;
+    source_sha256: Record<string, string>;
+    timestamp_recorded: boolean;
+  };
+  selection: {
+    case_id: string;
+    case_rule: string;
+    trial_index: number;
+    unique_match: boolean;
+  };
+  field_semantics: Record<string, string>;
+  recorded_episode: {
+    source: Record<string, unknown>;
+    question: string;
+    answer_choices: string[];
+    decision_slots: DecisionSlot[];
+    evidence: WorkbenchEvidence[];
+    initial: WorkbenchInitial;
+    observer: WorkbenchObserver;
+    event: WorkbenchEvent;
+    revision_plan: WorkbenchRevisionPlan;
+    replay_lanes: WorkbenchLane[];
+    public_output_comparison: {
+      before: PublicCard;
+      after: PublicCard;
+      diff: WorkbenchPublicDiff;
+      selected_recorded_lane: string;
+      selection_rationale: string;
+    };
+    recorded_physical_experiment_accounting: WorkbenchAccounting;
+    negative_lanes_retained: string[];
+    projection_fingerprint: string;
+  };
+  aperture_context: {
+    relationship_to_recorded_episode: string;
+    v0_4_1: Record<string, unknown>;
+    v0_4_2_unchanged_replication_r01: Record<string, unknown>;
+    claim_boundary: string;
+  };
+  provider_failure_atlas: ProviderFailureAtlas;
+  gates: Record<string, boolean>;
+  claim_boundary: string[];
+};
