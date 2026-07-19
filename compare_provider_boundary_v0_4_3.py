@@ -11,7 +11,9 @@ import argparse
 import hashlib
 import json
 import re
+import shutil
 import subprocess
+import tempfile
 from collections import Counter
 from collections.abc import Mapping, Sequence
 from pathlib import Path
@@ -183,15 +185,24 @@ def _validate_bundle(
     *, canonical: Path, working: Path, manifest_sha256: str
 ) -> dict[str, Any]:
     _require(canonical.is_dir(), f"missing canonical bundle: {canonical}")
-    _require(working.is_dir(), f"missing working bundle: {working}")
     canonical_names = tuple(sorted(path.name for path in canonical.iterdir() if path.is_file()))
-    working_names = tuple(sorted(path.name for path in working.iterdir() if path.is_file()))
     _require(canonical_names == tuple(sorted(ARTIFACT_NAMES)), "canonical bundle file set drifted")
-    _require(working_names == canonical_names, "working bundle file set drifted")
-    byte_identity: dict[str, bool] = {}
-    for name in ARTIFACT_NAMES:
-        byte_identity[name] = (canonical / name).read_bytes() == (working / name).read_bytes()
-    _require(all(byte_identity.values()), f"working/canonical mismatch: {canonical.name}")
+    working_present = working.exists()
+    byte_identity: dict[str, bool] | None = None
+    if working_present:
+        _require(working.is_dir(), f"working bundle is not a directory: {working}")
+        working_names = tuple(
+            sorted(path.name for path in working.iterdir() if path.is_file())
+        )
+        _require(working_names == canonical_names, "working bundle file set drifted")
+        byte_identity = {
+            name: (canonical / name).read_bytes() == (working / name).read_bytes()
+            for name in ARTIFACT_NAMES
+        }
+        _require(
+            all(byte_identity.values()),
+            f"working/canonical mismatch: {canonical.name}",
+        )
 
     manifest_path = canonical / "manifest.json"
     _require(_sha256(manifest_path) == manifest_sha256, f"manifest pin drifted: {manifest_path}")
@@ -238,6 +249,8 @@ def _validate_bundle(
         "manifest": manifest,
         "manifest_sha256": manifest_sha256,
         "results": results,
+        "working_bundle_present": working_present,
+        "working_identity_checked": working_present,
     }
 
 
@@ -449,6 +462,7 @@ def build_comparison() -> dict[str, Any]:
 
     checks = {
         "artifact_hash_maps_valid": True,
+        "canonical_bundles_required": True,
         "deterministic_schedule_valid": True,
         "full_v0_4_3_block_absent": True,
         "pinned_hashes_valid": True,
@@ -457,7 +471,8 @@ def build_comparison() -> dict[str, Any]:
         "r01_native_rows_not_reclassified": True,
         "receipt_cardinality_valid": True,
         "v0_4_3_phase_reason_allowlist_valid": True,
-        "working_canonical_byte_identity_valid": True,
+        "working_bundles_optional_for_clean_checkout": True,
+        "working_canonical_byte_identity_valid_when_available": True,
         "zero_retry_valid": True,
     }
     return {
@@ -537,6 +552,10 @@ def build_comparison() -> dict[str, Any]:
                 "v0_4_3_contract_smoke": v043["artifact_sha256"],
             },
             "pinned_sha256": pins,
+            "bundle_path_policy": {
+                "canonical_bundles": "required_and_fully_validated",
+                "working_bundles": "optional_but_byte_identical_when_present",
+            },
             "source_pin_scope": {
                 "v0_4_3_runner": "preregistration_commit_blob",
                 "other_v0_4_3_boot_sources": "working_tree_and_preregistration_commit_blob",
@@ -647,6 +666,114 @@ def _validate_existing() -> dict[str, Any]:
     return actual
 
 
+def _self_test_optional_working_bundle(
+    expected_comparison: Mapping[str, Any],
+) -> dict[str, bool]:
+    """Simulate clean checkout and reject canonical/optional-working tamper."""
+
+    with tempfile.TemporaryDirectory() as temp_dir:
+        root = Path(temp_dir)
+        working_path_names = (
+            "R01_SMOKE_WORKING",
+            "R01_FULL_WORKING",
+            "V043_SMOKE_WORKING",
+            "V043_FULL_WORKING",
+        )
+        original_working_paths = {
+            name: globals()[name] for name in working_path_names
+        }
+        try:
+            for name in working_path_names:
+                globals()[name] = root / "clean-checkout-absent" / name
+            clean_checkout_comparison = build_comparison()
+        finally:
+            globals().update(original_working_paths)
+        _require(
+            clean_checkout_comparison == expected_comparison,
+            "clean-checkout comparison differs without ignored working bundles",
+        )
+
+        canonical = root / "canonical"
+        absent_working = root / "absent-working"
+        shutil.copytree(V043_SMOKE_CANONICAL, canonical)
+
+        canonical_only = _validate_bundle(
+            canonical=canonical,
+            working=absent_working,
+            manifest_sha256=PINS["v043_smoke_manifest"],
+        )
+        _require(
+            canonical_only["working_bundle_present"] is False
+            and canonical_only["working_identity_checked"] is False
+            and canonical_only["byte_identical_files"] is None,
+            "absent optional working bundle was not treated as clean checkout",
+        )
+
+        working = root / "working"
+        shutil.copytree(canonical, working)
+        paired = _validate_bundle(
+            canonical=canonical,
+            working=working,
+            manifest_sha256=PINS["v043_smoke_manifest"],
+        )
+        _require(
+            paired["working_bundle_present"] is True
+            and paired["working_identity_checked"] is True
+            and all(paired["byte_identical_files"].values()),
+            "available working bundle did not receive a strict identity audit",
+        )
+
+        (working / "benchmark_report.md").write_text(
+            "working tamper\n", encoding="utf-8"
+        )
+        try:
+            _validate_bundle(
+                canonical=canonical,
+                working=working,
+                manifest_sha256=PINS["v043_smoke_manifest"],
+            )
+        except RuntimeError:
+            pass
+        else:
+            raise AssertionError("available working-bundle tamper passed validation")
+
+        shutil.rmtree(working)
+        working.write_text("not a directory\n", encoding="utf-8")
+        try:
+            _validate_bundle(
+                canonical=canonical,
+                working=working,
+                manifest_sha256=PINS["v043_smoke_manifest"],
+            )
+        except RuntimeError:
+            pass
+        else:
+            raise AssertionError("malformed available working path was ignored")
+        working.unlink()
+
+        (canonical / "benchmark_report.md").write_text(
+            "canonical tamper\n", encoding="utf-8"
+        )
+        try:
+            _validate_bundle(
+                canonical=canonical,
+                working=absent_working,
+                manifest_sha256=PINS["v043_smoke_manifest"],
+            )
+        except RuntimeError:
+            pass
+        else:
+            raise AssertionError("canonical tamper passed clean-checkout validation")
+    return {
+        "available_working_identity_checked": True,
+        "available_working_tamper_rejected": True,
+        "canonical_only_clean_checkout_passed": True,
+        "clean_checkout_comparison_is_deterministic": True,
+        "canonical_tamper_rejected_without_working_bundle": True,
+        "malformed_available_working_path_rejected": True,
+    }
+
+
 def _self_test() -> dict[str, Any]:
     first = build_comparison()
     second = build_comparison()
@@ -680,12 +807,14 @@ def _self_test() -> dict[str, Any]:
         and first["decision"]["diagnostic_integrity_ready"] is True,
         "bounded decision fields drifted",
     )
+    optional_working = _self_test_optional_working_bundle(first)
     if OUTPUT.exists():
         _validate_existing()
     return {
         "status": "PASS",
         "network_calls": 0,
         "primary_metric": first["primary_metric"],
+        "optional_working_bundle": optional_working,
         "verification_checks": len(first["verification"]["checks"]),
     }
 

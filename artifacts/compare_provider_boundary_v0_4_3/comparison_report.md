@@ -38,6 +38,7 @@ The v0.4.3 boundary classified all eight non-assessable smoke endpoints with dia
 ## Verification
 
 - `artifact_hash_maps_valid`: `true`
+- `canonical_bundles_required`: `true`
 - `deterministic_schedule_valid`: `true`
 - `full_v0_4_3_block_absent`: `true`
 - `pinned_hashes_valid`: `true`
@@ -46,7 +47,8 @@ The v0.4.3 boundary classified all eight non-assessable smoke endpoints with dia
 - `r01_native_rows_not_reclassified`: `true`
 - `receipt_cardinality_valid`: `true`
 - `v0_4_3_phase_reason_allowlist_valid`: `true`
-- `working_canonical_byte_identity_valid`: `true`
+- `working_bundles_optional_for_clean_checkout`: `true`
+- `working_canonical_byte_identity_valid_when_available`: `true`
 - `zero_retry_valid`: `true`
 
 ## Interpretation

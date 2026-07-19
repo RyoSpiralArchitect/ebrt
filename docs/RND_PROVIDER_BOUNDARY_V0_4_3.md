@@ -74,6 +74,16 @@ comparison verifier resolves the v0.4.3 runner from the smoke manifest's
 preregistration commit, so post-freeze working-source maintenance cannot alter
 which runner bytes are attributed to the live evidence.
 
+The offline comparison verifier was also made clean-checkout reproducible.
+Committed canonical bundles under `artifacts/` are the required evidence and
+receive the full manifest, artifact-hash, trace/call, receipt, schedule, and
+privacy audits. Ignored `benchmark_results/` working bundles are optional; when
+one is present, every expected file must still be byte-identical to its
+canonical counterpart. Offline tests exercise canonical-only validation plus
+canonical tamper, working-copy tamper, and malformed working-path rejection.
+This verifier maintenance made no live or network call and changes no frozen
+input bundle.
+
 ## Why v0.4.3 exists
 
 The unchanged v0.4.2 replication r01 passed its fixed two-case contract smoke,

@@ -91,8 +91,13 @@
   "status": "COMPLETE_DIAGNOSTIC_NON_CAUSAL",
   "verification": {
     "all_passed": true,
+    "bundle_path_policy": {
+      "canonical_bundles": "required_and_fully_validated",
+      "working_bundles": "optional_but_byte_identical_when_present"
+    },
     "checks": {
       "artifact_hash_maps_valid": true,
+      "canonical_bundles_required": true,
       "deterministic_schedule_valid": true,
       "full_v0_4_3_block_absent": true,
       "pinned_hashes_valid": true,
@@ -101,7 +106,8 @@
       "r01_native_rows_not_reclassified": true,
       "receipt_cardinality_valid": true,
       "v0_4_3_phase_reason_allowlist_valid": true,
-      "working_canonical_byte_identity_valid": true,
+      "working_bundles_optional_for_clean_checkout": true,
+      "working_canonical_byte_identity_valid_when_available": true,
       "zero_retry_valid": true
     },
     "input_artifact_sha256": {
