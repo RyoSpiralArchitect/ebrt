@@ -192,11 +192,10 @@ export function ReasoningFlow({
             {playing ? "Playing record" : "Play recorded revision"}
           </button>
         </div>
-        <div className="rw-lanes" role="listbox" aria-label="Recorded replay lanes">
+        <div className="rw-lanes" role="group" aria-label="Recorded replay lanes">
           <button
             type="button"
-            role="option"
-            aria-selected={selectedLaneId === "initial"}
+            aria-pressed={selectedLaneId === "initial"}
             className={`rw-lane ${selectedLaneId === "initial" ? "selected" : ""}`}
             onClick={() => onSelectLane("initial")}
           >
@@ -216,8 +215,7 @@ export function ReasoningFlow({
             return (
               <button
                 type="button"
-                role="option"
-                aria-selected={selected}
+                aria-pressed={selected}
                 className={`rw-lane ${selected ? "selected" : ""}`}
                 key={lane.lane_id}
                 onClick={() => onSelectLane(lane.lane_id)}
