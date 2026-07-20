@@ -353,26 +353,42 @@ class LaneRuntime:
         return len(self.sites)
 
 
-def _validate_v054_source_gate() -> JsonObject:
-    self_test, self_test_raw = _strict_load(V054_SELF_TEST_PATH)
-    manifest, manifest_raw = _strict_load(V054_MANIFEST_PATH)
-    _validate_internal_fingerprint(self_test, "v0.5.4 self-test")
-    if (
-        self_test.get("schema_version") != v054.SELF_TEST_SCHEMA_VERSION
-        or self_test.get("status") != "PASS"
-        or self_test.get("promotion_ready") is not True
-        or set(self_test.get("hard_gates", {})) != set(v054.HARD_GATE_IDS)
-        or not all(self_test["hard_gates"].values())
-    ):
-        raise LaneCompositionValidationError("v0.5.4 self-test gate is not exact PASS")
+def _validate_exact_true_hard_gates(
+    value: Any, expected_ids: Sequence[str], label: str
+) -> None:
+    if not isinstance(value, Mapping) or set(value) != set(expected_ids):
+        raise LaneCompositionValidationError(f"{label} hard gate IDs differ")
+    if any(value[gate_id] is not True for gate_id in expected_ids):
+        raise LaneCompositionValidationError(f"{label} hard gates are not exact true")
+
+
+def _validate_v054_manifest_promotion(manifest: Mapping[str, Any]) -> None:
+    _validate_exact_true_hard_gates(
+        manifest.get("hard_gates"), v054.HARD_GATE_IDS, "v0.5.4 manifest"
+    )
     if (
         manifest.get("decision_status") != "PROMOTE_V0_5_5_TEMPORAL_GATE"
         or manifest.get("promotion_ready") is not True
         or manifest.get("provider_calls") != 0
         or manifest.get("network_calls") != 0
-        or not all(manifest.get("hard_gates", {}).values())
     ):
         raise LaneCompositionValidationError("v0.5.4 manifest did not promote v0.5.5")
+
+
+def _validate_v054_source_gate() -> JsonObject:
+    self_test, self_test_raw = _strict_load(V054_SELF_TEST_PATH)
+    manifest, manifest_raw = _strict_load(V054_MANIFEST_PATH)
+    _validate_internal_fingerprint(self_test, "v0.5.4 self-test")
+    _validate_exact_true_hard_gates(
+        self_test.get("hard_gates"), v054.HARD_GATE_IDS, "v0.5.4 self-test"
+    )
+    if (
+        self_test.get("schema_version") != v054.SELF_TEST_SCHEMA_VERSION
+        or self_test.get("status") != "PASS"
+        or self_test.get("promotion_ready") is not True
+    ):
+        raise LaneCompositionValidationError("v0.5.4 self-test gate is not exact PASS")
+    _validate_v054_manifest_promotion(manifest)
     artifact_rows = manifest.get("artifacts")
     if not isinstance(artifact_rows, Mapping):
         raise LaneCompositionValidationError("v0.5.4 manifest artifact table missing")
@@ -1384,6 +1400,26 @@ def network_denied() -> Iterator[dict[str, int]]:
         yield counts
 
 
+def _lane_control_statistics(controls: Any, label: str) -> tuple[float, float]:
+    if not isinstance(controls, list):
+        raise LaneCompositionValidationError(f"{label}.controls must be list")
+    normalized_values: list[float] = []
+    raw_deltas: list[float] = []
+    for index, control in enumerate(controls):
+        if not isinstance(control, Mapping):
+            raise LaneCompositionValidationError(f"{label}.controls[{index}] must be object")
+        try:
+            normalized_values.append(_normalize_float(control["normalized_u"]))
+            raw_deltas.append(_normalize_float(control["raw_delta"]))
+        except (KeyError, TypeError, ValueError) as exc:
+            raise LaneCompositionValidationError(
+                f"{label}.controls[{index}] has invalid numeric rows"
+            ) from exc
+    normalized_l2 = math.sqrt(math.fsum(value * value for value in normalized_values))
+    raw_max_abs_delta = max((abs(value) for value in raw_deltas), default=0.0)
+    return normalized_l2, raw_max_abs_delta
+
+
 def validate_control_bundle(payload: Mapping[str, Any]) -> None:
     if not isinstance(payload, Mapping):
         raise LaneCompositionValidationError("control bundle must be object")
@@ -1434,8 +1470,17 @@ def validate_control_bundle(payload: Mapping[str, Any]) -> None:
         _validate_internal_fingerprint(inner, "inner lane control map")
         if len(inner.get("controls", [])) != row["control_count"]:
             raise LaneCompositionValidationError("lane control count drift")
-        observed = float(inner["normalized_l2"])
-        if observed > budget + 2.0e-15 or float(inner["raw_max_abs_delta"]) > 0.1 + 2.0e-15:
+        actual_l2, actual_raw_max = _lane_control_statistics(
+            inner["controls"],
+            f"control_bundle.lane_control_maps[{index}].inner_control_map",
+        )
+        published_l2 = _normalize_float(float(inner["normalized_l2"]))
+        published_raw_max = _normalize_float(float(inner["raw_max_abs_delta"]))
+        if abs(actual_l2 - published_l2) > 2.0e-15:
+            raise LaneCompositionValidationError("lane control L2 receipt drift")
+        if abs(actual_raw_max - published_raw_max) > 2.0e-15:
+            raise LaneCompositionValidationError("lane control raw maximum receipt drift")
+        if actual_l2 > budget + 2.0e-15 or actual_raw_max > 0.1 + 2.0e-15:
             raise LaneCompositionValidationError("lane control exceeded independent bound")
     if lane_ids != sorted(lane_ids) or len(lane_ids) != len(set(lane_ids)):
         raise LaneCompositionValidationError("lane control rows not canonical unique")
@@ -1820,6 +1865,28 @@ def _tamper_subchecks(
 
 
 def _bounds_subchecks(control_bundle: Mapping[str, Any]) -> JsonObject:
+    def resign_with_row_mutation(action: Any) -> JsonObject:
+        output = _clone(control_bundle)
+        row = next(
+            item
+            for item in output["lane_control_maps"]
+            if item["inner_control_map"] is not None
+        )
+        action(row["inner_control_map"]["controls"])
+        row["inner_control_map"]["fingerprint_sha256"] = fingerprint(
+            _without_fingerprint(row["inner_control_map"])
+        )
+        output["fingerprint_sha256"] = fingerprint(_without_fingerprint(output))
+        return output
+
+    def shrink_one_normalized_value(controls: list[JsonObject]) -> None:
+        control = next(row for row in controls if float(row["normalized_u"]) != 0.0)
+        control["normalized_u"] = float(control["normalized_u"]) * 0.5
+
+    def shrink_all_raw_deltas(controls: list[JsonObject]) -> None:
+        for control in controls:
+            control["raw_delta"] = float(control["raw_delta"]) * 0.5
+
     validate_control_bundle(control_bundle)
     mutated = _clone(control_bundle)
     event_row = next(
@@ -1832,6 +1899,8 @@ def _bounds_subchecks(control_bundle: Mapping[str, Any]) -> JsonObject:
         _without_fingerprint(event_row["inner_control_map"])
     )
     mutated["fingerprint_sha256"] = fingerprint(_without_fingerprint(mutated))
+    normalized_row_mutated = resign_with_row_mutation(shrink_one_normalized_value)
+    raw_row_mutated = resign_with_row_mutation(shrink_all_raw_deltas)
     checks = {
         "lane_and_merge_budgets_have_separate_receipts": all(
             "normalized_l2_budget" in row
@@ -1839,8 +1908,20 @@ def _bounds_subchecks(control_bundle: Mapping[str, Any]) -> JsonObject:
         )
         and "normalized_l2_budget" in control_bundle["merge_control_map"],
         "published_control_bundle_valid": True,
-        "oversized_lane_control_rejected": _expect_rejected(
-            lambda: validate_control_bundle(mutated), "oversized lane control"
+        "oversized_lane_control_rejected": all(
+            (
+                _expect_rejected(
+                    lambda: validate_control_bundle(mutated), "oversized lane control"
+                ),
+                _expect_rejected(
+                    lambda: validate_control_bundle(normalized_row_mutated),
+                    "lane normalized L2 row/receipt drift",
+                ),
+                _expect_rejected(
+                    lambda: validate_control_bundle(raw_row_mutated),
+                    "lane raw maximum row/receipt drift",
+                ),
+            )
         ),
     }
     return _with_fingerprint(
@@ -2149,6 +2230,23 @@ def self_test() -> JsonObject:
         canonical_json_bytes(row) == canonical_json_bytes(first)
         for row in permutation_results
     )
+    source_manifest, _source_manifest_raw = _strict_load(V054_MANIFEST_PATH)
+    missing_gate_manifest = _clone(source_manifest)
+    missing_gate_manifest.pop("hard_gates")
+    partial_gate_manifest = _clone(source_manifest)
+    partial_gate_manifest["hard_gates"].pop(v054.HARD_GATE_IDS[0])
+    incomplete_predecessor_gate_sets_rejected = all(
+        (
+            _expect_rejected(
+                lambda: _validate_v054_manifest_promotion(missing_gate_manifest),
+                "missing predecessor manifest hard gates",
+            ),
+            _expect_rejected(
+                lambda: _validate_v054_manifest_promotion(partial_gate_manifest),
+                "partial predecessor manifest hard gates",
+            ),
+        )
+    )
     aliases = {
         "all_six_lane_permutations_invariant": all_six_results_exact
         and first["permutation_audit"]["all_permutations_exact"]
@@ -2183,7 +2281,8 @@ def self_test() -> JsonObject:
                 "source_path_swap_rejected",
                 "source_payload_fingerprint_tamper_rejected",
             )
-        ),
+        )
+        and incomplete_predecessor_gate_sets_rejected,
         "two_build_byte_identical": canonical_json_bytes(first)
         == canonical_json_bytes(second)
         == canonical_json_bytes(denied),
