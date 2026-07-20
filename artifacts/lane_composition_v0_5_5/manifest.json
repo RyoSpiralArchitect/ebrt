@@ -3,7 +3,7 @@
   "artifacts": {
     "block_adjoint_audit.json": {
       "bytes": 12538,
-      "sha256": "4a63577a6b924acf35fe455194219aeda7d28875d67c5376843f68c32151f703"
+      "sha256": "519dc2f4ff5d6274c9976a94fc8550da39a26f97719fbc2fb734cce1688e0512"
     },
     "bundle_control_map.json": {
       "bytes": 29496,
@@ -15,7 +15,7 @@
     },
     "mechanism_report.md": {
       "bytes": 3593,
-      "sha256": "8e0a1cab245c7c1752b1c1b7b1c342b70cfdffb1259487065b2ec45185fa7c23"
+      "sha256": "06b30eb812b0ac2788da09399b5b16cb820775441329ecbfa11e5a49c50520be"
     },
     "merge_contract.json": {
       "bytes": 37030,
@@ -23,7 +23,7 @@
     },
     "sealed_bundle.json": {
       "bytes": 2998,
-      "sha256": "baa18eac488adb9bceee827f05d0b194a58417404939ef0145cedeeb150856bf"
+      "sha256": "71b0e3e9b5c19b2e7849696d315370b8ed4e8e61ed57927732f681cda0a420c8"
     },
     "sealed_lanes/correction_early.json": {
       "bytes": 69960,
@@ -34,12 +34,12 @@
       "sha256": "54c806a29fdf80f9677b5a008e140734e28a201e719a98ce8d312bf34298afc8"
     },
     "sealed_lanes/stable_constraint.json": {
-      "bytes": 2926,
-      "sha256": "379e63f9bfce0af69df2240fe85835b7032efb0de3209773f71f818ba43f40cb"
+      "bytes": 2972,
+      "sha256": "4ea3d27501907821510c2ad6f7cea4c5c14057b505b6ff8463a53b66bf7e98b8"
     },
     "self_test.json": {
       "bytes": 1204,
-      "sha256": "ee937803eddf075c03985887dc60079bd3441ea174d897deb79d1ba3847b1ddf"
+      "sha256": "b98d2dd7e969af91414635dd09226ec54a30ffc8d288c831ff0b35c0d63079f2"
     },
     "shared_evidence_ledger.json": {
       "bytes": 4311,
@@ -85,7 +85,7 @@
     "policy_lock": {
       "bytes": 12236,
       "path": "policy_lock_lane_composition_v0_5_5.json",
-      "sha256": "52c099eb316422281e48f6590d75dd202fd3e2b2dd929f249108e87770b2d1cc"
+      "sha256": "d8c62f009f9305511cde9fdd10d20ba8459663e95a1aac36c3947656525880bc"
     },
     "predecessor": {
       "artifact_receipts": {
@@ -117,17 +117,17 @@
         "manifest.json": {
           "bytes": 4920,
           "path": "artifacts/temporal_adjoint_lineage_v0_5_4/manifest.json",
-          "sha256": "60423518deee7e6b4bd69678a51d84269378e4725711803c46d079940227913b"
+          "sha256": "3a7e1c1903e447cba9c0da471558074d4558386c79e112addc090768978d5472"
         },
         "mechanism_report.md": {
           "bytes": 4029,
           "path": "artifacts/temporal_adjoint_lineage_v0_5_4/mechanism_report.md",
-          "sha256": "7af2346ec0d1b20376aa0a9ea679deda1a24a8161046273550c7698fdc1a292c"
+          "sha256": "342fdc8fbec51112b2a981c2f30d4395aba8bb5b52bdac3d58caa2cfb5c84899"
         },
         "no_event_audit.json": {
-          "bytes": 1163,
+          "bytes": 1207,
           "path": "artifacts/temporal_adjoint_lineage_v0_5_4/no_event_audit.json",
-          "sha256": "e11206e1026920108c27fdeba604138605a3b6f673003c3be86b5c37d5e10a19"
+          "sha256": "ec5da4ddf51123ade7d2495eb13685c310131bdab3fe4aec88310740da370909"
         },
         "self_test.json": {
           "bytes": 6077,
@@ -135,17 +135,17 @@
           "sha256": "488b5041ef99b1b8663a03d098a426c7c59a88de4e2a257f03a1f72b24f8c5d4"
         },
         "source_receipt.json": {
-          "bytes": 4810,
+          "bytes": 4811,
           "path": "artifacts/temporal_adjoint_lineage_v0_5_4/source_receipt.json",
-          "sha256": "9968c785d2dd8353df8d39a579af94eca57d13456fb96eac92489e19c4698988"
+          "sha256": "84847669eca84c83cf8334658e6f5106c37d3e8a32aa4bbe7793dedb5bf5969f"
         },
         "stable_constraint_sealed_lane.json": {
-          "bytes": 2926,
+          "bytes": 2972,
           "path": "artifacts/temporal_adjoint_lineage_v0_5_4/stable_constraint_sealed_lane.json",
-          "sha256": "379e63f9bfce0af69df2240fe85835b7032efb0de3209773f71f818ba43f40cb"
+          "sha256": "4ea3d27501907821510c2ad6f7cea4c5c14057b505b6ff8463a53b66bf7e98b8"
         }
       },
-      "commit_sha": "0820da1b79b3f912f7cde84aa13014c28951eb05",
+      "commit_sha": "33e3beee2c175217c6a493b7eec86e01b54780e8",
       "lane_receipts": {
         "correction_early": {
           "artifact_path": "sealed_lanes/correction_early.json",
@@ -161,28 +161,28 @@
         },
         "stable_constraint": {
           "artifact_path": "sealed_lanes/stable_constraint.json",
-          "bytes": 2926,
-          "sha256": "379e63f9bfce0af69df2240fe85835b7032efb0de3209773f71f818ba43f40cb",
+          "bytes": 2972,
+          "sha256": "4ea3d27501907821510c2ad6f7cea4c5c14057b505b6ff8463a53b66bf7e98b8",
           "source_path": "artifacts/temporal_adjoint_lineage_v0_5_4/stable_constraint_sealed_lane.json"
         }
       },
-      "manifest_sha256": "60423518deee7e6b4bd69678a51d84269378e4725711803c46d079940227913b",
+      "manifest_sha256": "3a7e1c1903e447cba9c0da471558074d4558386c79e112addc090768978d5472",
       "relationship": "Immutable committed v0.5.4 temporal-lineage checkpoint. Exact source, fixture, artifact, manifest, and sealed-lane bytes are compilation inputs and provenance only; v0.5.5 does not rerun or regrade v0.5.4.",
       "source_receipts": {
         "benchmark": {
-          "bytes": 9522,
+          "bytes": 9745,
           "path": "benchmark_temporal_adjoint_lineage_v0_5_4.py",
-          "sha256": "3c97f451e9128fdcbc3c7aadf64bbca47ca7d2a9798ace172cda083942f1e693"
+          "sha256": "6459e97ae44967f301bd7ec7cb360126432d213965240d754e27619590cc87b8"
         },
         "builder": {
-          "bytes": 51126,
+          "bytes": 51260,
           "path": "build_temporal_adjoint_lineage_artifact_v0_5_4.py",
-          "sha256": "5faa79b5ebbd7463e30a3d6bf08d862f0c176b4284a19a5f5d8bd3a51be91060"
+          "sha256": "bd70d4313989589959b7cd8c6542ce066034a36e460c470b753a6910b5596ffe"
         },
         "composition_source": {
-          "bytes": 95541,
+          "bytes": 96418,
           "path": "temporal_adjoint_lineage_v0_5_4.py",
-          "sha256": "0e900c9f0535d32b4994f41cafa71792c43c8dfb687bcd4b654dccecc906a1d4"
+          "sha256": "c92acd3a51b16caada00c58bcf40ef11b1031a7161e1afd6e282266924c8461b"
         },
         "event_fixture": {
           "bytes": 1050,
@@ -195,12 +195,12 @@
           "sha256": "e3ff041d8983f43cb0cfa7d60dd1baca041c7c714bd4af381f2690e08c4580a7"
         },
         "policy_lock": {
-          "bytes": 10154,
+          "bytes": 10155,
           "path": "policy_lock_temporal_adjoint_lineage_v0_5_4.json",
-          "sha256": "d2866441aeffab6bc81c74f53cd77822ff35b6620e3dadd9b9ba71b509bd6dec"
+          "sha256": "44a30c082b7239464e25ef0a2d82e7442155306dca05317f2c9dcc3c466e6dc5"
         }
       },
-      "tree_sha": "7e21fe0f5dbcf93c85660bb466041b6f0c1b6d13"
+      "tree_sha": "9920bac359f7d13e63676f2fc13120383293b337"
     },
     "sources": {
       "benchmark": {
@@ -211,7 +211,7 @@
       "builder": {
         "bytes": 51932,
         "path": "build_lane_composition_artifact_v0_5_5.py",
-        "sha256": "51d24842498cc12f988d39ea3653507586c0ccc27fecf42326459eec04a1ae51"
+        "sha256": "160b68aa432368ebd4e60470cceca53a4a208218daaa6bcf6bd423a1831828ff"
       },
       "core": {
         "bytes": 101600,

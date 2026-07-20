@@ -8,11 +8,11 @@ Can three byte-sealed public trajectories share one evidence ledger and one type
 
 ## Frozen v0.5.4 source
 
-- commit: `0820da1b79b3f912f7cde84aa13014c28951eb05`
-- manifest: `60423518deee7e6b4bd69678a51d84269378e4725711803c46d079940227913b`
+- commit: `33e3beee2c175217c6a493b7eec86e01b54780e8`
+- manifest: `3a7e1c1903e447cba9c0da471558074d4558386c79e112addc090768978d5472`
 - correction_early: `799b2d6b10129e63e751054e995d2e5017a2f73af44916d68068ee3c82b72d17`
 - correction_late: `54c806a29fdf80f9677b5a008e140734e28a201e719a98ce8d312bf34298afc8`
-- stable_constraint: `379e63f9bfce0af69df2240fe85835b7032efb0de3209773f71f818ba43f40cb`
+- stable_constraint: `4ea3d27501907821510c2ad6f7cea4c5c14057b505b6ff8463a53b66bf7e98b8`
 - provider calls: `0`
 - network calls: `0`
 
