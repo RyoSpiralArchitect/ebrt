@@ -182,12 +182,29 @@ manifest binding every artifact byte. The live runner independently rebuilt
 the projection, closure, grades, report, journal, and manifest before returning
 success.
 
-Offline validation is available with:
+Portable canonical-snapshot verification is available with only the Python
+standard library:
 
 ```bash
-python3 run_hosted_bundle_v0_6.py validate \
-  --output artifacts/hosted_bundle_execution_v0_6_live_r01
+python3 -I -S verify_hosted_bundle_v0_6_1_portable.py verify
+python3 -I -S verify_hosted_bundle_v0_6_1_portable.py self-test
 ```
+
+The portable verifier is intentionally post-run and non-generative. It pins
+the policy, manifest, result, and every artifact byte; checks their recorded
+source, runtime, projection, provider-input, attempt, receipt, usage, grade,
+and outcome bindings; and does not import project/provider packages, read the
+current v0.5.5 source tree, call a network, or gate on the verification host.
+It validates the historical v0.5.5 receipts recorded in the frozen projection
+bundle rather than pretending to rederive that predecessor from later fixed
+bytes. This establishes canonical snapshot consistency, not current-tree
+mechanism reproducibility, provider authentication, or a fresh semantic
+regrade.
+
+`run_hosted_bundle_v0_6.py validate` remains the exact historical
+producer-tree/runtime rederivation path. Use it only from the frozen producer
+source graph and recorded runtime; failure on a later v0.5.5 tree is expected
+and must not be repaired by changing the v0.6.1 lock or live artifact.
 
 The live command is historical evidence, not an instruction to rerun the
 one-shot block.

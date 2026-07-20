@@ -314,7 +314,8 @@ fixtures/lane_composition_v0_5_5*.json canonical three-lane and exact one-lane-d
 hosted_bundle_projection_v0_6.py exact v0.5.5-to-provider projection and matched P/A/B/D/C bundle
 hosted_bundle_lineage_v0_6.py strict public lineage compiler, closure, and post-call grader
 openai_lineage_provider_v0_6.py one-attempt GPT-5.6 structured-output boundary
-run_hosted_bundle_v0_6.py preregistered five-call runner and independent artifact validator
+run_hosted_bundle_v0_6.py frozen five-call runner and exact producer-tree/runtime rederivation validator
+verify_hosted_bundle_v0_6_1_portable.py host-independent canonical snapshot verifier
 policy_lock_hosted_bundle_v0_6.json frozen source, runtime, order, endpoint, and claim contract
 fixtures/hosted_bundle_projection_v0_6.json contaminated projection and matched-control fixture
 fixtures/hosted_bundle_lineage_gold_v0_6.json post-call-only exact lineage gold
@@ -1250,6 +1251,7 @@ retrospectively relabeling failures. See the
 | v0.6.1 carries the sealed public substrate through a real hosted output | Supported for one contaminated block: 5/5 calls completed, D returned `PROVE`, and D passed exact answer, invalidation, stable-fact, and fact-local lineage endpoints |
 | v0.6.1 shows gradient-derived placement beats a matched sham | No observed effect: B, D, and C returned byte-identical passing public outputs, so the primary `D_vs_C` contrast is `NULL` |
 | The v0.6.1 overall gate promoted | No; P answered `POLISH` correctly but failed exact pre-event lineage because R2 was unexpectedly inherited into `demo_centerpiece`, so the preregistered gate is held |
+| The v0.6.1 canonical artifact requires the current host or current v0.5.5 tree to validate | No; the post-run pure-stdlib verifier checks the pinned recorded snapshot without importing project/provider packages, reading current v0.5.5 sources, or gating on host runtime. It does not rederive the historical mechanism or authenticate the provider. |
 | A raw full-context restart failed to revise the answer | No; A answered `PROVE`, invalidated R3, and preserved R5, but failed the stricter lineage endpoint because R4 was absent from `final_priority` |
 | Selective replay should be optimized before state sufficiency | Not supported by current evidence; it is paused as a quality direction and remains an unranked future efficiency ablation |
 | EBRT edits hidden states inside a trained Transformer or GPT model | Not implemented |
