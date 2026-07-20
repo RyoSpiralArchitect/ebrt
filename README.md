@@ -156,6 +156,18 @@ and 10 required adversarial subchecks pass, yielding
 network-zero public-substrate result: no model, agent, router, tool, generated
 answer, or multi-agent quality comparison participated.
 
+EBRT v0.6.1 now completes the first preregistered five-call hosted bundle in
+the fixed order `P/A/B/D/C`. All five GPT-5.6 calls and the independent
+artifact validator completed. D carried the exact v0.5.5 public control map
+through full-context regeneration and passed the strict final answer,
+invalidation, stable-fact, and fact-local lineage contract. The overall gate is
+nevertheless `HOLD_V0_6_HOSTED_BUNDLE_GATE`: P returned the correct `POLISH`
+answer but added an unexpected inherited R2 dependency, and the matched
+placement comparison was null because B, D, and C returned byte-identical
+passing public outputs. Raw arm A returned the correct `PROVE` answer but
+omitted R4 from `final_priority`. This is a real bridge and a useful control-
+channel null result, not evidence that gradient placement improves GPT.
+
 > [!IMPORTANT]
 > v0.1-v0.3.1 are **not** a Transformer implementation, a GPT latent-state
 > editor, or evidence of improved language-model accuracy. v0.4 meaningfully
@@ -198,6 +210,11 @@ answer, or multi-agent quality comparison participated.
 > routing, debate, or learned arbitration. Its local objective decrease and
 > exact block gradients do not establish a better hosted output or general
 > multi-agent reasoning.
+> v0.6.1 executes one contaminated, unbalanced five-call GPT-5.6 regression.
+> Its supplied answer-adjacent oracle DAG is not autonomous semantic discovery;
+> B/D/C identity means the tested signed-displacement placement had no observed
+> effect. Exact-lineage failures in P and A are contract mismatches and do not
+> by themselves prove their natural-language answers were semantically wrong.
 
 ## Why EBRT?
 
@@ -294,6 +311,14 @@ benchmark_lane_composition_v0_5_5.py deterministic split-artifact composition be
 build_lane_composition_artifact_v0_5_5.py atomic network-zero bundle builder, verifier, and rollback audit
 policy_lock_lane_composition_v0_5_5.json exact v0.5.4 predecessor, source, fixture, artifact, and claim lock
 fixtures/lane_composition_v0_5_5*.json canonical three-lane and exact one-lane-degeneration policies
+hosted_bundle_projection_v0_6.py exact v0.5.5-to-provider projection and matched P/A/B/D/C bundle
+hosted_bundle_lineage_v0_6.py strict public lineage compiler, closure, and post-call grader
+openai_lineage_provider_v0_6.py one-attempt GPT-5.6 structured-output boundary
+run_hosted_bundle_v0_6.py frozen five-call runner and exact producer-tree/runtime rederivation validator
+verify_hosted_bundle_v0_6_1_portable.py host-independent canonical snapshot verifier
+policy_lock_hosted_bundle_v0_6.json frozen source, runtime, order, endpoint, and claim contract
+fixtures/hosted_bundle_projection_v0_6.json contaminated projection and matched-control fixture
+fixtures/hosted_bundle_lineage_gold_v0_6.json post-call-only exact lineage gold
 docs/RND_BENCHMARK_V0_1.md    protocol, results, limits, and claim ledger
 docs/RND_INSTRUMENTATION_V0_2.md measurement contract and algorithm findings
 docs/RND_DUAL_ROUTE_V0_3.md   terminal invariant result and v0.3.1 direction
@@ -313,6 +338,7 @@ docs/EBRT_CORE_THESIS.md       latent north star, corrected control math, and gr
 docs/RND_FACTORIZED_LINEAGE_V0_5_3.md network-zero lineage result and contaminated repair boundary
 docs/RND_TEMPORAL_ADJOINT_LINEAGE_V0_5_4.md matched temporal result, derivative audits, and claim boundary
 docs/RND_LANE_COMPOSABLE_TRAJECTORIES_V0_5_5.md completed composition mechanism, audits, and nonclaims
+docs/RND_HOSTED_BUNDLE_V0_6_1.md completed hosted block, null placement effect, and next bottleneck
 docs/ROADMAP_V0_5_3_TO_V0_5_5.md Space/Time/Multiplicity gates through v0.6 execution design
 docs/ROADMAP_V0_6_PLUS.md      sealed bundle-to-output, fresh utility, runtime lanes, and latent return
 artifacts/benchmark_v0_1/     committed machine-readable benchmark evidence
@@ -324,6 +350,7 @@ artifacts/benchmark_dual_route_v0_3_1_dev/ committed non-promotional DEV evidenc
 artifacts/factorized_lineage_v0_5_3/ committed contaminated network-zero lineage regression
 artifacts/temporal_adjoint_lineage_v0_5_4/ committed sealed temporal mechanism and three v0.5.5-compatible lanes
 artifacts/lane_composition_v0_5_5/ committed shared ledger, junction, block audit, controls, and byte-copied lanes
+artifacts/hosted_bundle_execution_v0_6_live_r01/ validated five-call hosted outputs, receipts, grades, and manifest
 artifacts/benchmark_language_replay_v0_4_fake_dev/ scripted plumbing evidence only
 artifacts/benchmark_language_replay_v0_4_live_smoke/ boundary-fixed GPT-5.6 DEV canary
 artifacts/benchmark_direct_full_calibration_v0_4_dev/ non-promotional 10-case DEV evidence
@@ -1221,6 +1248,11 @@ retrospectively relabeling failures. See the
 | v0.5.4 proves general temporal reasoning or improves a hosted answer | No; it is network-zero, uses two schedules over one supplied program, and its gradients stop at the local public recurrence |
 | v0.5.5 composes the sealed public trajectories without losing local provenance or exact credit | Supported on one contaminated network-zero bundle: one-lane equivalence is exact, 6/6 lane orders are byte-identical, block/autograd error is `2.22e-16`, finite-difference error is `1.238e-9`, and 10/10 gates plus 10/10 adversarial subchecks pass |
 | v0.5.5 executes or improves a multi-agent system | No; its lanes are deterministic public schedule views, its junction is fixed and unlearned, and provider/model/agent/generated-output calls are zero |
+| v0.6.1 carries the sealed public substrate through a real hosted output | Supported for one contaminated block: 5/5 calls completed, D returned `PROVE`, and D passed exact answer, invalidation, stable-fact, and fact-local lineage endpoints |
+| v0.6.1 shows gradient-derived placement beats a matched sham | No observed effect: B, D, and C returned byte-identical passing public outputs, so the primary `D_vs_C` contrast is `NULL` |
+| The v0.6.1 overall gate promoted | No; P answered `POLISH` correctly but failed exact pre-event lineage because R2 was unexpectedly inherited into `demo_centerpiece`, so the preregistered gate is held |
+| The v0.6.1 canonical artifact requires the current host or current v0.5.5 tree to validate | No; the post-run pure-stdlib verifier checks the pinned recorded snapshot without importing project/provider packages, reading current v0.5.5 sources, or gating on host runtime. It does not rederive the historical mechanism or authenticate the provider. |
+| A raw full-context restart failed to revise the answer | No; A answered `PROVE`, invalidated R3, and preserved R5, but failed the stricter lineage endpoint because R4 was absent from `final_priority` |
 | Selective replay should be optimized before state sufficiency | Not supported by current evidence; it is paused as a quality direction and remains an unranked future efficiency ablation |
 | EBRT edits hidden states inside a trained Transformer or GPT model | Not implemented |
 | EBRT improves real-world LLM reasoning accuracy | Not established |
@@ -1349,13 +1381,14 @@ category determination.
   bounds, source/artifact tamper rejection, and network-zero publication all
   pass. The result promotes a separately locked v0.6 execution question; it is
   not itself multi-agent or final-output evidence.
-- **Milestone 2.11 — hosted execution over sealed public lanes (next locked
-  experiment):** define how real GPT-5.6 executions populate the accepted
-  substrate, preserve blinded budgets and raw-context parity, and produce one
-  final controlled regeneration whose output and lineage are graded separately.
-  The next critical block is the contaminated five-call P/A/B/C/D bundle-to-
-  output regression; superiority is a separate effect flag, not its promotion
-  condition. The exact arms and stop rules are defined in the
+- **Milestone 2.11 — hosted execution over sealed public lanes (complete; gate
+  held):** the preregistered `P/A/B/D/C` block completed 5/5 one-attempt
+  GPT-5.6 calls with exact receipts and independent artifact validation. D
+  passed the strict hosted path, while raw A missed one fact-local R4 edge and
+  P added one unexpected inherited R2 edge. B/D/C were byte-identical strict
+  passes, so the matched placement effect is `NULL`; P's exact-lineage failure
+  keeps the overall gate at `HOLD_V0_6_HOSTED_BUNDLE_GATE`. See the
+  [v0.6.1 R&D note](docs/RND_HOSTED_BUNDLE_V0_6_1.md) and
   [evidence-led v0.6+ roadmap](docs/ROADMAP_V0_6_PLUS.md).
 - **Milestone 3 — coherent evaluator experience (provisional Workbench):** a
   deterministic allowlist projection and local read-only Workbench now connect

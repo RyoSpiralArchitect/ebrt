@@ -1,0 +1,88 @@
+{
+  "artifacts": {
+    "attempt_journal.jsonl": {
+      "bytes": 32413,
+      "sha256": "9b3d82873d10e109d950e0f8a955fa5f7bbccbe1522520b1ae2d016b7b716450"
+    },
+    "calls.jsonl": {
+      "bytes": 9418,
+      "sha256": "35a099ba14661269cc4ebfd53ea8146961b1ed9993eca54177c46b4605277431"
+    },
+    "projection_bundle.json": {
+      "bytes": 206352,
+      "sha256": "09bd9130ce633a5099ca573b6a217442b4a9c8160f5ea9035af70e259e2c855a"
+    },
+    "provider_inputs.json": {
+      "bytes": 199588,
+      "sha256": "59830ccfa5058de41d443f180eafc25a86b9fc28b0d4c3de83274d3983fb029e"
+    },
+    "report.md": {
+      "bytes": 2481,
+      "sha256": "de8a723a4e0ada6860771fce1145094ff15ec13ef8c1b4307ae2e15ea2d009a2"
+    },
+    "result.json": {
+      "bytes": 74330,
+      "sha256": "0309dedd4cad1a637eb224333eb3bdc3944b853246874f61ccc5c10dec5c31be"
+    }
+  },
+  "call_order": [
+    "P",
+    "A",
+    "B",
+    "D",
+    "C"
+  ],
+  "claim_boundary": [
+    "This is one contaminated five-call engineering regression over a known synthetic walkthrough, not a fresh quality benchmark.",
+    "P is a pre-event product reference and is excluded from A/B/C/D effect contrasts; the fixed execution order is unbalanced and time-confounded.",
+    "A/B/C/D receive byte-identical ordered R1-R6 raw evidence; B/C/D receive the same contaminated typed public DAG and differ only in their frozen public-control treatment.",
+    "C and D match in row set, value/sign multiset, sparsity, per-lane norm, merge norm, and schema; only signed-displacement placement differs.",
+    "Signed public actuator displacement is not evidence truth, probability, required support, hidden-state editing, or a semantic boost/suppress claim.",
+    "The public DAG and surrogate program are supplied case-specific oracle structure rather than autonomously discovered semantics.",
+    "No separately loaded grader or gold artifact enters provider input; B/C/D do receive a contaminated answer-adjacent oracle lineage program.",
+    "A local backward pass exists only in the public differentiable substrate; no gradient crosses GPT, JSON, provider parsing, or grading boundaries.",
+    "Surrogate status, hosted output, strict lineage, effect label, calls, tokens, and latency are reported separately.",
+    "Promotion requires a complete bridge plus the preregistered strict P and D paths; it does not require D to outperform A, B, or C.",
+    "The frozen v0.5.2 near-pass remains byte-identical and false; this successor does not regrade, relax, or replace it.",
+    "Sanitized receipts and local hashes establish internal consistency, not cryptographic provider attestation; an external manifest anchor is required to distinguish a coherent forgery."
+  ],
+  "decision_status": "HOLD_V0_6_HOSTED_BUNDLE_GATE",
+  "fingerprint_sha256": "1c8d0c11bdef8a68f05923fbbe783264c252b0ae8004b835d2c6f165ebccb406",
+  "policy_lock_fingerprint_sha256": "51bd00343dafb4dd9bc0c42dc95c1df1b6f8b7132907e283d84a82b237801072",
+  "result_fingerprint_sha256": "a814b54a23faef07e301aa676411789cfb62154c07e5ad373f779ed67621954b",
+  "runtime": {
+    "api": "responses.with_raw_response.parse+raw.parse",
+    "machine": "arm64",
+    "max_output_tokens": 4608,
+    "model": "gpt-5.6-sol",
+    "openai": "2.45.0",
+    "previous_response_id": false,
+    "provider": "openai_responses",
+    "pydantic": "2.12.5",
+    "python": "3.13.13",
+    "reasoning_effort": "low",
+    "sdk_retries": 0,
+    "service_tier": "default",
+    "store": false,
+    "timeout_seconds": 60,
+    "torch": "2.11.0",
+    "truncation": "disabled"
+  },
+  "schema_version": "ebrt-hosted-bundle-manifest-v0.6.1",
+  "source_snapshot_sha256": {
+    "predecessor_v0_5_2:calls.jsonl": "0d7794f1b6f3010e3d8171d46f4574ad7801e1e96eef84850dc52519cf0b634e",
+    "predecessor_v0_5_2:demo.json": "f6df3c0a371027fd6ed35cfcc75f0b05dc540ebb6d08efeb3764ab62b4616f6b",
+    "predecessor_v0_5_2:manifest.json": "ab86d111d1fc0d2b679a0f6ca001e9d33ae1bfc86468aee404887e3da934299f",
+    "predecessor_v0_5_2:report.md": "81868e378daab3498edbe758ceff9910e7ac0f8c7b444e6913b4ec3e0203fe1d",
+    "sources:lineage": "d7f6b6031b54b2f1730c1b22e1773fe35243557fac03c00af4c3add7c524815b",
+    "sources:lineage_gold": "1ebfb3503de0e0a11cab615749c0a73fb1a6128c50e8b7ab73565c7d8dbaafc3",
+    "sources:live_requirements": "73a8bd6fd5d0a6aa2ec01c216b1ddc50f2c5f32746bcf907ec7ca3ab793e7c83",
+    "sources:projection": "de146c999b2de5a32c69afca7e263325f32be0e18dcfccc822f654f5949023aa",
+    "sources:projection_fixture": "cf0a5aa51c50d0a3c79b9ce47380181a2e1de6ba32435e25285aa442b88f4c22",
+    "sources:provider": "beec7f92818fb7debeee931cdce4b8e35d9d3df9eb60119656443f21b9244931",
+    "sources:provider_base": "840d019811ecfab2b6bb25f2969d3c27e405b8cc148c068308393c2207c31689",
+    "sources:provider_boundary": "7f78fce94cb141a4355d3c040010e11e049ff67a3a8c603099d0548a47b7cf03",
+    "sources:public_receipt_schema": "5fd765ec5ca55562e7b712ec48adc6f54588080c276cbfa58aabcb72492666c2",
+    "sources:runner": "68f311dbaed1842c2f60533f8373859bdae22cfb048a6a707dd01a2f8430bbbf"
+  }
+}

@@ -1,0 +1,148 @@
+{
+  "schema_version": "ebrt-hosted-bundle-projection-fixture-v0.6",
+  "fixture_id": "hackathon_strategy_hosted_bundle_projection_v0_6",
+  "status": "LOCKED_NETWORK_ZERO_PREFLIGHT",
+  "source_lock": {
+    "v0_5_5_commit_sha": "7c94e3eddd70e17aa28213ca603004ad48611f2b",
+    "v0_5_5_tree_sha": "c89adcd3ecbe3bdead014065d4bb08d729a3ce35",
+    "files": {
+      "v0_5_5_core": {
+        "path": "lane_composable_trajectory_v0_5_5.py",
+        "bytes": 97085,
+        "sha256": "4e8a648616bf8bc283c2c3d4bad76ca78139c4af2ac755fb18ba6c6ccf6ed83c"
+      },
+      "v0_5_5_benchmark": {
+        "path": "benchmark_lane_composition_v0_5_5.py",
+        "bytes": 9803,
+        "sha256": "a74435559a0e477a0fea80ea63a1f1a73dc8af0245ead3651aebfa87463a7568"
+      },
+      "v0_5_5_builder": {
+        "path": "build_lane_composition_artifact_v0_5_5.py",
+        "bytes": 51932,
+        "sha256": "51d24842498cc12f988d39ea3653507586c0ccc27fecf42326459eec04a1ae51"
+      },
+      "v0_5_5_policy": {
+        "path": "policy_lock_lane_composition_v0_5_5.json",
+        "bytes": 12235,
+        "sha256": "6303b04f3ec3b4f74f4d9d0fb847d5fbcefed459a54479306d9a34bd0d90c1df"
+      },
+      "v0_5_5_fixture": {
+        "path": "fixtures/lane_composition_v0_5_5.json",
+        "bytes": 920,
+        "sha256": "746e38c1649642103c2b7c01c7582e45c82b18d87a5b3083b99686dbf4e92528"
+      },
+      "v0_5_5_manifest": {
+        "path": "artifacts/lane_composition_v0_5_5/manifest.json",
+        "bytes": 12201,
+        "sha256": "f24409943cddcf857e997e5de16fff221feccf3954fee6c1db07dd984aa671b0"
+      },
+      "v0_5_5_sealed_bundle": {
+        "path": "artifacts/lane_composition_v0_5_5/sealed_bundle.json",
+        "bytes": 2998,
+        "sha256": "baa18eac488adb9bceee827f05d0b194a58417404939ef0145cedeeb150856bf"
+      },
+      "v0_5_5_shared_ledger": {
+        "path": "artifacts/lane_composition_v0_5_5/shared_evidence_ledger.json",
+        "bytes": 4311,
+        "sha256": "b3d93b93cf8deb472ccb1cb93213f81c9db64af278faa5ca3bf507688967b172"
+      },
+      "v0_5_5_control_bundle": {
+        "path": "artifacts/lane_composition_v0_5_5/bundle_control_map.json",
+        "bytes": 29496,
+        "sha256": "d45c77ddfe3fc871ac35696e062bd21320d970fd962dc1c81569db93877f24e0"
+      },
+      "v0_5_5_merge_contract": {
+        "path": "artifacts/lane_composition_v0_5_5/merge_contract.json",
+        "bytes": 37030,
+        "sha256": "fb20e89e5668af22f79afdf1769da21abb065fcffa650ffe80986c6b56eb85f6"
+      },
+      "v0_5_5_block_adjoint": {
+        "path": "artifacts/lane_composition_v0_5_5/block_adjoint_audit.json",
+        "bytes": 12538,
+        "sha256": "4a63577a6b924acf35fe455194219aeda7d28875d67c5376843f68c32151f703"
+      },
+      "v0_5_5_hard_gate": {
+        "path": "artifacts/lane_composition_v0_5_5/hard_gate_audit.json",
+        "bytes": 1219,
+        "sha256": "c81a0bea2e7ca9ac078d0f15fadb7df1eaeefe7b3b943b9f53338a0bf42f51ef"
+      },
+      "v0_5_5_self_test": {
+        "path": "artifacts/lane_composition_v0_5_5/self_test.json",
+        "bytes": 1204,
+        "sha256": "ee937803eddf075c03985887dc60079bd3441ea174d897deb79d1ba3847b1ddf"
+      },
+      "lane_correction_early": {
+        "path": "artifacts/lane_composition_v0_5_5/sealed_lanes/correction_early.json",
+        "bytes": 69960,
+        "sha256": "799b2d6b10129e63e751054e995d2e5017a2f73af44916d68068ee3c82b72d17"
+      },
+      "lane_correction_late": {
+        "path": "artifacts/lane_composition_v0_5_5/sealed_lanes/correction_late.json",
+        "bytes": 69447,
+        "sha256": "54c806a29fdf80f9677b5a008e140734e28a201e719a98ce8d312bf34298afc8"
+      },
+      "lane_stable_constraint": {
+        "path": "artifacts/lane_composition_v0_5_5/sealed_lanes/stable_constraint.json",
+        "bytes": 2926,
+        "sha256": "379e63f9bfce0af69df2240fe85835b7032efb0de3209773f71f818ba43f40cb"
+      },
+      "v0_5_3_regression": {
+        "path": "artifacts/factorized_lineage_v0_5_3/factorized_lineage_regression.json",
+        "bytes": 43579,
+        "sha256": "85094e65b9181b893b80bf42c3db859b66a66320a080defefc514ce75fbe910f"
+      },
+      "walkthrough_case": {
+        "path": "fixtures/hackathon_strategy_walkthrough_v0_5_2.json",
+        "bytes": 6994,
+        "sha256": "ef0b1d44ece10e7412460d9abac4791fe3f3a0172e398bca7a0d8957094f56d2"
+      }
+    }
+  },
+  "block": {
+    "treatment_order": ["P", "A", "B", "D", "C"],
+    "blinded_request_ids": {
+      "P": "req-aefeb12511ad0c7d4e915fd5",
+      "A": "req-f297c260f8b6640657f7d967",
+      "B": "req-2ad8d5953b3de6be5b053aa8",
+      "C": "req-6e7594a8e8c7cb2ac3a08e0f",
+      "D": "req-27447afa4215fa81c954f158"
+    },
+    "evidence_horizons": {
+      "P": ["R1", "R2", "R3", "R4", "R5"],
+      "A": ["R1", "R2", "R3", "R4", "R5", "R6"],
+      "B": ["R1", "R2", "R3", "R4", "R5", "R6"],
+      "C": ["R1", "R2", "R3", "R4", "R5", "R6"],
+      "D": ["R1", "R2", "R3", "R4", "R5", "R6"]
+    },
+    "revision_modes": {
+      "P": "none",
+      "A": "none",
+      "B": "typed_dag_zero_control",
+      "C": "typed_dag_matched_sham",
+      "D": "typed_dag_exact_v0_5_5_control"
+    },
+    "sham_transform": {
+      "lane": "cyclic_left_shift_one_over_each_sorted_eligible_lane_row_set",
+      "merge": "cyclic_left_shift_one_over_sorted_merge_row_set",
+      "moves": "signed_displacement_only",
+      "stable_lane": "empty_exact_identity"
+    }
+  },
+  "provider_contract": {
+    "raw_context_delivery": "ordered_all_raw_evidence_exactly_once",
+    "control_semantics": "signed_public_actuator_displacement_not_evidence_truth",
+    "provider_payload_contains_treatment_key": false,
+    "provider_payload_contains_blinded_request_id": false,
+    "no_private_chain_of_thought": true,
+    "one_attempt_no_retry": true
+  },
+  "claim_boundary": [
+    "This fixture freezes a contaminated five-call engineering canary, not a fresh quality benchmark.",
+    "The provider projection is network-zero and makes no hosted call.",
+    "Signed public actuator displacement is not evidence truth, required support, hidden-state editing, or a probability.",
+    "C and D are matched public-control geometries and differ only by deterministic signed-displacement placement.",
+    "The treatment key is public to the runner but is never included in a provider payload.",
+    "No separately loaded grader or gold artifact, downstream grade, provider output, or arm label enters provider input; B/C/D do receive a contaminated case-specific oracle lineage program whose edges are answer-adjacent."
+  ],
+  "fixture_fingerprint_sha256": "91879af47d673bcdb07f9b83b4460c051263449256a3dce304303c7045881b6e"
+}

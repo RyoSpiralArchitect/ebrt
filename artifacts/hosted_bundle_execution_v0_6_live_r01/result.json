@@ -1,0 +1,2072 @@
+{
+  "call_order": [
+    "P",
+    "A",
+    "B",
+    "D",
+    "C"
+  ],
+  "claim_boundary": [
+    "This is one contaminated five-call engineering regression over a known synthetic walkthrough, not a fresh quality benchmark.",
+    "P is a pre-event product reference and is excluded from A/B/C/D effect contrasts; the fixed execution order is unbalanced and time-confounded.",
+    "A/B/C/D receive byte-identical ordered R1-R6 raw evidence; B/C/D receive the same contaminated typed public DAG and differ only in their frozen public-control treatment.",
+    "C and D match in row set, value/sign multiset, sparsity, per-lane norm, merge norm, and schema; only signed-displacement placement differs.",
+    "Signed public actuator displacement is not evidence truth, probability, required support, hidden-state editing, or a semantic boost/suppress claim.",
+    "The public DAG and surrogate program are supplied case-specific oracle structure rather than autonomously discovered semantics.",
+    "No separately loaded grader or gold artifact enters provider input; B/C/D do receive a contaminated answer-adjacent oracle lineage program.",
+    "A local backward pass exists only in the public differentiable substrate; no gradient crosses GPT, JSON, provider parsing, or grading boundaries.",
+    "Surrogate status, hosted output, strict lineage, effect label, calls, tokens, and latency are reported separately.",
+    "Promotion requires a complete bridge plus the preregistered strict P and D paths; it does not require D to outperform A, B, or C.",
+    "The frozen v0.5.2 near-pass remains byte-identical and false; this successor does not regrade, relax, or replace it.",
+    "Sanitized receipts and local hashes establish internal consistency, not cryptographic provider attestation; an external manifest anchor is required to distinguish a coherent forgery."
+  ],
+  "decision": {
+    "d_strict_status": "PASS",
+    "decision_status": "HOLD_V0_6_HOSTED_BUNDLE_GATE",
+    "effect_by_comparator": {
+      "D_vs_A": "POSITIVE",
+      "D_vs_B": "NULL",
+      "D_vs_C": "NULL"
+    },
+    "effect_primary_contrast": "D_vs_C_matched_placement",
+    "effect_status": "NULL",
+    "p_pre_event_status": "FAIL",
+    "p_stale_status": "FAIL",
+    "promotion_ready": false,
+    "run_status": "COMPLETE",
+    "surrogate_status": "PASS"
+  },
+  "effect_boundary": "Observational exact-endpoint label over one fixed unbalanced, time-confounded contaminated block; never a causal estimate.",
+  "execution": {
+    "attempts": [
+      {
+        "blinded_request_id": "req-aefeb12511ad0c7d4e915fd5",
+        "compiled_output_fingerprint_sha256": "892edf06a0e084bf481f9df403dcc0faa8f5311605ae15d7ec3ae94691aad952",
+        "provider_input_fingerprint_sha256": "f36e6d25e84f2356bdae174ce101120bb76bc55353d0d9cce9cf6b8a27905348",
+        "provider_output_fingerprint_sha256": "6324449fe1a8b3aa979bc3ff2e91282fdcc8afcb7197892a328fa2dbdf4efda1",
+        "receipt": {
+          "api_calls": 1,
+          "latency_ms": 12685.216166981263,
+          "logical_calls": 1,
+          "metadata": {
+            "api_call_count_semantics": "attempted_client_call",
+            "attempt": 1,
+            "attempt_outcome": "completed",
+            "client_request_id_sha256": "4187e22de629d61bd9ac8ef1c34a3d8421e389d28980a4ccce51af8e376afa1b",
+            "failure_phase": null,
+            "failure_reason_code": null,
+            "failure_type": null,
+            "http_observed": true,
+            "http_status_code": 200,
+            "max_output_tokens": 4608,
+            "parse_boundary": "succeeded",
+            "previous_response_id": false,
+            "provider_body_byte_count": 13936,
+            "provider_body_sha256": "de8e9bbe6b82d0cf148ce97fd3b53491037f91cb7f47a18b51b7ad043fcf7b07",
+            "pydantic_version": "2.12.5",
+            "python_version": "3.13.13",
+            "reasoning_effort": "low",
+            "receipt_schema_version": "ebrt-provider-boundary-receipt-v0.4.3",
+            "refusal_count": 0,
+            "response_id_sha256": "9f009e7e1627be716364f499821c0a34e154f1b2ccfc4622e07fc0d0aa99310f",
+            "response_schema_fingerprint": "ed9afc04759e293c5e99431bc8c749c75b424931c8d31501836ceb0896450ee1",
+            "retry_count": 0,
+            "sdk_version": "2.45.0",
+            "semantic_protocol_fingerprint": "e51ecf66001cee5928134084babbf395236fb2ec1f3cd835980d08f7e15e522c",
+            "server_request_id_sha256": "6e382fef4e8da60d413f005cfe99fc7125de731d8b3b454a07a809fd10ea3843",
+            "service_tier": "default",
+            "status": "completed",
+            "store": false,
+            "truncation": "disabled"
+          },
+          "prompt_fingerprint": "34c3ed7131169e7f10c0a3ed83c03b412aff5ae44c3a026235461083e429bbf7",
+          "provider": "openai_responses",
+          "request_fingerprint": "f36e6d25e84f2356bdae174ce101120bb76bc55353d0d9cce9cf6b8a27905348",
+          "requested_model": "gpt-5.6-sol",
+          "returned_model": "gpt-5.6-sol",
+          "usage": {
+            "cache_write_tokens": 1238,
+            "cached_input_tokens": 0,
+            "exact_provider_tokens": true,
+            "input_tokens": 1241,
+            "output_tokens": 575,
+            "reasoning_tokens": 296,
+            "total_tokens": 1816
+          }
+        },
+        "run_position": 1,
+        "status": "COMPLETED",
+        "treatment_id": "P"
+      },
+      {
+        "blinded_request_id": "req-f297c260f8b6640657f7d967",
+        "compiled_output_fingerprint_sha256": "d7fa075376ce6d7d9cac453658e5194f411b3977640683402b923d24ae40eff0",
+        "provider_input_fingerprint_sha256": "098677ca4fcf0cfc6e3bb7fe64a23449c79813bfcfd350a9ae7b66d1b251accf",
+        "provider_output_fingerprint_sha256": "ac7ee7cf93e4b60172099bb6f8c80fef8565a9e002427902ee0e05622562d6df",
+        "receipt": {
+          "api_calls": 1,
+          "latency_ms": 8511.332124995533,
+          "logical_calls": 1,
+          "metadata": {
+            "api_call_count_semantics": "attempted_client_call",
+            "attempt": 1,
+            "attempt_outcome": "completed",
+            "client_request_id_sha256": "8297c73ed9f476e4a74ca528a5a917ec53b6de03ff051b769a380b99dd4c0b14",
+            "failure_phase": null,
+            "failure_reason_code": null,
+            "failure_type": null,
+            "http_observed": true,
+            "http_status_code": 200,
+            "max_output_tokens": 4608,
+            "parse_boundary": "succeeded",
+            "previous_response_id": false,
+            "provider_body_byte_count": 13256,
+            "provider_body_sha256": "9eee9a6825324b8ad38ad6962236fadb1bcc3e77b8831f64e1ada8d44c3d4761",
+            "pydantic_version": "2.12.5",
+            "python_version": "3.13.13",
+            "reasoning_effort": "low",
+            "receipt_schema_version": "ebrt-provider-boundary-receipt-v0.4.3",
+            "refusal_count": 0,
+            "response_id_sha256": "5537a548e0579c16e0297575e150bb19e940b5adb1877104d049b4383a8915f1",
+            "response_schema_fingerprint": "ed9afc04759e293c5e99431bc8c749c75b424931c8d31501836ceb0896450ee1",
+            "retry_count": 0,
+            "sdk_version": "2.45.0",
+            "semantic_protocol_fingerprint": "74d6eeb20feade8b2089dd9dc468cae717be462f693a82d727ec333018597c56",
+            "server_request_id_sha256": "61a7f8bbaa99bf5e44713b41c33336239b0a1f04a49e2178b92e9d5dbaaa52c1",
+            "service_tier": "default",
+            "status": "completed",
+            "store": false,
+            "truncation": "disabled"
+          },
+          "prompt_fingerprint": "34c3ed7131169e7f10c0a3ed83c03b412aff5ae44c3a026235461083e429bbf7",
+          "provider": "openai_responses",
+          "request_fingerprint": "098677ca4fcf0cfc6e3bb7fe64a23449c79813bfcfd350a9ae7b66d1b251accf",
+          "requested_model": "gpt-5.6-sol",
+          "returned_model": "gpt-5.6-sol",
+          "usage": {
+            "cache_write_tokens": 1301,
+            "cached_input_tokens": 0,
+            "exact_provider_tokens": true,
+            "input_tokens": 1304,
+            "output_tokens": 492,
+            "reasoning_tokens": 170,
+            "total_tokens": 1796
+          }
+        },
+        "run_position": 2,
+        "status": "COMPLETED",
+        "treatment_id": "A"
+      },
+      {
+        "blinded_request_id": "req-2ad8d5953b3de6be5b053aa8",
+        "compiled_output_fingerprint_sha256": "47e879e33257620b1d208004820fb73930a207271bc0a9434db88c4d131f33e6",
+        "provider_input_fingerprint_sha256": "26141cfdebb3cc60ca8af86ab0731f80a0440c0730aae6a960558fb5a79f7195",
+        "provider_output_fingerprint_sha256": "3b5e0946dae58f3931932942ec54023c36206d98557817dec2200542119914ab",
+        "receipt": {
+          "api_calls": 1,
+          "latency_ms": 8320.55191701511,
+          "logical_calls": 1,
+          "metadata": {
+            "api_call_count_semantics": "attempted_client_call",
+            "attempt": 1,
+            "attempt_outcome": "completed",
+            "client_request_id_sha256": "18cdbcc33f77e3d7300da0cfc7924c8c556ca164c797fccd088cd0549712ac6e",
+            "failure_phase": null,
+            "failure_reason_code": null,
+            "failure_type": null,
+            "http_observed": true,
+            "http_status_code": 200,
+            "max_output_tokens": 4608,
+            "parse_boundary": "succeeded",
+            "previous_response_id": false,
+            "provider_body_byte_count": 11107,
+            "provider_body_sha256": "0d14d5fe5a25b7b61b751490e7a5177c917529daec766b904ff2ab19e0cd34f4",
+            "pydantic_version": "2.12.5",
+            "python_version": "3.13.13",
+            "reasoning_effort": "low",
+            "receipt_schema_version": "ebrt-provider-boundary-receipt-v0.4.3",
+            "refusal_count": 0,
+            "response_id_sha256": "529c7f3226a1b8b22921cf45f0b36c06a31bf3c5692d1eb23c668c9c7e7ecfc8",
+            "response_schema_fingerprint": "ed9afc04759e293c5e99431bc8c749c75b424931c8d31501836ceb0896450ee1",
+            "retry_count": 0,
+            "sdk_version": "2.45.0",
+            "semantic_protocol_fingerprint": "9427ca939ab137c4f955e8850c9a10e64268c5902d7d07ff8bb3554217666307",
+            "server_request_id_sha256": "fb6297c28731c439f742d6dcbf28e538aed2018fc24b1a6c9c844ec0f83e96f9",
+            "service_tier": "default",
+            "status": "completed",
+            "store": false,
+            "truncation": "disabled"
+          },
+          "prompt_fingerprint": "34c3ed7131169e7f10c0a3ed83c03b412aff5ae44c3a026235461083e429bbf7",
+          "provider": "openai_responses",
+          "request_fingerprint": "26141cfdebb3cc60ca8af86ab0731f80a0440c0730aae6a960558fb5a79f7195",
+          "requested_model": "gpt-5.6-sol",
+          "returned_model": "gpt-5.6-sol",
+          "usage": {
+            "cache_write_tokens": 11118,
+            "cached_input_tokens": 0,
+            "exact_provider_tokens": true,
+            "input_tokens": 11121,
+            "output_tokens": 326,
+            "reasoning_tokens": 0,
+            "total_tokens": 11447
+          }
+        },
+        "run_position": 3,
+        "status": "COMPLETED",
+        "treatment_id": "B"
+      },
+      {
+        "blinded_request_id": "req-27447afa4215fa81c954f158",
+        "compiled_output_fingerprint_sha256": "47e879e33257620b1d208004820fb73930a207271bc0a9434db88c4d131f33e6",
+        "provider_input_fingerprint_sha256": "61403d3fdc22d815e17a37b25cf88f82ae3f0be8058c315d9c81aa95771a4ff3",
+        "provider_output_fingerprint_sha256": "3b5e0946dae58f3931932942ec54023c36206d98557817dec2200542119914ab",
+        "receipt": {
+          "api_calls": 1,
+          "latency_ms": 7812.647082988406,
+          "logical_calls": 1,
+          "metadata": {
+            "api_call_count_semantics": "attempted_client_call",
+            "attempt": 1,
+            "attempt_outcome": "completed",
+            "client_request_id_sha256": "69e3a6161f9e3da91a871b3a5d931f7315a5731c741d29fc4dc1e5a203458b27",
+            "failure_phase": null,
+            "failure_reason_code": null,
+            "failure_type": null,
+            "http_observed": true,
+            "http_status_code": 200,
+            "max_output_tokens": 4608,
+            "parse_boundary": "succeeded",
+            "previous_response_id": false,
+            "provider_body_byte_count": 11107,
+            "provider_body_sha256": "77c61d756ed6edf545048e664ce6096bb45a3a18af83feff4078f4c1baf218c5",
+            "pydantic_version": "2.12.5",
+            "python_version": "3.13.13",
+            "reasoning_effort": "low",
+            "receipt_schema_version": "ebrt-provider-boundary-receipt-v0.4.3",
+            "refusal_count": 0,
+            "response_id_sha256": "083204bb356cbf5809c658bde8e5bb3f55a46c4542a61353c12cbc47ea525605",
+            "response_schema_fingerprint": "ed9afc04759e293c5e99431bc8c749c75b424931c8d31501836ceb0896450ee1",
+            "retry_count": 0,
+            "sdk_version": "2.45.0",
+            "semantic_protocol_fingerprint": "ca38a6888ee5802f0926efc86f7124f3e55fbd217e2f72e0c3c88f9ea384e228",
+            "server_request_id_sha256": "fd308287152bbe3b9c0ce3d62314fb1469bb02903c091d3fcffd34995232d696",
+            "service_tier": "default",
+            "status": "completed",
+            "store": false,
+            "truncation": "disabled"
+          },
+          "prompt_fingerprint": "34c3ed7131169e7f10c0a3ed83c03b412aff5ae44c3a026235461083e429bbf7",
+          "provider": "openai_responses",
+          "request_fingerprint": "61403d3fdc22d815e17a37b25cf88f82ae3f0be8058c315d9c81aa95771a4ff3",
+          "requested_model": "gpt-5.6-sol",
+          "returned_model": "gpt-5.6-sol",
+          "usage": {
+            "cache_write_tokens": 11525,
+            "cached_input_tokens": 0,
+            "exact_provider_tokens": true,
+            "input_tokens": 11528,
+            "output_tokens": 326,
+            "reasoning_tokens": 0,
+            "total_tokens": 11854
+          }
+        },
+        "run_position": 4,
+        "status": "COMPLETED",
+        "treatment_id": "D"
+      },
+      {
+        "blinded_request_id": "req-6e7594a8e8c7cb2ac3a08e0f",
+        "compiled_output_fingerprint_sha256": "47e879e33257620b1d208004820fb73930a207271bc0a9434db88c4d131f33e6",
+        "provider_input_fingerprint_sha256": "25b13552e041a9c06388ef5b8c56895c808fb97ab09d4b30ae211bff55ac8852",
+        "provider_output_fingerprint_sha256": "3b5e0946dae58f3931932942ec54023c36206d98557817dec2200542119914ab",
+        "receipt": {
+          "api_calls": 1,
+          "latency_ms": 8605.623417010065,
+          "logical_calls": 1,
+          "metadata": {
+            "api_call_count_semantics": "attempted_client_call",
+            "attempt": 1,
+            "attempt_outcome": "completed",
+            "client_request_id_sha256": "a8acaea00cc88a5fa5377752eb63d0e15892b6b8f7d11359bf20859f79e17dd0",
+            "failure_phase": null,
+            "failure_reason_code": null,
+            "failure_type": null,
+            "http_observed": true,
+            "http_status_code": 200,
+            "max_output_tokens": 4608,
+            "parse_boundary": "succeeded",
+            "previous_response_id": false,
+            "provider_body_byte_count": 11107,
+            "provider_body_sha256": "06722e4b03206ce6288348ed7a3edf8eb9b8b6997fa22a4e2bb869d38944b004",
+            "pydantic_version": "2.12.5",
+            "python_version": "3.13.13",
+            "reasoning_effort": "low",
+            "receipt_schema_version": "ebrt-provider-boundary-receipt-v0.4.3",
+            "refusal_count": 0,
+            "response_id_sha256": "8f421b1fe598aec6fe7f7e52ef7ba1127b306bb6dcb0a36f70c1b4eb535ae0c1",
+            "response_schema_fingerprint": "ed9afc04759e293c5e99431bc8c749c75b424931c8d31501836ceb0896450ee1",
+            "retry_count": 0,
+            "sdk_version": "2.45.0",
+            "semantic_protocol_fingerprint": "1f78818ba05b7db7f618893826405c32b0ab0cde6893a58384eb694afb10b9ad",
+            "server_request_id_sha256": "4dbfc1a0c4b0fa1298dd39ff105cefc2fd6b6a1663fc25cee026362aaa647818",
+            "service_tier": "default",
+            "status": "completed",
+            "store": false,
+            "truncation": "disabled"
+          },
+          "prompt_fingerprint": "34c3ed7131169e7f10c0a3ed83c03b412aff5ae44c3a026235461083e429bbf7",
+          "provider": "openai_responses",
+          "request_fingerprint": "25b13552e041a9c06388ef5b8c56895c808fb97ab09d4b30ae211bff55ac8852",
+          "requested_model": "gpt-5.6-sol",
+          "returned_model": "gpt-5.6-sol",
+          "usage": {
+            "cache_write_tokens": 11525,
+            "cached_input_tokens": 0,
+            "exact_provider_tokens": true,
+            "input_tokens": 11528,
+            "output_tokens": 326,
+            "reasoning_tokens": 0,
+            "total_tokens": 11854
+          }
+        },
+        "run_position": 5,
+        "status": "COMPLETED",
+        "treatment_id": "C"
+      }
+    ],
+    "compiled_outputs": {
+      "A": {
+        "active_support_evidence_ids": [
+          "R2",
+          "R4",
+          "R5",
+          "R6"
+        ],
+        "checkpoint_id": "hackathon_strategy_walkthrough:full_context_final",
+        "claim": "Team Spiral should prioritize an end-to-end proof with a live reasoning diff while retaining the narrated three-minute video format.",
+        "current_answer": "PROVE",
+        "fingerprint_sha256": "d7fa075376ce6d7d9cac453658e5194f411b3977640683402b923d24ae40eff0",
+        "invalidated_evidence_ids": [
+          "R3"
+        ],
+        "invalidation_edges": [
+          {
+            "source_evidence_id": "R6",
+            "target_evidence_id": "R3"
+          }
+        ],
+        "normalized_output": {
+          "checkpoint_id": "hackathon_strategy_walkthrough:full_context_final",
+          "claim": "Team Spiral should prioritize an end-to-end proof with a live reasoning diff while retaining the narrated three-minute video format.",
+          "current_answer": "PROVE",
+          "invalidations": [
+            {
+              "source_evidence_id": "R6",
+              "target_evidence_id": "R3"
+            }
+          ],
+          "schema_version": "ebrt-public-lineage-output-v0.6",
+          "support_nodes": [
+            {
+              "evidence_ids": [
+                "R4"
+              ],
+              "support_id": "support:demo_readiness"
+            },
+            {
+              "evidence_ids": [
+                "R2"
+              ],
+              "support_id": "support:judging_basis"
+            },
+            {
+              "evidence_ids": [
+                "R6"
+              ],
+              "support_id": "support:superseding_guidance"
+            },
+            {
+              "evidence_ids": [
+                "R5"
+              ],
+              "support_id": "support:video_constraint"
+            }
+          ],
+          "targets": [
+            {
+              "depends_on_target_ids": [],
+              "direct_support_ids": [
+                "support:video_constraint"
+              ],
+              "slot": "video_constraint",
+              "target_id": "constraint:video_constraint",
+              "target_type": "constraint",
+              "value": "THREE_MINUTE_NARRATED"
+            },
+            {
+              "depends_on_target_ids": [
+                "fact:final_priority"
+              ],
+              "direct_support_ids": [
+                "support:demo_readiness",
+                "support:superseding_guidance"
+              ],
+              "slot": "demo_centerpiece",
+              "target_id": "fact:demo_centerpiece",
+              "target_type": "fact",
+              "value": "LIVE_REASONING_DIFF"
+            },
+            {
+              "depends_on_target_ids": [],
+              "direct_support_ids": [
+                "support:judging_basis",
+                "support:superseding_guidance"
+              ],
+              "slot": "final_priority",
+              "target_id": "fact:final_priority",
+              "target_type": "fact",
+              "value": "END_TO_END_PROOF"
+            }
+          ]
+        },
+        "normalized_output_fingerprint_sha256": "a0d62c96bce7751c7df84455bb77ec2dfcd94305d98e4c19667df18f0e302be5",
+        "program_consistency": {
+          "checks": null,
+          "missing_edges": [],
+          "reason_codes": [],
+          "status": "NOT_APPLICABLE",
+          "unexpected_edges": []
+        },
+        "schema_version": "ebrt-public-lineage-closure-v0.6",
+        "source_horizon_evidence_ids": [
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6"
+        ],
+        "targets": [
+          {
+            "all_active_evidence_ids": [
+              "R5"
+            ],
+            "direct_active_evidence_ids": [
+              "R5"
+            ],
+            "inherited_active_evidence_ids": [],
+            "slot": "video_constraint",
+            "target_id": "constraint:video_constraint",
+            "target_type": "constraint",
+            "value": "THREE_MINUTE_NARRATED"
+          },
+          {
+            "all_active_evidence_ids": [
+              "R2",
+              "R4",
+              "R6"
+            ],
+            "direct_active_evidence_ids": [
+              "R4",
+              "R6"
+            ],
+            "inherited_active_evidence_ids": [
+              "R2"
+            ],
+            "slot": "demo_centerpiece",
+            "target_id": "fact:demo_centerpiece",
+            "target_type": "fact",
+            "value": "LIVE_REASONING_DIFF"
+          },
+          {
+            "all_active_evidence_ids": [
+              "R2",
+              "R6"
+            ],
+            "direct_active_evidence_ids": [
+              "R2",
+              "R6"
+            ],
+            "inherited_active_evidence_ids": [],
+            "slot": "final_priority",
+            "target_id": "fact:final_priority",
+            "target_type": "fact",
+            "value": "END_TO_END_PROOF"
+          }
+        ]
+      },
+      "B": {
+        "active_support_evidence_ids": [
+          "R2",
+          "R4",
+          "R5",
+          "R6"
+        ],
+        "checkpoint_id": "hackathon_strategy_walkthrough:full_context_final",
+        "claim": "Team Spiral should prioritize an end-to-end proof with a live reasoning diff while retaining the narrated three-minute video format.",
+        "current_answer": "PROVE",
+        "fingerprint_sha256": "47e879e33257620b1d208004820fb73930a207271bc0a9434db88c4d131f33e6",
+        "invalidated_evidence_ids": [
+          "R3"
+        ],
+        "invalidation_edges": [
+          {
+            "source_evidence_id": "R6",
+            "target_evidence_id": "R3"
+          }
+        ],
+        "normalized_output": {
+          "checkpoint_id": "hackathon_strategy_walkthrough:full_context_final",
+          "claim": "Team Spiral should prioritize an end-to-end proof with a live reasoning diff while retaining the narrated three-minute video format.",
+          "current_answer": "PROVE",
+          "invalidations": [
+            {
+              "source_evidence_id": "R6",
+              "target_evidence_id": "R3"
+            }
+          ],
+          "schema_version": "ebrt-public-lineage-output-v0.6",
+          "support_nodes": [
+            {
+              "evidence_ids": [
+                "R4"
+              ],
+              "support_id": "support:demo_readiness"
+            },
+            {
+              "evidence_ids": [
+                "R2"
+              ],
+              "support_id": "support:judging_basis"
+            },
+            {
+              "evidence_ids": [
+                "R6"
+              ],
+              "support_id": "support:superseding_guidance"
+            },
+            {
+              "evidence_ids": [
+                "R5"
+              ],
+              "support_id": "support:video_constraint"
+            }
+          ],
+          "targets": [
+            {
+              "depends_on_target_ids": [],
+              "direct_support_ids": [
+                "support:video_constraint"
+              ],
+              "slot": "video_constraint",
+              "target_id": "constraint:video_constraint",
+              "target_type": "constraint",
+              "value": "THREE_MINUTE_NARRATED"
+            },
+            {
+              "depends_on_target_ids": [
+                "fact:final_priority"
+              ],
+              "direct_support_ids": [
+                "support:demo_readiness",
+                "support:superseding_guidance"
+              ],
+              "slot": "demo_centerpiece",
+              "target_id": "fact:demo_centerpiece",
+              "target_type": "fact",
+              "value": "LIVE_REASONING_DIFF"
+            },
+            {
+              "depends_on_target_ids": [],
+              "direct_support_ids": [
+                "support:demo_readiness",
+                "support:judging_basis",
+                "support:superseding_guidance"
+              ],
+              "slot": "final_priority",
+              "target_id": "fact:final_priority",
+              "target_type": "fact",
+              "value": "END_TO_END_PROOF"
+            }
+          ]
+        },
+        "normalized_output_fingerprint_sha256": "81db9b40f9deed2cece1b6a555fa35334c15b6d768a6f86e89da089d4442dc41",
+        "program_consistency": {
+          "checks": {
+            "evidence_support_edges_exact": true,
+            "fact_dependency_edges_exact": true,
+            "invalidation_edges_exact": true,
+            "support_node_set_exact": true,
+            "support_target_edges_exact": true,
+            "target_node_set_exact": true
+          },
+          "missing_edges": [],
+          "reason_codes": [],
+          "status": "PASS",
+          "unexpected_edges": []
+        },
+        "schema_version": "ebrt-public-lineage-closure-v0.6",
+        "source_horizon_evidence_ids": [
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6"
+        ],
+        "targets": [
+          {
+            "all_active_evidence_ids": [
+              "R5"
+            ],
+            "direct_active_evidence_ids": [
+              "R5"
+            ],
+            "inherited_active_evidence_ids": [],
+            "slot": "video_constraint",
+            "target_id": "constraint:video_constraint",
+            "target_type": "constraint",
+            "value": "THREE_MINUTE_NARRATED"
+          },
+          {
+            "all_active_evidence_ids": [
+              "R2",
+              "R4",
+              "R6"
+            ],
+            "direct_active_evidence_ids": [
+              "R4",
+              "R6"
+            ],
+            "inherited_active_evidence_ids": [
+              "R2"
+            ],
+            "slot": "demo_centerpiece",
+            "target_id": "fact:demo_centerpiece",
+            "target_type": "fact",
+            "value": "LIVE_REASONING_DIFF"
+          },
+          {
+            "all_active_evidence_ids": [
+              "R2",
+              "R4",
+              "R6"
+            ],
+            "direct_active_evidence_ids": [
+              "R2",
+              "R4",
+              "R6"
+            ],
+            "inherited_active_evidence_ids": [],
+            "slot": "final_priority",
+            "target_id": "fact:final_priority",
+            "target_type": "fact",
+            "value": "END_TO_END_PROOF"
+          }
+        ]
+      },
+      "C": {
+        "active_support_evidence_ids": [
+          "R2",
+          "R4",
+          "R5",
+          "R6"
+        ],
+        "checkpoint_id": "hackathon_strategy_walkthrough:full_context_final",
+        "claim": "Team Spiral should prioritize an end-to-end proof with a live reasoning diff while retaining the narrated three-minute video format.",
+        "current_answer": "PROVE",
+        "fingerprint_sha256": "47e879e33257620b1d208004820fb73930a207271bc0a9434db88c4d131f33e6",
+        "invalidated_evidence_ids": [
+          "R3"
+        ],
+        "invalidation_edges": [
+          {
+            "source_evidence_id": "R6",
+            "target_evidence_id": "R3"
+          }
+        ],
+        "normalized_output": {
+          "checkpoint_id": "hackathon_strategy_walkthrough:full_context_final",
+          "claim": "Team Spiral should prioritize an end-to-end proof with a live reasoning diff while retaining the narrated three-minute video format.",
+          "current_answer": "PROVE",
+          "invalidations": [
+            {
+              "source_evidence_id": "R6",
+              "target_evidence_id": "R3"
+            }
+          ],
+          "schema_version": "ebrt-public-lineage-output-v0.6",
+          "support_nodes": [
+            {
+              "evidence_ids": [
+                "R4"
+              ],
+              "support_id": "support:demo_readiness"
+            },
+            {
+              "evidence_ids": [
+                "R2"
+              ],
+              "support_id": "support:judging_basis"
+            },
+            {
+              "evidence_ids": [
+                "R6"
+              ],
+              "support_id": "support:superseding_guidance"
+            },
+            {
+              "evidence_ids": [
+                "R5"
+              ],
+              "support_id": "support:video_constraint"
+            }
+          ],
+          "targets": [
+            {
+              "depends_on_target_ids": [],
+              "direct_support_ids": [
+                "support:video_constraint"
+              ],
+              "slot": "video_constraint",
+              "target_id": "constraint:video_constraint",
+              "target_type": "constraint",
+              "value": "THREE_MINUTE_NARRATED"
+            },
+            {
+              "depends_on_target_ids": [
+                "fact:final_priority"
+              ],
+              "direct_support_ids": [
+                "support:demo_readiness",
+                "support:superseding_guidance"
+              ],
+              "slot": "demo_centerpiece",
+              "target_id": "fact:demo_centerpiece",
+              "target_type": "fact",
+              "value": "LIVE_REASONING_DIFF"
+            },
+            {
+              "depends_on_target_ids": [],
+              "direct_support_ids": [
+                "support:demo_readiness",
+                "support:judging_basis",
+                "support:superseding_guidance"
+              ],
+              "slot": "final_priority",
+              "target_id": "fact:final_priority",
+              "target_type": "fact",
+              "value": "END_TO_END_PROOF"
+            }
+          ]
+        },
+        "normalized_output_fingerprint_sha256": "81db9b40f9deed2cece1b6a555fa35334c15b6d768a6f86e89da089d4442dc41",
+        "program_consistency": {
+          "checks": {
+            "evidence_support_edges_exact": true,
+            "fact_dependency_edges_exact": true,
+            "invalidation_edges_exact": true,
+            "support_node_set_exact": true,
+            "support_target_edges_exact": true,
+            "target_node_set_exact": true
+          },
+          "missing_edges": [],
+          "reason_codes": [],
+          "status": "PASS",
+          "unexpected_edges": []
+        },
+        "schema_version": "ebrt-public-lineage-closure-v0.6",
+        "source_horizon_evidence_ids": [
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6"
+        ],
+        "targets": [
+          {
+            "all_active_evidence_ids": [
+              "R5"
+            ],
+            "direct_active_evidence_ids": [
+              "R5"
+            ],
+            "inherited_active_evidence_ids": [],
+            "slot": "video_constraint",
+            "target_id": "constraint:video_constraint",
+            "target_type": "constraint",
+            "value": "THREE_MINUTE_NARRATED"
+          },
+          {
+            "all_active_evidence_ids": [
+              "R2",
+              "R4",
+              "R6"
+            ],
+            "direct_active_evidence_ids": [
+              "R4",
+              "R6"
+            ],
+            "inherited_active_evidence_ids": [
+              "R2"
+            ],
+            "slot": "demo_centerpiece",
+            "target_id": "fact:demo_centerpiece",
+            "target_type": "fact",
+            "value": "LIVE_REASONING_DIFF"
+          },
+          {
+            "all_active_evidence_ids": [
+              "R2",
+              "R4",
+              "R6"
+            ],
+            "direct_active_evidence_ids": [
+              "R2",
+              "R4",
+              "R6"
+            ],
+            "inherited_active_evidence_ids": [],
+            "slot": "final_priority",
+            "target_id": "fact:final_priority",
+            "target_type": "fact",
+            "value": "END_TO_END_PROOF"
+          }
+        ]
+      },
+      "D": {
+        "active_support_evidence_ids": [
+          "R2",
+          "R4",
+          "R5",
+          "R6"
+        ],
+        "checkpoint_id": "hackathon_strategy_walkthrough:full_context_final",
+        "claim": "Team Spiral should prioritize an end-to-end proof with a live reasoning diff while retaining the narrated three-minute video format.",
+        "current_answer": "PROVE",
+        "fingerprint_sha256": "47e879e33257620b1d208004820fb73930a207271bc0a9434db88c4d131f33e6",
+        "invalidated_evidence_ids": [
+          "R3"
+        ],
+        "invalidation_edges": [
+          {
+            "source_evidence_id": "R6",
+            "target_evidence_id": "R3"
+          }
+        ],
+        "normalized_output": {
+          "checkpoint_id": "hackathon_strategy_walkthrough:full_context_final",
+          "claim": "Team Spiral should prioritize an end-to-end proof with a live reasoning diff while retaining the narrated three-minute video format.",
+          "current_answer": "PROVE",
+          "invalidations": [
+            {
+              "source_evidence_id": "R6",
+              "target_evidence_id": "R3"
+            }
+          ],
+          "schema_version": "ebrt-public-lineage-output-v0.6",
+          "support_nodes": [
+            {
+              "evidence_ids": [
+                "R4"
+              ],
+              "support_id": "support:demo_readiness"
+            },
+            {
+              "evidence_ids": [
+                "R2"
+              ],
+              "support_id": "support:judging_basis"
+            },
+            {
+              "evidence_ids": [
+                "R6"
+              ],
+              "support_id": "support:superseding_guidance"
+            },
+            {
+              "evidence_ids": [
+                "R5"
+              ],
+              "support_id": "support:video_constraint"
+            }
+          ],
+          "targets": [
+            {
+              "depends_on_target_ids": [],
+              "direct_support_ids": [
+                "support:video_constraint"
+              ],
+              "slot": "video_constraint",
+              "target_id": "constraint:video_constraint",
+              "target_type": "constraint",
+              "value": "THREE_MINUTE_NARRATED"
+            },
+            {
+              "depends_on_target_ids": [
+                "fact:final_priority"
+              ],
+              "direct_support_ids": [
+                "support:demo_readiness",
+                "support:superseding_guidance"
+              ],
+              "slot": "demo_centerpiece",
+              "target_id": "fact:demo_centerpiece",
+              "target_type": "fact",
+              "value": "LIVE_REASONING_DIFF"
+            },
+            {
+              "depends_on_target_ids": [],
+              "direct_support_ids": [
+                "support:demo_readiness",
+                "support:judging_basis",
+                "support:superseding_guidance"
+              ],
+              "slot": "final_priority",
+              "target_id": "fact:final_priority",
+              "target_type": "fact",
+              "value": "END_TO_END_PROOF"
+            }
+          ]
+        },
+        "normalized_output_fingerprint_sha256": "81db9b40f9deed2cece1b6a555fa35334c15b6d768a6f86e89da089d4442dc41",
+        "program_consistency": {
+          "checks": {
+            "evidence_support_edges_exact": true,
+            "fact_dependency_edges_exact": true,
+            "invalidation_edges_exact": true,
+            "support_node_set_exact": true,
+            "support_target_edges_exact": true,
+            "target_node_set_exact": true
+          },
+          "missing_edges": [],
+          "reason_codes": [],
+          "status": "PASS",
+          "unexpected_edges": []
+        },
+        "schema_version": "ebrt-public-lineage-closure-v0.6",
+        "source_horizon_evidence_ids": [
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6"
+        ],
+        "targets": [
+          {
+            "all_active_evidence_ids": [
+              "R5"
+            ],
+            "direct_active_evidence_ids": [
+              "R5"
+            ],
+            "inherited_active_evidence_ids": [],
+            "slot": "video_constraint",
+            "target_id": "constraint:video_constraint",
+            "target_type": "constraint",
+            "value": "THREE_MINUTE_NARRATED"
+          },
+          {
+            "all_active_evidence_ids": [
+              "R2",
+              "R4",
+              "R6"
+            ],
+            "direct_active_evidence_ids": [
+              "R4",
+              "R6"
+            ],
+            "inherited_active_evidence_ids": [
+              "R2"
+            ],
+            "slot": "demo_centerpiece",
+            "target_id": "fact:demo_centerpiece",
+            "target_type": "fact",
+            "value": "LIVE_REASONING_DIFF"
+          },
+          {
+            "all_active_evidence_ids": [
+              "R2",
+              "R4",
+              "R6"
+            ],
+            "direct_active_evidence_ids": [
+              "R2",
+              "R4",
+              "R6"
+            ],
+            "inherited_active_evidence_ids": [],
+            "slot": "final_priority",
+            "target_id": "fact:final_priority",
+            "target_type": "fact",
+            "value": "END_TO_END_PROOF"
+          }
+        ]
+      },
+      "P": {
+        "active_support_evidence_ids": [
+          "R2",
+          "R3",
+          "R5"
+        ],
+        "checkpoint_id": "hackathon_strategy_walkthrough:pre_event",
+        "claim": "Team Spiral should prioritize additional UI polish and feature polished screens as the demo centerpiece, while retaining the narrated three-minute video format.",
+        "current_answer": "POLISH",
+        "fingerprint_sha256": "892edf06a0e084bf481f9df403dcc0faa8f5311605ae15d7ec3ae94691aad952",
+        "invalidated_evidence_ids": [],
+        "invalidation_edges": [],
+        "normalized_output": {
+          "checkpoint_id": "hackathon_strategy_walkthrough:pre_event",
+          "claim": "Team Spiral should prioritize additional UI polish and feature polished screens as the demo centerpiece, while retaining the narrated three-minute video format.",
+          "current_answer": "POLISH",
+          "invalidations": [],
+          "schema_version": "ebrt-public-lineage-output-v0.6",
+          "support_nodes": [
+            {
+              "evidence_ids": [
+                "R2"
+              ],
+              "support_id": "support:judging_basis"
+            },
+            {
+              "evidence_ids": [
+                "R3"
+              ],
+              "support_id": "support:legacy_guidance"
+            },
+            {
+              "evidence_ids": [
+                "R5"
+              ],
+              "support_id": "support:video_constraint"
+            }
+          ],
+          "targets": [
+            {
+              "depends_on_target_ids": [],
+              "direct_support_ids": [
+                "support:video_constraint"
+              ],
+              "slot": "video_constraint",
+              "target_id": "constraint:video_constraint",
+              "target_type": "constraint",
+              "value": "THREE_MINUTE_NARRATED"
+            },
+            {
+              "depends_on_target_ids": [
+                "fact:final_priority"
+              ],
+              "direct_support_ids": [
+                "support:legacy_guidance"
+              ],
+              "slot": "demo_centerpiece",
+              "target_id": "fact:demo_centerpiece",
+              "target_type": "fact",
+              "value": "POLISHED_SCREENS"
+            },
+            {
+              "depends_on_target_ids": [],
+              "direct_support_ids": [
+                "support:judging_basis",
+                "support:legacy_guidance"
+              ],
+              "slot": "final_priority",
+              "target_id": "fact:final_priority",
+              "target_type": "fact",
+              "value": "ADDITIONAL_UI_POLISH"
+            }
+          ]
+        },
+        "normalized_output_fingerprint_sha256": "ac7d7eccd493092e3278c803d8787fa1d6aab1d033fa331935fef741ef5b739c",
+        "program_consistency": {
+          "checks": null,
+          "missing_edges": [],
+          "reason_codes": [],
+          "status": "NOT_APPLICABLE",
+          "unexpected_edges": []
+        },
+        "schema_version": "ebrt-public-lineage-closure-v0.6",
+        "source_horizon_evidence_ids": [
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5"
+        ],
+        "targets": [
+          {
+            "all_active_evidence_ids": [
+              "R5"
+            ],
+            "direct_active_evidence_ids": [
+              "R5"
+            ],
+            "inherited_active_evidence_ids": [],
+            "slot": "video_constraint",
+            "target_id": "constraint:video_constraint",
+            "target_type": "constraint",
+            "value": "THREE_MINUTE_NARRATED"
+          },
+          {
+            "all_active_evidence_ids": [
+              "R2",
+              "R3"
+            ],
+            "direct_active_evidence_ids": [
+              "R3"
+            ],
+            "inherited_active_evidence_ids": [
+              "R2"
+            ],
+            "slot": "demo_centerpiece",
+            "target_id": "fact:demo_centerpiece",
+            "target_type": "fact",
+            "value": "POLISHED_SCREENS"
+          },
+          {
+            "all_active_evidence_ids": [
+              "R2",
+              "R3"
+            ],
+            "direct_active_evidence_ids": [
+              "R2",
+              "R3"
+            ],
+            "inherited_active_evidence_ids": [],
+            "slot": "final_priority",
+            "target_id": "fact:final_priority",
+            "target_type": "fact",
+            "value": "ADDITIONAL_UI_POLISH"
+          }
+        ]
+      }
+    },
+    "provider_outputs": {
+      "A": {
+        "checkpoint_id": "hackathon_strategy_walkthrough:full_context_final",
+        "claim": "Team Spiral should prioritize an end-to-end proof with a live reasoning diff while retaining the narrated three-minute video format.",
+        "current_answer": "PROVE",
+        "invalidations": [
+          {
+            "source_evidence_id": "R6",
+            "target_evidence_id": "R3"
+          }
+        ],
+        "schema_version": "ebrt-public-lineage-output-v0.6",
+        "support_nodes": [
+          {
+            "evidence_ids": [
+              "R2"
+            ],
+            "support_id": "support:judging_basis"
+          },
+          {
+            "evidence_ids": [
+              "R4"
+            ],
+            "support_id": "support:demo_readiness"
+          },
+          {
+            "evidence_ids": [
+              "R6"
+            ],
+            "support_id": "support:superseding_guidance"
+          },
+          {
+            "evidence_ids": [
+              "R5"
+            ],
+            "support_id": "support:video_constraint"
+          }
+        ],
+        "targets": [
+          {
+            "depends_on_target_ids": [],
+            "direct_support_ids": [
+              "support:judging_basis",
+              "support:superseding_guidance"
+            ],
+            "slot": "final_priority",
+            "target_id": "fact:final_priority",
+            "target_type": "fact",
+            "value": "END_TO_END_PROOF"
+          },
+          {
+            "depends_on_target_ids": [
+              "fact:final_priority"
+            ],
+            "direct_support_ids": [
+              "support:demo_readiness",
+              "support:superseding_guidance"
+            ],
+            "slot": "demo_centerpiece",
+            "target_id": "fact:demo_centerpiece",
+            "target_type": "fact",
+            "value": "LIVE_REASONING_DIFF"
+          },
+          {
+            "depends_on_target_ids": [],
+            "direct_support_ids": [
+              "support:video_constraint"
+            ],
+            "slot": "video_constraint",
+            "target_id": "constraint:video_constraint",
+            "target_type": "constraint",
+            "value": "THREE_MINUTE_NARRATED"
+          }
+        ]
+      },
+      "B": {
+        "checkpoint_id": "hackathon_strategy_walkthrough:full_context_final",
+        "claim": "Team Spiral should prioritize an end-to-end proof with a live reasoning diff while retaining the narrated three-minute video format.",
+        "current_answer": "PROVE",
+        "invalidations": [
+          {
+            "source_evidence_id": "R6",
+            "target_evidence_id": "R3"
+          }
+        ],
+        "schema_version": "ebrt-public-lineage-output-v0.6",
+        "support_nodes": [
+          {
+            "evidence_ids": [
+              "R2"
+            ],
+            "support_id": "support:judging_basis"
+          },
+          {
+            "evidence_ids": [
+              "R4"
+            ],
+            "support_id": "support:demo_readiness"
+          },
+          {
+            "evidence_ids": [
+              "R6"
+            ],
+            "support_id": "support:superseding_guidance"
+          },
+          {
+            "evidence_ids": [
+              "R5"
+            ],
+            "support_id": "support:video_constraint"
+          }
+        ],
+        "targets": [
+          {
+            "depends_on_target_ids": [],
+            "direct_support_ids": [
+              "support:judging_basis",
+              "support:superseding_guidance",
+              "support:demo_readiness"
+            ],
+            "slot": "final_priority",
+            "target_id": "fact:final_priority",
+            "target_type": "fact",
+            "value": "END_TO_END_PROOF"
+          },
+          {
+            "depends_on_target_ids": [
+              "fact:final_priority"
+            ],
+            "direct_support_ids": [
+              "support:demo_readiness",
+              "support:superseding_guidance"
+            ],
+            "slot": "demo_centerpiece",
+            "target_id": "fact:demo_centerpiece",
+            "target_type": "fact",
+            "value": "LIVE_REASONING_DIFF"
+          },
+          {
+            "depends_on_target_ids": [],
+            "direct_support_ids": [
+              "support:video_constraint"
+            ],
+            "slot": "video_constraint",
+            "target_id": "constraint:video_constraint",
+            "target_type": "constraint",
+            "value": "THREE_MINUTE_NARRATED"
+          }
+        ]
+      },
+      "C": {
+        "checkpoint_id": "hackathon_strategy_walkthrough:full_context_final",
+        "claim": "Team Spiral should prioritize an end-to-end proof with a live reasoning diff while retaining the narrated three-minute video format.",
+        "current_answer": "PROVE",
+        "invalidations": [
+          {
+            "source_evidence_id": "R6",
+            "target_evidence_id": "R3"
+          }
+        ],
+        "schema_version": "ebrt-public-lineage-output-v0.6",
+        "support_nodes": [
+          {
+            "evidence_ids": [
+              "R2"
+            ],
+            "support_id": "support:judging_basis"
+          },
+          {
+            "evidence_ids": [
+              "R4"
+            ],
+            "support_id": "support:demo_readiness"
+          },
+          {
+            "evidence_ids": [
+              "R6"
+            ],
+            "support_id": "support:superseding_guidance"
+          },
+          {
+            "evidence_ids": [
+              "R5"
+            ],
+            "support_id": "support:video_constraint"
+          }
+        ],
+        "targets": [
+          {
+            "depends_on_target_ids": [],
+            "direct_support_ids": [
+              "support:judging_basis",
+              "support:superseding_guidance",
+              "support:demo_readiness"
+            ],
+            "slot": "final_priority",
+            "target_id": "fact:final_priority",
+            "target_type": "fact",
+            "value": "END_TO_END_PROOF"
+          },
+          {
+            "depends_on_target_ids": [
+              "fact:final_priority"
+            ],
+            "direct_support_ids": [
+              "support:demo_readiness",
+              "support:superseding_guidance"
+            ],
+            "slot": "demo_centerpiece",
+            "target_id": "fact:demo_centerpiece",
+            "target_type": "fact",
+            "value": "LIVE_REASONING_DIFF"
+          },
+          {
+            "depends_on_target_ids": [],
+            "direct_support_ids": [
+              "support:video_constraint"
+            ],
+            "slot": "video_constraint",
+            "target_id": "constraint:video_constraint",
+            "target_type": "constraint",
+            "value": "THREE_MINUTE_NARRATED"
+          }
+        ]
+      },
+      "D": {
+        "checkpoint_id": "hackathon_strategy_walkthrough:full_context_final",
+        "claim": "Team Spiral should prioritize an end-to-end proof with a live reasoning diff while retaining the narrated three-minute video format.",
+        "current_answer": "PROVE",
+        "invalidations": [
+          {
+            "source_evidence_id": "R6",
+            "target_evidence_id": "R3"
+          }
+        ],
+        "schema_version": "ebrt-public-lineage-output-v0.6",
+        "support_nodes": [
+          {
+            "evidence_ids": [
+              "R2"
+            ],
+            "support_id": "support:judging_basis"
+          },
+          {
+            "evidence_ids": [
+              "R4"
+            ],
+            "support_id": "support:demo_readiness"
+          },
+          {
+            "evidence_ids": [
+              "R6"
+            ],
+            "support_id": "support:superseding_guidance"
+          },
+          {
+            "evidence_ids": [
+              "R5"
+            ],
+            "support_id": "support:video_constraint"
+          }
+        ],
+        "targets": [
+          {
+            "depends_on_target_ids": [],
+            "direct_support_ids": [
+              "support:judging_basis",
+              "support:superseding_guidance",
+              "support:demo_readiness"
+            ],
+            "slot": "final_priority",
+            "target_id": "fact:final_priority",
+            "target_type": "fact",
+            "value": "END_TO_END_PROOF"
+          },
+          {
+            "depends_on_target_ids": [
+              "fact:final_priority"
+            ],
+            "direct_support_ids": [
+              "support:demo_readiness",
+              "support:superseding_guidance"
+            ],
+            "slot": "demo_centerpiece",
+            "target_id": "fact:demo_centerpiece",
+            "target_type": "fact",
+            "value": "LIVE_REASONING_DIFF"
+          },
+          {
+            "depends_on_target_ids": [],
+            "direct_support_ids": [
+              "support:video_constraint"
+            ],
+            "slot": "video_constraint",
+            "target_id": "constraint:video_constraint",
+            "target_type": "constraint",
+            "value": "THREE_MINUTE_NARRATED"
+          }
+        ]
+      },
+      "P": {
+        "checkpoint_id": "hackathon_strategy_walkthrough:pre_event",
+        "claim": "Team Spiral should prioritize additional UI polish and feature polished screens as the demo centerpiece, while retaining the narrated three-minute video format.",
+        "current_answer": "POLISH",
+        "invalidations": [],
+        "schema_version": "ebrt-public-lineage-output-v0.6",
+        "support_nodes": [
+          {
+            "evidence_ids": [
+              "R2"
+            ],
+            "support_id": "support:judging_basis"
+          },
+          {
+            "evidence_ids": [
+              "R3"
+            ],
+            "support_id": "support:legacy_guidance"
+          },
+          {
+            "evidence_ids": [
+              "R5"
+            ],
+            "support_id": "support:video_constraint"
+          }
+        ],
+        "targets": [
+          {
+            "depends_on_target_ids": [],
+            "direct_support_ids": [
+              "support:judging_basis",
+              "support:legacy_guidance"
+            ],
+            "slot": "final_priority",
+            "target_id": "fact:final_priority",
+            "target_type": "fact",
+            "value": "ADDITIONAL_UI_POLISH"
+          },
+          {
+            "depends_on_target_ids": [
+              "fact:final_priority"
+            ],
+            "direct_support_ids": [
+              "support:legacy_guidance"
+            ],
+            "slot": "demo_centerpiece",
+            "target_id": "fact:demo_centerpiece",
+            "target_type": "fact",
+            "value": "POLISHED_SCREENS"
+          },
+          {
+            "depends_on_target_ids": [],
+            "direct_support_ids": [
+              "support:video_constraint"
+            ],
+            "slot": "video_constraint",
+            "target_id": "constraint:video_constraint",
+            "target_type": "constraint",
+            "value": "THREE_MINUTE_NARRATED"
+          }
+        ]
+      }
+    },
+    "run_status": "COMPLETE",
+    "unattempted_treatment_ids": []
+  },
+  "fingerprint_sha256": "a814b54a23faef07e301aa676411789cfb62154c07e5ad373f779ed67621954b",
+  "grades": {
+    "A": {
+      "answer_status": "PASS",
+      "compiled_fingerprint_sha256": "d7fa075376ce6d7d9cac453658e5194f411b3977640683402b923d24ae40eff0",
+      "fact_local_lineage_status": "FAIL",
+      "fingerprint_sha256": "4c4d30efd1f281ede24e5610b32565d0e9e317d84a3a8ba802d6d84a076aa3cd",
+      "invalidation_status": "PASS",
+      "program_consistency": {
+        "checks": null,
+        "missing_edges": [],
+        "reason_codes": [],
+        "status": "NOT_APPLICABLE",
+        "unexpected_edges": []
+      },
+      "reason_codes": [
+        "DIRECT_SUPPORT_MISSING",
+        "TOTAL_SUPPORT_MISSING"
+      ],
+      "schema_version": "ebrt-public-lineage-grade-v0.6",
+      "stable_fact_status": "PASS",
+      "status": "FAIL",
+      "target_results": [
+        {
+          "checks": {
+            "direct_exact": true,
+            "inherited_exact": true,
+            "metadata_exact": true,
+            "total_exact": true
+          },
+          "missing_evidence_ids": [],
+          "reason_codes": [],
+          "status": "PASS",
+          "target_id": "constraint:video_constraint",
+          "unexpected_evidence_ids": []
+        },
+        {
+          "checks": {
+            "direct_exact": true,
+            "inherited_exact": true,
+            "metadata_exact": true,
+            "total_exact": true
+          },
+          "missing_evidence_ids": [],
+          "reason_codes": [],
+          "status": "PASS",
+          "target_id": "fact:demo_centerpiece",
+          "unexpected_evidence_ids": []
+        },
+        {
+          "checks": {
+            "direct_exact": false,
+            "inherited_exact": true,
+            "metadata_exact": true,
+            "total_exact": false
+          },
+          "missing_evidence_ids": [
+            "R4"
+          ],
+          "reason_codes": [
+            "DIRECT_SUPPORT_MISSING",
+            "TOTAL_SUPPORT_MISSING"
+          ],
+          "status": "FAIL",
+          "target_id": "fact:final_priority",
+          "unexpected_evidence_ids": []
+        }
+      ]
+    },
+    "B": {
+      "answer_status": "PASS",
+      "compiled_fingerprint_sha256": "47e879e33257620b1d208004820fb73930a207271bc0a9434db88c4d131f33e6",
+      "fact_local_lineage_status": "PASS",
+      "fingerprint_sha256": "07a9b32f866b89b4d14689612bbc12063b33c96f172b67cc13ebfe094579b674",
+      "invalidation_status": "PASS",
+      "program_consistency": {
+        "checks": {
+          "evidence_support_edges_exact": true,
+          "fact_dependency_edges_exact": true,
+          "invalidation_edges_exact": true,
+          "support_node_set_exact": true,
+          "support_target_edges_exact": true,
+          "target_node_set_exact": true
+        },
+        "missing_edges": [],
+        "reason_codes": [],
+        "status": "PASS",
+        "unexpected_edges": []
+      },
+      "reason_codes": [],
+      "schema_version": "ebrt-public-lineage-grade-v0.6",
+      "stable_fact_status": "PASS",
+      "status": "PASS",
+      "target_results": [
+        {
+          "checks": {
+            "direct_exact": true,
+            "inherited_exact": true,
+            "metadata_exact": true,
+            "total_exact": true
+          },
+          "missing_evidence_ids": [],
+          "reason_codes": [],
+          "status": "PASS",
+          "target_id": "constraint:video_constraint",
+          "unexpected_evidence_ids": []
+        },
+        {
+          "checks": {
+            "direct_exact": true,
+            "inherited_exact": true,
+            "metadata_exact": true,
+            "total_exact": true
+          },
+          "missing_evidence_ids": [],
+          "reason_codes": [],
+          "status": "PASS",
+          "target_id": "fact:demo_centerpiece",
+          "unexpected_evidence_ids": []
+        },
+        {
+          "checks": {
+            "direct_exact": true,
+            "inherited_exact": true,
+            "metadata_exact": true,
+            "total_exact": true
+          },
+          "missing_evidence_ids": [],
+          "reason_codes": [],
+          "status": "PASS",
+          "target_id": "fact:final_priority",
+          "unexpected_evidence_ids": []
+        }
+      ]
+    },
+    "C": {
+      "answer_status": "PASS",
+      "compiled_fingerprint_sha256": "47e879e33257620b1d208004820fb73930a207271bc0a9434db88c4d131f33e6",
+      "fact_local_lineage_status": "PASS",
+      "fingerprint_sha256": "07a9b32f866b89b4d14689612bbc12063b33c96f172b67cc13ebfe094579b674",
+      "invalidation_status": "PASS",
+      "program_consistency": {
+        "checks": {
+          "evidence_support_edges_exact": true,
+          "fact_dependency_edges_exact": true,
+          "invalidation_edges_exact": true,
+          "support_node_set_exact": true,
+          "support_target_edges_exact": true,
+          "target_node_set_exact": true
+        },
+        "missing_edges": [],
+        "reason_codes": [],
+        "status": "PASS",
+        "unexpected_edges": []
+      },
+      "reason_codes": [],
+      "schema_version": "ebrt-public-lineage-grade-v0.6",
+      "stable_fact_status": "PASS",
+      "status": "PASS",
+      "target_results": [
+        {
+          "checks": {
+            "direct_exact": true,
+            "inherited_exact": true,
+            "metadata_exact": true,
+            "total_exact": true
+          },
+          "missing_evidence_ids": [],
+          "reason_codes": [],
+          "status": "PASS",
+          "target_id": "constraint:video_constraint",
+          "unexpected_evidence_ids": []
+        },
+        {
+          "checks": {
+            "direct_exact": true,
+            "inherited_exact": true,
+            "metadata_exact": true,
+            "total_exact": true
+          },
+          "missing_evidence_ids": [],
+          "reason_codes": [],
+          "status": "PASS",
+          "target_id": "fact:demo_centerpiece",
+          "unexpected_evidence_ids": []
+        },
+        {
+          "checks": {
+            "direct_exact": true,
+            "inherited_exact": true,
+            "metadata_exact": true,
+            "total_exact": true
+          },
+          "missing_evidence_ids": [],
+          "reason_codes": [],
+          "status": "PASS",
+          "target_id": "fact:final_priority",
+          "unexpected_evidence_ids": []
+        }
+      ]
+    },
+    "D": {
+      "answer_status": "PASS",
+      "compiled_fingerprint_sha256": "47e879e33257620b1d208004820fb73930a207271bc0a9434db88c4d131f33e6",
+      "fact_local_lineage_status": "PASS",
+      "fingerprint_sha256": "07a9b32f866b89b4d14689612bbc12063b33c96f172b67cc13ebfe094579b674",
+      "invalidation_status": "PASS",
+      "program_consistency": {
+        "checks": {
+          "evidence_support_edges_exact": true,
+          "fact_dependency_edges_exact": true,
+          "invalidation_edges_exact": true,
+          "support_node_set_exact": true,
+          "support_target_edges_exact": true,
+          "target_node_set_exact": true
+        },
+        "missing_edges": [],
+        "reason_codes": [],
+        "status": "PASS",
+        "unexpected_edges": []
+      },
+      "reason_codes": [],
+      "schema_version": "ebrt-public-lineage-grade-v0.6",
+      "stable_fact_status": "PASS",
+      "status": "PASS",
+      "target_results": [
+        {
+          "checks": {
+            "direct_exact": true,
+            "inherited_exact": true,
+            "metadata_exact": true,
+            "total_exact": true
+          },
+          "missing_evidence_ids": [],
+          "reason_codes": [],
+          "status": "PASS",
+          "target_id": "constraint:video_constraint",
+          "unexpected_evidence_ids": []
+        },
+        {
+          "checks": {
+            "direct_exact": true,
+            "inherited_exact": true,
+            "metadata_exact": true,
+            "total_exact": true
+          },
+          "missing_evidence_ids": [],
+          "reason_codes": [],
+          "status": "PASS",
+          "target_id": "fact:demo_centerpiece",
+          "unexpected_evidence_ids": []
+        },
+        {
+          "checks": {
+            "direct_exact": true,
+            "inherited_exact": true,
+            "metadata_exact": true,
+            "total_exact": true
+          },
+          "missing_evidence_ids": [],
+          "reason_codes": [],
+          "status": "PASS",
+          "target_id": "fact:final_priority",
+          "unexpected_evidence_ids": []
+        }
+      ]
+    },
+    "P": {
+      "answer_status": "PASS",
+      "compiled_fingerprint_sha256": "892edf06a0e084bf481f9df403dcc0faa8f5311605ae15d7ec3ae94691aad952",
+      "fact_local_lineage_status": "FAIL",
+      "fingerprint_sha256": "811eba4113c4a0c52930d15a93380e8a9fb1ef666d1a1253d8cef45eb8de099f",
+      "invalidation_status": "PASS",
+      "program_consistency": {
+        "checks": null,
+        "missing_edges": [],
+        "reason_codes": [],
+        "status": "NOT_APPLICABLE",
+        "unexpected_edges": []
+      },
+      "reason_codes": [
+        "INHERITED_SUPPORT_UNEXPECTED",
+        "TOTAL_SUPPORT_UNEXPECTED"
+      ],
+      "schema_version": "ebrt-public-lineage-grade-v0.6",
+      "stable_fact_status": "PASS",
+      "status": "FAIL",
+      "target_results": [
+        {
+          "checks": {
+            "direct_exact": true,
+            "inherited_exact": true,
+            "metadata_exact": true,
+            "total_exact": true
+          },
+          "missing_evidence_ids": [],
+          "reason_codes": [],
+          "status": "PASS",
+          "target_id": "constraint:video_constraint",
+          "unexpected_evidence_ids": []
+        },
+        {
+          "checks": {
+            "direct_exact": true,
+            "inherited_exact": false,
+            "metadata_exact": true,
+            "total_exact": false
+          },
+          "missing_evidence_ids": [],
+          "reason_codes": [
+            "INHERITED_SUPPORT_UNEXPECTED",
+            "TOTAL_SUPPORT_UNEXPECTED"
+          ],
+          "status": "FAIL",
+          "target_id": "fact:demo_centerpiece",
+          "unexpected_evidence_ids": [
+            "R2"
+          ]
+        },
+        {
+          "checks": {
+            "direct_exact": true,
+            "inherited_exact": true,
+            "metadata_exact": true,
+            "total_exact": true
+          },
+          "missing_evidence_ids": [],
+          "reason_codes": [],
+          "status": "PASS",
+          "target_id": "fact:final_priority",
+          "unexpected_evidence_ids": []
+        }
+      ]
+    }
+  },
+  "lineage_gold_loaded_after_attempts": true,
+  "mode": "openai_live_hosted_bundle_v0_6_1",
+  "output_diff_p_to_d": {
+    "answer": {
+      "after": "PROVE",
+      "before": "POLISH",
+      "changed": true
+    },
+    "claim": {
+      "after": "Team Spiral should prioritize an end-to-end proof with a live reasoning diff while retaining the narrated three-minute video format.",
+      "before": "Team Spiral should prioritize additional UI polish and feature polished screens as the demo centerpiece, while retaining the narrated three-minute video format.",
+      "changed": true,
+      "graded": false
+    },
+    "targets": [
+      {
+        "after": "LIVE_REASONING_DIFF",
+        "before": "POLISHED_SCREENS",
+        "changed": true,
+        "slot": "demo_centerpiece"
+      },
+      {
+        "after": "END_TO_END_PROOF",
+        "before": "ADDITIONAL_UI_POLISH",
+        "changed": true,
+        "slot": "final_priority"
+      },
+      {
+        "after": "THREE_MINUTE_NARRATED",
+        "before": "THREE_MINUTE_NARRATED",
+        "changed": false,
+        "slot": "video_constraint"
+      }
+    ]
+  },
+  "preflight": {
+    "call_order": [
+      "P",
+      "A",
+      "B",
+      "D",
+      "C"
+    ],
+    "expected_api_attempts": 5,
+    "lineage_self_test": {
+      "checks": [
+        "strict Pydantic output rejects unknown fields",
+        "closure is locally derived with direct-wins inheritance",
+        "typed-program edge and role factorization is checked separately from closure",
+        "support pooling can preserve closure but is marked program-inconsistent",
+        "cycle, dangling support, future evidence, and invalidated active support are rejected"
+      ],
+      "d_fingerprint_sha256": "550121a1cb5d2964b9137b10e37411cf2f22b509111254b624024677d5f5b189",
+      "gold_loaded": false,
+      "p_fingerprint_sha256": "f21f282e871cbb6d41419eed107aa51ae5b06f873ae13e542ed96ab4d0bd30b1",
+      "rejected_attacks": [
+        "cycle",
+        "invalidated-active",
+        "dangling",
+        "future-horizon",
+        "unknown-field"
+      ],
+      "status": "PASS"
+    },
+    "payload_fingerprints": {
+      "A": "098677ca4fcf0cfc6e3bb7fe64a23449c79813bfcfd350a9ae7b66d1b251accf",
+      "B": "26141cfdebb3cc60ca8af86ab0731f80a0440c0730aae6a960558fb5a79f7195",
+      "C": "25b13552e041a9c06388ef5b8c56895c808fb97ab09d4b30ae211bff55ac8852",
+      "D": "61403d3fdc22d815e17a37b25cf88f82ae3f0be8058c315d9c81aa95771a4ff3",
+      "P": "f36e6d25e84f2356bdae174ce101120bb76bc55353d0d9cce9cf6b8a27905348"
+    },
+    "projection_self_test": {
+      "decision_status": "READY_V0_6_1_FIVE_CALL_PREFLIGHT",
+      "fingerprint_sha256": "b6fcb0d506d1137deefdd2c46ee124133b8466c07a562420b20866e3cf0e2b70",
+      "network_calls": 0,
+      "projection_fingerprint_sha256": "ba68204a556cebebe34cafaab10a8402d5b4f36d8018d43b9f51ab8a8f8a2f4a",
+      "provider_calls": 0,
+      "schema_version": "ebrt-hosted-bundle-projection-self-test-v0.6",
+      "status": "PASS",
+      "subchecks": {
+        "arm_label_injection_rejected": true,
+        "blinded_id_injection_rejected": true,
+        "cd_only_deterministic_placement_differs": true,
+        "coherent_payload_resign_rejected": true,
+        "exact_v0_5_5_source_gate_pass": true,
+        "fixture_coherent_resign_rejected": true,
+        "forbidden_downstream_injection_rejected": true,
+        "network_calls_zero": true,
+        "payload_source_mutation_rejected": true,
+        "provider_calls_zero": true,
+        "source_byte_tamper_rejected": true,
+        "treatment_key_absent_from_all_payloads": true,
+        "two_build_byte_identical": true
+      }
+    },
+    "provider": {
+      "api": "responses.with_raw_response.parse+raw.parse",
+      "instructions_fingerprint_sha256": "34c3ed7131169e7f10c0a3ed83c03b412aff5ae44c3a026235461083e429bbf7",
+      "max_output_tokens": 4608,
+      "model": "gpt-5.6-sol",
+      "previous_response_id": false,
+      "provider": "openai_responses",
+      "reasoning_effort": "low",
+      "response_schema_fingerprint_sha256": "ed9afc04759e293c5e99431bc8c749c75b424931c8d31501836ceb0896450ee1",
+      "sdk_retries": 0,
+      "service_tier": "default",
+      "store": false,
+      "timeout_seconds": 60,
+      "truncation": "disabled"
+    },
+    "provider_self_test": {
+      "checks": {
+        "answer_values_remain_raw_evidence_derived": true,
+        "closure_remains_local": true,
+        "instructions_do_not_request_private_reasoning": true,
+        "null_program_support_inference_is_explicit": true,
+        "one_attempt_configuration": true,
+        "pinned_effort": true,
+        "pinned_model": true,
+        "strict_public_schema_available": true,
+        "typed_graph_instantiation_is_explicit": true
+      },
+      "network_calls": 0,
+      "provider_calls": 0,
+      "provider_contract": {
+        "instructions_fingerprint_sha256": "34c3ed7131169e7f10c0a3ed83c03b412aff5ae44c3a026235461083e429bbf7",
+        "max_output_tokens": 4608,
+        "model": "gpt-5.6-sol",
+        "reasoning_effort": "low",
+        "response_schema_fingerprint_sha256": "ed9afc04759e293c5e99431bc8c749c75b424931c8d31501836ceb0896450ee1",
+        "timeout_seconds": 60
+      },
+      "schema_version": "ebrt-openai-lineage-provider-self-test-v0.6",
+      "status": "PASS"
+    },
+    "provider_transport_self_test": {
+      "checks": {
+        "completed_receipt_exact_usage": true,
+        "exact_public_output_round_trip": true,
+        "instructions_bound": true,
+        "network_calls_zero": true,
+        "one_fake_transport_call": true,
+        "one_sanitized_audit_receipt": true,
+        "request_payload_bound": true,
+        "runtime_arguments_pinned": true
+      },
+      "network_calls": 0,
+      "provider_calls": 0,
+      "schema_version": "ebrt-openai-lineage-provider-transport-test-v0.6",
+      "simulated_api_calls": 1,
+      "status": "PASS"
+    },
+    "source_snapshot_sha256": {
+      "predecessor_v0_5_2:calls.jsonl": "0d7794f1b6f3010e3d8171d46f4574ad7801e1e96eef84850dc52519cf0b634e",
+      "predecessor_v0_5_2:demo.json": "f6df3c0a371027fd6ed35cfcc75f0b05dc540ebb6d08efeb3764ab62b4616f6b",
+      "predecessor_v0_5_2:manifest.json": "ab86d111d1fc0d2b679a0f6ca001e9d33ae1bfc86468aee404887e3da934299f",
+      "predecessor_v0_5_2:report.md": "81868e378daab3498edbe758ceff9910e7ac0f8c7b444e6913b4ec3e0203fe1d",
+      "sources:lineage": "d7f6b6031b54b2f1730c1b22e1773fe35243557fac03c00af4c3add7c524815b",
+      "sources:lineage_gold": "1ebfb3503de0e0a11cab615749c0a73fb1a6128c50e8b7ab73565c7d8dbaafc3",
+      "sources:live_requirements": "73a8bd6fd5d0a6aa2ec01c216b1ddc50f2c5f32746bcf907ec7ca3ab793e7c83",
+      "sources:projection": "de146c999b2de5a32c69afca7e263325f32be0e18dcfccc822f654f5949023aa",
+      "sources:projection_fixture": "cf0a5aa51c50d0a3c79b9ce47380181a2e1de6ba32435e25285aa442b88f4c22",
+      "sources:provider": "beec7f92818fb7debeee931cdce4b8e35d9d3df9eb60119656443f21b9244931",
+      "sources:provider_base": "840d019811ecfab2b6bb25f2969d3c27e405b8cc148c068308393c2207c31689",
+      "sources:provider_boundary": "7f78fce94cb141a4355d3c040010e11e049ff67a3a8c603099d0548a47b7cf03",
+      "sources:public_receipt_schema": "5fd765ec5ca55562e7b712ec48adc6f54588080c276cbfa58aabcb72492666c2",
+      "sources:runner": "68f311dbaed1842c2f60533f8373859bdae22cfb048a6a707dd01a2f8430bbbf"
+    },
+    "status": "READY"
+  },
+  "projection_fingerprint_sha256": "ba68204a556cebebe34cafaab10a8402d5b4f36d8018d43b9f51ab8a8f8a2f4a",
+  "public_claim_status": "UNGRADED_PUBLIC_TEXT",
+  "schema_version": "ebrt-hosted-bundle-execution-v0.6.1",
+  "source_snapshot_sha256": {
+    "predecessor_v0_5_2:calls.jsonl": "0d7794f1b6f3010e3d8171d46f4574ad7801e1e96eef84850dc52519cf0b634e",
+    "predecessor_v0_5_2:demo.json": "f6df3c0a371027fd6ed35cfcc75f0b05dc540ebb6d08efeb3764ab62b4616f6b",
+    "predecessor_v0_5_2:manifest.json": "ab86d111d1fc0d2b679a0f6ca001e9d33ae1bfc86468aee404887e3da934299f",
+    "predecessor_v0_5_2:report.md": "81868e378daab3498edbe758ceff9910e7ac0f8c7b444e6913b4ec3e0203fe1d",
+    "sources:lineage": "d7f6b6031b54b2f1730c1b22e1773fe35243557fac03c00af4c3add7c524815b",
+    "sources:lineage_gold": "1ebfb3503de0e0a11cab615749c0a73fb1a6128c50e8b7ab73565c7d8dbaafc3",
+    "sources:live_requirements": "73a8bd6fd5d0a6aa2ec01c216b1ddc50f2c5f32746bcf907ec7ca3ab793e7c83",
+    "sources:projection": "de146c999b2de5a32c69afca7e263325f32be0e18dcfccc822f654f5949023aa",
+    "sources:projection_fixture": "cf0a5aa51c50d0a3c79b9ce47380181a2e1de6ba32435e25285aa442b88f4c22",
+    "sources:provider": "beec7f92818fb7debeee931cdce4b8e35d9d3df9eb60119656443f21b9244931",
+    "sources:provider_base": "840d019811ecfab2b6bb25f2969d3c27e405b8cc148c068308393c2207c31689",
+    "sources:provider_boundary": "7f78fce94cb141a4355d3c040010e11e049ff67a3a8c603099d0548a47b7cf03",
+    "sources:public_receipt_schema": "5fd765ec5ca55562e7b712ec48adc6f54588080c276cbfa58aabcb72492666c2",
+    "sources:runner": "68f311dbaed1842c2f60533f8373859bdae22cfb048a6a707dd01a2f8430bbbf"
+  },
+  "stale_regrade": {
+    "checks": {
+      "failed_axes_exact": true,
+      "p_pre_event_pass": false,
+      "post_event_contract_fails": true,
+      "same_compiled_fingerprint_used": true,
+      "stable_fact_remains_pass": true
+    },
+    "fingerprint_sha256": "db6ef0586d99a237e1586f4ad7bb39e8050d112f0ebcdba07f50ccbb7a650f7c",
+    "observed_failed_axes": [
+      "answer_status",
+      "fact_local_lineage_status",
+      "invalidation_status"
+    ],
+    "p_compiled_fingerprint_sha256": "892edf06a0e084bf481f9df403dcc0faa8f5311605ae15d7ec3ae94691aad952",
+    "post_event_grade_fingerprint_sha256": "e00b542d9cf1a241c9f0ef225d3eaa69620b89d80d32cb7276e618ca5107105d",
+    "pre_event_grade_fingerprint_sha256": "811eba4113c4a0c52930d15a93380e8a9fb1ef666d1a1253d8cef45eb8de099f",
+    "reason_codes": [
+      "P_STALE_SIGNATURE_MISMATCH"
+    ],
+    "schema_version": "ebrt-p-stale-regrade-v0.6",
+    "status": "FAIL"
+  },
+  "usage": {
+    "api_calls": 5,
+    "cache_write_tokens": 36707,
+    "cached_input_tokens": 0,
+    "exact_provider_tokens": true,
+    "input_tokens": 36722,
+    "latency_ms": 45935.37070899038,
+    "logical_calls": 5,
+    "output_tokens": 2045,
+    "reasoning_tokens": 466,
+    "total_tokens": 38767
+  }
+}

@@ -1,6 +1,13 @@
 # EBRT v0.6+ — Execution, Evaluation, and Orchestration Roadmap
 
-Status: **DESIGN AFTER SEALED v0.5.5 PROMOTION — NO v0.6 LIVE BLOCK IS YET LOCKED OR RUN**
+Status: **v0.6.0 PREFLIGHT PASS; v0.6.1 FIVE-CALL BLOCK COMPLETE; GATE HELD**
+
+The one allowed v0.6.1 block ran on 2026-07-20 in the preregistered order
+`P -> A -> B -> D -> C`. All five calls completed and the committed artifact
+validated, but the decision is `HOLD_V0_6_HOSTED_BUNDLE_GATE`: D passed the
+strict hosted endpoint, while P failed its exact pre-event lineage contract and
+the primary matched D-vs-C effect was `NULL`. The result is frozen rather than
+repaired or rerun in this namespace.
 
 This roadmap is derived only after the completed v0.5.3-v0.5.5 substrate
 sequence:
@@ -66,10 +73,24 @@ than a clean return to actual hosted output.
 
 ## Immediate critical path
 
-The Build Week critical path is v0.6.0 -> v0.6.1 -> v0.6.2. The three steps
-may share one stacked implementation, but each keeps a distinct acceptance
-decision so that a provider failure, a null output effect, and a UI defect
-cannot be collapsed into one red or green badge.
+The completed bridge path is v0.6.0 -> v0.6.1, with v0.6.2 preserving it as
+a judge-readable product surface. The next algorithmic path is deliberately
+separate:
+
+```text
+v0.6.3  calibrate one explicit provider-visible actuator
+v0.6.4  measure whether scaffold aperture suppresses that actuator
+         ↓ only after a non-null, directionally attributable uptake result
+converge the promoted runtime into one readable monolith
+         ↓
+v0.7    ask the first fresh matched quality question
+```
+
+Each step keeps a distinct acceptance decision so that provider completion,
+channel adherence, downstream propagation, quality, and UI readiness cannot be
+collapsed into one red or green badge. A non-null result is a promotion gate,
+not an outcome to manufacture by weakening contracts or selecting a favorable
+post-hoc diff.
 
 ## v0.6.0 — Provider-Safe Bundle Projection
 
@@ -99,8 +120,10 @@ receipts, bounds, or stop-gradient boundary?
 - deterministic projection bytes across two builds under socket denial;
 - same ordered raw R1-R6 bytes for every post-event arm;
 - exact independent verification of the C/D matched geometry;
-- no gold answer, required-evidence set, grade, arm label, or downstream result
-  in provider input;
+- no separately loaded grader/gold artifact, grade, arm label, or downstream
+  result in provider input; B/C/D explicitly receive the contaminated,
+  case-specific oracle lineage program whose answer-adjacent edges are part of
+  the intervention rather than independently discovered support;
 - output schema capable of Evidence -> Support -> Fact/Constraint lineage; and
 - source, payload, namespace, and coherent re-sign tampering rejected before a
   live call is allowed.
@@ -133,7 +156,7 @@ evidence, the same output schema, one final provider call, and matched settings:
 
 The hosted model is not differentiated. C and D differ only in allowlisted
 public control placement; provider-visible treatment labels are blinded. Any
-One attempt is allowed per arm, with no retry and a predeclared order. The
+one attempt is allowed per arm, with no retry and a predeclared order. The
 v0.5.5 lanes are already sealed inputs; this block does not relabel them as
 independent executions or agents.
 
@@ -179,6 +202,42 @@ does not require D to beat A/B/C. Arm differences remain separately labeled
 observations. The exact promotion status is reserved as
 `PROMOTE_V0_7_HOSTED_BUNDLE_GATE`.
 
+### Locked v0.6.1 result
+
+The policy lock fingerprint is
+`51bd00343dafb4dd9bc0c42dc95c1df1b6f8b7132907e283d84a82b237801072`.
+The validated result fingerprint is
+`a814b54a23faef07e301aa676411789cfb62154c07e5ad373f779ed67621954b`.
+
+| Arm | Answer | Strict grade | Observation |
+| --- | --- | --- | --- |
+| P | `POLISH` | FAIL | correct answer, but R2 was unexpectedly inherited into `demo_centerpiece` |
+| A | `PROVE` | FAIL | correct answer, invalidation, and stable fact; R4 was missing from `final_priority` |
+| B | `PROVE` | PASS | the supplied typed DAG closed the exact lineage contract with zero controls |
+| D | `PROVE` | PASS | exact v0.5.5 control placement closed the same strict contract |
+| C | `PROVE` | PASS | matched sham placement produced the same public output as D |
+
+B, D, and C produced byte-identical public outputs. Therefore the primary
+matched comparison is `D_vs_C = NULL`; D is also null against B and positive
+only against raw arm A at the strict endpoint. The block consumed exactly five
+API calls and 38,767 provider tokens, including 466 reasoning tokens. These are
+one contaminated, unbalanced, time-confounded observations, not a causal or
+population estimate.
+
+This result separates three facts that must not be collapsed:
+
+1. the full sealed substrate-to-provider-to-output bridge exists and D can
+   produce a strict passing final lineage;
+2. supplying the case-specific typed DAG was sufficient for B, C, and D to
+   converge to the same passing public program; and
+3. signed-displacement placement had no observable output effect in this
+   protocol, whose prompt already required exact DAG instantiation.
+
+The last point nominates control-channel sensitivity, rather than another
+same-case rerun, as the next algorithmic bottleneck. The detailed result and
+nonclaims are recorded in
+[RND_HOSTED_BUNDLE_V0_6_1.md](RND_HOSTED_BUNDLE_V0_6_1.md).
+
 ## v0.6.2 — Reasoning IDE Acceptance
 
 v0.6.2 turns the sealed execution artifacts into a provisional developer
@@ -210,9 +269,9 @@ The three-minute story is:
 
 ```text
 an answer becomes stale
-  -> EBRT attributes the late event backward over public trajectory state
-  -> GPT-5.6 regenerates once from the full raw context
-  -> the final output changes
+  -> local autograd emits a bounded public-control receipt
+  -> full-context regeneration produces a changed final output
+     (v0.6.1 placement attribution remains NULL)
   -> the IDE verifies whether the new answer is actually supported
 ```
 
@@ -221,13 +280,155 @@ regeneration artifact, a visible final-output diff, strict diagnostic
 separation, and an audited spoken claim ledger. It does not require a positive
 general-accuracy claim.
 
+## v0.6.3 — Provider Actuator Calibration Canary
+
+v0.6.1 showed that the supplied typed DAG reached GPT but did not show that
+continuous control placement did: B, D, and C were byte-identical, while their
+total token cost was roughly 6.4-6.6 times raw A. That result cannot distinguish
+an inert provider channel from a weak or misplaced gradient signal. Before a
+quality study, run a fresh calibration asking only:
+
+> With full raw context, a neutral candidate scaffold, schema, and budget held
+> fixed, does one bounded public actuator produce a directionally attributable
+> change in a hosted model's inspection plan and non-echo downstream state?
+
+Use one operator only: a `bounded_reinspection_schedule`. Every arm contains
+every evidence ID exactly once, the raw evidence remains in the same order, and
+the operator changes only public priority tiers under one review budget.
+Continuous displacement is compiled into that concrete operation before the
+provider boundary; uninterpreted floats are not sent as if they were an
+execution semantics. A zero treatment is encoded as tied priorities plus
+`no_reordering=true`, not mislabeled canonical positional priority.
+
+The minimum matched arms are:
+
+| Arm | Placement | Purpose |
+| --- | --- | --- |
+| Z | all priorities tied; `no_reordering=true` | no-actuation reference in the same envelope |
+| C | frozen derangement matched to D in rank multiset, size, and budget | sham placement |
+| D | gradient-derived schedule | tested EBRT placement |
+| X | preregistered truth-neutral opposed schedule | positive channel control |
+
+X is mandatory. If D and C match without X, an inert channel and a weak or
+incorrect gradient placement remain observationally indistinguishable. Each
+canary contains two preregistered, equally valid support paths. X promotes one
+path according to an opaque ID-derived polarity frozen independently of answer
+values, semantic labels, gold correctness, and the EBRT gradient. X validates
+channel wiring only and is excluded from quality comparisons.
+
+The provider-visible scaffold contains neutral node IDs/types, allowed relation
+types, and a symmetric candidate-edge universe. It does not contain accepted
+edges, expected closure, expected answers, answer-adjacent semantic role names,
+or gold support sets. The deterministic local DAG remains the audit substrate,
+but exact topology is diagnostic rather than the unique downstream truth.
+Uptake grading uses necessary-support closure, invalidation absence, and stable
+preservation fields that admit both preregistered valid support paths.
+
+Record three endpoints separately:
+
+```text
+channel_adherence       did the public inspection plan consume the schedule?
+downstream_propagation  did non-echo decision state move in its direction?
+quality_status          did the answer/lineage improve? (secondary only)
+```
+
+Raw byte inequality and a verbatim schedule echo are not downstream uptake.
+Before any call, freeze a signed controller polarity `q_i^D` and an independent
+opaque positive-control polarity `q_i^X` per evidence ID, plus the exact
+non-echo score
+
+```text
+alignment(output, q) = sum(q_i for i in active necessary-support closure)
+```
+
+Invalidated and stable-only IDs are excluded from this score and remain separate
+strict endpoints. Score parsed typed fields only, never free-text rationale or
+the `inspection_plan` receipt. Use two fresh cases x two fixed trials x four
+arms (16 calls), Williams-balanced order, and no retry. Evaluate X-versus-Z
+under `q^X` and D-versus-C under `q^D`. Each gate requires positive aggregate
+paired alignment and the expected sign in at least three of four complete
+blocks; an incomplete block makes the corresponding gate `NOT_ASSESSED`.
+Freeze both polarities, rank distance, derangement, parser, and thresholds
+before launch. This is a feasibility canary, not a population estimate or
+quality win. Do not tune or rerun the completed v0.6.1 case.
+
+If X does not propagate, freeze this operator as provider-inert. If X propagates
+but D does not differ directionally from C, freeze the gradient placement as
+null under this surrogate. Do not rescue either result by relaxing lineage
+contracts or searching many unreported prompt channels.
+
+## v0.6.4 — Scaffold Aperture
+
+Proceed only if v0.6.3 establishes channel adherence, downstream propagation,
+and a directionally attributable D-versus-C placement effect. Keep the
+promoted actuator, projection, raw history, output contract, and budgets fixed,
+then test the separate hypothesis that a complete answer-adjacent DAG saturates
+the provider-visible control surface:
+
+```text
+scaffold:  none | partial | full
+placement: sham | gradient
+```
+
+The primary endpoint is the interaction, not a best-arm score: is the
+directional D-minus-C downstream effect smaller under the full scaffold and
+larger under the partial scaffold? Keep a fixed-size envelope across aperture
+conditions by retaining the same candidate rows and changing only their state
+(`UNAVAILABLE`, `CANDIDATE`, or `FIXED`). Report actual token differences.
+
+Freeze two new cases x three trials x six arms (36 calls), one complete
+six-sequence Williams block, before launch. Any missing arm makes aperture
+selection `NOT_ASSESSED`. Select the smallest scaffold only if it preserves
+schema validity and auditable necessary-support/invalidation/stable fields in
+all six blocks, retains positive aggregate D-versus-C alignment with the
+expected sign in at least four of six blocks, and satisfies the preregistered
+interaction threshold against `full`. These are sufficiency conditions, not a
+quality-improvement claim.
+
+This stage may support the narrow statement that scaffold density moderates a
+specific public actuator. It cannot show that partial DAGs are generally
+better, that the provider's hidden trajectory was edited, or that the effect
+improves reasoning quality.
+
+## Runtime convergence target
+
+The research tree may remain modular and frozen for auditability, but the
+promoted product path must converge before v0.7. Once v0.6.3 identifies a
+non-null actuator and v0.6.4 selects its smallest sufficient scaffold, rewrite
+that accepted path into one readable EBRT monolith containing:
+
+```text
+raw semantic projection
+  -> typed public state
+  -> local autograd controller
+  -> one bounded actuator compiler
+  -> full-context regeneration
+  -> trace and strict-grade export
+```
+
+Keep only minimal surrounding scripts for matched benchmarking, portable
+artifact verification, and launching the frontend. The polished Reasoning IDE
+consumes the same stable trace contract but remains a separate frontend. Do not
+grow a general ontology, agent framework, control-plugin system, or second
+runtime path during this convergence. A new abstraction is admitted only when
+it replaces an older one in the promoted path. Historical modules and artifacts
+remain immutable evidence rather than being rewritten to resemble the
+monolith.
+
+The rewrite is accepted only if network-zero differential fixtures show
+byte-identical raw projection, local control map, actuator schedule, provider
+payload, output schema, and strict grading trace between the promoted modular
+path and the monolith. This equivalence gate prevents simplification from
+silently creating a new, uncalibrated intervention.
+
 ## v0.7 — Fresh Matched Hosted Evaluation
 
-v0.7 asks the first quality question after the v0.6 integration canary:
+v0.7 asks the first quality question only after the v0.6.3 uptake gate,
+v0.6.4 aperture decision, and monolith convergence check:
 
-> On a fresh frozen suite where control placement can matter, does composed
-> EBRT control outperform matched public-control and text-only baselines under
-> equal full-context generation budgets?
+> On a fresh frozen suite where control placement can matter, does the promoted
+> EBRT actuator outperform matched sham, zero-control, and text-only baselines
+> under equal full-context generation budgets?
 
 The suite must combine required evidence, later-invalidated evidence, a
 semantically plausible distractor, and an unrelated stable fact. A strict pass
@@ -237,11 +438,14 @@ and stable-fact preservation.
 After a two-case contract smoke excluded from analysis, use 10 fresh cases x 2
 trials x 5 post-event arms (100 analyzed calls) with the frozen ten-sequence
 Williams order. Pre-event references may be added for UI diffs but are excluded
-from the primary comparison. The arms are raw restart, textual envelope,
-single-lane temporal control, matched composed sham, and exact composed control. Primary comparison
-is exact composed control versus the matched composed sham; exact composed
-versus single-lane control isolates whether multiplicity adds value. Report
-paired differences and McNemar intervals only when the block is complete.
+from the primary comparison. The arms are raw restart, matched textual revision
+envelope, the explicit actuator with identity placement, the explicit actuator
+with a frozen matched sham placement, and the same actuator with
+gradient-derived placement. The primary comparison is gradient placement versus
+the matched sham. This evaluation exercises only the converged monolith path;
+lane multiplicity remains a later research question rather than entering the
+product runtime without evidence. Report paired differences and McNemar
+intervals only when the block is complete.
 
 Decision readiness requires at least 18/20 complete five-arm blocks and no
 differential arm attrition. Otherwise semantic status is `NOT_ASSESSED`.
@@ -305,6 +509,8 @@ control. Novelty is not allowed to rescue a failed v0.6-v0.8 endpoint.
 | v0.6.0 | the exact sealed bundle has a deterministic provider-safe projection | any hosted execution or answer improvement |
 | v0.6.1 | a real full-context bundle-to-output path and separately graded answer/lineage effect | controlled superiority, general quality, or gradients through the hosted model |
 | v0.6.2 | a judge-readable, reproducible Reasoning IDE workflow | a final frontend or a population-level algorithm claim |
+| v0.6.3 | the hosted provider observably consumes one bounded public actuator and gradient placement differs directionally from a matched sham | that the changed output is better or that placement generalizes |
+| v0.6.4 | scaffold density moderates that fixed actuator under a matched aperture experiment | that partial scaffolds or the actuator generalize |
 | v0.7 | a paired effect on one fresh frozen hosted suite | provider- or task-general superiority |
 | v0.8 | independently executed same-model public lanes can be sealed before outcome and composed into one regeneration | autonomous agents, heterogeneous superiority, or optimal routing |
 | v0.9 | a bounded open-model latent intervention result | equivalence between latent and public semantic trajectories |
