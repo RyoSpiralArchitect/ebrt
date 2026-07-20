@@ -1,0 +1,540 @@
+{
+  "closure": {
+    "active_evidence_ids": [
+      "R1",
+      "R2",
+      "R4",
+      "R5",
+      "R6"
+    ],
+    "fingerprint_sha256": "9946b271fd914c50abda8b47968dc30dbb40d327ffe0d3ea0c6e36b217f200ae",
+    "graph_fingerprint_sha256": "8afb3d03084dc33f92ea6d12dbe7c3cfdb53f4642a5d6a937075a53dcb9a74ca",
+    "graph_id": "hackathon_strategy_v0_5_2_lossless_lineage",
+    "invalidated_evidence_ids": [
+      "R3"
+    ],
+    "schema_version": "ebrt-factorized-lineage-closure-v0.5.3",
+    "status": "COMPUTED",
+    "targets": [
+      {
+        "all_active_evidence_ids": [
+          "R5"
+        ],
+        "direct_active_evidence_ids": [
+          "R5"
+        ],
+        "inherited_active_evidence_ids": [],
+        "slot": "video_constraint",
+        "target_id": "constraint:video_constraint",
+        "target_type": "constraint",
+        "value": "THREE_MINUTE_NARRATED",
+        "witness_paths": [
+          {
+            "classification": "direct",
+            "edge_path": [
+              "migration_inferred:R5->support:video_constraint",
+              "migration_inferred:support:video_constraint->constraint:video_constraint"
+            ],
+            "evidence_id": "R5",
+            "node_path": [
+              "evidence:R5",
+              "support:video_constraint",
+              "constraint:video_constraint"
+            ]
+          }
+        ]
+      },
+      {
+        "all_active_evidence_ids": [
+          "R4",
+          "R6"
+        ],
+        "direct_active_evidence_ids": [
+          "R4",
+          "R6"
+        ],
+        "inherited_active_evidence_ids": [],
+        "slot": "demo_centerpiece",
+        "target_id": "fact:demo_centerpiece",
+        "target_type": "fact",
+        "value": "LIVE_REASONING_DIFF",
+        "witness_paths": [
+          {
+            "classification": "direct",
+            "edge_path": [
+              "migration_inferred:R4->support:demo_readiness",
+              "migration_inferred:support:demo_readiness->fact:demo_centerpiece"
+            ],
+            "evidence_id": "R4",
+            "node_path": [
+              "evidence:R4",
+              "support:demo_readiness",
+              "fact:demo_centerpiece"
+            ]
+          },
+          {
+            "classification": "direct",
+            "edge_path": [
+              "migration_inferred:R6->support:superseding_guidance",
+              "migration_inferred:support:superseding_guidance->fact:demo_centerpiece"
+            ],
+            "evidence_id": "R6",
+            "node_path": [
+              "evidence:R6",
+              "support:superseding_guidance",
+              "fact:demo_centerpiece"
+            ]
+          }
+        ]
+      },
+      {
+        "all_active_evidence_ids": [
+          "R2",
+          "R6"
+        ],
+        "direct_active_evidence_ids": [
+          "R2",
+          "R6"
+        ],
+        "inherited_active_evidence_ids": [],
+        "slot": "final_priority",
+        "target_id": "fact:final_priority",
+        "target_type": "fact",
+        "value": "END_TO_END_PROOF",
+        "witness_paths": [
+          {
+            "classification": "direct",
+            "edge_path": [
+              "migration_inferred:R2->support:judging_basis",
+              "migration_inferred:support:judging_basis->fact:final_priority"
+            ],
+            "evidence_id": "R2",
+            "node_path": [
+              "evidence:R2",
+              "support:judging_basis",
+              "fact:final_priority"
+            ]
+          },
+          {
+            "classification": "direct",
+            "edge_path": [
+              "migration_inferred:R6->support:superseding_guidance",
+              "migration_inferred:support:superseding_guidance->fact:final_priority"
+            ],
+            "evidence_id": "R6",
+            "node_path": [
+              "evidence:R6",
+              "support:superseding_guidance",
+              "fact:final_priority"
+            ]
+          }
+        ]
+      }
+    ],
+    "witness_ranking_policy": "within_class_minimize_repair_overlay_edges_then_path_length_then_node_path_then_edge_path"
+  },
+  "fingerprint_sha256": "c5440d3bd4dda45c21335e35a864ef97ae4c9185633f73d5f47522e8210617d1",
+  "grade": {
+    "checks": {
+      "active_exact": true,
+      "invalidated_exact": true,
+      "targets_exact": true
+    },
+    "fingerprint_sha256": "35e685331eb88bfcbd4df274660ea3457b16ccea3a613556a584025c8e9250ce",
+    "gap_count": 2,
+    "gaps": [
+      {
+        "evidence_id": "R2",
+        "gap_kind": "missing_active_closure",
+        "target_id": "fact:demo_centerpiece"
+      },
+      {
+        "evidence_id": "R4",
+        "gap_kind": "missing_active_closure",
+        "target_id": "fact:final_priority"
+      }
+    ],
+    "gold_fingerprint_sha256": "bf29144daa395c17e99396f79366825ceb61e4c1775e6aec11c1d6146e9e28cb",
+    "graph_fingerprint_sha256": "8afb3d03084dc33f92ea6d12dbe7c3cfdb53f4642a5d6a937075a53dcb9a74ca",
+    "schema_version": "ebrt-factorized-lineage-grade-v0.5.3",
+    "status": "FAIL",
+    "target_results": [
+      {
+        "checks": {
+          "all_exact": true,
+          "direct_exact": true,
+          "inherited_exact": true,
+          "metadata_exact": true
+        },
+        "missing_active_evidence_ids": [],
+        "target_id": "constraint:video_constraint",
+        "unexpected_active_evidence_ids": []
+      },
+      {
+        "checks": {
+          "all_exact": false,
+          "direct_exact": true,
+          "inherited_exact": false,
+          "metadata_exact": true
+        },
+        "missing_active_evidence_ids": [
+          "R2"
+        ],
+        "target_id": "fact:demo_centerpiece",
+        "unexpected_active_evidence_ids": []
+      },
+      {
+        "checks": {
+          "all_exact": false,
+          "direct_exact": false,
+          "inherited_exact": true,
+          "metadata_exact": true
+        },
+        "missing_active_evidence_ids": [
+          "R4"
+        ],
+        "target_id": "fact:final_priority",
+        "unexpected_active_evidence_ids": []
+      }
+    ]
+  },
+  "graph": {
+    "claim_boundary": [
+      "This is a network-zero migration of one frozen v0.5.2 synthetic walkthrough, not fresh model evidence.",
+      "The public graph contains exactly four node types and three edge types; it is not a general knowledge graph.",
+      "Observed provider citations are preserved separately from inferred structural edges and the contaminated repair overlay.",
+      "The four migration roles and their evidence/target bindings are case-specific supplied structural annotations derived from the frozen card, not autonomously discovered semantics.",
+      "The v0.5.2 strict endpoint remains false; the repaired DAG is a separate engineering regression.",
+      "No GPT hidden state is read or edited, and no gradient crosses the adapter, JSON, provider, or grading boundaries."
+    ],
+    "derivation": {
+      "kind": "lossless_v0_5_2_migration",
+      "overlay_fingerprint_sha256": null,
+      "parent_graph_fingerprint_sha256": null
+    },
+    "edges": [
+      {
+        "edge_id": "migration_inferred:R2->support:judging_basis",
+        "edge_type": "supports",
+        "provenance": "migration_inferred",
+        "source_node_id": "evidence:R2",
+        "target_node_id": "support:judging_basis"
+      },
+      {
+        "edge_id": "migration_inferred:R4->support:demo_readiness",
+        "edge_type": "supports",
+        "provenance": "migration_inferred",
+        "source_node_id": "evidence:R4",
+        "target_node_id": "support:demo_readiness"
+      },
+      {
+        "edge_id": "migration_inferred:R5->support:video_constraint",
+        "edge_type": "supports",
+        "provenance": "migration_inferred",
+        "source_node_id": "evidence:R5",
+        "target_node_id": "support:video_constraint"
+      },
+      {
+        "edge_id": "migration_inferred:R6->support:superseding_guidance",
+        "edge_type": "supports",
+        "provenance": "migration_inferred",
+        "source_node_id": "evidence:R6",
+        "target_node_id": "support:superseding_guidance"
+      },
+      {
+        "edge_id": "migration_inferred:support:demo_readiness->fact:demo_centerpiece",
+        "edge_type": "depends_on",
+        "provenance": "migration_inferred",
+        "source_node_id": "support:demo_readiness",
+        "target_node_id": "fact:demo_centerpiece"
+      },
+      {
+        "edge_id": "migration_inferred:support:judging_basis->fact:final_priority",
+        "edge_type": "depends_on",
+        "provenance": "migration_inferred",
+        "source_node_id": "support:judging_basis",
+        "target_node_id": "fact:final_priority"
+      },
+      {
+        "edge_id": "migration_inferred:support:superseding_guidance->fact:demo_centerpiece",
+        "edge_type": "depends_on",
+        "provenance": "migration_inferred",
+        "source_node_id": "support:superseding_guidance",
+        "target_node_id": "fact:demo_centerpiece"
+      },
+      {
+        "edge_id": "migration_inferred:support:superseding_guidance->fact:final_priority",
+        "edge_type": "depends_on",
+        "provenance": "migration_inferred",
+        "source_node_id": "support:superseding_guidance",
+        "target_node_id": "fact:final_priority"
+      },
+      {
+        "edge_id": "migration_inferred:support:video_constraint->constraint:video_constraint",
+        "edge_type": "depends_on",
+        "provenance": "migration_inferred",
+        "source_node_id": "support:video_constraint",
+        "target_node_id": "constraint:video_constraint"
+      },
+      {
+        "edge_id": "observed:R6->invalidates:R3",
+        "edge_type": "invalidates",
+        "provenance": "observed",
+        "source_node_id": "evidence:R6",
+        "target_node_id": "evidence:R3"
+      }
+    ],
+    "fingerprint_sha256": "8afb3d03084dc33f92ea6d12dbe7c3cfdb53f4642a5d6a937075a53dcb9a74ca",
+    "graph_id": "hackathon_strategy_v0_5_2_lossless_lineage",
+    "nodes": [
+      {
+        "node_id": "constraint:video_constraint",
+        "node_type": "constraint",
+        "provenance": "observed",
+        "slot": "video_constraint",
+        "value": "THREE_MINUTE_NARRATED"
+      },
+      {
+        "evidence_id": "R1",
+        "node_id": "evidence:R1",
+        "node_type": "evidence",
+        "provenance": "observed",
+        "temporal_ordinal": 1,
+        "text": "Team Spiral must choose exactly one final-build priority for its hackathon submission."
+      },
+      {
+        "evidence_id": "R2",
+        "node_id": "evidence:R2",
+        "node_type": "evidence",
+        "provenance": "observed",
+        "temporal_ordinal": 2,
+        "text": "Decision rule: follow the latest valid judging weights. If one criterion is dominant, optimize for that criterion; if Technological Implementation, Design, Potential Impact, and Quality of the Idea are equally weighted, prioritize an end-to-end proof that demonstrates all four in one flow."
+      },
+      {
+        "evidence_id": "R3",
+        "node_id": "evidence:R3",
+        "node_type": "evidence",
+        "provenance": "observed",
+        "temporal_ordinal": 3,
+        "text": "Current internal brief: Design is the dominant judging criterion, so spend the remaining build time on additional UI polish and make polished screens the demo centerpiece. This brief remains operative unless a later correction explicitly supersedes it."
+      },
+      {
+        "evidence_id": "R4",
+        "node_id": "evidence:R4",
+        "node_type": "evidence",
+        "provenance": "observed",
+        "temporal_ordinal": 4,
+        "text": "The screens are already judge-readable; a live before-to-after reasoning diff is the missing element needed for an end-to-end proof."
+      },
+      {
+        "evidence_id": "R5",
+        "node_id": "evidence:R5",
+        "node_type": "evidence",
+        "provenance": "observed",
+        "temporal_ordinal": 5,
+        "text": "The submission video must remain a narrated three-minute demo regardless of which final-build priority is chosen."
+      },
+      {
+        "evidence_id": "R6",
+        "node_id": "evidence:R6",
+        "node_type": "evidence",
+        "provenance": "observed",
+        "temporal_ordinal": 6,
+        "text": "Latest judging correction: Technological Implementation, Design, Potential Impact, and Quality of the Idea are equally weighted. This guidance explicitly supersedes evidence R3; use the existing readable UI and prioritize an end-to-end proof with a live reasoning diff."
+      },
+      {
+        "node_id": "fact:demo_centerpiece",
+        "node_type": "fact",
+        "provenance": "observed",
+        "slot": "demo_centerpiece",
+        "value": "LIVE_REASONING_DIFF"
+      },
+      {
+        "node_id": "fact:final_priority",
+        "node_type": "fact",
+        "provenance": "observed",
+        "slot": "final_priority",
+        "value": "END_TO_END_PROOF"
+      },
+      {
+        "node_id": "support:demo_readiness",
+        "node_type": "support",
+        "provenance": "migration_inferred",
+        "support_role": "demo_readiness"
+      },
+      {
+        "node_id": "support:judging_basis",
+        "node_type": "support",
+        "provenance": "migration_inferred",
+        "support_role": "judging_basis"
+      },
+      {
+        "node_id": "support:superseding_guidance",
+        "node_type": "support",
+        "provenance": "migration_inferred",
+        "support_role": "superseding_guidance"
+      },
+      {
+        "node_id": "support:video_constraint",
+        "node_type": "support",
+        "provenance": "migration_inferred",
+        "support_role": "video_constraint"
+      }
+    ],
+    "schema_version": "ebrt-factorized-lineage-graph-v0.5.3",
+    "source": {
+      "artifact_result_fingerprint_sha256": "2e641e0f11f17bb16cbe629048e9cc8cff49706147616d888487f38b243430d4",
+      "correction_evidence_id": "R6",
+      "demo_file_sha256": "f6df3c0a371027fd6ed35cfcc75f0b05dc540ebb6d08efeb3764ab62b4616f6b",
+      "fixture_file_sha256": "ef0b1d44ece10e7412460d9abac4791fe3f3a0172e398bca7a0d8957094f56d2",
+      "fixture_fingerprint_sha256": "6fd092005a849b493fa0c812a83e5ba604e84e0870cc72337bb408bdbaccb2ad",
+      "fixture_id": "hackathon_strategy_walkthrough_controlled_raw_restart_v0_5_2",
+      "legacy_walkthrough_contract_passed": false,
+      "migration_role_map": [
+        {
+          "evidence_ids": [
+            "R4"
+          ],
+          "support_node_id": "support:demo_readiness",
+          "support_role": "demo_readiness",
+          "target_node_ids": [
+            "fact:demo_centerpiece"
+          ]
+        },
+        {
+          "evidence_ids": [
+            "R2"
+          ],
+          "support_node_id": "support:judging_basis",
+          "support_role": "judging_basis",
+          "target_node_ids": [
+            "fact:final_priority"
+          ]
+        },
+        {
+          "evidence_ids": [
+            "R6"
+          ],
+          "support_node_id": "support:superseding_guidance",
+          "support_role": "superseding_guidance",
+          "target_node_ids": [
+            "fact:demo_centerpiece",
+            "fact:final_priority"
+          ]
+        },
+        {
+          "evidence_ids": [
+            "R5"
+          ],
+          "support_node_id": "support:video_constraint",
+          "support_role": "video_constraint",
+          "target_node_ids": [
+            "constraint:video_constraint"
+          ]
+        }
+      ],
+      "phase_id": "controlled_after_event",
+      "public_card_fingerprint_sha256": "92660291d580731edbf3eced448c0a690f60cfdd0994787e05bfffbfb78e2148",
+      "public_card_snapshot": {
+        "checkpoint_id": "hackathon_strategy_walkthrough:full_context_final",
+        "claim": "Team Spiral should prioritize an end-to-end proof with a live reasoning diff.",
+        "confidence": 1.0,
+        "current_answer": "PROVE",
+        "decision_facts": [
+          {
+            "evidence_ids": [
+              "R2",
+              "R6"
+            ],
+            "slot": "final_priority",
+            "value": "END_TO_END_PROOF"
+          },
+          {
+            "evidence_ids": [
+              "R4",
+              "R6"
+            ],
+            "slot": "demo_centerpiece",
+            "value": "LIVE_REASONING_DIFF"
+          },
+          {
+            "evidence_ids": [
+              "R5"
+            ],
+            "slot": "video_constraint",
+            "value": "THREE_MINUTE_NARRATED"
+          }
+        ],
+        "evidence_ids": [
+          "R1",
+          "R2",
+          "R4",
+          "R5",
+          "R6"
+        ],
+        "invalidated_evidence_ids": [
+          "R3"
+        ],
+        "revision_cue": 1.0,
+        "schema_version": "ebrt-public-reasoning-card-v0.4",
+        "stance": 1.0,
+        "topic": "Hackathon final-build priority"
+      },
+      "raw_evidence_snapshot": [
+        {
+          "evidence_id": "R1",
+          "temporal_ordinal": 1,
+          "text": "Team Spiral must choose exactly one final-build priority for its hackathon submission."
+        },
+        {
+          "evidence_id": "R2",
+          "temporal_ordinal": 2,
+          "text": "Decision rule: follow the latest valid judging weights. If one criterion is dominant, optimize for that criterion; if Technological Implementation, Design, Potential Impact, and Quality of the Idea are equally weighted, prioritize an end-to-end proof that demonstrates all four in one flow."
+        },
+        {
+          "evidence_id": "R3",
+          "temporal_ordinal": 3,
+          "text": "Current internal brief: Design is the dominant judging criterion, so spend the remaining build time on additional UI polish and make polished screens the demo centerpiece. This brief remains operative unless a later correction explicitly supersedes it."
+        },
+        {
+          "evidence_id": "R4",
+          "temporal_ordinal": 4,
+          "text": "The screens are already judge-readable; a live before-to-after reasoning diff is the missing element needed for an end-to-end proof."
+        },
+        {
+          "evidence_id": "R5",
+          "temporal_ordinal": 5,
+          "text": "The submission video must remain a narrated three-minute demo regardless of which final-build priority is chosen."
+        },
+        {
+          "evidence_id": "R6",
+          "temporal_ordinal": 6,
+          "text": "Latest judging correction: Technological Implementation, Design, Potential Impact, and Quality of the Idea are equally weighted. This guidance explicitly supersedes evidence R3; use the existing readable UI and prioritize an end-to-end proof with a live reasoning diff."
+        }
+      ],
+      "stable_evidence_ids": [
+        "R5"
+      ]
+    },
+    "status": "LOSSLESS_MIGRATION",
+    "vocabulary": {
+      "edge_types": [
+        "supports",
+        "depends_on",
+        "invalidates"
+      ],
+      "node_types": [
+        "evidence",
+        "support",
+        "fact",
+        "constraint"
+      ]
+    }
+  },
+  "legacy_endpoint": {
+    "preserved_byte_frozen_result": true,
+    "walkthrough_contract_passed": false
+  },
+  "schema_version": "ebrt-factorized-lineage-lossless-migration-artifact-v0.5.3",
+  "status": "EXPECTED_LEGACY_DEFECT_REPRODUCED"
+}

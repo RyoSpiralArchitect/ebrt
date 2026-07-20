@@ -1,0 +1,72 @@
+{
+  "claim_boundary": [
+    "This exact closure gold is a post-graph grading oracle and never participates in migration, graph construction, or overlay application.",
+    "The expected sets describe one contaminated engineering regression over the known v0.5.2 lineage defect.",
+    "Exact-set grading rejects missing support, unexpected overclosure, and a direct-versus-inherited classification mismatch."
+  ],
+  "expected_active_evidence_ids": [
+    "R1",
+    "R2",
+    "R4",
+    "R5",
+    "R6"
+  ],
+  "expected_invalidated_evidence_ids": [
+    "R3"
+  ],
+  "fingerprint_sha256": "bf29144daa395c17e99396f79366825ceb61e4c1775e6aec11c1d6146e9e28cb",
+  "gold_id": "hackathon_strategy_factorized_lineage_closure_v0_5_3",
+  "schema_version": "ebrt-factorized-lineage-closure-gold-v0.5.3",
+  "source_case_id": "hackathon_strategy_walkthrough",
+  "status": "LOCKED_POST_GRAPH_GRADING_ONLY",
+  "targets": [
+    {
+      "all_active_evidence_ids": [
+        "R5"
+      ],
+      "direct_active_evidence_ids": [
+        "R5"
+      ],
+      "inherited_active_evidence_ids": [],
+      "slot": "video_constraint",
+      "target_id": "constraint:video_constraint",
+      "target_type": "constraint",
+      "value": "THREE_MINUTE_NARRATED"
+    },
+    {
+      "all_active_evidence_ids": [
+        "R2",
+        "R4",
+        "R6"
+      ],
+      "direct_active_evidence_ids": [
+        "R4",
+        "R6"
+      ],
+      "inherited_active_evidence_ids": [
+        "R2"
+      ],
+      "slot": "demo_centerpiece",
+      "target_id": "fact:demo_centerpiece",
+      "target_type": "fact",
+      "value": "LIVE_REASONING_DIFF"
+    },
+    {
+      "all_active_evidence_ids": [
+        "R2",
+        "R4",
+        "R6"
+      ],
+      "direct_active_evidence_ids": [
+        "R2",
+        "R4",
+        "R6"
+      ],
+      "inherited_active_evidence_ids": [],
+      "slot": "final_priority",
+      "target_id": "fact:final_priority",
+      "target_type": "fact",
+      "value": "END_TO_END_PROOF"
+    }
+  ]
+}
