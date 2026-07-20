@@ -30,11 +30,11 @@ ARTIFACT_RELATIVE = Path("artifacts/actuator_uptake_canary_v0_6_3_1_preflight")
 MAX_FILE_BYTES = 2_000_000
 EXPECTED_POLICY_FILE = (
     4444,
-    "d8c7ba5ac17a6cb710aa658b5957b5fec83ece1d8626c1721c85c767bc7d4de4",
+    "f96fea21f4024a3203c0b341d9d95653e2312caeb9d913f8e01f821a4719c10b",
 )
 EXPECTED_MANIFEST_FILE = (
     1331,
-    "7d88acbe5df1029c93f2030545d52b9b6238c092f2524e4e9593e68f01eb2d42",
+    "d380e72db5f9e4e43cc2f3605b59a64894d21fd9d152a4d9fc8e34194d730245",
 )
 ARMS = ("Z", "C", "D", "X")
 OPERATOR = "evidence_permutation"
@@ -1373,6 +1373,10 @@ def self_test(root: Path = ROOT) -> dict[str, Any]:
     _expect_rejected(
         lambda: _strict_json_bytes(b'{"x":NaN}', label="non-finite probe"),
         "non-finite JSON",
+    )
+    _expect_rejected(
+        lambda: _strict_json_bytes(b'{"x":1e999}', label="overflow probe"),
+        "overflowing JSON number",
     )
     policy_raw = _read_regular(root / POLICY_RELATIVE, label="policy anchor probe")
     _expect_rejected(

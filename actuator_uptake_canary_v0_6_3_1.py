@@ -157,13 +157,24 @@ def _reject_duplicates(pairs: Sequence[tuple[str, Any]]) -> dict[str, Any]:
     return output
 
 
+def _reject_nonfinite_numbers(value: Any, *, label: str) -> None:
+    if isinstance(value, float):
+        _require(math.isfinite(value), "NONFINITE_JSON", label)
+    elif isinstance(value, Mapping):
+        for child in value.values():
+            _reject_nonfinite_numbers(child, label=label)
+    elif isinstance(value, list):
+        for child in value:
+            _reject_nonfinite_numbers(child, label=label)
+
+
 def _strict_json_bytes(value: bytes, *, label: str) -> Any:
     try:
         text = value.decode("utf-8")
     except UnicodeDecodeError as error:
         raise UptakeCanaryError("NON_UTF8_JSON", label) from error
     try:
-        return json.loads(
+        parsed = json.loads(
             text,
             object_pairs_hook=_reject_duplicates,
             parse_constant=_reject_constant,
@@ -172,6 +183,8 @@ def _strict_json_bytes(value: bytes, *, label: str) -> Any:
         raise
     except (TypeError, ValueError, json.JSONDecodeError) as error:
         raise UptakeCanaryError("INVALID_JSON", label) from error
+    _reject_nonfinite_numbers(parsed, label=label)
+    return parsed
 
 
 def _strict_load(path: Path) -> dict[str, Any]:
@@ -1681,6 +1694,10 @@ def run_self_test() -> dict[str, Any]:
             lambda: _strict_json_bytes(b'{"x":NaN}', label="nan"),
             "NONFINITE_JSON",
         )
+        overflowing_json_rejected = _expect_rejected(
+            lambda: _strict_json_bytes(b'{"x":1e999}', label="overflow"),
+            "NONFINITE_JSON",
+        )
         unsealed_payload = _unseal(payload_by_arm["Z"], "unsealed attack")
         unsealed_payload_rejected = _expect_rejected(
             lambda: compile_public_output(
@@ -1933,7 +1950,8 @@ def run_self_test() -> dict[str, Any]:
         and nonvalid_trace_unassessed,
         "unknown_closure_rejected": unknown_rejected
         and duplicate_json_rejected
-        and nonfinite_json_rejected,
+        and nonfinite_json_rejected
+        and overflowing_json_rejected,
         "decision_classifier_total": len(decisions) == 256
         and set(decisions) == known_terminal_statuses
         and incomplete["terminal_decision"] == "INCOMPLETE_NOT_ASSESSED"
