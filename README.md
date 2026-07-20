@@ -143,6 +143,19 @@ and the sealed decision is `PROMOTE_V0_5_5_TEMPORAL_GATE`. This is a
 contaminated network-zero mechanism result over one supplied public program,
 not fresh benchmark or hosted-model evidence.
 
+EBRT v0.5.5 now composes the three byte-sealed v0.5.4 lanes through one
+mechanically generated typed incidence junction. A shared R1-R6 evidence
+ledger is bound once by canonical payload hashes; the two Fact lanes retain
+their local schedules and controls, while the stable Constraint lane remains
+exactly disconnected. The one-lane bundle degenerates byte-exactly to the
+source v0.5.4 C control map, all six three-lane input orders produce the same
+full result bytes, and the explicit block adjoint agrees with full autograd to
+`2.22e-16` and central finite differences to `1.24e-9`. All 10 top-level gates
+and 10 required adversarial subchecks pass, yielding
+`PROMOTE_V0_6_LANE_COMPOSITION_GATE`. This is still a contaminated,
+network-zero public-substrate result: no model, agent, router, tool, generated
+answer, or multi-agent quality comparison participated.
+
 > [!IMPORTANT]
 > v0.1-v0.3.1 are **not** a Transformer implementation, a GPT latent-state
 > editor, or evidence of improved language-model accuracy. v0.4 meaningfully
@@ -179,6 +192,12 @@ not fresh benchmark or hosted-model evidence.
 > independent held-out preregistration, uses two schedules over one contaminated
 > synthetic program, and does not establish semantic discovery, GPT improvement,
 > general causal superiority, or access to model hidden states.
+> v0.5.5 adds deterministic composition of three sealed public trajectories,
+> not execution or coordination of three agents. Its equality junction is a
+> fixed signed incidence program with separate bounded slack, not voting,
+> routing, debate, or learned arbitration. Its local objective decrease and
+> exact block gradients do not establish a better hosted output or general
+> multi-agent reasoning.
 
 ## Why EBRT?
 
@@ -201,8 +220,10 @@ latent-trajectory idea while defining the stricter reachable-control,
 stop-gradient, and nonclaim boundaries used by the current public substrate.
 The [v0.5.3-v0.5.5 roadmap](docs/ROADMAP_V0_5_3_TO_V0_5_5.md) separates the
 vertical work into dependency space, time, and sealed-trajectory multiplicity
-before any v0.6 execution or orchestration claim; its Space and Time milestones
-are now complete.
+before any v0.6 execution or orchestration claim; all three network-zero
+milestones are now complete. The evidence-led v0.6+ execution roadmap is
+defined separately so that hosted outcomes cannot rewrite these substrate
+artifacts: [v0.6+ execution roadmap](docs/ROADMAP_V0_6_PLUS.md).
 
 ## Repository map
 
@@ -268,6 +289,11 @@ benchmark_temporal_adjoint_lineage_v0_5_4.py deterministic A/B/C/D comparison an
 build_temporal_adjoint_lineage_artifact_v0_5_4.py portable network-zero bundle builder and verifier
 policy_lock_temporal_adjoint_lineage_v0_5_4.json exact predecessor, source, schema, gate, and claim contract
 fixtures/temporal_adjoint_lineage_v0_5_4_*.json symbolic event and no-event policies only
+lane_composable_trajectory_v0_5_5.py typed direct-sum junction, block adjoint, isolation, and adversarial gates
+benchmark_lane_composition_v0_5_5.py deterministic split-artifact composition benchmark and rederivation validator
+build_lane_composition_artifact_v0_5_5.py atomic network-zero bundle builder, verifier, and rollback audit
+policy_lock_lane_composition_v0_5_5.json exact v0.5.4 predecessor, source, fixture, artifact, and claim lock
+fixtures/lane_composition_v0_5_5*.json canonical three-lane and exact one-lane-degeneration policies
 docs/RND_BENCHMARK_V0_1.md    protocol, results, limits, and claim ledger
 docs/RND_INSTRUMENTATION_V0_2.md measurement contract and algorithm findings
 docs/RND_DUAL_ROUTE_V0_3.md   terminal invariant result and v0.3.1 direction
@@ -286,7 +312,9 @@ docs/RND_HACKATHON_STRATEGY_WALKTHROUGH_V0_5_2.md preregistration, live diff, st
 docs/EBRT_CORE_THESIS.md       latent north star, corrected control math, and gradient boundaries
 docs/RND_FACTORIZED_LINEAGE_V0_5_3.md network-zero lineage result and contaminated repair boundary
 docs/RND_TEMPORAL_ADJOINT_LINEAGE_V0_5_4.md matched temporal result, derivative audits, and claim boundary
+docs/RND_LANE_COMPOSABLE_TRAJECTORIES_V0_5_5.md completed composition mechanism, audits, and nonclaims
 docs/ROADMAP_V0_5_3_TO_V0_5_5.md Space/Time/Multiplicity gates through v0.6 execution design
+docs/ROADMAP_V0_6_PLUS.md      sealed bundle-to-output, fresh utility, runtime lanes, and latent return
 artifacts/benchmark_v0_1/     committed machine-readable benchmark evidence
 artifacts/demo_v0_1/trace.json committed no-build mechanism trace
 artifacts/benchmark_instrumentation_v0_2/ committed v0.2 measurement evidence
@@ -295,6 +323,7 @@ artifacts/.dual_route_v0_3_holdout_ledger.json canonical terminal attempt record
 artifacts/benchmark_dual_route_v0_3_1_dev/ committed non-promotional DEV evidence
 artifacts/factorized_lineage_v0_5_3/ committed contaminated network-zero lineage regression
 artifacts/temporal_adjoint_lineage_v0_5_4/ committed sealed temporal mechanism and three v0.5.5-compatible lanes
+artifacts/lane_composition_v0_5_5/ committed shared ledger, junction, block audit, controls, and byte-copied lanes
 artifacts/benchmark_language_replay_v0_4_fake_dev/ scripted plumbing evidence only
 artifacts/benchmark_language_replay_v0_4_live_smoke/ boundary-fixed GPT-5.6 DEV canary
 artifacts/benchmark_direct_full_calibration_v0_4_dev/ non-promotional 10-case DEV evidence
@@ -1190,6 +1219,8 @@ retrospectively relabeling failures. See the
 | v0.5.3 autonomously discovers support roles or improves a GPT output | No; the four role bindings are explicit case annotations, the predecessor output is not rerun or regraded, and provider calls are zero |
 | The v0.5.4 exact temporal arm beats its matched controls | Supported only on the frozen contaminated public program: C is below A, node-tied B, and all three locked within-node timing shams for both schedules; 17/17 mechanism gates pass |
 | v0.5.4 proves general temporal reasoning or improves a hosted answer | No; it is network-zero, uses two schedules over one supplied program, and its gradients stop at the local public recurrence |
+| v0.5.5 composes the sealed public trajectories without losing local provenance or exact credit | Supported on one contaminated network-zero bundle: one-lane equivalence is exact, 6/6 lane orders are byte-identical, block/autograd error is `2.22e-16`, finite-difference error is `1.238e-9`, and 10/10 gates plus 10/10 adversarial subchecks pass |
+| v0.5.5 executes or improves a multi-agent system | No; its lanes are deterministic public schedule views, its junction is fixed and unlearned, and provider/model/agent/generated-output calls are zero |
 | Selective replay should be optimized before state sufficiency | Not supported by current evidence; it is paused as a quality direction and remains an unranked future efficiency ablation |
 | EBRT edits hidden states inside a trained Transformer or GPT model | Not implemented |
 | EBRT improves real-world LLM reasoning accuracy | Not established |
@@ -1310,12 +1341,22 @@ category determination.
   sham, and deterministic artifact gates pass. C beats A, node-tied B, and all
   locked within-node timing shams in both schedules, promoting the exact local
   temporal-placement claim only.
-- **Milestone 2.10 — sealed-trajectory multiplicity (prospective):** v0.5.5 may
-  now test one-to-three sealed-lane composition, shared evidence receipts,
-  block credit, and lane isolation without agents or providers.
-  v0.6 execution design is intentionally deferred until those artifacts reveal
-  which substrate claims survive. The intended gates and stop rules are defined
-  in the [vertical research roadmap](docs/ROADMAP_V0_5_3_TO_V0_5_5.md).
+- **Milestone 2.10 — sealed-trajectory multiplicity (network-zero complete):**
+  v0.5.5 composes the two temporal Fact lanes and one disconnected stable
+  Constraint lane under a single typed incidence program. Exact one-lane
+  degeneration, shared-ledger identity, lane isolation, block/autograd/finite-
+  difference agreement, 6/6 full-result order invariance, separate lane/merge
+  bounds, source/artifact tamper rejection, and network-zero publication all
+  pass. The result promotes a separately locked v0.6 execution question; it is
+  not itself multi-agent or final-output evidence.
+- **Milestone 2.11 — hosted execution over sealed public lanes (next locked
+  experiment):** define how real GPT-5.6 executions populate the accepted
+  substrate, preserve blinded budgets and raw-context parity, and produce one
+  final controlled regeneration whose output and lineage are graded separately.
+  The next critical block is the contaminated five-call P/A/B/C/D bundle-to-
+  output regression; superiority is a separate effect flag, not its promotion
+  condition. The exact arms and stop rules are defined in the
+  [evidence-led v0.6+ roadmap](docs/ROADMAP_V0_6_PLUS.md).
 - **Milestone 3 — coherent evaluator experience (provisional Workbench):** a
   deterministic allowlist projection and local read-only Workbench now connect
   Evidence, Event, Revision, every recorded Replay lane, and Final Output Diff.
@@ -1409,9 +1450,11 @@ contaminated dependency regression whose only additions are final/R4 and
 demo/R2. The network-zero v0.5.4 successor then compiles that exact repaired
 program into a temporal recurrence: manual/autograd/finite-difference checks
 pass, C beats its matched node-tied and timing-placement controls in both
-schedules, and the sealed 17-gate decision promotes v0.5.5. Sealed-lane
-composition remains the next gated substrate milestone; the concrete v0.6
-execution design follows only after its completion audit.
+schedules, and the sealed 17-gate decision promotes v0.5.5. The completed
+v0.5.5 successor then composes its three sealed lanes with exact block credit,
+one-lane equivalence, disconnected Constraint isolation, and byte invariance
+across all six input orders. The next work is therefore a separately locked
+hosted execution bridge, not another substrate repair.
 A promotion suite, matched hard-suite comparison, live
 revision application, and any hosted judge sandbox remain pending; there is no
 hosted service in this release.

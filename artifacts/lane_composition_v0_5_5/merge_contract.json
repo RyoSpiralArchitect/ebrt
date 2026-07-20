@@ -1,0 +1,1247 @@
+{
+  "contract": {
+    "arity": 3,
+    "clauses": [
+      {
+        "axis_id": "direct|R1|fact:demo_centerpiece",
+        "clause_id": "eq::correction_early::correction_late::6a36445a19bcc3cd",
+        "incidence": [
+          {
+            "coefficient": 1,
+            "lane_id": "correction_early"
+          },
+          {
+            "coefficient": -1,
+            "lane_id": "correction_late"
+          }
+        ],
+        "left_lane_id": "correction_early",
+        "right_lane_id": "correction_late",
+        "target_value": 0.0
+      },
+      {
+        "axis_id": "direct|R1|fact:final_priority",
+        "clause_id": "eq::correction_early::correction_late::30b287074c31fc29",
+        "incidence": [
+          {
+            "coefficient": 1,
+            "lane_id": "correction_early"
+          },
+          {
+            "coefficient": -1,
+            "lane_id": "correction_late"
+          }
+        ],
+        "left_lane_id": "correction_early",
+        "right_lane_id": "correction_late",
+        "target_value": 0.0
+      },
+      {
+        "axis_id": "direct|R2|fact:demo_centerpiece",
+        "clause_id": "eq::correction_early::correction_late::d04bed2320073dc3",
+        "incidence": [
+          {
+            "coefficient": 1,
+            "lane_id": "correction_early"
+          },
+          {
+            "coefficient": -1,
+            "lane_id": "correction_late"
+          }
+        ],
+        "left_lane_id": "correction_early",
+        "right_lane_id": "correction_late",
+        "target_value": 0.0
+      },
+      {
+        "axis_id": "direct|R2|fact:final_priority",
+        "clause_id": "eq::correction_early::correction_late::aecfa1f2bb7ae50e",
+        "incidence": [
+          {
+            "coefficient": 1,
+            "lane_id": "correction_early"
+          },
+          {
+            "coefficient": -1,
+            "lane_id": "correction_late"
+          }
+        ],
+        "left_lane_id": "correction_early",
+        "right_lane_id": "correction_late",
+        "target_value": 1.0
+      },
+      {
+        "axis_id": "direct|R3|fact:demo_centerpiece",
+        "clause_id": "eq::correction_early::correction_late::9842701e2022a7c1",
+        "incidence": [
+          {
+            "coefficient": 1,
+            "lane_id": "correction_early"
+          },
+          {
+            "coefficient": -1,
+            "lane_id": "correction_late"
+          }
+        ],
+        "left_lane_id": "correction_early",
+        "right_lane_id": "correction_late",
+        "target_value": 0.0
+      },
+      {
+        "axis_id": "direct|R3|fact:final_priority",
+        "clause_id": "eq::correction_early::correction_late::0c4aae894d277434",
+        "incidence": [
+          {
+            "coefficient": 1,
+            "lane_id": "correction_early"
+          },
+          {
+            "coefficient": -1,
+            "lane_id": "correction_late"
+          }
+        ],
+        "left_lane_id": "correction_early",
+        "right_lane_id": "correction_late",
+        "target_value": 0.0
+      },
+      {
+        "axis_id": "direct|R4|fact:demo_centerpiece",
+        "clause_id": "eq::correction_early::correction_late::00bbd8f862d6a84a",
+        "incidence": [
+          {
+            "coefficient": 1,
+            "lane_id": "correction_early"
+          },
+          {
+            "coefficient": -1,
+            "lane_id": "correction_late"
+          }
+        ],
+        "left_lane_id": "correction_early",
+        "right_lane_id": "correction_late",
+        "target_value": 1.0
+      },
+      {
+        "axis_id": "direct|R4|fact:final_priority",
+        "clause_id": "eq::correction_early::correction_late::a83dad5e2c414757",
+        "incidence": [
+          {
+            "coefficient": 1,
+            "lane_id": "correction_early"
+          },
+          {
+            "coefficient": -1,
+            "lane_id": "correction_late"
+          }
+        ],
+        "left_lane_id": "correction_early",
+        "right_lane_id": "correction_late",
+        "target_value": 1.0
+      },
+      {
+        "axis_id": "direct|R5|fact:demo_centerpiece",
+        "clause_id": "eq::correction_early::correction_late::7b9de105f841be4e",
+        "incidence": [
+          {
+            "coefficient": 1,
+            "lane_id": "correction_early"
+          },
+          {
+            "coefficient": -1,
+            "lane_id": "correction_late"
+          }
+        ],
+        "left_lane_id": "correction_early",
+        "right_lane_id": "correction_late",
+        "target_value": 0.0
+      },
+      {
+        "axis_id": "direct|R5|fact:final_priority",
+        "clause_id": "eq::correction_early::correction_late::bf79410b08dc2fb9",
+        "incidence": [
+          {
+            "coefficient": 1,
+            "lane_id": "correction_early"
+          },
+          {
+            "coefficient": -1,
+            "lane_id": "correction_late"
+          }
+        ],
+        "left_lane_id": "correction_early",
+        "right_lane_id": "correction_late",
+        "target_value": 0.0
+      },
+      {
+        "axis_id": "direct|R6|fact:demo_centerpiece",
+        "clause_id": "eq::correction_early::correction_late::80cfdc07c85acbc4",
+        "incidence": [
+          {
+            "coefficient": 1,
+            "lane_id": "correction_early"
+          },
+          {
+            "coefficient": -1,
+            "lane_id": "correction_late"
+          }
+        ],
+        "left_lane_id": "correction_early",
+        "right_lane_id": "correction_late",
+        "target_value": 1.0
+      },
+      {
+        "axis_id": "direct|R6|fact:final_priority",
+        "clause_id": "eq::correction_early::correction_late::9f84061d5de0c771",
+        "incidence": [
+          {
+            "coefficient": 1,
+            "lane_id": "correction_early"
+          },
+          {
+            "coefficient": -1,
+            "lane_id": "correction_late"
+          }
+        ],
+        "left_lane_id": "correction_early",
+        "right_lane_id": "correction_late",
+        "target_value": 1.0
+      },
+      {
+        "axis_id": "inherited|R1|fact:demo_centerpiece",
+        "clause_id": "eq::correction_early::correction_late::7548d41d2c6ed6cb",
+        "incidence": [
+          {
+            "coefficient": 1,
+            "lane_id": "correction_early"
+          },
+          {
+            "coefficient": -1,
+            "lane_id": "correction_late"
+          }
+        ],
+        "left_lane_id": "correction_early",
+        "right_lane_id": "correction_late",
+        "target_value": 0.0
+      },
+      {
+        "axis_id": "inherited|R1|fact:final_priority",
+        "clause_id": "eq::correction_early::correction_late::21c2ab79487e5894",
+        "incidence": [
+          {
+            "coefficient": 1,
+            "lane_id": "correction_early"
+          },
+          {
+            "coefficient": -1,
+            "lane_id": "correction_late"
+          }
+        ],
+        "left_lane_id": "correction_early",
+        "right_lane_id": "correction_late",
+        "target_value": 0.0
+      },
+      {
+        "axis_id": "inherited|R2|fact:demo_centerpiece",
+        "clause_id": "eq::correction_early::correction_late::fa0d7064030084cd",
+        "incidence": [
+          {
+            "coefficient": 1,
+            "lane_id": "correction_early"
+          },
+          {
+            "coefficient": -1,
+            "lane_id": "correction_late"
+          }
+        ],
+        "left_lane_id": "correction_early",
+        "right_lane_id": "correction_late",
+        "target_value": 1.0
+      },
+      {
+        "axis_id": "inherited|R2|fact:final_priority",
+        "clause_id": "eq::correction_early::correction_late::204e68d38248355b",
+        "incidence": [
+          {
+            "coefficient": 1,
+            "lane_id": "correction_early"
+          },
+          {
+            "coefficient": -1,
+            "lane_id": "correction_late"
+          }
+        ],
+        "left_lane_id": "correction_early",
+        "right_lane_id": "correction_late",
+        "target_value": 0.0
+      },
+      {
+        "axis_id": "inherited|R3|fact:demo_centerpiece",
+        "clause_id": "eq::correction_early::correction_late::27e51d4831fec1fc",
+        "incidence": [
+          {
+            "coefficient": 1,
+            "lane_id": "correction_early"
+          },
+          {
+            "coefficient": -1,
+            "lane_id": "correction_late"
+          }
+        ],
+        "left_lane_id": "correction_early",
+        "right_lane_id": "correction_late",
+        "target_value": 0.0
+      },
+      {
+        "axis_id": "inherited|R3|fact:final_priority",
+        "clause_id": "eq::correction_early::correction_late::b9d91fe336d1a719",
+        "incidence": [
+          {
+            "coefficient": 1,
+            "lane_id": "correction_early"
+          },
+          {
+            "coefficient": -1,
+            "lane_id": "correction_late"
+          }
+        ],
+        "left_lane_id": "correction_early",
+        "right_lane_id": "correction_late",
+        "target_value": 0.0
+      },
+      {
+        "axis_id": "inherited|R4|fact:demo_centerpiece",
+        "clause_id": "eq::correction_early::correction_late::69ebe5ae1144be62",
+        "incidence": [
+          {
+            "coefficient": 1,
+            "lane_id": "correction_early"
+          },
+          {
+            "coefficient": -1,
+            "lane_id": "correction_late"
+          }
+        ],
+        "left_lane_id": "correction_early",
+        "right_lane_id": "correction_late",
+        "target_value": 0.0
+      },
+      {
+        "axis_id": "inherited|R4|fact:final_priority",
+        "clause_id": "eq::correction_early::correction_late::4df47873aacc616e",
+        "incidence": [
+          {
+            "coefficient": 1,
+            "lane_id": "correction_early"
+          },
+          {
+            "coefficient": -1,
+            "lane_id": "correction_late"
+          }
+        ],
+        "left_lane_id": "correction_early",
+        "right_lane_id": "correction_late",
+        "target_value": 0.0
+      },
+      {
+        "axis_id": "inherited|R5|fact:demo_centerpiece",
+        "clause_id": "eq::correction_early::correction_late::c3acb928eec499d7",
+        "incidence": [
+          {
+            "coefficient": 1,
+            "lane_id": "correction_early"
+          },
+          {
+            "coefficient": -1,
+            "lane_id": "correction_late"
+          }
+        ],
+        "left_lane_id": "correction_early",
+        "right_lane_id": "correction_late",
+        "target_value": 0.0
+      },
+      {
+        "axis_id": "inherited|R5|fact:final_priority",
+        "clause_id": "eq::correction_early::correction_late::ba06f1ae49e6b4d9",
+        "incidence": [
+          {
+            "coefficient": 1,
+            "lane_id": "correction_early"
+          },
+          {
+            "coefficient": -1,
+            "lane_id": "correction_late"
+          }
+        ],
+        "left_lane_id": "correction_early",
+        "right_lane_id": "correction_late",
+        "target_value": 0.0
+      },
+      {
+        "axis_id": "inherited|R6|fact:demo_centerpiece",
+        "clause_id": "eq::correction_early::correction_late::5714bce362c509e1",
+        "incidence": [
+          {
+            "coefficient": 1,
+            "lane_id": "correction_early"
+          },
+          {
+            "coefficient": -1,
+            "lane_id": "correction_late"
+          }
+        ],
+        "left_lane_id": "correction_early",
+        "right_lane_id": "correction_late",
+        "target_value": 0.0
+      },
+      {
+        "axis_id": "inherited|R6|fact:final_priority",
+        "clause_id": "eq::correction_early::correction_late::ce4e2e62508b7707",
+        "incidence": [
+          {
+            "coefficient": 1,
+            "lane_id": "correction_early"
+          },
+          {
+            "coefficient": -1,
+            "lane_id": "correction_late"
+          }
+        ],
+        "left_lane_id": "correction_early",
+        "right_lane_id": "correction_late",
+        "target_value": 0.0
+      }
+    ],
+    "fingerprint_sha256": "37b5b89aef5d78ec5454de784174605fcbc5f84986cee022b4e3ea1caeeaccd0",
+    "junction_count": 1,
+    "junction_id": "merge::typed_contract",
+    "merge_control_dimension": 24,
+    "objective": "sum_lane_objectives_plus_half_norm_Aq_minus_m_squared_plus_half_norm_m_squared",
+    "operator": "typed_keyed_direct_sum_exact_axis_incidence_v0_5_5",
+    "schema_version": "ebrt-typed-merge-contract-v0.5.5",
+    "weights": []
+  },
+  "controlled_evaluation": {
+    "fingerprint_sha256": "2ee77140ee3be75d98a29052b8280c99485c9c69b7dee8b8cd1620bdde484656",
+    "junction_rows": [
+      {
+        "clause_id": "eq::correction_early::correction_late::6a36445a19bcc3cd",
+        "controlled_residual": 0.0,
+        "merge_control": 0.0,
+        "raw_incidence_aq": 0.0
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::30b287074c31fc29",
+        "controlled_residual": 0.0,
+        "merge_control": 0.0,
+        "raw_incidence_aq": 0.0
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::d04bed2320073dc3",
+        "controlled_residual": 0.0,
+        "merge_control": 0.0,
+        "raw_incidence_aq": 0.0
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::aecfa1f2bb7ae50e",
+        "controlled_residual": 3.530845431098939e-05,
+        "merge_control": 0.0,
+        "raw_incidence_aq": 3.530845431098939e-05
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::9842701e2022a7c1",
+        "controlled_residual": 0.0,
+        "merge_control": 0.0,
+        "raw_incidence_aq": 0.0
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::0c4aae894d277434",
+        "controlled_residual": 0.0,
+        "merge_control": 0.0,
+        "raw_incidence_aq": 0.0
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::00bbd8f862d6a84a",
+        "controlled_residual": -0.18717601994519387,
+        "merge_control": -0.00010833988207524007,
+        "raw_incidence_aq": -0.1872843598272691
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::a83dad5e2c414757",
+        "controlled_residual": -0.18718500056068113,
+        "merge_control": -0.00010833988207524007,
+        "raw_incidence_aq": -0.18729334044275636
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::7b9de105f841be4e",
+        "controlled_residual": 0.0,
+        "merge_control": 0.0,
+        "raw_incidence_aq": 0.0
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::bf79410b08dc2fb9",
+        "controlled_residual": 0.0,
+        "merge_control": 0.0,
+        "raw_incidence_aq": 0.0
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::80cfdc07c85acbc4",
+        "controlled_residual": 0.4370197794342461,
+        "merge_control": 0.00025279305817556014,
+        "raw_incidence_aq": 0.43727257249242163
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::9f84061d5de0c771",
+        "controlled_residual": 0.43698492435956277,
+        "merge_control": 0.00025279305817556014,
+        "raw_incidence_aq": 0.4372377174177383
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::7548d41d2c6ed6cb",
+        "controlled_residual": 0.0,
+        "merge_control": 0.0,
+        "raw_incidence_aq": 0.0
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::21c2ab79487e5894",
+        "controlled_residual": 0.0,
+        "merge_control": 0.0,
+        "raw_incidence_aq": 0.0
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::fa0d7064030084cd",
+        "controlled_residual": 5.8822250300516465e-05,
+        "merge_control": 0.0,
+        "raw_incidence_aq": 5.8822250300516465e-05
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::204e68d38248355b",
+        "controlled_residual": 0.0,
+        "merge_control": 0.0,
+        "raw_incidence_aq": 0.0
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::27e51d4831fec1fc",
+        "controlled_residual": 0.0,
+        "merge_control": 0.0,
+        "raw_incidence_aq": 0.0
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::b9d91fe336d1a719",
+        "controlled_residual": 0.0,
+        "merge_control": 0.0,
+        "raw_incidence_aq": 0.0
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::69ebe5ae1144be62",
+        "controlled_residual": 6.671763086760207e-05,
+        "merge_control": 0.0,
+        "raw_incidence_aq": 6.671763086760207e-05
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::4df47873aacc616e",
+        "controlled_residual": 0.0,
+        "merge_control": 0.0,
+        "raw_incidence_aq": 0.0
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::c3acb928eec499d7",
+        "controlled_residual": 0.0,
+        "merge_control": 0.0,
+        "raw_incidence_aq": 0.0
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::ba06f1ae49e6b4d9",
+        "controlled_residual": 0.0,
+        "merge_control": 0.0,
+        "raw_incidence_aq": 0.0
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::5714bce362c509e1",
+        "controlled_residual": 0.062346882856069895,
+        "merge_control": 3.611329402508002e-05,
+        "raw_incidence_aq": 0.062382996150094974
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::ce4e2e62508b7707",
+        "controlled_residual": 0.0,
+        "merge_control": 0.0,
+        "raw_incidence_aq": 0.0
+      }
+    ],
+    "lane_outputs": [
+      {
+        "lane_id": "correction_early",
+        "terminal": [
+          {
+            "axis_id": "direct|R1|fact:demo_centerpiece",
+            "value": 0.0
+          },
+          {
+            "axis_id": "inherited|R1|fact:demo_centerpiece",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R2|fact:demo_centerpiece",
+            "value": 0.0
+          },
+          {
+            "axis_id": "inherited|R2|fact:demo_centerpiece",
+            "value": 0.7739387231223689
+          },
+          {
+            "axis_id": "direct|R3|fact:demo_centerpiece",
+            "value": 0.0
+          },
+          {
+            "axis_id": "inherited|R3|fact:demo_centerpiece",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R4|fact:demo_centerpiece",
+            "value": 0.5004480367692807
+          },
+          {
+            "axis_id": "inherited|R4|fact:demo_centerpiece",
+            "value": 0.15629120832506077
+          },
+          {
+            "axis_id": "direct|R5|fact:demo_centerpiece",
+            "value": 0.0
+          },
+          {
+            "axis_id": "inherited|R5|fact:demo_centerpiece",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R6|fact:demo_centerpiece",
+            "value": 0.6875872383426643
+          },
+          {
+            "axis_id": "inherited|R6|fact:demo_centerpiece",
+            "value": 0.15625625639247995
+          },
+          {
+            "axis_id": "direct|R1|fact:final_priority",
+            "value": 0.0
+          },
+          {
+            "axis_id": "inherited|R1|fact:final_priority",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R2|fact:final_priority",
+            "value": 0.8908950384251363
+          },
+          {
+            "axis_id": "inherited|R2|fact:final_priority",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R3|fact:final_priority",
+            "value": 0.0
+          },
+          {
+            "axis_id": "inherited|R3|fact:final_priority",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R4|fact:final_priority",
+            "value": 0.5004120631334
+          },
+          {
+            "axis_id": "inherited|R4|fact:final_priority",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R5|fact:final_priority",
+            "value": 0.0
+          },
+          {
+            "axis_id": "inherited|R5|fact:final_priority",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R6|fact:final_priority",
+            "value": 0.6875468327350021
+          },
+          {
+            "axis_id": "inherited|R6|fact:final_priority",
+            "value": 0.0
+          }
+        ],
+        "terminal_loss": 0.40310976950794064
+      },
+      {
+        "lane_id": "correction_late",
+        "terminal": [
+          {
+            "axis_id": "direct|R1|fact:demo_centerpiece",
+            "value": 0.0
+          },
+          {
+            "axis_id": "inherited|R1|fact:demo_centerpiece",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R2|fact:demo_centerpiece",
+            "value": 0.0
+          },
+          {
+            "axis_id": "inherited|R2|fact:demo_centerpiece",
+            "value": 0.7738799008720684
+          },
+          {
+            "axis_id": "direct|R3|fact:demo_centerpiece",
+            "value": 0.0
+          },
+          {
+            "axis_id": "inherited|R3|fact:demo_centerpiece",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R4|fact:demo_centerpiece",
+            "value": 0.6877323965965498
+          },
+          {
+            "axis_id": "inherited|R4|fact:demo_centerpiece",
+            "value": 0.15622449069419317
+          },
+          {
+            "axis_id": "direct|R5|fact:demo_centerpiece",
+            "value": 0.0
+          },
+          {
+            "axis_id": "inherited|R5|fact:demo_centerpiece",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R6|fact:demo_centerpiece",
+            "value": 0.2503146658502427
+          },
+          {
+            "axis_id": "inherited|R6|fact:demo_centerpiece",
+            "value": 0.09387326024238497
+          },
+          {
+            "axis_id": "direct|R1|fact:final_priority",
+            "value": 0.0
+          },
+          {
+            "axis_id": "inherited|R1|fact:final_priority",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R2|fact:final_priority",
+            "value": 0.8908597299708253
+          },
+          {
+            "axis_id": "inherited|R2|fact:final_priority",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R3|fact:final_priority",
+            "value": 0.0
+          },
+          {
+            "axis_id": "inherited|R3|fact:final_priority",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R4|fact:final_priority",
+            "value": 0.6877054035761564
+          },
+          {
+            "axis_id": "inherited|R4|fact:final_priority",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R5|fact:final_priority",
+            "value": 0.0
+          },
+          {
+            "axis_id": "inherited|R5|fact:final_priority",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R6|fact:final_priority",
+            "value": 0.25030911531726374
+          },
+          {
+            "axis_id": "inherited|R6|fact:final_priority",
+            "value": 0.0
+          }
+        ],
+        "terminal_loss": 0.7076818360796722
+      },
+      {
+        "lane_id": "stable_constraint",
+        "terminal": [
+          {
+            "axis_id": "direct|R1|constraint:video_constraint",
+            "value": 0.0
+          },
+          {
+            "axis_id": "inherited|R1|constraint:video_constraint",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R2|constraint:video_constraint",
+            "value": 0.0
+          },
+          {
+            "axis_id": "inherited|R2|constraint:video_constraint",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R3|constraint:video_constraint",
+            "value": 0.0
+          },
+          {
+            "axis_id": "inherited|R3|constraint:video_constraint",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R4|constraint:video_constraint",
+            "value": 0.0
+          },
+          {
+            "axis_id": "inherited|R4|constraint:video_constraint",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R5|constraint:video_constraint",
+            "value": 1.0
+          },
+          {
+            "axis_id": "inherited|R5|constraint:video_constraint",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R6|constraint:video_constraint",
+            "value": 0.0
+          },
+          {
+            "axis_id": "inherited|R6|constraint:video_constraint",
+            "value": 0.0
+          }
+        ],
+        "terminal_loss": 0.0
+      }
+    ],
+    "total_objective": 1.3387428526673435
+  },
+  "fingerprint_sha256": "2394273fcd2e849517611e42957c92811da5d790e6a3d6bbe7e6dfd477462922",
+  "network_calls": 0,
+  "neutral_evaluation": {
+    "fingerprint_sha256": "9716c58a2c3578f2e6142f30a4dcafb4394c8c38a67ebbb178607aee11d895a1",
+    "junction_rows": [
+      {
+        "clause_id": "eq::correction_early::correction_late::6a36445a19bcc3cd",
+        "controlled_residual": 0.0,
+        "merge_control": 0.0,
+        "raw_incidence_aq": 0.0
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::30b287074c31fc29",
+        "controlled_residual": 0.0,
+        "merge_control": 0.0,
+        "raw_incidence_aq": 0.0
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::d04bed2320073dc3",
+        "controlled_residual": 0.0,
+        "merge_control": 0.0,
+        "raw_incidence_aq": 0.0
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::aecfa1f2bb7ae50e",
+        "controlled_residual": 0.0,
+        "merge_control": 0.0,
+        "raw_incidence_aq": 0.0
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::9842701e2022a7c1",
+        "controlled_residual": 0.0,
+        "merge_control": 0.0,
+        "raw_incidence_aq": 0.0
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::0c4aae894d277434",
+        "controlled_residual": 0.0,
+        "merge_control": 0.0,
+        "raw_incidence_aq": 0.0
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::00bbd8f862d6a84a",
+        "controlled_residual": -0.1875,
+        "merge_control": 0.0,
+        "raw_incidence_aq": -0.1875
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::a83dad5e2c414757",
+        "controlled_residual": -0.1875,
+        "merge_control": 0.0,
+        "raw_incidence_aq": -0.1875
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::7b9de105f841be4e",
+        "controlled_residual": 0.0,
+        "merge_control": 0.0,
+        "raw_incidence_aq": 0.0
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::bf79410b08dc2fb9",
+        "controlled_residual": 0.0,
+        "merge_control": 0.0,
+        "raw_incidence_aq": 0.0
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::80cfdc07c85acbc4",
+        "controlled_residual": 0.4375,
+        "merge_control": 0.0,
+        "raw_incidence_aq": 0.4375
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::9f84061d5de0c771",
+        "controlled_residual": 0.4375,
+        "merge_control": 0.0,
+        "raw_incidence_aq": 0.4375
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::7548d41d2c6ed6cb",
+        "controlled_residual": 0.0,
+        "merge_control": 0.0,
+        "raw_incidence_aq": 0.0
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::21c2ab79487e5894",
+        "controlled_residual": 0.0,
+        "merge_control": 0.0,
+        "raw_incidence_aq": 0.0
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::fa0d7064030084cd",
+        "controlled_residual": 0.0,
+        "merge_control": 0.0,
+        "raw_incidence_aq": 0.0
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::204e68d38248355b",
+        "controlled_residual": 0.0,
+        "merge_control": 0.0,
+        "raw_incidence_aq": 0.0
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::27e51d4831fec1fc",
+        "controlled_residual": 0.0,
+        "merge_control": 0.0,
+        "raw_incidence_aq": 0.0
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::b9d91fe336d1a719",
+        "controlled_residual": 0.0,
+        "merge_control": 0.0,
+        "raw_incidence_aq": 0.0
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::69ebe5ae1144be62",
+        "controlled_residual": 0.0,
+        "merge_control": 0.0,
+        "raw_incidence_aq": 0.0
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::4df47873aacc616e",
+        "controlled_residual": 0.0,
+        "merge_control": 0.0,
+        "raw_incidence_aq": 0.0
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::c3acb928eec499d7",
+        "controlled_residual": 0.0,
+        "merge_control": 0.0,
+        "raw_incidence_aq": 0.0
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::ba06f1ae49e6b4d9",
+        "controlled_residual": 0.0,
+        "merge_control": 0.0,
+        "raw_incidence_aq": 0.0
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::5714bce362c509e1",
+        "controlled_residual": 0.0625,
+        "merge_control": 0.0,
+        "raw_incidence_aq": 0.0625
+      },
+      {
+        "clause_id": "eq::correction_early::correction_late::ce4e2e62508b7707",
+        "controlled_residual": 0.0,
+        "merge_control": 0.0,
+        "raw_incidence_aq": 0.0
+      }
+    ],
+    "lane_outputs": [
+      {
+        "lane_id": "correction_early",
+        "terminal": [
+          {
+            "axis_id": "direct|R1|fact:demo_centerpiece",
+            "value": 0.0
+          },
+          {
+            "axis_id": "inherited|R1|fact:demo_centerpiece",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R2|fact:demo_centerpiece",
+            "value": 0.0
+          },
+          {
+            "axis_id": "inherited|R2|fact:demo_centerpiece",
+            "value": 0.7734375
+          },
+          {
+            "axis_id": "direct|R3|fact:demo_centerpiece",
+            "value": 0.0
+          },
+          {
+            "axis_id": "inherited|R3|fact:demo_centerpiece",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R4|fact:demo_centerpiece",
+            "value": 0.5
+          },
+          {
+            "axis_id": "inherited|R4|fact:demo_centerpiece",
+            "value": 0.15625
+          },
+          {
+            "axis_id": "direct|R5|fact:demo_centerpiece",
+            "value": 0.0
+          },
+          {
+            "axis_id": "inherited|R5|fact:demo_centerpiece",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R6|fact:demo_centerpiece",
+            "value": 0.6875
+          },
+          {
+            "axis_id": "inherited|R6|fact:demo_centerpiece",
+            "value": 0.15625
+          },
+          {
+            "axis_id": "direct|R1|fact:final_priority",
+            "value": 0.0
+          },
+          {
+            "axis_id": "inherited|R1|fact:final_priority",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R2|fact:final_priority",
+            "value": 0.890625
+          },
+          {
+            "axis_id": "inherited|R2|fact:final_priority",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R3|fact:final_priority",
+            "value": 0.0
+          },
+          {
+            "axis_id": "inherited|R3|fact:final_priority",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R4|fact:final_priority",
+            "value": 0.5
+          },
+          {
+            "axis_id": "inherited|R4|fact:final_priority",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R5|fact:final_priority",
+            "value": 0.0
+          },
+          {
+            "axis_id": "inherited|R5|fact:final_priority",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R6|fact:final_priority",
+            "value": 0.6875
+          },
+          {
+            "axis_id": "inherited|R6|fact:final_priority",
+            "value": 0.0
+          }
+        ],
+        "terminal_loss": 0.403717041015625
+      },
+      {
+        "lane_id": "correction_late",
+        "terminal": [
+          {
+            "axis_id": "direct|R1|fact:demo_centerpiece",
+            "value": 0.0
+          },
+          {
+            "axis_id": "inherited|R1|fact:demo_centerpiece",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R2|fact:demo_centerpiece",
+            "value": 0.0
+          },
+          {
+            "axis_id": "inherited|R2|fact:demo_centerpiece",
+            "value": 0.7734375
+          },
+          {
+            "axis_id": "direct|R3|fact:demo_centerpiece",
+            "value": 0.0
+          },
+          {
+            "axis_id": "inherited|R3|fact:demo_centerpiece",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R4|fact:demo_centerpiece",
+            "value": 0.6875
+          },
+          {
+            "axis_id": "inherited|R4|fact:demo_centerpiece",
+            "value": 0.15625
+          },
+          {
+            "axis_id": "direct|R5|fact:demo_centerpiece",
+            "value": 0.0
+          },
+          {
+            "axis_id": "inherited|R5|fact:demo_centerpiece",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R6|fact:demo_centerpiece",
+            "value": 0.25
+          },
+          {
+            "axis_id": "inherited|R6|fact:demo_centerpiece",
+            "value": 0.09375
+          },
+          {
+            "axis_id": "direct|R1|fact:final_priority",
+            "value": 0.0
+          },
+          {
+            "axis_id": "inherited|R1|fact:final_priority",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R2|fact:final_priority",
+            "value": 0.890625
+          },
+          {
+            "axis_id": "inherited|R2|fact:final_priority",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R3|fact:final_priority",
+            "value": 0.0
+          },
+          {
+            "axis_id": "inherited|R3|fact:final_priority",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R4|fact:final_priority",
+            "value": 0.6875
+          },
+          {
+            "axis_id": "inherited|R4|fact:final_priority",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R5|fact:final_priority",
+            "value": 0.0
+          },
+          {
+            "axis_id": "inherited|R5|fact:final_priority",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R6|fact:final_priority",
+            "value": 0.25
+          },
+          {
+            "axis_id": "inherited|R6|fact:final_priority",
+            "value": 0.0
+          }
+        ],
+        "terminal_loss": 0.708404541015625
+      },
+      {
+        "lane_id": "stable_constraint",
+        "terminal": [
+          {
+            "axis_id": "direct|R1|constraint:video_constraint",
+            "value": 0.0
+          },
+          {
+            "axis_id": "inherited|R1|constraint:video_constraint",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R2|constraint:video_constraint",
+            "value": 0.0
+          },
+          {
+            "axis_id": "inherited|R2|constraint:video_constraint",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R3|constraint:video_constraint",
+            "value": 0.0
+          },
+          {
+            "axis_id": "inherited|R3|constraint:video_constraint",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R4|constraint:video_constraint",
+            "value": 0.0
+          },
+          {
+            "axis_id": "inherited|R4|constraint:video_constraint",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R5|constraint:video_constraint",
+            "value": 1.0
+          },
+          {
+            "axis_id": "inherited|R5|constraint:video_constraint",
+            "value": 0.0
+          },
+          {
+            "axis_id": "direct|R6|constraint:video_constraint",
+            "value": 0.0
+          },
+          {
+            "axis_id": "inherited|R6|constraint:video_constraint",
+            "value": 0.0
+          }
+        ],
+        "terminal_loss": 0.0
+      }
+    ],
+    "total_objective": 1.34063720703125
+  },
+  "provider_calls": 0,
+  "schema_version": "ebrt-lane-merge-contract-artifact-v0.5.5"
+}

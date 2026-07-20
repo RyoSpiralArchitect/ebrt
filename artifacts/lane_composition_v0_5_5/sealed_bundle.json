@@ -1,0 +1,64 @@
+{
+  "decision_status": "PROMOTE_V0_6_LANE_COMPOSITION_GATE",
+  "fingerprint_sha256": "2dd1c441ab2cd326d80645e9b39518ef4c3c9b20d0099c0f4853f599b995f42f",
+  "fixture_id": "hackathon_strategy_lane_composition_v0_5_5",
+  "junction_count": 1,
+  "lane_ids": [
+    "correction_early",
+    "correction_late",
+    "stable_constraint"
+  ],
+  "network_calls": 0,
+  "one_lane_equivalence": {
+    "fingerprint_sha256": "3e538970f9b393e21a52afa0ad3687ddc459c95aea265be3a5771fc0d8339888",
+    "generated_equivalence_fingerprint_sha256": "c0b1c3c1b7f5c5502be311002f011cf246c31b5e4d8fea32b6fba039cb21b4ff",
+    "source_equivalence_fingerprint_sha256": "c0b1c3c1b7f5c5502be311002f011cf246c31b5e4d8fea32b6fba039cb21b4ff",
+    "status": "PASS",
+    "subchecks": {
+      "control_map_canonical_bytes_exact": true,
+      "equivalence_payload_canonical_bytes_exact": true,
+      "incidence_has_zero_rows": true,
+      "merge_control_vector_empty": true,
+      "objective_exact_source_lane": true,
+      "sealed_lane_bytes_receipted_unchanged": true,
+      "source_gate_pass": true,
+      "source_ledger_valid": true
+    }
+  },
+  "promotion_ready": true,
+  "provider_calls": 0,
+  "schema_version": "ebrt-sealed-lane-composition-bundle-v0.5.5",
+  "sealed_lane_receipts": {
+    "correction_early": {
+      "bytes": 69960,
+      "sealed_lane_fingerprint_sha256": "a1675805e2a33c4ef9a6b17ab9ea75ab8428edb3a1ab01464a4745283e6fba62",
+      "sha256": "799b2d6b10129e63e751054e995d2e5017a2f73af44916d68068ee3c82b72d17",
+      "source_path": "artifacts/temporal_adjoint_lineage_v0_5_4/correction_early_sealed_lane.json"
+    },
+    "correction_late": {
+      "bytes": 69447,
+      "sealed_lane_fingerprint_sha256": "f7256b7866099f6a682ac7bd733acb26f278eac5000a030ef34932151492077a",
+      "sha256": "54c806a29fdf80f9677b5a008e140734e28a201e719a98ce8d312bf34298afc8",
+      "source_path": "artifacts/temporal_adjoint_lineage_v0_5_4/correction_late_sealed_lane.json"
+    },
+    "stable_constraint": {
+      "bytes": 2926,
+      "sealed_lane_fingerprint_sha256": "d1cca589e6eaf4f99ee46fc92c22c830ae51d8bee32c96c3b9185a6a3fbd29a9",
+      "sha256": "379e63f9bfce0af69df2240fe85835b7032efb0de3209773f71f818ba43f40cb",
+      "source_path": "artifacts/temporal_adjoint_lineage_v0_5_4/stable_constraint_sealed_lane.json"
+    }
+  },
+  "source_bundle_fingerprint_sha256": "5bfbe5c07ae05208a403092b1011b1ccbe876d7f8dbe8a692aeac14bd92f8429",
+  "source_gate": {
+    "all_hard_gates_true": true,
+    "decision_status": "PROMOTE_V0_5_5_TEMPORAL_GATE",
+    "fingerprint_sha256": "03422cb71096f7f2eae94bcbb9ba7e274002b550205f17f8d9fce355938f0d20",
+    "manifest_file_sha256": "60423518deee7e6b4bd69678a51d84269378e4725711803c46d079940227913b",
+    "network_calls": 0,
+    "promotion_ready": true,
+    "provider_calls": 0,
+    "self_test_file_sha256": "488b5041ef99b1b8663a03d098a426c7c59a88de4e2a257f03a1f72b24f8c5d4",
+    "self_test_fingerprint_sha256": "cde081b21e9cb99cd004362455cde802cf917c923b37f946c573cef393643511",
+    "status": "PASS"
+  }
+}
