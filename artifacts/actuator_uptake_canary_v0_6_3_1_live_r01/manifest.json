@@ -1,0 +1,63 @@
+{
+  "artifacts": {
+    "attempt_journal.jsonl": {
+      "bytes": 17125,
+      "sha256": "a2906c67f3173d886b1a7da6d8e16fdf9fca9edcee04ce18da0d3f3f2991a521"
+    },
+    "calls.jsonl": {
+      "bytes": 7493,
+      "sha256": "c0e94cf1c05f3bd60f503fcc77801f20b6edea3b557d3df3f5d59580211a5e1a"
+    },
+    "projection_bundle.json": {
+      "bytes": 17512,
+      "sha256": "a87de8b219d7d5f27eade5122f919483d9653948a037929e21b3417c1964e62a"
+    },
+    "provider_inputs.json": {
+      "bytes": 14589,
+      "sha256": "dd2ce281ea5ae08b809980a89c459feb93c1105d7e872288fcd2edff4379ade9"
+    },
+    "report.md": {
+      "bytes": 1671,
+      "sha256": "21eac17967da804013633ca488aca380ad6a480f84618f5350c9b338af9dc470"
+    },
+    "result.json": {
+      "bytes": 33159,
+      "sha256": "0ffa875e76f325ee7b3508915a5a52b05b4cbffab07f50efcd9263142da0ec7b"
+    }
+  },
+  "assessment_status": "ASSESSED",
+  "attempt_block_status": "COMPLETE_EXACT_FOUR_TERMINALS",
+  "claim_boundary": [
+    "This is one sealed four-call actuator-uptake canary, not a population estimate or quality benchmark.",
+    "The sole intentionally treatment-varying semantic payload field is evidence order.",
+    "The provider never sees C/X/D/Z, treatment metadata, gradient values, controller internals, closure roles, gold, or grades.",
+    "The local float64 backward pass ends before JSON; no gradient crosses GPT or the provider boundary.",
+    "Known stale or mixed closures are valid semantic endpoints; only transport, parse, schema, and unknown-ID failures are structural invalidity.",
+    "A positive canary opens only a separately sealed fresh replication; it never directly promotes v0.6.4.",
+    "The fixed serial C-to-X-to-D-to-Z block cannot separate treatment order from temporal or provider drift.",
+    "Provider receipts and execution provenance are operator-attested local records, not provider-signed proof.",
+    "The authorization tag prevents accidental execution from an unreviewed checkout but does not provide global exactly-once semantics across clones.",
+    "The semantic-gold barrier is a locked Path.read_bytes guard, not an operating-system sandbox.",
+    "No result supports hidden-state editing, causal superiority, quality improvement, or general reasoning improvement."
+  ],
+  "fingerprint_sha256": "cc90cb304ee150d07dcece9e8c8b37a015783ecd9e9ee61b8c803995c9dfe743",
+  "policy_lock_fingerprint_sha256": "7f15e08202b3e77a025f82644c04883819d2049d616461a1b07b5cddc637ea66",
+  "result_fingerprint_sha256": "131d64dfe74b99912d5e39b0fdd13d17c69eca0d1361b27a48e75887ec25b8e2",
+  "schema_version": "ebrt-actuator-uptake-live-manifest-v0.6.3.1-r01",
+  "source_snapshot_sha256": {
+    "core": "487f9e97a9210e0fb8ff128341fac919b9722df69181d34676f8cc74ef4dae2e",
+    "fixture": "45103d622540e5c212d8a680de85455544633b76df00b4d37d407c634d25e256",
+    "protocol_note": "73473d9a3474559d6cbb6454d6b5ddc034f438f96923a6697640ab856b9c89f5",
+    "provider_base": "840d019811ecfab2b6bb25f2969d3c27e405b8cc148c068308393c2207c31689",
+    "receipt_contract": "5fd765ec5ca55562e7b712ec48adc6f54588080c276cbfa58aabcb72492666c2",
+    "requirements": "024ff69128d68a1c08bba956e318301500b7aebb7c917b19ff913a9bf5e373d7",
+    "requirements_live": "73a8bd6fd5d0a6aa2ec01c216b1ddc50f2c5f32746bcf907ec7ca3ab793e7c83",
+    "response_boundary": "7f78fce94cb141a4355d3c040010e11e049ff67a3a8c603099d0548a47b7cf03",
+    "runner": "86fd267f13b90dbb7f77d7a5d1e40749158c227d1856091fc5b3eebbaa7b8a01",
+    "zero_call_manifest": "b118576c2e3ffcee66a34831622944fac8e7123270cca7cdad98b8295daf4131",
+    "zero_call_policy": "bde4ad54569c4e71c1745104575756690d632422f1bd589fda4b5c695787c4dd",
+    "zero_call_projection": "a87de8b219d7d5f27eade5122f919483d9653948a037929e21b3417c1964e62a"
+  },
+  "status": "SEALED_LIVE_RESULT",
+  "terminal_decision": "PROMOTE_TO_FRESH_REPLICATION"
+}

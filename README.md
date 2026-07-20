@@ -259,11 +259,10 @@ python3 actuator_uptake_canary_v0_6_3_1.py validate-artifact
 python3 -I -S verify_actuator_uptake_canary_v0_6_3_1_portable.py self-test
 ```
 
-The monolith has no live command and authorizes zero provider calls. A future
-four-call run requires a separate runner, merged authorization lock, and exact-
-commit tag. Even its favorable terminal status is only
+The monolith has no live command and authorizes zero provider calls. Its
+separately authorized four-call successor could return at most
 `PROMOTE_TO_FRESH_REPLICATION`; v0.6.4 stays blocked until a new sealed case
-replicates the directional uptake. No hosted result is claimed here. See the
+replicates any directional uptake. See the
 [`v0.6.3.1 R&D note`](docs/RND_ACTUATOR_UPTAKE_CANARY_V0_6_3_1.md).
 
 The separately reviewed live successor is
@@ -272,13 +271,26 @@ with its own
 [`live-r01 policy lock`](policy_lock_actuator_uptake_canary_v0_6_3_1_live_r01.json)
 and
 [`sealed execution protocol`](docs/RND_ACTUATOR_UPTAKE_CANARY_V0_6_3_1_LIVE_R01.md).
-It is anchored to annotated preflight tag `v0.6.3.1-preflight` at commit
-`c5e1244055e5d7f83493698119549c49df718ed7` and permits exactly one call per
+It was anchored to annotated preflight tag `v0.6.3.1-preflight` at commit
+`c5e1244055e5d7f83493698119549c49df718ed7` and permitted exactly one call per
 arm in `C -> X -> D -> Z` order, with no retry, reorder, resume, or backfill.
-This authorization change contains no live result. Execution remains forbidden
-until the authorization pull request is merged and annotated tag
-`v0.6.3.1-live-r01-authorized` points exactly at that merge commit. Any hosted
-artifact and its independent verifier belong to a later result pull request.
+The separately merged authorization was annotated as
+`v0.6.3.1-live-r01-authorized` (tag object
+`621d6ce5aca04629eefd1f0189635ee84b62e8da`, peeled commit
+`35b84895acb63298a8459dba1e9f3f2a47f4de0f`) and the block was consumed once.
+
+All four calls completed. C, X, D, and Z selected `K_5c1377f2fc`,
+`K_ba42ee466f`, `K_ba42ee466f`, and `K_f41cb3914f`, respectively. The locked
+classifier returned `CHANNEL_OPEN_DIRECTIONAL`,
+`GRADIENT_PLACEMENT_DIRECTIONAL`, and `PROMOTE_TO_FRESH_REPLICATION`; direct
+v0.6.4 promotion remains false. This is one fixed serial block and cannot
+separate evidence-order treatment from temporal or provider drift. The next
+action is fresh preregistered replication, not UI work or v0.6.4. See the
+[`live-r01 result note`](docs/RND_ACTUATOR_UPTAKE_CANARY_V0_6_3_1_LIVE_R01_RESULT.md),
+the
+[`canonical artifact`](artifacts/actuator_uptake_canary_v0_6_3_1_live_r01),
+and the
+[`portable verifier`](verify_actuator_uptake_canary_v0_6_3_1_live_r01.py).
 
 > [!IMPORTANT]
 > v0.1-v0.3.1 are **not** a Transformer implementation, a GPT latent-state
@@ -329,9 +341,12 @@ artifact and its independent verifier belong to a later result pull request.
 > by themselves prove their natural-language answers were semantically wrong.
 > v0.6.3-live-r01 is a consumed one-call terminal artifact, not an actuator-null
 > result: its compiler stopped before X/Z or D/C effects were assessed.
-> v0.6.3.1 is only a zero-call measurement repair. Its local backward pass ends
-> before JSON, synthetic closure round-trips are parser/classifier conformance
-> checks, and no hosted uptake, quality, causality, or population result exists.
+> v0.6.3.1's preflight is a zero-call measurement repair. Its separately
+> authorized live-r01 block observed a directionally preregistered public
+> endpoint difference, but the local backward pass still ends before JSON and
+> the fixed serial one-case block cannot separate treatment from temporal or
+> provider drift. It establishes no quality improvement, causal effect,
+> population reliability, hidden-state editing, or general reasoning result.
 
 ## Why EBRT?
 
@@ -1381,9 +1396,9 @@ retrospectively relabeling failures. See the
 | The v0.6.1 canonical artifact requires the current host or current v0.5.5 tree to validate | No; the post-run pure-stdlib verifier checks the pinned recorded snapshot without importing project/provider packages, reading current v0.5.5 sources, or gating on host runtime. It does not rederive the historical mechanism or authenticate the provider. |
 | A raw full-context restart failed to revise the answer | No; A answered `PROVE`, invalidated R3, and preserved R5, but failed the stricter lineage endpoint because R4 was absent from `final_priority` |
 | v0.6.3-live-r01 establishes a null provider actuator | No; it stopped after one completed call on `EXACT_ONE_CLOSURE_FAILED`, with 15 calls unattempted and all X/Z and D/C effects not assessed |
-| v0.6.3.1 demonstrates hosted actuator uptake | No; it is a zero-call measurement repair that freezes four position-only payloads and a discrete public closure endpoint. Synthetic parser/classifier coverage is not a hosted effect |
-| The v0.6.3.1-live-r01 authorization change is a hosted result | No; it only freezes a four-call runner and lock. Execution remains forbidden until the exact annotated authorization tag exists, and any result belongs to a later pull request |
-| A favorable v0.6.3.1 four-call canary would open v0.6.4 | No; its strongest allowed decision is `PROMOTE_TO_FRESH_REPLICATION`. v0.6.4 remains blocked until a new sealed case replicates the directional result |
+| v0.6.3.1-live-r01 observed a non-zero public endpoint difference | Yes, narrowly: one authorized `C -> X -> D -> Z` block completed 4/4 calls; X and D selected the aligned closure while C selected the alternative and Z the mixed closure, yielding `CHANNEL_OPEN_DIRECTIONAL` and `GRADIENT_PLACEMENT_DIRECTIONAL` |
+| The v0.6.3.1-live-r01 result establishes evidence-order causality or quality improvement | No; evidence order was the sole intentionally varying semantic payload field, but the one fixed serial block cannot separate treatment from temporal/provider drift, and all arms returned the same public answer `VIOLET` |
+| The favorable v0.6.3.1 four-call canary opens v0.6.4 | No; its terminal decision is only `PROMOTE_TO_FRESH_REPLICATION`. v0.6.4 remains blocked until a new sealed case replicates the directional result |
 | Selective replay should be optimized before state sufficiency | Not supported by current evidence; it is paused as a quality direction and remains an unranked future efficiency ablation |
 | EBRT edits hidden states inside a trained Transformer or GPT model | Not implemented |
 | EBRT improves real-world LLM reasoning accuracy | Not established |
