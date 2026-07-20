@@ -269,9 +269,9 @@ The three-minute story is:
 
 ```text
 an answer becomes stale
-  -> EBRT attributes the late event backward over public trajectory state
-  -> GPT-5.6 regenerates once from the full raw context
-  -> the final output changes
+  -> local autograd emits a bounded public-control receipt
+  -> full-context regeneration produces a changed final output
+     (v0.6.1 placement attribution remains NULL)
   -> the IDE verifies whether the new answer is actually supported
 ```
 
@@ -294,27 +294,35 @@ quality study, run a fresh calibration asking only:
 
 Use one operator only: a `bounded_reinspection_schedule`. Every arm contains
 every evidence ID exactly once, the raw evidence remains in the same order, and
-the operator changes only a fixed-rank review schedule under one review budget.
+the operator changes only public priority tiers under one review budget.
 Continuous displacement is compiled into that concrete operation before the
 provider boundary; uninterpreted floats are not sent as if they were an
-execution semantics.
+execution semantics. A zero treatment is encoded as tied priorities plus
+`no_reordering=true`, not mislabeled canonical positional priority.
 
 The minimum matched arms are:
 
 | Arm | Placement | Purpose |
 | --- | --- | --- |
-| Z | identity / zero schedule | no-actuation reference in the same envelope |
+| Z | all priorities tied; `no_reordering=true` | no-actuation reference in the same envelope |
 | C | frozen derangement matched to D in rank multiset, size, and budget | sham placement |
 | D | gradient-derived schedule | tested EBRT placement |
-| X | preregistered maximum-contrast schedule | positive channel control |
+| X | preregistered truth-neutral opposed schedule | positive channel control |
 
 X is mandatory. If D and C match without X, an inert channel and a weak or
-incorrect gradient placement remain observationally indistinguishable. The
-provider-visible scaffold contains neutral node IDs/types, allowed relation
+incorrect gradient placement remain observationally indistinguishable. Each
+canary contains two preregistered, equally valid support paths. X promotes one
+path according to an opaque ID-derived polarity frozen independently of answer
+values, semantic labels, gold correctness, and the EBRT gradient. X validates
+channel wiring only and is excluded from quality comparisons.
+
+The provider-visible scaffold contains neutral node IDs/types, allowed relation
 types, and a symmetric candidate-edge universe. It does not contain accepted
 edges, expected closure, expected answers, answer-adjacent semantic role names,
-or gold support sets. The complete deterministic DAG remains available after
-generation as the local audit and grading substrate.
+or gold support sets. The deterministic local DAG remains the audit substrate,
+but exact topology is diagnostic rather than the unique downstream truth.
+Uptake grading uses necessary-support closure, invalidation absence, and stable
+preservation fields that admit both preregistered valid support paths.
 
 Record three endpoints separately:
 
@@ -325,11 +333,24 @@ quality_status          did the answer/lineage improve? (secondary only)
 ```
 
 Raw byte inequality and a verbatim schedule echo are not downstream uptake.
-Use two fresh cases x two fixed trials x four arms (16 calls), Williams-balanced
-order, and no retry. This is a feasibility canary, not a population estimate.
-Freeze rank-distance and derangement rules before launch. An observable,
-directionally consistent D-versus-C downstream difference is a placement gate,
-not yet a quality win. Do not tune or rerun the completed v0.6.1 case.
+Before any call, freeze a signed controller polarity `q_i^D` and an independent
+opaque positive-control polarity `q_i^X` per evidence ID, plus the exact
+non-echo score
+
+```text
+alignment(output, q) = sum(q_i for i in active necessary-support closure)
+```
+
+Invalidated and stable-only IDs are excluded from this score and remain separate
+strict endpoints. Score parsed typed fields only, never free-text rationale or
+the `inspection_plan` receipt. Use two fresh cases x two fixed trials x four
+arms (16 calls), Williams-balanced order, and no retry. Evaluate X-versus-Z
+under `q^X` and D-versus-C under `q^D`. Each gate requires positive aggregate
+paired alignment and the expected sign in at least three of four complete
+blocks; an incomplete block makes the corresponding gate `NOT_ASSESSED`.
+Freeze both polarities, rank distance, derangement, parser, and thresholds
+before launch. This is a feasibility canary, not a population estimate or
+quality win. Do not tune or rerun the completed v0.6.1 case.
 
 If X does not propagate, freeze this operator as provider-inert. If X propagates
 but D does not differ directionally from C, freeze the gradient placement as
@@ -338,10 +359,11 @@ contracts or searching many unreported prompt channels.
 
 ## v0.6.4 — Scaffold Aperture
 
-Proceed only if v0.6.3 establishes channel adherence and downstream
-propagation. Keep the promoted actuator, projection, raw history, output
-contract, and budgets fixed, then test the separate hypothesis that a complete
-answer-adjacent DAG saturates the provider-visible control surface:
+Proceed only if v0.6.3 establishes channel adherence, downstream propagation,
+and a directionally attributable D-versus-C placement effect. Keep the
+promoted actuator, projection, raw history, output contract, and budgets fixed,
+then test the separate hypothesis that a complete answer-adjacent DAG saturates
+the provider-visible control surface:
 
 ```text
 scaffold:  none | partial | full
@@ -353,6 +375,15 @@ directional D-minus-C downstream effect smaller under the full scaffold and
 larger under the partial scaffold? Keep a fixed-size envelope across aperture
 conditions by retaining the same candidate rows and changing only their state
 (`UNAVAILABLE`, `CANDIDATE`, or `FIXED`). Report actual token differences.
+
+Freeze two new cases x three trials x six arms (36 calls), one complete
+six-sequence Williams block, before launch. Any missing arm makes aperture
+selection `NOT_ASSESSED`. Select the smallest scaffold only if it preserves
+schema validity and auditable necessary-support/invalidation/stable fields in
+all six blocks, retains positive aggregate D-versus-C alignment with the
+expected sign in at least four of six blocks, and satisfies the preregistered
+interaction threshold against `full`. These are sufficiency conditions, not a
+quality-improvement claim.
 
 This stage may support the narrow statement that scaffold density moderates a
 specific public actuator. It cannot show that partial DAGs are generally
@@ -384,14 +415,20 @@ it replaces an older one in the promoted path. Historical modules and artifacts
 remain immutable evidence rather than being rewritten to resemble the
 monolith.
 
+The rewrite is accepted only if network-zero differential fixtures show
+byte-identical raw projection, local control map, actuator schedule, provider
+payload, output schema, and strict grading trace between the promoted modular
+path and the monolith. This equivalence gate prevents simplification from
+silently creating a new, uncalibrated intervention.
+
 ## v0.7 — Fresh Matched Hosted Evaluation
 
 v0.7 asks the first quality question only after the v0.6.3 uptake gate,
 v0.6.4 aperture decision, and monolith convergence check:
 
-> On a fresh frozen suite where control placement can matter, does composed
-> EBRT control outperform matched public-control and text-only baselines under
-> equal full-context generation budgets?
+> On a fresh frozen suite where control placement can matter, does the promoted
+> EBRT actuator outperform matched sham, zero-control, and text-only baselines
+> under equal full-context generation budgets?
 
 The suite must combine required evidence, later-invalidated evidence, a
 semantically plausible distractor, and an unrelated stable fact. A strict pass
@@ -401,11 +438,14 @@ and stable-fact preservation.
 After a two-case contract smoke excluded from analysis, use 10 fresh cases x 2
 trials x 5 post-event arms (100 analyzed calls) with the frozen ten-sequence
 Williams order. Pre-event references may be added for UI diffs but are excluded
-from the primary comparison. The arms are raw restart, textual envelope,
-single-lane temporal control, matched composed sham, and exact composed control. Primary comparison
-is exact composed control versus the matched composed sham; exact composed
-versus single-lane control isolates whether multiplicity adds value. Report
-paired differences and McNemar intervals only when the block is complete.
+from the primary comparison. The arms are raw restart, matched textual revision
+envelope, the explicit actuator with identity placement, the explicit actuator
+with a frozen matched sham placement, and the same actuator with
+gradient-derived placement. The primary comparison is gradient placement versus
+the matched sham. This evaluation exercises only the converged monolith path;
+lane multiplicity remains a later research question rather than entering the
+product runtime without evidence. Report paired differences and McNemar
+intervals only when the block is complete.
 
 Decision readiness requires at least 18/20 complete five-arm blocks and no
 differential arm attrition. Otherwise semantic status is `NOT_ASSESSED`.
