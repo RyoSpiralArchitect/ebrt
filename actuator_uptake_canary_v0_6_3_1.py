@@ -1054,10 +1054,23 @@ def _expand_known_closure(closure_id: str, case: Mapping[str, Any]) -> dict[str,
                 "relation_type": "invalidates",
             }
         )
+    graph_nodes = list(selected)
+    if late_event in selected and invalidated not in selected:
+        graph_nodes.append(invalidated)
+    graph_nodes.extend(["PUBLIC_DECISION", "PUBLIC_RECORD_FORMAT"])
+    graph_node_set = set(graph_nodes)
+    _require(
+        all(
+            edge["source_node_id"] in graph_node_set
+            and edge["target_node_id"] in graph_node_set
+            for edge in graph_edges
+        ),
+        "PUBLIC_GRAPH_ENDPOINT_MISSING",
+    )
     return {
         "selected_evidence_ids": list(selected),
         "expanded_public_graph": {
-            "nodes": list(selected) + ["PUBLIC_DECISION", "PUBLIC_RECORD_FORMAT"],
+            "nodes": graph_nodes,
             "edges": graph_edges,
         },
         "public_contract_checks": {
@@ -1656,6 +1669,7 @@ def run_self_test() -> dict[str, Any]:
         }
         candidate_ids = fixture_audit["candidate_ids"]
         roundtrips: list[bool] = []
+        graph_endpoints_closed: list[bool] = []
         compiled_by_arm_and_id: dict[str, dict[str, dict[str, Any]]] = {
             arm: {} for arm in ARMS
         }
@@ -1669,6 +1683,16 @@ def run_self_test() -> dict[str, Any]:
                 roundtrips.append(parsed.model_dump(mode="json") == output)
                 compiled = compile_public_output(
                     output, payload=payload_by_arm[arm], case=fixture["case"]
+                )
+                graph = compiled["expanded_public_graph"]
+                graph_nodes = set(graph["nodes"])
+                graph_endpoints_closed.append(
+                    len(graph_nodes) == len(graph["nodes"])
+                    and all(
+                        edge["source_node_id"] in graph_nodes
+                        and edge["target_node_id"] in graph_nodes
+                        for edge in graph["edges"]
+                    )
                 )
                 compiled_by_arm_and_id[arm][closure_id] = compiled
                 endpoints_by_arm_and_id[arm][closure_id] = grade_endpoint(
@@ -1956,7 +1980,8 @@ def run_self_test() -> dict[str, Any]:
         and unsealed_payload_rejected,
         "four_payloads_presealed": len(payloads) == 4
         and len({payload["fingerprint_sha256"] for payload in payloads}) == 4,
-        "all_known_closures_roundtrip": all(roundtrips),
+        "all_known_closures_roundtrip": all(roundtrips)
+        and all(graph_endpoints_closed),
         "semantic_failures_are_endpoints": stale_compiled_without_error
         and nonvalid_trace_unassessed,
         "unknown_closure_rejected": unknown_rejected

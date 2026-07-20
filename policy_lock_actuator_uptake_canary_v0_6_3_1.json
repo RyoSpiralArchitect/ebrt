@@ -28,7 +28,7 @@
     "A future four-call execution requires a separate merged authorization lock and exact-commit tag.",
     "No result here supports hidden-state editing, attention/KV claims, quality improvement, or general reasoning improvement."
   ],
-  "fingerprint_sha256": "c6fe0e5735d0a5f222d72055dd365f6fef0e7bf5d7dcd7548f45d56893ac7836",
+  "fingerprint_sha256": "daee1ca7a54a6bea06e40b58b2da6af821c389044c5ee3e251c1546661dfde54",
   "protocol": {
     "arms": [
       "Z",
@@ -133,9 +133,9 @@
   "schema_version": "ebrt-actuator-uptake-policy-lock-v0.6.3.1",
   "sources": {
     "core": {
-      "bytes": 87702,
+      "bytes": 88677,
       "path": "actuator_uptake_canary_v0_6_3_1.py",
-      "sha256": "b0d91ee8eaccf5f578301a4d2be834b602e6b62ef638b47028dc72e70c2ba6db"
+      "sha256": "487f9e97a9210e0fb8ff128341fac919b9722df69181d34676f8cc74ef4dae2e"
     },
     "fixture": {
       "bytes": 3997,
