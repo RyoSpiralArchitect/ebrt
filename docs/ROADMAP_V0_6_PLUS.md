@@ -1,6 +1,6 @@
 # EBRT v0.6+ — Execution, Evaluation, and Orchestration Roadmap
 
-Status: **v0.6.0 PREFLIGHT PASS; v0.6.1 FIVE-CALL BLOCK COMPLETE; GATE HELD**
+Status: **v0.6.0 PREFLIGHT PASS; v0.6.1 FIVE-CALL BLOCK COMPLETE, GATE HELD; v0.6.3 NETWORK-ZERO PREFLIGHT PASS, LIVE NOT AUTHORIZED**
 
 The one allowed v0.6.1 block ran on 2026-07-20 in the preregistered order
 `P -> A -> B -> D -> C`. All five calls completed and the committed artifact
@@ -282,6 +282,12 @@ general-accuracy claim.
 
 ## v0.6.3 — Provider Actuator Calibration Canary
 
+The monolithic network-zero implementation now records `PASS_NETWORK_ZERO`
+with 20/20 hard gates and a canonical
+`READY_ZERO_CALL_PREFLIGHT_ONLY` artifact. It seals 16 future payloads while
+making zero network/provider calls; no hosted execution is authorized or
+observed in this namespace.
+
 v0.6.1 showed that the supplied typed DAG reached GPT but did not show that
 continuous control placement did: B, D, and C were byte-identical, while their
 total token cost was roughly 6.4-6.6 times raw A. That result cannot distinguish
@@ -305,16 +311,22 @@ The minimum matched arms are:
 | Arm | Placement | Purpose |
 | --- | --- | --- |
 | Z | all priorities tied; `no_reordering=true` | no-actuation reference in the same envelope |
-| C | frozen derangement matched to D in rank multiset, size, and budget | sham placement |
+| C | frozen anti-placement derangement matched to D in rank multiset, size, and budget | construct-aligned anti-control |
 | D | gradient-derived schedule | tested EBRT placement |
 | X | preregistered truth-neutral opposed schedule | positive channel control |
 
 X is mandatory. If D and C match without X, an inert channel and a weak or
 incorrect gradient placement remain observationally indistinguishable. Each
 canary contains two preregistered, equally valid support paths. X promotes one
-path according to an opaque ID-derived polarity frozen independently of answer
-values, semantic labels, gold correctness, and the EBRT gradient. X validates
-channel wiring only and is excluded from quality comparisons.
+path using the immediate predecessor branch head plus an opaque case-ID rule.
+The runtime rule does not read the answer value, the EBRT gradient, or provider
+output, but the cases/controller were designed later, so broader study-design
+selection independence is not claimed. The rule intentionally uses the private
+equivalence class containing those two paths and must not be described as
+gold-free. Both paths imply the same valid
+answer, and neither path is privileged as more correct. The frozen case rule
+selects opposite path members across the two cases. X validates channel wiring
+only and is excluded from quality comparisons.
 
 The provider-visible scaffold contains neutral node IDs/types, allowed relation
 types, and a symmetric candidate-edge universe. It does not contain accepted
@@ -322,7 +334,13 @@ edges, expected closure, expected answers, answer-adjacent semantic role names,
 or gold support sets. The deterministic local DAG remains the audit substrate,
 but exact topology is diagnostic rather than the unique downstream truth.
 Uptake grading uses necessary-support closure, invalidation absence, and stable
-preservation fields that admit both preregistered valid support paths.
+preservation fields that admit both preregistered valid support paths. Write the
+paths as `P0 = K union A0` and `P1 = K union A1`, where `K` is common support and
+the disjoint alternative sets `A0` and `A1` have equal cardinality. A scored
+active closure must equal exactly P0 or P1; a union, partial path, or mixed path
+is a contract failure rather than extra alignment credit. Closure is rederived
+locally from the selected candidate-edge graph and is never accepted from an
+output-declared closure field.
 
 Record three endpoints separately:
 
@@ -334,28 +352,63 @@ quality_status          did the answer/lineage improve? (secondary only)
 
 Raw byte inequality and a verbatim schedule echo are not downstream uptake.
 Before any call, freeze a signed controller polarity `q_i^D` and an independent
-opaque positive-control polarity `q_i^X` per evidence ID, plus the exact
-non-echo score
+opaque-rule positive-control polarity `q_i^X` per evidence ID. Center each
+polarity over the path-discriminating eligible IDs and normalize it to unit L1
+norm; common, invalidated, and stable-only IDs receive zero score. A nonfinite or
+zero-norm `q^D`, or tied P0/P1 aggregate under `q^D`, is a zero-call preflight
+stop. Freeze the exact non-echo score
 
 ```text
 alignment(output, q) = sum(q_i for i in active necessary-support closure)
+delta_XZ = alignment(X, q^X) - alignment(Z, q^X)
+delta_DC = alignment(D, q^D) - alignment(C, q^D)
 ```
 
 Invalidated and stable-only IDs are excluded from this score and remain separate
 strict endpoints. Score parsed typed fields only, never free-text rationale or
-the `inspection_plan` receipt. Use two fresh cases x two fixed trials x four
-arms (16 calls), Williams-balanced order, and no retry. Evaluate X-versus-Z
-under `q^X` and D-versus-C under `q^D`. Each gate requires positive aggregate
-paired alignment and the expected sign in at least three of four complete
-blocks; an incomplete block makes the corresponding gate `NOT_ASSESSED`.
-Freeze both polarities, rank distance, derangement, parser, and thresholds
-before launch. This is a feasibility canary, not a population estimate or
-quality win. Do not tune or rerun the completed v0.6.1 case.
+the `inspection_plan` receipt. C must preserve D's rank/tier multiset, size, and
+budget while having no eligible fixed point, different provider bytes after
+projection, and strictly lower frozen input alignment under `q^D`.
 
-If X does not propagate, freeze this operator as provider-inert. If X propagates
-but D does not differ directionally from C, freeze the gradient placement as
-null under this surrogate. Do not rescue either result by relaxing lineage
-contracts or searching many unreported prompt channels.
+Use two fresh cases x two fixed trials x four arms (16 calls), no retry, and the
+following complete Williams mapping:
+
+```text
+case_1 / trial_1: Z C X D
+case_2 / trial_1: C D Z X
+case_1 / trial_2: D X C Z
+case_2 / trial_2: X Z D C
+```
+
+This balances position and first-order carryover over the whole block, not
+within either case. Evaluate X-versus-Z under `q^X` and D-versus-C under `q^D`.
+Each gate requires positive aggregate paired alignment and the expected sign in
+at least three of four complete blocks. Any incomplete block makes the effect
+gates `NOT_ASSESSED`. Freeze both polarities, rank distance, derangement,
+parser, numeric tolerance, and all 16 provider payloads before launch.
+
+The network-zero conformance outputs exercise both exact path coordinates and
+alignment arithmetic only. They do not instantiate hosted Z/C/D/X effects, and
+no synthetic X-versus-Z or D-versus-C delta is a hard gate.
+
+The D schedule and the D endpoint deliberately share `q^D`; this is a
+construct-aligned actuator calibration against a matched anti-placement
+control, not independent validation or evidence
+of reasoning quality. The terminal statuses are exact:
+
+```text
+ZERO_CALL_PREFLIGHT_STOP          a network-zero hard gate failed
+INCOMPLETE_NOT_ASSESSED           a call, receipt, parser, or block failed
+STOP_OUTPUT_CONTRACT              exact-one closure, invalidation, or stable preservation failed
+STOP_CHANNEL_ADHERENCE_NULL       X did not consume its schedule
+STOP_ACTUATOR_ECHO_ONLY           X echoed the schedule without non-echo propagation
+STOP_GRADIENT_PLACEMENT_NULL      X propagated but D did not exceed C directionally
+PROMOTE_V0_6_4_ACTUATOR_GATE      every frozen gate passed
+```
+
+This is a feasibility canary, not a population estimate or quality win. Do not
+tune or rerun the completed v0.6.1 case, relax lineage contracts, or search many
+unreported prompt channels to rescue a null result.
 
 ## v0.6.4 — Scaffold Aperture
 
@@ -367,7 +420,7 @@ the provider-visible control surface:
 
 ```text
 scaffold:  none | partial | full
-placement: sham | gradient
+placement: anti-control | gradient
 ```
 
 The primary endpoint is the interaction, not a best-arm score: is the
@@ -427,8 +480,9 @@ v0.7 asks the first quality question only after the v0.6.3 uptake gate,
 v0.6.4 aperture decision, and monolith convergence check:
 
 > On a fresh frozen suite where control placement can matter, does the promoted
-> EBRT actuator outperform matched sham, zero-control, and text-only baselines
-> under equal full-context generation budgets?
+> EBRT actuator outperform its matched anti-placement construct control,
+> zero-control, and text-only baselines under equal full-context generation
+> budgets?
 
 The suite must combine required evidence, later-invalidated evidence, a
 semantically plausible distractor, and an unrelated stable fact. A strict pass
@@ -440,9 +494,10 @@ trials x 5 post-event arms (100 analyzed calls) with the frozen ten-sequence
 Williams order. Pre-event references may be added for UI diffs but are excluded
 from the primary comparison. The arms are raw restart, matched textual revision
 envelope, the explicit actuator with identity placement, the explicit actuator
-with a frozen matched sham placement, and the same actuator with
+with the frozen matched anti-placement, and the same actuator with
 gradient-derived placement. The primary comparison is gradient placement versus
-the matched sham. This evaluation exercises only the converged monolith path;
+the anti-placement construct control. This evaluation exercises only the
+converged monolith path;
 lane multiplicity remains a later research question rather than entering the
 product runtime without evidence. Report paired differences and McNemar
 intervals only when the block is complete.
@@ -509,7 +564,7 @@ control. Novelty is not allowed to rescue a failed v0.6-v0.8 endpoint.
 | v0.6.0 | the exact sealed bundle has a deterministic provider-safe projection | any hosted execution or answer improvement |
 | v0.6.1 | a real full-context bundle-to-output path and separately graded answer/lineage effect | controlled superiority, general quality, or gradients through the hosted model |
 | v0.6.2 | a judge-readable, reproducible Reasoning IDE workflow | a final frontend or a population-level algorithm claim |
-| v0.6.3 | the hosted provider observably consumes one bounded public actuator and gradient placement differs directionally from a matched sham | that the changed output is better or that placement generalizes |
+| v0.6.3 | the hosted provider observably consumes one bounded public actuator and gradient placement differs directionally from its matched anti-placement construct control | that the changed output is better or that placement generalizes |
 | v0.6.4 | scaffold density moderates that fixed actuator under a matched aperture experiment | that partial scaffolds or the actuator generalize |
 | v0.7 | a paired effect on one fresh frozen hosted suite | provider- or task-general superiority |
 | v0.8 | independently executed same-model public lanes can be sealed before outcome and composed into one regeneration | autonomous agents, heterogeneous superiority, or optimal routing |

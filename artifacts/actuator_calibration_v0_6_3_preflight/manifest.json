@@ -1,0 +1,91 @@
+{
+  "artifact_receipts": {
+    "controller_audit.json": {
+      "bytes": 10708,
+      "path": "artifacts/actuator_calibration_v0_6_3_preflight/controller_audit.json",
+      "sha256": "34dd72b1c65a7b3e0f9d2435a94053c4023980e001f9b7f786f0380a57436242"
+    },
+    "projection_bundle.json": {
+      "bytes": 147098,
+      "path": "artifacts/actuator_calibration_v0_6_3_preflight/projection_bundle.json",
+      "sha256": "ffb6d232fb77131b2f978a725ed8564e5dc42481763235eaf3f52ac57ab3a2a4"
+    },
+    "self_test.json": {
+      "bytes": 9450,
+      "path": "artifacts/actuator_calibration_v0_6_3_preflight/self_test.json",
+      "sha256": "a8f6f38967422eeb50ec75824955f987bbc4d215473408be55f5018ba513aa4d"
+    }
+  },
+  "claim_boundary": [
+    "This lock authorizes only deterministic network-zero preflight construction.",
+    "The local float64 backward pass ends before JSON and no gradient crosses a hosted provider.",
+    "Both exact valid closures are conformance coordinates, not simulated hosted outputs.",
+    "No synthetic X-Z or D-C delta is a hard gate or evidence of provider uptake.",
+    "A future 16-call block requires explicit authorization after this lock; this file grants none.",
+    "No result here supports hidden-state editing, causal superiority, quality improvement, or general reasoning improvement."
+  ],
+  "controller_audit_fingerprint_sha256": "98abc33f4bcb434d7e3bbd31a7e821330f1aed40a4c7301d77603761b8957da3",
+  "fingerprint_sha256": "c924af71cfa24f991b84e9c98b0b19d36b02788b12d89faaec46a7821ae349d2",
+  "handoff_status": "AWAIT_EXPLICIT_LIVE_AUTHORIZATION",
+  "hard_gates": {
+    "c_eligible_derangement": true,
+    "central_finite_difference_agreement": true,
+    "d_input_alignment_exceeds_c": true,
+    "deterministic_double_projection": true,
+    "exact_one_closure_enforced": true,
+    "inspection_receipt_excluded_from_alignment": true,
+    "matched_schedule_geometry": true,
+    "network_calls_zero": true,
+    "non_actuator_payload_fields_matched": true,
+    "opposite_case_positive_controls": true,
+    "output_contract_roundtrip": true,
+    "p0_p1_alignment_arithmetic_exact": true,
+    "provider_payloads_leak_free": true,
+    "real_float64_backward": true,
+    "sixteen_payloads_presealed": true,
+    "strict_fixture_contract": true,
+    "symmetric_candidate_universe": true,
+    "unit_l1_polarities": true,
+    "williams_four_block_balance": true,
+    "z_true_no_reordering": true
+  },
+  "live_execution_authorized": false,
+  "network_calls": 0,
+  "policy_lock": {
+    "bytes": 5306,
+    "path": "policy_lock_actuator_calibration_v0_6_3.json",
+    "sha256": "ea851d9f8298c608e926e62695425b78c7e7ce265f36217d69b3e3e9d9a48dcc"
+  },
+  "projection_fingerprint_sha256": "c817e45c27f6b4a94696a8519fe6b0130c5f66e97966413914fda42d57eb1588",
+  "provider_calls": 0,
+  "schema_version": "ebrt-actuator-calibration-preflight-manifest-v0.6.3",
+  "self_test_fingerprint_sha256": "57c4fed16f80ffa4b9c290bd4971530020d67548212d6aaa8af182d8c234a80f",
+  "source_receipts": {
+    "core": {
+      "bytes": 93169,
+      "path": "actuator_calibration_v0_6_3.py",
+      "sha256": "6913ef5205de35a1129796765bee8434c6387c53dc5b70e62be78ba2a4700837"
+    },
+    "fixture": {
+      "bytes": 12477,
+      "path": "fixtures/actuator_calibration_v0_6_3.json",
+      "sha256": "987f1fb0d5aca8f0d33a49c3476a78bbdde4dd8b394d59235e8c6dd531839a86"
+    },
+    "post_call_gold": {
+      "bytes": 1511,
+      "path": "fixtures/actuator_calibration_gold_v0_6_3.json",
+      "sha256": "3d58dd75b310b92ae3aa140eaeb7728febeb6c043d03c0ebb1306dd38a6606e6"
+    },
+    "protocol_note": {
+      "bytes": 9233,
+      "path": "docs/RND_ACTUATOR_CALIBRATION_V0_6_3.md",
+      "sha256": "c96e2a8ed0e24f0d0677db527954600c5713e092356fb85773bcabe564c19636"
+    },
+    "requirements": {
+      "bytes": 28,
+      "path": "requirements.txt",
+      "sha256": "024ff69128d68a1c08bba956e318301500b7aebb7c917b19ff913a9bf5e373d7"
+    }
+  },
+  "status": "READY_ZERO_CALL_PREFLIGHT_ONLY"
+}

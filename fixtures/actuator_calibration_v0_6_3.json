@@ -1,0 +1,270 @@
+{
+  "schema_version": "ebrt-actuator-calibration-fixture-v0.6.3",
+  "status": "LOCKED_NETWORK_ZERO_PREFLIGHT_INPUT",
+  "operator": "bounded_reinspection_schedule",
+  "review_budget": 3,
+  "active_priority_tiers": [3, 2, 1],
+  "arms": ["Z", "C", "D", "X"],
+  "cases": [
+    {
+      "case_id": "relay_bay_revision_a",
+      "checkpoint_id": "relay_bay_revision_a:post_event",
+      "question": "Which bay is active for shipment K after applying the latest valid evidence? Answer BLUE or AMBER.",
+      "answer_choices": ["BLUE", "AMBER"],
+      "decision_slots": [
+        {
+          "slot_id": "primary_decision",
+          "allowed_values": ["BLUE_BAY", "AMBER_BAY"]
+        },
+        {
+          "slot_id": "stable_constraint",
+          "allowed_values": ["SIGNED_JSON"]
+        }
+      ],
+      "raw_evidence": [
+        {
+          "evidence_id": "E1",
+          "text": "Certified routing rule: one complete registry chain is sufficient to establish the active bay for shipment K."
+        },
+        {
+          "evidence_id": "E2",
+          "text": "Registry channel A records bay BLUE for shipment K and is valid for the current routing epoch."
+        },
+        {
+          "evidence_id": "E3",
+          "text": "Independent signed controller notice CN-41 records bay BLUE for shipment K; it is valid when paired with its verification receipt."
+        },
+        {
+          "evidence_id": "E4",
+          "text": "Verification receipt V-41 authenticates controller notice CN-41 for the current routing epoch."
+        },
+        {
+          "evidence_id": "E5",
+          "text": "Legacy dispatch note L-9 records bay AMBER and remains usable unless a later revocation names it."
+        },
+        {
+          "evidence_id": "E6",
+          "text": "Latest revocation: legacy dispatch note L-9 is withdrawn. Use one complete currently certified chain; E5 is invalidated."
+        },
+        {
+          "evidence_id": "E7",
+          "text": "The final machine-readable record must remain SIGNED_JSON regardless of the selected bay."
+        }
+      ],
+      "candidate_scaffold": {
+        "schema_version": "ebrt-neutral-candidate-scaffold-v0.6.3",
+        "allowed_relation_types": ["supports", "depends_on", "invalidates"],
+        "nodes": [
+          {"node_id": "E1", "node_type": "evidence"},
+          {"node_id": "E2", "node_type": "evidence"},
+          {"node_id": "E3", "node_type": "evidence"},
+          {"node_id": "E4", "node_type": "evidence"},
+          {"node_id": "E5", "node_type": "evidence"},
+          {"node_id": "E6", "node_type": "evidence"},
+          {"node_id": "E7", "node_type": "evidence"},
+          {"node_id": "N08", "node_type": "support"},
+          {"node_id": "N09", "node_type": "support"},
+          {"node_id": "N10", "node_type": "support"},
+          {"node_id": "N11", "node_type": "fact"},
+          {"node_id": "N12", "node_type": "support"},
+          {"node_id": "N13", "node_type": "constraint"}
+        ],
+        "candidate_edges": [
+          {"edge_id": "C01", "source_node_id": "E1", "target_node_id": "N08", "relation_type": "supports"},
+          {"edge_id": "C02", "source_node_id": "E2", "target_node_id": "N08", "relation_type": "supports"},
+          {"edge_id": "C03", "source_node_id": "N08", "target_node_id": "N11", "relation_type": "supports"},
+          {"edge_id": "C04", "source_node_id": "E3", "target_node_id": "N09", "relation_type": "supports"},
+          {"edge_id": "C05", "source_node_id": "E4", "target_node_id": "N09", "relation_type": "supports"},
+          {"edge_id": "C06", "source_node_id": "N09", "target_node_id": "N11", "relation_type": "supports"},
+          {"edge_id": "C07", "source_node_id": "E6", "target_node_id": "N10", "relation_type": "supports"},
+          {"edge_id": "C08", "source_node_id": "N10", "target_node_id": "N11", "relation_type": "supports"},
+          {"edge_id": "C09", "source_node_id": "E7", "target_node_id": "N12", "relation_type": "supports"},
+          {"edge_id": "C10", "source_node_id": "N12", "target_node_id": "N13", "relation_type": "supports"},
+          {"edge_id": "C11", "source_node_id": "E6", "target_node_id": "E5", "relation_type": "invalidates"},
+          {"edge_id": "C12", "source_node_id": "E1", "target_node_id": "N09", "relation_type": "supports"},
+          {"edge_id": "C13", "source_node_id": "E2", "target_node_id": "N09", "relation_type": "supports"},
+          {"edge_id": "C14", "source_node_id": "E3", "target_node_id": "N08", "relation_type": "supports"},
+          {"edge_id": "C15", "source_node_id": "E4", "target_node_id": "N08", "relation_type": "supports"}
+        ],
+        "target_bindings": [
+          {"node_id": "N11", "slot_id": "primary_decision"},
+          {"node_id": "N13", "slot_id": "stable_constraint"}
+        ]
+      },
+      "local_controller": {
+        "eligible_evidence_ids": ["E1", "E2", "E3", "E4", "E6"],
+        "effect_by_evidence_id": {
+          "E1": 0.8,
+          "E2": 0.7,
+          "E3": -0.6,
+          "E4": -0.5,
+          "E6": 0.1
+        },
+        "terminal_target": 0.85,
+        "finite_difference_epsilon": 0.000001,
+        "finite_difference_tolerance": 0.00000005
+      },
+      "closure_contract": {
+        "equivalence_classes": {
+          "P0": {
+            "evidence_ids": ["E1", "E2"],
+            "edge_ids": ["C01", "C02", "C03"]
+          },
+          "P1": {
+            "evidence_ids": ["E3", "E4"],
+            "edge_ids": ["C04", "C05", "C06"]
+          }
+        },
+        "shared_support": {
+          "evidence_ids": ["E6"],
+          "edge_ids": ["C07", "C08"]
+        },
+        "stable_support": {
+          "evidence_ids": ["E7"],
+          "edge_ids": ["C09", "C10"]
+        },
+        "invalidation": {
+          "source_evidence_id": "E6",
+          "target_evidence_id": "E5",
+          "edge_id": "C11"
+        },
+        "primary_target_node_id": "N11",
+        "stable_target_node_id": "N13"
+      }
+    },
+    {
+      "case_id": "coolant_loop_revision_b",
+      "checkpoint_id": "coolant_loop_revision_b:post_event",
+      "question": "Which coolant loop is active after applying the latest valid evidence? Answer SOUTH or NORTH.",
+      "answer_choices": ["SOUTH", "NORTH"],
+      "decision_slots": [
+        {
+          "slot_id": "primary_decision",
+          "allowed_values": ["SOUTH_LOOP", "NORTH_LOOP"]
+        },
+        {
+          "slot_id": "stable_constraint",
+          "allowed_values": ["AUDIT_CSV"]
+        }
+      ],
+      "raw_evidence": [
+        {
+          "evidence_id": "E1",
+          "text": "Calibrated sensor rule: one complete calibrated sensor chain is sufficient to select the active coolant loop."
+        },
+        {
+          "evidence_id": "E2",
+          "text": "Calibrated sensor pair SP-8 selects the SOUTH coolant loop for the current batch."
+        },
+        {
+          "evidence_id": "E3",
+          "text": "Independent laboratory certificate LC-7 selects the SOUTH coolant loop when its custody seal is valid."
+        },
+        {
+          "evidence_id": "E4",
+          "text": "Custody record CR-7 verifies the seal on laboratory certificate LC-7 for the current batch."
+        },
+        {
+          "evidence_id": "E5",
+          "text": "Earlier operator memo M-2 selects the NORTH coolant loop unless a later withdrawal names it."
+        },
+        {
+          "evidence_id": "E6",
+          "text": "Latest withdrawal: operator memo M-2 is revoked. Use one complete currently valid chain; E5 is invalidated."
+        },
+        {
+          "evidence_id": "E7",
+          "text": "The batch audit export must remain AUDIT_CSV regardless of the selected coolant loop."
+        }
+      ],
+      "candidate_scaffold": {
+        "schema_version": "ebrt-neutral-candidate-scaffold-v0.6.3",
+        "allowed_relation_types": ["supports", "depends_on", "invalidates"],
+        "nodes": [
+          {"node_id": "E1", "node_type": "evidence"},
+          {"node_id": "E2", "node_type": "evidence"},
+          {"node_id": "E3", "node_type": "evidence"},
+          {"node_id": "E4", "node_type": "evidence"},
+          {"node_id": "E5", "node_type": "evidence"},
+          {"node_id": "E6", "node_type": "evidence"},
+          {"node_id": "E7", "node_type": "evidence"},
+          {"node_id": "N08", "node_type": "support"},
+          {"node_id": "N09", "node_type": "support"},
+          {"node_id": "N10", "node_type": "support"},
+          {"node_id": "N11", "node_type": "fact"},
+          {"node_id": "N12", "node_type": "support"},
+          {"node_id": "N13", "node_type": "constraint"}
+        ],
+        "candidate_edges": [
+          {"edge_id": "C01", "source_node_id": "E1", "target_node_id": "N08", "relation_type": "supports"},
+          {"edge_id": "C02", "source_node_id": "E2", "target_node_id": "N08", "relation_type": "supports"},
+          {"edge_id": "C03", "source_node_id": "N08", "target_node_id": "N11", "relation_type": "supports"},
+          {"edge_id": "C04", "source_node_id": "E3", "target_node_id": "N09", "relation_type": "supports"},
+          {"edge_id": "C05", "source_node_id": "E4", "target_node_id": "N09", "relation_type": "supports"},
+          {"edge_id": "C06", "source_node_id": "N09", "target_node_id": "N11", "relation_type": "supports"},
+          {"edge_id": "C07", "source_node_id": "E6", "target_node_id": "N10", "relation_type": "supports"},
+          {"edge_id": "C08", "source_node_id": "N10", "target_node_id": "N11", "relation_type": "supports"},
+          {"edge_id": "C09", "source_node_id": "E7", "target_node_id": "N12", "relation_type": "supports"},
+          {"edge_id": "C10", "source_node_id": "N12", "target_node_id": "N13", "relation_type": "supports"},
+          {"edge_id": "C11", "source_node_id": "E6", "target_node_id": "E5", "relation_type": "invalidates"},
+          {"edge_id": "C12", "source_node_id": "E1", "target_node_id": "N09", "relation_type": "supports"},
+          {"edge_id": "C13", "source_node_id": "E2", "target_node_id": "N09", "relation_type": "supports"},
+          {"edge_id": "C14", "source_node_id": "E3", "target_node_id": "N08", "relation_type": "supports"},
+          {"edge_id": "C15", "source_node_id": "E4", "target_node_id": "N08", "relation_type": "supports"}
+        ],
+        "target_bindings": [
+          {"node_id": "N11", "slot_id": "primary_decision"},
+          {"node_id": "N13", "slot_id": "stable_constraint"}
+        ]
+      },
+      "local_controller": {
+        "eligible_evidence_ids": ["E1", "E2", "E3", "E4", "E6"],
+        "effect_by_evidence_id": {
+          "E1": -0.7,
+          "E2": -0.6,
+          "E3": 0.8,
+          "E4": 0.7,
+          "E6": 0.1
+        },
+        "terminal_target": 0.85,
+        "finite_difference_epsilon": 0.000001,
+        "finite_difference_tolerance": 0.00000005
+      },
+      "closure_contract": {
+        "equivalence_classes": {
+          "P0": {
+            "evidence_ids": ["E1", "E2"],
+            "edge_ids": ["C01", "C02", "C03"]
+          },
+          "P1": {
+            "evidence_ids": ["E3", "E4"],
+            "edge_ids": ["C04", "C05", "C06"]
+          }
+        },
+        "shared_support": {
+          "evidence_ids": ["E6"],
+          "edge_ids": ["C07", "C08"]
+        },
+        "stable_support": {
+          "evidence_ids": ["E7"],
+          "edge_ids": ["C09", "C10"]
+        },
+        "invalidation": {
+          "source_evidence_id": "E6",
+          "target_evidence_id": "E5",
+          "edge_id": "C11"
+        },
+        "primary_target_node_id": "N11",
+        "stable_target_node_id": "N13"
+      }
+    }
+  ],
+  "claim_boundary": [
+    "This fixture defines a network-zero actuator calibration protocol, not a hosted-model result.",
+    "The two support classes are preregistered as semantically equivalent for this feasibility canary; selecting either class can satisfy the strict contract.",
+    "The local controller, equivalence classes, and post-call grader material are never provider input.",
+    "A real local float64 backward pass exists only in the public surrogate; no gradient crosses JSON or a hosted model.",
+    "The positive-control runtime rule uses the immediate predecessor branch head and the frozen equivalence partition; it does not read an answer, quality gold, provider output, or the gradient-derived polarity, but broader study-design selection independence is not claimed.",
+    "A provider schedule echo or byte-level output difference is not downstream uptake."
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "schema_version": "ebrt-actuator-calibration-gold-v0.6.3",
+  "status": "LOCKED_POST_CALL_GRADING_ONLY",
+  "cases": [
+    {
+      "case_id": "relay_bay_revision_a",
+      "answer": "BLUE",
+      "slot_values": {
+        "primary_decision": "BLUE_BAY",
+        "stable_constraint": "SIGNED_JSON"
+      },
+      "valid_necessary_support_closures": {
+        "P0": ["E1", "E2", "E6"],
+        "P1": ["E3", "E4", "E6"]
+      },
+      "invalidation_edges": [
+        {"source_evidence_id": "E6", "target_evidence_id": "E5"}
+      ],
+      "stable_support_evidence_ids": ["E7"]
+    },
+    {
+      "case_id": "coolant_loop_revision_b",
+      "answer": "SOUTH",
+      "slot_values": {
+        "primary_decision": "SOUTH_LOOP",
+        "stable_constraint": "AUDIT_CSV"
+      },
+      "valid_necessary_support_closures": {
+        "P0": ["E1", "E2", "E6"],
+        "P1": ["E3", "E4", "E6"]
+      },
+      "invalidation_edges": [
+        {"source_evidence_id": "E6", "target_evidence_id": "E5"}
+      ],
+      "stable_support_evidence_ids": ["E7"]
+    }
+  ],
+  "claim_boundary": [
+    "This file is loaded only after a complete fixed attempt sequence and is never provider input.",
+    "P0 and P1 are both accepted exact necessary-support closures; choosing between them is not a quality difference.",
+    "The quality endpoint is secondary to channel adherence and non-echo downstream propagation in v0.6.3.",
+    "A passing local grade is not evidence of hidden-state editing or general reasoning improvement."
+  ]
+}
