@@ -206,7 +206,7 @@
     "provenance_scope": "OPERATOR_ATTESTED_NOT_CRYPTOGRAPHICALLY_AUTHENTICATED",
     "provider_calls_authorized": 16
   },
-  "fingerprint_sha256": "35d780482907115bbb3ebbdb77ddaaf6b0dc1da05d1c4afe6a148df08ea6b673",
+  "fingerprint_sha256": "bce283bd820c07343668058afb3e99429ee75d13ec1ddb4fb4a12e37c0321933",
   "instructions_fingerprint_sha256": "5b1c5b1fffc4ab23988c3b57b97d946004ba56c71e8676cb098979eb2b69c47e",
   "preflight_anchor_commit": "97b8d63b32e07664e3f16b5f13df91309fbb40ee",
   "preflight_anchor_tag_object": "d569bf5960fea7c72f572a7b204288837a499756",
@@ -280,9 +280,9 @@
       "sha256": "7f78fce94cb141a4355d3c040010e11e049ff67a3a8c603099d0548a47b7cf03"
     },
     "runner": {
-      "bytes": 96480,
+      "bytes": 97315,
       "path": "run_actuator_calibration_v0_6_3_live_r01.py",
-      "sha256": "eab23d5c533023f0e3efec739bca08fe7599a71c0d008c45e89a2a8d0d4e85b0"
+      "sha256": "0daedb60443601375f5b2e75a333ac559c028c2c8bc685d7ab049213424d6900"
     },
     "zero_call_manifest": {
       "bytes": 4009,

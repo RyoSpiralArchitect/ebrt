@@ -728,6 +728,28 @@ def _provider_transport_self_test(material: Mapping[str, Any]) -> dict[str, Any]
         public_output, receipt = provider.generate(payload)
     receipt_value = receipt.to_dict()
     call = fake.endpoint.calls[0] if len(fake.endpoint.calls) == 1 else {}
+    other_status_receipt = _clone(receipt_value)
+    other_status_receipt["metadata"].update(
+        {
+            "status": "other",
+            "attempt_outcome": "contract_error",
+            "failure_phase": "provider_contract",
+            "failure_reason_code": "provider_status_non_completed",
+            "failure_type": "provider_status_non_completed",
+        }
+    )
+    other_status_failure = {
+        "category": "provider_boundary_error",
+        "exception_class": "OpenAIProviderBoundaryError",
+        "phase": "provider_contract",
+        "reason_code": "provider_status_non_completed",
+    }
+    _validate_receipt(
+        other_status_receipt,
+        payload,
+        provider_completed=False,
+        failure=other_status_failure,
+    )
     checks = {
         "one_fake_transport_call": len(fake.endpoint.calls) == 1,
         "exact_public_output_roundtrip": public_output == output,
@@ -736,6 +758,7 @@ def _provider_transport_self_test(material: Mapping[str, Any]) -> dict[str, Any]
         == fingerprint(payload),
         "instructions_bound": receipt_value["prompt_fingerprint"]
         == INSTRUCTIONS_FINGERPRINT,
+        "sanitized_other_status_accepted": True,
         "runtime_arguments_pinned": (
             call.get("model") == core.MODEL
             and call.get("instructions") == ACTUATOR_INSTRUCTIONS
@@ -1275,6 +1298,7 @@ def _validate_receipt(
                 "cancelled",
                 "queued",
                 "in_progress",
+                "other",
                 "provider_contract_error",
             },
         }
