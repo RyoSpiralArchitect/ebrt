@@ -98,8 +98,8 @@ CORE_SOURCE_PATH = "temporal_adjoint_lineage_v0_5_4.py"
 BENCHMARK_SOURCE_PATH = "benchmark_temporal_adjoint_lineage_v0_5_4.py"
 BUILDER_SOURCE_PATH = "build_temporal_adjoint_lineage_artifact_v0_5_4.py"
 
-PREDECESSOR_COMMIT_SHA = "79e047b7e2b500b6fb2b73385ea2f59a7dcde881"
-PREDECESSOR_TREE_SHA = "38389d8521f93c7a11c58b4d9be48fde2c1350c6"
+PREDECESSOR_COMMIT_SHA = "c671e149fcbe05217820512a3f90c847cbbcfbf2"
+PREDECESSOR_TREE_SHA = "f87266eb14200074ccd95c3feee1bfe170f14df3"
 PREDECESSOR_SOURCE_RECEIPTS = {
     "builder": {
         "path": "build_factorized_lineage_artifact_v0_5_3.py",
@@ -113,13 +113,13 @@ PREDECESSOR_SOURCE_RECEIPTS = {
     },
     "core": {
         "path": "factorized_lineage_v0_5_3.py",
-        "bytes": 96449,
-        "sha256": "ccb6e770b140e81f1b61a75b5e2c7cdfe0d11147ad2edc553510252a01e41633",
+        "bytes": 100732,
+        "sha256": "d7ad2344a0c37b502feac663e17bb918be1fe50b4d9c94898e18ee757c4cb35b",
     },
     "policy_lock": {
         "path": "policy_lock_factorized_lineage_v0_5_3.json",
         "bytes": 6112,
-        "sha256": "dfaab71441ea3f511bb6186cce547f025372c049064421a1711d006efdbab63f",
+        "sha256": "145d8f40d7721e49b2bdb7f317c7208d244d3b70f5df057d10ff3bc5b3e1bf39",
     },
     "repair_overlay": {
         "path": "fixtures/factorized_lineage_v0_5_3_repair_overlay.json",
@@ -141,7 +141,7 @@ PREDECESSOR_ARTIFACT_RECEIPTS = {
     "manifest.json": {
         "path": "artifacts/factorized_lineage_v0_5_3/manifest.json",
         "bytes": 5668,
-        "sha256": "e7cbd1388e23bb86fc32e1b4b4e306af90c0e151f1388348ca67dd01f94c75e4",
+        "sha256": "50f33ac2029d66210b7b00b7719df09c9cd8c5bbe05b34aadfddb5929adb57e7",
     },
     "mechanism_report.md": {
         "path": "artifacts/factorized_lineage_v0_5_3/mechanism_report.md",
@@ -150,8 +150,8 @@ PREDECESSOR_ARTIFACT_RECEIPTS = {
     },
     "self_test.json": {
         "path": "artifacts/factorized_lineage_v0_5_3/self_test.json",
-        "bytes": 4928,
-        "sha256": "19646001667eae28ae38a9f2d9f3cff2974bbe36a68236f13f5bc0a73f41d616",
+        "bytes": 4995,
+        "sha256": "77948a2b73348bf983999a80498ce2839dcce227418addb9c08b4797dd8efdd9",
     },
 }
 PREDECESSOR_FINGERPRINTS = {
@@ -813,6 +813,10 @@ def _validate_payload_contract(payloads: Any) -> dict[str, Any]:
     _require(no_event.get("event_triggered") is False, "no-event audit drift")
     _require(no_event.get("backward_calls") == 0, "no-event backward call drift")
     _require(no_event.get("exact_identity") is True, "no-event identity failed")
+    _require(
+        no_event.get("recurrence_zero_delta_exact_zero") is True,
+        "no-event recurrence identity failed",
+    )
 
     ready, _status, gates = _promotion_state(values["arm_comparison"])
     self_test = values["self_test"]

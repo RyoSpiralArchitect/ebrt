@@ -452,10 +452,10 @@ def _node_type_by_id(program: CompiledProgram) -> dict[str, str]:
 
 
 def _site_rows(program: CompiledProgram, schedule_id: str) -> list[JsonObject]:
-    if not program.event_triggered:
-        return []
     if schedule_id not in LOCKED_SCHEDULE_IDS or schedule_id not in program.schedules:
         raise TemporalAdjointValidationError(f"unlocked schedule: {schedule_id}")
+    if not program.event_triggered:
+        return []
     node_types = _node_type_by_id(program)
     rows: list[JsonObject] = []
     for horizon_index, evidence_id in enumerate(program.schedules[schedule_id], start=1):
@@ -594,6 +594,12 @@ def forward_state(
         else _validate_sweep_override(program, sweep_order_override)
     )
     state = torch.zeros(program.state_shape, dtype=FLOAT_DTYPE, device=deltas.device)
+    if not program.event_triggered:
+        if identity_after_site is not None:
+            raise TemporalAdjointValidationError(
+                "no-event recurrence has no identity insertion site"
+            )
+        return state
     site_index = 0
     for evidence_id in program.schedules[schedule_id]:
         state = _apply_admission(state, program, evidence_id)
@@ -1747,6 +1753,16 @@ def run_no_event_audit(
     program = compile_program(fixture, no_event=True)
     if program.event_triggered or program.site_count != 0:
         raise TemporalAdjointValidationError("no-event compiler exposed controls")
+    zero_deltas = torch.zeros(0, dtype=FLOAT_DTYPE)
+    recurrence_zero_delta_exact_zero = all(
+        bool(
+            torch.count_nonzero(
+                forward_terminal(program, schedule_id, zero_deltas)
+            ).item()
+            == 0
+        )
+        for schedule_id in LOCKED_SCHEDULE_IDS
+    )
     structural = compiled_structural_closure(program)
     target_node_id = str(fixture["lane"]["target_node_id"])
     partition = structural["targets"][target_node_id]
@@ -1774,6 +1790,7 @@ def run_no_event_audit(
         "neutral_output": _tensor_floats(neutral_output),
         "output_identity": torch.equal(stable_input, controlled_output),
         "provider_calls": 0,
+        "recurrence_zero_delta_exact_zero": recurrence_zero_delta_exact_zero,
         "schema_version": NO_EVENT_AUDIT_SCHEMA_VERSION,
         "stable_input": _tensor_floats(stable_input),
         "status": "PASS",
@@ -1784,6 +1801,7 @@ def run_no_event_audit(
         and audit["output_identity"]
         and audit["control_count"] == 0
         and audit["backward_calls"] == 0
+        and audit["recurrence_zero_delta_exact_zero"] is True
     ):
         audit["status"] = "FAIL"
     audit["fingerprint_sha256"] = fingerprint(audit)
@@ -1799,6 +1817,9 @@ def run_no_event_audit(
             "controls_exact_zero": audit["control_count"] == 0,
             "neutral_equals_controlled": audit["neutral_equals_controlled"],
             "output_identity": audit["output_identity"],
+            "recurrence_zero_delta_exact_zero": audit[
+                "recurrence_zero_delta_exact_zero"
+            ],
         },
         "lane_id": "stable_constraint",
         "network_calls": 0,
@@ -2109,6 +2130,7 @@ def self_test(
                 and audit["backward_calls"] == 0
                 and audit["neutral_equals_controlled"] is True
                 and audit["output_identity"] is True
+                and audit["recurrence_zero_delta_exact_zero"] is True
                 and stable_lane["status"] == "PASS"
             ),
             "sever_final_to_demo_zeroes_r2_inherited_upstream_jacobian": (

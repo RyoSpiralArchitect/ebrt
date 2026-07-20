@@ -8,7 +8,7 @@ On the frozen v0.5.3 public dependency program, does normalized exact temporal c
 
 ## Sealed source
 
-- v0.5.3 commit: `79e047b7e2b500b6fb2b73385ea2f59a7dcde881`
+- v0.5.3 commit: `c671e149fcbe05217820512a3f90c847cbbcfbf2`
 - repaired graph: `361d6961938dda2d69ccc0340fecb802c55af40d6cd551c628eb307462416333`
 - repaired closure: `899afdca968e3a3e1c1dd7f9eb5c4605e18c7c6b4188a8a4f4af1707a2859c9c`
 - regression: `0335ede60f428ddf77f7266d1c2bea6483c4698e924f555e9be8a7d3422e2997`
