@@ -201,6 +201,22 @@ results, no synthetic X-minus-Z or D-minus-C delta is a gate, no hosted uptake
 has been observed, and this preflight does not authorize a live call. See the
 [`v0.6.3 R&D note`](docs/RND_ACTUATOR_CALIBRATION_V0_6_3.md).
 
+The separately frozen hosted successor is
+[`run_actuator_calibration_v0_6_3_live_r01.py`](run_actuator_calibration_v0_6_3_live_r01.py),
+with its own
+[`live r01 policy lock`](policy_lock_actuator_calibration_v0_6_3_live_r01.json)
+and
+[`execution note`](docs/RND_ACTUATOR_CALIBRATION_V0_6_3_LIVE_R01.md). It imports
+the unchanged monolith, consumes only the 16 sealed payloads, durably journals
+each attempt before crossing the provider boundary, and forbids retry, resume,
+backfill, alternate output paths, or a partial block. Its network-zero component
+self-test is separate from the irreversible `run-live` command. The live command
+also requires an annotated authorization tag at its exact execution commit and
+guards its semantic-gold loader until all 16 public outputs compile. No hosted r01
+result is claimed until that one fixed command completes and its artifact
+validates; local receipts are operator-auditable records, not provider-signed
+cryptographic proof.
+
 > [!IMPORTANT]
 > v0.1-v0.3.1 are **not** a Transformer implementation, a GPT latent-state
 > editor, or evidence of improved language-model accuracy. v0.4 meaningfully
