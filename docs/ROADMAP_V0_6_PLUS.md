@@ -1,6 +1,6 @@
 # EBRT v0.6+ — Execution, Evaluation, and Orchestration Roadmap
 
-Status: **v0.6.0 PREFLIGHT PASS; v0.6.1 FIVE-CALL BLOCK COMPLETE, GATE HELD; v0.6.3 NETWORK-ZERO PREFLIGHT PASS, LIVE NOT AUTHORIZED**
+Status: **v0.6.0 PREFLIGHT PASS; v0.6.1 FIVE-CALL BLOCK COMPLETE, GATE HELD; v0.6.3 NETWORK-ZERO PREFLIGHT PASS; LIVE R01 PREREGISTERED, NOT YET RUN**
 
 The one allowed v0.6.1 block ran on 2026-07-20 in the preregistered order
 `P -> A -> B -> D -> C`. All five calls completed and the committed artifact
@@ -409,6 +409,17 @@ PROMOTE_V0_6_4_ACTUATOR_GATE      every frozen gate passed
 This is a feasibility canary, not a population estimate or quality win. Do not
 tune or rerun the completed v0.6.1 case, relax lineage contracts, or search many
 unreported prompt channels to rescue a null result.
+
+The live r01 runner and its separate 16-call authorization lock now freeze the
+existing Williams order, exact payload hashes, one-shot provider boundary,
+durable pre-call journal, `epsilon=1e-12`, all-four X adherence, all-eight D/C
+adherence, endpoint thresholds, and terminal decisions. The live revision also
+requires all-four Z baseline adherence, an annotated execution-commit tag, and
+a locked-code semantic-gold loader guard through complete public compilation. The zero-call monolith,
+policy, and canonical preflight artifact remain unchanged. This roadmap does not
+record a hosted result until the single r01 namespace has executed and validated.
+See the
+[`live r01 execution note`](RND_ACTUATOR_CALIBRATION_V0_6_3_LIVE_R01.md).
 
 ## v0.6.4 — Scaffold Aperture
 
