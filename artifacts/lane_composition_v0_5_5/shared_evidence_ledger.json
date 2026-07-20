@@ -1,0 +1,99 @@
+{
+  "fingerprint_sha256": "4ce2098bdcf4a2431c8a2a70488654467bfea770088d57d57ed1e65c09024071",
+  "ledger": {
+    "entries": [
+      {
+        "content_sha256": "f5cfc296f75f612748a3c4a5bddeb45e19a760b5b56bc53b0d6d90ebeeed37cd",
+        "evidence_id": "R1",
+        "node_payload": {
+          "evidence_id": "R1",
+          "node_id": "evidence:R1",
+          "node_type": "evidence",
+          "provenance": "observed",
+          "temporal_ordinal": 1,
+          "text": "Team Spiral must choose exactly one final-build priority for its hackathon submission."
+        }
+      },
+      {
+        "content_sha256": "268e2a8ae345912be402f67382cc7edb5342172ec4f6d93aba7b9cfa7b15a9f7",
+        "evidence_id": "R2",
+        "node_payload": {
+          "evidence_id": "R2",
+          "node_id": "evidence:R2",
+          "node_type": "evidence",
+          "provenance": "observed",
+          "temporal_ordinal": 2,
+          "text": "Decision rule: follow the latest valid judging weights. If one criterion is dominant, optimize for that criterion; if Technological Implementation, Design, Potential Impact, and Quality of the Idea are equally weighted, prioritize an end-to-end proof that demonstrates all four in one flow."
+        }
+      },
+      {
+        "content_sha256": "93ea064f801f363c21b38900f78c8a8cf4c8c47993d037da56cdd460dc6c3074",
+        "evidence_id": "R3",
+        "node_payload": {
+          "evidence_id": "R3",
+          "node_id": "evidence:R3",
+          "node_type": "evidence",
+          "provenance": "observed",
+          "temporal_ordinal": 3,
+          "text": "Current internal brief: Design is the dominant judging criterion, so spend the remaining build time on additional UI polish and make polished screens the demo centerpiece. This brief remains operative unless a later correction explicitly supersedes it."
+        }
+      },
+      {
+        "content_sha256": "8c83128bd71dd894fcdb1f30feb10dfab33b280df8afabe434bd09a374f61534",
+        "evidence_id": "R4",
+        "node_payload": {
+          "evidence_id": "R4",
+          "node_id": "evidence:R4",
+          "node_type": "evidence",
+          "provenance": "observed",
+          "temporal_ordinal": 4,
+          "text": "The screens are already judge-readable; a live before-to-after reasoning diff is the missing element needed for an end-to-end proof."
+        }
+      },
+      {
+        "content_sha256": "9899a95a8a58999aa7a790d6ecb87d1d7dd8cb6bea5d39f80ab9171161c344b1",
+        "evidence_id": "R5",
+        "node_payload": {
+          "evidence_id": "R5",
+          "node_id": "evidence:R5",
+          "node_type": "evidence",
+          "provenance": "observed",
+          "temporal_ordinal": 5,
+          "text": "The submission video must remain a narrated three-minute demo regardless of which final-build priority is chosen."
+        }
+      },
+      {
+        "content_sha256": "78077607bda7b87362d65274c6d7005b840b66f941da7c6a53deea49a1d31c0e",
+        "evidence_id": "R6",
+        "node_payload": {
+          "evidence_id": "R6",
+          "node_id": "evidence:R6",
+          "node_type": "evidence",
+          "provenance": "observed",
+          "temporal_ordinal": 6,
+          "text": "Latest judging correction: Technological Implementation, Design, Potential Impact, and Quality of the Idea are equally weighted. This guidance explicitly supersedes evidence R3; use the existing readable UI and prioritize an end-to-end proof with a live reasoning diff."
+        }
+      }
+    ],
+    "fingerprint_sha256": "9520131d72d53e1b8838b570b0c74b809bfb70a717d9a89938ac553fa1dc87b2",
+    "graph_fingerprint_sha256": "361d6961938dda2d69ccc0340fecb802c55af40d6cd551c628eb307462416333",
+    "invalidations": [
+      {
+        "content_sha256": "63c97439898eb5f8f1c6de8da06e8b296fba9346e0f928fc68b08eef148a9b7b",
+        "edge_payload": {
+          "edge_id": "observed:R6->invalidates:R3",
+          "edge_type": "invalidates",
+          "provenance": "observed",
+          "source_node_id": "evidence:R6",
+          "target_node_id": "evidence:R3"
+        },
+        "source_evidence_id": "R6",
+        "target_evidence_id": "R3"
+      }
+    ],
+    "schema_version": "ebrt-shared-evidence-ledger-v0.5.5"
+  },
+  "network_calls": 0,
+  "provider_calls": 0,
+  "schema_version": "ebrt-shared-evidence-ledger-artifact-v0.5.5"
+}

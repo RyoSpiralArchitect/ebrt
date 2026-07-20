@@ -1,6 +1,6 @@
 # EBRT v0.5.3-v0.5.5 Research Roadmap
 
-Status: **v0.5.3-v0.5.4 COMPLETE; v0.5.5 PROSPECTIVE — EACH MILESTONE HAS ITS OWN LOCK**
+Status: **v0.5.3-v0.5.5 COMPLETE — EACH MILESTONE HAS ITS OWN SEALED LOCK**
 
 This roadmap translates the [Core Thesis](EBRT_CORE_THESIS.md) through three
 orthogonal axes before any multi-agent execution claim:
@@ -230,7 +230,7 @@ Can several sealed reasoning trajectories share an evidence ledger and one
 terminal contract while preserving lane-local provenance, isolation, and exact
 backward credit?
 
-### Minimal scope
+### Completed scope
 
 Limit the first substrate to at most three prebuilt lanes:
 
@@ -244,7 +244,7 @@ Each lane is an immutable v0.5.4-compatible artifact with a namespaced node
 space. The bundle has one shared evidence ledger, one fixed merge operator, one
 terminal contract, a block adjoint, and a per-lane public control map.
 
-The milestone explicitly excludes live provider calls, agent spawning, debate,
+The completed milestone explicitly excludes live provider calls, agent spawning, debate,
 dynamic routing, learned arbitration, tool execution, and final answer
 generation.
 
@@ -261,6 +261,20 @@ generation.
 - merge controls and lane controls are separately bounded and receipted; and
 - all mechanism artifacts build with network access denied.
 
+### Completed result
+
+The canonical three-lane bundle passed all 10 top-level gates and all 10
+required adversarial subchecks. One-lane degeneration preserved the exact
+v0.5.4 C control-map bytes; all six input orders produced byte-identical full
+results; the block adjoint agreed with autograd within `2.22e-16` and central
+finite differences within `1.238e-9`; and the stable Constraint lane remained
+disconnected with zero controls. The sealed decision is
+`PROMOTE_V0_6_LANE_COMPOSITION_GATE`. Build, independent source rederivation,
+and publication self-test all passed with zero provider and network calls.
+
+This licenses the v0.6 execution-design question only. It is not evidence of
+multi-agent coordination, answer improvement, or a learned arbitration policy.
+
 ### Stop rule
 
 Do not introduce orchestration while single-lane equivalence, lane isolation,
@@ -269,9 +283,14 @@ mechanism result, not justification for a learned arbiter.
 
 ## v0.6+ — Execution over the substrate
 
-v0.6 begins only after the v0.5.5 completion audit. Its first design task is to
-decide how external models or agents may populate sealed lanes without changing
-the substrate's semantics after observing outcomes.
+The v0.5.5 completion audit passed. v0.6 therefore begins under a separate lock
+whose first task is to decide how external executions may populate sealed lanes
+without changing the substrate's semantics after observing outcomes.
+
+That successor protocol is now specified in
+[the evidence-led v0.6+ roadmap](ROADMAP_V0_6_PLUS.md). Its first critical live
+block is a contaminated five-call bundle-to-output regression, followed by a
+fresh matched hosted suite only if the integration path is assessable.
 
 Potential execution questions include:
 
@@ -285,8 +304,8 @@ Potential execution questions include:
 - a Reasoning IDE surface for clean passes and hidden-defect detection.
 
 These are design candidates, not v0.5.5 capabilities. The concrete v0.6
-protocol is intentionally assembled from the evidence observed after v0.5.3,
-v0.5.4, and v0.5.5 complete.
+protocol is intentionally assembled in the separate v0.6+ roadmap from the
+evidence now observed across all three completed substrate milestones.
 
 ## Deferred axis: novelty
 

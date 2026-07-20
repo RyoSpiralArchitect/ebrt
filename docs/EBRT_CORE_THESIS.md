@@ -196,10 +196,17 @@ The word has deliberately different, bounded meanings:
   factorized program, checked against autograd, finite differences, and matched
   within-node timing shams;
   and
-- in v0.5.5, it is planned to mean block credit over multiple sealed public
-  trajectories.
+- in v0.5.5, it means exact block credit over three byte-sealed public
+  trajectories joined by one fixed typed incidence program, with a disconnected
+  stable Constraint lane and separately bounded merge slack.
 
 None of these definitions licenses the phrase "backpropagation through GPT."
+
+The completed v0.5.5 gate establishes that this public trajectory substrate is
+composable under its frozen contaminated program. It does not establish that
+the three lanes are agents, that their composition improves an answer, or that
+the fixed junction is an effective orchestration policy. Those become new,
+separately locked execution questions in v0.6 and later.
 
 ## Deferred novelty objective
 

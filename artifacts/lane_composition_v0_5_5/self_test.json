@@ -1,0 +1,34 @@
+{
+  "bundle_fingerprint_sha256": "5bfbe5c07ae05208a403092b1011b1ccbe876d7f8dbe8a692aeac14bd92f8429",
+  "decision_status": "PROMOTE_V0_6_LANE_COMPOSITION_GATE",
+  "fingerprint_sha256": "d49992fe602bdc75d5d65675f39076f2b021e51fc7f385df70b3e8ba2db83d8f",
+  "network_calls": 0,
+  "promotion_ready": true,
+  "provider_calls": 0,
+  "schema_version": "ebrt-lane-composition-self-test-v0.5.5",
+  "status": "PASS",
+  "subchecks": {
+    "all_six_lane_permutations_invariant": true,
+    "artifact_tamper_rejected": true,
+    "conflicting_axis_target_rejected": true,
+    "conflicting_evidence_hash_rejected": true,
+    "duplicate_lane_alias_rejected": true,
+    "forbidden_schema_surface_rejected": true,
+    "provider_calls_zero": true,
+    "socket_denied": true,
+    "source_tamper_rejected": true,
+    "two_build_byte_identical": true
+  },
+  "top_level_gates": {
+    "block_gradient_agreement": true,
+    "bounds_complete": true,
+    "deterministic_network_zero": true,
+    "disconnected_zero": true,
+    "ledger_consistent": true,
+    "namespace_isolated": true,
+    "one_lane_exact": true,
+    "permutation_invariant": true,
+    "tamper_ready_source_receipts": true,
+    "v0_5_4_source_gate_exact": true
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "claim_boundary": [
+    "This fixture is the one-lane exact-degeneration witness for the sealed v0.5.4 correction-early lane.",
+    "With one lane the incidence matrix has zero rows, the merge-control vector is empty, and the bundle objective is exactly the source lane objective.",
+    "No provider, model, agent, tool, memory, retry, UI, or natural-language generation participates."
+  ],
+  "fixture_id": "hackathon_strategy_lane_composition_one_lane_v0_5_5",
+  "junction": {
+    "count": 1,
+    "operator": "typed_keyed_direct_sum_exact_axis_incidence_v0_5_5"
+  },
+  "lane_ids": [
+    "correction_early"
+  ],
+  "schema_version": "ebrt-lane-composition-fixture-v0.5.5",
+  "source_contract": {
+    "required_v0_5_4_decision_status": "PROMOTE_V0_5_5_TEMPORAL_GATE",
+    "required_v0_5_4_promotion_ready": true,
+    "version": "v0.5.4"
+  }
+}

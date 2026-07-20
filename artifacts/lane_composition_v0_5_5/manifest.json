@@ -1,0 +1,249 @@
+{
+  "artifact_directory": "artifacts/lane_composition_v0_5_5",
+  "artifacts": {
+    "block_adjoint_audit.json": {
+      "bytes": 12538,
+      "sha256": "4a63577a6b924acf35fe455194219aeda7d28875d67c5376843f68c32151f703"
+    },
+    "bundle_control_map.json": {
+      "bytes": 29496,
+      "sha256": "d45c77ddfe3fc871ac35696e062bd21320d970fd962dc1c81569db93877f24e0"
+    },
+    "hard_gate_audit.json": {
+      "bytes": 1219,
+      "sha256": "c81a0bea2e7ca9ac078d0f15fadb7df1eaeefe7b3b943b9f53338a0bf42f51ef"
+    },
+    "mechanism_report.md": {
+      "bytes": 3593,
+      "sha256": "8e0a1cab245c7c1752b1c1b7b1c342b70cfdffb1259487065b2ec45185fa7c23"
+    },
+    "merge_contract.json": {
+      "bytes": 37030,
+      "sha256": "fb20e89e5668af22f79afdf1769da21abb065fcffa650ffe80986c6b56eb85f6"
+    },
+    "sealed_bundle.json": {
+      "bytes": 2998,
+      "sha256": "baa18eac488adb9bceee827f05d0b194a58417404939ef0145cedeeb150856bf"
+    },
+    "sealed_lanes/correction_early.json": {
+      "bytes": 69960,
+      "sha256": "799b2d6b10129e63e751054e995d2e5017a2f73af44916d68068ee3c82b72d17"
+    },
+    "sealed_lanes/correction_late.json": {
+      "bytes": 69447,
+      "sha256": "54c806a29fdf80f9677b5a008e140734e28a201e719a98ce8d312bf34298afc8"
+    },
+    "sealed_lanes/stable_constraint.json": {
+      "bytes": 2926,
+      "sha256": "379e63f9bfce0af69df2240fe85835b7032efb0de3209773f71f818ba43f40cb"
+    },
+    "self_test.json": {
+      "bytes": 1204,
+      "sha256": "ee937803eddf075c03985887dc60079bd3441ea174d897deb79d1ba3847b1ddf"
+    },
+    "shared_evidence_ledger.json": {
+      "bytes": 4311,
+      "sha256": "b3d93b93cf8deb472ccb1cb93213f81c9db64af278faa5ca3bf507688967b172"
+    }
+  },
+  "claim_boundary": [
+    "On one contaminated frozen public bundle, EBRT composed three byte-sealed trajectories through one typed merge junction while preserving shared-evidence byte identity, lane-local provenance and isolation, and exact block-gradient agreement.",
+    "This is a contaminated network-zero mechanism result over three byte-sealed v0.5.4 public lanes; it is not fresh reasoning or generalization evidence.",
+    "The three lanes are deterministic schedule views over one contaminated public program, not independent agents, models, or benchmark replications.",
+    "The shared-evidence digest binds canonical public node-payload bytes across pinned lanes; it does not establish evidence truth, semantic equivalence, or provenance beyond the pinned source artifact.",
+    "The only merge is one mechanically generated typed incidence junction with separately bounded lane and merge controls; it is not voting, debate, selection, routing, or learned arbitration.",
+    "Block gradients and exact adjoints exist only inside the public local substrate. No gradient crosses JSON, a semantic adapter, provider API, sampling process, or generated natural-language output.",
+    "The stable-constraint lane remains disconnected from the Fact junction and is an isolation witness, not a third independent reasoner.",
+    "Passing the exact gate permits only the stated local lane-composition claim and v0.6 protocol design; it does not establish hidden-state editing, hosted-model improvement, multi-agent superiority, final-output improvement, production readiness, or benchmark generality.",
+    "Any failed top-level gate or boolean subcheck freezes STOP_V0_6_LANE_COMPOSITION_GATE under this namespace; no failed result may be tuned, relabeled, or rescued by orchestration.",
+    "No SOL, agent spawning, model routing, provider execution, tool use, memory, UI, generated answer, or final-output claim participates.",
+    "Provider calls and network calls are exactly zero."
+  ],
+  "decision_status": "PROMOTE_V0_6_LANE_COMPOSITION_GATE",
+  "network_calls": 0,
+  "promotion_ready": true,
+  "provider_calls": 0,
+  "runtime_contract": "Deterministic float64 local composition over byte-pinned public inputs. Canonical artifacts exclude timestamps, hostnames, absolute paths, and observed runtime metadata. Two-build byte identity is required on the recorded build environment; arbitrary cross-platform floating-point byte identity is not claimed.",
+  "schema_version": "ebrt-lane-composition-manifest-v0.5.5",
+  "source_ledger": {
+    "fixtures": {
+      "composition": {
+        "bytes": 920,
+        "fixture_id": "hackathon_strategy_lane_composition_v0_5_5",
+        "path": "fixtures/lane_composition_v0_5_5.json",
+        "schema_version": "ebrt-lane-composition-fixture-v0.5.5",
+        "sha256": "746e38c1649642103c2b7c01c7582e45c82b18d87a5b3083b99686dbf4e92528"
+      },
+      "one_lane": {
+        "bytes": 845,
+        "fixture_id": "hackathon_strategy_lane_composition_one_lane_v0_5_5",
+        "path": "fixtures/lane_composition_v0_5_5_one_lane.json",
+        "schema_version": "ebrt-lane-composition-fixture-v0.5.5",
+        "sha256": "1b6be74f98c67c5077d2474c672d93d4fa4897461b58a20ff3512c4d6f7d7164"
+      }
+    },
+    "policy_lock": {
+      "bytes": 12235,
+      "path": "policy_lock_lane_composition_v0_5_5.json",
+      "sha256": "6303b04f3ec3b4f74f4d9d0fb847d5fbcefed459a54479306d9a34bd0d90c1df"
+    },
+    "predecessor": {
+      "artifact_receipts": {
+        "actuator_geometry.json": {
+          "bytes": 178587,
+          "path": "artifacts/temporal_adjoint_lineage_v0_5_4/actuator_geometry.json",
+          "sha256": "f257403ddbf204d46af5c3807c37b3102fe8e7c39da35b62840b400e7a96b43f"
+        },
+        "arm_comparison.json": {
+          "bytes": 13235,
+          "path": "artifacts/temporal_adjoint_lineage_v0_5_4/arm_comparison.json",
+          "sha256": "944039a8c58b61847d8ee0ed78c1b9adcc7903a49d13c787afab0bc22e6f2f23"
+        },
+        "compiled_programs.json": {
+          "bytes": 10636,
+          "path": "artifacts/temporal_adjoint_lineage_v0_5_4/compiled_programs.json",
+          "sha256": "357bab8950da93a08c0d3f459bcf347e533feac28629db7bd77fa87e60c805ab"
+        },
+        "correction_early_sealed_lane.json": {
+          "bytes": 69960,
+          "path": "artifacts/temporal_adjoint_lineage_v0_5_4/correction_early_sealed_lane.json",
+          "sha256": "799b2d6b10129e63e751054e995d2e5017a2f73af44916d68068ee3c82b72d17"
+        },
+        "correction_late_sealed_lane.json": {
+          "bytes": 69447,
+          "path": "artifacts/temporal_adjoint_lineage_v0_5_4/correction_late_sealed_lane.json",
+          "sha256": "54c806a29fdf80f9677b5a008e140734e28a201e719a98ce8d312bf34298afc8"
+        },
+        "manifest.json": {
+          "bytes": 4920,
+          "path": "artifacts/temporal_adjoint_lineage_v0_5_4/manifest.json",
+          "sha256": "60423518deee7e6b4bd69678a51d84269378e4725711803c46d079940227913b"
+        },
+        "mechanism_report.md": {
+          "bytes": 4029,
+          "path": "artifacts/temporal_adjoint_lineage_v0_5_4/mechanism_report.md",
+          "sha256": "7af2346ec0d1b20376aa0a9ea679deda1a24a8161046273550c7698fdc1a292c"
+        },
+        "no_event_audit.json": {
+          "bytes": 1163,
+          "path": "artifacts/temporal_adjoint_lineage_v0_5_4/no_event_audit.json",
+          "sha256": "e11206e1026920108c27fdeba604138605a3b6f673003c3be86b5c37d5e10a19"
+        },
+        "self_test.json": {
+          "bytes": 6077,
+          "path": "artifacts/temporal_adjoint_lineage_v0_5_4/self_test.json",
+          "sha256": "488b5041ef99b1b8663a03d098a426c7c59a88de4e2a257f03a1f72b24f8c5d4"
+        },
+        "source_receipt.json": {
+          "bytes": 4810,
+          "path": "artifacts/temporal_adjoint_lineage_v0_5_4/source_receipt.json",
+          "sha256": "9968c785d2dd8353df8d39a579af94eca57d13456fb96eac92489e19c4698988"
+        },
+        "stable_constraint_sealed_lane.json": {
+          "bytes": 2926,
+          "path": "artifacts/temporal_adjoint_lineage_v0_5_4/stable_constraint_sealed_lane.json",
+          "sha256": "379e63f9bfce0af69df2240fe85835b7032efb0de3209773f71f818ba43f40cb"
+        }
+      },
+      "commit_sha": "0820da1b79b3f912f7cde84aa13014c28951eb05",
+      "lane_receipts": {
+        "correction_early": {
+          "artifact_path": "sealed_lanes/correction_early.json",
+          "bytes": 69960,
+          "sha256": "799b2d6b10129e63e751054e995d2e5017a2f73af44916d68068ee3c82b72d17",
+          "source_path": "artifacts/temporal_adjoint_lineage_v0_5_4/correction_early_sealed_lane.json"
+        },
+        "correction_late": {
+          "artifact_path": "sealed_lanes/correction_late.json",
+          "bytes": 69447,
+          "sha256": "54c806a29fdf80f9677b5a008e140734e28a201e719a98ce8d312bf34298afc8",
+          "source_path": "artifacts/temporal_adjoint_lineage_v0_5_4/correction_late_sealed_lane.json"
+        },
+        "stable_constraint": {
+          "artifact_path": "sealed_lanes/stable_constraint.json",
+          "bytes": 2926,
+          "sha256": "379e63f9bfce0af69df2240fe85835b7032efb0de3209773f71f818ba43f40cb",
+          "source_path": "artifacts/temporal_adjoint_lineage_v0_5_4/stable_constraint_sealed_lane.json"
+        }
+      },
+      "manifest_sha256": "60423518deee7e6b4bd69678a51d84269378e4725711803c46d079940227913b",
+      "relationship": "Immutable committed v0.5.4 temporal-lineage checkpoint. Exact source, fixture, artifact, manifest, and sealed-lane bytes are compilation inputs and provenance only; v0.5.5 does not rerun or regrade v0.5.4.",
+      "source_receipts": {
+        "benchmark": {
+          "bytes": 9522,
+          "path": "benchmark_temporal_adjoint_lineage_v0_5_4.py",
+          "sha256": "3c97f451e9128fdcbc3c7aadf64bbca47ca7d2a9798ace172cda083942f1e693"
+        },
+        "builder": {
+          "bytes": 51126,
+          "path": "build_temporal_adjoint_lineage_artifact_v0_5_4.py",
+          "sha256": "5faa79b5ebbd7463e30a3d6bf08d862f0c176b4284a19a5f5d8bd3a51be91060"
+        },
+        "composition_source": {
+          "bytes": 95541,
+          "path": "temporal_adjoint_lineage_v0_5_4.py",
+          "sha256": "0e900c9f0535d32b4994f41cafa71792c43c8dfb687bcd4b654dccecc906a1d4"
+        },
+        "event_fixture": {
+          "bytes": 1050,
+          "path": "fixtures/temporal_adjoint_lineage_v0_5_4_dev.json",
+          "sha256": "a1d4b2d55d403c13e89548dbe54ba4ebc80401a1e70b1972541039afeb1b7749"
+        },
+        "no_event_fixture": {
+          "bytes": 915,
+          "path": "fixtures/temporal_adjoint_lineage_v0_5_4_no_event.json",
+          "sha256": "e3ff041d8983f43cb0cfa7d60dd1baca041c7c714bd4af381f2690e08c4580a7"
+        },
+        "policy_lock": {
+          "bytes": 10154,
+          "path": "policy_lock_temporal_adjoint_lineage_v0_5_4.json",
+          "sha256": "d2866441aeffab6bc81c74f53cd77822ff35b6620e3dadd9b9ba71b509bd6dec"
+        }
+      },
+      "tree_sha": "7e21fe0f5dbcf93c85660bb466041b6f0c1b6d13"
+    },
+    "sources": {
+      "benchmark": {
+        "bytes": 9803,
+        "path": "benchmark_lane_composition_v0_5_5.py",
+        "sha256": "a74435559a0e477a0fea80ea63a1f1a73dc8af0245ead3651aebfa87463a7568"
+      },
+      "builder": {
+        "bytes": 51932,
+        "path": "build_lane_composition_artifact_v0_5_5.py",
+        "sha256": "51d24842498cc12f988d39ea3653507586c0ccc27fecf42326459eec04a1ae51"
+      },
+      "core": {
+        "bytes": 97085,
+        "path": "lane_composable_trajectory_v0_5_5.py",
+        "sha256": "4e8a648616bf8bc283c2c3d4bad76ca78139c4af2ac755fb18ba6c6ccf6ed83c"
+      }
+    }
+  },
+  "status": "COMPLETE_CONTAMINATED_NETWORK_ZERO_LANE_COMPOSITION",
+  "subchecks": {
+    "all_six_lane_permutations_invariant": true,
+    "artifact_tamper_rejected": true,
+    "conflicting_axis_target_rejected": true,
+    "conflicting_evidence_hash_rejected": true,
+    "duplicate_lane_alias_rejected": true,
+    "forbidden_schema_surface_rejected": true,
+    "provider_calls_zero": true,
+    "socket_denied": true,
+    "source_tamper_rejected": true,
+    "two_build_byte_identical": true
+  },
+  "top_level_gates": {
+    "block_gradient_agreement": true,
+    "bounds_complete": true,
+    "deterministic_network_zero": true,
+    "disconnected_zero": true,
+    "ledger_consistent": true,
+    "namespace_isolated": true,
+    "one_lane_exact": true,
+    "permutation_invariant": true,
+    "tamper_ready_source_receipts": true,
+    "v0_5_4_source_gate_exact": true
+  },
+  "validator_host_used_as_gate": false
+}

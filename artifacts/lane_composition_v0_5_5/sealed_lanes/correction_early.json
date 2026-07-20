@@ -1,0 +1,2191 @@
+{
+  "adjoint_audit": {
+    "autograd_gradient_raw_delta": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      -0.017547607421875,
+      0.0,
+      -0.005279541015625,
+      -0.000885009765625,
+      0.0,
+      0.0,
+      0.0,
+      -0.01226806640625,
+      0.0,
+      -0.0087890625,
+      -0.002655029296875,
+      0.0,
+      0.0,
+      0.0,
+      -0.00787353515625,
+      -0.06134033203125,
+      -0.01800537109375,
+      -0.016754150390625,
+      0.0,
+      0.0,
+      -0.123779296875,
+      -0.004364013671875,
+      -0.041656494140625,
+      -0.0533447265625,
+      -0.062835693359375,
+      0.0,
+      0.0,
+      -0.0631103515625,
+      -0.001739501953125,
+      -0.021209716796875,
+      -0.09332275390625,
+      -0.106597900390625,
+      0.0,
+      0.0
+    ],
+    "backward_calls": 1,
+    "central_finite_difference_epsilon": 1e-06,
+    "central_finite_difference_max_abs_error": 1.234212732015294e-10,
+    "fingerprint_sha256": "1007468c4b7e2bd02bf27e872eb01d2e804143ba8622fdd193697e3cc021b343",
+    "manual_forward_max_abs_error": 0.0,
+    "manual_reverse_gradient_raw_delta": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      -0.017547607421875,
+      0.0,
+      -0.005279541015625,
+      -0.000885009765625,
+      0.0,
+      0.0,
+      0.0,
+      -0.01226806640625,
+      0.0,
+      -0.0087890625,
+      -0.002655029296875,
+      0.0,
+      0.0,
+      0.0,
+      -0.00787353515625,
+      -0.06134033203125,
+      -0.01800537109375,
+      -0.016754150390625,
+      0.0,
+      0.0,
+      -0.123779296875,
+      -0.004364013671875,
+      -0.041656494140625,
+      -0.0533447265625,
+      -0.062835693359375,
+      0.0,
+      0.0,
+      -0.0631103515625,
+      -0.001739501953125,
+      -0.021209716796875,
+      -0.09332275390625,
+      -0.106597900390625,
+      0.0,
+      0.0
+    ],
+    "manual_reverse_max_abs_error": 0.0,
+    "normalized_gradient": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      -0.24918172877305217,
+      0.0,
+      -0.25097885550492166,
+      -0.2265625,
+      0.0,
+      0.0,
+      0.0,
+      -0.24524161046570173,
+      0.0,
+      -0.25155764746872633,
+      -0.2265625,
+      0.0,
+      0.0,
+      0.0,
+      -0.23754368430485584,
+      -0.4586442646979324,
+      -0.33003131435611255,
+      -0.4135537192572507,
+      0.0,
+      0.0,
+      -0.6995186510749762,
+      -0.2234375,
+      -0.46318996458511424,
+      -0.505787037037037,
+      -0.640339349041986,
+      0.0,
+      0.0,
+      -0.7133158631277372,
+      -0.19914980424607504,
+      -0.4663425576547682,
+      -0.5626290095124571,
+      -0.6345864612620075,
+      0.0,
+      0.0
+    ],
+    "normalized_jacobian_max_norm_error": 1.1102230246251565e-16,
+    "normalized_reverse_max_abs_error": 1.1102230246251565e-16,
+    "schema_version": "ebrt-temporal-lineage-adjoint-audit-v0.5.4",
+    "status": "PASS"
+  },
+  "claim_boundary": [
+    "This lane is one deterministic network-zero mechanism run over the sealed v0.5.3 repaired lineage graph.",
+    "The exact temporal-adjoint result is local to the compiled smooth recurrence and matched normalized actuator geometry.",
+    "No provider, model generation, optimizer, or downstream grader participated."
+  ],
+  "constraint_neutral_receipt": {
+    "arm_max_abs_drift": {
+      "A": 0.0,
+      "B": 0.0,
+      "C": 0.0,
+      "D1": 0.0,
+      "D2": 0.0,
+      "D3": 0.0
+    },
+    "neutral_output": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.25,
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "control_maps": {
+    "A": {
+      "arm_id": "A",
+      "controls": [
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:support:demo_readiness"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:support:judging_basis"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:support:superseding_guidance"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:fact:final_priority"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:fact:demo_centerpiece"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:support:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:constraint:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h02:R2:support:demo_readiness"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.07042092334890604,
+          "site_id": "q:correction_early:h02:R2:support:judging_basis"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h02:R2:support:superseding_guidance"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.021035800027869155,
+          "site_id": "q:correction_early:h02:R2:fact:final_priority"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.00390625,
+          "site_id": "q:correction_early:h02:R2:fact:demo_centerpiece"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h02:R2:support:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h02:R2:constraint:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h03:R3:support:demo_readiness"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.05002440810494413,
+          "site_id": "q:correction_early:h03:R3:support:judging_basis"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h03:R3:support:superseding_guidance"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.034938562148434216,
+          "site_id": "q:correction_early:h03:R3:fact:final_priority"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.01171875,
+          "site_id": "q:correction_early:h03:R3:fact:demo_centerpiece"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h03:R3:support:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h03:R3:constraint:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h04:R6:support:demo_readiness"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.03314563036811941,
+          "site_id": "q:correction_early:h04:R6:support:judging_basis"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.13374272121695305,
+          "site_id": "q:correction_early:h04:R6:support:superseding_guidance"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.05455655360727899,
+          "site_id": "q:correction_early:h04:R6:fact:final_priority"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.04051263381385067,
+          "site_id": "q:correction_early:h04:R6:fact:demo_centerpiece"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h04:R6:support:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h04:R6:constraint:video_constraint"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.1769492445766582,
+          "site_id": "q:correction_early:h05:R4:support:demo_readiness"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.01953125,
+          "site_id": "q:correction_early:h05:R4:support:judging_basis"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.08993393062377184,
+          "site_id": "q:correction_early:h05:R4:support:superseding_guidance"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.10546875,
+          "site_id": "q:correction_early:h05:R4:fact:final_priority"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.09812873978990001,
+          "site_id": "q:correction_early:h05:R4:fact:demo_centerpiece"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h05:R4:support:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h05:R4:constraint:video_constraint"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0884746222883291,
+          "site_id": "q:correction_early:h06:R5:support:demo_readiness"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.008734640537108554,
+          "site_id": "q:correction_early:h06:R5:support:judging_basis"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.04548098055544929,
+          "site_id": "q:correction_early:h06:R5:support:superseding_guidance"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.165869075942455,
+          "site_id": "q:correction_early:h06:R5:fact:final_priority"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.16798010499409782,
+          "site_id": "q:correction_early:h06:R5:fact:demo_centerpiece"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h06:R5:support:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h06:R5:constraint:video_constraint"
+        }
+      ],
+      "fingerprint_sha256": "ee24cf6f86317ad9ceaf97c1cc030e868c2a34d66a022df7f21f39fd2bb8eb90",
+      "normalized_l2": 0.0,
+      "placement": "zero_control",
+      "raw_max_abs_delta": 0.0,
+      "schema_version": "ebrt-temporal-lineage-control-map-v0.5.4",
+      "sham_transform": null,
+      "step_count": 0
+    },
+    "B": {
+      "arm_id": "B",
+      "controls": [
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:support:demo_readiness"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:support:judging_basis"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:support:superseding_guidance"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:fact:final_priority"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:fact:demo_centerpiece"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:support:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:constraint:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h02:R2:support:demo_readiness"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 4.7892947345833244e-05,
+          "raw_delta": 0.0006800954186377796,
+          "raw_scale_s": 0.07042092334890604,
+          "site_id": "q:correction_early:h02:R2:support:judging_basis"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h02:R2:support:superseding_guidance"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 7.885615939125596e-05,
+          "raw_delta": 0.003748664623488712,
+          "raw_scale_s": 0.021035800027869155,
+          "site_id": "q:correction_early:h02:R2:fact:final_priority"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 8.883752847406807e-05,
+          "raw_delta": 0.022742407289361426,
+          "raw_scale_s": 0.00390625,
+          "site_id": "q:correction_early:h02:R2:fact:demo_centerpiece"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h02:R2:support:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h02:R2:constraint:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h03:R3:support:demo_readiness"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 4.7892947345833244e-05,
+          "raw_delta": 0.0009573915846312588,
+          "raw_scale_s": 0.05002440810494413,
+          "site_id": "q:correction_early:h03:R3:support:judging_basis"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h03:R3:support:superseding_guidance"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 7.885615939125596e-05,
+          "raw_delta": 0.0022569949803956067,
+          "raw_scale_s": 0.034938562148434216,
+          "site_id": "q:correction_early:h03:R3:fact:final_priority"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 8.883752847406807e-05,
+          "raw_delta": 0.007580802429787142,
+          "raw_scale_s": 0.01171875,
+          "site_id": "q:correction_early:h03:R3:fact:demo_centerpiece"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h03:R3:support:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h03:R3:constraint:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h04:R6:support:demo_readiness"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 4.7892947345833244e-05,
+          "raw_delta": 0.0014449249211412887,
+          "raw_scale_s": 0.03314563036811941,
+          "site_id": "q:correction_early:h04:R6:support:judging_basis"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 9.597336415630835e-05,
+          "raw_delta": 0.0007175969150547155,
+          "raw_scale_s": 0.13374272121695305,
+          "site_id": "q:correction_early:h04:R6:support:superseding_guidance"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 7.885615939125596e-05,
+          "raw_delta": 0.0014454021410314102,
+          "raw_scale_s": 0.05455655360727899,
+          "site_id": "q:correction_early:h04:R6:fact:final_priority"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 8.883752847406807e-05,
+          "raw_delta": 0.0021928351753742518,
+          "raw_scale_s": 0.04051263381385067,
+          "site_id": "q:correction_early:h04:R6:fact:demo_centerpiece"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h04:R6:support:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h04:R6:constraint:video_constraint"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.00014651716114265944,
+          "raw_delta": 0.0008280180087413997,
+          "raw_scale_s": 0.1769492445766582,
+          "site_id": "q:correction_early:h05:R4:support:demo_readiness"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 4.7892947345833244e-05,
+          "raw_delta": 0.002452118904106662,
+          "raw_scale_s": 0.01953125,
+          "site_id": "q:correction_early:h05:R4:support:judging_basis"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 9.597336415630835e-05,
+          "raw_delta": 0.0010671541151448364,
+          "raw_scale_s": 0.08993393062377184,
+          "site_id": "q:correction_early:h05:R4:support:superseding_guidance"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 7.885615939125596e-05,
+          "raw_delta": 0.0007476732149689454,
+          "raw_scale_s": 0.10546875,
+          "site_id": "q:correction_early:h05:R4:fact:final_priority"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 8.883752847406807e-05,
+          "raw_delta": 0.0009053161047851524,
+          "raw_scale_s": 0.09812873978990001,
+          "site_id": "q:correction_early:h05:R4:fact:demo_centerpiece"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h05:R4:support:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h05:R4:constraint:video_constraint"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.00014651716114265944,
+          "raw_delta": 0.0016560360174827993,
+          "raw_scale_s": 0.0884746222883291,
+          "site_id": "q:correction_early:h06:R5:support:demo_readiness"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 4.7892947345833244e-05,
+          "raw_delta": 0.005483104558494784,
+          "raw_scale_s": 0.008734640537108554,
+          "site_id": "q:correction_early:h06:R5:support:judging_basis"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 9.597336415630835e-05,
+          "raw_delta": 0.002110186785425613,
+          "raw_scale_s": 0.04548098055544929,
+          "site_id": "q:correction_early:h06:R5:support:superseding_guidance"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 7.885615939125596e-05,
+          "raw_delta": 0.0004754120618518038,
+          "raw_scale_s": 0.165869075942455,
+          "site_id": "q:correction_early:h06:R5:fact:final_priority"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 8.883752847406807e-05,
+          "raw_delta": 0.0005288574410474947,
+          "raw_scale_s": 0.16798010499409782,
+          "site_id": "q:correction_early:h06:R5:fact:demo_centerpiece"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h06:R5:support:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h06:R5:constraint:video_constraint"
+        }
+      ],
+      "fingerprint_sha256": "0247f865695a1f006ce4cbcff5ab4b186c39d9746bffbdd56f9d51fb6d817ea6",
+      "normalized_l2": 0.0003906250000000001,
+      "placement": "static_node_tied_projection",
+      "raw_max_abs_delta": 0.022742407289361426,
+      "schema_version": "ebrt-temporal-lineage-control-map-v0.5.4",
+      "sham_transform": null,
+      "step_count": 1
+    },
+    "C": {
+      "arm_id": "C",
+      "controls": [
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:support:demo_readiness"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:support:judging_basis"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:support:superseding_guidance"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:fact:final_priority"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:fact:demo_centerpiece"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:support:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:constraint:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h02:R2:support:demo_readiness"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 4.991454332269347e-05,
+          "raw_delta": 0.0007088027385751237,
+          "raw_scale_s": 0.07042092334890604,
+          "site_id": "q:correction_early:h02:R2:support:judging_basis"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h02:R2:support:superseding_guidance"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 5.02745326387479e-05,
+          "raw_delta": 0.002389951063051654,
+          "raw_scale_s": 0.021035800027869155,
+          "site_id": "q:correction_early:h02:R2:fact:final_priority"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 4.538359925999009e-05,
+          "raw_delta": 0.011618201410557463,
+          "raw_scale_s": 0.00390625,
+          "site_id": "q:correction_early:h02:R2:fact:demo_centerpiece"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h02:R2:support:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h02:R2:constraint:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h03:R3:support:demo_readiness"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 4.9125283183448263e-05,
+          "raw_delta": 0.0009820262756610808,
+          "raw_scale_s": 0.05002440810494413,
+          "site_id": "q:correction_early:h03:R3:support:judging_basis"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h03:R3:support:superseding_guidance"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 5.03904726665116e-05,
+          "raw_delta": 0.0014422594854485123,
+          "raw_scale_s": 0.034938562148434216,
+          "site_id": "q:correction_early:h03:R3:fact:final_priority"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 4.538359925999009e-05,
+          "raw_delta": 0.003872733803519154,
+          "raw_scale_s": 0.01171875,
+          "site_id": "q:correction_early:h03:R3:fact:demo_centerpiece"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h03:R3:support:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h03:R3:constraint:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h04:R6:support:demo_readiness"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 4.758328220792573e-05,
+          "raw_delta": 0.001435582358201066,
+          "raw_scale_s": 0.03314563036811941,
+          "site_id": "q:correction_early:h04:R6:support:judging_basis"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 9.187278350099324e-05,
+          "raw_delta": 0.0006869366995453923,
+          "raw_scale_s": 0.13374272121695305,
+          "site_id": "q:correction_early:h04:R6:support:superseding_guidance"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 6.610983244793654e-05,
+          "raw_delta": 0.0012117670211322898,
+          "raw_scale_s": 0.05455655360727899,
+          "site_id": "q:correction_early:h04:R6:fact:final_priority"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 8.284052421406681e-05,
+          "raw_delta": 0.0020448071728613425,
+          "raw_scale_s": 0.04051263381385067,
+          "site_id": "q:correction_early:h04:R6:fact:demo_centerpiece"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h04:R6:support:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h04:R6:constraint:video_constraint"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.00014012325135569898,
+          "raw_delta": 0.0007918838630305347,
+          "raw_scale_s": 0.1769492445766582,
+          "site_id": "q:correction_early:h05:R4:support:demo_readiness"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 4.475761858054195e-05,
+          "raw_delta": 0.0022915900713237477,
+          "raw_scale_s": 0.01953125,
+          "site_id": "q:correction_early:h05:R4:support:judging_basis"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 9.278334999825577e-05,
+          "raw_delta": 0.0010316834742429323,
+          "raw_scale_s": 0.08993393062377184,
+          "site_id": "q:correction_early:h05:R4:support:superseding_guidance"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.00010131613219216176,
+          "raw_delta": 0.0009606270311553115,
+          "raw_scale_s": 0.10546875,
+          "site_id": "q:correction_early:h05:R4:fact:final_priority"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.0001282688194530181,
+          "raw_delta": 0.001307148341328442,
+          "raw_scale_s": 0.09812873978990001,
+          "site_id": "q:correction_early:h05:R4:fact:demo_centerpiece"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h05:R4:support:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h05:R4:constraint:video_constraint"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.00014288702357178777,
+          "raw_delta": 0.0016150057482713473,
+          "raw_scale_s": 0.0884746222883291,
+          "site_id": "q:correction_early:h06:R5:support:demo_readiness"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 3.989245752765502e-05,
+          "raw_delta": 0.004567155037253623,
+          "raw_scale_s": 0.008734640537108554,
+          "site_id": "q:correction_early:h06:R5:support:judging_basis"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 9.341485795082072e-05,
+          "raw_delta": 0.002053932364913101,
+          "raw_scale_s": 0.04548098055544929,
+          "site_id": "q:correction_early:h06:R5:support:superseding_guidance"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.00011270236468858924,
+          "raw_delta": 0.0006794658018574185,
+          "raw_scale_s": 0.165869075942455,
+          "site_id": "q:correction_early:h06:R5:fact:final_priority"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.00012711643654060212,
+          "raw_delta": 0.000756735070174343,
+          "raw_scale_s": 0.16798010499409782,
+          "site_id": "q:correction_early:h06:R5:fact:demo_centerpiece"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h06:R5:support:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h06:R5:constraint:video_constraint"
+        }
+      ],
+      "fingerprint_sha256": "8d626ce136bc66a129847baf138edc5dd2fad92adaaa09e572006d567c0f47ac",
+      "normalized_l2": 0.000390625,
+      "placement": "exact_temporal_adjoint",
+      "raw_max_abs_delta": 0.011618201410557463,
+      "schema_version": "ebrt-temporal-lineage-control-map-v0.5.4",
+      "sham_transform": null,
+      "step_count": 1
+    },
+    "D1": {
+      "arm_id": "D1",
+      "controls": [
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:support:demo_readiness"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:support:judging_basis"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:support:superseding_guidance"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:fact:final_priority"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:fact:demo_centerpiece"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:support:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:constraint:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h02:R2:support:demo_readiness"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 3.989245752765502e-05,
+          "raw_delta": 0.0005664858628735196,
+          "raw_scale_s": 0.07042092334890604,
+          "site_id": "q:correction_early:h02:R2:support:judging_basis"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h02:R2:support:superseding_guidance"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.00011270236468858924,
+          "raw_delta": 0.005357645753395458,
+          "raw_scale_s": 0.021035800027869155,
+          "site_id": "q:correction_early:h02:R2:fact:final_priority"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.00012711643654060212,
+          "raw_delta": 0.03254180775439414,
+          "raw_scale_s": 0.00390625,
+          "site_id": "q:correction_early:h02:R2:fact:demo_centerpiece"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h02:R2:support:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h02:R2:constraint:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h03:R3:support:demo_readiness"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 4.991454332269347e-05,
+          "raw_delta": 0.0009978037764680758,
+          "raw_scale_s": 0.05002440810494413,
+          "site_id": "q:correction_early:h03:R3:support:judging_basis"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h03:R3:support:superseding_guidance"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 5.02745326387479e-05,
+          "raw_delta": 0.0014389410882210839,
+          "raw_scale_s": 0.034938562148434216,
+          "site_id": "q:correction_early:h03:R3:fact:final_priority"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 4.538359925999009e-05,
+          "raw_delta": 0.003872733803519154,
+          "raw_scale_s": 0.01171875,
+          "site_id": "q:correction_early:h03:R3:fact:demo_centerpiece"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h03:R3:support:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h03:R3:constraint:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h04:R6:support:demo_readiness"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 4.9125283183448263e-05,
+          "raw_delta": 0.0014821043569802981,
+          "raw_scale_s": 0.03314563036811941,
+          "site_id": "q:correction_early:h04:R6:support:judging_basis"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 9.341485795082072e-05,
+          "raw_delta": 0.0006984668556226414,
+          "raw_scale_s": 0.13374272121695305,
+          "site_id": "q:correction_early:h04:R6:support:superseding_guidance"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 5.03904726665116e-05,
+          "raw_delta": 0.0009236373878973993,
+          "raw_scale_s": 0.05455655360727899,
+          "site_id": "q:correction_early:h04:R6:fact:final_priority"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 4.538359925999009e-05,
+          "raw_delta": 0.001120233245474011,
+          "raw_scale_s": 0.04051263381385067,
+          "site_id": "q:correction_early:h04:R6:fact:demo_centerpiece"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h04:R6:support:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h04:R6:constraint:video_constraint"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.00014288702357178777,
+          "raw_delta": 0.0008075028741356737,
+          "raw_scale_s": 0.1769492445766582,
+          "site_id": "q:correction_early:h05:R4:support:demo_readiness"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 4.758328220792573e-05,
+          "raw_delta": 0.0024362640490457974,
+          "raw_scale_s": 0.01953125,
+          "site_id": "q:correction_early:h05:R4:support:judging_basis"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 9.187278350099324e-05,
+          "raw_delta": 0.0010215586360317374,
+          "raw_scale_s": 0.08993393062377184,
+          "site_id": "q:correction_early:h05:R4:support:superseding_guidance"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 6.610983244793654e-05,
+          "raw_delta": 0.0006268191520989538,
+          "raw_scale_s": 0.10546875,
+          "site_id": "q:correction_early:h05:R4:fact:final_priority"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 8.284052421406681e-05,
+          "raw_delta": 0.0008442024669982895,
+          "raw_scale_s": 0.09812873978990001,
+          "site_id": "q:correction_early:h05:R4:fact:demo_centerpiece"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h05:R4:support:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h05:R4:constraint:video_constraint"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.00014012325135569898,
+          "raw_delta": 0.0015837677260610694,
+          "raw_scale_s": 0.0884746222883291,
+          "site_id": "q:correction_early:h06:R5:support:demo_readiness"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 4.475761858054195e-05,
+          "raw_delta": 0.005124151176043492,
+          "raw_scale_s": 0.008734640537108554,
+          "site_id": "q:correction_early:h06:R5:support:judging_basis"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 9.278334999825577e-05,
+          "raw_delta": 0.0020400472651449677,
+          "raw_scale_s": 0.04548098055544929,
+          "site_id": "q:correction_early:h06:R5:support:superseding_guidance"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.00010131613219216176,
+          "raw_delta": 0.000610819898865967,
+          "raw_scale_s": 0.165869075942455,
+          "site_id": "q:correction_early:h06:R5:fact:final_priority"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.0001282688194530181,
+          "raw_delta": 0.0007635953046792355,
+          "raw_scale_s": 0.16798010499409782,
+          "site_id": "q:correction_early:h06:R5:fact:demo_centerpiece"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h06:R5:support:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h06:R5:constraint:video_constraint"
+        }
+      ],
+      "fingerprint_sha256": "33bfcb9dfae13d85844e08a3d720d79cb405a42b88c0dea1012755c96a1e4645",
+      "normalized_l2": 0.000390625,
+      "placement": "locked_within_node_temporal_sham",
+      "raw_max_abs_delta": 0.03254180775439414,
+      "schema_version": "ebrt-temporal-lineage-control-map-v0.5.4",
+      "sham_transform": "cyclic_plus_1",
+      "step_count": 1
+    },
+    "D2": {
+      "arm_id": "D2",
+      "controls": [
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:support:demo_readiness"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:support:judging_basis"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:support:superseding_guidance"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:fact:final_priority"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:fact:demo_centerpiece"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:support:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:constraint:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h02:R2:support:demo_readiness"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 4.9125283183448263e-05,
+          "raw_delta": 0.0006975949880698547,
+          "raw_scale_s": 0.07042092334890604,
+          "site_id": "q:correction_early:h02:R2:support:judging_basis"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h02:R2:support:superseding_guidance"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 5.03904726665116e-05,
+          "raw_delta": 0.002395462620853596,
+          "raw_scale_s": 0.021035800027869155,
+          "site_id": "q:correction_early:h02:R2:fact:final_priority"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 4.538359925999009e-05,
+          "raw_delta": 0.011618201410557463,
+          "raw_scale_s": 0.00390625,
+          "site_id": "q:correction_early:h02:R2:fact:demo_centerpiece"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h02:R2:support:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h02:R2:constraint:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h03:R3:support:demo_readiness"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 4.758328220792573e-05,
+          "raw_delta": 0.0009512013037336241,
+          "raw_scale_s": 0.05002440810494413,
+          "site_id": "q:correction_early:h03:R3:support:judging_basis"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h03:R3:support:superseding_guidance"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 6.610983244793654e-05,
+          "raw_delta": 0.001892173815484255,
+          "raw_scale_s": 0.034938562148434216,
+          "site_id": "q:correction_early:h03:R3:fact:final_priority"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 8.284052421406681e-05,
+          "raw_delta": 0.007069058066267034,
+          "raw_scale_s": 0.01171875,
+          "site_id": "q:correction_early:h03:R3:fact:demo_centerpiece"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h03:R3:support:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h03:R3:constraint:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h04:R6:support:demo_readiness"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 4.475761858054195e-05,
+          "raw_delta": 0.001350332399277322,
+          "raw_scale_s": 0.03314563036811941,
+          "site_id": "q:correction_early:h04:R6:support:judging_basis"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 9.278334999825577e-05,
+          "raw_delta": 0.0006937450438722992,
+          "raw_scale_s": 0.13374272121695305,
+          "site_id": "q:correction_early:h04:R6:support:superseding_guidance"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.00010131613219216176,
+          "raw_delta": 0.0018570845387609685,
+          "raw_scale_s": 0.05455655360727899,
+          "site_id": "q:correction_early:h04:R6:fact:final_priority"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.0001282688194530181,
+          "raw_delta": 0.0031661436785965,
+          "raw_scale_s": 0.04051263381385067,
+          "site_id": "q:correction_early:h04:R6:fact:demo_centerpiece"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h04:R6:support:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h04:R6:constraint:video_constraint"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.00014288702357178777,
+          "raw_delta": 0.0008075028741356737,
+          "raw_scale_s": 0.1769492445766582,
+          "site_id": "q:correction_early:h05:R4:support:demo_readiness"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 3.989245752765502e-05,
+          "raw_delta": 0.0020424938254159372,
+          "raw_scale_s": 0.01953125,
+          "site_id": "q:correction_early:h05:R4:support:judging_basis"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 9.341485795082072e-05,
+          "raw_delta": 0.0010387053840848004,
+          "raw_scale_s": 0.08993393062377184,
+          "site_id": "q:correction_early:h05:R4:support:superseding_guidance"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.00011270236468858924,
+          "raw_delta": 0.0010685853837140314,
+          "raw_scale_s": 0.10546875,
+          "site_id": "q:correction_early:h05:R4:fact:final_priority"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.00012711643654060212,
+          "raw_delta": 0.0012954047592251428,
+          "raw_scale_s": 0.09812873978990001,
+          "site_id": "q:correction_early:h05:R4:fact:demo_centerpiece"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h05:R4:support:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h05:R4:constraint:video_constraint"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.00014012325135569898,
+          "raw_delta": 0.0015837677260610694,
+          "raw_scale_s": 0.0884746222883291,
+          "site_id": "q:correction_early:h06:R5:support:demo_readiness"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 4.991454332269347e-05,
+          "raw_delta": 0.005714550371092522,
+          "raw_scale_s": 0.008734640537108554,
+          "site_id": "q:correction_early:h06:R5:support:judging_basis"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 9.187278350099324e-05,
+          "raw_delta": 0.002020026445757567,
+          "raw_scale_s": 0.04548098055544929,
+          "site_id": "q:correction_early:h06:R5:support:superseding_guidance"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 5.02745326387479e-05,
+          "raw_delta": 0.00030309768323656455,
+          "raw_scale_s": 0.165869075942455,
+          "site_id": "q:correction_early:h06:R5:fact:final_priority"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 4.538359925999009e-05,
+          "raw_delta": 0.0002701724663262039,
+          "raw_scale_s": 0.16798010499409782,
+          "site_id": "q:correction_early:h06:R5:fact:demo_centerpiece"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h06:R5:support:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h06:R5:constraint:video_constraint"
+        }
+      ],
+      "fingerprint_sha256": "0ca89d6a00654c14b677fd8088762aac6e8d63684f7484b8d6b3041258926a5a",
+      "normalized_l2": 0.000390625,
+      "placement": "locked_within_node_temporal_sham",
+      "raw_max_abs_delta": 0.011618201410557463,
+      "schema_version": "ebrt-temporal-lineage-control-map-v0.5.4",
+      "sham_transform": "cyclic_minus_1",
+      "step_count": 1
+    },
+    "D3": {
+      "arm_id": "D3",
+      "controls": [
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:support:demo_readiness"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:support:judging_basis"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:support:superseding_guidance"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:fact:final_priority"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:fact:demo_centerpiece"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:support:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h01:R1:constraint:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h02:R2:support:demo_readiness"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 3.989245752765502e-05,
+          "raw_delta": 0.0005664858628735196,
+          "raw_scale_s": 0.07042092334890604,
+          "site_id": "q:correction_early:h02:R2:support:judging_basis"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h02:R2:support:superseding_guidance"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.00011270236468858924,
+          "raw_delta": 0.005357645753395458,
+          "raw_scale_s": 0.021035800027869155,
+          "site_id": "q:correction_early:h02:R2:fact:final_priority"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.00012711643654060212,
+          "raw_delta": 0.03254180775439414,
+          "raw_scale_s": 0.00390625,
+          "site_id": "q:correction_early:h02:R2:fact:demo_centerpiece"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h02:R2:support:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h02:R2:constraint:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h03:R3:support:demo_readiness"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 4.475761858054195e-05,
+          "raw_delta": 0.000894715605363022,
+          "raw_scale_s": 0.05002440810494413,
+          "site_id": "q:correction_early:h03:R3:support:judging_basis"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h03:R3:support:superseding_guidance"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.00010131613219216176,
+          "raw_delta": 0.0028998369126275645,
+          "raw_scale_s": 0.034938562148434216,
+          "site_id": "q:correction_early:h03:R3:fact:final_priority"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.0001282688194530181,
+          "raw_delta": 0.010945605926657545,
+          "raw_scale_s": 0.01171875,
+          "site_id": "q:correction_early:h03:R3:fact:demo_centerpiece"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h03:R3:support:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h03:R3:constraint:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h04:R6:support:demo_readiness"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 4.758328220792573e-05,
+          "raw_delta": 0.001435582358201066,
+          "raw_scale_s": 0.03314563036811941,
+          "site_id": "q:correction_early:h04:R6:support:judging_basis"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 9.341485795082072e-05,
+          "raw_delta": 0.0006984668556226414,
+          "raw_scale_s": 0.13374272121695305,
+          "site_id": "q:correction_early:h04:R6:support:superseding_guidance"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 6.610983244793654e-05,
+          "raw_delta": 0.0012117670211322898,
+          "raw_scale_s": 0.05455655360727899,
+          "site_id": "q:correction_early:h04:R6:fact:final_priority"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 8.284052421406681e-05,
+          "raw_delta": 0.0020448071728613425,
+          "raw_scale_s": 0.04051263381385067,
+          "site_id": "q:correction_early:h04:R6:fact:demo_centerpiece"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h04:R6:support:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h04:R6:constraint:video_constraint"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.00014288702357178777,
+          "raw_delta": 0.0008075028741356737,
+          "raw_scale_s": 0.1769492445766582,
+          "site_id": "q:correction_early:h05:R4:support:demo_readiness"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 4.9125283183448263e-05,
+          "raw_delta": 0.0025152144989925513,
+          "raw_scale_s": 0.01953125,
+          "site_id": "q:correction_early:h05:R4:support:judging_basis"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 9.278334999825577e-05,
+          "raw_delta": 0.0010316834742429323,
+          "raw_scale_s": 0.08993393062377184,
+          "site_id": "q:correction_early:h05:R4:support:superseding_guidance"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 5.03904726665116e-05,
+          "raw_delta": 0.0004777763334306285,
+          "raw_scale_s": 0.10546875,
+          "site_id": "q:correction_early:h05:R4:fact:final_priority"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 4.538359925999009e-05,
+          "raw_delta": 0.00046249039126722015,
+          "raw_scale_s": 0.09812873978990001,
+          "site_id": "q:correction_early:h05:R4:fact:demo_centerpiece"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h05:R4:support:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h05:R4:constraint:video_constraint"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 0.00014012325135569898,
+          "raw_delta": 0.0015837677260610694,
+          "raw_scale_s": 0.0884746222883291,
+          "site_id": "q:correction_early:h06:R5:support:demo_readiness"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 4.991454332269347e-05,
+          "raw_delta": 0.005714550371092522,
+          "raw_scale_s": 0.008734640537108554,
+          "site_id": "q:correction_early:h06:R5:support:judging_basis"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 9.187278350099324e-05,
+          "raw_delta": 0.002020026445757567,
+          "raw_scale_s": 0.04548098055544929,
+          "site_id": "q:correction_early:h06:R5:support:superseding_guidance"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 5.02745326387479e-05,
+          "raw_delta": 0.00030309768323656455,
+          "raw_scale_s": 0.165869075942455,
+          "site_id": "q:correction_early:h06:R5:fact:final_priority"
+        },
+        {
+          "eligible": true,
+          "normalized_u": 4.538359925999009e-05,
+          "raw_delta": 0.0002701724663262039,
+          "raw_scale_s": 0.16798010499409782,
+          "site_id": "q:correction_early:h06:R5:fact:demo_centerpiece"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h06:R5:support:video_constraint"
+        },
+        {
+          "eligible": false,
+          "normalized_u": 0.0,
+          "raw_delta": 0.0,
+          "raw_scale_s": 0.0,
+          "site_id": "q:correction_early:h06:R5:constraint:video_constraint"
+        }
+      ],
+      "fingerprint_sha256": "d7ddc52a2b00dd99251d0bc3b031ef1b85bfa7bbe4b4a83dfa3b91d74c0fb0ba",
+      "normalized_l2": 0.000390625,
+      "placement": "locked_within_node_temporal_sham",
+      "raw_max_abs_delta": 0.03254180775439414,
+      "schema_version": "ebrt-temporal-lineage-control-map-v0.5.4",
+      "sham_transform": "reverse",
+      "step_count": 1
+    }
+  },
+  "evidence_order": [
+    "R1",
+    "R2",
+    "R3",
+    "R6",
+    "R4",
+    "R5"
+  ],
+  "fingerprint_sha256": "a1675805e2a33c4ef9a6b17ab9ea75ab8428edb3a1ab01464a4745283e6fba62",
+  "fixture_id": "hackathon_strategy_temporal_adjoint_lineage_dev_v0_5_4",
+  "gates": {
+    "all_nonzero_controls_exact_l2_rho": true,
+    "all_normalized_jacobian_norms_one": true,
+    "all_raw_delta_bounded": true,
+    "c_beats_a_b_and_every_distinct_d": true,
+    "constraint_preserved_neutral": true,
+    "finite_difference_agrees": true,
+    "locked_sham_geometry_exact": true,
+    "manual_forward_agrees_autograd": true,
+    "manual_reverse_agrees_autograd": true,
+    "normalized_reverse_agrees": true,
+    "top_credit_has_positive_finite_leverage": true,
+    "zero_leverage_controls_fixed_zero": true
+  },
+  "geometry_fingerprint_sha256": "a19552f5af1fa5af1c05be99e01486bf7b3be88bd40126f760458826bbc07f9f",
+  "lane_id": "correction_early",
+  "network_calls": 0,
+  "neutral": {
+    "loss": 0.403717041015625,
+    "target": [
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0
+    ],
+    "terminal_output": [
+      0.0,
+      0.0,
+      0.0,
+      0.7734375,
+      0.0,
+      0.0,
+      0.5,
+      0.15625,
+      0.0,
+      0.0,
+      0.6875,
+      0.15625,
+      0.0,
+      0.0,
+      0.890625,
+      0.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0,
+      0.0,
+      0.0,
+      0.6875,
+      0.0
+    ]
+  },
+  "program_fingerprint_sha256": "686ae870d0694fbecc387836911b13265c04f8cc1b9bc4430369479470b32cfb",
+  "provider_calls": 0,
+  "schema_version": "ebrt-sealed-temporal-lineage-lane-v0.5.4",
+  "sham_geometry_audit": {
+    "expected_disposition": {
+      "cyclic_minus_1": "D2",
+      "cyclic_plus_1": "D1",
+      "reverse": "D3"
+    },
+    "expected_distinct_d_count": 3,
+    "family_gates": {
+      "all_three_locked_transforms_accounted_for": true,
+      "distinct_d_count_exact": true,
+      "distinct_d_mapping_exact": true,
+      "every_emitted_sham_invariant_exact": true
+    },
+    "fingerprint_sha256": "1ddf09ba164dc3b2c59e2ddbd4aefae681af2f989574dddecc9a289f1e5d3ef2",
+    "locked_transforms": [
+      "cyclic_plus_1",
+      "cyclic_minus_1",
+      "reverse"
+    ],
+    "observed_disposition": {
+      "cyclic_minus_1": "D2",
+      "cyclic_plus_1": "D1",
+      "reverse": "D3"
+    },
+    "observed_distinct_d_count": 3,
+    "per_sham": {
+      "D1": {
+        "distinct_from_c": true,
+        "eligible_support_exact": true,
+        "exact_locked_transform": true,
+        "exact_zero_count_and_sparsity": true,
+        "ineligible_sites_zero": true,
+        "node_type_mapping_exact": true,
+        "normalized_l2_abs_error": 0.0,
+        "normalized_l2_exact": true,
+        "observed_transform": "cyclic_plus_1",
+        "same_sign_multiset_by_target_node": true,
+        "same_value_multiset_by_target_node": true,
+        "status": "PASS",
+        "transform": "cyclic_plus_1",
+        "value_fingerprint_sha256": "6813b647dbd9a308ae49d3ceddd0f5acf16742cce28f27e6e40f2c3e7bd71efa"
+      },
+      "D2": {
+        "distinct_from_c": true,
+        "eligible_support_exact": true,
+        "exact_locked_transform": true,
+        "exact_zero_count_and_sparsity": true,
+        "ineligible_sites_zero": true,
+        "node_type_mapping_exact": true,
+        "normalized_l2_abs_error": 0.0,
+        "normalized_l2_exact": true,
+        "observed_transform": "cyclic_minus_1",
+        "same_sign_multiset_by_target_node": true,
+        "same_value_multiset_by_target_node": true,
+        "status": "PASS",
+        "transform": "cyclic_minus_1",
+        "value_fingerprint_sha256": "f08296f00561352712afe45cdb7713bf1e502c98f07b90e930a85c02b781f644"
+      },
+      "D3": {
+        "distinct_from_c": true,
+        "eligible_support_exact": true,
+        "exact_locked_transform": true,
+        "exact_zero_count_and_sparsity": true,
+        "ineligible_sites_zero": true,
+        "node_type_mapping_exact": true,
+        "normalized_l2_abs_error": 0.0,
+        "normalized_l2_exact": true,
+        "observed_transform": "reverse",
+        "same_sign_multiset_by_target_node": true,
+        "same_value_multiset_by_target_node": true,
+        "status": "PASS",
+        "transform": "reverse",
+        "value_fingerprint_sha256": "6cf4ddcf3473deccb4c77f58124ca59fac3c193957c4ddc06991dfaee9761da2"
+      }
+    },
+    "schema_version": "ebrt-temporal-lineage-sham-geometry-audit-v0.5.4",
+    "status": "PASS"
+  },
+  "status": "PASS",
+  "terminal_axis_types": [
+    "fact"
+  ],
+  "top_credit_site": {
+    "admitted_evidence_id": "R5",
+    "horizon_index": 6,
+    "horizon_label_semantics": "admitted_evidence_id names the current horizon; it is not a direct gate on this site",
+    "normalized_abs_credit": 0.7133158631277372,
+    "raw_scale_s": 0.0884746222883291,
+    "runner_up_margin": 0.013797212052760965,
+    "site_id": "q:correction_early:h06:R5:support:demo_readiness",
+    "target_node_id": "support:demo_readiness",
+    "target_node_type": "support"
+  }
+}
