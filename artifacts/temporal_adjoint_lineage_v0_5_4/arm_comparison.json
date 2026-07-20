@@ -1,0 +1,332 @@
+{
+  "decision_status": "PROMOTE_V0_5_5_TEMPORAL_GATE",
+  "fingerprint_sha256": "befa18d6c02698dbb7bda6ce3fb8d27ff9fa5b1b1d483eda984f946a843b79e5",
+  "hard_gates": {
+    "central_finite_difference_agreement": true,
+    "compiled_closure_exact": true,
+    "early_late_top_credit_switch": true,
+    "exact_credit_beats_all_timing_shams": true,
+    "exact_credit_beats_zero_and_node_tied": true,
+    "fixture_mechanism_injection_rejected": true,
+    "forward_sensitivity_agreement": true,
+    "identity_insertion_invariant": true,
+    "independent_operator_permutation_invariant": true,
+    "matched_control_geometry": true,
+    "no_event_exact_identity": true,
+    "normalized_jacobian_geometry": true,
+    "reverse_adjoint_agreement": true,
+    "severed_path_zero_credit": true,
+    "socket_denied_network_zero": true,
+    "two_build_byte_identity": true,
+    "v053_source_exact": true
+  },
+  "lanes": {
+    "correction_early": {
+      "arm_results": {
+        "A": {
+          "constraint_max_abs_drift": 0.0,
+          "control_map_fingerprint_sha256": "ee24cf6f86317ad9ceaf97c1cc030e868c2a34d66a022df7f21f39fd2bb8eb90",
+          "improvement_from_A": 0.0,
+          "normalized_l2": 0.0,
+          "raw_max_abs_delta": 0.0,
+          "terminal_loss": 0.403717041015625
+        },
+        "B": {
+          "constraint_max_abs_drift": 0.0,
+          "control_map_fingerprint_sha256": "0247f865695a1f006ce4cbcff5ab4b186c39d9746bffbdd56f9d51fb6d817ea6",
+          "improvement_from_A": 0.0007349340653509118,
+          "normalized_l2": 0.0003906250000000001,
+          "raw_max_abs_delta": 0.022742407289361426,
+          "terminal_loss": 0.4029821069502741
+        },
+        "C": {
+          "constraint_max_abs_drift": 0.0,
+          "control_map_fingerprint_sha256": "8d626ce136bc66a129847baf138edc5dd2fad92adaaa09e572006d567c0f47ac",
+          "improvement_from_A": 0.0007610944519213514,
+          "normalized_l2": 0.000390625,
+          "raw_max_abs_delta": 0.011618201410557463,
+          "terminal_loss": 0.40295594656370365
+        },
+        "D1": {
+          "constraint_max_abs_drift": 0.0,
+          "control_map_fingerprint_sha256": "33bfcb9dfae13d85844e08a3d720d79cb405a42b88c0dea1012755c96a1e4645",
+          "improvement_from_A": 0.0007216403286967044,
+          "normalized_l2": 0.000390625,
+          "raw_max_abs_delta": 0.03254180775439414,
+          "terminal_loss": 0.4029954006869283
+        },
+        "D2": {
+          "constraint_max_abs_drift": 0.0,
+          "control_map_fingerprint_sha256": "0ca89d6a00654c14b677fd8088762aac6e8d63684f7484b8d6b3041258926a5a",
+          "improvement_from_A": 0.0007215696175043584,
+          "normalized_l2": 0.000390625,
+          "raw_max_abs_delta": 0.011618201410557463,
+          "terminal_loss": 0.40299547139812064
+        },
+        "D3": {
+          "constraint_max_abs_drift": 0.0,
+          "control_map_fingerprint_sha256": "d7ddc52a2b00dd99251d0bc3b031ef1b85bfa7bbe4b4a83dfa3b91d74c0fb0ba",
+          "improvement_from_A": 0.0006602750652057177,
+          "normalized_l2": 0.000390625,
+          "raw_max_abs_delta": 0.03254180775439414,
+          "terminal_loss": 0.4030567659504193
+        }
+      },
+      "c_strictly_beats_under_1e_12": {
+        "A": true,
+        "B": true,
+        "D1": true,
+        "D2": true,
+        "D3": true
+      },
+      "c_vs_b_loss_margin": 2.616038657043962e-05,
+      "c_vs_best_distinct_d_loss_margin": 3.945412322464703e-05,
+      "fingerprint_sha256": "a04313bca8e3e0804d229c17b0e4cef6898b49c39324a1643a8e8ed9ed788df6",
+      "lane_id": "correction_early",
+      "rho": 0.000390625,
+      "schema_version": "ebrt-temporal-lineage-comparison-v0.5.4",
+      "sham_disposition": {
+        "cyclic_minus_1": "D2",
+        "cyclic_plus_1": "D1",
+        "reverse": "D3"
+      },
+      "sham_geometry_audit": {
+        "expected_disposition": {
+          "cyclic_minus_1": "D2",
+          "cyclic_plus_1": "D1",
+          "reverse": "D3"
+        },
+        "expected_distinct_d_count": 3,
+        "family_gates": {
+          "all_three_locked_transforms_accounted_for": true,
+          "distinct_d_count_exact": true,
+          "distinct_d_mapping_exact": true,
+          "every_emitted_sham_invariant_exact": true
+        },
+        "fingerprint_sha256": "1ddf09ba164dc3b2c59e2ddbd4aefae681af2f989574dddecc9a289f1e5d3ef2",
+        "locked_transforms": [
+          "cyclic_plus_1",
+          "cyclic_minus_1",
+          "reverse"
+        ],
+        "observed_disposition": {
+          "cyclic_minus_1": "D2",
+          "cyclic_plus_1": "D1",
+          "reverse": "D3"
+        },
+        "observed_distinct_d_count": 3,
+        "per_sham": {
+          "D1": {
+            "distinct_from_c": true,
+            "eligible_support_exact": true,
+            "exact_locked_transform": true,
+            "exact_zero_count_and_sparsity": true,
+            "ineligible_sites_zero": true,
+            "node_type_mapping_exact": true,
+            "normalized_l2_abs_error": 0.0,
+            "normalized_l2_exact": true,
+            "observed_transform": "cyclic_plus_1",
+            "same_sign_multiset_by_target_node": true,
+            "same_value_multiset_by_target_node": true,
+            "status": "PASS",
+            "transform": "cyclic_plus_1",
+            "value_fingerprint_sha256": "6813b647dbd9a308ae49d3ceddd0f5acf16742cce28f27e6e40f2c3e7bd71efa"
+          },
+          "D2": {
+            "distinct_from_c": true,
+            "eligible_support_exact": true,
+            "exact_locked_transform": true,
+            "exact_zero_count_and_sparsity": true,
+            "ineligible_sites_zero": true,
+            "node_type_mapping_exact": true,
+            "normalized_l2_abs_error": 0.0,
+            "normalized_l2_exact": true,
+            "observed_transform": "cyclic_minus_1",
+            "same_sign_multiset_by_target_node": true,
+            "same_value_multiset_by_target_node": true,
+            "status": "PASS",
+            "transform": "cyclic_minus_1",
+            "value_fingerprint_sha256": "f08296f00561352712afe45cdb7713bf1e502c98f07b90e930a85c02b781f644"
+          },
+          "D3": {
+            "distinct_from_c": true,
+            "eligible_support_exact": true,
+            "exact_locked_transform": true,
+            "exact_zero_count_and_sparsity": true,
+            "ineligible_sites_zero": true,
+            "node_type_mapping_exact": true,
+            "normalized_l2_abs_error": 0.0,
+            "normalized_l2_exact": true,
+            "observed_transform": "reverse",
+            "same_sign_multiset_by_target_node": true,
+            "same_value_multiset_by_target_node": true,
+            "status": "PASS",
+            "transform": "reverse",
+            "value_fingerprint_sha256": "6cf4ddcf3473deccb4c77f58124ca59fac3c193957c4ddc06991dfaee9761da2"
+          }
+        },
+        "schema_version": "ebrt-temporal-lineage-sham-geometry-audit-v0.5.4",
+        "status": "PASS"
+      },
+      "status": "PASS"
+    },
+    "correction_late": {
+      "arm_results": {
+        "A": {
+          "constraint_max_abs_drift": 0.0,
+          "control_map_fingerprint_sha256": "e727223d750a6d770a1731fc488f1d4c59bfbee88bd08cd0eb6f009a455986e9",
+          "improvement_from_A": 0.0,
+          "normalized_l2": 0.0,
+          "raw_max_abs_delta": 0.0,
+          "terminal_loss": 0.708404541015625
+        },
+        "B": {
+          "constraint_max_abs_drift": 0.0,
+          "control_map_fingerprint_sha256": "7a19d7c82106f5a1385c5436a2c0db0431fe227a4d74bef176a963ea24e33297",
+          "improvement_from_A": 0.0007361159461077849,
+          "normalized_l2": 0.000390625,
+          "raw_max_abs_delta": 0.02199485744623096,
+          "terminal_loss": 0.7076684250695172
+        },
+        "C": {
+          "constraint_max_abs_drift": 0.0,
+          "control_map_fingerprint_sha256": "3aebb5d68438dcdfb4eb351425c235a170d803017100ae32022988363ab453ad",
+          "improvement_from_A": 0.0007750498163028308,
+          "normalized_l2": 0.000390625,
+          "raw_max_abs_delta": 0.011411429981821875,
+          "terminal_loss": 0.7076294911993222
+        },
+        "D1": {
+          "constraint_max_abs_drift": 0.0,
+          "control_map_fingerprint_sha256": "e7f4542ef0dc65b3256e3c0fc65897e76a7dba5f603a91e030cbb49bdfcd70ba",
+          "improvement_from_A": 0.0006850031930941691,
+          "normalized_l2": 0.000390625,
+          "raw_max_abs_delta": 0.040173798372514474,
+          "terminal_loss": 0.7077195378225308
+        },
+        "D2": {
+          "constraint_max_abs_drift": 0.0,
+          "control_map_fingerprint_sha256": "c0284f455e063eef2b90c082620b264ffad7c7445ae1a417e65d47281b325242",
+          "improvement_from_A": 0.0006849159561223006,
+          "normalized_l2": 0.000390625,
+          "raw_max_abs_delta": 0.011411429981821875,
+          "terminal_loss": 0.7077196250595027
+        },
+        "D3": {
+          "constraint_max_abs_drift": 0.0,
+          "control_map_fingerprint_sha256": "85f7bec08a63e7caa1820ddc6352ba789f6b79a4ad1116e9a89466a38e13a2e4",
+          "improvement_from_A": 0.0006553341063821883,
+          "normalized_l2": 0.000390625,
+          "raw_max_abs_delta": 0.040173798372514474,
+          "terminal_loss": 0.7077492069092428
+        }
+      },
+      "c_strictly_beats_under_1e_12": {
+        "A": true,
+        "B": true,
+        "D1": true,
+        "D2": true,
+        "D3": true
+      },
+      "c_vs_b_loss_margin": 3.8933870195045905e-05,
+      "c_vs_best_distinct_d_loss_margin": 9.004662320866164e-05,
+      "fingerprint_sha256": "eef8522bfcdad1cb772e9d4b69f6f44a09f08a4258c8e1ae9b4c98a2ef0fbda0",
+      "lane_id": "correction_late",
+      "rho": 0.000390625,
+      "schema_version": "ebrt-temporal-lineage-comparison-v0.5.4",
+      "sham_disposition": {
+        "cyclic_minus_1": "D2",
+        "cyclic_plus_1": "D1",
+        "reverse": "D3"
+      },
+      "sham_geometry_audit": {
+        "expected_disposition": {
+          "cyclic_minus_1": "D2",
+          "cyclic_plus_1": "D1",
+          "reverse": "D3"
+        },
+        "expected_distinct_d_count": 3,
+        "family_gates": {
+          "all_three_locked_transforms_accounted_for": true,
+          "distinct_d_count_exact": true,
+          "distinct_d_mapping_exact": true,
+          "every_emitted_sham_invariant_exact": true
+        },
+        "fingerprint_sha256": "fc48eb978f547e8643f1d6925538bea3207fa22fd0e70e0e2dcef255a4260878",
+        "locked_transforms": [
+          "cyclic_plus_1",
+          "cyclic_minus_1",
+          "reverse"
+        ],
+        "observed_disposition": {
+          "cyclic_minus_1": "D2",
+          "cyclic_plus_1": "D1",
+          "reverse": "D3"
+        },
+        "observed_distinct_d_count": 3,
+        "per_sham": {
+          "D1": {
+            "distinct_from_c": true,
+            "eligible_support_exact": true,
+            "exact_locked_transform": true,
+            "exact_zero_count_and_sparsity": true,
+            "ineligible_sites_zero": true,
+            "node_type_mapping_exact": true,
+            "normalized_l2_abs_error": 0.0,
+            "normalized_l2_exact": true,
+            "observed_transform": "cyclic_plus_1",
+            "same_sign_multiset_by_target_node": true,
+            "same_value_multiset_by_target_node": true,
+            "status": "PASS",
+            "transform": "cyclic_plus_1",
+            "value_fingerprint_sha256": "83ca7a83a4809c50cbd01aa7906b101a2293427dfb0597a56d327040f1cecf1a"
+          },
+          "D2": {
+            "distinct_from_c": true,
+            "eligible_support_exact": true,
+            "exact_locked_transform": true,
+            "exact_zero_count_and_sparsity": true,
+            "ineligible_sites_zero": true,
+            "node_type_mapping_exact": true,
+            "normalized_l2_abs_error": 0.0,
+            "normalized_l2_exact": true,
+            "observed_transform": "cyclic_minus_1",
+            "same_sign_multiset_by_target_node": true,
+            "same_value_multiset_by_target_node": true,
+            "status": "PASS",
+            "transform": "cyclic_minus_1",
+            "value_fingerprint_sha256": "67df2f6308fd8bed32b5d9511503ed45258c9ed2a462ab150f9cc74e77e435f0"
+          },
+          "D3": {
+            "distinct_from_c": true,
+            "eligible_support_exact": true,
+            "exact_locked_transform": true,
+            "exact_zero_count_and_sparsity": true,
+            "ineligible_sites_zero": true,
+            "node_type_mapping_exact": true,
+            "normalized_l2_abs_error": 0.0,
+            "normalized_l2_exact": true,
+            "observed_transform": "reverse",
+            "same_sign_multiset_by_target_node": true,
+            "same_value_multiset_by_target_node": true,
+            "status": "PASS",
+            "transform": "reverse",
+            "value_fingerprint_sha256": "f2c1f7d96043251e187ba7e64b168cc26638b3db9f8a731511a7fc42dc71d086"
+          }
+        },
+        "schema_version": "ebrt-temporal-lineage-sham-geometry-audit-v0.5.4",
+        "status": "PASS"
+      },
+      "status": "PASS"
+    }
+  },
+  "network_calls": 0,
+  "promotion": {
+    "eligible_for_v0_5_5": true,
+    "stop_rule": null
+  },
+  "promotion_ready": true,
+  "provider_calls": 0,
+  "schema_version": "ebrt-temporal-lineage-comparison-v0.5.4",
+  "status": "PASS"
+}

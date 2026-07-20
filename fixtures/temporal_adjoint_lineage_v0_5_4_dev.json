@@ -1,0 +1,24 @@
+{
+  "claim_boundary": [
+    "This is a network-zero temporal mechanism fixture over the contaminated v0.5.3 engineering repair, not fresh reasoning evidence.",
+    "The fixture selects only locked symbolic policies; graph structure, closure targets, transition algebra, Jacobians, and actuator geometry are compiled mechanically.",
+    "A promoted result is limited to this fixed synthetic lineage program and does not establish hosted-model or general causal superiority."
+  ],
+  "control_policy": "one_exact_normalized_adjoint_step_v0_5_4",
+  "event": {
+    "correction_evidence_id": "R6",
+    "triggered": true
+  },
+  "fixture_id": "hackathon_strategy_temporal_adjoint_lineage_dev_v0_5_4",
+  "lineage_source": {
+    "closure_status": "COMPUTED",
+    "graph_status": "CONTAMINATED_REPAIR_OVERLAY",
+    "version": "v0.5.3"
+  },
+  "schedule_policy_ids": [
+    "correction_early",
+    "correction_late"
+  ],
+  "schema_version": "ebrt-temporal-adjoint-lineage-fixture-v0.5.4",
+  "terminal_contract": "repaired_fact_closure_constraint_neutral_v0_5_4"
+}
