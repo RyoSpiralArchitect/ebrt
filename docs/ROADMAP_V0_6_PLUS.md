@@ -1,6 +1,6 @@
 # EBRT v0.6+ — Execution, Evaluation, and Orchestration Roadmap
 
-Status: **v0.6.0 PREFLIGHT PASS; v0.6.1 FIVE-CALL BLOCK COMPLETE, GATE HELD; v0.6.3 NETWORK-ZERO PREFLIGHT PASS; LIVE R01 PREREGISTERED, NOT YET RUN**
+Status: **v0.6.0 PREFLIGHT PASS; v0.6.1 FIVE-CALL BLOCK COMPLETE, GATE HELD; v0.6.3 LIVE R01 EXECUTED ONCE, STOP_OUTPUT_CONTRACT; v0.6.4 BLOCKED**
 
 The one allowed v0.6.1 block ran on 2026-07-20 in the preregistered order
 `P -> A -> B -> D -> C`. All five calls completed and the committed artifact
@@ -415,11 +415,22 @@ existing Williams order, exact payload hashes, one-shot provider boundary,
 durable pre-call journal, `epsilon=1e-12`, all-four X adherence, all-eight D/C
 adherence, endpoint thresholds, and terminal decisions. The live revision also
 requires all-four Z baseline adherence, an annotated execution-commit tag, and
-a locked-code semantic-gold loader guard through complete public compilation. The zero-call monolith,
-policy, and canonical preflight artifact remain unchanged. This roadmap does not
-record a hosted result until the single r01 namespace has executed and validated.
-See the
-[`live r01 execution note`](RND_ACTUATOR_CALIBRATION_V0_6_3_LIVE_R01.md).
+a locked-code semantic-gold loader guard through complete public compilation.
+The zero-call monolith, policy, and canonical preflight artifact remain
+unchanged.
+
+The r01 namespace executed once after the authorization tag was published. Its
+first provider call completed, but the unchanged local compiler rejected the
+public graph with `EXACT_ONE_CLOSURE_FAILED`. The frozen terminal state is
+`STOP_OUTPUT_CONTRACT`: 15 calls were not attempted, gold and secondary quality
+remained unloaded/not assessed, and neither X/Z propagation nor D/C placement
+was evaluated. Do not rerun or reinterpret this as a null actuator effect. See
+the frozen
+[`preregistration`](RND_ACTUATOR_CALIBRATION_V0_6_3_LIVE_R01.md) and
+[`terminal result`](RND_ACTUATOR_CALIBRATION_V0_6_3_LIVE_R01_RESULT.md).
+The receipts are operator-attested rather than provider-signed or
+cryptographically authenticated; the tag neither authenticates operator
+identity nor guarantees cross-clone exactly-once execution.
 
 ## v0.6.4 — Scaffold Aperture
 

@@ -1,0 +1,325 @@
+{
+  "claim_boundary": [
+    "This is one sealed two-case, two-trial actuator calibration block, not a population estimate or quality benchmark.",
+    "The provider sees raw evidence, a neutral candidate scaffold, and one bounded public reinspection schedule; it never sees arm labels, q vectors, accepted paths, gold, or grades.",
+    "The local float64 backward pass ends before JSON; no gradient crosses GPT or the provider boundary.",
+    "Schedule adherence is a public receipt and is never counted as downstream propagation.",
+    "D is constructed and evaluated in the same q^D coordinate system, so a positive result is construct-aligned calibration rather than independent validation.",
+    "Answer and lineage quality are secondary diagnostics and do not gate actuator promotion.",
+    "Provider receipts and execution provenance are operator-attested local records, not cryptographically authenticated or provider-signed proof of hosted execution.",
+    "The authorization tag does not authenticate operator identity or guarantee global exactly-once execution across clones.",
+    "The semantic-gold barrier is a locked-code Path.read_bytes guard, not an operating-system sandbox against arbitrary processes.",
+    "No result supports hidden-state editing, causal superiority, general quality improvement, or general reasoning improvement."
+  ],
+  "decision": {
+    "promotion_ready": false,
+    "quality_is_promotion_gate": false,
+    "reason_code": "PUBLIC_OUTPUT_COMPILER_REJECTED",
+    "run_status": "INCOMPLETE",
+    "terminal_status": "STOP_OUTPUT_CONTRACT"
+  },
+  "endpoints": {
+    "blocks": [],
+    "channel_adherence": {
+      "status": "NOT_ASSESSED"
+    },
+    "d_c_adherence": {
+      "status": "NOT_ASSESSED"
+    },
+    "effect_epsilon": 1e-12,
+    "gradient_placement": {
+      "status": "NOT_ASSESSED"
+    },
+    "positive_control": {
+      "status": "NOT_ASSESSED"
+    }
+  },
+  "execution": {
+    "attempts": [
+      {
+        "blinded_request_id": "req-678ea292de97159f0a7cd2b8",
+        "block_id": "block_1",
+        "block_position": 1,
+        "case_id": "relay_bay_revision_a",
+        "failure": {
+          "category": "local_output_contract_error",
+          "exception_class": "ActuatorCalibrationError",
+          "phase": "local_output_contract",
+          "reason_code": "EXACT_ONE_CLOSURE_FAILED"
+        },
+        "provider_input_fingerprint_sha256": "702d4358c57272532d9d8226bb8f86108bec887a532450fc56e27d490be9dc32",
+        "provider_output_fingerprint_sha256": "c79eb9c5acc8744e2e57f712e1de4a68ab62ee0c63fe12dc36131d9da4b0115c",
+        "provider_payload_sha256": "702d4358c57272532d9d8226bb8f86108bec887a532450fc56e27d490be9dc32",
+        "receipt": {
+          "api_calls": 1,
+          "latency_ms": 8848.178874999576,
+          "logical_calls": 1,
+          "metadata": {
+            "api_call_count_semantics": "attempted_client_call",
+            "attempt": 1,
+            "attempt_outcome": "completed",
+            "client_request_id_sha256": "5d65c72f7c88b1aab20a54d928fd8ced4a145b568e27d6e51597d818c84f1793",
+            "failure_phase": null,
+            "failure_reason_code": null,
+            "failure_type": null,
+            "http_observed": true,
+            "http_status_code": 200,
+            "max_output_tokens": 2048,
+            "parse_boundary": "succeeded",
+            "previous_response_id": false,
+            "provider_body_byte_count": 8287,
+            "provider_body_sha256": "85a0f111e62a6c992c3b2c94d94fbdcb96d526a0a7190a547b27b792abd39dd7",
+            "pydantic_version": "2.12.5",
+            "python_version": "3.13.13",
+            "reasoning_effort": "low",
+            "receipt_schema_version": "ebrt-provider-boundary-receipt-v0.4.3",
+            "refusal_count": 0,
+            "response_id_sha256": "9674066c08c0deb867ecb46fd4ead226c657ffcecde4928db189cc6dae310929",
+            "response_schema_fingerprint": "09238b88f6ea184f2d9061fb5da63673c933f01a90975a850eb41bcd9a4ea209",
+            "retry_count": 0,
+            "sdk_version": "2.45.0",
+            "semantic_protocol_fingerprint": "7a88c2c30568efe43cde9069dc755f9c83678db24ae0951d31e3f4ffe835090a",
+            "server_request_id_sha256": "5ca76034a784932d76a1fdbe19823d4f993aff236ea41a6b0d79badc1d7a39c1",
+            "service_tier": "default",
+            "status": "completed",
+            "store": false,
+            "truncation": "disabled"
+          },
+          "prompt_fingerprint": "5b1c5b1fffc4ab23988c3b57b97d946004ba56c71e8676cb098979eb2b69c47e",
+          "provider": "openai_responses",
+          "request_fingerprint": "702d4358c57272532d9d8226bb8f86108bec887a532450fc56e27d490be9dc32",
+          "requested_model": "gpt-5.6-sol",
+          "returned_model": "gpt-5.6-sol",
+          "usage": {
+            "cache_write_tokens": 1618,
+            "cached_input_tokens": 0,
+            "exact_provider_tokens": true,
+            "input_tokens": 1621,
+            "output_tokens": 230,
+            "reasoning_tokens": 103,
+            "total_tokens": 1851
+          }
+        },
+        "run_position": 1,
+        "status": "LOCAL_OUTPUT_CONTRACT_ERROR",
+        "treatment_id": "Z",
+        "trial_id": 1
+      }
+    ],
+    "compiled_outputs": {},
+    "provider_outputs": {
+      "req-678ea292de97159f0a7cd2b8": {
+        "checkpoint_id": "relay_bay_revision_a:post_event",
+        "current_answer": "BLUE",
+        "decision_slots": [
+          {
+            "slot_id": "primary_decision",
+            "value": "BLUE_BAY"
+          },
+          {
+            "slot_id": "stable_constraint",
+            "value": "SIGNED_JSON"
+          }
+        ],
+        "inspection_plan": {
+          "operator": "bounded_reinspection_schedule",
+          "reviewed_evidence_ids": [
+            "E1",
+            "E2",
+            "E3"
+          ]
+        },
+        "schema_version": "ebrt-actuator-calibration-provider-output-v0.6.3",
+        "selected_candidate_edge_ids": [
+          "C01",
+          "C02",
+          "C03",
+          "C09",
+          "C10",
+          "C11"
+        ]
+      }
+    },
+    "run_status": "INCOMPLETE",
+    "unattempted_blinded_request_ids": [
+      "req-97d7a8a50b6c88f721d2c94e",
+      "req-5e7328ff49476cd4f8b7379d",
+      "req-b591cc3968b294a1d593063b",
+      "req-1759c1d2344e86a8a6cb0cc3",
+      "req-c9f2b9778714fd1b54efcb19",
+      "req-66fa66b31d008082555d2b43",
+      "req-aadd60cc05435444180b770a",
+      "req-6cbe8f64b49de7b43b1374e9",
+      "req-8b877132f25712b5a988d7b6",
+      "req-e1c904fd5a9f07b11ccb9627",
+      "req-cef4e911884f32d80dadce73",
+      "req-00b70d2fde1301d2831d4f26",
+      "req-478d747bc998fd62272c2939",
+      "req-af6d899c27ec820b4c2d9b3c",
+      "req-1376160a073decc952c33c9e"
+    ]
+  },
+  "fingerprint_sha256": "52b3878b877d7c006d7521d98de4ee3ce398cd5b279e577fe1bd9eebbd168a29",
+  "gold_loaded_after_complete_compilation": false,
+  "mode": "openai_live_actuator_calibration_v0_6_3_r01",
+  "policy_lock_fingerprint_sha256": "bce283bd820c07343668058afb3e99429ee75d13ec1ddb4fb4a12e37c0321933",
+  "preflight": {
+    "call_order_blinded_request_ids": [
+      "req-678ea292de97159f0a7cd2b8",
+      "req-97d7a8a50b6c88f721d2c94e",
+      "req-5e7328ff49476cd4f8b7379d",
+      "req-b591cc3968b294a1d593063b",
+      "req-1759c1d2344e86a8a6cb0cc3",
+      "req-c9f2b9778714fd1b54efcb19",
+      "req-66fa66b31d008082555d2b43",
+      "req-aadd60cc05435444180b770a",
+      "req-6cbe8f64b49de7b43b1374e9",
+      "req-8b877132f25712b5a988d7b6",
+      "req-e1c904fd5a9f07b11ccb9627",
+      "req-cef4e911884f32d80dadce73",
+      "req-00b70d2fde1301d2831d4f26",
+      "req-478d747bc998fd62272c2939",
+      "req-af6d899c27ec820b4c2d9b3c",
+      "req-1376160a073decc952c33c9e"
+    ],
+    "component_self_test": {
+      "checks": {
+        "committed_core_hard_gates_pass": true,
+        "committed_core_manifest_exact": true,
+        "network_calls_zero": true,
+        "offline_full_block_pass": true,
+        "projection_exact": true,
+        "provider_transport_pass": true,
+        "sdk_versions_pinned": true,
+        "semantic_gold_path_read_attempts_zero": true,
+        "sixteen_attempts_presealed": true
+      },
+      "fingerprint_sha256": "fd37793abd91f9da87afc75c6029cd3857ce11a70e5405b59f5acc5f5e56b2b1",
+      "network_calls": 0,
+      "provider_calls": 0,
+      "schema_version": "ebrt-actuator-live-component-self-test-v0.6.3-r01",
+      "simulated_api_calls": 17,
+      "status": "PASS_NETWORK_ZERO"
+    },
+    "execution_authorization": {
+      "authorized_commit": "012791fc942107bf442e5db91be197a803ced599",
+      "execution_head_commit": "012791fc942107bf442e5db91be197a803ced599",
+      "head_matches_authorized_commit": true,
+      "provenance_scope": "OPERATOR_ATTESTED_NOT_CRYPTOGRAPHICALLY_AUTHENTICATED",
+      "status": "AUTHORIZED_ANNOTATED_TAG",
+      "tag_name": "v0.6.3-live-r01-authorized",
+      "tag_object": "eb76d2573073f34b020de8b37d877cf6670f917b"
+    },
+    "expected_api_attempts": 16,
+    "fingerprint_sha256": "92bb4e52e079b1ec953cb9b8d36b262f787a5232d1867f4c7c89fd1595184d2e",
+    "gold_guard_scope": "LOCKED_PATH_READ_BYTES_NOT_OS_SANDBOX",
+    "gold_loaded": false,
+    "guarded_gold_path_read_attempts": 0,
+    "network_calls": 0,
+    "payload_fingerprints": {
+      "req-00b70d2fde1301d2831d4f26": "1870dc147968a0bdb9c6c9717b214fbbdf2df19c106b49814ea34fc69b5cd171",
+      "req-1376160a073decc952c33c9e": "6cc89ac6da3a92f60e1a69b51cb298a408df57de3d0486cc3b861294597d5f0e",
+      "req-1759c1d2344e86a8a6cb0cc3": "6cc89ac6da3a92f60e1a69b51cb298a408df57de3d0486cc3b861294597d5f0e",
+      "req-478d747bc998fd62272c2939": "7a91a9c15a069278859e8c05ef9aa8bad002391c08dd708c87345f0cc95a923f",
+      "req-5e7328ff49476cd4f8b7379d": "9d1be2bc61018377a4609c243e6f5598ec00b509d99998edc0b943035a592aa5",
+      "req-66fa66b31d008082555d2b43": "7a91a9c15a069278859e8c05ef9aa8bad002391c08dd708c87345f0cc95a923f",
+      "req-678ea292de97159f0a7cd2b8": "702d4358c57272532d9d8226bb8f86108bec887a532450fc56e27d490be9dc32",
+      "req-6cbe8f64b49de7b43b1374e9": "bd311b91a64e4e9f74220526ed237e808fc3da4cf21a01d6d37f56a380bca6b8",
+      "req-8b877132f25712b5a988d7b6": "9d1be2bc61018377a4609c243e6f5598ec00b509d99998edc0b943035a592aa5",
+      "req-97d7a8a50b6c88f721d2c94e": "1309a9815e15e1cadcdc9f95f6b6bb94dd29df8d66d5bef6efffa74275f18070",
+      "req-aadd60cc05435444180b770a": "1870dc147968a0bdb9c6c9717b214fbbdf2df19c106b49814ea34fc69b5cd171",
+      "req-af6d899c27ec820b4c2d9b3c": "b736ed6143825c68481d55adfbe2396eeabcb9f3ffcc02b0becd4744f0f84815",
+      "req-b591cc3968b294a1d593063b": "bd311b91a64e4e9f74220526ed237e808fc3da4cf21a01d6d37f56a380bca6b8",
+      "req-c9f2b9778714fd1b54efcb19": "b736ed6143825c68481d55adfbe2396eeabcb9f3ffcc02b0becd4744f0f84815",
+      "req-cef4e911884f32d80dadce73": "702d4358c57272532d9d8226bb8f86108bec887a532450fc56e27d490be9dc32",
+      "req-e1c904fd5a9f07b11ccb9627": "1309a9815e15e1cadcdc9f95f6b6bb94dd29df8d66d5bef6efffa74275f18070"
+    },
+    "policy_lock_fingerprint_sha256": "bce283bd820c07343668058afb3e99429ee75d13ec1ddb4fb4a12e37c0321933",
+    "post_call_gold_expected_receipt": {
+      "bytes": 1511,
+      "path": "fixtures/actuator_calibration_gold_v0_6_3.json",
+      "sha256": "3d58dd75b310b92ae3aa140eaeb7728febeb6c043d03c0ebb1306dd38a6606e6"
+    },
+    "preflight_anchor_commit": "97b8d63b32e07664e3f16b5f13df91309fbb40ee",
+    "preflight_anchor_tag_object": "d569bf5960fea7c72f572a7b204288837a499756",
+    "preflight_manifest_bytes_sha256": "f5de1d69e50ce3da34532e04d2b2a1f27125fa933c5338864f172145f32a3853",
+    "projection_fingerprint_sha256": "c817e45c27f6b4a94696a8519fe6b0130c5f66e97966413914fda42d57eb1588",
+    "provider": {
+      "api": "responses.with_raw_response.parse+raw.parse",
+      "instructions_fingerprint_sha256": "5b1c5b1fffc4ab23988c3b57b97d946004ba56c71e8676cb098979eb2b69c47e",
+      "machine": "arm64",
+      "max_output_tokens": 2048,
+      "model": "gpt-5.6-sol",
+      "openai_sdk": "2.45.0",
+      "previous_response_id": false,
+      "provider": "openai_responses",
+      "pydantic": "2.12.5",
+      "python": "3.13.13",
+      "reasoning_effort": "low",
+      "receipt_schema_version": "ebrt-provider-boundary-receipt-v0.4.3",
+      "response_schema_fingerprint_sha256": "09238b88f6ea184f2d9061fb5da63673c933f01a90975a850eb41bcd9a4ea209",
+      "sdk_retries": 0,
+      "service_tier": "default",
+      "store": false,
+      "timeout_seconds": 60,
+      "torch": "2.11.0",
+      "truncation": "disabled"
+    },
+    "provider_calls": 0,
+    "schema_version": "ebrt-actuator-live-preflight-v0.6.3-r01",
+    "source_snapshot_sha256": {
+      "core": "e2b3ef1517824fd0d2c5a7b2d9f53766f635d098c76b8b5baa56daa144b0b2bc",
+      "fixture": "987f1fb0d5aca8f0d33a49c3476a78bbdde4dd8b394d59235e8c6dd531839a86",
+      "protocol_note": "161cb2554188fb9c27f36478a3ef572329bda15029923ce7c305708f0d563489",
+      "provider_base": "840d019811ecfab2b6bb25f2969d3c27e405b8cc148c068308393c2207c31689",
+      "receipt_contract": "5fd765ec5ca55562e7b712ec48adc6f54588080c276cbfa58aabcb72492666c2",
+      "requirements": "024ff69128d68a1c08bba956e318301500b7aebb7c917b19ff913a9bf5e373d7",
+      "requirements_live": "73a8bd6fd5d0a6aa2ec01c216b1ddc50f2c5f32746bcf907ec7ca3ab793e7c83",
+      "response_boundary": "7f78fce94cb141a4355d3c040010e11e049ff67a3a8c603099d0548a47b7cf03",
+      "runner": "0daedb60443601375f5b2e75a333ac559c028c2c8bc685d7ab049213424d6900",
+      "zero_call_manifest": "f5de1d69e50ce3da34532e04d2b2a1f27125fa933c5338864f172145f32a3853",
+      "zero_call_policy": "b709e40175165452089594cb978457655a3f1717b9ec322da1caee075921f83f",
+      "zero_call_projection": "ffb6d232fb77131b2f978a725ed8564e5dc42481763235eaf3f52ac57ab3a2a4"
+    },
+    "status": "READY_EXACT_16_CALL_LIVE_BLOCK"
+  },
+  "preflight_anchor_commit": "97b8d63b32e07664e3f16b5f13df91309fbb40ee",
+  "preflight_anchor_tag_object": "d569bf5960fea7c72f572a7b204288837a499756",
+  "projection_fingerprint_sha256": "c817e45c27f6b4a94696a8519fe6b0130c5f66e97966413914fda42d57eb1588",
+  "quality_status": {
+    "attempt_count": 1,
+    "by_blinded_request_id": {},
+    "gold_loaded": false,
+    "observed_gold_receipt": null,
+    "pass_count": 0,
+    "secondary_only": true,
+    "status": "NOT_ASSESSED"
+  },
+  "schema_version": "ebrt-actuator-calibration-live-result-v0.6.3-r01",
+  "source_snapshot_sha256": {
+    "core": "e2b3ef1517824fd0d2c5a7b2d9f53766f635d098c76b8b5baa56daa144b0b2bc",
+    "fixture": "987f1fb0d5aca8f0d33a49c3476a78bbdde4dd8b394d59235e8c6dd531839a86",
+    "protocol_note": "161cb2554188fb9c27f36478a3ef572329bda15029923ce7c305708f0d563489",
+    "provider_base": "840d019811ecfab2b6bb25f2969d3c27e405b8cc148c068308393c2207c31689",
+    "receipt_contract": "5fd765ec5ca55562e7b712ec48adc6f54588080c276cbfa58aabcb72492666c2",
+    "requirements": "024ff69128d68a1c08bba956e318301500b7aebb7c917b19ff913a9bf5e373d7",
+    "requirements_live": "73a8bd6fd5d0a6aa2ec01c216b1ddc50f2c5f32746bcf907ec7ca3ab793e7c83",
+    "response_boundary": "7f78fce94cb141a4355d3c040010e11e049ff67a3a8c603099d0548a47b7cf03",
+    "runner": "0daedb60443601375f5b2e75a333ac559c028c2c8bc685d7ab049213424d6900",
+    "zero_call_manifest": "f5de1d69e50ce3da34532e04d2b2a1f27125fa933c5338864f172145f32a3853",
+    "zero_call_policy": "b709e40175165452089594cb978457655a3f1717b9ec322da1caee075921f83f",
+    "zero_call_projection": "ffb6d232fb77131b2f978a725ed8564e5dc42481763235eaf3f52ac57ab3a2a4"
+  },
+  "usage": {
+    "api_calls": 1,
+    "cache_write_tokens": 1618,
+    "cached_input_tokens": 0,
+    "exact_provider_tokens": true,
+    "input_tokens": 1621,
+    "latency_ms": 8848.178874999576,
+    "logical_calls": 1,
+    "output_tokens": 230,
+    "reasoning_tokens": 103,
+    "total_tokens": 1851
+  }
+}

@@ -217,6 +217,17 @@ result is claimed until that one fixed command completes and its artifact
 validates; local receipts are operator-auditable records, not provider-signed
 cryptographic proof.
 
+That r01 namespace has now executed once and is frozen. The first provider call
+completed, but the unchanged public graph compiler rejected its output with
+`EXACT_ONE_CLOSURE_FAILED`; the terminal result is
+`STOP_OUTPUT_CONTRACT`, with 15 calls unattempted, semantic gold unloaded, and
+secondary quality and all X/Z and D/C effects not assessed. This is not a
+control-effect null and the block must not be rerun. See the
+[`frozen live result`](docs/RND_ACTUATOR_CALIBRATION_V0_6_3_LIVE_R01_RESULT.md),
+the
+[`canonical artifact`](artifacts/actuator_calibration_v0_6_3_live_r01), and the
+[`portable verifier`](verify_actuator_calibration_v0_6_3_live_r01.py).
+
 > [!IMPORTANT]
 > v0.1-v0.3.1 are **not** a Transformer implementation, a GPT latent-state
 > editor, or evidence of improved language-model accuracy. v0.4 meaningfully

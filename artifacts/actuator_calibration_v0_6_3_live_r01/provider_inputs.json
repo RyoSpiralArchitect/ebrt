@@ -1,0 +1,4487 @@
+{
+  "fingerprint_sha256": "bd6b4128759090703fa2443510a7d48749e89083b9caf49db70ec0e66fc36115",
+  "payloads": [
+    {
+      "blinded_request_id": "req-678ea292de97159f0a7cd2b8",
+      "block_id": "block_1",
+      "block_position": 1,
+      "case_id": "relay_bay_revision_a",
+      "payload": {
+        "all_raw_evidence": [
+          {
+            "evidence_id": "E1",
+            "text": "Certified routing rule: one complete registry chain is sufficient to establish the active bay for shipment K."
+          },
+          {
+            "evidence_id": "E2",
+            "text": "Registry channel A records bay BLUE for shipment K and is valid for the current routing epoch."
+          },
+          {
+            "evidence_id": "E3",
+            "text": "Independent signed controller notice CN-41 records bay BLUE for shipment K; it is valid when paired with its verification receipt."
+          },
+          {
+            "evidence_id": "E4",
+            "text": "Verification receipt V-41 authenticates controller notice CN-41 for the current routing epoch."
+          },
+          {
+            "evidence_id": "E5",
+            "text": "Legacy dispatch note L-9 records bay AMBER and remains usable unless a later revocation names it."
+          },
+          {
+            "evidence_id": "E6",
+            "text": "Latest revocation: legacy dispatch note L-9 is withdrawn. Use one complete currently certified chain; E5 is invalidated."
+          },
+          {
+            "evidence_id": "E7",
+            "text": "The final machine-readable record must remain SIGNED_JSON regardless of the selected bay."
+          }
+        ],
+        "allowed_evidence_ids": [
+          "E1",
+          "E2",
+          "E3",
+          "E4",
+          "E5",
+          "E6",
+          "E7"
+        ],
+        "answer_choices": [
+          "BLUE",
+          "AMBER"
+        ],
+        "candidate_scaffold": {
+          "allowed_relation_types": [
+            "supports",
+            "depends_on",
+            "invalidates"
+          ],
+          "candidate_edges": [
+            {
+              "edge_id": "C01",
+              "relation_type": "supports",
+              "source_node_id": "E1",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C02",
+              "relation_type": "supports",
+              "source_node_id": "E2",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C03",
+              "relation_type": "supports",
+              "source_node_id": "N08",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C04",
+              "relation_type": "supports",
+              "source_node_id": "E3",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C05",
+              "relation_type": "supports",
+              "source_node_id": "E4",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C06",
+              "relation_type": "supports",
+              "source_node_id": "N09",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C07",
+              "relation_type": "supports",
+              "source_node_id": "E6",
+              "target_node_id": "N10"
+            },
+            {
+              "edge_id": "C08",
+              "relation_type": "supports",
+              "source_node_id": "N10",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C09",
+              "relation_type": "supports",
+              "source_node_id": "E7",
+              "target_node_id": "N12"
+            },
+            {
+              "edge_id": "C10",
+              "relation_type": "supports",
+              "source_node_id": "N12",
+              "target_node_id": "N13"
+            },
+            {
+              "edge_id": "C11",
+              "relation_type": "invalidates",
+              "source_node_id": "E6",
+              "target_node_id": "E5"
+            },
+            {
+              "edge_id": "C12",
+              "relation_type": "supports",
+              "source_node_id": "E1",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C13",
+              "relation_type": "supports",
+              "source_node_id": "E2",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C14",
+              "relation_type": "supports",
+              "source_node_id": "E3",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C15",
+              "relation_type": "supports",
+              "source_node_id": "E4",
+              "target_node_id": "N08"
+            }
+          ],
+          "nodes": [
+            {
+              "node_id": "E1",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E2",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E3",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E4",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E5",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E6",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E7",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "N08",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N09",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N10",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N11",
+              "node_type": "fact"
+            },
+            {
+              "node_id": "N12",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N13",
+              "node_type": "constraint"
+            }
+          ],
+          "schema_version": "ebrt-neutral-candidate-scaffold-v0.6.3",
+          "target_bindings": [
+            {
+              "node_id": "N11",
+              "slot_id": "primary_decision"
+            },
+            {
+              "node_id": "N13",
+              "slot_id": "stable_constraint"
+            }
+          ]
+        },
+        "checkpoint_id": "relay_bay_revision_a:post_event",
+        "decision_slots": [
+          {
+            "allowed_values": [
+              "BLUE_BAY",
+              "AMBER_BAY"
+            ],
+            "slot_id": "primary_decision"
+          },
+          {
+            "allowed_values": [
+              "SIGNED_JSON"
+            ],
+            "slot_id": "stable_constraint"
+          }
+        ],
+        "question": "Which bay is active for shipment K after applying the latest valid evidence? Answer BLUE or AMBER.",
+        "response_contract": {
+          "inspection_plan_is_public_receipt_only": true,
+          "return_private_reasoning": false,
+          "schema_version": "ebrt-actuator-calibration-provider-output-v0.6.3",
+          "select_only_candidate_edge_ids": true
+        },
+        "revision_actuator": {
+          "fingerprint_sha256": "776adab7aee146a3af99ef330ae597434af461eec5242166937752a88d627ff0",
+          "no_reordering": true,
+          "operator": "bounded_reinspection_schedule",
+          "priority_rows": [
+            {
+              "evidence_id": "E1",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E2",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E3",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E4",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E5",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E6",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E7",
+              "priority_tier": 0
+            }
+          ],
+          "review_budget": 3,
+          "schema_version": "ebrt-bounded-reinspection-schedule-v0.6.3"
+        },
+        "schema_version": "ebrt-actuator-calibration-provider-input-v0.6.3"
+      },
+      "provider_payload_sha256": "702d4358c57272532d9d8226bb8f86108bec887a532450fc56e27d490be9dc32",
+      "run_position": 1,
+      "treatment_id": "Z",
+      "trial_id": 1
+    },
+    {
+      "blinded_request_id": "req-97d7a8a50b6c88f721d2c94e",
+      "block_id": "block_1",
+      "block_position": 2,
+      "case_id": "relay_bay_revision_a",
+      "payload": {
+        "all_raw_evidence": [
+          {
+            "evidence_id": "E1",
+            "text": "Certified routing rule: one complete registry chain is sufficient to establish the active bay for shipment K."
+          },
+          {
+            "evidence_id": "E2",
+            "text": "Registry channel A records bay BLUE for shipment K and is valid for the current routing epoch."
+          },
+          {
+            "evidence_id": "E3",
+            "text": "Independent signed controller notice CN-41 records bay BLUE for shipment K; it is valid when paired with its verification receipt."
+          },
+          {
+            "evidence_id": "E4",
+            "text": "Verification receipt V-41 authenticates controller notice CN-41 for the current routing epoch."
+          },
+          {
+            "evidence_id": "E5",
+            "text": "Legacy dispatch note L-9 records bay AMBER and remains usable unless a later revocation names it."
+          },
+          {
+            "evidence_id": "E6",
+            "text": "Latest revocation: legacy dispatch note L-9 is withdrawn. Use one complete currently certified chain; E5 is invalidated."
+          },
+          {
+            "evidence_id": "E7",
+            "text": "The final machine-readable record must remain SIGNED_JSON regardless of the selected bay."
+          }
+        ],
+        "allowed_evidence_ids": [
+          "E1",
+          "E2",
+          "E3",
+          "E4",
+          "E5",
+          "E6",
+          "E7"
+        ],
+        "answer_choices": [
+          "BLUE",
+          "AMBER"
+        ],
+        "candidate_scaffold": {
+          "allowed_relation_types": [
+            "supports",
+            "depends_on",
+            "invalidates"
+          ],
+          "candidate_edges": [
+            {
+              "edge_id": "C01",
+              "relation_type": "supports",
+              "source_node_id": "E1",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C02",
+              "relation_type": "supports",
+              "source_node_id": "E2",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C03",
+              "relation_type": "supports",
+              "source_node_id": "N08",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C04",
+              "relation_type": "supports",
+              "source_node_id": "E3",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C05",
+              "relation_type": "supports",
+              "source_node_id": "E4",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C06",
+              "relation_type": "supports",
+              "source_node_id": "N09",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C07",
+              "relation_type": "supports",
+              "source_node_id": "E6",
+              "target_node_id": "N10"
+            },
+            {
+              "edge_id": "C08",
+              "relation_type": "supports",
+              "source_node_id": "N10",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C09",
+              "relation_type": "supports",
+              "source_node_id": "E7",
+              "target_node_id": "N12"
+            },
+            {
+              "edge_id": "C10",
+              "relation_type": "supports",
+              "source_node_id": "N12",
+              "target_node_id": "N13"
+            },
+            {
+              "edge_id": "C11",
+              "relation_type": "invalidates",
+              "source_node_id": "E6",
+              "target_node_id": "E5"
+            },
+            {
+              "edge_id": "C12",
+              "relation_type": "supports",
+              "source_node_id": "E1",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C13",
+              "relation_type": "supports",
+              "source_node_id": "E2",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C14",
+              "relation_type": "supports",
+              "source_node_id": "E3",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C15",
+              "relation_type": "supports",
+              "source_node_id": "E4",
+              "target_node_id": "N08"
+            }
+          ],
+          "nodes": [
+            {
+              "node_id": "E1",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E2",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E3",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E4",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E5",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E6",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E7",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "N08",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N09",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N10",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N11",
+              "node_type": "fact"
+            },
+            {
+              "node_id": "N12",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N13",
+              "node_type": "constraint"
+            }
+          ],
+          "schema_version": "ebrt-neutral-candidate-scaffold-v0.6.3",
+          "target_bindings": [
+            {
+              "node_id": "N11",
+              "slot_id": "primary_decision"
+            },
+            {
+              "node_id": "N13",
+              "slot_id": "stable_constraint"
+            }
+          ]
+        },
+        "checkpoint_id": "relay_bay_revision_a:post_event",
+        "decision_slots": [
+          {
+            "allowed_values": [
+              "BLUE_BAY",
+              "AMBER_BAY"
+            ],
+            "slot_id": "primary_decision"
+          },
+          {
+            "allowed_values": [
+              "SIGNED_JSON"
+            ],
+            "slot_id": "stable_constraint"
+          }
+        ],
+        "question": "Which bay is active for shipment K after applying the latest valid evidence? Answer BLUE or AMBER.",
+        "response_contract": {
+          "inspection_plan_is_public_receipt_only": true,
+          "return_private_reasoning": false,
+          "schema_version": "ebrt-actuator-calibration-provider-output-v0.6.3",
+          "select_only_candidate_edge_ids": true
+        },
+        "revision_actuator": {
+          "fingerprint_sha256": "f755c52754e2158e53a6ab92a7378e0f27e1068b772c9f51ce8418c39f78b54e",
+          "no_reordering": false,
+          "operator": "bounded_reinspection_schedule",
+          "priority_rows": [
+            {
+              "evidence_id": "E1",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E2",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E3",
+              "priority_tier": 3
+            },
+            {
+              "evidence_id": "E4",
+              "priority_tier": 2
+            },
+            {
+              "evidence_id": "E5",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E6",
+              "priority_tier": 1
+            },
+            {
+              "evidence_id": "E7",
+              "priority_tier": 0
+            }
+          ],
+          "review_budget": 3,
+          "schema_version": "ebrt-bounded-reinspection-schedule-v0.6.3"
+        },
+        "schema_version": "ebrt-actuator-calibration-provider-input-v0.6.3"
+      },
+      "provider_payload_sha256": "1309a9815e15e1cadcdc9f95f6b6bb94dd29df8d66d5bef6efffa74275f18070",
+      "run_position": 2,
+      "treatment_id": "C",
+      "trial_id": 1
+    },
+    {
+      "blinded_request_id": "req-5e7328ff49476cd4f8b7379d",
+      "block_id": "block_1",
+      "block_position": 3,
+      "case_id": "relay_bay_revision_a",
+      "payload": {
+        "all_raw_evidence": [
+          {
+            "evidence_id": "E1",
+            "text": "Certified routing rule: one complete registry chain is sufficient to establish the active bay for shipment K."
+          },
+          {
+            "evidence_id": "E2",
+            "text": "Registry channel A records bay BLUE for shipment K and is valid for the current routing epoch."
+          },
+          {
+            "evidence_id": "E3",
+            "text": "Independent signed controller notice CN-41 records bay BLUE for shipment K; it is valid when paired with its verification receipt."
+          },
+          {
+            "evidence_id": "E4",
+            "text": "Verification receipt V-41 authenticates controller notice CN-41 for the current routing epoch."
+          },
+          {
+            "evidence_id": "E5",
+            "text": "Legacy dispatch note L-9 records bay AMBER and remains usable unless a later revocation names it."
+          },
+          {
+            "evidence_id": "E6",
+            "text": "Latest revocation: legacy dispatch note L-9 is withdrawn. Use one complete currently certified chain; E5 is invalidated."
+          },
+          {
+            "evidence_id": "E7",
+            "text": "The final machine-readable record must remain SIGNED_JSON regardless of the selected bay."
+          }
+        ],
+        "allowed_evidence_ids": [
+          "E1",
+          "E2",
+          "E3",
+          "E4",
+          "E5",
+          "E6",
+          "E7"
+        ],
+        "answer_choices": [
+          "BLUE",
+          "AMBER"
+        ],
+        "candidate_scaffold": {
+          "allowed_relation_types": [
+            "supports",
+            "depends_on",
+            "invalidates"
+          ],
+          "candidate_edges": [
+            {
+              "edge_id": "C01",
+              "relation_type": "supports",
+              "source_node_id": "E1",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C02",
+              "relation_type": "supports",
+              "source_node_id": "E2",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C03",
+              "relation_type": "supports",
+              "source_node_id": "N08",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C04",
+              "relation_type": "supports",
+              "source_node_id": "E3",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C05",
+              "relation_type": "supports",
+              "source_node_id": "E4",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C06",
+              "relation_type": "supports",
+              "source_node_id": "N09",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C07",
+              "relation_type": "supports",
+              "source_node_id": "E6",
+              "target_node_id": "N10"
+            },
+            {
+              "edge_id": "C08",
+              "relation_type": "supports",
+              "source_node_id": "N10",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C09",
+              "relation_type": "supports",
+              "source_node_id": "E7",
+              "target_node_id": "N12"
+            },
+            {
+              "edge_id": "C10",
+              "relation_type": "supports",
+              "source_node_id": "N12",
+              "target_node_id": "N13"
+            },
+            {
+              "edge_id": "C11",
+              "relation_type": "invalidates",
+              "source_node_id": "E6",
+              "target_node_id": "E5"
+            },
+            {
+              "edge_id": "C12",
+              "relation_type": "supports",
+              "source_node_id": "E1",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C13",
+              "relation_type": "supports",
+              "source_node_id": "E2",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C14",
+              "relation_type": "supports",
+              "source_node_id": "E3",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C15",
+              "relation_type": "supports",
+              "source_node_id": "E4",
+              "target_node_id": "N08"
+            }
+          ],
+          "nodes": [
+            {
+              "node_id": "E1",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E2",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E3",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E4",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E5",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E6",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E7",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "N08",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N09",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N10",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N11",
+              "node_type": "fact"
+            },
+            {
+              "node_id": "N12",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N13",
+              "node_type": "constraint"
+            }
+          ],
+          "schema_version": "ebrt-neutral-candidate-scaffold-v0.6.3",
+          "target_bindings": [
+            {
+              "node_id": "N11",
+              "slot_id": "primary_decision"
+            },
+            {
+              "node_id": "N13",
+              "slot_id": "stable_constraint"
+            }
+          ]
+        },
+        "checkpoint_id": "relay_bay_revision_a:post_event",
+        "decision_slots": [
+          {
+            "allowed_values": [
+              "BLUE_BAY",
+              "AMBER_BAY"
+            ],
+            "slot_id": "primary_decision"
+          },
+          {
+            "allowed_values": [
+              "SIGNED_JSON"
+            ],
+            "slot_id": "stable_constraint"
+          }
+        ],
+        "question": "Which bay is active for shipment K after applying the latest valid evidence? Answer BLUE or AMBER.",
+        "response_contract": {
+          "inspection_plan_is_public_receipt_only": true,
+          "return_private_reasoning": false,
+          "schema_version": "ebrt-actuator-calibration-provider-output-v0.6.3",
+          "select_only_candidate_edge_ids": true
+        },
+        "revision_actuator": {
+          "fingerprint_sha256": "6819d71da8ddf4b7bd4287e449350d2c10f3e388a2f123377438e657c8871eae",
+          "no_reordering": false,
+          "operator": "bounded_reinspection_schedule",
+          "priority_rows": [
+            {
+              "evidence_id": "E1",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E2",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E3",
+              "priority_tier": 2
+            },
+            {
+              "evidence_id": "E4",
+              "priority_tier": 3
+            },
+            {
+              "evidence_id": "E5",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E6",
+              "priority_tier": 1
+            },
+            {
+              "evidence_id": "E7",
+              "priority_tier": 0
+            }
+          ],
+          "review_budget": 3,
+          "schema_version": "ebrt-bounded-reinspection-schedule-v0.6.3"
+        },
+        "schema_version": "ebrt-actuator-calibration-provider-input-v0.6.3"
+      },
+      "provider_payload_sha256": "9d1be2bc61018377a4609c243e6f5598ec00b509d99998edc0b943035a592aa5",
+      "run_position": 3,
+      "treatment_id": "X",
+      "trial_id": 1
+    },
+    {
+      "blinded_request_id": "req-b591cc3968b294a1d593063b",
+      "block_id": "block_1",
+      "block_position": 4,
+      "case_id": "relay_bay_revision_a",
+      "payload": {
+        "all_raw_evidence": [
+          {
+            "evidence_id": "E1",
+            "text": "Certified routing rule: one complete registry chain is sufficient to establish the active bay for shipment K."
+          },
+          {
+            "evidence_id": "E2",
+            "text": "Registry channel A records bay BLUE for shipment K and is valid for the current routing epoch."
+          },
+          {
+            "evidence_id": "E3",
+            "text": "Independent signed controller notice CN-41 records bay BLUE for shipment K; it is valid when paired with its verification receipt."
+          },
+          {
+            "evidence_id": "E4",
+            "text": "Verification receipt V-41 authenticates controller notice CN-41 for the current routing epoch."
+          },
+          {
+            "evidence_id": "E5",
+            "text": "Legacy dispatch note L-9 records bay AMBER and remains usable unless a later revocation names it."
+          },
+          {
+            "evidence_id": "E6",
+            "text": "Latest revocation: legacy dispatch note L-9 is withdrawn. Use one complete currently certified chain; E5 is invalidated."
+          },
+          {
+            "evidence_id": "E7",
+            "text": "The final machine-readable record must remain SIGNED_JSON regardless of the selected bay."
+          }
+        ],
+        "allowed_evidence_ids": [
+          "E1",
+          "E2",
+          "E3",
+          "E4",
+          "E5",
+          "E6",
+          "E7"
+        ],
+        "answer_choices": [
+          "BLUE",
+          "AMBER"
+        ],
+        "candidate_scaffold": {
+          "allowed_relation_types": [
+            "supports",
+            "depends_on",
+            "invalidates"
+          ],
+          "candidate_edges": [
+            {
+              "edge_id": "C01",
+              "relation_type": "supports",
+              "source_node_id": "E1",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C02",
+              "relation_type": "supports",
+              "source_node_id": "E2",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C03",
+              "relation_type": "supports",
+              "source_node_id": "N08",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C04",
+              "relation_type": "supports",
+              "source_node_id": "E3",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C05",
+              "relation_type": "supports",
+              "source_node_id": "E4",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C06",
+              "relation_type": "supports",
+              "source_node_id": "N09",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C07",
+              "relation_type": "supports",
+              "source_node_id": "E6",
+              "target_node_id": "N10"
+            },
+            {
+              "edge_id": "C08",
+              "relation_type": "supports",
+              "source_node_id": "N10",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C09",
+              "relation_type": "supports",
+              "source_node_id": "E7",
+              "target_node_id": "N12"
+            },
+            {
+              "edge_id": "C10",
+              "relation_type": "supports",
+              "source_node_id": "N12",
+              "target_node_id": "N13"
+            },
+            {
+              "edge_id": "C11",
+              "relation_type": "invalidates",
+              "source_node_id": "E6",
+              "target_node_id": "E5"
+            },
+            {
+              "edge_id": "C12",
+              "relation_type": "supports",
+              "source_node_id": "E1",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C13",
+              "relation_type": "supports",
+              "source_node_id": "E2",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C14",
+              "relation_type": "supports",
+              "source_node_id": "E3",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C15",
+              "relation_type": "supports",
+              "source_node_id": "E4",
+              "target_node_id": "N08"
+            }
+          ],
+          "nodes": [
+            {
+              "node_id": "E1",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E2",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E3",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E4",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E5",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E6",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E7",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "N08",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N09",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N10",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N11",
+              "node_type": "fact"
+            },
+            {
+              "node_id": "N12",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N13",
+              "node_type": "constraint"
+            }
+          ],
+          "schema_version": "ebrt-neutral-candidate-scaffold-v0.6.3",
+          "target_bindings": [
+            {
+              "node_id": "N11",
+              "slot_id": "primary_decision"
+            },
+            {
+              "node_id": "N13",
+              "slot_id": "stable_constraint"
+            }
+          ]
+        },
+        "checkpoint_id": "relay_bay_revision_a:post_event",
+        "decision_slots": [
+          {
+            "allowed_values": [
+              "BLUE_BAY",
+              "AMBER_BAY"
+            ],
+            "slot_id": "primary_decision"
+          },
+          {
+            "allowed_values": [
+              "SIGNED_JSON"
+            ],
+            "slot_id": "stable_constraint"
+          }
+        ],
+        "question": "Which bay is active for shipment K after applying the latest valid evidence? Answer BLUE or AMBER.",
+        "response_contract": {
+          "inspection_plan_is_public_receipt_only": true,
+          "return_private_reasoning": false,
+          "schema_version": "ebrt-actuator-calibration-provider-output-v0.6.3",
+          "select_only_candidate_edge_ids": true
+        },
+        "revision_actuator": {
+          "fingerprint_sha256": "3213d9c15c763b4692eedc78f56366069ba1d8eb8858a67c235d102e597e68f8",
+          "no_reordering": false,
+          "operator": "bounded_reinspection_schedule",
+          "priority_rows": [
+            {
+              "evidence_id": "E1",
+              "priority_tier": 3
+            },
+            {
+              "evidence_id": "E2",
+              "priority_tier": 2
+            },
+            {
+              "evidence_id": "E3",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E4",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E5",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E6",
+              "priority_tier": 1
+            },
+            {
+              "evidence_id": "E7",
+              "priority_tier": 0
+            }
+          ],
+          "review_budget": 3,
+          "schema_version": "ebrt-bounded-reinspection-schedule-v0.6.3"
+        },
+        "schema_version": "ebrt-actuator-calibration-provider-input-v0.6.3"
+      },
+      "provider_payload_sha256": "bd311b91a64e4e9f74220526ed237e808fc3da4cf21a01d6d37f56a380bca6b8",
+      "run_position": 4,
+      "treatment_id": "D",
+      "trial_id": 1
+    },
+    {
+      "blinded_request_id": "req-1759c1d2344e86a8a6cb0cc3",
+      "block_id": "block_2",
+      "block_position": 1,
+      "case_id": "coolant_loop_revision_b",
+      "payload": {
+        "all_raw_evidence": [
+          {
+            "evidence_id": "E1",
+            "text": "Calibrated sensor rule: one complete calibrated sensor chain is sufficient to select the active coolant loop."
+          },
+          {
+            "evidence_id": "E2",
+            "text": "Calibrated sensor pair SP-8 selects the SOUTH coolant loop for the current batch."
+          },
+          {
+            "evidence_id": "E3",
+            "text": "Independent laboratory certificate LC-7 selects the SOUTH coolant loop when its custody seal is valid."
+          },
+          {
+            "evidence_id": "E4",
+            "text": "Custody record CR-7 verifies the seal on laboratory certificate LC-7 for the current batch."
+          },
+          {
+            "evidence_id": "E5",
+            "text": "Earlier operator memo M-2 selects the NORTH coolant loop unless a later withdrawal names it."
+          },
+          {
+            "evidence_id": "E6",
+            "text": "Latest withdrawal: operator memo M-2 is revoked. Use one complete currently valid chain; E5 is invalidated."
+          },
+          {
+            "evidence_id": "E7",
+            "text": "The batch audit export must remain AUDIT_CSV regardless of the selected coolant loop."
+          }
+        ],
+        "allowed_evidence_ids": [
+          "E1",
+          "E2",
+          "E3",
+          "E4",
+          "E5",
+          "E6",
+          "E7"
+        ],
+        "answer_choices": [
+          "SOUTH",
+          "NORTH"
+        ],
+        "candidate_scaffold": {
+          "allowed_relation_types": [
+            "supports",
+            "depends_on",
+            "invalidates"
+          ],
+          "candidate_edges": [
+            {
+              "edge_id": "C01",
+              "relation_type": "supports",
+              "source_node_id": "E1",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C02",
+              "relation_type": "supports",
+              "source_node_id": "E2",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C03",
+              "relation_type": "supports",
+              "source_node_id": "N08",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C04",
+              "relation_type": "supports",
+              "source_node_id": "E3",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C05",
+              "relation_type": "supports",
+              "source_node_id": "E4",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C06",
+              "relation_type": "supports",
+              "source_node_id": "N09",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C07",
+              "relation_type": "supports",
+              "source_node_id": "E6",
+              "target_node_id": "N10"
+            },
+            {
+              "edge_id": "C08",
+              "relation_type": "supports",
+              "source_node_id": "N10",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C09",
+              "relation_type": "supports",
+              "source_node_id": "E7",
+              "target_node_id": "N12"
+            },
+            {
+              "edge_id": "C10",
+              "relation_type": "supports",
+              "source_node_id": "N12",
+              "target_node_id": "N13"
+            },
+            {
+              "edge_id": "C11",
+              "relation_type": "invalidates",
+              "source_node_id": "E6",
+              "target_node_id": "E5"
+            },
+            {
+              "edge_id": "C12",
+              "relation_type": "supports",
+              "source_node_id": "E1",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C13",
+              "relation_type": "supports",
+              "source_node_id": "E2",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C14",
+              "relation_type": "supports",
+              "source_node_id": "E3",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C15",
+              "relation_type": "supports",
+              "source_node_id": "E4",
+              "target_node_id": "N08"
+            }
+          ],
+          "nodes": [
+            {
+              "node_id": "E1",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E2",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E3",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E4",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E5",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E6",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E7",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "N08",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N09",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N10",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N11",
+              "node_type": "fact"
+            },
+            {
+              "node_id": "N12",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N13",
+              "node_type": "constraint"
+            }
+          ],
+          "schema_version": "ebrt-neutral-candidate-scaffold-v0.6.3",
+          "target_bindings": [
+            {
+              "node_id": "N11",
+              "slot_id": "primary_decision"
+            },
+            {
+              "node_id": "N13",
+              "slot_id": "stable_constraint"
+            }
+          ]
+        },
+        "checkpoint_id": "coolant_loop_revision_b:post_event",
+        "decision_slots": [
+          {
+            "allowed_values": [
+              "SOUTH_LOOP",
+              "NORTH_LOOP"
+            ],
+            "slot_id": "primary_decision"
+          },
+          {
+            "allowed_values": [
+              "AUDIT_CSV"
+            ],
+            "slot_id": "stable_constraint"
+          }
+        ],
+        "question": "Which coolant loop is active after applying the latest valid evidence? Answer SOUTH or NORTH.",
+        "response_contract": {
+          "inspection_plan_is_public_receipt_only": true,
+          "return_private_reasoning": false,
+          "schema_version": "ebrt-actuator-calibration-provider-output-v0.6.3",
+          "select_only_candidate_edge_ids": true
+        },
+        "revision_actuator": {
+          "fingerprint_sha256": "3213d9c15c763b4692eedc78f56366069ba1d8eb8858a67c235d102e597e68f8",
+          "no_reordering": false,
+          "operator": "bounded_reinspection_schedule",
+          "priority_rows": [
+            {
+              "evidence_id": "E1",
+              "priority_tier": 3
+            },
+            {
+              "evidence_id": "E2",
+              "priority_tier": 2
+            },
+            {
+              "evidence_id": "E3",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E4",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E5",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E6",
+              "priority_tier": 1
+            },
+            {
+              "evidence_id": "E7",
+              "priority_tier": 0
+            }
+          ],
+          "review_budget": 3,
+          "schema_version": "ebrt-bounded-reinspection-schedule-v0.6.3"
+        },
+        "schema_version": "ebrt-actuator-calibration-provider-input-v0.6.3"
+      },
+      "provider_payload_sha256": "6cc89ac6da3a92f60e1a69b51cb298a408df57de3d0486cc3b861294597d5f0e",
+      "run_position": 5,
+      "treatment_id": "C",
+      "trial_id": 1
+    },
+    {
+      "blinded_request_id": "req-c9f2b9778714fd1b54efcb19",
+      "block_id": "block_2",
+      "block_position": 2,
+      "case_id": "coolant_loop_revision_b",
+      "payload": {
+        "all_raw_evidence": [
+          {
+            "evidence_id": "E1",
+            "text": "Calibrated sensor rule: one complete calibrated sensor chain is sufficient to select the active coolant loop."
+          },
+          {
+            "evidence_id": "E2",
+            "text": "Calibrated sensor pair SP-8 selects the SOUTH coolant loop for the current batch."
+          },
+          {
+            "evidence_id": "E3",
+            "text": "Independent laboratory certificate LC-7 selects the SOUTH coolant loop when its custody seal is valid."
+          },
+          {
+            "evidence_id": "E4",
+            "text": "Custody record CR-7 verifies the seal on laboratory certificate LC-7 for the current batch."
+          },
+          {
+            "evidence_id": "E5",
+            "text": "Earlier operator memo M-2 selects the NORTH coolant loop unless a later withdrawal names it."
+          },
+          {
+            "evidence_id": "E6",
+            "text": "Latest withdrawal: operator memo M-2 is revoked. Use one complete currently valid chain; E5 is invalidated."
+          },
+          {
+            "evidence_id": "E7",
+            "text": "The batch audit export must remain AUDIT_CSV regardless of the selected coolant loop."
+          }
+        ],
+        "allowed_evidence_ids": [
+          "E1",
+          "E2",
+          "E3",
+          "E4",
+          "E5",
+          "E6",
+          "E7"
+        ],
+        "answer_choices": [
+          "SOUTH",
+          "NORTH"
+        ],
+        "candidate_scaffold": {
+          "allowed_relation_types": [
+            "supports",
+            "depends_on",
+            "invalidates"
+          ],
+          "candidate_edges": [
+            {
+              "edge_id": "C01",
+              "relation_type": "supports",
+              "source_node_id": "E1",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C02",
+              "relation_type": "supports",
+              "source_node_id": "E2",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C03",
+              "relation_type": "supports",
+              "source_node_id": "N08",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C04",
+              "relation_type": "supports",
+              "source_node_id": "E3",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C05",
+              "relation_type": "supports",
+              "source_node_id": "E4",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C06",
+              "relation_type": "supports",
+              "source_node_id": "N09",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C07",
+              "relation_type": "supports",
+              "source_node_id": "E6",
+              "target_node_id": "N10"
+            },
+            {
+              "edge_id": "C08",
+              "relation_type": "supports",
+              "source_node_id": "N10",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C09",
+              "relation_type": "supports",
+              "source_node_id": "E7",
+              "target_node_id": "N12"
+            },
+            {
+              "edge_id": "C10",
+              "relation_type": "supports",
+              "source_node_id": "N12",
+              "target_node_id": "N13"
+            },
+            {
+              "edge_id": "C11",
+              "relation_type": "invalidates",
+              "source_node_id": "E6",
+              "target_node_id": "E5"
+            },
+            {
+              "edge_id": "C12",
+              "relation_type": "supports",
+              "source_node_id": "E1",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C13",
+              "relation_type": "supports",
+              "source_node_id": "E2",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C14",
+              "relation_type": "supports",
+              "source_node_id": "E3",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C15",
+              "relation_type": "supports",
+              "source_node_id": "E4",
+              "target_node_id": "N08"
+            }
+          ],
+          "nodes": [
+            {
+              "node_id": "E1",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E2",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E3",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E4",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E5",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E6",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E7",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "N08",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N09",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N10",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N11",
+              "node_type": "fact"
+            },
+            {
+              "node_id": "N12",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N13",
+              "node_type": "constraint"
+            }
+          ],
+          "schema_version": "ebrt-neutral-candidate-scaffold-v0.6.3",
+          "target_bindings": [
+            {
+              "node_id": "N11",
+              "slot_id": "primary_decision"
+            },
+            {
+              "node_id": "N13",
+              "slot_id": "stable_constraint"
+            }
+          ]
+        },
+        "checkpoint_id": "coolant_loop_revision_b:post_event",
+        "decision_slots": [
+          {
+            "allowed_values": [
+              "SOUTH_LOOP",
+              "NORTH_LOOP"
+            ],
+            "slot_id": "primary_decision"
+          },
+          {
+            "allowed_values": [
+              "AUDIT_CSV"
+            ],
+            "slot_id": "stable_constraint"
+          }
+        ],
+        "question": "Which coolant loop is active after applying the latest valid evidence? Answer SOUTH or NORTH.",
+        "response_contract": {
+          "inspection_plan_is_public_receipt_only": true,
+          "return_private_reasoning": false,
+          "schema_version": "ebrt-actuator-calibration-provider-output-v0.6.3",
+          "select_only_candidate_edge_ids": true
+        },
+        "revision_actuator": {
+          "fingerprint_sha256": "f755c52754e2158e53a6ab92a7378e0f27e1068b772c9f51ce8418c39f78b54e",
+          "no_reordering": false,
+          "operator": "bounded_reinspection_schedule",
+          "priority_rows": [
+            {
+              "evidence_id": "E1",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E2",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E3",
+              "priority_tier": 3
+            },
+            {
+              "evidence_id": "E4",
+              "priority_tier": 2
+            },
+            {
+              "evidence_id": "E5",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E6",
+              "priority_tier": 1
+            },
+            {
+              "evidence_id": "E7",
+              "priority_tier": 0
+            }
+          ],
+          "review_budget": 3,
+          "schema_version": "ebrt-bounded-reinspection-schedule-v0.6.3"
+        },
+        "schema_version": "ebrt-actuator-calibration-provider-input-v0.6.3"
+      },
+      "provider_payload_sha256": "b736ed6143825c68481d55adfbe2396eeabcb9f3ffcc02b0becd4744f0f84815",
+      "run_position": 6,
+      "treatment_id": "D",
+      "trial_id": 1
+    },
+    {
+      "blinded_request_id": "req-66fa66b31d008082555d2b43",
+      "block_id": "block_2",
+      "block_position": 3,
+      "case_id": "coolant_loop_revision_b",
+      "payload": {
+        "all_raw_evidence": [
+          {
+            "evidence_id": "E1",
+            "text": "Calibrated sensor rule: one complete calibrated sensor chain is sufficient to select the active coolant loop."
+          },
+          {
+            "evidence_id": "E2",
+            "text": "Calibrated sensor pair SP-8 selects the SOUTH coolant loop for the current batch."
+          },
+          {
+            "evidence_id": "E3",
+            "text": "Independent laboratory certificate LC-7 selects the SOUTH coolant loop when its custody seal is valid."
+          },
+          {
+            "evidence_id": "E4",
+            "text": "Custody record CR-7 verifies the seal on laboratory certificate LC-7 for the current batch."
+          },
+          {
+            "evidence_id": "E5",
+            "text": "Earlier operator memo M-2 selects the NORTH coolant loop unless a later withdrawal names it."
+          },
+          {
+            "evidence_id": "E6",
+            "text": "Latest withdrawal: operator memo M-2 is revoked. Use one complete currently valid chain; E5 is invalidated."
+          },
+          {
+            "evidence_id": "E7",
+            "text": "The batch audit export must remain AUDIT_CSV regardless of the selected coolant loop."
+          }
+        ],
+        "allowed_evidence_ids": [
+          "E1",
+          "E2",
+          "E3",
+          "E4",
+          "E5",
+          "E6",
+          "E7"
+        ],
+        "answer_choices": [
+          "SOUTH",
+          "NORTH"
+        ],
+        "candidate_scaffold": {
+          "allowed_relation_types": [
+            "supports",
+            "depends_on",
+            "invalidates"
+          ],
+          "candidate_edges": [
+            {
+              "edge_id": "C01",
+              "relation_type": "supports",
+              "source_node_id": "E1",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C02",
+              "relation_type": "supports",
+              "source_node_id": "E2",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C03",
+              "relation_type": "supports",
+              "source_node_id": "N08",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C04",
+              "relation_type": "supports",
+              "source_node_id": "E3",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C05",
+              "relation_type": "supports",
+              "source_node_id": "E4",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C06",
+              "relation_type": "supports",
+              "source_node_id": "N09",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C07",
+              "relation_type": "supports",
+              "source_node_id": "E6",
+              "target_node_id": "N10"
+            },
+            {
+              "edge_id": "C08",
+              "relation_type": "supports",
+              "source_node_id": "N10",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C09",
+              "relation_type": "supports",
+              "source_node_id": "E7",
+              "target_node_id": "N12"
+            },
+            {
+              "edge_id": "C10",
+              "relation_type": "supports",
+              "source_node_id": "N12",
+              "target_node_id": "N13"
+            },
+            {
+              "edge_id": "C11",
+              "relation_type": "invalidates",
+              "source_node_id": "E6",
+              "target_node_id": "E5"
+            },
+            {
+              "edge_id": "C12",
+              "relation_type": "supports",
+              "source_node_id": "E1",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C13",
+              "relation_type": "supports",
+              "source_node_id": "E2",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C14",
+              "relation_type": "supports",
+              "source_node_id": "E3",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C15",
+              "relation_type": "supports",
+              "source_node_id": "E4",
+              "target_node_id": "N08"
+            }
+          ],
+          "nodes": [
+            {
+              "node_id": "E1",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E2",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E3",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E4",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E5",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E6",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E7",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "N08",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N09",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N10",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N11",
+              "node_type": "fact"
+            },
+            {
+              "node_id": "N12",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N13",
+              "node_type": "constraint"
+            }
+          ],
+          "schema_version": "ebrt-neutral-candidate-scaffold-v0.6.3",
+          "target_bindings": [
+            {
+              "node_id": "N11",
+              "slot_id": "primary_decision"
+            },
+            {
+              "node_id": "N13",
+              "slot_id": "stable_constraint"
+            }
+          ]
+        },
+        "checkpoint_id": "coolant_loop_revision_b:post_event",
+        "decision_slots": [
+          {
+            "allowed_values": [
+              "SOUTH_LOOP",
+              "NORTH_LOOP"
+            ],
+            "slot_id": "primary_decision"
+          },
+          {
+            "allowed_values": [
+              "AUDIT_CSV"
+            ],
+            "slot_id": "stable_constraint"
+          }
+        ],
+        "question": "Which coolant loop is active after applying the latest valid evidence? Answer SOUTH or NORTH.",
+        "response_contract": {
+          "inspection_plan_is_public_receipt_only": true,
+          "return_private_reasoning": false,
+          "schema_version": "ebrt-actuator-calibration-provider-output-v0.6.3",
+          "select_only_candidate_edge_ids": true
+        },
+        "revision_actuator": {
+          "fingerprint_sha256": "776adab7aee146a3af99ef330ae597434af461eec5242166937752a88d627ff0",
+          "no_reordering": true,
+          "operator": "bounded_reinspection_schedule",
+          "priority_rows": [
+            {
+              "evidence_id": "E1",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E2",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E3",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E4",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E5",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E6",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E7",
+              "priority_tier": 0
+            }
+          ],
+          "review_budget": 3,
+          "schema_version": "ebrt-bounded-reinspection-schedule-v0.6.3"
+        },
+        "schema_version": "ebrt-actuator-calibration-provider-input-v0.6.3"
+      },
+      "provider_payload_sha256": "7a91a9c15a069278859e8c05ef9aa8bad002391c08dd708c87345f0cc95a923f",
+      "run_position": 7,
+      "treatment_id": "Z",
+      "trial_id": 1
+    },
+    {
+      "blinded_request_id": "req-aadd60cc05435444180b770a",
+      "block_id": "block_2",
+      "block_position": 4,
+      "case_id": "coolant_loop_revision_b",
+      "payload": {
+        "all_raw_evidence": [
+          {
+            "evidence_id": "E1",
+            "text": "Calibrated sensor rule: one complete calibrated sensor chain is sufficient to select the active coolant loop."
+          },
+          {
+            "evidence_id": "E2",
+            "text": "Calibrated sensor pair SP-8 selects the SOUTH coolant loop for the current batch."
+          },
+          {
+            "evidence_id": "E3",
+            "text": "Independent laboratory certificate LC-7 selects the SOUTH coolant loop when its custody seal is valid."
+          },
+          {
+            "evidence_id": "E4",
+            "text": "Custody record CR-7 verifies the seal on laboratory certificate LC-7 for the current batch."
+          },
+          {
+            "evidence_id": "E5",
+            "text": "Earlier operator memo M-2 selects the NORTH coolant loop unless a later withdrawal names it."
+          },
+          {
+            "evidence_id": "E6",
+            "text": "Latest withdrawal: operator memo M-2 is revoked. Use one complete currently valid chain; E5 is invalidated."
+          },
+          {
+            "evidence_id": "E7",
+            "text": "The batch audit export must remain AUDIT_CSV regardless of the selected coolant loop."
+          }
+        ],
+        "allowed_evidence_ids": [
+          "E1",
+          "E2",
+          "E3",
+          "E4",
+          "E5",
+          "E6",
+          "E7"
+        ],
+        "answer_choices": [
+          "SOUTH",
+          "NORTH"
+        ],
+        "candidate_scaffold": {
+          "allowed_relation_types": [
+            "supports",
+            "depends_on",
+            "invalidates"
+          ],
+          "candidate_edges": [
+            {
+              "edge_id": "C01",
+              "relation_type": "supports",
+              "source_node_id": "E1",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C02",
+              "relation_type": "supports",
+              "source_node_id": "E2",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C03",
+              "relation_type": "supports",
+              "source_node_id": "N08",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C04",
+              "relation_type": "supports",
+              "source_node_id": "E3",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C05",
+              "relation_type": "supports",
+              "source_node_id": "E4",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C06",
+              "relation_type": "supports",
+              "source_node_id": "N09",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C07",
+              "relation_type": "supports",
+              "source_node_id": "E6",
+              "target_node_id": "N10"
+            },
+            {
+              "edge_id": "C08",
+              "relation_type": "supports",
+              "source_node_id": "N10",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C09",
+              "relation_type": "supports",
+              "source_node_id": "E7",
+              "target_node_id": "N12"
+            },
+            {
+              "edge_id": "C10",
+              "relation_type": "supports",
+              "source_node_id": "N12",
+              "target_node_id": "N13"
+            },
+            {
+              "edge_id": "C11",
+              "relation_type": "invalidates",
+              "source_node_id": "E6",
+              "target_node_id": "E5"
+            },
+            {
+              "edge_id": "C12",
+              "relation_type": "supports",
+              "source_node_id": "E1",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C13",
+              "relation_type": "supports",
+              "source_node_id": "E2",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C14",
+              "relation_type": "supports",
+              "source_node_id": "E3",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C15",
+              "relation_type": "supports",
+              "source_node_id": "E4",
+              "target_node_id": "N08"
+            }
+          ],
+          "nodes": [
+            {
+              "node_id": "E1",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E2",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E3",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E4",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E5",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E6",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E7",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "N08",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N09",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N10",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N11",
+              "node_type": "fact"
+            },
+            {
+              "node_id": "N12",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N13",
+              "node_type": "constraint"
+            }
+          ],
+          "schema_version": "ebrt-neutral-candidate-scaffold-v0.6.3",
+          "target_bindings": [
+            {
+              "node_id": "N11",
+              "slot_id": "primary_decision"
+            },
+            {
+              "node_id": "N13",
+              "slot_id": "stable_constraint"
+            }
+          ]
+        },
+        "checkpoint_id": "coolant_loop_revision_b:post_event",
+        "decision_slots": [
+          {
+            "allowed_values": [
+              "SOUTH_LOOP",
+              "NORTH_LOOP"
+            ],
+            "slot_id": "primary_decision"
+          },
+          {
+            "allowed_values": [
+              "AUDIT_CSV"
+            ],
+            "slot_id": "stable_constraint"
+          }
+        ],
+        "question": "Which coolant loop is active after applying the latest valid evidence? Answer SOUTH or NORTH.",
+        "response_contract": {
+          "inspection_plan_is_public_receipt_only": true,
+          "return_private_reasoning": false,
+          "schema_version": "ebrt-actuator-calibration-provider-output-v0.6.3",
+          "select_only_candidate_edge_ids": true
+        },
+        "revision_actuator": {
+          "fingerprint_sha256": "da79063a2e4da264608b26448a2f22801aac6b53d816e415432d2641c483830d",
+          "no_reordering": false,
+          "operator": "bounded_reinspection_schedule",
+          "priority_rows": [
+            {
+              "evidence_id": "E1",
+              "priority_tier": 2
+            },
+            {
+              "evidence_id": "E2",
+              "priority_tier": 3
+            },
+            {
+              "evidence_id": "E3",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E4",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E5",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E6",
+              "priority_tier": 1
+            },
+            {
+              "evidence_id": "E7",
+              "priority_tier": 0
+            }
+          ],
+          "review_budget": 3,
+          "schema_version": "ebrt-bounded-reinspection-schedule-v0.6.3"
+        },
+        "schema_version": "ebrt-actuator-calibration-provider-input-v0.6.3"
+      },
+      "provider_payload_sha256": "1870dc147968a0bdb9c6c9717b214fbbdf2df19c106b49814ea34fc69b5cd171",
+      "run_position": 8,
+      "treatment_id": "X",
+      "trial_id": 1
+    },
+    {
+      "blinded_request_id": "req-6cbe8f64b49de7b43b1374e9",
+      "block_id": "block_3",
+      "block_position": 1,
+      "case_id": "relay_bay_revision_a",
+      "payload": {
+        "all_raw_evidence": [
+          {
+            "evidence_id": "E1",
+            "text": "Certified routing rule: one complete registry chain is sufficient to establish the active bay for shipment K."
+          },
+          {
+            "evidence_id": "E2",
+            "text": "Registry channel A records bay BLUE for shipment K and is valid for the current routing epoch."
+          },
+          {
+            "evidence_id": "E3",
+            "text": "Independent signed controller notice CN-41 records bay BLUE for shipment K; it is valid when paired with its verification receipt."
+          },
+          {
+            "evidence_id": "E4",
+            "text": "Verification receipt V-41 authenticates controller notice CN-41 for the current routing epoch."
+          },
+          {
+            "evidence_id": "E5",
+            "text": "Legacy dispatch note L-9 records bay AMBER and remains usable unless a later revocation names it."
+          },
+          {
+            "evidence_id": "E6",
+            "text": "Latest revocation: legacy dispatch note L-9 is withdrawn. Use one complete currently certified chain; E5 is invalidated."
+          },
+          {
+            "evidence_id": "E7",
+            "text": "The final machine-readable record must remain SIGNED_JSON regardless of the selected bay."
+          }
+        ],
+        "allowed_evidence_ids": [
+          "E1",
+          "E2",
+          "E3",
+          "E4",
+          "E5",
+          "E6",
+          "E7"
+        ],
+        "answer_choices": [
+          "BLUE",
+          "AMBER"
+        ],
+        "candidate_scaffold": {
+          "allowed_relation_types": [
+            "supports",
+            "depends_on",
+            "invalidates"
+          ],
+          "candidate_edges": [
+            {
+              "edge_id": "C01",
+              "relation_type": "supports",
+              "source_node_id": "E1",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C02",
+              "relation_type": "supports",
+              "source_node_id": "E2",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C03",
+              "relation_type": "supports",
+              "source_node_id": "N08",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C04",
+              "relation_type": "supports",
+              "source_node_id": "E3",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C05",
+              "relation_type": "supports",
+              "source_node_id": "E4",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C06",
+              "relation_type": "supports",
+              "source_node_id": "N09",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C07",
+              "relation_type": "supports",
+              "source_node_id": "E6",
+              "target_node_id": "N10"
+            },
+            {
+              "edge_id": "C08",
+              "relation_type": "supports",
+              "source_node_id": "N10",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C09",
+              "relation_type": "supports",
+              "source_node_id": "E7",
+              "target_node_id": "N12"
+            },
+            {
+              "edge_id": "C10",
+              "relation_type": "supports",
+              "source_node_id": "N12",
+              "target_node_id": "N13"
+            },
+            {
+              "edge_id": "C11",
+              "relation_type": "invalidates",
+              "source_node_id": "E6",
+              "target_node_id": "E5"
+            },
+            {
+              "edge_id": "C12",
+              "relation_type": "supports",
+              "source_node_id": "E1",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C13",
+              "relation_type": "supports",
+              "source_node_id": "E2",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C14",
+              "relation_type": "supports",
+              "source_node_id": "E3",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C15",
+              "relation_type": "supports",
+              "source_node_id": "E4",
+              "target_node_id": "N08"
+            }
+          ],
+          "nodes": [
+            {
+              "node_id": "E1",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E2",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E3",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E4",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E5",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E6",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E7",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "N08",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N09",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N10",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N11",
+              "node_type": "fact"
+            },
+            {
+              "node_id": "N12",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N13",
+              "node_type": "constraint"
+            }
+          ],
+          "schema_version": "ebrt-neutral-candidate-scaffold-v0.6.3",
+          "target_bindings": [
+            {
+              "node_id": "N11",
+              "slot_id": "primary_decision"
+            },
+            {
+              "node_id": "N13",
+              "slot_id": "stable_constraint"
+            }
+          ]
+        },
+        "checkpoint_id": "relay_bay_revision_a:post_event",
+        "decision_slots": [
+          {
+            "allowed_values": [
+              "BLUE_BAY",
+              "AMBER_BAY"
+            ],
+            "slot_id": "primary_decision"
+          },
+          {
+            "allowed_values": [
+              "SIGNED_JSON"
+            ],
+            "slot_id": "stable_constraint"
+          }
+        ],
+        "question": "Which bay is active for shipment K after applying the latest valid evidence? Answer BLUE or AMBER.",
+        "response_contract": {
+          "inspection_plan_is_public_receipt_only": true,
+          "return_private_reasoning": false,
+          "schema_version": "ebrt-actuator-calibration-provider-output-v0.6.3",
+          "select_only_candidate_edge_ids": true
+        },
+        "revision_actuator": {
+          "fingerprint_sha256": "3213d9c15c763b4692eedc78f56366069ba1d8eb8858a67c235d102e597e68f8",
+          "no_reordering": false,
+          "operator": "bounded_reinspection_schedule",
+          "priority_rows": [
+            {
+              "evidence_id": "E1",
+              "priority_tier": 3
+            },
+            {
+              "evidence_id": "E2",
+              "priority_tier": 2
+            },
+            {
+              "evidence_id": "E3",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E4",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E5",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E6",
+              "priority_tier": 1
+            },
+            {
+              "evidence_id": "E7",
+              "priority_tier": 0
+            }
+          ],
+          "review_budget": 3,
+          "schema_version": "ebrt-bounded-reinspection-schedule-v0.6.3"
+        },
+        "schema_version": "ebrt-actuator-calibration-provider-input-v0.6.3"
+      },
+      "provider_payload_sha256": "bd311b91a64e4e9f74220526ed237e808fc3da4cf21a01d6d37f56a380bca6b8",
+      "run_position": 9,
+      "treatment_id": "D",
+      "trial_id": 2
+    },
+    {
+      "blinded_request_id": "req-8b877132f25712b5a988d7b6",
+      "block_id": "block_3",
+      "block_position": 2,
+      "case_id": "relay_bay_revision_a",
+      "payload": {
+        "all_raw_evidence": [
+          {
+            "evidence_id": "E1",
+            "text": "Certified routing rule: one complete registry chain is sufficient to establish the active bay for shipment K."
+          },
+          {
+            "evidence_id": "E2",
+            "text": "Registry channel A records bay BLUE for shipment K and is valid for the current routing epoch."
+          },
+          {
+            "evidence_id": "E3",
+            "text": "Independent signed controller notice CN-41 records bay BLUE for shipment K; it is valid when paired with its verification receipt."
+          },
+          {
+            "evidence_id": "E4",
+            "text": "Verification receipt V-41 authenticates controller notice CN-41 for the current routing epoch."
+          },
+          {
+            "evidence_id": "E5",
+            "text": "Legacy dispatch note L-9 records bay AMBER and remains usable unless a later revocation names it."
+          },
+          {
+            "evidence_id": "E6",
+            "text": "Latest revocation: legacy dispatch note L-9 is withdrawn. Use one complete currently certified chain; E5 is invalidated."
+          },
+          {
+            "evidence_id": "E7",
+            "text": "The final machine-readable record must remain SIGNED_JSON regardless of the selected bay."
+          }
+        ],
+        "allowed_evidence_ids": [
+          "E1",
+          "E2",
+          "E3",
+          "E4",
+          "E5",
+          "E6",
+          "E7"
+        ],
+        "answer_choices": [
+          "BLUE",
+          "AMBER"
+        ],
+        "candidate_scaffold": {
+          "allowed_relation_types": [
+            "supports",
+            "depends_on",
+            "invalidates"
+          ],
+          "candidate_edges": [
+            {
+              "edge_id": "C01",
+              "relation_type": "supports",
+              "source_node_id": "E1",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C02",
+              "relation_type": "supports",
+              "source_node_id": "E2",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C03",
+              "relation_type": "supports",
+              "source_node_id": "N08",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C04",
+              "relation_type": "supports",
+              "source_node_id": "E3",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C05",
+              "relation_type": "supports",
+              "source_node_id": "E4",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C06",
+              "relation_type": "supports",
+              "source_node_id": "N09",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C07",
+              "relation_type": "supports",
+              "source_node_id": "E6",
+              "target_node_id": "N10"
+            },
+            {
+              "edge_id": "C08",
+              "relation_type": "supports",
+              "source_node_id": "N10",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C09",
+              "relation_type": "supports",
+              "source_node_id": "E7",
+              "target_node_id": "N12"
+            },
+            {
+              "edge_id": "C10",
+              "relation_type": "supports",
+              "source_node_id": "N12",
+              "target_node_id": "N13"
+            },
+            {
+              "edge_id": "C11",
+              "relation_type": "invalidates",
+              "source_node_id": "E6",
+              "target_node_id": "E5"
+            },
+            {
+              "edge_id": "C12",
+              "relation_type": "supports",
+              "source_node_id": "E1",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C13",
+              "relation_type": "supports",
+              "source_node_id": "E2",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C14",
+              "relation_type": "supports",
+              "source_node_id": "E3",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C15",
+              "relation_type": "supports",
+              "source_node_id": "E4",
+              "target_node_id": "N08"
+            }
+          ],
+          "nodes": [
+            {
+              "node_id": "E1",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E2",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E3",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E4",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E5",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E6",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E7",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "N08",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N09",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N10",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N11",
+              "node_type": "fact"
+            },
+            {
+              "node_id": "N12",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N13",
+              "node_type": "constraint"
+            }
+          ],
+          "schema_version": "ebrt-neutral-candidate-scaffold-v0.6.3",
+          "target_bindings": [
+            {
+              "node_id": "N11",
+              "slot_id": "primary_decision"
+            },
+            {
+              "node_id": "N13",
+              "slot_id": "stable_constraint"
+            }
+          ]
+        },
+        "checkpoint_id": "relay_bay_revision_a:post_event",
+        "decision_slots": [
+          {
+            "allowed_values": [
+              "BLUE_BAY",
+              "AMBER_BAY"
+            ],
+            "slot_id": "primary_decision"
+          },
+          {
+            "allowed_values": [
+              "SIGNED_JSON"
+            ],
+            "slot_id": "stable_constraint"
+          }
+        ],
+        "question": "Which bay is active for shipment K after applying the latest valid evidence? Answer BLUE or AMBER.",
+        "response_contract": {
+          "inspection_plan_is_public_receipt_only": true,
+          "return_private_reasoning": false,
+          "schema_version": "ebrt-actuator-calibration-provider-output-v0.6.3",
+          "select_only_candidate_edge_ids": true
+        },
+        "revision_actuator": {
+          "fingerprint_sha256": "6819d71da8ddf4b7bd4287e449350d2c10f3e388a2f123377438e657c8871eae",
+          "no_reordering": false,
+          "operator": "bounded_reinspection_schedule",
+          "priority_rows": [
+            {
+              "evidence_id": "E1",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E2",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E3",
+              "priority_tier": 2
+            },
+            {
+              "evidence_id": "E4",
+              "priority_tier": 3
+            },
+            {
+              "evidence_id": "E5",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E6",
+              "priority_tier": 1
+            },
+            {
+              "evidence_id": "E7",
+              "priority_tier": 0
+            }
+          ],
+          "review_budget": 3,
+          "schema_version": "ebrt-bounded-reinspection-schedule-v0.6.3"
+        },
+        "schema_version": "ebrt-actuator-calibration-provider-input-v0.6.3"
+      },
+      "provider_payload_sha256": "9d1be2bc61018377a4609c243e6f5598ec00b509d99998edc0b943035a592aa5",
+      "run_position": 10,
+      "treatment_id": "X",
+      "trial_id": 2
+    },
+    {
+      "blinded_request_id": "req-e1c904fd5a9f07b11ccb9627",
+      "block_id": "block_3",
+      "block_position": 3,
+      "case_id": "relay_bay_revision_a",
+      "payload": {
+        "all_raw_evidence": [
+          {
+            "evidence_id": "E1",
+            "text": "Certified routing rule: one complete registry chain is sufficient to establish the active bay for shipment K."
+          },
+          {
+            "evidence_id": "E2",
+            "text": "Registry channel A records bay BLUE for shipment K and is valid for the current routing epoch."
+          },
+          {
+            "evidence_id": "E3",
+            "text": "Independent signed controller notice CN-41 records bay BLUE for shipment K; it is valid when paired with its verification receipt."
+          },
+          {
+            "evidence_id": "E4",
+            "text": "Verification receipt V-41 authenticates controller notice CN-41 for the current routing epoch."
+          },
+          {
+            "evidence_id": "E5",
+            "text": "Legacy dispatch note L-9 records bay AMBER and remains usable unless a later revocation names it."
+          },
+          {
+            "evidence_id": "E6",
+            "text": "Latest revocation: legacy dispatch note L-9 is withdrawn. Use one complete currently certified chain; E5 is invalidated."
+          },
+          {
+            "evidence_id": "E7",
+            "text": "The final machine-readable record must remain SIGNED_JSON regardless of the selected bay."
+          }
+        ],
+        "allowed_evidence_ids": [
+          "E1",
+          "E2",
+          "E3",
+          "E4",
+          "E5",
+          "E6",
+          "E7"
+        ],
+        "answer_choices": [
+          "BLUE",
+          "AMBER"
+        ],
+        "candidate_scaffold": {
+          "allowed_relation_types": [
+            "supports",
+            "depends_on",
+            "invalidates"
+          ],
+          "candidate_edges": [
+            {
+              "edge_id": "C01",
+              "relation_type": "supports",
+              "source_node_id": "E1",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C02",
+              "relation_type": "supports",
+              "source_node_id": "E2",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C03",
+              "relation_type": "supports",
+              "source_node_id": "N08",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C04",
+              "relation_type": "supports",
+              "source_node_id": "E3",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C05",
+              "relation_type": "supports",
+              "source_node_id": "E4",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C06",
+              "relation_type": "supports",
+              "source_node_id": "N09",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C07",
+              "relation_type": "supports",
+              "source_node_id": "E6",
+              "target_node_id": "N10"
+            },
+            {
+              "edge_id": "C08",
+              "relation_type": "supports",
+              "source_node_id": "N10",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C09",
+              "relation_type": "supports",
+              "source_node_id": "E7",
+              "target_node_id": "N12"
+            },
+            {
+              "edge_id": "C10",
+              "relation_type": "supports",
+              "source_node_id": "N12",
+              "target_node_id": "N13"
+            },
+            {
+              "edge_id": "C11",
+              "relation_type": "invalidates",
+              "source_node_id": "E6",
+              "target_node_id": "E5"
+            },
+            {
+              "edge_id": "C12",
+              "relation_type": "supports",
+              "source_node_id": "E1",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C13",
+              "relation_type": "supports",
+              "source_node_id": "E2",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C14",
+              "relation_type": "supports",
+              "source_node_id": "E3",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C15",
+              "relation_type": "supports",
+              "source_node_id": "E4",
+              "target_node_id": "N08"
+            }
+          ],
+          "nodes": [
+            {
+              "node_id": "E1",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E2",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E3",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E4",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E5",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E6",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E7",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "N08",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N09",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N10",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N11",
+              "node_type": "fact"
+            },
+            {
+              "node_id": "N12",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N13",
+              "node_type": "constraint"
+            }
+          ],
+          "schema_version": "ebrt-neutral-candidate-scaffold-v0.6.3",
+          "target_bindings": [
+            {
+              "node_id": "N11",
+              "slot_id": "primary_decision"
+            },
+            {
+              "node_id": "N13",
+              "slot_id": "stable_constraint"
+            }
+          ]
+        },
+        "checkpoint_id": "relay_bay_revision_a:post_event",
+        "decision_slots": [
+          {
+            "allowed_values": [
+              "BLUE_BAY",
+              "AMBER_BAY"
+            ],
+            "slot_id": "primary_decision"
+          },
+          {
+            "allowed_values": [
+              "SIGNED_JSON"
+            ],
+            "slot_id": "stable_constraint"
+          }
+        ],
+        "question": "Which bay is active for shipment K after applying the latest valid evidence? Answer BLUE or AMBER.",
+        "response_contract": {
+          "inspection_plan_is_public_receipt_only": true,
+          "return_private_reasoning": false,
+          "schema_version": "ebrt-actuator-calibration-provider-output-v0.6.3",
+          "select_only_candidate_edge_ids": true
+        },
+        "revision_actuator": {
+          "fingerprint_sha256": "f755c52754e2158e53a6ab92a7378e0f27e1068b772c9f51ce8418c39f78b54e",
+          "no_reordering": false,
+          "operator": "bounded_reinspection_schedule",
+          "priority_rows": [
+            {
+              "evidence_id": "E1",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E2",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E3",
+              "priority_tier": 3
+            },
+            {
+              "evidence_id": "E4",
+              "priority_tier": 2
+            },
+            {
+              "evidence_id": "E5",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E6",
+              "priority_tier": 1
+            },
+            {
+              "evidence_id": "E7",
+              "priority_tier": 0
+            }
+          ],
+          "review_budget": 3,
+          "schema_version": "ebrt-bounded-reinspection-schedule-v0.6.3"
+        },
+        "schema_version": "ebrt-actuator-calibration-provider-input-v0.6.3"
+      },
+      "provider_payload_sha256": "1309a9815e15e1cadcdc9f95f6b6bb94dd29df8d66d5bef6efffa74275f18070",
+      "run_position": 11,
+      "treatment_id": "C",
+      "trial_id": 2
+    },
+    {
+      "blinded_request_id": "req-cef4e911884f32d80dadce73",
+      "block_id": "block_3",
+      "block_position": 4,
+      "case_id": "relay_bay_revision_a",
+      "payload": {
+        "all_raw_evidence": [
+          {
+            "evidence_id": "E1",
+            "text": "Certified routing rule: one complete registry chain is sufficient to establish the active bay for shipment K."
+          },
+          {
+            "evidence_id": "E2",
+            "text": "Registry channel A records bay BLUE for shipment K and is valid for the current routing epoch."
+          },
+          {
+            "evidence_id": "E3",
+            "text": "Independent signed controller notice CN-41 records bay BLUE for shipment K; it is valid when paired with its verification receipt."
+          },
+          {
+            "evidence_id": "E4",
+            "text": "Verification receipt V-41 authenticates controller notice CN-41 for the current routing epoch."
+          },
+          {
+            "evidence_id": "E5",
+            "text": "Legacy dispatch note L-9 records bay AMBER and remains usable unless a later revocation names it."
+          },
+          {
+            "evidence_id": "E6",
+            "text": "Latest revocation: legacy dispatch note L-9 is withdrawn. Use one complete currently certified chain; E5 is invalidated."
+          },
+          {
+            "evidence_id": "E7",
+            "text": "The final machine-readable record must remain SIGNED_JSON regardless of the selected bay."
+          }
+        ],
+        "allowed_evidence_ids": [
+          "E1",
+          "E2",
+          "E3",
+          "E4",
+          "E5",
+          "E6",
+          "E7"
+        ],
+        "answer_choices": [
+          "BLUE",
+          "AMBER"
+        ],
+        "candidate_scaffold": {
+          "allowed_relation_types": [
+            "supports",
+            "depends_on",
+            "invalidates"
+          ],
+          "candidate_edges": [
+            {
+              "edge_id": "C01",
+              "relation_type": "supports",
+              "source_node_id": "E1",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C02",
+              "relation_type": "supports",
+              "source_node_id": "E2",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C03",
+              "relation_type": "supports",
+              "source_node_id": "N08",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C04",
+              "relation_type": "supports",
+              "source_node_id": "E3",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C05",
+              "relation_type": "supports",
+              "source_node_id": "E4",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C06",
+              "relation_type": "supports",
+              "source_node_id": "N09",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C07",
+              "relation_type": "supports",
+              "source_node_id": "E6",
+              "target_node_id": "N10"
+            },
+            {
+              "edge_id": "C08",
+              "relation_type": "supports",
+              "source_node_id": "N10",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C09",
+              "relation_type": "supports",
+              "source_node_id": "E7",
+              "target_node_id": "N12"
+            },
+            {
+              "edge_id": "C10",
+              "relation_type": "supports",
+              "source_node_id": "N12",
+              "target_node_id": "N13"
+            },
+            {
+              "edge_id": "C11",
+              "relation_type": "invalidates",
+              "source_node_id": "E6",
+              "target_node_id": "E5"
+            },
+            {
+              "edge_id": "C12",
+              "relation_type": "supports",
+              "source_node_id": "E1",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C13",
+              "relation_type": "supports",
+              "source_node_id": "E2",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C14",
+              "relation_type": "supports",
+              "source_node_id": "E3",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C15",
+              "relation_type": "supports",
+              "source_node_id": "E4",
+              "target_node_id": "N08"
+            }
+          ],
+          "nodes": [
+            {
+              "node_id": "E1",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E2",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E3",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E4",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E5",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E6",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E7",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "N08",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N09",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N10",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N11",
+              "node_type": "fact"
+            },
+            {
+              "node_id": "N12",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N13",
+              "node_type": "constraint"
+            }
+          ],
+          "schema_version": "ebrt-neutral-candidate-scaffold-v0.6.3",
+          "target_bindings": [
+            {
+              "node_id": "N11",
+              "slot_id": "primary_decision"
+            },
+            {
+              "node_id": "N13",
+              "slot_id": "stable_constraint"
+            }
+          ]
+        },
+        "checkpoint_id": "relay_bay_revision_a:post_event",
+        "decision_slots": [
+          {
+            "allowed_values": [
+              "BLUE_BAY",
+              "AMBER_BAY"
+            ],
+            "slot_id": "primary_decision"
+          },
+          {
+            "allowed_values": [
+              "SIGNED_JSON"
+            ],
+            "slot_id": "stable_constraint"
+          }
+        ],
+        "question": "Which bay is active for shipment K after applying the latest valid evidence? Answer BLUE or AMBER.",
+        "response_contract": {
+          "inspection_plan_is_public_receipt_only": true,
+          "return_private_reasoning": false,
+          "schema_version": "ebrt-actuator-calibration-provider-output-v0.6.3",
+          "select_only_candidate_edge_ids": true
+        },
+        "revision_actuator": {
+          "fingerprint_sha256": "776adab7aee146a3af99ef330ae597434af461eec5242166937752a88d627ff0",
+          "no_reordering": true,
+          "operator": "bounded_reinspection_schedule",
+          "priority_rows": [
+            {
+              "evidence_id": "E1",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E2",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E3",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E4",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E5",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E6",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E7",
+              "priority_tier": 0
+            }
+          ],
+          "review_budget": 3,
+          "schema_version": "ebrt-bounded-reinspection-schedule-v0.6.3"
+        },
+        "schema_version": "ebrt-actuator-calibration-provider-input-v0.6.3"
+      },
+      "provider_payload_sha256": "702d4358c57272532d9d8226bb8f86108bec887a532450fc56e27d490be9dc32",
+      "run_position": 12,
+      "treatment_id": "Z",
+      "trial_id": 2
+    },
+    {
+      "blinded_request_id": "req-00b70d2fde1301d2831d4f26",
+      "block_id": "block_4",
+      "block_position": 1,
+      "case_id": "coolant_loop_revision_b",
+      "payload": {
+        "all_raw_evidence": [
+          {
+            "evidence_id": "E1",
+            "text": "Calibrated sensor rule: one complete calibrated sensor chain is sufficient to select the active coolant loop."
+          },
+          {
+            "evidence_id": "E2",
+            "text": "Calibrated sensor pair SP-8 selects the SOUTH coolant loop for the current batch."
+          },
+          {
+            "evidence_id": "E3",
+            "text": "Independent laboratory certificate LC-7 selects the SOUTH coolant loop when its custody seal is valid."
+          },
+          {
+            "evidence_id": "E4",
+            "text": "Custody record CR-7 verifies the seal on laboratory certificate LC-7 for the current batch."
+          },
+          {
+            "evidence_id": "E5",
+            "text": "Earlier operator memo M-2 selects the NORTH coolant loop unless a later withdrawal names it."
+          },
+          {
+            "evidence_id": "E6",
+            "text": "Latest withdrawal: operator memo M-2 is revoked. Use one complete currently valid chain; E5 is invalidated."
+          },
+          {
+            "evidence_id": "E7",
+            "text": "The batch audit export must remain AUDIT_CSV regardless of the selected coolant loop."
+          }
+        ],
+        "allowed_evidence_ids": [
+          "E1",
+          "E2",
+          "E3",
+          "E4",
+          "E5",
+          "E6",
+          "E7"
+        ],
+        "answer_choices": [
+          "SOUTH",
+          "NORTH"
+        ],
+        "candidate_scaffold": {
+          "allowed_relation_types": [
+            "supports",
+            "depends_on",
+            "invalidates"
+          ],
+          "candidate_edges": [
+            {
+              "edge_id": "C01",
+              "relation_type": "supports",
+              "source_node_id": "E1",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C02",
+              "relation_type": "supports",
+              "source_node_id": "E2",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C03",
+              "relation_type": "supports",
+              "source_node_id": "N08",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C04",
+              "relation_type": "supports",
+              "source_node_id": "E3",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C05",
+              "relation_type": "supports",
+              "source_node_id": "E4",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C06",
+              "relation_type": "supports",
+              "source_node_id": "N09",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C07",
+              "relation_type": "supports",
+              "source_node_id": "E6",
+              "target_node_id": "N10"
+            },
+            {
+              "edge_id": "C08",
+              "relation_type": "supports",
+              "source_node_id": "N10",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C09",
+              "relation_type": "supports",
+              "source_node_id": "E7",
+              "target_node_id": "N12"
+            },
+            {
+              "edge_id": "C10",
+              "relation_type": "supports",
+              "source_node_id": "N12",
+              "target_node_id": "N13"
+            },
+            {
+              "edge_id": "C11",
+              "relation_type": "invalidates",
+              "source_node_id": "E6",
+              "target_node_id": "E5"
+            },
+            {
+              "edge_id": "C12",
+              "relation_type": "supports",
+              "source_node_id": "E1",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C13",
+              "relation_type": "supports",
+              "source_node_id": "E2",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C14",
+              "relation_type": "supports",
+              "source_node_id": "E3",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C15",
+              "relation_type": "supports",
+              "source_node_id": "E4",
+              "target_node_id": "N08"
+            }
+          ],
+          "nodes": [
+            {
+              "node_id": "E1",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E2",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E3",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E4",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E5",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E6",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E7",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "N08",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N09",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N10",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N11",
+              "node_type": "fact"
+            },
+            {
+              "node_id": "N12",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N13",
+              "node_type": "constraint"
+            }
+          ],
+          "schema_version": "ebrt-neutral-candidate-scaffold-v0.6.3",
+          "target_bindings": [
+            {
+              "node_id": "N11",
+              "slot_id": "primary_decision"
+            },
+            {
+              "node_id": "N13",
+              "slot_id": "stable_constraint"
+            }
+          ]
+        },
+        "checkpoint_id": "coolant_loop_revision_b:post_event",
+        "decision_slots": [
+          {
+            "allowed_values": [
+              "SOUTH_LOOP",
+              "NORTH_LOOP"
+            ],
+            "slot_id": "primary_decision"
+          },
+          {
+            "allowed_values": [
+              "AUDIT_CSV"
+            ],
+            "slot_id": "stable_constraint"
+          }
+        ],
+        "question": "Which coolant loop is active after applying the latest valid evidence? Answer SOUTH or NORTH.",
+        "response_contract": {
+          "inspection_plan_is_public_receipt_only": true,
+          "return_private_reasoning": false,
+          "schema_version": "ebrt-actuator-calibration-provider-output-v0.6.3",
+          "select_only_candidate_edge_ids": true
+        },
+        "revision_actuator": {
+          "fingerprint_sha256": "da79063a2e4da264608b26448a2f22801aac6b53d816e415432d2641c483830d",
+          "no_reordering": false,
+          "operator": "bounded_reinspection_schedule",
+          "priority_rows": [
+            {
+              "evidence_id": "E1",
+              "priority_tier": 2
+            },
+            {
+              "evidence_id": "E2",
+              "priority_tier": 3
+            },
+            {
+              "evidence_id": "E3",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E4",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E5",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E6",
+              "priority_tier": 1
+            },
+            {
+              "evidence_id": "E7",
+              "priority_tier": 0
+            }
+          ],
+          "review_budget": 3,
+          "schema_version": "ebrt-bounded-reinspection-schedule-v0.6.3"
+        },
+        "schema_version": "ebrt-actuator-calibration-provider-input-v0.6.3"
+      },
+      "provider_payload_sha256": "1870dc147968a0bdb9c6c9717b214fbbdf2df19c106b49814ea34fc69b5cd171",
+      "run_position": 13,
+      "treatment_id": "X",
+      "trial_id": 2
+    },
+    {
+      "blinded_request_id": "req-478d747bc998fd62272c2939",
+      "block_id": "block_4",
+      "block_position": 2,
+      "case_id": "coolant_loop_revision_b",
+      "payload": {
+        "all_raw_evidence": [
+          {
+            "evidence_id": "E1",
+            "text": "Calibrated sensor rule: one complete calibrated sensor chain is sufficient to select the active coolant loop."
+          },
+          {
+            "evidence_id": "E2",
+            "text": "Calibrated sensor pair SP-8 selects the SOUTH coolant loop for the current batch."
+          },
+          {
+            "evidence_id": "E3",
+            "text": "Independent laboratory certificate LC-7 selects the SOUTH coolant loop when its custody seal is valid."
+          },
+          {
+            "evidence_id": "E4",
+            "text": "Custody record CR-7 verifies the seal on laboratory certificate LC-7 for the current batch."
+          },
+          {
+            "evidence_id": "E5",
+            "text": "Earlier operator memo M-2 selects the NORTH coolant loop unless a later withdrawal names it."
+          },
+          {
+            "evidence_id": "E6",
+            "text": "Latest withdrawal: operator memo M-2 is revoked. Use one complete currently valid chain; E5 is invalidated."
+          },
+          {
+            "evidence_id": "E7",
+            "text": "The batch audit export must remain AUDIT_CSV regardless of the selected coolant loop."
+          }
+        ],
+        "allowed_evidence_ids": [
+          "E1",
+          "E2",
+          "E3",
+          "E4",
+          "E5",
+          "E6",
+          "E7"
+        ],
+        "answer_choices": [
+          "SOUTH",
+          "NORTH"
+        ],
+        "candidate_scaffold": {
+          "allowed_relation_types": [
+            "supports",
+            "depends_on",
+            "invalidates"
+          ],
+          "candidate_edges": [
+            {
+              "edge_id": "C01",
+              "relation_type": "supports",
+              "source_node_id": "E1",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C02",
+              "relation_type": "supports",
+              "source_node_id": "E2",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C03",
+              "relation_type": "supports",
+              "source_node_id": "N08",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C04",
+              "relation_type": "supports",
+              "source_node_id": "E3",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C05",
+              "relation_type": "supports",
+              "source_node_id": "E4",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C06",
+              "relation_type": "supports",
+              "source_node_id": "N09",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C07",
+              "relation_type": "supports",
+              "source_node_id": "E6",
+              "target_node_id": "N10"
+            },
+            {
+              "edge_id": "C08",
+              "relation_type": "supports",
+              "source_node_id": "N10",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C09",
+              "relation_type": "supports",
+              "source_node_id": "E7",
+              "target_node_id": "N12"
+            },
+            {
+              "edge_id": "C10",
+              "relation_type": "supports",
+              "source_node_id": "N12",
+              "target_node_id": "N13"
+            },
+            {
+              "edge_id": "C11",
+              "relation_type": "invalidates",
+              "source_node_id": "E6",
+              "target_node_id": "E5"
+            },
+            {
+              "edge_id": "C12",
+              "relation_type": "supports",
+              "source_node_id": "E1",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C13",
+              "relation_type": "supports",
+              "source_node_id": "E2",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C14",
+              "relation_type": "supports",
+              "source_node_id": "E3",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C15",
+              "relation_type": "supports",
+              "source_node_id": "E4",
+              "target_node_id": "N08"
+            }
+          ],
+          "nodes": [
+            {
+              "node_id": "E1",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E2",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E3",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E4",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E5",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E6",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E7",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "N08",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N09",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N10",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N11",
+              "node_type": "fact"
+            },
+            {
+              "node_id": "N12",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N13",
+              "node_type": "constraint"
+            }
+          ],
+          "schema_version": "ebrt-neutral-candidate-scaffold-v0.6.3",
+          "target_bindings": [
+            {
+              "node_id": "N11",
+              "slot_id": "primary_decision"
+            },
+            {
+              "node_id": "N13",
+              "slot_id": "stable_constraint"
+            }
+          ]
+        },
+        "checkpoint_id": "coolant_loop_revision_b:post_event",
+        "decision_slots": [
+          {
+            "allowed_values": [
+              "SOUTH_LOOP",
+              "NORTH_LOOP"
+            ],
+            "slot_id": "primary_decision"
+          },
+          {
+            "allowed_values": [
+              "AUDIT_CSV"
+            ],
+            "slot_id": "stable_constraint"
+          }
+        ],
+        "question": "Which coolant loop is active after applying the latest valid evidence? Answer SOUTH or NORTH.",
+        "response_contract": {
+          "inspection_plan_is_public_receipt_only": true,
+          "return_private_reasoning": false,
+          "schema_version": "ebrt-actuator-calibration-provider-output-v0.6.3",
+          "select_only_candidate_edge_ids": true
+        },
+        "revision_actuator": {
+          "fingerprint_sha256": "776adab7aee146a3af99ef330ae597434af461eec5242166937752a88d627ff0",
+          "no_reordering": true,
+          "operator": "bounded_reinspection_schedule",
+          "priority_rows": [
+            {
+              "evidence_id": "E1",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E2",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E3",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E4",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E5",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E6",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E7",
+              "priority_tier": 0
+            }
+          ],
+          "review_budget": 3,
+          "schema_version": "ebrt-bounded-reinspection-schedule-v0.6.3"
+        },
+        "schema_version": "ebrt-actuator-calibration-provider-input-v0.6.3"
+      },
+      "provider_payload_sha256": "7a91a9c15a069278859e8c05ef9aa8bad002391c08dd708c87345f0cc95a923f",
+      "run_position": 14,
+      "treatment_id": "Z",
+      "trial_id": 2
+    },
+    {
+      "blinded_request_id": "req-af6d899c27ec820b4c2d9b3c",
+      "block_id": "block_4",
+      "block_position": 3,
+      "case_id": "coolant_loop_revision_b",
+      "payload": {
+        "all_raw_evidence": [
+          {
+            "evidence_id": "E1",
+            "text": "Calibrated sensor rule: one complete calibrated sensor chain is sufficient to select the active coolant loop."
+          },
+          {
+            "evidence_id": "E2",
+            "text": "Calibrated sensor pair SP-8 selects the SOUTH coolant loop for the current batch."
+          },
+          {
+            "evidence_id": "E3",
+            "text": "Independent laboratory certificate LC-7 selects the SOUTH coolant loop when its custody seal is valid."
+          },
+          {
+            "evidence_id": "E4",
+            "text": "Custody record CR-7 verifies the seal on laboratory certificate LC-7 for the current batch."
+          },
+          {
+            "evidence_id": "E5",
+            "text": "Earlier operator memo M-2 selects the NORTH coolant loop unless a later withdrawal names it."
+          },
+          {
+            "evidence_id": "E6",
+            "text": "Latest withdrawal: operator memo M-2 is revoked. Use one complete currently valid chain; E5 is invalidated."
+          },
+          {
+            "evidence_id": "E7",
+            "text": "The batch audit export must remain AUDIT_CSV regardless of the selected coolant loop."
+          }
+        ],
+        "allowed_evidence_ids": [
+          "E1",
+          "E2",
+          "E3",
+          "E4",
+          "E5",
+          "E6",
+          "E7"
+        ],
+        "answer_choices": [
+          "SOUTH",
+          "NORTH"
+        ],
+        "candidate_scaffold": {
+          "allowed_relation_types": [
+            "supports",
+            "depends_on",
+            "invalidates"
+          ],
+          "candidate_edges": [
+            {
+              "edge_id": "C01",
+              "relation_type": "supports",
+              "source_node_id": "E1",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C02",
+              "relation_type": "supports",
+              "source_node_id": "E2",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C03",
+              "relation_type": "supports",
+              "source_node_id": "N08",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C04",
+              "relation_type": "supports",
+              "source_node_id": "E3",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C05",
+              "relation_type": "supports",
+              "source_node_id": "E4",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C06",
+              "relation_type": "supports",
+              "source_node_id": "N09",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C07",
+              "relation_type": "supports",
+              "source_node_id": "E6",
+              "target_node_id": "N10"
+            },
+            {
+              "edge_id": "C08",
+              "relation_type": "supports",
+              "source_node_id": "N10",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C09",
+              "relation_type": "supports",
+              "source_node_id": "E7",
+              "target_node_id": "N12"
+            },
+            {
+              "edge_id": "C10",
+              "relation_type": "supports",
+              "source_node_id": "N12",
+              "target_node_id": "N13"
+            },
+            {
+              "edge_id": "C11",
+              "relation_type": "invalidates",
+              "source_node_id": "E6",
+              "target_node_id": "E5"
+            },
+            {
+              "edge_id": "C12",
+              "relation_type": "supports",
+              "source_node_id": "E1",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C13",
+              "relation_type": "supports",
+              "source_node_id": "E2",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C14",
+              "relation_type": "supports",
+              "source_node_id": "E3",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C15",
+              "relation_type": "supports",
+              "source_node_id": "E4",
+              "target_node_id": "N08"
+            }
+          ],
+          "nodes": [
+            {
+              "node_id": "E1",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E2",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E3",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E4",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E5",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E6",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E7",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "N08",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N09",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N10",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N11",
+              "node_type": "fact"
+            },
+            {
+              "node_id": "N12",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N13",
+              "node_type": "constraint"
+            }
+          ],
+          "schema_version": "ebrt-neutral-candidate-scaffold-v0.6.3",
+          "target_bindings": [
+            {
+              "node_id": "N11",
+              "slot_id": "primary_decision"
+            },
+            {
+              "node_id": "N13",
+              "slot_id": "stable_constraint"
+            }
+          ]
+        },
+        "checkpoint_id": "coolant_loop_revision_b:post_event",
+        "decision_slots": [
+          {
+            "allowed_values": [
+              "SOUTH_LOOP",
+              "NORTH_LOOP"
+            ],
+            "slot_id": "primary_decision"
+          },
+          {
+            "allowed_values": [
+              "AUDIT_CSV"
+            ],
+            "slot_id": "stable_constraint"
+          }
+        ],
+        "question": "Which coolant loop is active after applying the latest valid evidence? Answer SOUTH or NORTH.",
+        "response_contract": {
+          "inspection_plan_is_public_receipt_only": true,
+          "return_private_reasoning": false,
+          "schema_version": "ebrt-actuator-calibration-provider-output-v0.6.3",
+          "select_only_candidate_edge_ids": true
+        },
+        "revision_actuator": {
+          "fingerprint_sha256": "f755c52754e2158e53a6ab92a7378e0f27e1068b772c9f51ce8418c39f78b54e",
+          "no_reordering": false,
+          "operator": "bounded_reinspection_schedule",
+          "priority_rows": [
+            {
+              "evidence_id": "E1",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E2",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E3",
+              "priority_tier": 3
+            },
+            {
+              "evidence_id": "E4",
+              "priority_tier": 2
+            },
+            {
+              "evidence_id": "E5",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E6",
+              "priority_tier": 1
+            },
+            {
+              "evidence_id": "E7",
+              "priority_tier": 0
+            }
+          ],
+          "review_budget": 3,
+          "schema_version": "ebrt-bounded-reinspection-schedule-v0.6.3"
+        },
+        "schema_version": "ebrt-actuator-calibration-provider-input-v0.6.3"
+      },
+      "provider_payload_sha256": "b736ed6143825c68481d55adfbe2396eeabcb9f3ffcc02b0becd4744f0f84815",
+      "run_position": 15,
+      "treatment_id": "D",
+      "trial_id": 2
+    },
+    {
+      "blinded_request_id": "req-1376160a073decc952c33c9e",
+      "block_id": "block_4",
+      "block_position": 4,
+      "case_id": "coolant_loop_revision_b",
+      "payload": {
+        "all_raw_evidence": [
+          {
+            "evidence_id": "E1",
+            "text": "Calibrated sensor rule: one complete calibrated sensor chain is sufficient to select the active coolant loop."
+          },
+          {
+            "evidence_id": "E2",
+            "text": "Calibrated sensor pair SP-8 selects the SOUTH coolant loop for the current batch."
+          },
+          {
+            "evidence_id": "E3",
+            "text": "Independent laboratory certificate LC-7 selects the SOUTH coolant loop when its custody seal is valid."
+          },
+          {
+            "evidence_id": "E4",
+            "text": "Custody record CR-7 verifies the seal on laboratory certificate LC-7 for the current batch."
+          },
+          {
+            "evidence_id": "E5",
+            "text": "Earlier operator memo M-2 selects the NORTH coolant loop unless a later withdrawal names it."
+          },
+          {
+            "evidence_id": "E6",
+            "text": "Latest withdrawal: operator memo M-2 is revoked. Use one complete currently valid chain; E5 is invalidated."
+          },
+          {
+            "evidence_id": "E7",
+            "text": "The batch audit export must remain AUDIT_CSV regardless of the selected coolant loop."
+          }
+        ],
+        "allowed_evidence_ids": [
+          "E1",
+          "E2",
+          "E3",
+          "E4",
+          "E5",
+          "E6",
+          "E7"
+        ],
+        "answer_choices": [
+          "SOUTH",
+          "NORTH"
+        ],
+        "candidate_scaffold": {
+          "allowed_relation_types": [
+            "supports",
+            "depends_on",
+            "invalidates"
+          ],
+          "candidate_edges": [
+            {
+              "edge_id": "C01",
+              "relation_type": "supports",
+              "source_node_id": "E1",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C02",
+              "relation_type": "supports",
+              "source_node_id": "E2",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C03",
+              "relation_type": "supports",
+              "source_node_id": "N08",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C04",
+              "relation_type": "supports",
+              "source_node_id": "E3",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C05",
+              "relation_type": "supports",
+              "source_node_id": "E4",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C06",
+              "relation_type": "supports",
+              "source_node_id": "N09",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C07",
+              "relation_type": "supports",
+              "source_node_id": "E6",
+              "target_node_id": "N10"
+            },
+            {
+              "edge_id": "C08",
+              "relation_type": "supports",
+              "source_node_id": "N10",
+              "target_node_id": "N11"
+            },
+            {
+              "edge_id": "C09",
+              "relation_type": "supports",
+              "source_node_id": "E7",
+              "target_node_id": "N12"
+            },
+            {
+              "edge_id": "C10",
+              "relation_type": "supports",
+              "source_node_id": "N12",
+              "target_node_id": "N13"
+            },
+            {
+              "edge_id": "C11",
+              "relation_type": "invalidates",
+              "source_node_id": "E6",
+              "target_node_id": "E5"
+            },
+            {
+              "edge_id": "C12",
+              "relation_type": "supports",
+              "source_node_id": "E1",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C13",
+              "relation_type": "supports",
+              "source_node_id": "E2",
+              "target_node_id": "N09"
+            },
+            {
+              "edge_id": "C14",
+              "relation_type": "supports",
+              "source_node_id": "E3",
+              "target_node_id": "N08"
+            },
+            {
+              "edge_id": "C15",
+              "relation_type": "supports",
+              "source_node_id": "E4",
+              "target_node_id": "N08"
+            }
+          ],
+          "nodes": [
+            {
+              "node_id": "E1",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E2",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E3",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E4",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E5",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E6",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "E7",
+              "node_type": "evidence"
+            },
+            {
+              "node_id": "N08",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N09",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N10",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N11",
+              "node_type": "fact"
+            },
+            {
+              "node_id": "N12",
+              "node_type": "support"
+            },
+            {
+              "node_id": "N13",
+              "node_type": "constraint"
+            }
+          ],
+          "schema_version": "ebrt-neutral-candidate-scaffold-v0.6.3",
+          "target_bindings": [
+            {
+              "node_id": "N11",
+              "slot_id": "primary_decision"
+            },
+            {
+              "node_id": "N13",
+              "slot_id": "stable_constraint"
+            }
+          ]
+        },
+        "checkpoint_id": "coolant_loop_revision_b:post_event",
+        "decision_slots": [
+          {
+            "allowed_values": [
+              "SOUTH_LOOP",
+              "NORTH_LOOP"
+            ],
+            "slot_id": "primary_decision"
+          },
+          {
+            "allowed_values": [
+              "AUDIT_CSV"
+            ],
+            "slot_id": "stable_constraint"
+          }
+        ],
+        "question": "Which coolant loop is active after applying the latest valid evidence? Answer SOUTH or NORTH.",
+        "response_contract": {
+          "inspection_plan_is_public_receipt_only": true,
+          "return_private_reasoning": false,
+          "schema_version": "ebrt-actuator-calibration-provider-output-v0.6.3",
+          "select_only_candidate_edge_ids": true
+        },
+        "revision_actuator": {
+          "fingerprint_sha256": "3213d9c15c763b4692eedc78f56366069ba1d8eb8858a67c235d102e597e68f8",
+          "no_reordering": false,
+          "operator": "bounded_reinspection_schedule",
+          "priority_rows": [
+            {
+              "evidence_id": "E1",
+              "priority_tier": 3
+            },
+            {
+              "evidence_id": "E2",
+              "priority_tier": 2
+            },
+            {
+              "evidence_id": "E3",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E4",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E5",
+              "priority_tier": 0
+            },
+            {
+              "evidence_id": "E6",
+              "priority_tier": 1
+            },
+            {
+              "evidence_id": "E7",
+              "priority_tier": 0
+            }
+          ],
+          "review_budget": 3,
+          "schema_version": "ebrt-bounded-reinspection-schedule-v0.6.3"
+        },
+        "schema_version": "ebrt-actuator-calibration-provider-input-v0.6.3"
+      },
+      "provider_payload_sha256": "6cc89ac6da3a92f60e1a69b51cb298a408df57de3d0486cc3b861294597d5f0e",
+      "run_position": 16,
+      "treatment_id": "C",
+      "trial_id": 2
+    }
+  ],
+  "projection_fingerprint_sha256": "c817e45c27f6b4a94696a8519fe6b0130c5f66e97966413914fda42d57eb1588",
+  "schema_version": "ebrt-actuator-calibration-live-inputs-v0.6.3-r01"
+}
