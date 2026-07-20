@@ -23,23 +23,23 @@
     },
     "mechanism_report.md": {
       "bytes": 4029,
-      "sha256": "7af2346ec0d1b20376aa0a9ea679deda1a24a8161046273550c7698fdc1a292c"
+      "sha256": "342fdc8fbec51112b2a981c2f30d4395aba8bb5b52bdac3d58caa2cfb5c84899"
     },
     "no_event_audit.json": {
-      "bytes": 1163,
-      "sha256": "e11206e1026920108c27fdeba604138605a3b6f673003c3be86b5c37d5e10a19"
+      "bytes": 1207,
+      "sha256": "ec5da4ddf51123ade7d2495eb13685c310131bdab3fe4aec88310740da370909"
     },
     "self_test.json": {
       "bytes": 6077,
       "sha256": "488b5041ef99b1b8663a03d098a426c7c59a88de4e2a257f03a1f72b24f8c5d4"
     },
     "source_receipt.json": {
-      "bytes": 4810,
-      "sha256": "9968c785d2dd8353df8d39a579af94eca57d13456fb96eac92489e19c4698988"
+      "bytes": 4811,
+      "sha256": "84847669eca84c83cf8334658e6f5106c37d3e8a32aa4bbe7793dedb5bf5969f"
     },
     "stable_constraint_sealed_lane.json": {
-      "bytes": 2926,
-      "sha256": "379e63f9bfce0af69df2240fe85835b7032efb0de3209773f71f818ba43f40cb"
+      "bytes": 2972,
+      "sha256": "4ea3d27501907821510c2ad6f7cea4c5c14057b505b6ff8463a53b66bf7e98b8"
     }
   },
   "claim_boundary": [
@@ -79,7 +79,7 @@
   "provider_calls": 0,
   "runtime_contract": "Deterministic float64 local mechanism over byte-pinned public inputs. Canonical artifacts exclude timestamps, hostnames, absolute paths, and observed runtime metadata. Two-build byte identity is required on the recorded build environment; arbitrary cross-platform floating-point byte identity is not claimed.",
   "schema_version": "ebrt-temporal-lineage-manifest-v0.5.4",
-  "source_receipt_fingerprint_sha256": "04dcc60ade46003f23f451b068e8041307dcb94ccd2cd6ac211e9576fc452b8c",
+  "source_receipt_fingerprint_sha256": "e2198d3ed70fd2800f8b4eb039e521e03d110a9ef84572823d1ff86f2a11143a",
   "status": "COMPLETE_CONTAMINATED_NETWORK_ZERO_TEMPORAL_GATE",
   "validator_host_used_as_gate": false
 }

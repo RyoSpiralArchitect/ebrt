@@ -1,7 +1,7 @@
 {
-  "bundle_fingerprint_sha256": "5bfbe5c07ae05208a403092b1011b1ccbe876d7f8dbe8a692aeac14bd92f8429",
+  "bundle_fingerprint_sha256": "555232b02fc3bb8f1658e13cc328b72d08a1073aa9054d39757a1df334990b84",
   "decision_status": "PROMOTE_V0_6_LANE_COMPOSITION_GATE",
-  "fingerprint_sha256": "d49992fe602bdc75d5d65675f39076f2b021e51fc7f385df70b3e8ba2db83d8f",
+  "fingerprint_sha256": "2e64dad3d944db851c57a755d0e1b59f47cd5affd446757584e71dcf7f3b8a31",
   "network_calls": 0,
   "promotion_ready": true,
   "provider_calls": 0,
