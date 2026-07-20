@@ -33,7 +33,7 @@ python3 actuator_calibration_v0_6_3.py self-test
 python3 actuator_calibration_v0_6_3.py build-artifact
 ```
 
-The committed self-test status is `PASS_NETWORK_ZERO`: all 20 frozen hard
+The committed self-test status is `PASS_NETWORK_ZERO`: all 21 frozen hard
 gates are true, all 16 future payloads are presealed, and network/provider call
 counts are zero. The canonical manifest is
 `READY_ZERO_CALL_PREFLIGHT_ONLY`. The CLI has no live command and the policy
@@ -113,7 +113,8 @@ Every item must pass before network access:
   value are absent;
 - exact four-row Williams mapping; and
 - deterministic reconstruction of the same 16 sealed payload hashes in two
-  network-denied builds.
+  network-denied builds, plus fail-closed rejection of any extra, missing, or
+  non-regular entry in the canonical artifact directory.
 
 Failure of any item yields `ZERO_CALL_PREFLIGHT_STOP`; there is no partial live
 authorization.

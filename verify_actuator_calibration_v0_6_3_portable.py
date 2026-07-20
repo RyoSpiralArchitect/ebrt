@@ -25,18 +25,18 @@ POLICY_RELATIVE = Path("policy_lock_actuator_calibration_v0_6_3.json")
 ARTIFACT_RELATIVE = Path("artifacts/actuator_calibration_v0_6_3_preflight")
 MAX_FILE_BYTES = 2_000_000
 EXPECTED_POLICY_FILE = (
-    5306,
-    "ea851d9f8298c608e926e62695425b78c7e7ce265f36217d69b3e3e9d9a48dcc",
+    5350,
+    "b709e40175165452089594cb978457655a3f1717b9ec322da1caee075921f83f",
 )
 EXPECTED_MANIFEST_FILE = (
-    3961,
-    "334c5b2840b8565e889c53dd35b866676a1fc58cdb978882a7b05c8a1f48503a",
+    4009,
+    "f5de1d69e50ce3da34532e04d2b2a1f27125fa933c5338864f172145f32a3853",
 )
 EXPECTED_POLICY_FINGERPRINT = (
-    "e72546b5689dabd4fc4684d53e58884707c1e8c53ee26d3044a7e528d40fe639"
+    "01accc2daea2f17c102699e3bedea1b5b1e11e96bbff80a65f1733963998c54c"
 )
 EXPECTED_MANIFEST_FINGERPRINT = (
-    "c924af71cfa24f991b84e9c98b0b19d36b02788b12d89faaec46a7821ae349d2"
+    "635ff536704079ba1b6aceaf6af8653c1e89e006ade9f580974afcf8bdd8a8c6"
 )
 
 POLICY_SCHEMA = "ebrt-actuator-calibration-policy-lock-v0.6.3"
@@ -88,6 +88,7 @@ HARD_GATE_IDS = frozenset(
         "p0_p1_alignment_arithmetic_exact",
         "output_contract_roundtrip",
         "deterministic_double_projection",
+        "canonical_artifact_directory_exact",
         "network_calls_zero",
     }
 )
@@ -429,8 +430,9 @@ def _validate_hard_gates(
 ) -> None:
     expected_order = policy["protocol"]["hard_gate_ids"]
     _require(
-        len(expected_order) == 20 and len(set(expected_order)) == 20,
-        "policy must list exactly 20 unique hard gates",
+        len(expected_order) == len(HARD_GATE_IDS)
+        and len(set(expected_order)) == len(HARD_GATE_IDS),
+        f"policy must list exactly {len(HARD_GATE_IDS)} unique hard gates",
     )
     _require(set(expected_order) == HARD_GATE_IDS, "policy hard-gate keyset drifted")
     _require(
@@ -443,7 +445,7 @@ def _validate_hard_gates(
     ):
         _require(isinstance(gates, Mapping), f"{label} hard gates missing")
         _require(
-            set(gates) == HARD_GATE_IDS and len(gates) == 20,
+            set(gates) == HARD_GATE_IDS and len(gates) == len(HARD_GATE_IDS),
             f"{label} hard-gate keyset drifted",
         )
         _require(

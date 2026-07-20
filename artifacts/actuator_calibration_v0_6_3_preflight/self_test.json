@@ -226,12 +226,16 @@
     "schema_version": "ebrt-actuator-alignment-arithmetic-audit-v0.6.3",
     "status": "PASS"
   },
+  "artifact_directory_adversarial_audit": {
+    "reason_code": "CANONICAL_ARTIFACT_STALE_ENTRY",
+    "stale_entry_rejected": true
+  },
   "claim_boundary": [
     "PASS_NETWORK_ZERO proves local contracts and endpoint plumbing only.",
     "No synthetic arm-effect delta is constructed; conformance outputs only exercise parser and arithmetic contracts.",
     "No result here supports hidden-state editing, causal superiority, or general reasoning improvement."
   ],
-  "fingerprint_sha256": "57c4fed16f80ffa4b9c290bd4971530020d67548212d6aaa8af182d8c234a80f",
+  "fingerprint_sha256": "102cb05c0e39ad3af3cabca7fb80b0e63c4cf5d23dab009614c419a391fff6b9",
   "fixture_fingerprint_sha256": "b5e20b64489d48c466e1417166cd798569607163f4611d429a1fcfb045376ff5",
   "hard_gate_ids": [
     "strict_fixture_contract",
@@ -253,10 +257,12 @@
     "p0_p1_alignment_arithmetic_exact",
     "output_contract_roundtrip",
     "deterministic_double_projection",
+    "canonical_artifact_directory_exact",
     "network_calls_zero"
   ],
   "hard_gates": {
     "c_eligible_derangement": true,
+    "canonical_artifact_directory_exact": true,
     "central_finite_difference_agreement": true,
     "d_input_alignment_exceeds_c": true,
     "deterministic_double_projection": true,

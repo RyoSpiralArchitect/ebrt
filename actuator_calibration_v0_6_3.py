@@ -24,6 +24,7 @@ import json
 import math
 import platform
 import socket
+import tempfile
 from contextlib import contextmanager
 from importlib.metadata import version as package_version
 from pathlib import Path
@@ -124,7 +125,17 @@ HARD_GATE_IDS = (
     "p0_p1_alignment_arithmetic_exact",
     "output_contract_roundtrip",
     "deterministic_double_projection",
+    "canonical_artifact_directory_exact",
     "network_calls_zero",
+)
+
+CANONICAL_ARTIFACT_FILENAMES = frozenset(
+    {
+        "projection_bundle.json",
+        "controller_audit.json",
+        "self_test.json",
+        "manifest.json",
+    }
 )
 
 
@@ -2023,6 +2034,7 @@ def _hard_gates(
     fixture: Mapping[str, Any],
     arithmetic: Mapping[str, Any],
     adversarial: Mapping[str, Any],
+    canonical_artifact_directory_exact: bool,
     network_attempts: int,
 ) -> dict[str, bool]:
     fixture_audit = projection["fixture_audit"]
@@ -2139,6 +2151,7 @@ def _hard_gates(
         "output_contract_roundtrip": arithmetic["checks"]["output_contract_roundtrip"],
         "deterministic_double_projection": _canonical_bytes(projection)
         == _canonical_bytes(second_projection),
+        "canonical_artifact_directory_exact": canonical_artifact_directory_exact,
         "network_calls_zero": network_attempts == 0
         and projection["network_calls"] == 0
         and projection["provider_calls"] == 0,
@@ -2154,12 +2167,23 @@ def run_self_test() -> dict[str, Any]:
         second_projection = build_projection(_strict_load(FIXTURE_PATH))
         arithmetic = alignment_arithmetic_audit(projection, fixture)
         adversarial = _adversarial_contract_audit(projection, fixture)
+    with tempfile.TemporaryDirectory(prefix="ebrt-v063-stale-artifact-") as directory:
+        stale_directory = Path(directory)
+        (stale_directory / "stale.json").write_text("{}\n", encoding="utf-8")
+        stale_entry_attack = _expect_rejected(
+            lambda: _validate_artifact_directory_entries(
+                stale_directory, require_complete=False
+            ),
+            "CANONICAL_ARTIFACT_STALE_ENTRY",
+        )
+    canonical_artifact_directory_exact = stale_entry_attack["rejected"]
     gates = _hard_gates(
         projection=projection,
         second_projection=second_projection,
         fixture=fixture,
         arithmetic=arithmetic,
         adversarial=adversarial,
+        canonical_artifact_directory_exact=canonical_artifact_directory_exact,
         network_attempts=network_counter["attempts"],
     )
     _require(all(gates.values()), "HARD_GATE_FAILED")
@@ -2195,6 +2219,10 @@ def run_self_test() -> dict[str, Any]:
             "fixture_fingerprint_sha256": _fingerprint(fixture),
             "alignment_arithmetic_audit": arithmetic,
             "adversarial_contract_audit": adversarial,
+            "artifact_directory_adversarial_audit": {
+                "stale_entry_rejected": canonical_artifact_directory_exact,
+                "reason_code": stale_entry_attack["reason_code"],
+            },
             "secondary_conformance_quality_grades": secondary_grades,
             "claim_boundary": [
                 "PASS_NETWORK_ZERO proves local contracts and endpoint plumbing only.",
@@ -2370,12 +2398,42 @@ def _write_canonical(path: Path, value: Any) -> None:
     path.write_bytes(data)
 
 
+def _validate_artifact_directory_entries(
+    output_dir: Path, *, require_complete: bool
+) -> None:
+    if not output_dir.exists():
+        _require(not require_complete, "CANONICAL_ARTIFACT_DIRECTORY_MISSING")
+        return
+    _require(
+        output_dir.is_dir() and not output_dir.is_symlink(),
+        "CANONICAL_ARTIFACT_DIRECTORY_INVALID",
+    )
+    entries = list(output_dir.iterdir())
+    names = {entry.name for entry in entries}
+    _require(
+        names.issubset(CANONICAL_ARTIFACT_FILENAMES),
+        "CANONICAL_ARTIFACT_STALE_ENTRY",
+        ",".join(sorted(names - CANONICAL_ARTIFACT_FILENAMES)),
+    )
+    _require(
+        all(entry.is_file() and not entry.is_symlink() for entry in entries),
+        "CANONICAL_ARTIFACT_ENTRY_INVALID",
+    )
+    if require_complete:
+        _require(
+            names == CANONICAL_ARTIFACT_FILENAMES,
+            "CANONICAL_ARTIFACT_FILESET_INCOMPLETE",
+        )
+
+
 def build_canonical_artifact(output_dir: Path = DEFAULT_ARTIFACT_DIR) -> dict[str, Any]:
     lock = validate_policy_lock()
+    output_dir = output_dir.resolve()
     _require(
-        output_dir.resolve() == DEFAULT_ARTIFACT_DIR.resolve(),
+        output_dir == DEFAULT_ARTIFACT_DIR.resolve(),
         "NONCANONICAL_ARTIFACT_DIRECTORY",
     )
+    _validate_artifact_directory_entries(output_dir, require_complete=False)
     preflight = build_preflight()
     projection = preflight["projection"]
     self_test = preflight["self_test"]
@@ -2425,6 +2483,7 @@ def build_canonical_artifact(output_dir: Path = DEFAULT_ARTIFACT_DIR) -> dict[st
         }
     )
     _write_canonical(output_dir / "manifest.json", manifest)
+    _validate_artifact_directory_entries(output_dir, require_complete=True)
     return manifest
 
 

@@ -11,9 +11,9 @@
       "sha256": "ffb6d232fb77131b2f978a725ed8564e5dc42481763235eaf3f52ac57ab3a2a4"
     },
     "self_test.json": {
-      "bytes": 9450,
+      "bytes": 9675,
       "path": "artifacts/actuator_calibration_v0_6_3_preflight/self_test.json",
-      "sha256": "a8f6f38967422eeb50ec75824955f987bbc4d215473408be55f5018ba513aa4d"
+      "sha256": "ae75993c19aca121e480e293ee56adb709684a55dc04beb12324eba9da93e53d"
     }
   },
   "claim_boundary": [
@@ -25,10 +25,11 @@
     "No result here supports hidden-state editing, causal superiority, quality improvement, or general reasoning improvement."
   ],
   "controller_audit_fingerprint_sha256": "98abc33f4bcb434d7e3bbd31a7e821330f1aed40a4c7301d77603761b8957da3",
-  "fingerprint_sha256": "c924af71cfa24f991b84e9c98b0b19d36b02788b12d89faaec46a7821ae349d2",
+  "fingerprint_sha256": "635ff536704079ba1b6aceaf6af8653c1e89e006ade9f580974afcf8bdd8a8c6",
   "handoff_status": "AWAIT_EXPLICIT_LIVE_AUTHORIZATION",
   "hard_gates": {
     "c_eligible_derangement": true,
+    "canonical_artifact_directory_exact": true,
     "central_finite_difference_agreement": true,
     "d_input_alignment_exceeds_c": true,
     "deterministic_double_projection": true,
@@ -52,19 +53,19 @@
   "live_execution_authorized": false,
   "network_calls": 0,
   "policy_lock": {
-    "bytes": 5306,
+    "bytes": 5350,
     "path": "policy_lock_actuator_calibration_v0_6_3.json",
-    "sha256": "ea851d9f8298c608e926e62695425b78c7e7ce265f36217d69b3e3e9d9a48dcc"
+    "sha256": "b709e40175165452089594cb978457655a3f1717b9ec322da1caee075921f83f"
   },
   "projection_fingerprint_sha256": "c817e45c27f6b4a94696a8519fe6b0130c5f66e97966413914fda42d57eb1588",
   "provider_calls": 0,
   "schema_version": "ebrt-actuator-calibration-preflight-manifest-v0.6.3",
-  "self_test_fingerprint_sha256": "57c4fed16f80ffa4b9c290bd4971530020d67548212d6aaa8af182d8c234a80f",
+  "self_test_fingerprint_sha256": "102cb05c0e39ad3af3cabca7fb80b0e63c4cf5d23dab009614c419a391fff6b9",
   "source_receipts": {
     "core": {
-      "bytes": 93169,
+      "bytes": 95436,
       "path": "actuator_calibration_v0_6_3.py",
-      "sha256": "6913ef5205de35a1129796765bee8434c6387c53dc5b70e62be78ba2a4700837"
+      "sha256": "e2b3ef1517824fd0d2c5a7b2d9f53766f635d098c76b8b5baa56daa144b0b2bc"
     },
     "fixture": {
       "bytes": 12477,
@@ -77,9 +78,9 @@
       "sha256": "3d58dd75b310b92ae3aa140eaeb7728febeb6c043d03c0ebb1306dd38a6606e6"
     },
     "protocol_note": {
-      "bytes": 9233,
+      "bytes": 9343,
       "path": "docs/RND_ACTUATOR_CALIBRATION_V0_6_3.md",
-      "sha256": "c96e2a8ed0e24f0d0677db527954600c5713e092356fb85773bcabe564c19636"
+      "sha256": "8384feed41ed940665b82e4f8f7f3269947b11ab72783aadf49b7dfea03f6940"
     },
     "requirements": {
       "bytes": 28,

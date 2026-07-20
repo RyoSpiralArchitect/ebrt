@@ -283,7 +283,7 @@ general-accuracy claim.
 ## v0.6.3 — Provider Actuator Calibration Canary
 
 The monolithic network-zero implementation now records `PASS_NETWORK_ZERO`
-with 20/20 hard gates and a canonical
+with 21/21 hard gates and a canonical
 `READY_ZERO_CALL_PREFLIGHT_ONLY` artifact. It seals 16 future payloads while
 making zero network/provider calls; no hosted execution is authorized or
 observed in this namespace.

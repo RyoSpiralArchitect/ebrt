@@ -29,7 +29,7 @@
     "A future 16-call block requires explicit authorization after this lock; this file grants none.",
     "No result here supports hidden-state editing, causal superiority, quality improvement, or general reasoning improvement."
   ],
-  "fingerprint_sha256": "e72546b5689dabd4fc4684d53e58884707c1e8c53ee26d3044a7e528d40fe639",
+  "fingerprint_sha256": "01accc2daea2f17c102699e3bedea1b5b1e11e96bbff80a65f1733963998c54c",
   "protocol": {
     "active_priority_tiers": [
       3,
@@ -62,6 +62,7 @@
       "p0_p1_alignment_arithmetic_exact",
       "output_contract_roundtrip",
       "deterministic_double_projection",
+      "canonical_artifact_directory_exact",
       "network_calls_zero"
     ],
     "operator": "bounded_reinspection_schedule",
@@ -148,9 +149,9 @@
   "schema_version": "ebrt-actuator-calibration-policy-lock-v0.6.3",
   "sources": {
     "core": {
-      "bytes": 93169,
+      "bytes": 95436,
       "path": "actuator_calibration_v0_6_3.py",
-      "sha256": "6913ef5205de35a1129796765bee8434c6387c53dc5b70e62be78ba2a4700837"
+      "sha256": "e2b3ef1517824fd0d2c5a7b2d9f53766f635d098c76b8b5baa56daa144b0b2bc"
     },
     "fixture": {
       "bytes": 12477,
@@ -163,9 +164,9 @@
       "sha256": "3d58dd75b310b92ae3aa140eaeb7728febeb6c043d03c0ebb1306dd38a6606e6"
     },
     "protocol_note": {
-      "bytes": 9233,
+      "bytes": 9343,
       "path": "docs/RND_ACTUATOR_CALIBRATION_V0_6_3.md",
-      "sha256": "c96e2a8ed0e24f0d0677db527954600c5713e092356fb85773bcabe564c19636"
+      "sha256": "8384feed41ed940665b82e4f8f7f3269947b11ab72783aadf49b7dfea03f6940"
     },
     "requirements": {
       "bytes": 28,

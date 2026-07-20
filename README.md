@@ -191,7 +191,7 @@ python3 -I -S verify_actuator_calibration_v0_6_3_portable.py self-test
 
 The committed
 [`artifacts/actuator_calibration_v0_6_3_preflight/`](artifacts/actuator_calibration_v0_6_3_preflight/)
-bundle records `PASS_NETWORK_ZERO`, 20/20 hard gates, 16 presealed provider
+bundle records `PASS_NETWORK_ZERO`, 21/21 hard gates, 16 presealed provider
 payloads, and zero network/provider calls; its manifest status is
 `READY_ZERO_CALL_PREFLIGHT_ONLY`. Exact support is rederived from selected
 candidate edges in the frozen public graph rather than accepted from a
