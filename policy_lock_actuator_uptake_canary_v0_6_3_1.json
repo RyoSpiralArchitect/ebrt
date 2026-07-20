@@ -1,0 +1,162 @@
+{
+  "artifact": {
+    "directory": "artifacts/actuator_uptake_canary_v0_6_3_1_preflight",
+    "files": [
+      "controller_audit.json",
+      "manifest.json",
+      "projection_bundle.json",
+      "self_test.json"
+    ],
+    "network_calls": 0,
+    "provider_calls": 0
+  },
+  "canonicalization": {
+    "allow_nan": false,
+    "encoding": "utf-8",
+    "ensure_ascii": false,
+    "separators": [
+      ",",
+      ":"
+    ],
+    "sort_keys": true,
+    "trailing_newline": true
+  },
+  "claim_boundary": [
+    "This lock authorizes deterministic network-zero construction only.",
+    "The local float64 backward ends before JSON; no gradient crosses the hosted boundary.",
+    "The four synthetic closure coordinates are parser and decision conformance cases, not hosted effects.",
+    "A future four-call execution requires a separate merged authorization lock and exact-commit tag.",
+    "No result here supports hidden-state editing, attention/KV claims, quality improvement, or general reasoning improvement."
+  ],
+  "fingerprint_sha256": "37cb8ae64d8852b80a4f78f9adeac0e2f80af283943a88f8e60e837053e703b3",
+  "protocol": {
+    "arms": [
+      "Z",
+      "C",
+      "D",
+      "X"
+    ],
+    "case_id": "archive_gate_revision_c",
+    "direct_v0_6_4_promotion_allowed": false,
+    "execution_order": [
+      "C",
+      "X",
+      "D",
+      "Z"
+    ],
+    "hard_gate_ids": [
+      "strict_fixture_contract",
+      "opaque_candidate_ids",
+      "equal_candidate_cardinality",
+      "real_float64_backward",
+      "finite_difference_agreement",
+      "gradient_path_preference_nonzero",
+      "exact_z_x_c_d_permutations",
+      "matched_d_c_geometry",
+      "d_alignment_exceeds_c",
+      "immutable_chunk_multiset",
+      "only_evidence_order_differs",
+      "provider_payloads_leak_free",
+      "four_payloads_presealed",
+      "all_known_closures_roundtrip",
+      "semantic_failures_are_endpoints",
+      "unknown_closure_rejected",
+      "decision_classifier_total",
+      "deterministic_double_projection",
+      "canonical_artifact_directory_exact",
+      "network_calls_zero"
+    ],
+    "operator": "evidence_permutation",
+    "orders": {
+      "C": [
+        "E3",
+        "E4",
+        "E6",
+        "E1",
+        "E2",
+        "E5",
+        "E7"
+      ],
+      "D": [
+        "E1",
+        "E2",
+        "E6",
+        "E3",
+        "E4",
+        "E5",
+        "E7"
+      ],
+      "X": [
+        "E6",
+        "E5",
+        "E1",
+        "E2",
+        "E3",
+        "E4",
+        "E7"
+      ],
+      "Z": [
+        "E1",
+        "E3",
+        "E6",
+        "E4",
+        "E2",
+        "E5",
+        "E7"
+      ]
+    },
+    "positive_result": "PROMOTE_TO_FRESH_REPLICATION",
+    "primary_action_field": "selected_closure_id",
+    "provider_payload_count": 4,
+    "semantic_failures_are_endpoints": true,
+    "structural_invalid_reasons": [
+      "provider_transport_or_timeout",
+      "malformed_or_duplicate_key_json",
+      "provider_output_schema_invalid",
+      "unknown_closure_id"
+    ]
+  },
+  "runtime_contract": {
+    "machine": "arm64",
+    "max_output_tokens": 1024,
+    "model": "gpt-5.6-sol",
+    "previous_response_id": false,
+    "provider_calls_authorized": 0,
+    "pydantic": "2.12.5",
+    "python": "3.13.13",
+    "reasoning_effort": "low",
+    "sdk_retries": 0,
+    "store": false,
+    "timeout_seconds": 60,
+    "torch": "2.11.0"
+  },
+  "schema_version": "ebrt-actuator-uptake-policy-lock-v0.6.3.1",
+  "sources": {
+    "core": {
+      "bytes": 86518,
+      "path": "actuator_uptake_canary_v0_6_3_1.py",
+      "sha256": "4c7da6ab89a445607149263e4f3c4fa3d5f7fb846792d4209dba320c5f2dd4cc"
+    },
+    "fixture": {
+      "bytes": 3997,
+      "path": "fixtures/actuator_uptake_canary_v0_6_3_1.json",
+      "sha256": "45103d622540e5c212d8a680de85455544633b76df00b4d37d407c634d25e256"
+    },
+    "post_call_gold": {
+      "bytes": 1058,
+      "path": "fixtures/actuator_uptake_canary_gold_v0_6_3_1.json",
+      "sha256": "f3bca9c84f35077b6217653094074f83dd4cc8d4c8d8510da97efc8dff65c6d0"
+    },
+    "protocol_note": {
+      "bytes": 11294,
+      "path": "docs/RND_ACTUATOR_UPTAKE_CANARY_V0_6_3_1.md",
+      "sha256": "ca51b584163ad67cc5a46688ab01939b909d6eb99f98891961e18b78a7c1845f"
+    },
+    "requirements": {
+      "bytes": 28,
+      "path": "requirements.txt",
+      "sha256": "024ff69128d68a1c08bba956e318301500b7aebb7c917b19ff913a9bf5e373d7"
+    }
+  },
+  "status": "LOCKED_NETWORK_ZERO_PREFLIGHT_NO_LIVE_AUTHORIZATION"
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": "ebrt-actuator-uptake-canary-gold-v0.6.3.1",
+  "status": "LOCKED_POST_CALL_GRADING_ONLY",
+  "case_id": "archive_gate_revision_c",
+  "answer": "VIOLET",
+  "record_format": "SIGNED_NDJSON",
+  "positive_control_target_closure_id": "K_ba42ee466f",
+  "gradient_target_closure_id": "K_ba42ee466f",
+  "quality_valid_closure_ids": ["K_ba42ee466f", "K_5c1377f2fc"],
+  "closure_roles": {
+    "K_ba42ee466f": "ALIGNED_EVENT_CONSISTENT",
+    "K_5c1377f2fc": "ALTERNATIVE_EVENT_CONSISTENT",
+    "K_be3b12efdb": "STALE_INVALIDATED_SUPPORT",
+    "K_f41cb3914f": "MIXED_INSUFFICIENT_SUPPORT"
+  },
+  "claim_boundary": [
+    "This file is never used by provider-payload construction; a future live executor must not load it until all four attempts are terminal, while network-zero conformance may validate it.",
+    "The aligned closure is a construct target for uptake calibration; both aligned and alternative event-consistent closures are quality-valid.",
+    "A directionally favorable four-call result promotes only a fresh replication gate."
+  ]
+}

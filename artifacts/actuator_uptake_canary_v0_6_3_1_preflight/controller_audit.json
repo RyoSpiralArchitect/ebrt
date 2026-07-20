@@ -1,0 +1,57 @@
+{
+  "backward_calls": 1,
+  "baseline_loss": 0.81,
+  "baseline_states": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "case_id": "archive_gate_revision_c",
+  "displacement_by_evidence_id": {
+    "E1": 0.017380872088704005,
+    "E2": 0.024735586464000005,
+    "E3": -0.034576626240000005,
+    "E4": -0.04718894400000001,
+    "E5": -0.06227280000000001,
+    "E6": 0.25668,
+    "E7": -0.0
+  },
+  "dtype": "torch.float64",
+  "fingerprint_sha256": "ca65f1aaf285da1966524d88260e58a2d811dad66860327adfa0d18d78363396",
+  "finite_difference_by_evidence_id": {
+    "E1": -0.0869043604856401,
+    "E2": -0.12367793228440505,
+    "E3": 0.17288313125529697,
+    "E4": 0.23594471992849364,
+    "E5": 0.311363999971892,
+    "E6": -1.283400000051671,
+    "E7": 0.0
+  },
+  "finite_difference_tolerance": 5e-08,
+  "gradient_boundary": {
+    "ends_before": "JSON provider payload",
+    "hosted_model_differentiated": false,
+    "starts_at": "local recurrent public-state surrogate"
+  },
+  "gradient_by_evidence_id": {
+    "E1": -0.08690436044352001,
+    "E2": -0.12367793232000002,
+    "E3": 0.1728831312,
+    "E4": 0.23594472000000005,
+    "E5": 0.31136400000000003,
+    "E6": -1.2834,
+    "E7": 0.0
+  },
+  "maximum_finite_difference_error": 7.150641190278861e-11,
+  "opposed_path_id": "P1",
+  "path_scores": {
+    "P0": 0.04211645855270401,
+    "P1": -0.08176557024000002
+  },
+  "preferred_path_id": "P0",
+  "schema_version": "ebrt-actuator-uptake-controller-audit-v0.6.3.1"
+}
