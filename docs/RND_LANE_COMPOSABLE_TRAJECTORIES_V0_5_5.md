@@ -205,7 +205,7 @@ core self-test fingerprint
   d49992fe602bdc75d5d65675f39076f2b021e51fc7f385df70b3e8ba2db83d8f
 
 canonical manifest file
-  f24409943cddcf857e997e5de16fff221feccf3954fee6c1db07dd984aa671b0
+  b26db72c0f3316565e7967b27f96ea5a2e6aa0b91d68ef539dd16fe7166f00f1
 
 shared-ledger artifact
   b3d93b93cf8deb472ccb1cb93213f81c9db64af278faa5ca3bf507688967b172
