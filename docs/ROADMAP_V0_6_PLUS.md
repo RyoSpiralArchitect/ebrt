@@ -1,6 +1,6 @@
 # EBRT v0.6+ — Execution, Evaluation, and Orchestration Roadmap
 
-Status: **v0.6.0 PREFLIGHT PASS; v0.6.1 FIVE-CALL BLOCK COMPLETE, GATE HELD; v0.6.3 LIVE R01 EXECUTED ONCE, STOP_OUTPUT_CONTRACT; v0.6.3.1 LIVE R01 PROTOCOL FROZEN, ZERO LIVE CALLS; v0.6.4 BLOCKED**
+Status: **v0.6.0 PREFLIGHT PASS; v0.6.1 FIVE-CALL BLOCK COMPLETE, GATE HELD; v0.6.3 LIVE R01 EXECUTED ONCE, STOP_OUTPUT_CONTRACT; v0.6.3.1 LIVE R01 COMPLETE, PROMOTE TO FRESH REPLICATION; v0.6.4 BLOCKED**
 
 The one allowed v0.6.1 block ran on 2026-07-20 in the preregistered order
 `P -> A -> B -> D -> C`. All five calls completed and the committed artifact
@@ -490,34 +490,59 @@ echo, local surrogate decrease, and a quality-valid answer are not substitutes
 for the selected-closure contrast.
 
 The preflight monolith authorizes zero provider calls and publishes no hosted
-result. Its separately reviewed live-r01 successor freezes exactly one call per
+result. Its separately reviewed live-r01 successor froze exactly one call per
 arm in `C -> X -> D -> Z` order, with no retry, reorder, resume, or backfill.
-It is anchored to annotated tag `v0.6.3.1-preflight`, peeled to commit
-`c5e1244055e5d7f83493698119549c49df718ed7`. Live execution remains forbidden
-until the authorization pull request is merged and annotated tag
-`v0.6.3.1-live-r01-authorized` points exactly at that merge commit.
+It was anchored to annotated tag `v0.6.3.1-preflight`, peeled to commit
+`c5e1244055e5d7f83493698119549c49df718ed7`. Live execution was forbidden until
+the authorization pull request merged and annotated tag
+`v0.6.3.1-live-r01-authorized` pointed exactly at that merge commit.
 
 Known stale or mixed closures remain valid semantic endpoints. A structurally
 invalid arm is recorded and the remaining presealed arms continue, but the
 block ends `INCOMPLETE_NOT_ASSESSED` without loading gold. A source, lock,
 payload, journal, receipt, filesystem, or process-integrity failure instead
 stops the sequence and burns the attempt. Gold may load only after all four
-arms have valid compiled terminals. The hosted result and its independent
-verifier belong to a later result pull request, not the authorization commit.
+arms have valid compiled terminals. The protocol required the hosted result and
+its independent verifier to enter through a later result pull request, never
+the authorization commit.
 
-Even a favorable four-call result opens only a separately sealed fresh
+That authorization tag was created at object
+`621d6ce5aca04629eefd1f0189635ee84b62e8da`, peeled to commit
+`35b84895acb63298a8459dba1e9f3f2a47f4de0f`, and the exact block was consumed
+once. All four calls completed and produced eight durable attempt-journal rows.
+C selected the alternative closure, X and D selected the aligned closure, and Z
+selected the mixed closure. The locked classifier returned
+`CHANNEL_OPEN_DIRECTIONAL`, `GRADIENT_PLACEMENT_DIRECTIONAL`, and terminal
+`PROMOTE_TO_FRESH_REPLICATION`. Semantic gold loaded exactly once after the
+complete valid block. The result fingerprint is
+`131d64dfe74b99912d5e39b0fdd13d17c69eca0d1361b27a48e75887ec25b8e2`.
+
+This is a one-case, one-block directional observation. Although evidence order
+was the sole intentionally treatment-varying semantic payload field, fixed
+serial order cannot separate treatment from temporal or provider drift. The
+result establishes neither quality improvement nor causal, population,
+hidden-state, or general reasoning claims.
+
+This favorable four-call result opens only a separately sealed fresh
 replication. It does not directly promote v0.6.4 or establish quality,
 causality, population reliability, hidden-state editing, or general reasoning
 improvement. See the
 [`v0.6.3.1 measurement-repair note`](RND_ACTUATOR_UPTAKE_CANARY_V0_6_3_1.md).
 The live authorization boundary is detailed in
 [`v0.6.3.1-live-r01 protocol`](RND_ACTUATOR_UPTAKE_CANARY_V0_6_3_1_LIVE_R01.md).
+The consumed block is documented in the
+[`v0.6.3.1-live-r01 result`](RND_ACTUATOR_UPTAKE_CANARY_V0_6_3_1_LIVE_R01_RESULT.md),
+with its
+[`canonical artifact`](../artifacts/actuator_uptake_canary_v0_6_3_1_live_r01)
+and
+[`portable verifier`](../verify_actuator_uptake_canary_v0_6_3_1_live_r01.py).
 
 ## v0.6.4 — Scaffold Aperture
 
-Proceed only if a separately sealed fresh replication confirms the
+Proceed only if a separately sealed fresh replication confirms the observed
 v0.6.3.1 channel and a directionally attributable D-versus-C placement effect.
-A favorable four-call sensitivity canary alone is insufficient. Keep the
+A favorable four-call sensitivity canary alone is insufficient; the current
+live-r01 result therefore does not open v0.6.4. Keep the
 replicated actuator, projection, raw history, output contract, and budgets
 fixed, then test the separate hypothesis that a complete answer-adjacent DAG
 saturates the provider-visible control surface:
@@ -671,7 +696,7 @@ control. Novelty is not allowed to rescue a failed v0.6-v0.8 endpoint.
 | v0.6.1 | a real full-context bundle-to-output path and separately graded answer/lineage effect | controlled superiority, general quality, or gradients through the hosted model |
 | v0.6.2 | a judge-readable, reproducible Reasoning IDE workflow | a final frontend or a population-level algorithm claim |
 | v0.6.3 | the hosted provider observably consumes one bounded public actuator and gradient placement differs directionally from its matched anti-placement construct control | that the changed output is better or that placement generalizes |
-| v0.6.3.1 | in a separately authorized four-call canary, one position-only public channel changes the selected closure and gradient placement differs directionally from matched anti-placement | quality improvement, causality, population reliability, or direct promotion to v0.6.4; success opens only fresh replication |
+| v0.6.3.1 | in a separately authorized four-call canary, public selected-closure endpoints differ across the position-only payloads and gradient placement differs directionally from matched anti-placement | quality improvement, causality, population reliability, or direct promotion to v0.6.4; success opens only fresh replication |
 | v0.6.4 | scaffold density moderates that fixed actuator under a matched aperture experiment | that partial scaffolds or the actuator generalize |
 | v0.7 | a paired effect on one fresh frozen hosted suite | provider- or task-general superiority |
 | v0.8 | independently executed same-model public lanes can be sealed before outcome and composed into one regeneration | autonomous agents, heterogeneous superiority, or optimal routing |

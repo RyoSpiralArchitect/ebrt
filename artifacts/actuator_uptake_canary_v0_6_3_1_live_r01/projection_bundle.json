@@ -1,0 +1,528 @@
+{
+  "case_id": "archive_gate_revision_c",
+  "claim_boundary": [
+    "This fixture calibrates one provider-visible evidence-order actuator on one sealed case.",
+    "All arms contain the exact same immutable evidence-chunk byte multiset; only sequence position differs.",
+    "The hosted model is not differentiated and no claim is made about its hidden states, attention, or KV cache.",
+    "Candidate closure selection is a public action endpoint, not a private reasoning trace.",
+    "A four-call canary can open only a fresh replication gate; it cannot establish quality improvement or a general actuator effect."
+  ],
+  "controller_audit_fingerprint_sha256": "ca65f1aaf285da1966524d88260e58a2d811dad66860327adfa0d18d78363396",
+  "execution_order": [
+    "C",
+    "X",
+    "D",
+    "Z"
+  ],
+  "fingerprint_sha256": "65af77712b529bb028aeae22e3eba5d6d943b0299a0b2951758445afcfe83216",
+  "fixture_audit": {
+    "candidate_ids": [
+      "K_be3b12efdb",
+      "K_5c1377f2fc",
+      "K_f41cb3914f",
+      "K_ba42ee466f"
+    ],
+    "case_id": "archive_gate_revision_c",
+    "chunk_hashes": [
+      "e1bc1aec8d43bed3e4d4d1d3aae3ef1507453a92e915c8b2f4d5dbea5c949b35",
+      "e2c9652e4502d8afd4f8c1fe1046f537fea120d0472c4ff96fe5a50030823c6f",
+      "b628bcdc09b49504ebc210e14e1281d8c33d9fdea591f087f45945477cb6f7d1",
+      "b3cc0addb329237d2f265cfae652c9a7287e9a0fc3df43f50b99c17c53dc7c72",
+      "f72160a782940feca7de4917d4870f93fc802efe0008fc870830ec5b8fb90abb",
+      "93d50a2a59fd7b818a733d7a5a397421fa5e5d9cd930184a7a75a76047d3f3b0",
+      "e86e56d1f5fb9f495eef7ea808b70df9820d36636fbad1ec46815f94c21e33a0"
+    ],
+    "evidence_ids": [
+      "E1",
+      "E2",
+      "E3",
+      "E4",
+      "E5",
+      "E6",
+      "E7"
+    ]
+  },
+  "gold_used_for_projection": false,
+  "operator": "evidence_permutation",
+  "permutation_geometry": {
+    "case_id": "archive_gate_revision_c",
+    "checks": {
+      "all_four_orders_distinct": true,
+      "d_alignment_exceeds_c": true,
+      "d_c_anchor_positions_matched": true,
+      "d_c_fixed_points_matched": true,
+      "d_c_footrule_matched": true,
+      "d_c_kendall_matched": true
+    },
+    "d_minus_c_alignment": 0.3716460863781119,
+    "distances_from_z": {
+      "C": {
+        "fixed_points": 4,
+        "kendall": 4,
+        "spearman_footrule": 6
+      },
+      "D": {
+        "fixed_points": 4,
+        "kendall": 4,
+        "spearman_footrule": 6
+      }
+    },
+    "fingerprint_sha256": "5554b2ceaf0399d65127f5dc79cd30ae352a6c2b30eecee17334b85f924370f0",
+    "orders": {
+      "C": [
+        "E3",
+        "E4",
+        "E6",
+        "E1",
+        "E2",
+        "E5",
+        "E7"
+      ],
+      "D": [
+        "E1",
+        "E2",
+        "E6",
+        "E3",
+        "E4",
+        "E5",
+        "E7"
+      ],
+      "X": [
+        "E6",
+        "E5",
+        "E1",
+        "E2",
+        "E3",
+        "E4",
+        "E7"
+      ],
+      "Z": [
+        "E1",
+        "E3",
+        "E6",
+        "E4",
+        "E2",
+        "E5",
+        "E7"
+      ]
+    },
+    "positional_alignment": {
+      "C": 0.7774146000668161,
+      "D": 1.149060686444928
+    },
+    "schema_version": "ebrt-actuator-uptake-permutation-geometry-v0.6.3.1"
+  },
+  "provider_calls_authorized": 0,
+  "provider_calls_observed": 0,
+  "provider_payload_count": 4,
+  "provider_payloads": [
+    {
+      "blinded_request_id": "Q_00b33f7ff9377f35",
+      "payload": {
+        "answer_choices": [
+          "VIOLET",
+          "COPPER"
+        ],
+        "candidate_closures": [
+          {
+            "closure_id": "K_be3b12efdb",
+            "selected_evidence_ids": [
+              "E1",
+              "E2",
+              "E5",
+              "E7"
+            ]
+          },
+          {
+            "closure_id": "K_5c1377f2fc",
+            "selected_evidence_ids": [
+              "E3",
+              "E4",
+              "E6",
+              "E7"
+            ]
+          },
+          {
+            "closure_id": "K_f41cb3914f",
+            "selected_evidence_ids": [
+              "E1",
+              "E3",
+              "E6",
+              "E7"
+            ]
+          },
+          {
+            "closure_id": "K_ba42ee466f",
+            "selected_evidence_ids": [
+              "E1",
+              "E2",
+              "E6",
+              "E7"
+            ]
+          }
+        ],
+        "checkpoint_id": "archive_gate_revision_c:post_event",
+        "fingerprint_sha256": "b15bf97b3d7d6923a698f1c18ce9ba20a95580ac4a21cf9720c21efdcd856b86",
+        "ordered_raw_evidence": [
+          {
+            "evidence_id": "E3",
+            "text": "Independent signed inspection notice IN-72 records gate VIOLET for batch Q when paired with its custody receipt."
+          },
+          {
+            "evidence_id": "E4",
+            "text": "Custody receipt CR-72 authenticates inspection notice IN-72 for the current release epoch."
+          },
+          {
+            "evidence_id": "E6",
+            "text": "Latest revocation: legacy release memo LM-4 is withdrawn. Use one complete currently certified chain; E5 is invalidated."
+          },
+          {
+            "evidence_id": "E1",
+            "text": "Certified release rule: one complete current registry chain is sufficient to establish the active archive gate for batch Q."
+          },
+          {
+            "evidence_id": "E2",
+            "text": "Current registry channel A records gate VIOLET for batch Q and is valid for this release epoch."
+          },
+          {
+            "evidence_id": "E5",
+            "text": "Legacy release memo LM-4 records gate COPPER and remains usable unless a later revocation names it."
+          },
+          {
+            "evidence_id": "E7",
+            "text": "The final machine-readable record must remain SIGNED_NDJSON regardless of the selected gate."
+          }
+        ],
+        "question": "Which archive release gate is active for batch Q after applying the latest valid evidence? Answer VIOLET or COPPER.",
+        "record_format_choices": [
+          "SIGNED_NDJSON"
+        ],
+        "response_contract": {
+          "choose_exactly_one_candidate_closure": true,
+          "return_private_reasoning": false,
+          "reviewed_evidence_count": 3,
+          "schema_version": "ebrt-actuator-uptake-provider-output-v0.6.3.1"
+        },
+        "schema_version": "ebrt-actuator-uptake-provider-input-v0.6.3.1",
+        "task_instructions": [
+          "Use the full evidence set and inspect the immutable chunks in the order presented.",
+          "Select exactly one candidate closure and emit only the typed public response.",
+          "Do not return private chain-of-thought or invent a closure outside the catalog."
+        ]
+      },
+      "sequence_index": 1
+    },
+    {
+      "blinded_request_id": "Q_0289fe8cd42f35a6",
+      "payload": {
+        "answer_choices": [
+          "VIOLET",
+          "COPPER"
+        ],
+        "candidate_closures": [
+          {
+            "closure_id": "K_be3b12efdb",
+            "selected_evidence_ids": [
+              "E1",
+              "E2",
+              "E5",
+              "E7"
+            ]
+          },
+          {
+            "closure_id": "K_5c1377f2fc",
+            "selected_evidence_ids": [
+              "E3",
+              "E4",
+              "E6",
+              "E7"
+            ]
+          },
+          {
+            "closure_id": "K_f41cb3914f",
+            "selected_evidence_ids": [
+              "E1",
+              "E3",
+              "E6",
+              "E7"
+            ]
+          },
+          {
+            "closure_id": "K_ba42ee466f",
+            "selected_evidence_ids": [
+              "E1",
+              "E2",
+              "E6",
+              "E7"
+            ]
+          }
+        ],
+        "checkpoint_id": "archive_gate_revision_c:post_event",
+        "fingerprint_sha256": "56203eff435b9116cea3b7c11dd3ae4ca8b954c14f662d6804cf891f8d73d854",
+        "ordered_raw_evidence": [
+          {
+            "evidence_id": "E6",
+            "text": "Latest revocation: legacy release memo LM-4 is withdrawn. Use one complete currently certified chain; E5 is invalidated."
+          },
+          {
+            "evidence_id": "E5",
+            "text": "Legacy release memo LM-4 records gate COPPER and remains usable unless a later revocation names it."
+          },
+          {
+            "evidence_id": "E1",
+            "text": "Certified release rule: one complete current registry chain is sufficient to establish the active archive gate for batch Q."
+          },
+          {
+            "evidence_id": "E2",
+            "text": "Current registry channel A records gate VIOLET for batch Q and is valid for this release epoch."
+          },
+          {
+            "evidence_id": "E3",
+            "text": "Independent signed inspection notice IN-72 records gate VIOLET for batch Q when paired with its custody receipt."
+          },
+          {
+            "evidence_id": "E4",
+            "text": "Custody receipt CR-72 authenticates inspection notice IN-72 for the current release epoch."
+          },
+          {
+            "evidence_id": "E7",
+            "text": "The final machine-readable record must remain SIGNED_NDJSON regardless of the selected gate."
+          }
+        ],
+        "question": "Which archive release gate is active for batch Q after applying the latest valid evidence? Answer VIOLET or COPPER.",
+        "record_format_choices": [
+          "SIGNED_NDJSON"
+        ],
+        "response_contract": {
+          "choose_exactly_one_candidate_closure": true,
+          "return_private_reasoning": false,
+          "reviewed_evidence_count": 3,
+          "schema_version": "ebrt-actuator-uptake-provider-output-v0.6.3.1"
+        },
+        "schema_version": "ebrt-actuator-uptake-provider-input-v0.6.3.1",
+        "task_instructions": [
+          "Use the full evidence set and inspect the immutable chunks in the order presented.",
+          "Select exactly one candidate closure and emit only the typed public response.",
+          "Do not return private chain-of-thought or invent a closure outside the catalog."
+        ]
+      },
+      "sequence_index": 2
+    },
+    {
+      "blinded_request_id": "Q_f4fc36504480840b",
+      "payload": {
+        "answer_choices": [
+          "VIOLET",
+          "COPPER"
+        ],
+        "candidate_closures": [
+          {
+            "closure_id": "K_be3b12efdb",
+            "selected_evidence_ids": [
+              "E1",
+              "E2",
+              "E5",
+              "E7"
+            ]
+          },
+          {
+            "closure_id": "K_5c1377f2fc",
+            "selected_evidence_ids": [
+              "E3",
+              "E4",
+              "E6",
+              "E7"
+            ]
+          },
+          {
+            "closure_id": "K_f41cb3914f",
+            "selected_evidence_ids": [
+              "E1",
+              "E3",
+              "E6",
+              "E7"
+            ]
+          },
+          {
+            "closure_id": "K_ba42ee466f",
+            "selected_evidence_ids": [
+              "E1",
+              "E2",
+              "E6",
+              "E7"
+            ]
+          }
+        ],
+        "checkpoint_id": "archive_gate_revision_c:post_event",
+        "fingerprint_sha256": "3364d976db8b4c1406c25a1fbe378f447b605e092714ac7975623f946a68fab6",
+        "ordered_raw_evidence": [
+          {
+            "evidence_id": "E1",
+            "text": "Certified release rule: one complete current registry chain is sufficient to establish the active archive gate for batch Q."
+          },
+          {
+            "evidence_id": "E2",
+            "text": "Current registry channel A records gate VIOLET for batch Q and is valid for this release epoch."
+          },
+          {
+            "evidence_id": "E6",
+            "text": "Latest revocation: legacy release memo LM-4 is withdrawn. Use one complete currently certified chain; E5 is invalidated."
+          },
+          {
+            "evidence_id": "E3",
+            "text": "Independent signed inspection notice IN-72 records gate VIOLET for batch Q when paired with its custody receipt."
+          },
+          {
+            "evidence_id": "E4",
+            "text": "Custody receipt CR-72 authenticates inspection notice IN-72 for the current release epoch."
+          },
+          {
+            "evidence_id": "E5",
+            "text": "Legacy release memo LM-4 records gate COPPER and remains usable unless a later revocation names it."
+          },
+          {
+            "evidence_id": "E7",
+            "text": "The final machine-readable record must remain SIGNED_NDJSON regardless of the selected gate."
+          }
+        ],
+        "question": "Which archive release gate is active for batch Q after applying the latest valid evidence? Answer VIOLET or COPPER.",
+        "record_format_choices": [
+          "SIGNED_NDJSON"
+        ],
+        "response_contract": {
+          "choose_exactly_one_candidate_closure": true,
+          "return_private_reasoning": false,
+          "reviewed_evidence_count": 3,
+          "schema_version": "ebrt-actuator-uptake-provider-output-v0.6.3.1"
+        },
+        "schema_version": "ebrt-actuator-uptake-provider-input-v0.6.3.1",
+        "task_instructions": [
+          "Use the full evidence set and inspect the immutable chunks in the order presented.",
+          "Select exactly one candidate closure and emit only the typed public response.",
+          "Do not return private chain-of-thought or invent a closure outside the catalog."
+        ]
+      },
+      "sequence_index": 3
+    },
+    {
+      "blinded_request_id": "Q_10b2215b1c3170c8",
+      "payload": {
+        "answer_choices": [
+          "VIOLET",
+          "COPPER"
+        ],
+        "candidate_closures": [
+          {
+            "closure_id": "K_be3b12efdb",
+            "selected_evidence_ids": [
+              "E1",
+              "E2",
+              "E5",
+              "E7"
+            ]
+          },
+          {
+            "closure_id": "K_5c1377f2fc",
+            "selected_evidence_ids": [
+              "E3",
+              "E4",
+              "E6",
+              "E7"
+            ]
+          },
+          {
+            "closure_id": "K_f41cb3914f",
+            "selected_evidence_ids": [
+              "E1",
+              "E3",
+              "E6",
+              "E7"
+            ]
+          },
+          {
+            "closure_id": "K_ba42ee466f",
+            "selected_evidence_ids": [
+              "E1",
+              "E2",
+              "E6",
+              "E7"
+            ]
+          }
+        ],
+        "checkpoint_id": "archive_gate_revision_c:post_event",
+        "fingerprint_sha256": "7111067bc34b8ba4b8035edb534d566c71b2f86d981cdf1799de9424ceb09b53",
+        "ordered_raw_evidence": [
+          {
+            "evidence_id": "E1",
+            "text": "Certified release rule: one complete current registry chain is sufficient to establish the active archive gate for batch Q."
+          },
+          {
+            "evidence_id": "E3",
+            "text": "Independent signed inspection notice IN-72 records gate VIOLET for batch Q when paired with its custody receipt."
+          },
+          {
+            "evidence_id": "E6",
+            "text": "Latest revocation: legacy release memo LM-4 is withdrawn. Use one complete currently certified chain; E5 is invalidated."
+          },
+          {
+            "evidence_id": "E4",
+            "text": "Custody receipt CR-72 authenticates inspection notice IN-72 for the current release epoch."
+          },
+          {
+            "evidence_id": "E2",
+            "text": "Current registry channel A records gate VIOLET for batch Q and is valid for this release epoch."
+          },
+          {
+            "evidence_id": "E5",
+            "text": "Legacy release memo LM-4 records gate COPPER and remains usable unless a later revocation names it."
+          },
+          {
+            "evidence_id": "E7",
+            "text": "The final machine-readable record must remain SIGNED_NDJSON regardless of the selected gate."
+          }
+        ],
+        "question": "Which archive release gate is active for batch Q after applying the latest valid evidence? Answer VIOLET or COPPER.",
+        "record_format_choices": [
+          "SIGNED_NDJSON"
+        ],
+        "response_contract": {
+          "choose_exactly_one_candidate_closure": true,
+          "return_private_reasoning": false,
+          "reviewed_evidence_count": 3,
+          "schema_version": "ebrt-actuator-uptake-provider-output-v0.6.3.1"
+        },
+        "schema_version": "ebrt-actuator-uptake-provider-input-v0.6.3.1",
+        "task_instructions": [
+          "Use the full evidence set and inspect the immutable chunks in the order presented.",
+          "Select exactly one candidate closure and emit only the typed public response.",
+          "Do not return private chain-of-thought or invent a closure outside the catalog."
+        ]
+      },
+      "sequence_index": 4
+    }
+  ],
+  "public_treatment_key": [
+    {
+      "blinded_request_id": "Q_00b33f7ff9377f35",
+      "sequence_index": 1,
+      "treatment_id": "C"
+    },
+    {
+      "blinded_request_id": "Q_0289fe8cd42f35a6",
+      "sequence_index": 2,
+      "treatment_id": "X"
+    },
+    {
+      "blinded_request_id": "Q_f4fc36504480840b",
+      "sequence_index": 3,
+      "treatment_id": "D"
+    },
+    {
+      "blinded_request_id": "Q_10b2215b1c3170c8",
+      "sequence_index": 4,
+      "treatment_id": "Z"
+    }
+  ],
+  "schema_version": "ebrt-actuator-uptake-projection-v0.6.3.1",
+  "status": "READY_ZERO_CALL_PREFLIGHT_ONLY"
+}
