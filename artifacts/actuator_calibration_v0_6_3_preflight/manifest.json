@@ -1,0 +1,92 @@
+{
+  "artifact_receipts": {
+    "controller_audit.json": {
+      "bytes": 10708,
+      "path": "artifacts/actuator_calibration_v0_6_3_preflight/controller_audit.json",
+      "sha256": "34dd72b1c65a7b3e0f9d2435a94053c4023980e001f9b7f786f0380a57436242"
+    },
+    "projection_bundle.json": {
+      "bytes": 147098,
+      "path": "artifacts/actuator_calibration_v0_6_3_preflight/projection_bundle.json",
+      "sha256": "ffb6d232fb77131b2f978a725ed8564e5dc42481763235eaf3f52ac57ab3a2a4"
+    },
+    "self_test.json": {
+      "bytes": 9675,
+      "path": "artifacts/actuator_calibration_v0_6_3_preflight/self_test.json",
+      "sha256": "ae75993c19aca121e480e293ee56adb709684a55dc04beb12324eba9da93e53d"
+    }
+  },
+  "claim_boundary": [
+    "This lock authorizes only deterministic network-zero preflight construction.",
+    "The local float64 backward pass ends before JSON and no gradient crosses a hosted provider.",
+    "Both exact valid closures are conformance coordinates, not simulated hosted outputs.",
+    "No synthetic X-Z or D-C delta is a hard gate or evidence of provider uptake.",
+    "A future 16-call block requires explicit authorization after this lock; this file grants none.",
+    "No result here supports hidden-state editing, causal superiority, quality improvement, or general reasoning improvement."
+  ],
+  "controller_audit_fingerprint_sha256": "98abc33f4bcb434d7e3bbd31a7e821330f1aed40a4c7301d77603761b8957da3",
+  "fingerprint_sha256": "635ff536704079ba1b6aceaf6af8653c1e89e006ade9f580974afcf8bdd8a8c6",
+  "handoff_status": "AWAIT_EXPLICIT_LIVE_AUTHORIZATION",
+  "hard_gates": {
+    "c_eligible_derangement": true,
+    "canonical_artifact_directory_exact": true,
+    "central_finite_difference_agreement": true,
+    "d_input_alignment_exceeds_c": true,
+    "deterministic_double_projection": true,
+    "exact_one_closure_enforced": true,
+    "inspection_receipt_excluded_from_alignment": true,
+    "matched_schedule_geometry": true,
+    "network_calls_zero": true,
+    "non_actuator_payload_fields_matched": true,
+    "opposite_case_positive_controls": true,
+    "output_contract_roundtrip": true,
+    "p0_p1_alignment_arithmetic_exact": true,
+    "provider_payloads_leak_free": true,
+    "real_float64_backward": true,
+    "sixteen_payloads_presealed": true,
+    "strict_fixture_contract": true,
+    "symmetric_candidate_universe": true,
+    "unit_l1_polarities": true,
+    "williams_four_block_balance": true,
+    "z_true_no_reordering": true
+  },
+  "live_execution_authorized": false,
+  "network_calls": 0,
+  "policy_lock": {
+    "bytes": 5350,
+    "path": "policy_lock_actuator_calibration_v0_6_3.json",
+    "sha256": "b709e40175165452089594cb978457655a3f1717b9ec322da1caee075921f83f"
+  },
+  "projection_fingerprint_sha256": "c817e45c27f6b4a94696a8519fe6b0130c5f66e97966413914fda42d57eb1588",
+  "provider_calls": 0,
+  "schema_version": "ebrt-actuator-calibration-preflight-manifest-v0.6.3",
+  "self_test_fingerprint_sha256": "102cb05c0e39ad3af3cabca7fb80b0e63c4cf5d23dab009614c419a391fff6b9",
+  "source_receipts": {
+    "core": {
+      "bytes": 95436,
+      "path": "actuator_calibration_v0_6_3.py",
+      "sha256": "e2b3ef1517824fd0d2c5a7b2d9f53766f635d098c76b8b5baa56daa144b0b2bc"
+    },
+    "fixture": {
+      "bytes": 12477,
+      "path": "fixtures/actuator_calibration_v0_6_3.json",
+      "sha256": "987f1fb0d5aca8f0d33a49c3476a78bbdde4dd8b394d59235e8c6dd531839a86"
+    },
+    "post_call_gold": {
+      "bytes": 1511,
+      "path": "fixtures/actuator_calibration_gold_v0_6_3.json",
+      "sha256": "3d58dd75b310b92ae3aa140eaeb7728febeb6c043d03c0ebb1306dd38a6606e6"
+    },
+    "protocol_note": {
+      "bytes": 9343,
+      "path": "docs/RND_ACTUATOR_CALIBRATION_V0_6_3.md",
+      "sha256": "8384feed41ed940665b82e4f8f7f3269947b11ab72783aadf49b7dfea03f6940"
+    },
+    "requirements": {
+      "bytes": 28,
+      "path": "requirements.txt",
+      "sha256": "024ff69128d68a1c08bba956e318301500b7aebb7c917b19ff913a9bf5e373d7"
+    }
+  },
+  "status": "READY_ZERO_CALL_PREFLIGHT_ONLY"
+}

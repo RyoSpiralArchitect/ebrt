@@ -1,0 +1,361 @@
+{
+  "alignment_arithmetic_audit": {
+    "checks": {
+      "alignment_arithmetic_exact": true,
+      "all_four_path_coordinates_exercised": true,
+      "output_contract_roundtrip": true
+    },
+    "claim_boundary": [
+      "This verifies compiler and alignment arithmetic for both frozen valid closures.",
+      "It does not predict or simulate which closure a hosted provider will emit."
+    ],
+    "fingerprint_sha256": "4e6d6d5d16c2b5dc64a917fe3dc1775011cb589fc02a9aeb81f107da0a8dbe30",
+    "rows": [
+      {
+        "active_necessary_support_closure": [
+          "E1",
+          "E2",
+          "E6"
+        ],
+        "arithmetic_exact": true,
+        "case_id": "coolant_loop_revision_b",
+        "expected_alignment": {
+          "q_d": -0.5,
+          "q_x": 0.5
+        },
+        "observed_alignment": {
+          "q_d": -0.5,
+          "q_x": 0.5
+        },
+        "output_contract_roundtrip": true,
+        "path_id": "P0"
+      },
+      {
+        "active_necessary_support_closure": [
+          "E3",
+          "E4",
+          "E6"
+        ],
+        "arithmetic_exact": true,
+        "case_id": "coolant_loop_revision_b",
+        "expected_alignment": {
+          "q_d": 0.5,
+          "q_x": -0.5
+        },
+        "observed_alignment": {
+          "q_d": 0.5,
+          "q_x": -0.5
+        },
+        "output_contract_roundtrip": true,
+        "path_id": "P1"
+      },
+      {
+        "active_necessary_support_closure": [
+          "E1",
+          "E2",
+          "E6"
+        ],
+        "arithmetic_exact": true,
+        "case_id": "relay_bay_revision_a",
+        "expected_alignment": {
+          "q_d": 0.5,
+          "q_x": -0.5
+        },
+        "observed_alignment": {
+          "q_d": 0.5,
+          "q_x": -0.5
+        },
+        "output_contract_roundtrip": true,
+        "path_id": "P0"
+      },
+      {
+        "active_necessary_support_closure": [
+          "E3",
+          "E4",
+          "E6"
+        ],
+        "arithmetic_exact": true,
+        "case_id": "relay_bay_revision_a",
+        "expected_alignment": {
+          "q_d": -0.5,
+          "q_x": 0.5
+        },
+        "observed_alignment": {
+          "q_d": -0.5,
+          "q_x": 0.5
+        },
+        "output_contract_roundtrip": true,
+        "path_id": "P1"
+      }
+    ],
+    "schema_version": "ebrt-actuator-alignment-arithmetic-audit-v0.6.3",
+    "status": "PASS"
+  },
+  "claim_boundary": [
+    "The controller audit proves local gradient and schedule construction only.",
+    "It contains no hosted observation or synthetic effect result."
+  ],
+  "controller_audits": [
+    {
+      "backward_calls": 1,
+      "case_id": "coolant_loop_revision_b",
+      "claim_boundary": [
+        "q^D is derived by one local float64 backward pass and does not cross JSON or a hosted provider.",
+        "q^X runtime derivation does not read an answer value, q^D, or a provider output; it intentionally reads the frozen P0/P1 equivalence partition.",
+        "The q^X seed is the immediate predecessor branch head, but no broader study-design selection independence is claimed because the cases and controller were designed later.",
+        "D is constructed and evaluated in the same q^D coordinate system; this is construct-aligned calibration, not independent validation."
+      ],
+      "dtype": "float64",
+      "fingerprint_sha256": "7a6ab3366cb39fcac3de47551f725b72ce6537746681e379513e6a87969085e3",
+      "finite_difference_gradient_by_evidence_id": {
+        "E1": 0.12008000005447883,
+        "E2": 0.1042800000794486,
+        "E3": -0.11692000001506386,
+        "E4": -0.10111999998452248,
+        "E6": -0.006320000023318784
+      },
+      "finite_difference_max_abs_error": 7.94486143540496e-11,
+      "finite_difference_tolerance": 5e-08,
+      "gradient_by_evidence_id": {
+        "E1": 0.12007999999999998,
+        "E2": 0.10427999999999998,
+        "E3": -0.11691999999999998,
+        "E4": -0.10111999999999997,
+        "E6": -0.0063199999999999975
+      },
+      "loss_at_origin": 0.6240999999999999,
+      "q_d": {
+        "E1": -0.26785714285714285,
+        "E2": -0.23214285714285715,
+        "E3": 0.26785714285714285,
+        "E4": 0.23214285714285712,
+        "E5": 0.0,
+        "E6": 0.0,
+        "E7": 0.0
+      },
+      "q_d_path_alignment": {
+        "P0": -0.5,
+        "P1": 0.5
+      },
+      "q_d_preferred_path": "P1",
+      "q_x": {
+        "E1": 0.25,
+        "E2": 0.25,
+        "E3": -0.25,
+        "E4": -0.25,
+        "E5": 0.0,
+        "E6": 0.0,
+        "E7": 0.0
+      },
+      "q_x_seed": "2b2e58710871767e1f522f75380a7ca3c1d8580e",
+      "q_x_seed_provenance": "Immediate v0.6.3 predecessor branch head; fixed before this implementation.",
+      "q_x_selected_path": "P0",
+      "schema_version": "ebrt-actuator-controller-audit-v0.6.3"
+    },
+    {
+      "backward_calls": 1,
+      "case_id": "relay_bay_revision_a",
+      "claim_boundary": [
+        "q^D is derived by one local float64 backward pass and does not cross JSON or a hosted provider.",
+        "q^X runtime derivation does not read an answer value, q^D, or a provider output; it intentionally reads the frozen P0/P1 equivalence partition.",
+        "The q^X seed is the immediate predecessor branch head, but no broader study-design selection independence is claimed because the cases and controller were designed later.",
+        "D is constructed and evaluated in the same q^D coordinate system; this is construct-aligned calibration, not independent validation."
+      ],
+      "dtype": "float64",
+      "fingerprint_sha256": "3940d6107487644443578a19ba78859ac62b899c364c8e36d23b9a5fde8a6c81",
+      "finite_difference_gradient_by_evidence_id": {
+        "E1": -0.10500000002799936,
+        "E2": -0.09000000006365028,
+        "E3": 0.10500000002799936,
+        "E4": 0.09000000006365028,
+        "E6": 0.0
+      },
+      "finite_difference_max_abs_error": 6.36502794915117e-11,
+      "finite_difference_tolerance": 5e-08,
+      "gradient_by_evidence_id": {
+        "E1": -0.105,
+        "E2": -0.09,
+        "E3": 0.105,
+        "E4": 0.09,
+        "E6": 0.0
+      },
+      "loss_at_origin": 0.5625,
+      "q_d": {
+        "E1": 0.2692307692307692,
+        "E2": 0.23076923076923075,
+        "E3": -0.2692307692307692,
+        "E4": -0.23076923076923075,
+        "E5": 0.0,
+        "E6": 0.0,
+        "E7": 0.0
+      },
+      "q_d_path_alignment": {
+        "P0": 0.5,
+        "P1": -0.5
+      },
+      "q_d_preferred_path": "P0",
+      "q_x": {
+        "E1": -0.25,
+        "E2": -0.25,
+        "E3": 0.25,
+        "E4": 0.25,
+        "E5": 0.0,
+        "E6": 0.0,
+        "E7": 0.0
+      },
+      "q_x_seed": "2b2e58710871767e1f522f75380a7ca3c1d8580e",
+      "q_x_seed_provenance": "Immediate v0.6.3 predecessor branch head; fixed before this implementation.",
+      "q_x_selected_path": "P1",
+      "schema_version": "ebrt-actuator-controller-audit-v0.6.3"
+    }
+  ],
+  "fingerprint_sha256": "98abc33f4bcb434d7e3bbd31a7e821330f1aed40a4c7301d77603761b8957da3",
+  "geometry_audits": [
+    {
+      "active_priority_multisets": {
+        "C": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          2,
+          3
+        ],
+        "D": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          2,
+          3
+        ],
+        "X": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "c_d_eligible_fixed_points": [],
+      "c_input_alignment": -1.2678571428571428,
+      "case_id": "coolant_loop_revision_b",
+      "checks": {
+        "active_tier_multisets_match": true,
+        "c_d_eligible_derangement": true,
+        "c_d_provider_schedules_differ": true,
+        "d_input_alignment_exceeds_c": true,
+        "protected_common_tier_fixed": true,
+        "x_schedule_is_distinct": true,
+        "z_all_tied_no_reordering": true
+      },
+      "d_input_alignment": 1.2678571428571428,
+      "d_minus_c_input_alignment": 2.5357142857142856,
+      "eligible_evidence_ids": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence_ids": [
+        "E1",
+        "E2",
+        "E3",
+        "E4",
+        "E5",
+        "E6",
+        "E7"
+      ],
+      "fingerprint_sha256": "f661e3fced0b148310a8e9ea0f49f42620a175a58735d6e3b4e6eadfc9655053",
+      "protected_common_evidence_ids": [
+        "E6"
+      ],
+      "schedule_fingerprints": {
+        "C": "3213d9c15c763b4692eedc78f56366069ba1d8eb8858a67c235d102e597e68f8",
+        "D": "f755c52754e2158e53a6ab92a7378e0f27e1068b772c9f51ce8418c39f78b54e",
+        "X": "da79063a2e4da264608b26448a2f22801aac6b53d816e415432d2641c483830d",
+        "Z": "776adab7aee146a3af99ef330ae597434af461eec5242166937752a88d627ff0"
+      },
+      "schema_version": "ebrt-actuator-geometry-audit-v0.6.3"
+    },
+    {
+      "active_priority_multisets": {
+        "C": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          2,
+          3
+        ],
+        "D": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          2,
+          3
+        ],
+        "X": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "c_d_eligible_fixed_points": [],
+      "c_input_alignment": -1.2692307692307692,
+      "case_id": "relay_bay_revision_a",
+      "checks": {
+        "active_tier_multisets_match": true,
+        "c_d_eligible_derangement": true,
+        "c_d_provider_schedules_differ": true,
+        "d_input_alignment_exceeds_c": true,
+        "protected_common_tier_fixed": true,
+        "x_schedule_is_distinct": true,
+        "z_all_tied_no_reordering": true
+      },
+      "d_input_alignment": 1.2692307692307692,
+      "d_minus_c_input_alignment": 2.5384615384615383,
+      "eligible_evidence_ids": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "evidence_ids": [
+        "E1",
+        "E2",
+        "E3",
+        "E4",
+        "E5",
+        "E6",
+        "E7"
+      ],
+      "fingerprint_sha256": "fe70feffe7c9c37ab89dc28bf9633f95b6ee96f3703259b8ff94de04a833661f",
+      "protected_common_evidence_ids": [
+        "E6"
+      ],
+      "schedule_fingerprints": {
+        "C": "f755c52754e2158e53a6ab92a7378e0f27e1068b772c9f51ce8418c39f78b54e",
+        "D": "3213d9c15c763b4692eedc78f56366069ba1d8eb8858a67c235d102e597e68f8",
+        "X": "6819d71da8ddf4b7bd4287e449350d2c10f3e388a2f123377438e657c8871eae",
+        "Z": "776adab7aee146a3af99ef330ae597434af461eec5242166937752a88d627ff0"
+      },
+      "schema_version": "ebrt-actuator-geometry-audit-v0.6.3"
+    }
+  ],
+  "network_calls": 0,
+  "provider_calls": 0,
+  "schema_version": "ebrt-actuator-calibration-controller-bundle-v0.6.3",
+  "status": "PASS_NETWORK_ZERO"
+}

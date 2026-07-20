@@ -1,0 +1,178 @@
+{
+  "artifact": {
+    "directory": "artifacts/actuator_calibration_v0_6_3_preflight",
+    "files": [
+      "projection_bundle.json",
+      "controller_audit.json",
+      "self_test.json",
+      "manifest.json"
+    ],
+    "network_calls": 0,
+    "provider_calls": 0
+  },
+  "canonicalization": {
+    "allow_nan": false,
+    "encoding": "utf-8",
+    "ensure_ascii": false,
+    "separators": [
+      ",",
+      ":"
+    ],
+    "sort_keys": true,
+    "trailing_newline": true
+  },
+  "claim_boundary": [
+    "This lock authorizes only deterministic network-zero preflight construction.",
+    "The local float64 backward pass ends before JSON and no gradient crosses a hosted provider.",
+    "Both exact valid closures are conformance coordinates, not simulated hosted outputs.",
+    "No synthetic X-Z or D-C delta is a hard gate or evidence of provider uptake.",
+    "A future 16-call block requires explicit authorization after this lock; this file grants none.",
+    "No result here supports hidden-state editing, causal superiority, quality improvement, or general reasoning improvement."
+  ],
+  "fingerprint_sha256": "01accc2daea2f17c102699e3bedea1b5b1e11e96bbff80a65f1733963998c54c",
+  "protocol": {
+    "active_priority_tiers": [
+      3,
+      2,
+      1
+    ],
+    "arms": [
+      "Z",
+      "C",
+      "D",
+      "X"
+    ],
+    "hard_gate_ids": [
+      "strict_fixture_contract",
+      "symmetric_candidate_universe",
+      "real_float64_backward",
+      "central_finite_difference_agreement",
+      "unit_l1_polarities",
+      "opposite_case_positive_controls",
+      "z_true_no_reordering",
+      "matched_schedule_geometry",
+      "c_eligible_derangement",
+      "d_input_alignment_exceeds_c",
+      "provider_payloads_leak_free",
+      "non_actuator_payload_fields_matched",
+      "williams_four_block_balance",
+      "sixteen_payloads_presealed",
+      "exact_one_closure_enforced",
+      "inspection_receipt_excluded_from_alignment",
+      "p0_p1_alignment_arithmetic_exact",
+      "output_contract_roundtrip",
+      "deterministic_double_projection",
+      "canonical_artifact_directory_exact",
+      "network_calls_zero"
+    ],
+    "operator": "bounded_reinspection_schedule",
+    "positive_control_seed": "2b2e58710871767e1f522f75380a7ca3c1d8580e",
+    "positive_control_seed_provenance": "Immediate v0.6.3 predecessor branch head; fixed before this implementation.",
+    "primary_future_endpoints": {
+      "gradient_placement": "delta_DC under q_d; aggregate > 0 and positive in at least 3 of 4 complete blocks",
+      "positive_control": "delta_XZ under q_x; aggregate > 0 and positive in at least 3 of 4 complete blocks",
+      "quality_status": "secondary_only",
+      "schedule_receipt_scored_as_downstream": false
+    },
+    "provider_payload_count": 16,
+    "review_budget": 3,
+    "terminal_statuses": [
+      "ZERO_CALL_PREFLIGHT_STOP",
+      "INCOMPLETE_NOT_ASSESSED",
+      "STOP_OUTPUT_CONTRACT",
+      "STOP_CHANNEL_ADHERENCE_NULL",
+      "STOP_ACTUATOR_ECHO_ONLY",
+      "STOP_GRADIENT_PLACEMENT_NULL",
+      "PROMOTE_V0_6_4_ACTUATOR_GATE"
+    ],
+    "williams_blocks": [
+      {
+        "block_id": "block_1",
+        "case_id": "relay_bay_revision_a",
+        "order": [
+          "Z",
+          "C",
+          "X",
+          "D"
+        ],
+        "trial_id": 1
+      },
+      {
+        "block_id": "block_2",
+        "case_id": "coolant_loop_revision_b",
+        "order": [
+          "C",
+          "D",
+          "Z",
+          "X"
+        ],
+        "trial_id": 1
+      },
+      {
+        "block_id": "block_3",
+        "case_id": "relay_bay_revision_a",
+        "order": [
+          "D",
+          "X",
+          "C",
+          "Z"
+        ],
+        "trial_id": 2
+      },
+      {
+        "block_id": "block_4",
+        "case_id": "coolant_loop_revision_b",
+        "order": [
+          "X",
+          "Z",
+          "D",
+          "C"
+        ],
+        "trial_id": 2
+      }
+    ]
+  },
+  "runtime_contract": {
+    "machine": "arm64",
+    "max_output_tokens": 2048,
+    "model": "gpt-5.6-sol",
+    "previous_response_id": false,
+    "provider_calls_authorized": 0,
+    "pydantic": "2.12.5",
+    "python": "3.13.13",
+    "reasoning_effort": "low",
+    "sdk_retries": 0,
+    "store": false,
+    "timeout_seconds": 60,
+    "torch": "2.11.0"
+  },
+  "schema_version": "ebrt-actuator-calibration-policy-lock-v0.6.3",
+  "sources": {
+    "core": {
+      "bytes": 95436,
+      "path": "actuator_calibration_v0_6_3.py",
+      "sha256": "e2b3ef1517824fd0d2c5a7b2d9f53766f635d098c76b8b5baa56daa144b0b2bc"
+    },
+    "fixture": {
+      "bytes": 12477,
+      "path": "fixtures/actuator_calibration_v0_6_3.json",
+      "sha256": "987f1fb0d5aca8f0d33a49c3476a78bbdde4dd8b394d59235e8c6dd531839a86"
+    },
+    "post_call_gold": {
+      "bytes": 1511,
+      "path": "fixtures/actuator_calibration_gold_v0_6_3.json",
+      "sha256": "3d58dd75b310b92ae3aa140eaeb7728febeb6c043d03c0ebb1306dd38a6606e6"
+    },
+    "protocol_note": {
+      "bytes": 9343,
+      "path": "docs/RND_ACTUATOR_CALIBRATION_V0_6_3.md",
+      "sha256": "8384feed41ed940665b82e4f8f7f3269947b11ab72783aadf49b7dfea03f6940"
+    },
+    "requirements": {
+      "bytes": 28,
+      "path": "requirements.txt",
+      "sha256": "024ff69128d68a1c08bba956e318301500b7aebb7c917b19ff913a9bf5e373d7"
+    }
+  },
+  "status": "LOCKED_NETWORK_ZERO_PREFLIGHT_NO_LIVE_AUTHORIZATION"
+}

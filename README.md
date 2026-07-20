@@ -168,6 +168,39 @@ passing public outputs. Raw arm A returned the correct `PROVE` answer but
 omitted R4 from `final_priority`. This is a real bridge and a useful control-
 channel null result, not evidence that gradient placement improves GPT.
 
+### v0.6.3 network-zero actuator preflight
+
+EBRT v0.6.3 now freezes the next control question in one readable monolith,
+[`actuator_calibration_v0_6_3.py`](actuator_calibration_v0_6_3.py). Its two
+synthetic cases and separate post-call gold live in
+[`fixtures/actuator_calibration_v0_6_3.json`](fixtures/actuator_calibration_v0_6_3.json)
+and
+[`fixtures/actuator_calibration_gold_v0_6_3.json`](fixtures/actuator_calibration_gold_v0_6_3.json).
+The source, runtime, 16-call Williams geometry, no-live boundary, and exact hard
+gates are sealed by
+[`policy_lock_actuator_calibration_v0_6_3.json`](policy_lock_actuator_calibration_v0_6_3.json).
+
+Run the network-zero adversarial checks and reproduce the canonical preflight
+artifact:
+
+```bash
+python3 actuator_calibration_v0_6_3.py self-test
+python3 actuator_calibration_v0_6_3.py build-artifact
+python3 -I -S verify_actuator_calibration_v0_6_3_portable.py self-test
+```
+
+The committed
+[`artifacts/actuator_calibration_v0_6_3_preflight/`](artifacts/actuator_calibration_v0_6_3_preflight/)
+bundle records `PASS_NETWORK_ZERO`, 21/21 hard gates, 16 presealed provider
+payloads, and zero network/provider calls; its manifest status is
+`READY_ZERO_CALL_PREFLIGHT_ONLY`. Exact support is rederived from selected
+candidate edges in the frozen public graph rather than accepted from a
+model-written closure field. The conformance rows exercise both valid path
+coordinates and alignment arithmetic only. They are not synthetic arm-effect
+results, no synthetic X-minus-Z or D-minus-C delta is a gate, no hosted uptake
+has been observed, and this preflight does not authorize a live call. See the
+[`v0.6.3 R&D note`](docs/RND_ACTUATOR_CALIBRATION_V0_6_3.md).
+
 > [!IMPORTANT]
 > v0.1-v0.3.1 are **not** a Transformer implementation, a GPT latent-state
 > editor, or evidence of improved language-model accuracy. v0.4 meaningfully

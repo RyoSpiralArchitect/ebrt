@@ -1,0 +1,321 @@
+{
+  "adversarial_contract_audit": {
+    "checks": {
+      "answer_adjacent_scaffold_key_rejected": true,
+      "contract_edge_topology_drift_rejected": true,
+      "duplicate_json_key_rejected": true,
+      "empty_target_bindings_rejected": true,
+      "graph_isomorphic_closure_accepted": true,
+      "inspection_receipt_excluded": true,
+      "mixed_cross_closure_rejected": true,
+      "nonfinite_json_rejected": true,
+      "private_provider_key_rejected": true,
+      "question_drift_rejected": true,
+      "union_closure_rejected": true,
+      "unmanaged_evidence_rejected": true
+    },
+    "fingerprint_sha256": "ecd144274333746962320c807706494d8ec9a9687be2df62c3721acf4e4f6b45",
+    "graph_isomorphic_conformance": {
+      "compiled": {
+        "active_necessary_support_closure": [
+          "E1",
+          "E2",
+          "E6"
+        ],
+        "checkpoint_id": "relay_bay_revision_a:post_event",
+        "current_answer": "BLUE",
+        "decision_slots": {
+          "primary_decision": "BLUE_BAY",
+          "stable_constraint": "SIGNED_JSON"
+        },
+        "fingerprint_sha256": "932cb5c969782f28cec94c5dffa5d86d5d534dbf05c8ed803e0572016fd47e69",
+        "inspection_plan": {
+          "adherence": true,
+          "expected_reviewed_evidence_ids": [
+            "E1",
+            "E2",
+            "E6"
+          ],
+          "reviewed_evidence_ids": [
+            "E1",
+            "E2",
+            "E6"
+          ],
+          "scored_as_downstream": false
+        },
+        "invalidated_evidence_ids": [
+          "E5"
+        ],
+        "provider_output_fingerprint_sha256": "5dc65d38263287aa93a2dc01f1fba7db2eb318fac2a45b2a28ac853cffeec14a",
+        "schema_version": "ebrt-actuator-calibration-compiled-output-v0.6.3",
+        "selected_candidate_edge_ids": [
+          "C12",
+          "C13",
+          "C06",
+          "C07",
+          "C08",
+          "C09",
+          "C10",
+          "C11"
+        ],
+        "selected_path_id": "P0",
+        "stable_support_evidence_ids": [
+          "E7"
+        ]
+      },
+      "selected_candidate_edge_ids": [
+        "C12",
+        "C13",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11"
+      ]
+    },
+    "receipt_mutation": {
+      "after_adherence": false,
+      "after_reviewed_evidence_ids": [
+        "E3",
+        "E4",
+        "E5"
+      ],
+      "alignment_after": 0.5,
+      "alignment_before": 0.5,
+      "before_reviewed_evidence_ids": [
+        "E1",
+        "E2",
+        "E6"
+      ]
+    },
+    "rejections": {
+      "answer_adjacent_scaffold": {
+        "reason_code": "SCAFFOLD_INVALID",
+        "rejected": true
+      },
+      "contract_edge_topology_drift": {
+        "reason_code": "PATH_GRAPH_EVIDENCE_DRIFT",
+        "rejected": true
+      },
+      "duplicate_json": {
+        "reason_code": "DUPLICATE_JSON_KEY",
+        "rejected": true
+      },
+      "empty_target_bindings": {
+        "reason_code": "TARGET_BINDINGS_INVALID",
+        "rejected": true
+      },
+      "mixed_cross": {
+        "reason_code": "EXACT_ONE_CLOSURE_FAILED",
+        "rejected": true
+      },
+      "nonfinite_json": {
+        "reason_code": "NONFINITE_JSON",
+        "rejected": true
+      },
+      "private_key": {
+        "reason_code": "PROVIDER_PRIVATE_KEY_LEAK",
+        "rejected": true
+      },
+      "question_drift": {
+        "reason_code": "QUESTION_DRIFT",
+        "rejected": true
+      },
+      "union": {
+        "reason_code": "EXACT_ONE_CLOSURE_FAILED",
+        "rejected": true
+      },
+      "unmanaged_evidence": {
+        "reason_code": "UNMANAGED_EVIDENCE_PRESENT",
+        "rejected": true
+      }
+    },
+    "schema_version": "ebrt-actuator-calibration-adversarial-audit-v0.6.3",
+    "status": "PASS"
+  },
+  "alignment_arithmetic_audit": {
+    "checks": {
+      "alignment_arithmetic_exact": true,
+      "all_four_path_coordinates_exercised": true,
+      "output_contract_roundtrip": true
+    },
+    "claim_boundary": [
+      "This verifies compiler and alignment arithmetic for both frozen valid closures.",
+      "It does not predict or simulate which closure a hosted provider will emit."
+    ],
+    "fingerprint_sha256": "4e6d6d5d16c2b5dc64a917fe3dc1775011cb589fc02a9aeb81f107da0a8dbe30",
+    "rows": [
+      {
+        "active_necessary_support_closure": [
+          "E1",
+          "E2",
+          "E6"
+        ],
+        "arithmetic_exact": true,
+        "case_id": "coolant_loop_revision_b",
+        "expected_alignment": {
+          "q_d": -0.5,
+          "q_x": 0.5
+        },
+        "observed_alignment": {
+          "q_d": -0.5,
+          "q_x": 0.5
+        },
+        "output_contract_roundtrip": true,
+        "path_id": "P0"
+      },
+      {
+        "active_necessary_support_closure": [
+          "E3",
+          "E4",
+          "E6"
+        ],
+        "arithmetic_exact": true,
+        "case_id": "coolant_loop_revision_b",
+        "expected_alignment": {
+          "q_d": 0.5,
+          "q_x": -0.5
+        },
+        "observed_alignment": {
+          "q_d": 0.5,
+          "q_x": -0.5
+        },
+        "output_contract_roundtrip": true,
+        "path_id": "P1"
+      },
+      {
+        "active_necessary_support_closure": [
+          "E1",
+          "E2",
+          "E6"
+        ],
+        "arithmetic_exact": true,
+        "case_id": "relay_bay_revision_a",
+        "expected_alignment": {
+          "q_d": 0.5,
+          "q_x": -0.5
+        },
+        "observed_alignment": {
+          "q_d": 0.5,
+          "q_x": -0.5
+        },
+        "output_contract_roundtrip": true,
+        "path_id": "P0"
+      },
+      {
+        "active_necessary_support_closure": [
+          "E3",
+          "E4",
+          "E6"
+        ],
+        "arithmetic_exact": true,
+        "case_id": "relay_bay_revision_a",
+        "expected_alignment": {
+          "q_d": -0.5,
+          "q_x": 0.5
+        },
+        "observed_alignment": {
+          "q_d": -0.5,
+          "q_x": 0.5
+        },
+        "output_contract_roundtrip": true,
+        "path_id": "P1"
+      }
+    ],
+    "schema_version": "ebrt-actuator-alignment-arithmetic-audit-v0.6.3",
+    "status": "PASS"
+  },
+  "artifact_directory_adversarial_audit": {
+    "reason_code": "CANONICAL_ARTIFACT_STALE_ENTRY",
+    "stale_entry_rejected": true
+  },
+  "claim_boundary": [
+    "PASS_NETWORK_ZERO proves local contracts and endpoint plumbing only.",
+    "No synthetic arm-effect delta is constructed; conformance outputs only exercise parser and arithmetic contracts.",
+    "No result here supports hidden-state editing, causal superiority, or general reasoning improvement."
+  ],
+  "fingerprint_sha256": "102cb05c0e39ad3af3cabca7fb80b0e63c4cf5d23dab009614c419a391fff6b9",
+  "fixture_fingerprint_sha256": "b5e20b64489d48c466e1417166cd798569607163f4611d429a1fcfb045376ff5",
+  "hard_gate_ids": [
+    "strict_fixture_contract",
+    "symmetric_candidate_universe",
+    "real_float64_backward",
+    "central_finite_difference_agreement",
+    "unit_l1_polarities",
+    "opposite_case_positive_controls",
+    "z_true_no_reordering",
+    "matched_schedule_geometry",
+    "c_eligible_derangement",
+    "d_input_alignment_exceeds_c",
+    "provider_payloads_leak_free",
+    "non_actuator_payload_fields_matched",
+    "williams_four_block_balance",
+    "sixteen_payloads_presealed",
+    "exact_one_closure_enforced",
+    "inspection_receipt_excluded_from_alignment",
+    "p0_p1_alignment_arithmetic_exact",
+    "output_contract_roundtrip",
+    "deterministic_double_projection",
+    "canonical_artifact_directory_exact",
+    "network_calls_zero"
+  ],
+  "hard_gates": {
+    "c_eligible_derangement": true,
+    "canonical_artifact_directory_exact": true,
+    "central_finite_difference_agreement": true,
+    "d_input_alignment_exceeds_c": true,
+    "deterministic_double_projection": true,
+    "exact_one_closure_enforced": true,
+    "inspection_receipt_excluded_from_alignment": true,
+    "matched_schedule_geometry": true,
+    "network_calls_zero": true,
+    "non_actuator_payload_fields_matched": true,
+    "opposite_case_positive_controls": true,
+    "output_contract_roundtrip": true,
+    "p0_p1_alignment_arithmetic_exact": true,
+    "provider_payloads_leak_free": true,
+    "real_float64_backward": true,
+    "sixteen_payloads_presealed": true,
+    "strict_fixture_contract": true,
+    "symmetric_candidate_universe": true,
+    "unit_l1_polarities": true,
+    "williams_four_block_balance": true,
+    "z_true_no_reordering": true
+  },
+  "network_calls": 0,
+  "projection_fingerprint_sha256": "c817e45c27f6b4a94696a8519fe6b0130c5f66e97966413914fda42d57eb1588",
+  "provider_calls": 0,
+  "schema_version": "ebrt-actuator-calibration-self-test-v0.6.3",
+  "secondary_conformance_quality_grades": [
+    {
+      "case_id": "coolant_loop_revision_b",
+      "checks": {
+        "answer": true,
+        "decision_slots": true,
+        "exact_one_valid_closure": true,
+        "invalidation": true,
+        "stable_preservation": true
+      },
+      "fingerprint_sha256": "65e08d9d7fd4754247afff3b705d1029fca1b1ce690f72c231fc262e1a14d7cf",
+      "schema_version": "ebrt-actuator-calibration-quality-grade-v0.6.3",
+      "secondary_quality_only": true,
+      "status": "PASS"
+    },
+    {
+      "case_id": "relay_bay_revision_a",
+      "checks": {
+        "answer": true,
+        "decision_slots": true,
+        "exact_one_valid_closure": true,
+        "invalidation": true,
+        "stable_preservation": true
+      },
+      "fingerprint_sha256": "94e0224d6dfbe1ff6d319828413ec0e88f6f05ce6043ca85367365c8ef56c577",
+      "schema_version": "ebrt-actuator-calibration-quality-grade-v0.6.3",
+      "secondary_quality_only": true,
+      "status": "PASS"
+    }
+  ],
+  "status": "PASS_NETWORK_ZERO"
+}
