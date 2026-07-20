@@ -1,0 +1,61 @@
+{
+  "artifacts": {
+    "attempt_journal.jsonl": {
+      "bytes": 3281,
+      "sha256": "e22dbef8fb874d7e3c3fcd1fb8f6f87a68ca55f8188d4e228af7219c769a1f0a"
+    },
+    "calls.jsonl": {
+      "bytes": 2085,
+      "sha256": "0f2e2b465c51d9d21cc740b5325f24084aafcc2184725873e22dcf8dc31c2ac9"
+    },
+    "projection_bundle.json": {
+      "bytes": 147098,
+      "sha256": "ffb6d232fb77131b2f978a725ed8564e5dc42481763235eaf3f52ac57ab3a2a4"
+    },
+    "provider_inputs.json": {
+      "bytes": 134557,
+      "sha256": "84d75b31ea5254b47045b327ad96a6b53dfa94c20561b3bbd177352da70e50cf"
+    },
+    "report.md": {
+      "bytes": 1709,
+      "sha256": "665a56935ecd5f77fc93196eb1c2e45b000143118865c99a03db87b81534e16c"
+    },
+    "result.json": {
+      "bytes": 15654,
+      "sha256": "5ed4442042dec4c252ea19dc445fa305a066dd59ed0a9ad16158138767b7c748"
+    }
+  },
+  "claim_boundary": [
+    "This is one sealed two-case, two-trial actuator calibration block, not a population estimate or quality benchmark.",
+    "The provider sees raw evidence, a neutral candidate scaffold, and one bounded public reinspection schedule; it never sees arm labels, q vectors, accepted paths, gold, or grades.",
+    "The local float64 backward pass ends before JSON; no gradient crosses GPT or the provider boundary.",
+    "Schedule adherence is a public receipt and is never counted as downstream propagation.",
+    "D is constructed and evaluated in the same q^D coordinate system, so a positive result is construct-aligned calibration rather than independent validation.",
+    "Answer and lineage quality are secondary diagnostics and do not gate actuator promotion.",
+    "Provider receipts and execution provenance are operator-attested local records, not cryptographically authenticated or provider-signed proof of hosted execution.",
+    "The authorization tag does not authenticate operator identity or guarantee global exactly-once execution across clones.",
+    "The semantic-gold barrier is a locked-code Path.read_bytes guard, not an operating-system sandbox against arbitrary processes.",
+    "No result supports hidden-state editing, causal superiority, general quality improvement, or general reasoning improvement."
+  ],
+  "fingerprint_sha256": "b30206e4416787267cd947ce73be3f9015bc6dd442a94739f6adf2823c3d7a9b",
+  "policy_lock_fingerprint_sha256": "bce283bd820c07343668058afb3e99429ee75d13ec1ddb4fb4a12e37c0321933",
+  "result_fingerprint_sha256": "52b3878b877d7c006d7521d98de4ee3ce398cd5b279e577fe1bd9eebbd168a29",
+  "run_status": "INCOMPLETE",
+  "schema_version": "ebrt-actuator-calibration-live-manifest-v0.6.3-r01",
+  "source_snapshot_sha256": {
+    "core": "e2b3ef1517824fd0d2c5a7b2d9f53766f635d098c76b8b5baa56daa144b0b2bc",
+    "fixture": "987f1fb0d5aca8f0d33a49c3476a78bbdde4dd8b394d59235e8c6dd531839a86",
+    "protocol_note": "161cb2554188fb9c27f36478a3ef572329bda15029923ce7c305708f0d563489",
+    "provider_base": "840d019811ecfab2b6bb25f2969d3c27e405b8cc148c068308393c2207c31689",
+    "receipt_contract": "5fd765ec5ca55562e7b712ec48adc6f54588080c276cbfa58aabcb72492666c2",
+    "requirements": "024ff69128d68a1c08bba956e318301500b7aebb7c917b19ff913a9bf5e373d7",
+    "requirements_live": "73a8bd6fd5d0a6aa2ec01c216b1ddc50f2c5f32746bcf907ec7ca3ab793e7c83",
+    "response_boundary": "7f78fce94cb141a4355d3c040010e11e049ff67a3a8c603099d0548a47b7cf03",
+    "runner": "0daedb60443601375f5b2e75a333ac559c028c2c8bc685d7ab049213424d6900",
+    "zero_call_manifest": "f5de1d69e50ce3da34532e04d2b2a1f27125fa933c5338864f172145f32a3853",
+    "zero_call_policy": "b709e40175165452089594cb978457655a3f1717b9ec322da1caee075921f83f",
+    "zero_call_projection": "ffb6d232fb77131b2f978a725ed8564e5dc42481763235eaf3f52ac57ab3a2a4"
+  },
+  "status": "SEALED_LIVE_RESULT",
+  "terminal_status": "STOP_OUTPUT_CONTRACT"
+}
