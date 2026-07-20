@@ -1,0 +1,144 @@
+{
+  "artifact": {
+    "default_directory": "artifacts/hosted_bundle_execution_v0_6_live_r01",
+    "files": [
+      "result.json",
+      "calls.jsonl",
+      "attempt_journal.jsonl",
+      "provider_inputs.json",
+      "projection_bundle.json",
+      "report.md",
+      "manifest.json"
+    ]
+  },
+  "call_order": [
+    "P",
+    "A",
+    "B",
+    "D",
+    "C"
+  ],
+  "claim_boundary": [
+    "This is one contaminated five-call engineering regression over a known synthetic walkthrough, not a fresh quality benchmark.",
+    "P is a pre-event product reference and is excluded from A/B/C/D effect contrasts; the fixed execution order is unbalanced and time-confounded.",
+    "A/B/C/D receive byte-identical ordered R1-R6 raw evidence; B/C/D receive the same contaminated typed public DAG and differ only in their frozen public-control treatment.",
+    "C and D match in row set, value/sign multiset, sparsity, per-lane norm, merge norm, and schema; only signed-displacement placement differs.",
+    "Signed public actuator displacement is not evidence truth, probability, required support, hidden-state editing, or a semantic boost/suppress claim.",
+    "The public DAG and surrogate program are supplied case-specific oracle structure rather than autonomously discovered semantics.",
+    "No separately loaded grader or gold artifact enters provider input; B/C/D do receive a contaminated answer-adjacent oracle lineage program.",
+    "A local backward pass exists only in the public differentiable substrate; no gradient crosses GPT, JSON, provider parsing, or grading boundaries.",
+    "Surrogate status, hosted output, strict lineage, effect label, calls, tokens, and latency are reported separately.",
+    "Promotion requires a complete bridge plus the preregistered strict P and D paths; it does not require D to outperform A, B, or C.",
+    "The frozen v0.5.2 near-pass remains byte-identical and false; this successor does not regrade, relax, or replace it.",
+    "Sanitized receipts and local hashes establish internal consistency, not cryptographic provider attestation; an external manifest anchor is required to distinguish a coherent forgery."
+  ],
+  "decision_rules": {
+    "d_strict": "D passes answer, exact direct/inherited/total lineage, invalidation, and stable-fact endpoints",
+    "effect": "observational strict-endpoint contrast only; superiority and causality are not inferred",
+    "failure": "any provider or local output-contract failure freezes INCOMPLETE and no missing call is backfilled",
+    "p_pre_event": "P passes the locked R1-R5 POLISH and fact-local lineage contract",
+    "p_stale": "the unchanged P output passes its locked post-event stale signature while preserving R5",
+    "promotion": "PROMOTE_V0_7_HOSTED_BUNDLE_GATE iff run, P pre-event, P stale, surrogate, and D strict all pass",
+    "run_complete": "all five fixed attempts return one valid public lineage output and one sanitized receipt"
+  },
+  "fingerprint_sha256": "51bd00343dafb4dd9bc0c42dc95c1df1b6f8b7132907e283d84a82b237801072",
+  "instructions_fingerprint_sha256": "34c3ed7131169e7f10c0a3ed83c03b412aff5ae44c3a026235461083e429bbf7",
+  "predecessor_v0_5_2": {
+    "expected_walkthrough_contract_passed": false,
+    "files": {
+      "calls.jsonl": {
+        "bytes": 3820,
+        "path": "artifacts/demo_hackathon_strategy_walkthrough_v0_5_2_live_r01/calls.jsonl",
+        "sha256": "0d7794f1b6f3010e3d8171d46f4574ad7801e1e96eef84850dc52519cf0b634e"
+      },
+      "demo.json": {
+        "bytes": 27548,
+        "path": "artifacts/demo_hackathon_strategy_walkthrough_v0_5_2_live_r01/demo.json",
+        "sha256": "f6df3c0a371027fd6ed35cfcc75f0b05dc540ebb6d08efeb3764ab62b4616f6b"
+      },
+      "manifest.json": {
+        "bytes": 2758,
+        "path": "artifacts/demo_hackathon_strategy_walkthrough_v0_5_2_live_r01/manifest.json",
+        "sha256": "ab86d111d1fc0d2b679a0f6ca001e9d33ae1bfc86468aee404887e3da934299f"
+      },
+      "report.md": {
+        "bytes": 2759,
+        "path": "artifacts/demo_hackathon_strategy_walkthrough_v0_5_2_live_r01/report.md",
+        "sha256": "81868e378daab3498edbe758ceff9910e7ac0f8c7b444e6913b4ec3e0203fe1d"
+      }
+    }
+  },
+  "response_schema_fingerprint_sha256": "ed9afc04759e293c5e99431bc8c749c75b424931c8d31501836ceb0896450ee1",
+  "runtime": {
+    "api": "responses.with_raw_response.parse+raw.parse",
+    "machine": "arm64",
+    "max_output_tokens": 4608,
+    "model": "gpt-5.6-sol",
+    "openai": "2.45.0",
+    "previous_response_id": false,
+    "provider": "openai_responses",
+    "pydantic": "2.12.5",
+    "python": "3.13.13",
+    "reasoning_effort": "low",
+    "sdk_retries": 0,
+    "service_tier": "default",
+    "store": false,
+    "timeout_seconds": 60,
+    "torch": "2.11.0",
+    "truncation": "disabled"
+  },
+  "schema_version": "ebrt-hosted-bundle-policy-lock-v0.6.1",
+  "sources": {
+    "lineage": {
+      "bytes": 42663,
+      "path": "hosted_bundle_lineage_v0_6.py",
+      "sha256": "d7f6b6031b54b2f1730c1b22e1773fe35243557fac03c00af4c3add7c524815b"
+    },
+    "lineage_gold": {
+      "bytes": 3001,
+      "path": "fixtures/hosted_bundle_lineage_gold_v0_6.json",
+      "sha256": "1ebfb3503de0e0a11cab615749c0a73fb1a6128c50e8b7ab73565c7d8dbaafc3"
+    },
+    "live_requirements": {
+      "bytes": 32,
+      "path": "requirements-live.txt",
+      "sha256": "73a8bd6fd5d0a6aa2ec01c216b1ddc50f2c5f32746bcf907ec7ca3ab793e7c83"
+    },
+    "projection": {
+      "bytes": 68019,
+      "path": "hosted_bundle_projection_v0_6.py",
+      "sha256": "de146c999b2de5a32c69afca7e263325f32be0e18dcfccc822f654f5949023aa"
+    },
+    "projection_fixture": {
+      "bytes": 6582,
+      "path": "fixtures/hosted_bundle_projection_v0_6.json",
+      "sha256": "cf0a5aa51c50d0a3c79b9ce47380181a2e1de6ba32435e25285aa442b88f4c22"
+    },
+    "provider": {
+      "bytes": 12966,
+      "path": "openai_lineage_provider_v0_6.py",
+      "sha256": "beec7f92818fb7debeee931cdce4b8e35d9d3df9eb60119656443f21b9244931"
+    },
+    "provider_base": {
+      "bytes": 23671,
+      "path": "openai_reasoning_provider_v0_4.py",
+      "sha256": "840d019811ecfab2b6bb25f2969d3c27e405b8cc148c068308393c2207c31689"
+    },
+    "provider_boundary": {
+      "bytes": 54590,
+      "path": "openai_response_boundary_v0_4_3.py",
+      "sha256": "7f78fce94cb141a4355d3c040010e11e049ff67a3a8c603099d0548a47b7cf03"
+    },
+    "public_receipt_schema": {
+      "bytes": 49804,
+      "path": "language_replay_bridge_v0_4.py",
+      "sha256": "5fd765ec5ca55562e7b712ec48adc6f54588080c276cbfa58aabcb72492666c2"
+    },
+    "runner": {
+      "bytes": 62612,
+      "path": "run_hosted_bundle_v0_6.py",
+      "sha256": "68f311dbaed1842c2f60533f8373859bdae22cfb048a6a707dd01a2f8430bbbf"
+    }
+  },
+  "status": "PREREGISTERED_FIVE_CALL_LIVE_BLOCK"
+}

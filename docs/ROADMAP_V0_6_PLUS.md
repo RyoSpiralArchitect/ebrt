@@ -1,6 +1,13 @@
 # EBRT v0.6+ — Execution, Evaluation, and Orchestration Roadmap
 
-Status: **DESIGN AFTER SEALED v0.5.5 PROMOTION — NO v0.6 LIVE BLOCK IS YET LOCKED OR RUN**
+Status: **v0.6.0 PREFLIGHT PASS; v0.6.1 FIVE-CALL BLOCK COMPLETE; GATE HELD**
+
+The one allowed v0.6.1 block ran on 2026-07-20 in the preregistered order
+`P -> A -> B -> D -> C`. All five calls completed and the committed artifact
+validated, but the decision is `HOLD_V0_6_HOSTED_BUNDLE_GATE`: D passed the
+strict hosted endpoint, while P failed its exact pre-event lineage contract and
+the primary matched D-vs-C effect was `NULL`. The result is frozen rather than
+repaired or rerun in this namespace.
 
 This roadmap is derived only after the completed v0.5.3-v0.5.5 substrate
 sequence:
@@ -99,8 +106,10 @@ receipts, bounds, or stop-gradient boundary?
 - deterministic projection bytes across two builds under socket denial;
 - same ordered raw R1-R6 bytes for every post-event arm;
 - exact independent verification of the C/D matched geometry;
-- no gold answer, required-evidence set, grade, arm label, or downstream result
-  in provider input;
+- no separately loaded grader/gold artifact, grade, arm label, or downstream
+  result in provider input; B/C/D explicitly receive the contaminated,
+  case-specific oracle lineage program whose answer-adjacent edges are part of
+  the intervention rather than independently discovered support;
 - output schema capable of Evidence -> Support -> Fact/Constraint lineage; and
 - source, payload, namespace, and coherent re-sign tampering rejected before a
   live call is allowed.
@@ -133,7 +142,7 @@ evidence, the same output schema, one final provider call, and matched settings:
 
 The hosted model is not differentiated. C and D differ only in allowlisted
 public control placement; provider-visible treatment labels are blinded. Any
-One attempt is allowed per arm, with no retry and a predeclared order. The
+one attempt is allowed per arm, with no retry and a predeclared order. The
 v0.5.5 lanes are already sealed inputs; this block does not relabel them as
 independent executions or agents.
 
@@ -178,6 +187,42 @@ Promotion means the bundle-to-output bridge and strict D path completed; it
 does not require D to beat A/B/C. Arm differences remain separately labeled
 observations. The exact promotion status is reserved as
 `PROMOTE_V0_7_HOSTED_BUNDLE_GATE`.
+
+### Locked v0.6.1 result
+
+The policy lock fingerprint is
+`51bd00343dafb4dd9bc0c42dc95c1df1b6f8b7132907e283d84a82b237801072`.
+The validated result fingerprint is
+`a814b54a23faef07e301aa676411789cfb62154c07e5ad373f779ed67621954b`.
+
+| Arm | Answer | Strict grade | Observation |
+| --- | --- | --- | --- |
+| P | `POLISH` | FAIL | correct answer, but R2 was unexpectedly inherited into `demo_centerpiece` |
+| A | `PROVE` | FAIL | correct answer, invalidation, and stable fact; R4 was missing from `final_priority` |
+| B | `PROVE` | PASS | the supplied typed DAG closed the exact lineage contract with zero controls |
+| D | `PROVE` | PASS | exact v0.5.5 control placement closed the same strict contract |
+| C | `PROVE` | PASS | matched sham placement produced the same public output as D |
+
+B, D, and C produced byte-identical public outputs. Therefore the primary
+matched comparison is `D_vs_C = NULL`; D is also null against B and positive
+only against raw arm A at the strict endpoint. The block consumed exactly five
+API calls and 38,767 provider tokens, including 466 reasoning tokens. These are
+one contaminated, unbalanced, time-confounded observations, not a causal or
+population estimate.
+
+This result separates three facts that must not be collapsed:
+
+1. the full sealed substrate-to-provider-to-output bridge exists and D can
+   produce a strict passing final lineage;
+2. supplying the case-specific typed DAG was sufficient for B, C, and D to
+   converge to the same passing public program; and
+3. signed-displacement placement had no observable output effect in this
+   protocol, whose prompt already required exact DAG instantiation.
+
+The last point nominates control-channel sensitivity, rather than another
+same-case rerun, as the next algorithmic bottleneck. The detailed result and
+nonclaims are recorded in
+[RND_HOSTED_BUNDLE_V0_6_1.md](RND_HOSTED_BUNDLE_V0_6_1.md).
 
 ## v0.6.2 — Reasoning IDE Acceptance
 

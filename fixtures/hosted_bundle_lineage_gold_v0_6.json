@@ -1,0 +1,87 @@
+{
+  "schema_version": "ebrt-hosted-bundle-lineage-gold-v0.6",
+  "status": "LOCKED_POST_CALL_GRADING_ONLY",
+  "case_id": "hackathon_strategy_walkthrough",
+  "pre_event": {
+    "answer": "POLISH",
+    "invalidation_edges": [],
+    "targets": [
+      {
+        "target_id": "constraint:video_constraint",
+        "target_type": "constraint",
+        "slot": "video_constraint",
+        "value": "THREE_MINUTE_NARRATED",
+        "direct_active_evidence_ids": ["R5"],
+        "inherited_active_evidence_ids": [],
+        "all_active_evidence_ids": ["R5"]
+      },
+      {
+        "target_id": "fact:demo_centerpiece",
+        "target_type": "fact",
+        "slot": "demo_centerpiece",
+        "value": "POLISHED_SCREENS",
+        "direct_active_evidence_ids": ["R3"],
+        "inherited_active_evidence_ids": [],
+        "all_active_evidence_ids": ["R3"]
+      },
+      {
+        "target_id": "fact:final_priority",
+        "target_type": "fact",
+        "slot": "final_priority",
+        "value": "ADDITIONAL_UI_POLISH",
+        "direct_active_evidence_ids": ["R2", "R3"],
+        "inherited_active_evidence_ids": [],
+        "all_active_evidence_ids": ["R2", "R3"]
+      }
+    ]
+  },
+  "post_event": {
+    "answer": "PROVE",
+    "invalidation_edges": [
+      {"source_evidence_id": "R6", "target_evidence_id": "R3"}
+    ],
+    "targets": [
+      {
+        "target_id": "constraint:video_constraint",
+        "target_type": "constraint",
+        "slot": "video_constraint",
+        "value": "THREE_MINUTE_NARRATED",
+        "direct_active_evidence_ids": ["R5"],
+        "inherited_active_evidence_ids": [],
+        "all_active_evidence_ids": ["R5"]
+      },
+      {
+        "target_id": "fact:demo_centerpiece",
+        "target_type": "fact",
+        "slot": "demo_centerpiece",
+        "value": "LIVE_REASONING_DIFF",
+        "direct_active_evidence_ids": ["R4", "R6"],
+        "inherited_active_evidence_ids": ["R2"],
+        "all_active_evidence_ids": ["R2", "R4", "R6"]
+      },
+      {
+        "target_id": "fact:final_priority",
+        "target_type": "fact",
+        "slot": "final_priority",
+        "value": "END_TO_END_PROOF",
+        "direct_active_evidence_ids": ["R2", "R4", "R6"],
+        "inherited_active_evidence_ids": [],
+        "all_active_evidence_ids": ["R2", "R4", "R6"]
+      }
+    ]
+  },
+  "stale_expectation": {
+    "failed_axes": [
+      "answer_status",
+      "fact_local_lineage_status",
+      "invalidation_status"
+    ],
+    "stable_axis": "stable_fact_status"
+  },
+  "claim_boundary": [
+    "This gold is parsed only after the frozen provider-attempt sequence ends and is never provider input.",
+    "The P and post-event expectations grade different evidence horizons in one contaminated engineering regression.",
+    "Exact direct, inherited, and total sets reject missing support, unexpected support, and classification drift.",
+    "A passing D output establishes one strict hosted bundle-to-output path, not causal superiority or general reasoning improvement."
+  ]
+}
