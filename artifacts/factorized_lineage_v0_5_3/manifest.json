@@ -13,8 +13,8 @@
       "sha256": "f70d9c06a47451467e62309535c1d163ecabc8e1e71f58bd943fb1f416a3541e"
     },
     "self_test.json": {
-      "bytes": 4928,
-      "sha256": "19646001667eae28ae38a9f2d9f3cff2974bbe36a68236f13f5bc0a73f41d616"
+      "bytes": 4995,
+      "sha256": "77948a2b73348bf983999a80498ce2839dcce227418addb9c08b4797dd8efdd9"
     }
   },
   "claim_boundary": [
@@ -63,7 +63,7 @@
     },
     "policy_lock": {
       "path": "policy_lock_factorized_lineage_v0_5_3.json",
-      "sha256": "dfaab71441ea3f511bb6186cce547f025372c049064421a1711d006efdbab63f"
+      "sha256": "145d8f40d7721e49b2bdb7f317c7208d244d3b70f5df057d10ff3bc5b3e1bf39"
     },
     "predecessor_artifact:calls.jsonl": {
       "bytes": 3820,
@@ -95,7 +95,7 @@
     },
     "source:core": {
       "path": "factorized_lineage_v0_5_3.py",
-      "sha256": "ccb6e770b140e81f1b61a75b5e2c7cdfe0d11147ad2edc553510252a01e41633"
+      "sha256": "d7ad2344a0c37b502feac663e17bb918be1fe50b4d9c94898e18ee757c4cb35b"
     },
     "source:v0_5_2_verifier": {
       "path": "verify_hackathon_strategy_walkthrough_v0_5_2_portable.py",

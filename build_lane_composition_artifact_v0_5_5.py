@@ -89,26 +89,26 @@ BUILDER_SOURCE_PATH = "build_lane_composition_artifact_v0_5_5.py"
 COMPOSITION_FIXTURE_PATH = "fixtures/lane_composition_v0_5_5.json"
 ONE_LANE_FIXTURE_PATH = "fixtures/lane_composition_v0_5_5_one_lane.json"
 
-PREDECESSOR_COMMIT_SHA = "0820da1b79b3f912f7cde84aa13014c28951eb05"
-PREDECESSOR_TREE_SHA = "7e21fe0f5dbcf93c85660bb466041b6f0c1b6d13"
+PREDECESSOR_COMMIT_SHA = "33e3beee2c175217c6a493b7eec86e01b54780e8"
+PREDECESSOR_TREE_SHA = "9920bac359f7d13e63676f2fc13120383293b337"
 PREDECESSOR_MANIFEST_SHA256 = (
-    "60423518deee7e6b4bd69678a51d84269378e4725711803c46d079940227913b"
+    "3a7e1c1903e447cba9c0da471558074d4558386c79e112addc090768978d5472"
 )
 PREDECESSOR_SOURCE_RECEIPTS = {
     "benchmark": {
         "path": "benchmark_temporal_adjoint_lineage_v0_5_4.py",
-        "bytes": 9522,
-        "sha256": "3c97f451e9128fdcbc3c7aadf64bbca47ca7d2a9798ace172cda083942f1e693",
+        "bytes": 9745,
+        "sha256": "6459e97ae44967f301bd7ec7cb360126432d213965240d754e27619590cc87b8",
     },
     "builder": {
         "path": "build_temporal_adjoint_lineage_artifact_v0_5_4.py",
-        "bytes": 51126,
-        "sha256": "5faa79b5ebbd7463e30a3d6bf08d862f0c176b4284a19a5f5d8bd3a51be91060",
+        "bytes": 51260,
+        "sha256": "bd70d4313989589959b7cd8c6542ce066034a36e460c470b753a6910b5596ffe",
     },
     "composition_source": {
         "path": "temporal_adjoint_lineage_v0_5_4.py",
-        "bytes": 95541,
-        "sha256": "0e900c9f0535d32b4994f41cafa71792c43c8dfb687bcd4b654dccecc906a1d4",
+        "bytes": 96418,
+        "sha256": "c92acd3a51b16caada00c58bcf40ef11b1031a7161e1afd6e282266924c8461b",
     },
     "event_fixture": {
         "path": "fixtures/temporal_adjoint_lineage_v0_5_4_dev.json",
@@ -122,8 +122,8 @@ PREDECESSOR_SOURCE_RECEIPTS = {
     },
     "policy_lock": {
         "path": "policy_lock_temporal_adjoint_lineage_v0_5_4.json",
-        "bytes": 10154,
-        "sha256": "d2866441aeffab6bc81c74f53cd77822ff35b6620e3dadd9b9ba71b509bd6dec",
+        "bytes": 10155,
+        "sha256": "44a30c082b7239464e25ef0a2d82e7442155306dca05317f2c9dcc3c466e6dc5",
     },
 }
 PREDECESSOR_ARTIFACT_RECEIPTS = {
@@ -160,12 +160,12 @@ PREDECESSOR_ARTIFACT_RECEIPTS = {
     "mechanism_report.md": {
         "path": "artifacts/temporal_adjoint_lineage_v0_5_4/mechanism_report.md",
         "bytes": 4029,
-        "sha256": "7af2346ec0d1b20376aa0a9ea679deda1a24a8161046273550c7698fdc1a292c",
+        "sha256": "342fdc8fbec51112b2a981c2f30d4395aba8bb5b52bdac3d58caa2cfb5c84899",
     },
     "no_event_audit.json": {
         "path": "artifacts/temporal_adjoint_lineage_v0_5_4/no_event_audit.json",
-        "bytes": 1163,
-        "sha256": "e11206e1026920108c27fdeba604138605a3b6f673003c3be86b5c37d5e10a19",
+        "bytes": 1207,
+        "sha256": "ec5da4ddf51123ade7d2495eb13685c310131bdab3fe4aec88310740da370909",
     },
     "self_test.json": {
         "path": "artifacts/temporal_adjoint_lineage_v0_5_4/self_test.json",
@@ -174,13 +174,13 @@ PREDECESSOR_ARTIFACT_RECEIPTS = {
     },
     "source_receipt.json": {
         "path": "artifacts/temporal_adjoint_lineage_v0_5_4/source_receipt.json",
-        "bytes": 4810,
-        "sha256": "9968c785d2dd8353df8d39a579af94eca57d13456fb96eac92489e19c4698988",
+        "bytes": 4811,
+        "sha256": "84847669eca84c83cf8334658e6f5106c37d3e8a32aa4bbe7793dedb5bf5969f",
     },
     "stable_constraint_sealed_lane.json": {
         "path": "artifacts/temporal_adjoint_lineage_v0_5_4/stable_constraint_sealed_lane.json",
-        "bytes": 2926,
-        "sha256": "379e63f9bfce0af69df2240fe85835b7032efb0de3209773f71f818ba43f40cb",
+        "bytes": 2972,
+        "sha256": "4ea3d27501907821510c2ad6f7cea4c5c14057b505b6ff8463a53b66bf7e98b8",
     },
 }
 PREDECESSOR_LANES = {
@@ -199,8 +199,8 @@ PREDECESSOR_LANES = {
     "stable_constraint": {
         "source_path": "artifacts/temporal_adjoint_lineage_v0_5_4/stable_constraint_sealed_lane.json",
         "artifact_path": "sealed_lanes/stable_constraint.json",
-        "bytes": 2926,
-        "sha256": "379e63f9bfce0af69df2240fe85835b7032efb0de3209773f71f818ba43f40cb",
+        "bytes": 2972,
+        "sha256": "4ea3d27501907821510c2ad6f7cea4c5c14057b505b6ff8463a53b66bf7e98b8",
     },
 }
 

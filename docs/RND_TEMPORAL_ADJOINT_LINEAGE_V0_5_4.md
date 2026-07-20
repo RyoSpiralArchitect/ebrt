@@ -37,10 +37,10 @@ The complete v0.5.3 checkpoint is pinned as immutable input:
 
 ```text
 commit
-  79e047b7e2b500b6fb2b73385ea2f59a7dcde881
+  c671e149fcbe05217820512a3f90c847cbbcfbf2
 
 tree
-  38389d8521f93c7a11c58b4d9be48fde2c1350c6
+  f87266eb14200074ccd95c3feee1bfe170f14df3
 
 observed graph
   8afb3d03084dc33f92ea6d12dbe7c3cfdb53f4642a5d6a937075a53dcb9a74ca

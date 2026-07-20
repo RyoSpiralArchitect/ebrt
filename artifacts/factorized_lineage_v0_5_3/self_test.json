@@ -36,6 +36,7 @@
       "r3_invalidated_r5_preserved": true,
       "repaired_closure_pass": true,
       "socket_denied_execution_passed": true,
+      "source_digest_and_grade_coverage_tampering_rejected": true,
       "witness_ranking_prefers_nonrepair": true
     },
     "observed_graph_fingerprint_sha256": "8afb3d03084dc33f92ea6d12dbe7c3cfdb53f4642a5d6a937075a53dcb9a74ca",

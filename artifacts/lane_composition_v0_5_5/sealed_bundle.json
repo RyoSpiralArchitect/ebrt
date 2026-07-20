@@ -1,6 +1,6 @@
 {
   "decision_status": "PROMOTE_V0_6_LANE_COMPOSITION_GATE",
-  "fingerprint_sha256": "2dd1c441ab2cd326d80645e9b39518ef4c3c9b20d0099c0f4853f599b995f42f",
+  "fingerprint_sha256": "3cbd7fe8456eb523de2897c2c4ce5c37d2f8ed110f6db23efd8ce7def393a9f6",
   "fixture_id": "hackathon_strategy_lane_composition_v0_5_5",
   "junction_count": 1,
   "lane_ids": [
@@ -42,18 +42,18 @@
       "source_path": "artifacts/temporal_adjoint_lineage_v0_5_4/correction_late_sealed_lane.json"
     },
     "stable_constraint": {
-      "bytes": 2926,
-      "sealed_lane_fingerprint_sha256": "d1cca589e6eaf4f99ee46fc92c22c830ae51d8bee32c96c3b9185a6a3fbd29a9",
-      "sha256": "379e63f9bfce0af69df2240fe85835b7032efb0de3209773f71f818ba43f40cb",
+      "bytes": 2972,
+      "sealed_lane_fingerprint_sha256": "fc9c6ce99496dae375379b639a9448856c9764f6ceb3277e0ebf2fc240f29199",
+      "sha256": "4ea3d27501907821510c2ad6f7cea4c5c14057b505b6ff8463a53b66bf7e98b8",
       "source_path": "artifacts/temporal_adjoint_lineage_v0_5_4/stable_constraint_sealed_lane.json"
     }
   },
-  "source_bundle_fingerprint_sha256": "5bfbe5c07ae05208a403092b1011b1ccbe876d7f8dbe8a692aeac14bd92f8429",
+  "source_bundle_fingerprint_sha256": "555232b02fc3bb8f1658e13cc328b72d08a1073aa9054d39757a1df334990b84",
   "source_gate": {
     "all_hard_gates_true": true,
     "decision_status": "PROMOTE_V0_5_5_TEMPORAL_GATE",
-    "fingerprint_sha256": "03422cb71096f7f2eae94bcbb9ba7e274002b550205f17f8d9fce355938f0d20",
-    "manifest_file_sha256": "60423518deee7e6b4bd69678a51d84269378e4725711803c46d079940227913b",
+    "fingerprint_sha256": "d18d42db7ee455967702fc488f292d78d79d489ab9f1ff4f55fc9c6a4db2ba06",
+    "manifest_file_sha256": "3a7e1c1903e447cba9c0da471558074d4558386c79e112addc090768978d5472",
     "network_calls": 0,
     "promotion_ready": true,
     "provider_calls": 0,

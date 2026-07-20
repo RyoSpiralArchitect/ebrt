@@ -8,18 +8,19 @@
   "control_maps": {},
   "control_values": [],
   "event_triggered": false,
-  "fingerprint_sha256": "d1cca589e6eaf4f99ee46fc92c22c830ae51d8bee32c96c3b9185a6a3fbd29a9",
+  "fingerprint_sha256": "fc9c6ce99496dae375379b639a9448856c9764f6ceb3277e0ebf2fc240f29199",
   "fixture_id": "hackathon_strategy_temporal_adjoint_lineage_no_event_v0_5_4",
   "gates": {
     "backward_calls_zero": true,
     "controls_exact_zero": true,
     "neutral_equals_controlled": true,
-    "output_identity": true
+    "output_identity": true,
+    "recurrence_zero_delta_exact_zero": true
   },
   "lane_id": "stable_constraint",
   "network_calls": 0,
   "neutral_equals_controlled": true,
-  "no_event_audit_fingerprint_sha256": "0c32f58f45b9588970c2073fc026455621d8ee478008a6c964f86bdf268cc2fb",
+  "no_event_audit_fingerprint_sha256": "10977799463472989dbcc2d2ccf4b1f34ee282b7b878db5db206afdd325d7960",
   "program_fingerprint_sha256": "e7a1df43374765e9a96260f473275e16a91cc2ba6a24e56aa090bfa3efde2d72",
   "provider_calls": 0,
   "schema_version": "ebrt-sealed-temporal-lineage-lane-v0.5.4",

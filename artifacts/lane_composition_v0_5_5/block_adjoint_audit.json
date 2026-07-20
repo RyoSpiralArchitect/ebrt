@@ -466,16 +466,16 @@
       "stable_perturbation_leaves_event_gradients_exact": true
     }
   },
-  "fingerprint_sha256": "ff08ec76c478a2806adf81dfef77e60d2045c7ab1fd71c3a17d3c6528177e834",
+  "fingerprint_sha256": "e5db78d2eba320f17070a8570ba13cb65ffab6943804d10690630d1bc0945f49",
   "network_calls": 0,
   "permutation_audit": {
     "all_permutations_exact": true,
     "expected_permutation_count": 6,
-    "fingerprint_sha256": "1ccd15a53680584433f9f0b38de80ded9fef9ad4066e8a793b7795e84b21cd93",
+    "fingerprint_sha256": "ce16471dc0427ccf56db1cbae37d0e2b104fb3cdbff7bf7c217a75b935a577a7",
     "observed_permutation_count": 6,
     "permutations": [
       {
-        "canonical_surface_fingerprint_sha256": "b330a6b8d96e8fdc9188e9b4d09fc123947cc6191115def2af3b60c60e5fbf7a",
+        "canonical_surface_fingerprint_sha256": "6a42aa7442f3b73850fd3340b90caaa25bbfb3518ebcd069993bb98b52355f17",
         "exact": true,
         "input_lane_order": [
           "correction_early",
@@ -484,7 +484,7 @@
         ]
       },
       {
-        "canonical_surface_fingerprint_sha256": "b330a6b8d96e8fdc9188e9b4d09fc123947cc6191115def2af3b60c60e5fbf7a",
+        "canonical_surface_fingerprint_sha256": "6a42aa7442f3b73850fd3340b90caaa25bbfb3518ebcd069993bb98b52355f17",
         "exact": true,
         "input_lane_order": [
           "correction_early",
@@ -493,7 +493,7 @@
         ]
       },
       {
-        "canonical_surface_fingerprint_sha256": "b330a6b8d96e8fdc9188e9b4d09fc123947cc6191115def2af3b60c60e5fbf7a",
+        "canonical_surface_fingerprint_sha256": "6a42aa7442f3b73850fd3340b90caaa25bbfb3518ebcd069993bb98b52355f17",
         "exact": true,
         "input_lane_order": [
           "correction_late",
@@ -502,7 +502,7 @@
         ]
       },
       {
-        "canonical_surface_fingerprint_sha256": "b330a6b8d96e8fdc9188e9b4d09fc123947cc6191115def2af3b60c60e5fbf7a",
+        "canonical_surface_fingerprint_sha256": "6a42aa7442f3b73850fd3340b90caaa25bbfb3518ebcd069993bb98b52355f17",
         "exact": true,
         "input_lane_order": [
           "correction_late",
@@ -511,7 +511,7 @@
         ]
       },
       {
-        "canonical_surface_fingerprint_sha256": "b330a6b8d96e8fdc9188e9b4d09fc123947cc6191115def2af3b60c60e5fbf7a",
+        "canonical_surface_fingerprint_sha256": "6a42aa7442f3b73850fd3340b90caaa25bbfb3518ebcd069993bb98b52355f17",
         "exact": true,
         "input_lane_order": [
           "stable_constraint",
@@ -520,7 +520,7 @@
         ]
       },
       {
-        "canonical_surface_fingerprint_sha256": "b330a6b8d96e8fdc9188e9b4d09fc123947cc6191115def2af3b60c60e5fbf7a",
+        "canonical_surface_fingerprint_sha256": "6a42aa7442f3b73850fd3340b90caaa25bbfb3518ebcd069993bb98b52355f17",
         "exact": true,
         "input_lane_order": [
           "stable_constraint",

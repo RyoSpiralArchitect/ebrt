@@ -185,6 +185,13 @@ def validate_artifact_payloads(payloads: Mapping[str, Any]) -> None:
         raise core.TemporalAdjointValidationError("self-test promotion state drift")
     if payloads["no_event_audit"].get("exact_identity") is not True:
         raise core.TemporalAdjointValidationError("no-event exact identity missing")
+    if (
+        payloads["no_event_audit"].get("recurrence_zero_delta_exact_zero")
+        is not True
+    ):
+        raise core.TemporalAdjointValidationError(
+            "no-event recurrence identity missing"
+        )
     for name, value in payloads.items():
         if value.get("network_calls") != 0 or value.get("provider_calls") != 0:
             raise core.TemporalAdjointValidationError(

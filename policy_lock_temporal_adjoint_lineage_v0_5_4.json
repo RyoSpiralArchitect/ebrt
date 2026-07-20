@@ -126,7 +126,7 @@
       "manifest.json": {
         "bytes": 5668,
         "path": "artifacts/factorized_lineage_v0_5_3/manifest.json",
-        "sha256": "e7cbd1388e23bb86fc32e1b4b4e306af90c0e151f1388348ca67dd01f94c75e4"
+        "sha256": "50f33ac2029d66210b7b00b7719df09c9cd8c5bbe05b34aadfddb5929adb57e7"
       },
       "mechanism_report.md": {
         "bytes": 2488,
@@ -134,12 +134,12 @@
         "sha256": "f70d9c06a47451467e62309535c1d163ecabc8e1e71f58bd943fb1f416a3541e"
       },
       "self_test.json": {
-        "bytes": 4928,
+        "bytes": 4995,
         "path": "artifacts/factorized_lineage_v0_5_3/self_test.json",
-        "sha256": "19646001667eae28ae38a9f2d9f3cff2974bbe36a68236f13f5bc0a73f41d616"
+        "sha256": "77948a2b73348bf983999a80498ce2839dcce227418addb9c08b4797dd8efdd9"
       }
     },
-    "commit_sha": "79e047b7e2b500b6fb2b73385ea2f59a7dcde881",
+    "commit_sha": "c671e149fcbe05217820512a3f90c847cbbcfbf2",
     "fingerprints": {
       "observed_graph_sha256": "8afb3d03084dc33f92ea6d12dbe7c3cfdb53f4642a5d6a937075a53dcb9a74ca",
       "regression_sha256": "0335ede60f428ddf77f7266d1c2bea6483c4698e924f555e9be8a7d3422e2997",
@@ -160,14 +160,14 @@
         "sha256": "0e30dfe19b926990fd8eac77c781f4ac2087a81da11b74e0f25becf3ffa7447b"
       },
       "core": {
-        "bytes": 96449,
+        "bytes": 100732,
         "path": "factorized_lineage_v0_5_3.py",
-        "sha256": "ccb6e770b140e81f1b61a75b5e2c7cdfe0d11147ad2edc553510252a01e41633"
+        "sha256": "d7ad2344a0c37b502feac663e17bb918be1fe50b4d9c94898e18ee757c4cb35b"
       },
       "policy_lock": {
         "bytes": 6112,
         "path": "policy_lock_factorized_lineage_v0_5_3.json",
-        "sha256": "dfaab71441ea3f511bb6186cce547f025372c049064421a1711d006efdbab63f"
+        "sha256": "145d8f40d7721e49b2bdb7f317c7208d244d3b70f5df057d10ff3bc5b3e1bf39"
       },
       "repair_overlay": {
         "bytes": 1306,
@@ -175,7 +175,7 @@
         "sha256": "9425bda87e5aa859ec6c8016035c599a0d1f3d8704ec7d012ddf44e6ca05e22e"
       }
     },
-    "tree_sha": "38389d8521f93c7a11c58b4d9be48fde2c1350c6"
+    "tree_sha": "f87266eb14200074ccd95c3feee1bfe170f14df3"
   },
   "schema_version": "ebrt-temporal-adjoint-lineage-policy-lock-v0.5.4",
   "schemas": {
@@ -194,19 +194,19 @@
   },
   "sources": {
     "benchmark": {
-      "bytes": 9522,
+      "bytes": 9745,
       "path": "benchmark_temporal_adjoint_lineage_v0_5_4.py",
-      "sha256": "3c97f451e9128fdcbc3c7aadf64bbca47ca7d2a9798ace172cda083942f1e693"
+      "sha256": "6459e97ae44967f301bd7ec7cb360126432d213965240d754e27619590cc87b8"
     },
     "builder": {
-      "bytes": 51126,
+      "bytes": 51260,
       "path": "build_temporal_adjoint_lineage_artifact_v0_5_4.py",
-      "sha256": "5faa79b5ebbd7463e30a3d6bf08d862f0c176b4284a19a5f5d8bd3a51be91060"
+      "sha256": "bd70d4313989589959b7cd8c6542ce066034a36e460c470b753a6910b5596ffe"
     },
     "core": {
-      "bytes": 95541,
+      "bytes": 96418,
       "path": "temporal_adjoint_lineage_v0_5_4.py",
-      "sha256": "0e900c9f0535d32b4994f41cafa71792c43c8dfb687bcd4b654dccecc906a1d4"
+      "sha256": "c92acd3a51b16caada00c58bcf40ef11b1031a7161e1afd6e282266924c8461b"
     }
   },
   "status": "LOCKED_CONTAMINATED_NETWORK_ZERO_TEMPORAL_GATE"
