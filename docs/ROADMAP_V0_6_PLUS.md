@@ -1,6 +1,6 @@
 # EBRT v0.6+ — Execution, Evaluation, and Orchestration Roadmap
 
-Status: **v0.6.0 PREFLIGHT PASS; v0.6.1 FIVE-CALL BLOCK COMPLETE, GATE HELD; v0.6.3 LIVE R01 EXECUTED ONCE, STOP_OUTPUT_CONTRACT; v0.6.3.1 ZERO-CALL MEASUREMENT REPAIR, NO LIVE CALL AUTHORIZED; v0.6.4 BLOCKED**
+Status: **v0.6.0 PREFLIGHT PASS; v0.6.1 FIVE-CALL BLOCK COMPLETE, GATE HELD; v0.6.3 LIVE R01 EXECUTED ONCE, STOP_OUTPUT_CONTRACT; v0.6.3.1 LIVE R01 PROTOCOL FROZEN, ZERO LIVE CALLS; v0.6.4 BLOCKED**
 
 The one allowed v0.6.1 block ran on 2026-07-20 in the preregistered order
 `P -> A -> B -> D -> C`. All five calls completed and the committed artifact
@@ -85,6 +85,7 @@ separate:
 ```text
 v0.6.3    preserve the consumed r01 output-contract stop
 v0.6.3.1  repair the uptake measurement with one discrete public action
+live-r01   execute exactly C -> X -> D -> Z under a separate merged lock/tag
            ↓ a favorable four-call canary opens only fresh replication
 replication confirm the same actuator on a new sealed case
 v0.6.4    measure whether scaffold aperture suppresses the replicated actuator
@@ -488,13 +489,29 @@ non-promotional terminal statuses. Raw byte inequality, reviewed-evidence
 echo, local surrogate decrease, and a quality-valid answer are not substitutes
 for the selected-closure contrast.
 
-The current monolith authorizes zero provider calls and publishes no hosted
-result. A future four-call execution requires its own runner, merged lock, and
-exact-commit authorization tag. Even a favorable four-call result opens only a
-separately sealed fresh replication. It does not directly promote v0.6.4 or
-establish quality, causality, population reliability, hidden-state editing, or
-general reasoning improvement. See the
+The preflight monolith authorizes zero provider calls and publishes no hosted
+result. Its separately reviewed live-r01 successor freezes exactly one call per
+arm in `C -> X -> D -> Z` order, with no retry, reorder, resume, or backfill.
+It is anchored to annotated tag `v0.6.3.1-preflight`, peeled to commit
+`c5e1244055e5d7f83493698119549c49df718ed7`. Live execution remains forbidden
+until the authorization pull request is merged and annotated tag
+`v0.6.3.1-live-r01-authorized` points exactly at that merge commit.
+
+Known stale or mixed closures remain valid semantic endpoints. A structurally
+invalid arm is recorded and the remaining presealed arms continue, but the
+block ends `INCOMPLETE_NOT_ASSESSED` without loading gold. A source, lock,
+payload, journal, receipt, filesystem, or process-integrity failure instead
+stops the sequence and burns the attempt. Gold may load only after all four
+arms have valid compiled terminals. The hosted result and its independent
+verifier belong to a later result pull request, not the authorization commit.
+
+Even a favorable four-call result opens only a separately sealed fresh
+replication. It does not directly promote v0.6.4 or establish quality,
+causality, population reliability, hidden-state editing, or general reasoning
+improvement. See the
 [`v0.6.3.1 measurement-repair note`](RND_ACTUATOR_UPTAKE_CANARY_V0_6_3_1.md).
+The live authorization boundary is detailed in
+[`v0.6.3.1-live-r01 protocol`](RND_ACTUATOR_UPTAKE_CANARY_V0_6_3_1_LIVE_R01.md).
 
 ## v0.6.4 — Scaffold Aperture
 
