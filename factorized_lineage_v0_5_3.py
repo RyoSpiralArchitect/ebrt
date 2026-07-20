@@ -400,15 +400,20 @@ def _validate_source(source: Mapping[str, Any]) -> None:
         },
         label="source",
     )
-    for key in (
-        "artifact_result_fingerprint_sha256",
-        "demo_file_sha256",
-        "fixture_file_sha256",
-        "fixture_fingerprint_sha256",
-        "public_card_fingerprint_sha256",
-    ):
+    expected_digests = {
+        "artifact_result_fingerprint_sha256": EXPECTED_DEMO_RESULT_FINGERPRINT,
+        "demo_file_sha256": EXPECTED_DEMO_FILE_SHA256,
+        "fixture_file_sha256": EXPECTED_FIXTURE_FILE_SHA256,
+        "fixture_fingerprint_sha256": EXPECTED_FIXTURE_FINGERPRINT,
+        "public_card_fingerprint_sha256": EXPECTED_PUBLIC_CARD_FINGERPRINT,
+    }
+    for key, expected in expected_digests.items():
         if not _is_sha256(source[key]):
             raise FactorizedLineageValidationError(f"invalid SHA-256 at source.{key}")
+        if source[key] != expected:
+            raise FactorizedLineageValidationError(
+                f"frozen source digest changed at source.{key}"
+            )
     for key in ("correction_evidence_id", "fixture_id", "phase_id"):
         _require_string(source[key], label=f"source.{key}")
     if source["legacy_walkthrough_contract_passed"] is not False:
@@ -1538,8 +1543,59 @@ def validate_closure_grade(grade: Mapping[str, Any]) -> None:
         grade["target_results"], list
     ):
         raise FactorizedLineageValidationError("grade arrays invalid")
+    if not grade["target_results"]:
+        raise FactorizedLineageValidationError("grade target results must be nonempty")
     if grade["gap_count"] != len(grade["gaps"]):
         raise FactorizedLineageValidationError("grade gap count mismatch")
+    target_ids: list[str] = []
+    for index, result in enumerate(grade["target_results"]):
+        if not isinstance(result, Mapping):
+            raise FactorizedLineageValidationError(
+                f"grade.target_results[{index}] must be object"
+            )
+        _require_exact_keys(
+            result,
+            {
+                "checks",
+                "missing_active_evidence_ids",
+                "target_id",
+                "unexpected_active_evidence_ids",
+            },
+            label=f"grade.target_results[{index}]",
+        )
+        target_id = _require_string(
+            result["target_id"], label=f"grade.target_results[{index}].target_id"
+        )
+        target_ids.append(target_id)
+        target_checks = result["checks"]
+        if not isinstance(target_checks, Mapping):
+            raise FactorizedLineageValidationError(
+                f"grade.target_results[{index}].checks must be object"
+            )
+        _require_exact_keys(
+            target_checks,
+            {"all_exact", "direct_exact", "inherited_exact", "metadata_exact"},
+            label=f"grade.target_results[{index}].checks",
+        )
+        if not all(isinstance(value, bool) for value in target_checks.values()):
+            raise FactorizedLineageValidationError(
+                f"grade.target_results[{index}].checks must be booleans"
+            )
+        for key in (
+            "missing_active_evidence_ids",
+            "unexpected_active_evidence_ids",
+        ):
+            evidence_ids = _require_string_list(
+                result[key], label=f"grade.target_results[{index}].{key}"
+            )
+            if evidence_ids != sorted(evidence_ids):
+                raise FactorizedLineageValidationError(
+                    f"grade.target_results[{index}].{key} must be sorted"
+                )
+    if target_ids != sorted(target_ids) or len(target_ids) != len(set(target_ids)):
+        raise FactorizedLineageValidationError(
+            "grade target results must be unique and sorted"
+        )
     passed = all(checks.values()) and all(
         all(result["checks"].values()) for result in grade["target_results"]
     )
@@ -1885,6 +1941,16 @@ def validate_regression(bundle: Mapping[str, Any]) -> None:
             raise FactorizedLineageValidationError(
                 f"{lane} embedded closure is not the canonical graph-bound closure"
             )
+        closure_target_ids = [
+            row["target_id"] for row in payload["closure"]["targets"]
+        ]
+        grade_target_ids = [
+            row["target_id"] for row in payload["grade"]["target_results"]
+        ]
+        if grade_target_ids != closure_target_ids:
+            raise FactorizedLineageValidationError(
+                f"{lane} grade does not cover the exact closure targets"
+            )
     legacy = bundle["legacy_endpoint"]
     if legacy != {
         "preserved_byte_frozen_result": True,
@@ -2129,6 +2195,16 @@ def self_test() -> JsonObject:
     validate_graph(reordered)
     assert compute_closure(reordered) == repaired_closure
 
+    drifted_source_digest = _clone(observed)
+    drifted_source_digest["source"]["demo_file_sha256"] = "0" * 64
+    drifted_source_digest = _reseal_graph_without_validation(
+        drifted_source_digest
+    )
+    _expect_rejected(
+        "drifted frozen source digest",
+        lambda: validate_graph(drifted_source_digest),
+    )
+
     cycle = _clone(repaired)
     cycle["edges"].append(
         {
@@ -2293,6 +2369,28 @@ def self_test() -> JsonObject:
     ):
         bundle = build_regression()
     assert bundle["status"] == "PASS"
+    empty_target_grade = _clone(bundle)
+    empty_grade = empty_target_grade["repaired"]["grade"]
+    empty_grade["target_results"] = []
+    empty_grade["fingerprint_sha256"] = _grade_fingerprint(empty_grade)
+    empty_target_grade["fingerprint_sha256"] = _regression_fingerprint(
+        empty_target_grade
+    )
+    _expect_rejected(
+        "empty target grade",
+        lambda: validate_regression(empty_target_grade),
+    )
+    incomplete_target_grade = _clone(bundle)
+    incomplete_grade = incomplete_target_grade["repaired"]["grade"]
+    incomplete_grade["target_results"].pop()
+    incomplete_grade["fingerprint_sha256"] = _grade_fingerprint(incomplete_grade)
+    incomplete_target_grade["fingerprint_sha256"] = _regression_fingerprint(
+        incomplete_target_grade
+    )
+    _expect_rejected(
+        "incomplete target grade coverage",
+        lambda: validate_regression(incomplete_target_grade),
+    )
     fabricated_witness = _clone(bundle)
     fabricated_target = next(
         row
@@ -2324,6 +2422,7 @@ def self_test() -> JsonObject:
             "r3_invalidated_r5_preserved": True,
             "repaired_closure_pass": True,
             "socket_denied_execution_passed": True,
+            "source_digest_and_grade_coverage_tampering_rejected": True,
             "witness_ranking_prefers_nonrepair": True,
         },
         "observed_graph_fingerprint_sha256": observed["fingerprint_sha256"],
