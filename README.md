@@ -228,6 +228,44 @@ the
 [`canonical artifact`](artifacts/actuator_calibration_v0_6_3_live_r01), and the
 [`portable verifier`](verify_actuator_calibration_v0_6_3_live_r01.py).
 
+### v0.6.3.1 zero-call actuator-uptake measurement repair
+
+EBRT v0.6.3.1 leaves that r01 result immutable and starts a new, network-zero
+namespace in
+[`actuator_uptake_canary_v0_6_3_1.py`](actuator_uptake_canary_v0_6_3_1.py).
+Its public fixture and separate provider-excluded grading gold are
+[`fixtures/actuator_uptake_canary_v0_6_3_1.json`](fixtures/actuator_uptake_canary_v0_6_3_1.json)
+and
+[`fixtures/actuator_uptake_canary_gold_v0_6_3_1.json`](fixtures/actuator_uptake_canary_gold_v0_6_3_1.json).
+
+The measurement repair keeps one actuator only: all four Z/C/D/X payloads
+contain the same immutable evidence chunks and differ only in their order. D is
+compiled from one real local float64 backward pass; C swaps the same path
+blocks with matched permutation geometry; X is a frozen correction-first
+positive control; and Z is neutral. The hosted model is not differentiated.
+
+The provider chooses one known opaque `selected_closure_id`. The local harness
+expands that coordinate into a public graph and grades it after parsing. A
+known stale, mixed, or incomplete coordinate is therefore retained as a
+semantic endpoint; malformed/schema-invalid output and unknown closure IDs
+remain structural failures. This changes the successor measurement interface,
+not the frozen v0.6.3-r01 contract or verdict.
+
+Run the zero-call checks with:
+
+```bash
+python3 actuator_uptake_canary_v0_6_3_1.py self-test
+python3 actuator_uptake_canary_v0_6_3_1.py validate-artifact
+python3 -I -S verify_actuator_uptake_canary_v0_6_3_1_portable.py self-test
+```
+
+The monolith has no live command and authorizes zero provider calls. A future
+four-call run requires a separate runner, merged authorization lock, and exact-
+commit tag. Even its favorable terminal status is only
+`PROMOTE_TO_FRESH_REPLICATION`; v0.6.4 stays blocked until a new sealed case
+replicates the directional uptake. No hosted result is claimed here. See the
+[`v0.6.3.1 R&D note`](docs/RND_ACTUATOR_UPTAKE_CANARY_V0_6_3_1.md).
+
 > [!IMPORTANT]
 > v0.1-v0.3.1 are **not** a Transformer implementation, a GPT latent-state
 > editor, or evidence of improved language-model accuracy. v0.4 meaningfully
@@ -275,6 +313,11 @@ the
 > B/D/C identity means the tested signed-displacement placement had no observed
 > effect. Exact-lineage failures in P and A are contract mismatches and do not
 > by themselves prove their natural-language answers were semantically wrong.
+> v0.6.3-live-r01 is a consumed one-call terminal artifact, not an actuator-null
+> result: its compiler stopped before X/Z or D/C effects were assessed.
+> v0.6.3.1 is only a zero-call measurement repair. Its local backward pass ends
+> before JSON, synthetic closure round-trips are parser/classifier conformance
+> checks, and no hosted uptake, quality, causality, or population result exists.
 
 ## Why EBRT?
 
@@ -379,6 +422,12 @@ verify_hosted_bundle_v0_6_1_portable.py host-independent canonical snapshot veri
 policy_lock_hosted_bundle_v0_6.json frozen source, runtime, order, endpoint, and claim contract
 fixtures/hosted_bundle_projection_v0_6.json contaminated projection and matched-control fixture
 fixtures/hosted_bundle_lineage_gold_v0_6.json post-call-only exact lineage gold
+actuator_uptake_canary_v0_6_3_1.py discrete closure-choice uptake preflight monolith
+verify_actuator_uptake_canary_v0_6_3_1_portable.py pure-stdlib exact-byte and tamper verifier
+policy_lock_actuator_uptake_canary_v0_6_3_1.json zero-call source, runtime, order, and claim lock
+fixtures/actuator_uptake_canary_v0_6_3_1.json one-case position-only actuator fixture
+fixtures/actuator_uptake_canary_gold_v0_6_3_1.json provider-excluded closure roles and grading gold
+artifacts/actuator_uptake_canary_v0_6_3_1_preflight/ canonical four-payload network-zero bundle
 docs/RND_BENCHMARK_V0_1.md    protocol, results, limits, and claim ledger
 docs/RND_INSTRUMENTATION_V0_2.md measurement contract and algorithm findings
 docs/RND_DUAL_ROUTE_V0_3.md   terminal invariant result and v0.3.1 direction
@@ -399,6 +448,7 @@ docs/RND_FACTORIZED_LINEAGE_V0_5_3.md network-zero lineage result and contaminat
 docs/RND_TEMPORAL_ADJOINT_LINEAGE_V0_5_4.md matched temporal result, derivative audits, and claim boundary
 docs/RND_LANE_COMPOSABLE_TRAJECTORIES_V0_5_5.md completed composition mechanism, audits, and nonclaims
 docs/RND_HOSTED_BUNDLE_V0_6_1.md completed hosted block, null placement effect, and next bottleneck
+docs/RND_ACTUATOR_UPTAKE_CANARY_V0_6_3_1.md zero-call discrete uptake measurement repair
 docs/ROADMAP_V0_5_3_TO_V0_5_5.md Space/Time/Multiplicity gates through v0.6 execution design
 docs/ROADMAP_V0_6_PLUS.md      sealed bundle-to-output, fresh utility, runtime lanes, and latent return
 artifacts/benchmark_v0_1/     committed machine-readable benchmark evidence
@@ -1313,6 +1363,9 @@ retrospectively relabeling failures. See the
 | The v0.6.1 overall gate promoted | No; P answered `POLISH` correctly but failed exact pre-event lineage because R2 was unexpectedly inherited into `demo_centerpiece`, so the preregistered gate is held |
 | The v0.6.1 canonical artifact requires the current host or current v0.5.5 tree to validate | No; the post-run pure-stdlib verifier checks the pinned recorded snapshot without importing project/provider packages, reading current v0.5.5 sources, or gating on host runtime. It does not rederive the historical mechanism or authenticate the provider. |
 | A raw full-context restart failed to revise the answer | No; A answered `PROVE`, invalidated R3, and preserved R5, but failed the stricter lineage endpoint because R4 was absent from `final_priority` |
+| v0.6.3-live-r01 establishes a null provider actuator | No; it stopped after one completed call on `EXACT_ONE_CLOSURE_FAILED`, with 15 calls unattempted and all X/Z and D/C effects not assessed |
+| v0.6.3.1 demonstrates hosted actuator uptake | No; it is a zero-call measurement repair that freezes four position-only payloads and a discrete public closure endpoint. Synthetic parser/classifier coverage is not a hosted effect |
+| A favorable v0.6.3.1 four-call canary would open v0.6.4 | No; its strongest allowed decision is `PROMOTE_TO_FRESH_REPLICATION`. v0.6.4 remains blocked until a new sealed case replicates the directional result |
 | Selective replay should be optimized before state sufficiency | Not supported by current evidence; it is paused as a quality direction and remains an unranked future efficiency ablation |
 | EBRT edits hidden states inside a trained Transformer or GPT model | Not implemented |
 | EBRT improves real-world LLM reasoning accuracy | Not established |

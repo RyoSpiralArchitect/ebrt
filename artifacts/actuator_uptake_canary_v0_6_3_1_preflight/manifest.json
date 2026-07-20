@@ -1,0 +1,30 @@
+{
+  "artifact_receipts": {
+    "controller_audit.json": {
+      "bytes": 1484,
+      "sha256": "d60fcaf4a69e148a597c7a6a695e7b091007601f5dc42c6bff5f7ea32dcd5077"
+    },
+    "projection_bundle.json": {
+      "bytes": 17512,
+      "sha256": "a87de8b219d7d5f27eade5122f919483d9653948a037929e21b3417c1964e62a"
+    },
+    "self_test.json": {
+      "bytes": 2286,
+      "sha256": "1e631cde22c4f23cd42169c740153c1763467c1c26cf83a727cc17193fb58350"
+    }
+  },
+  "claim_boundary": [
+    "This artifact freezes four provider payloads but authorizes zero provider calls.",
+    "No synthetic endpoint is evidence of hosted uptake."
+  ],
+  "controller_fingerprint_sha256": "ca65f1aaf285da1966524d88260e58a2d811dad66860327adfa0d18d78363396",
+  "fingerprint_sha256": "193db43d1d4c45f19f150d9b822d85af9f977000a3a39cdd33a8667ae8cebf19",
+  "live_execution_authorized": false,
+  "network_calls": 0,
+  "policy_lock_fingerprint_sha256": "daee1ca7a54a6bea06e40b58b2da6af821c389044c5ee3e251c1546661dfde54",
+  "projection_fingerprint_sha256": "65af77712b529bb028aeae22e3eba5d6d943b0299a0b2951758445afcfe83216",
+  "provider_calls": 0,
+  "schema_version": "ebrt-actuator-uptake-preflight-manifest-v0.6.3.1",
+  "self_test_fingerprint_sha256": "8174027ba94386bf755f73c420bd64c98a4093b29d212ccadf7158fedcd44685",
+  "status": "READY_ZERO_CALL_PREFLIGHT_ONLY"
+}

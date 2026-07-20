@@ -1,0 +1,108 @@
+{
+  "schema_version": "ebrt-actuator-uptake-canary-fixture-v0.6.3.1",
+  "status": "LOCKED_NETWORK_ZERO_PREFLIGHT_INPUT",
+  "operator": "evidence_permutation",
+  "arms": ["Z", "C", "D", "X"],
+  "case": {
+    "case_id": "archive_gate_revision_c",
+    "checkpoint_id": "archive_gate_revision_c:post_event",
+    "question": "Which archive release gate is active for batch Q after applying the latest valid evidence? Answer VIOLET or COPPER.",
+    "answer_choices": ["VIOLET", "COPPER"],
+    "record_format_choices": ["SIGNED_NDJSON"],
+    "raw_evidence": [
+      {
+        "evidence_id": "E1",
+        "text": "Certified release rule: one complete current registry chain is sufficient to establish the active archive gate for batch Q."
+      },
+      {
+        "evidence_id": "E2",
+        "text": "Current registry channel A records gate VIOLET for batch Q and is valid for this release epoch."
+      },
+      {
+        "evidence_id": "E3",
+        "text": "Independent signed inspection notice IN-72 records gate VIOLET for batch Q when paired with its custody receipt."
+      },
+      {
+        "evidence_id": "E4",
+        "text": "Custody receipt CR-72 authenticates inspection notice IN-72 for the current release epoch."
+      },
+      {
+        "evidence_id": "E5",
+        "text": "Legacy release memo LM-4 records gate COPPER and remains usable unless a later revocation names it."
+      },
+      {
+        "evidence_id": "E6",
+        "text": "Latest revocation: legacy release memo LM-4 is withdrawn. Use one complete currently certified chain; E5 is invalidated."
+      },
+      {
+        "evidence_id": "E7",
+        "text": "The final machine-readable record must remain SIGNED_NDJSON regardless of the selected gate."
+      }
+    ],
+    "candidate_closures": [
+      {
+        "closure_id": "K_be3b12efdb",
+        "selected_evidence_ids": ["E1", "E2", "E5", "E7"]
+      },
+      {
+        "closure_id": "K_5c1377f2fc",
+        "selected_evidence_ids": ["E3", "E4", "E6", "E7"]
+      },
+      {
+        "closure_id": "K_f41cb3914f",
+        "selected_evidence_ids": ["E1", "E3", "E6", "E7"]
+      },
+      {
+        "closure_id": "K_ba42ee466f",
+        "selected_evidence_ids": ["E1", "E2", "E6", "E7"]
+      }
+    ],
+    "public_event_contract": {
+      "late_event_evidence_id": "E6",
+      "invalidated_evidence_id": "E5",
+      "stable_evidence_id": "E7"
+    },
+    "local_controller": {
+      "path_blocks": {
+        "P0": ["E1", "E2"],
+        "P1": ["E3", "E4"]
+      },
+      "state_decay": 0.62,
+      "terminal_target": 0.9,
+      "step_size": 0.2,
+      "control_regularization": 0.01,
+      "effect_by_evidence_id": {
+        "E1": 0.85,
+        "E2": 0.75,
+        "E3": -0.65,
+        "E4": -0.55,
+        "E5": -0.45,
+        "E6": 1.15,
+        "E7": 0.0
+      },
+      "finite_difference_epsilon": 0.000001,
+      "finite_difference_tolerance": 0.00000005
+    }
+  },
+  "protocol": {
+    "review_budget": 3,
+    "neutral_order": ["E1", "E3", "E6", "E4", "E2", "E5", "E7"],
+    "positive_control_order": ["E6", "E5", "E1", "E2", "E3", "E4", "E7"],
+    "matched_anti_rule": "swap_preferred_and_opposed_path_blocks",
+    "execution_order_seed": "ebrt-v0631-execution-order-20260720",
+    "candidate_id_salt": "ebrt-v0.6.3.1",
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "low",
+    "max_output_tokens": 1024,
+    "timeout_seconds": 60,
+    "sdk_retries": 0,
+    "store": false
+  },
+  "claim_boundary": [
+    "This fixture calibrates one provider-visible evidence-order actuator on one sealed case.",
+    "All arms contain the exact same immutable evidence-chunk byte multiset; only sequence position differs.",
+    "The hosted model is not differentiated and no claim is made about its hidden states, attention, or KV cache.",
+    "Candidate closure selection is a public action endpoint, not a private reasoning trace.",
+    "A four-call canary can open only a fresh replication gate; it cannot establish quality improvement or a general actuator effect."
+  ]
+}

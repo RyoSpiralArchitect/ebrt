@@ -1,6 +1,6 @@
 # EBRT v0.6+ — Execution, Evaluation, and Orchestration Roadmap
 
-Status: **v0.6.0 PREFLIGHT PASS; v0.6.1 FIVE-CALL BLOCK COMPLETE, GATE HELD; v0.6.3 LIVE R01 EXECUTED ONCE, STOP_OUTPUT_CONTRACT; v0.6.4 BLOCKED**
+Status: **v0.6.0 PREFLIGHT PASS; v0.6.1 FIVE-CALL BLOCK COMPLETE, GATE HELD; v0.6.3 LIVE R01 EXECUTED ONCE, STOP_OUTPUT_CONTRACT; v0.6.3.1 ZERO-CALL MEASUREMENT REPAIR, NO LIVE CALL AUTHORIZED; v0.6.4 BLOCKED**
 
 The one allowed v0.6.1 block ran on 2026-07-20 in the preregistered order
 `P -> A -> B -> D -> C`. All five calls completed and the committed artifact
@@ -67,6 +67,11 @@ The next experiment must preserve all of these observed boundaries:
    it did not establish hosted-model improvement.
 6. v0.5.5 established deterministic lane composition and block credit; its
    lanes were schedule views of one public program, not independent agents.
+7. v0.6.1 showed that a complete answer-adjacent public DAG can saturate the
+   tested provider surface: B, D, and C returned byte-identical outputs.
+8. v0.6.3-live-r01 stopped after one completed call because a freely emitted
+   graph missed the exact-one-closure contract. It did not measure X/Z channel
+   propagation or D/C placement and is not a null actuator result.
 
 These findings make another network-zero mechanism extension lower priority
 than a clean return to actual hosted output.
@@ -78,9 +83,12 @@ a judge-readable product surface. The next algorithmic path is deliberately
 separate:
 
 ```text
-v0.6.3  calibrate one explicit provider-visible actuator
-v0.6.4  measure whether scaffold aperture suppresses that actuator
-         ↓ only after a non-null, directionally attributable uptake result
+v0.6.3    preserve the consumed r01 output-contract stop
+v0.6.3.1  repair the uptake measurement with one discrete public action
+           ↓ a favorable four-call canary opens only fresh replication
+replication confirm the same actuator on a new sealed case
+v0.6.4    measure whether scaffold aperture suppresses the replicated actuator
+           ↓ only after a non-null, directionally attributable replicated result
 converge the promoted runtime into one readable monolith
          ↓
 v0.7    ask the first fresh matched quality question
@@ -432,13 +440,70 @@ The receipts are operator-attested rather than provider-signed or
 cryptographically authenticated; the tag neither authenticates operator
 identity nor guarantees cross-clone exactly-once execution.
 
+## v0.6.3.1 — Observable Actuator Uptake Canary
+
+v0.6.3.1 is a new zero-call measurement-repair namespace, not a repair or
+rerun of the frozen r01 artifact. It narrows the provider-visible intervention
+to one `evidence_permutation` and the primary public action to one known opaque
+`selected_closure_id`. The deterministic DAG remains downstream as an
+expansion and audit substrate; the provider no longer freely generates the
+edge set used to decide whether uptake was observed.
+
+Freeze one new synthetic case and four payloads:
+
+| Arm | Frozen order | Purpose |
+| --- | --- | --- |
+| Z | neutral | positional reference |
+| X | correction first | positive channel control |
+| C | opposed path block first | geometry-matched anti-placement |
+| D | local-backward-preferred path block first | tested EBRT placement |
+
+Every arm contains the same immutable evidence-chunk byte multiset, candidate
+catalog and order, instructions, schema, model settings, and budgets. After
+normalizing evidence rows by ID, the payloads must be byte-identical. D is
+compiled from one real local float64 backward pass; C matches D in Spearman
+footrule distance, Kendall distance, fixed points, and protected anchor
+positions while having lower frozen positional alignment. The gradient stops
+before JSON and the hosted model is not differentiated.
+
+Known stale, mixed, or incomplete closure IDs are valid semantic observations.
+They are deterministically expanded and graded after parsing rather than
+causing an output-contract stop. Malformed JSON, schema drift, an unknown
+closure ID, or a provider/receipt failure remains structural and makes the
+four-call block `INCOMPLETE_NOT_ASSESSED`. Thus the measurement boundary is
+repaired without relaxing answer, invalidation, stable-fact, or lineage
+diagnostics.
+
+The primary canary gate is directionally preregistered:
+
+```text
+X moves from non-target Z to the aligned closure
+and
+D selects the aligned closure while matched C does not
+  -> PROMOTE_TO_FRESH_REPLICATION
+```
+
+Ceilings, equality, off-target movement, and adverse movement have separate
+non-promotional terminal statuses. Raw byte inequality, reviewed-evidence
+echo, local surrogate decrease, and a quality-valid answer are not substitutes
+for the selected-closure contrast.
+
+The current monolith authorizes zero provider calls and publishes no hosted
+result. A future four-call execution requires its own runner, merged lock, and
+exact-commit authorization tag. Even a favorable four-call result opens only a
+separately sealed fresh replication. It does not directly promote v0.6.4 or
+establish quality, causality, population reliability, hidden-state editing, or
+general reasoning improvement. See the
+[`v0.6.3.1 measurement-repair note`](RND_ACTUATOR_UPTAKE_CANARY_V0_6_3_1.md).
+
 ## v0.6.4 — Scaffold Aperture
 
-Proceed only if v0.6.3 establishes channel adherence, downstream propagation,
-and a directionally attributable D-versus-C placement effect. Keep the
-promoted actuator, projection, raw history, output contract, and budgets fixed,
-then test the separate hypothesis that a complete answer-adjacent DAG saturates
-the provider-visible control surface:
+Proceed only if a separately sealed fresh replication confirms the
+v0.6.3.1 channel and a directionally attributable D-versus-C placement effect.
+A favorable four-call sensitivity canary alone is insufficient. Keep the
+replicated actuator, projection, raw history, output contract, and budgets
+fixed, then test the separate hypothesis that a complete answer-adjacent DAG
+saturates the provider-visible control surface:
 
 ```text
 scaffold:  none | partial | full
@@ -468,9 +533,10 @@ improves reasoning quality.
 ## Runtime convergence target
 
 The research tree may remain modular and frozen for auditability, but the
-promoted product path must converge before v0.7. Once v0.6.3 identifies a
-non-null actuator and v0.6.4 selects its smallest sufficient scaffold, rewrite
-that accepted path into one readable EBRT monolith containing:
+promoted product path must converge before v0.7. Once a fresh replication
+confirms the v0.6.3.1 actuator and v0.6.4 selects its smallest sufficient
+scaffold, rewrite that accepted path into one readable EBRT monolith
+containing:
 
 ```text
 raw semantic projection
@@ -498,8 +564,9 @@ silently creating a new, uncalibrated intervention.
 
 ## v0.7 — Fresh Matched Hosted Evaluation
 
-v0.7 asks the first quality question only after the v0.6.3 uptake gate,
-v0.6.4 aperture decision, and monolith convergence check:
+v0.7 asks the first quality question only after the v0.6.3.1 uptake canary,
+its separately sealed fresh replication, the v0.6.4 aperture decision, and the
+monolith convergence check:
 
 > On a fresh frozen suite where control placement can matter, does the promoted
 > EBRT actuator outperform its matched anti-placement construct control,
@@ -587,6 +654,7 @@ control. Novelty is not allowed to rescue a failed v0.6-v0.8 endpoint.
 | v0.6.1 | a real full-context bundle-to-output path and separately graded answer/lineage effect | controlled superiority, general quality, or gradients through the hosted model |
 | v0.6.2 | a judge-readable, reproducible Reasoning IDE workflow | a final frontend or a population-level algorithm claim |
 | v0.6.3 | the hosted provider observably consumes one bounded public actuator and gradient placement differs directionally from its matched anti-placement construct control | that the changed output is better or that placement generalizes |
+| v0.6.3.1 | in a separately authorized four-call canary, one position-only public channel changes the selected closure and gradient placement differs directionally from matched anti-placement | quality improvement, causality, population reliability, or direct promotion to v0.6.4; success opens only fresh replication |
 | v0.6.4 | scaffold density moderates that fixed actuator under a matched aperture experiment | that partial scaffolds or the actuator generalize |
 | v0.7 | a paired effect on one fresh frozen hosted suite | provider- or task-general superiority |
 | v0.8 | independently executed same-model public lanes can be sealed before outcome and composed into one regeneration | autonomous agents, heterogeneous superiority, or optimal routing |
