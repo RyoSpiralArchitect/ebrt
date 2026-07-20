@@ -1592,6 +1592,7 @@ def _network_denied() -> Iterator[dict[str, int]]:
         mock.patch.object(socket.socket, "connect", new=blocked),
         mock.patch.object(socket.socket, "connect_ex", new=blocked),
         mock.patch.object(socket, "create_connection", new=blocked),
+        mock.patch.object(socket, "getaddrinfo", new=blocked),
     ):
         yield counter
 
@@ -1631,6 +1632,16 @@ def run_self_test() -> dict[str, Any]:
     fixture_audit = validate_fixture(fixture)
     gold_audit = validate_gold(gold, fixture)
     with _network_denied() as network:
+        with _network_denied() as dns_probe:
+            try:
+                socket.getaddrinfo("example.invalid", 443)
+            except RuntimeError as error:
+                dns_guard_rejected = (
+                    str(error) == "NETWORK_DISABLED_BY_V0631_SELF_TEST"
+                    and dns_probe["attempts"] == 1
+                )
+            else:
+                dns_guard_rejected = False
         controller = derive_controller(fixture)
         projection = build_projection(fixture, controller)
         second_controller = derive_controller(fixture)
@@ -1963,7 +1974,7 @@ def run_self_test() -> dict[str, Any]:
         == _canonical_bytes(second_controller)
         and _canonical_bytes(projection) == _canonical_bytes(second_projection),
         "canonical_artifact_directory_exact": _artifact_directory_contract_audit(),
-        "network_calls_zero": network["attempts"] == 0,
+        "network_calls_zero": network["attempts"] == 0 and dns_guard_rejected,
     }
     _require(set(checks) == set(HARD_GATE_IDS), "HARD_GATE_SET_DRIFT")
     _require(all(checks.values()), "SELF_TEST_HARD_GATE_FAILED")

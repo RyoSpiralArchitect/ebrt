@@ -17,6 +17,7 @@ import json
 import math
 import stat
 import sys
+import tempfile
 from pathlib import Path
 from typing import Any, Callable, Mapping, Sequence
 
@@ -30,11 +31,11 @@ ARTIFACT_RELATIVE = Path("artifacts/actuator_uptake_canary_v0_6_3_1_preflight")
 MAX_FILE_BYTES = 2_000_000
 EXPECTED_POLICY_FILE = (
     4444,
-    "f96fea21f4024a3203c0b341d9d95653e2312caeb9d913f8e01f821a4719c10b",
+    "5517dd0f8937225fdb0556f9958739cb59317f7644fc0995c157ddad5f80f13d",
 )
 EXPECTED_MANIFEST_FILE = (
     1331,
-    "d380e72db5f9e4e43cc2f3605b59a64894d21fd9d152a4d9fc8e34194d730245",
+    "7579a440f750a26f0a58a72e7015468101732089f221ac6c00e7dc64640dd6fe",
 )
 ARMS = ("Z", "C", "D", "X")
 OPERATOR = "evidence_permutation"
@@ -1435,10 +1436,18 @@ def self_test(root: Path = ROOT) -> dict[str, Any]:
         lambda: _validate_all_recorded_calls_zero(nonzero_tamper, label="nonzero probe"),
         "nonzero provider calls",
     )
-    _expect_rejected(
-        lambda: _require(ARTIFACT_FILES | {"extra.json"} == ARTIFACT_FILES, "artifact directory entry set drifted"),
-        "extra artifact entry",
-    )
+    with tempfile.TemporaryDirectory(prefix="ebrt-v0631-portable-extra-") as raw:
+        tamper_root = Path(raw)
+        for filename in sorted(ARTIFACT_FILES):
+            source = root / ARTIFACT_RELATIVE / filename
+            (tamper_root / filename).write_bytes(
+                _read_regular(source, label=f"extra-file probe {filename}")
+            )
+        (tamper_root / "extra.json").write_bytes(b"{}\n")
+        _expect_rejected(
+            lambda: _artifact_entry_names(tamper_root),
+            "extra artifact entry",
+        )
 
     result["status"] = "PASS_PORTABLE_WITH_TAMPER_SELF_TEST"
     result["tamper_checks"] = {

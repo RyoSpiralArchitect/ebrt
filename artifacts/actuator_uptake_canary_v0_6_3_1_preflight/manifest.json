@@ -18,10 +18,10 @@
     "No synthetic endpoint is evidence of hosted uptake."
   ],
   "controller_fingerprint_sha256": "ca65f1aaf285da1966524d88260e58a2d811dad66860327adfa0d18d78363396",
-  "fingerprint_sha256": "848c980858dd0a3c7ab485065dd7d5e3f47345789b5aa62960fe42e64e711d68",
+  "fingerprint_sha256": "f7ba6f26e830a80fe34b382a3212f4eb2f5fbfd164620063cdb8094bcb6857c3",
   "live_execution_authorized": false,
   "network_calls": 0,
-  "policy_lock_fingerprint_sha256": "32985af7e310f21964260c150089afa8ea5e0bde092b19906f0485cfdfdd13bc",
+  "policy_lock_fingerprint_sha256": "c6fe0e5735d0a5f222d72055dd365f6fef0e7bf5d7dcd7548f45d56893ac7836",
   "projection_fingerprint_sha256": "65af77712b529bb028aeae22e3eba5d6d943b0299a0b2951758445afcfe83216",
   "provider_calls": 0,
   "schema_version": "ebrt-actuator-uptake-preflight-manifest-v0.6.3.1",
