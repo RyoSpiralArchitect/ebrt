@@ -1,0 +1,770 @@
+{
+  "control_bundle": {
+    "fingerprint_sha256": "bd10662160b76fc648bdf92829fee398370ae5785f57a9addd3ce4aca28abbce",
+    "lane_control_maps": [
+      {
+        "control_count": 42,
+        "inner_control_map": {
+          "arm_id": "C",
+          "controls": [
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_early:h01:R1:support:demo_readiness"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_early:h01:R1:support:judging_basis"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_early:h01:R1:support:superseding_guidance"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_early:h01:R1:fact:final_priority"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_early:h01:R1:fact:demo_centerpiece"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_early:h01:R1:support:video_constraint"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_early:h01:R1:constraint:video_constraint"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_early:h02:R2:support:demo_readiness"
+            },
+            {
+              "eligible": true,
+              "normalized_u": 5.355573025842929e-05,
+              "raw_delta": 0.000760508776533406,
+              "raw_scale_s": 0.07042092334890604,
+              "site_id": "q:correction_early:h02:R2:support:judging_basis"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_early:h02:R2:support:superseding_guidance"
+            },
+            {
+              "eligible": true,
+              "normalized_u": 5.394198022533547e-05,
+              "raw_delta": 0.0025642942105301796,
+              "raw_scale_s": 0.021035800027869155,
+              "site_id": "q:correction_early:h02:R2:fact:final_priority"
+            },
+            {
+              "eligible": true,
+              "normalized_u": 4.869426099746842e-05,
+              "raw_delta": 0.012465730815351916,
+              "raw_scale_s": 0.00390625,
+              "site_id": "q:correction_early:h02:R2:fact:demo_centerpiece"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_early:h02:R2:support:video_constraint"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_early:h02:R2:constraint:video_constraint"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_early:h03:R3:support:demo_readiness"
+            },
+            {
+              "eligible": true,
+              "normalized_u": 5.27088948411867e-05,
+              "raw_delta": 0.0010536635382194007,
+              "raw_scale_s": 0.05002440810494413,
+              "site_id": "q:correction_early:h03:R3:support:judging_basis"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_early:h03:R3:support:superseding_guidance"
+            },
+            {
+              "eligible": true,
+              "normalized_u": 5.406637789462647e-05,
+              "raw_delta": 0.0015474700322505824,
+              "raw_scale_s": 0.034938562148434216,
+              "site_id": "q:correction_early:h03:R3:fact:final_priority"
+            },
+            {
+              "eligible": true,
+              "normalized_u": 4.869426099746842e-05,
+              "raw_delta": 0.0041552436051173055,
+              "raw_scale_s": 0.01171875,
+              "site_id": "q:correction_early:h03:R3:fact:demo_centerpiece"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_early:h03:R3:support:video_constraint"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_early:h03:R3:constraint:video_constraint"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_early:h04:R6:support:demo_readiness"
+            },
+            {
+              "eligible": true,
+              "normalized_u": 5.105440733502187e-05,
+              "raw_delta": 0.0015403058191383117,
+              "raw_scale_s": 0.03314563036811941,
+              "site_id": "q:correction_early:h04:R6:support:judging_basis"
+            },
+            {
+              "eligible": true,
+              "normalized_u": -3.148507184658002e-05,
+              "raw_delta": -0.0002354152178158987,
+              "raw_scale_s": 0.13374272121695305,
+              "site_id": "q:correction_early:h04:R6:support:superseding_guidance"
+            },
+            {
+              "eligible": true,
+              "normalized_u": 1.3465141170216534e-05,
+              "raw_delta": 0.00024681069972169213,
+              "raw_scale_s": 0.05455655360727899,
+              "site_id": "q:correction_early:h04:R6:fact:final_priority"
+            },
+            {
+              "eligible": true,
+              "normalized_u": 1.9913814115308906e-05,
+              "raw_delta": 0.000491545778208591,
+              "raw_scale_s": 0.04051263381385067,
+              "site_id": "q:correction_early:h04:R6:fact:demo_centerpiece"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_early:h04:R6:support:video_constraint"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_early:h04:R6:constraint:video_constraint"
+            },
+            {
+              "eligible": true,
+              "normalized_u": 0.00020728041324996586,
+              "raw_delta": 0.0011714116878310127,
+              "raw_scale_s": 0.1769492445766582,
+              "site_id": "q:correction_early:h05:R4:support:demo_readiness"
+            },
+            {
+              "eligible": true,
+              "normalized_u": 4.8022616018192994e-05,
+              "raw_delta": 0.002458757940131481,
+              "raw_scale_s": 0.01953125,
+              "site_id": "q:correction_early:h05:R4:support:judging_basis"
+            },
+            {
+              "eligible": true,
+              "normalized_u": -2.8662151775318114e-05,
+              "raw_delta": -0.0003187023137598967,
+              "raw_scale_s": 0.08993393062377184,
+              "site_id": "q:correction_early:h05:R4:support:superseding_guidance"
+            },
+            {
+              "eligible": true,
+              "normalized_u": 7.437846251976019e-05,
+              "raw_delta": 0.0007052180150021707,
+              "raw_scale_s": 0.10546875,
+              "site_id": "q:correction_early:h05:R4:fact:final_priority"
+            },
+            {
+              "eligible": true,
+              "normalized_u": 0.0001056757805752629,
+              "raw_delta": 0.0010769095863405725,
+              "raw_scale_s": 0.09812873978990001,
+              "site_id": "q:correction_early:h05:R4:fact:demo_centerpiece"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_early:h05:R4:support:video_constraint"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_early:h05:R4:constraint:video_constraint"
+            },
+            {
+              "eligible": true,
+              "normalized_u": 0.00021024579827500113,
+              "raw_delta": 0.002376340162152183,
+              "raw_scale_s": 0.0884746222883291,
+              "site_id": "q:correction_early:h06:R5:support:demo_readiness"
+            },
+            {
+              "eligible": true,
+              "normalized_u": 4.28025491665793e-05,
+              "raw_delta": 0.0049003217687935115,
+              "raw_scale_s": 0.008734640537108554,
+              "site_id": "q:correction_early:h06:R5:support:judging_basis"
+            },
+            {
+              "eligible": true,
+              "normalized_u": -2.581445898468384e-05,
+              "raw_delta": -0.0005675880042474346,
+              "raw_scale_s": 0.04548098055544929,
+              "site_id": "q:correction_early:h06:R5:support:superseding_guidance"
+            },
+            {
+              "eligible": true,
+              "normalized_u": 9.696050229028646e-05,
+              "raw_delta": 0.0005845604537154653,
+              "raw_scale_s": 0.165869075942455,
+              "site_id": "q:correction_early:h06:R5:fact:final_priority"
+            },
+            {
+              "eligible": true,
+              "normalized_u": 0.00011530427637163153,
+              "raw_delta": 0.0006864162656386177,
+              "raw_scale_s": 0.16798010499409782,
+              "site_id": "q:correction_early:h06:R5:fact:demo_centerpiece"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_early:h06:R5:support:video_constraint"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_early:h06:R5:constraint:video_constraint"
+            }
+          ],
+          "fingerprint_sha256": "4403861076f612b4dfd3fcae172975fda299fe3c7ce8e3cdef45e3ba182bf6c7",
+          "normalized_l2": 0.000390625,
+          "placement": "bundle_block_adjoint",
+          "raw_max_abs_delta": 0.012465730815351916,
+          "schema_version": "ebrt-temporal-lineage-control-map-v0.5.4",
+          "sham_transform": null,
+          "step_count": 1
+        },
+        "lane_id": "correction_early",
+        "namespace_prefix": "lane::correction_early::",
+        "normalized_l2_budget": 0.000390625
+      },
+      {
+        "control_count": 42,
+        "inner_control_map": {
+          "arm_id": "C",
+          "controls": [
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_late:h01:R1:support:demo_readiness"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_late:h01:R1:support:judging_basis"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_late:h01:R1:support:superseding_guidance"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_late:h01:R1:fact:final_priority"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_late:h01:R1:fact:demo_centerpiece"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_late:h01:R1:support:video_constraint"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_late:h01:R1:constraint:video_constraint"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_late:h02:R2:support:demo_readiness"
+            },
+            {
+              "eligible": true,
+              "normalized_u": 4.126715666538258e-05,
+              "raw_delta": 0.0005860070374385918,
+              "raw_scale_s": 0.07042092334890604,
+              "site_id": "q:correction_late:h02:R2:support:judging_basis"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_late:h02:R2:support:superseding_guidance"
+            },
+            {
+              "eligible": true,
+              "normalized_u": 4.156478005356908e-05,
+              "raw_delta": 0.0019759067874053865,
+              "raw_scale_s": 0.021035800027869155,
+              "site_id": "q:correction_late:h02:R2:fact:final_priority"
+            },
+            {
+              "eligible": true,
+              "normalized_u": 3.7521170705562006e-05,
+              "raw_delta": 0.009605419700623874,
+              "raw_scale_s": 0.00390625,
+              "site_id": "q:correction_late:h02:R2:fact:demo_centerpiece"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_late:h02:R2:support:video_constraint"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_late:h02:R2:constraint:video_constraint"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_late:h03:R3:support:demo_readiness"
+            },
+            {
+              "eligible": true,
+              "normalized_u": 4.0614630975516845e-05,
+              "raw_delta": 0.0008118962825169884,
+              "raw_scale_s": 0.05002440810494413,
+              "site_id": "q:correction_late:h03:R3:support:judging_basis"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_late:h03:R3:support:superseding_guidance"
+            },
+            {
+              "eligible": true,
+              "normalized_u": 4.1660634186874115e-05,
+              "raw_delta": 0.0011923969283533082,
+              "raw_scale_s": 0.034938562148434216,
+              "site_id": "q:correction_late:h03:R3:fact:final_priority"
+            },
+            {
+              "eligible": true,
+              "normalized_u": 3.7521170705562006e-05,
+              "raw_delta": 0.0032018065668746247,
+              "raw_scale_s": 0.01171875,
+              "site_id": "q:correction_late:h03:R3:fact:demo_centerpiece"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_late:h03:R3:support:video_constraint"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_late:h03:R3:constraint:video_constraint"
+            },
+            {
+              "eligible": true,
+              "normalized_u": 3.2423175695635454e-05,
+              "raw_delta": 0.00024242946009031508,
+              "raw_scale_s": 0.13374272121695305,
+              "site_id": "q:correction_late:h04:R4:support:demo_readiness"
+            },
+            {
+              "eligible": true,
+              "normalized_u": 3.933977215483862e-05,
+              "raw_delta": 0.0011868765722035247,
+              "raw_scale_s": 0.03314563036811941,
+              "site_id": "q:correction_late:h04:R4:support:judging_basis"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_late:h04:R4:support:superseding_guidance"
+            },
+            {
+              "eligible": true,
+              "normalized_u": 3.687012089182114e-05,
+              "raw_delta": 0.0006758146996826041,
+              "raw_scale_s": 0.05455655360727899,
+              "site_id": "q:correction_late:h04:R4:fact:final_priority"
+            },
+            {
+              "eligible": true,
+              "normalized_u": 4.45365072568461e-05,
+              "raw_delta": 0.0010993239161266215,
+              "raw_scale_s": 0.04051263381385067,
+              "site_id": "q:correction_late:h04:R4:fact:demo_centerpiece"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_late:h04:R4:support:video_constraint"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_late:h04:R4:constraint:video_constraint"
+            },
+            {
+              "eligible": true,
+              "normalized_u": 3.3549741120896884e-05,
+              "raw_delta": 0.00037304875799600414,
+              "raw_scale_s": 0.08993393062377184,
+              "site_id": "q:correction_late:h05:R5:support:demo_readiness"
+            },
+            {
+              "eligible": true,
+              "normalized_u": 3.700363731651977e-05,
+              "raw_delta": 0.001894586230605812,
+              "raw_scale_s": 0.01953125,
+              "site_id": "q:correction_late:h05:R5:support:judging_basis"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_late:h05:R5:support:superseding_guidance"
+            },
+            {
+              "eligible": true,
+              "normalized_u": 3.198797389043732e-05,
+              "raw_delta": 0.0004049160990061492,
+              "raw_scale_s": 0.07899901725061205,
+              "site_id": "q:correction_late:h05:R5:fact:final_priority"
+            },
+            {
+              "eligible": true,
+              "normalized_u": 4.2211973393566244e-05,
+              "raw_delta": 0.0005587319868492991,
+              "raw_scale_s": 0.075549591552115,
+              "site_id": "q:correction_late:h05:R5:fact:demo_centerpiece"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_late:h05:R5:support:video_constraint"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_late:h05:R5:constraint:video_constraint"
+            },
+            {
+              "eligible": true,
+              "normalized_u": 3.455962225395265e-05,
+              "raw_delta": 0.0007598697704377417,
+              "raw_scale_s": 0.04548098055544929,
+              "site_id": "q:correction_late:h06:R6:support:demo_readiness"
+            },
+            {
+              "eligible": true,
+              "normalized_u": 3.298133539794201e-05,
+              "raw_delta": 0.003775923606452143,
+              "raw_scale_s": 0.008734640537108554,
+              "site_id": "q:correction_late:h06:R6:support:judging_basis"
+            },
+            {
+              "eligible": true,
+              "normalized_u": 0.00027297572770713967,
+              "raw_delta": 0.0015206071939859109,
+              "raw_scale_s": 0.1795175827043134,
+              "site_id": "q:correction_late:h06:R6:support:superseding_guidance"
+            },
+            {
+              "eligible": true,
+              "normalized_u": 0.00016130331033533733,
+              "raw_delta": 0.0009515922101469455,
+              "raw_scale_s": 0.1695088595885298,
+              "site_id": "q:correction_late:h06:R6:fact:final_priority"
+            },
+            {
+              "eligible": true,
+              "normalized_u": 0.00016999436664553305,
+              "raw_delta": 0.000995962749432782,
+              "raw_scale_s": 0.1706834585353195,
+              "site_id": "q:correction_late:h06:R6:fact:demo_centerpiece"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_late:h06:R6:support:video_constraint"
+            },
+            {
+              "eligible": false,
+              "normalized_u": 0.0,
+              "raw_delta": 0.0,
+              "raw_scale_s": 0.0,
+              "site_id": "q:correction_late:h06:R6:constraint:video_constraint"
+            }
+          ],
+          "fingerprint_sha256": "b88d3017011b4ce72c4437a461aa35238580f26562caf25743864c720356eb33",
+          "normalized_l2": 0.000390625,
+          "placement": "bundle_block_adjoint",
+          "raw_max_abs_delta": 0.009605419700623874,
+          "schema_version": "ebrt-temporal-lineage-control-map-v0.5.4",
+          "sham_transform": null,
+          "step_count": 1
+        },
+        "lane_id": "correction_late",
+        "namespace_prefix": "lane::correction_late::",
+        "normalized_l2_budget": 0.000390625
+      },
+      {
+        "control_count": 0,
+        "inner_control_map": null,
+        "lane_id": "stable_constraint",
+        "namespace_prefix": "lane::stable_constraint::",
+        "normalized_l2_budget": 0.0
+      }
+    ],
+    "merge_control_map": {
+      "controls": [
+        {
+          "clause_id": "eq::correction_early::correction_late::6a36445a19bcc3cd",
+          "control_id": "merge::eq::correction_early::correction_late::6a36445a19bcc3cd",
+          "value": 0.0
+        },
+        {
+          "clause_id": "eq::correction_early::correction_late::30b287074c31fc29",
+          "control_id": "merge::eq::correction_early::correction_late::30b287074c31fc29",
+          "value": 0.0
+        },
+        {
+          "clause_id": "eq::correction_early::correction_late::d04bed2320073dc3",
+          "control_id": "merge::eq::correction_early::correction_late::d04bed2320073dc3",
+          "value": 0.0
+        },
+        {
+          "clause_id": "eq::correction_early::correction_late::aecfa1f2bb7ae50e",
+          "control_id": "merge::eq::correction_early::correction_late::aecfa1f2bb7ae50e",
+          "value": 0.0
+        },
+        {
+          "clause_id": "eq::correction_early::correction_late::9842701e2022a7c1",
+          "control_id": "merge::eq::correction_early::correction_late::9842701e2022a7c1",
+          "value": 0.0
+        },
+        {
+          "clause_id": "eq::correction_early::correction_late::0c4aae894d277434",
+          "control_id": "merge::eq::correction_early::correction_late::0c4aae894d277434",
+          "value": 0.0
+        },
+        {
+          "clause_id": "eq::correction_early::correction_late::00bbd8f862d6a84a",
+          "control_id": "merge::eq::correction_early::correction_late::00bbd8f862d6a84a",
+          "value": -0.00010833988207524007
+        },
+        {
+          "clause_id": "eq::correction_early::correction_late::a83dad5e2c414757",
+          "control_id": "merge::eq::correction_early::correction_late::a83dad5e2c414757",
+          "value": -0.00010833988207524007
+        },
+        {
+          "clause_id": "eq::correction_early::correction_late::7b9de105f841be4e",
+          "control_id": "merge::eq::correction_early::correction_late::7b9de105f841be4e",
+          "value": 0.0
+        },
+        {
+          "clause_id": "eq::correction_early::correction_late::bf79410b08dc2fb9",
+          "control_id": "merge::eq::correction_early::correction_late::bf79410b08dc2fb9",
+          "value": 0.0
+        },
+        {
+          "clause_id": "eq::correction_early::correction_late::80cfdc07c85acbc4",
+          "control_id": "merge::eq::correction_early::correction_late::80cfdc07c85acbc4",
+          "value": 0.00025279305817556014
+        },
+        {
+          "clause_id": "eq::correction_early::correction_late::9f84061d5de0c771",
+          "control_id": "merge::eq::correction_early::correction_late::9f84061d5de0c771",
+          "value": 0.00025279305817556014
+        },
+        {
+          "clause_id": "eq::correction_early::correction_late::7548d41d2c6ed6cb",
+          "control_id": "merge::eq::correction_early::correction_late::7548d41d2c6ed6cb",
+          "value": 0.0
+        },
+        {
+          "clause_id": "eq::correction_early::correction_late::21c2ab79487e5894",
+          "control_id": "merge::eq::correction_early::correction_late::21c2ab79487e5894",
+          "value": 0.0
+        },
+        {
+          "clause_id": "eq::correction_early::correction_late::fa0d7064030084cd",
+          "control_id": "merge::eq::correction_early::correction_late::fa0d7064030084cd",
+          "value": 0.0
+        },
+        {
+          "clause_id": "eq::correction_early::correction_late::204e68d38248355b",
+          "control_id": "merge::eq::correction_early::correction_late::204e68d38248355b",
+          "value": 0.0
+        },
+        {
+          "clause_id": "eq::correction_early::correction_late::27e51d4831fec1fc",
+          "control_id": "merge::eq::correction_early::correction_late::27e51d4831fec1fc",
+          "value": 0.0
+        },
+        {
+          "clause_id": "eq::correction_early::correction_late::b9d91fe336d1a719",
+          "control_id": "merge::eq::correction_early::correction_late::b9d91fe336d1a719",
+          "value": 0.0
+        },
+        {
+          "clause_id": "eq::correction_early::correction_late::69ebe5ae1144be62",
+          "control_id": "merge::eq::correction_early::correction_late::69ebe5ae1144be62",
+          "value": 0.0
+        },
+        {
+          "clause_id": "eq::correction_early::correction_late::4df47873aacc616e",
+          "control_id": "merge::eq::correction_early::correction_late::4df47873aacc616e",
+          "value": 0.0
+        },
+        {
+          "clause_id": "eq::correction_early::correction_late::c3acb928eec499d7",
+          "control_id": "merge::eq::correction_early::correction_late::c3acb928eec499d7",
+          "value": 0.0
+        },
+        {
+          "clause_id": "eq::correction_early::correction_late::ba06f1ae49e6b4d9",
+          "control_id": "merge::eq::correction_early::correction_late::ba06f1ae49e6b4d9",
+          "value": 0.0
+        },
+        {
+          "clause_id": "eq::correction_early::correction_late::5714bce362c509e1",
+          "control_id": "merge::eq::correction_early::correction_late::5714bce362c509e1",
+          "value": 3.611329402508002e-05
+        },
+        {
+          "clause_id": "eq::correction_early::correction_late::ce4e2e62508b7707",
+          "control_id": "merge::eq::correction_early::correction_late::ce4e2e62508b7707",
+          "value": 0.0
+        }
+      ],
+      "normalized_l2": 0.000390625,
+      "normalized_l2_budget": 0.000390625,
+      "parameterization": "separate_bounded_consistency_slack"
+    },
+    "schema_version": "ebrt-lane-control-bundle-v0.5.5"
+  },
+  "fingerprint_sha256": "bbc0059eb2d4f12136259bfef2c5b3a651ce50a3bf3243229e6e2b0378b486e6",
+  "network_calls": 0,
+  "provider_calls": 0,
+  "schema_version": "ebrt-lane-control-bundle-artifact-v0.5.5"
+}
