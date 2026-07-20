@@ -71,6 +71,11 @@ total tokens          38,767
 aggregate latency     45,935.371 ms
 ```
 
+The raw A arm used 1,796 total tokens. B used 11,447 and D/C each used
+11,854, or roughly 6.4-6.6 times A, without a D-over-B/C output benefit. This
+is a measured cost of the current verbose public-program projection, not a
+matched-compute quality comparison.
+
 ## What the block established
 
 ### 1. The hosted bridge exists
@@ -141,6 +146,15 @@ fact, exact lineage, program consistency, and matched effect. The useful story
 is not one green score: it is that P and A look correct at answer level while
 the debugger exposes two different dependency defects, and that D's apparent
 success is not credited to placement when B and C match it exactly.
+
+A small v0.6.3 provider-actuator uptake canary should then precede the proposed
+100-call v0.7 quality suite. It should hold raw context and an admissible
+partial topology fixed, compile displacement into an explicit truth-neutral
+operation such as bounded evidence-reinspection order or budget, and require
+an observable D-versus-C difference in a preregistered public field before
+quality evaluation is allowed. If zero, sham, and exact placement remain
+identical, freeze this hosted actuator projection as inert rather than scaling
+it up.
 
 ## Claim boundary
 

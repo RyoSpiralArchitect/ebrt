@@ -266,9 +266,32 @@ regeneration artifact, a visible final-output diff, strict diagnostic
 separation, and an audited spoken claim ledger. It does not require a positive
 general-accuracy claim.
 
+## v0.6.3 — Provider Actuator Uptake Canary
+
+v0.6.1 showed that the supplied typed DAG reached GPT but did not show that
+continuous control placement did: B, D, and C were byte-identical, while their
+total token cost was roughly 6.4-6.6 times raw A. Before spending the proposed
+100 analyzed calls in v0.7, run a small fresh uptake canary asking only:
+
+> With full raw context and an admissible public topology held fixed, can exact
+> EBRT placement produce a preregistered provider-visible difference from zero
+> control and a geometry-matched sham?
+
+The topology must remain partial rather than specifying the entire accepted
+lineage. Signed displacement must compile into an explicit, truth-neutral
+execution operator, such as a bounded evidence-reinspection order or budget,
+rather than entering as uninterpreted floats. B, C, and D retain matched
+information, schema, and budgets. Exact program-adherence grading applies only
+to structure actually supplied to an arm; common answer and lineage endpoints
+grade every arm.
+
+An observable D-versus-C difference is an uptake gate, not a quality win. If
+B/C/D remain identical, freeze the hosted actuator projection as inert and do
+not launch v0.7. Do not tune or rerun the completed v0.6.1 case.
+
 ## v0.7 — Fresh Matched Hosted Evaluation
 
-v0.7 asks the first quality question after the v0.6 integration canary:
+v0.7 asks the first quality question only after the v0.6.3 uptake gate:
 
 > On a fresh frozen suite where control placement can matter, does composed
 > EBRT control outperform matched public-control and text-only baselines under
@@ -350,6 +373,7 @@ control. Novelty is not allowed to rescue a failed v0.6-v0.8 endpoint.
 | v0.6.0 | the exact sealed bundle has a deterministic provider-safe projection | any hosted execution or answer improvement |
 | v0.6.1 | a real full-context bundle-to-output path and separately graded answer/lineage effect | controlled superiority, general quality, or gradients through the hosted model |
 | v0.6.2 | a judge-readable, reproducible Reasoning IDE workflow | a final frontend or a population-level algorithm claim |
+| v0.6.3 | the hosted provider observably consumes a bounded public actuator under a matched sham | that the changed output is better or that placement generalizes |
 | v0.7 | a paired effect on one fresh frozen hosted suite | provider- or task-general superiority |
 | v0.8 | independently executed same-model public lanes can be sealed before outcome and composed into one regeneration | autonomous agents, heterogeneous superiority, or optimal routing |
 | v0.9 | a bounded open-model latent intervention result | equivalence between latent and public semantic trajectories |
