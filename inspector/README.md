@@ -5,7 +5,9 @@ artifact. It presents one public product path:
 
 ```text
 Before + late event
-  -> local public surrogate backward()
+  -> neutral public trajectory
+  -> one time-local public surrogate backward()
+  -> revised public trajectory
   -> public control map
   -> compiled provider-visible actuator
   -> recorded GPT-5.6 full-context output
@@ -26,14 +28,37 @@ prior public state, closure graphs, fingerprints, or provider configuration.
 There is no automatic retry. Stopping the browser wait aborts only the browser
 request; the server operation may still complete.
 
+Live protocol `v0.6.2.4` exposes Runtime Preview 3's public temporal revision
+path. The backend starts from the compiled public Before vector, executes a
+chronological neutral trajectory, performs one real local `float64` backward
+over eligible time sites, and replays the same public recurrence with bounded
+time-local controls. The Inspector shows both neutral and revised trajectories,
+the matched temporal sham objective, temporal credit, optimized public
+inspection shares, the full-admission support reference used by the
+preterminal path objective, deterministic abstract budget units, compiled
+program, and executed state trace. The three trajectory coordinates are a
+hand-built public surrogate; they are not private model states or a transcript
+of private model reasoning. Inspection fields are external review directives—not provider
+attention probabilities or token budgets. Provider uptake remains
+`NOT_ASSESSED`.
+
+The live parser requires the public trajectory to bind to the actual Before
+state, and requires its fingerprint to propagate exactly through the compiled
+actuator, inspection plan, revision program, and execution receipt. Neutral,
+revised, matched-sham, chronology, locality, stable-axis identity, path-loss,
+and gradient-boundary checks are exact hard gates. The recorded `v0.6.2.1`
+artifact has no temporal trajectory and remains a supported fallback; its
+existing signed-credit view is rendered unchanged and makes no live request.
+
 The Live display retains the whole demo envelope, recomputes its request and
 envelope fingerprints, and requires the response input fingerprint, provenance,
 source fingerprint, Before state, event, and evidence to bind back to that
 envelope. Every JSON response carries `X-EBRT-Body-SHA256`; the browser hashes
 the received bytes before parsing, recomputes the live response self-seal from
 the number-lexeme-preserving canonical body, and displays the independently
-verified transport digest. The parser also requires the exact 12
-operational rows, two exact `NOT_ASSESSED` rows, and their aggregate status
+verified transport digest. The parser also requires the exact operational
+rows, two exact `NOT_ASSESSED` rows, the trajectory/controller/actuator/execution
+hard gates, and their aggregate status
 relationships before the UI can render a terminal. These unkeyed hashes are
 loopback integrity checks, not signatures or remote-backend authentication.
 
@@ -47,8 +72,13 @@ VITE_EBRT_API_BASE_URL=http://127.0.0.1:8765/api/ pnpm dev
 ```
 
 Provider credentials remain server-side. Live results report operational path
-status only. Semantic correctness and effect attribution remain
-`NOT_ASSESSED`.
+status only. Semantic correctness, provider uptake, hosted counterfactual
+effect, and effect attribution remain `NOT_ASSESSED`. The public
+block/unblock audit is limited to the selected caller-supplied graph. The
+temporal placement comparison is local to the declared public recurrence and
+does not establish hosted-model causality, hidden-state editing, attention
+control, KV-cache control, quality improvement, or general reasoning
+improvement.
 
 ## Deterministic public projection
 

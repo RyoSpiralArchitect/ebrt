@@ -143,7 +143,8 @@ contracts:
 | Latent north star | model-native hidden trajectory and admitted latent controls | Research hypothesis; not implemented for GPT or another hosted model |
 | Public differentiable substrate | typed semantic states, dependencies, local recurrence, and bounded external controls | Mechanism studied by v0.5.0 and the experimental v0.5-T branch |
 | Full-context execution backend | public control map projected into one full-context regeneration | Implemented as a non-differentiable bridge in v0.5.1 and exercised in v0.5.2 |
-| Reasoning debugger | recorded evidence, event, controls, output diff, and strict diagnostics | Provisional read-only Inspector/Workbench; not a final product surface |
+| Revisable public trajectory runtime | chronological three-axis public recurrence, trajectory-wide loss, time-local controls, replay, and compiled actuator | Implemented network-zero in Runtime Preview 3 (`v0.6.2.4`); no new hosted-effect result |
+| Reasoning IDE | recorded or live evidence, event, neutral/revised trajectories, controls, output diff, and strict diagnostics | Provisional Inspector/Workbench surface; not a final product claim |
 
 The public representation is neither a transcript of private chain-of-thought
 nor a claim that it is isomorphic to model internals. It is an intentionally
@@ -198,7 +199,11 @@ The word has deliberately different, bounded meanings:
   and
 - in v0.5.5, it means exact block credit over three byte-sealed public
   trajectories joined by one fixed typed incidence program, with a disconnected
-  stable Constraint lane and separately bounded merge slack.
+  stable Constraint lane and separately bounded merge slack; and
+- in Runtime Preview 3 (`v0.6.2.4`), it means one real reverse-mode pass over
+  bounded scalar controls inside a chronological three-axis public recurrence,
+  followed by deterministic projected replay and exact compilation into the
+  existing public actuator.
 
 None of these definitions licenses the phrase "backpropagation through GPT."
 

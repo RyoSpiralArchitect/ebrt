@@ -1,6 +1,6 @@
 # EBRT v0.6+ — Execution, Evaluation, and Orchestration Roadmap
 
-Status: **v0.6.0 PREFLIGHT PASS; v0.6.1 FIVE-CALL BLOCK COMPLETE, GATE HELD; v0.6.2.1 APPLY-REVISION LIVE R01 PRODUCT ACCEPTANCE PASS, EFFECT NOT ASSESSED; v0.6.2.2 CURRENT TYPED INVALIDATION-REVISION MONOLITH, SEMANTIC QUALITY AND EFFECT NOT ASSESSED; v0.6.3 LIVE R01 EXECUTED ONCE, STOP_OUTPUT_CONTRACT; v0.6.3.1 LIVE R01 COMPLETE, PROMOTE TO FRESH REPLICATION; v0.6.3.2 LIVE R01 COMPLETE, D/C REPEATED, X/Z CEILING STOP; v0.6.4 BLOCKED; REASONING IDE CONVERGENCE IN PROGRESS**
+Status: **v0.6.0 PREFLIGHT PASS; v0.6.1 FIVE-CALL BLOCK COMPLETE, GATE HELD; v0.6.2.1 APPLY-REVISION LIVE R01 PRODUCT ACCEPTANCE PASS, EFFECT NOT ASSESSED; RUNTIME PREVIEW 2 CONTINUOUS REVISION PROGRAM NETWORK-ZERO PASS, HOSTED UPTAKE NOT ASSESSED; v0.6.3 LIVE R01 EXECUTED ONCE, STOP_OUTPUT_CONTRACT; v0.6.3.1 LIVE R01 COMPLETE, PROMOTE TO FRESH REPLICATION; v0.6.3.2 LIVE R01 COMPLETE, D/C REPEATED, X/Z CEILING STOP; v0.6.4 BLOCKED; REASONING IDE CONVERGENCE IN PROGRESS**
 
 The one allowed v0.6.1 block ran on 2026-07-20 in the preregistered order
 `P -> A -> B -> D -> C`. All five calls completed and the committed artifact
@@ -368,6 +368,33 @@ unverified. The initial HTTP surface is loopback-only:
 This milestone closes the product-monolith convergence item. It does not open
 v0.6.4, answer the fresh matched-quality question reserved for v0.7, or convert
 the historical demo into independent evidence.
+
+### Runtime Preview 3 — Temporal Public Trajectory Control
+
+The live monolith now makes the public revision state itself chronological and
+revisable. It rolls a three-axis public trajectory forward across the ordered
+evidence, evaluates a terminal-plus-nonterminal public objective, executes one
+real float64 backward over scalar time-local controls, projects the update to a
+global L2 budget, and rolls the same declared recurrence forward again. The
+accepted control magnitudes are then decoded into the existing deterministic
+inspection allocation, review depth, execution order, and
+`LOAD_EVENT -> SUPPRESS* -> REINSPECT* -> PRESERVE* -> PREPARE` state machine.
+
+The nonterminal path objective compares the support trajectory with a
+role-blind, graph-incidence-derived full-admission reference. It contains no
+answer, accepted closure ID, target value, or semantic gold. A matched temporal
+sham preserves the eligible control-value multiset and norm while permuting
+placement; a no-event sentinel is an exact zero-backward identity. The runtime
+rederives finite differences, the deterministic projected/backtracked update,
+neutral and revised replay, the matched sham, and the trajectory fingerprint
+chain before provider execution, so coherently resealed telemetry cannot stand
+in for the scientific computation.
+
+This remains a hand-built, one-horizon public surrogate—not MPC, hidden-state
+editing, attention/token control, or differentiation through GPT. Preview 3
+adds no new hosted contrast. Provider uptake, semantic correctness, causal
+superiority, general reasoning improvement, and output effect attribution
+remain `NOT_ASSESSED`; v0.6.4 remains blocked by its independent research gate.
 
 ## v0.6.3 — Provider Actuator Calibration Canary
 
