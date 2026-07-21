@@ -168,6 +168,36 @@ passing public outputs. Raw arm A returned the correct `PROVE` answer but
 omitted R4 from `final_priority`. This is a real bridge and a useful control-
 channel null result, not evidence that gradient placement improves GPT.
 
+### v0.6.2.1 Apply Revision acceptance
+
+EBRT now converges the product path into one executable,
+[`ebrt.py`](ebrt.py). It takes an actual typed Before output, runs one local
+float64 backward pass over an actual-Before-conditioned public surrogate,
+compiles a bounded `Reinspect / Suppress / Preserve` operation, and performs
+one dependent full-context regeneration. The hosted model is not
+differentiated, and semantic gold is parsed only after two structurally valid
+provider terminals exist.
+
+The frozen acceptance case is intentionally contaminated and case-specific.
+Its purpose is to test whether `Apply Revision -> Regenerate` is executable,
+observable, and strictly verifiable—not whether the control caused an
+improvement. Therefore every result keeps
+`effect_attribution_status = NOT_ASSESSED`.
+
+Run the network-zero contract checks:
+
+```bash
+python3 ebrt.py self-test
+python3 ebrt.py preflight
+```
+
+The sealed contract, post-call-only gold, and UI concept are documented in
+[`RND_APPLY_REVISION_ACCEPTANCE_V0_6_2_1.md`](docs/RND_APPLY_REVISION_ACCEPTANCE_V0_6_2_1.md).
+Live execution remains a separate one-shot step requiring the committed policy
+lock and the exact annotated authorization tag. A structurally valid but
+semantically unexpected Before still receives exactly one After attempt; a
+failure is preserved without retry, resume, backfill, or a third call.
+
 ### v0.6.3 network-zero actuator preflight
 
 EBRT v0.6.3 now freezes the next control question in one readable monolith,

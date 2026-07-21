@@ -1,6 +1,6 @@
 # EBRT v0.6+ — Execution, Evaluation, and Orchestration Roadmap
 
-Status: **v0.6.0 PREFLIGHT PASS; v0.6.1 FIVE-CALL BLOCK COMPLETE, GATE HELD; v0.6.3 LIVE R01 EXECUTED ONCE, STOP_OUTPUT_CONTRACT; v0.6.3.1 LIVE R01 COMPLETE, PROMOTE TO FRESH REPLICATION; v0.6.3.2 LIVE R01 COMPLETE, D/C REPEATED, X/Z CEILING STOP; v0.6.4 BLOCKED; RETURN TO REASONING IDE**
+Status: **v0.6.0 PREFLIGHT PASS; v0.6.1 FIVE-CALL BLOCK COMPLETE, GATE HELD; v0.6.2.1 APPLY-REVISION ZERO-CALL CONTRACT PASS, LIVE AUTHORIZATION PENDING; v0.6.3 LIVE R01 EXECUTED ONCE, STOP_OUTPUT_CONTRACT; v0.6.3.1 LIVE R01 COMPLETE, PROMOTE TO FRESH REPLICATION; v0.6.3.2 LIVE R01 COMPLETE, D/C REPEATED, X/Z CEILING STOP; v0.6.4 BLOCKED; RETURN TO REASONING IDE**
 
 The one allowed v0.6.1 block ran on 2026-07-20 in the preregistered order
 `P -> A -> B -> D -> C`. All five calls completed and the committed artifact
@@ -289,6 +289,34 @@ Demo readiness requires deterministic artifact playback, one real hosted
 regeneration artifact, a visible final-output diff, strict diagnostic
 separation, and an audited spoken claim ledger. It does not require a positive
 general-accuracy claim.
+
+### v0.6.2.1 — Apply Revision Acceptance
+
+The promoted product path is now one single-lane monolith, `ebrt.py`:
+
+```text
+actual hosted Before
+  -> factorized public state
+  -> actual-Before-conditioned local backward()
+  -> bounded public control map
+  -> Reinspect / Suppress / Preserve actuator
+  -> one dependent full-context regeneration
+  -> strict output, lineage, invalidation, and stable-fact verification
+```
+
+This namespace asks for product integration acceptance, not another matched
+effect experiment. It inherits the known contaminated R1-R6 walkthrough,
+presents multiple opaque closure candidates without provider-visible gold,
+and loads semantic gold only after two structurally valid terminals. The
+dynamic Call-2 bytes are durably sealed only after the actual Call-1 output has
+been normalized and used by the public surrogate.
+
+The network-zero self-test requires an all-green scripted acceptance, exact
+six-event journal, no-network execution, post-call gold barrier, dynamic
+payload binding, artifact round-trip, and coherent tamper rejection. Live use
+requires a separately merged policy lock and the exact annotated authorization
+tag, then consumes at most two no-retry attempts in one namespace. Regardless
+of the product endpoint, `effect_attribution_status` remains `NOT_ASSESSED`.
 
 ## v0.6.3 — Provider Actuator Calibration Canary
 
