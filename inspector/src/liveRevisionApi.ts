@@ -28,6 +28,17 @@ const OPERATIONAL_ROW_LABELS: Record<string, string> = {
 };
 const SEMANTIC_ROW_DETAIL = "Reserved gold fields are rejected; caller semantic content is unverified";
 const EFFECT_ROW_DETAIL = "One regeneration is not a causal contrast";
+const CONTROL_CHECK_KEYS = [
+  "actual_before_state_bound_to_controller",
+  "local_backward_executed",
+  "finite_reinspection_salience",
+  "surrogate_objective_decreased",
+  "non_neutral_control_map",
+  "control_budget_respected",
+  "finite_difference_agreement",
+  "gradient_stops_before_provider",
+  "reserved_gold_fields_absent",
+] as const;
 
 export class LiveRevisionApiError extends Error {
   readonly code: string;
@@ -311,7 +322,12 @@ function parseResponse(
 
   const mechanismStatus = binaryStatus(mechanism.status, "response.mechanism.status");
   const controlChecks = booleanRecord(control.checks, "response.mechanism.public_control_map.checks");
-  if (!Object.keys(controlChecks).length || !Object.values(controlChecks).every(Boolean)) {
+  const controlCheckKeys = Object.keys(controlChecks);
+  if (
+    controlCheckKeys.length !== CONTROL_CHECK_KEYS.length ||
+    CONTROL_CHECK_KEYS.some((key) => controlChecks[key] !== true) ||
+    controlCheckKeys.some((key) => !CONTROL_CHECK_KEYS.includes(key as (typeof CONTROL_CHECK_KEYS)[number]))
+  ) {
     return fail("response.mechanism.public_control_map.checks hard gate");
   }
   if (mechanismStatus !== "PASS") return fail("response.mechanism.status hard gate");
