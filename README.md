@@ -261,8 +261,9 @@ python3 -I -S verify_actuator_uptake_canary_v0_6_3_1_portable.py self-test
 
 The monolith has no live command and authorizes zero provider calls. Its
 separately authorized four-call successor could return at most
-`PROMOTE_TO_FRESH_REPLICATION`; v0.6.4 stays blocked until a new sealed case
-replicates any directional uptake. See the
+`PROMOTE_TO_FRESH_REPLICATION`; it could not directly open v0.6.4. That
+historical successor later opened only the separately sealed v0.6.3.2
+replication recorded below. See the
 [`v0.6.3.1 R&D note`](docs/RND_ACTUATOR_UPTAKE_CANARY_V0_6_3_1.md).
 
 The separately reviewed live successor is
@@ -284,8 +285,9 @@ All four calls completed. C, X, D, and Z selected `K_5c1377f2fc`,
 classifier returned `CHANNEL_OPEN_DIRECTIONAL`,
 `GRADIENT_PLACEMENT_DIRECTIONAL`, and `PROMOTE_TO_FRESH_REPLICATION`; direct
 v0.6.4 promotion remains false. This is one fixed serial block and cannot
-separate evidence-order treatment from temporal or provider drift. The next
-action is fresh preregistered replication, not UI work or v0.6.4. See the
+separate evidence-order treatment from temporal or provider drift. Its frozen
+next action was fresh preregistered replication rather than direct v0.6.4; that
+replication has now been consumed as the v0.6.3.2 ceiling result below. See the
 [`live-r01 result note`](docs/RND_ACTUATOR_UPTAKE_CANARY_V0_6_3_1_LIVE_R01_RESULT.md),
 the
 [`canonical artifact`](artifacts/actuator_uptake_canary_v0_6_3_1_live_r01),
