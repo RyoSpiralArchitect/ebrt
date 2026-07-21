@@ -37,7 +37,7 @@
     "semantic_gold_loaded_only_after_two_structurally_valid_terminals": true,
     "structurally_valid_before_always_continues": true
   },
-  "fingerprint_sha256": "8cc290a71ba88fa2b2b131d72b8b315492a76324a22527886f2c132c68154f99",
+  "fingerprint_sha256": "31b27497b6ff05369e9f33110f6faa1c3765a2e4caae710a2aa7d7661c4f111e",
   "fixture_fingerprint_sha256": "a10f903ee492b0741de3f2e0be8742311ae80bc09eb6b097a3b2c2de6ec1e484",
   "provider": {
     "after_payload_fingerprint_sha256": null,
@@ -82,9 +82,9 @@
       "sha256": "a4565a4452804e2017a71d060373f759f18dbd02baccc89f8ffbf6d93a49d925"
     },
     "product_runtime": {
-      "bytes": 142658,
+      "bytes": 144723,
       "path": "ebrt.py",
-      "sha256": "498873e4c327811ac89ae30d61215fca8ff1b50cecfe79d4b3cfe262428c3c22"
+      "sha256": "03cd8b629dae10b27761c315d91dc2c33b76b3ba8fb417888789263482088266"
     },
     "provider_boundary": {
       "bytes": 54590,

@@ -1902,10 +1902,45 @@ def validate_gold(gold: Mapping[str, Any], fixture: Mapping[str, Any]) -> None:
     _require(acceptance["effect_attribution_status"] == "NOT_ASSESSED", "GOLD_EFFECT_STATUS_DRIFT")
 
 
-def _load_gold(fixture: Mapping[str, Any]) -> JsonObject:
-    gold = _strict_load(GOLD_PATH)
+def _gold_from_bytes(
+    raw: bytes,
+    fixture: Mapping[str, Any],
+    *,
+    locked_source_receipt: Mapping[str, Any] | None = None,
+) -> JsonObject:
+    if locked_source_receipt is not None:
+        expected = _exact_keys(
+            locked_source_receipt,
+            {"path", "bytes", "sha256"},
+            "locked_gold_source_receipt",
+        )
+        observed = {
+            "path": str(GOLD_PATH.relative_to(ROOT)),
+            "bytes": len(raw),
+            "sha256": _sha256_bytes(raw),
+        }
+        _require(
+            observed == expected,
+            "POST_CALL_GOLD_SOURCE_RECEIPT_DRIFT",
+        )
+    gold = _strict_json_bytes(raw, label=str(GOLD_PATH))
+    _require(isinstance(gold, dict), "JSON_ROOT_NOT_OBJECT", str(GOLD_PATH))
     validate_gold(gold, fixture)
     return gold
+
+
+def _load_gold(
+    fixture: Mapping[str, Any],
+    *,
+    locked_source_receipt: Mapping[str, Any] | None = None,
+) -> JsonObject:
+    # Parse exactly the bytes whose receipt is checked here.  Hashing the path
+    # first and reopening it later would leave a TOCTOU window in the live path.
+    return _gold_from_bytes(
+        GOLD_PATH.read_bytes(),
+        fixture,
+        locked_source_receipt=locked_source_receipt,
+    )
 
 
 def _grade(compiled: Mapping[str, Any], expected: Mapping[str, Any]) -> JsonObject:
@@ -2175,20 +2210,15 @@ def _semantic_gold_denied() -> Iterator[dict[str, int]]:
     """Deny semantic parsing while either provider call can still occur.
 
     The lock and live source guard are allowed to hash the opaque gold bytes.
-    Only ``_strict_load(GOLD_PATH)`` crosses the semantic boundary.
+    Only ``_load_gold(...)`` crosses the semantic boundary.
     """
 
     counts = {"attempted_gold_accesses": 0}
-    original = _strict_load
-    gold_path = GOLD_PATH.resolve()
+    def guarded(*_args: Any, **_kwargs: Any) -> JsonObject:
+        counts["attempted_gold_accesses"] += 1
+        raise ApplyRevisionError("SEMANTIC_GOLD_ACCESSED_BEFORE_TWO_TERMINALS")
 
-    def guarded(path: Path) -> JsonObject:
-        if path.resolve() == gold_path:
-            counts["attempted_gold_accesses"] += 1
-            raise ApplyRevisionError("SEMANTIC_GOLD_ACCESSED_BEFORE_TWO_TERMINALS")
-        return original(path)
-
-    with mock.patch.object(sys.modules[__name__], "_strict_load", guarded):
+    with mock.patch.object(sys.modules[__name__], "_load_gold", guarded):
         yield counts
 
 
@@ -2925,7 +2955,16 @@ def validate_bundle(
     )
     gold = None
     if execution["two_structurally_valid_terminals"]:
-        gold = _load_gold(fixture) if in_memory_gold is None else _clone(in_memory_gold)
+        gold = (
+            _load_gold(
+                fixture,
+                locked_source_receipt=effective_lock["sources"][
+                    "post_call_semantic_gold"
+                ],
+            )
+            if in_memory_gold is None
+            else _clone(in_memory_gold)
+        )
         validate_gold(gold, fixture)
     else:
         _require(in_memory_gold is None, "INCOMPLETE_BUNDLE_MUST_NOT_RECEIVE_GOLD")
@@ -3080,6 +3119,28 @@ def self_test() -> JsonObject:
         opaque_lock["semantic_gold_bytes_sha256"] == _sha256_path(GOLD_PATH)
         and semantic_parse_rejected
         and precise_barrier["attempted_gold_accesses"] == 1
+    )
+    locked_gold_receipt = opaque_lock["sources"]["post_call_semantic_gold"]
+    locked_gold = _load_gold(
+        fixture,
+        locked_source_receipt=locked_gold_receipt,
+    )
+    tampered_gold_rejected = False
+    gold_raw = GOLD_PATH.read_bytes()
+    try:
+        _gold_from_bytes(
+            b"[" + gold_raw[1:],
+            fixture,
+            locked_source_receipt=locked_gold_receipt,
+        )
+    except ApplyRevisionError as error:
+        tampered_gold_rejected = (
+            error.reason_code == "POST_CALL_GOLD_SOURCE_RECEIPT_DRIFT"
+        )
+    checks["live_gold_load_bound_to_locked_bytes"] = (
+        locked_gold["source_fixture"]["fingerprint_sha256"]
+        == fixture["fingerprint_sha256"]
+        and tampered_gold_rejected
     )
     with tempfile.TemporaryDirectory(prefix="ebrt-apply-revision-self-test-") as raw_tmp:
         temporary = Path(raw_tmp)
@@ -3371,7 +3432,14 @@ def run_live(output: Path = DEFAULT_OUTPUT) -> JsonObject:
         )
         raise
 
-    gold = _load_gold(fixture) if execution["two_structurally_valid_terminals"] else None
+    gold = (
+        _load_gold(
+            fixture,
+            locked_source_receipt=lock["sources"]["post_call_semantic_gold"],
+        )
+        if execution["two_structurally_valid_terminals"]
+        else None
+    )
     result = finalize_result(fixture, execution, gold)
     files = _materialize_files(
         result,

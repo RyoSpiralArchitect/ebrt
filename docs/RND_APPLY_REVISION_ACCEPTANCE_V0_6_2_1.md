@@ -431,7 +431,7 @@ clean HEAD, and one new output namespace.
 ```text
 fixture fingerprint     a10f903ee492b0741de3f2e0be8742311ae80bc09eb6b097a3b2c2de6ec1e484
 gold fingerprint        1a6fee91d2c676c249436f652bacdd50fdcfd8e7fe8b30e4eefd919723b9b872
-policy-lock fingerprint 8cc290a71ba88fa2b2b131d72b8b315492a76324a22527886f2c132c68154f99
+policy-lock fingerprint 31b27497b6ff05369e9f33110f6faa1c3765a2e4caae710a2aa7d7661c4f111e
 before payload          088efd8ad4ab606169878045f780e4c3e93fbfe70efcd18f6e42850132b2b8e3
 ```
 
