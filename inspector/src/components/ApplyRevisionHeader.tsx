@@ -25,8 +25,18 @@ export function ApplyRevisionHeader({
   return (
     <header className="ar-header">
       <div className="ar-brand">
+        <span aria-hidden="true" className="ar-spiral-hero">
+          <img
+            alt=""
+            decoding="async"
+            draggable={false}
+            height="48"
+            src="/spiral-hero-48.jpg"
+            width="48"
+          />
+        </span>
         <strong>EBRT</strong>
-        <span>Apply Revision</span>
+        <span className="ar-brand-subtitle">Apply Revision</span>
       </div>
       <div className="ar-case-line">
         <span>CASE</span>
