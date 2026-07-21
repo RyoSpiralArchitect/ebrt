@@ -1,0 +1,617 @@
+{
+  "block_schedules": {
+    "A": [
+      "C",
+      "Z",
+      "D",
+      "X"
+    ],
+    "B": [
+      "D",
+      "X",
+      "C",
+      "Z"
+    ]
+  },
+  "case_id": "orbital_manifest_revision_f",
+  "claim_boundary": [
+    "This fresh fixture tests whether one public evidence-order contrast repeats under pairwise serial-position counterbalancing.",
+    "All eight scheduled attempts reuse exactly four sealed payload byte strings; only evidence sequence position differs between arm payloads.",
+    "The hosted model is not differentiated and no claim is made about hidden states, attention, KV cache, or private reasoning.",
+    "selected_closure_id is the primary public action; reviewed_evidence_ids remains a secondary inspection receipt.",
+    "Only a strict directional result in both complete blocks can open a v0.6.4 network-zero preflight; this namespace never authorizes live execution."
+  ],
+  "controller_audit_fingerprint_sha256": "a0c78c5659869c8519a4d96f7246e234ffce61e1ab18b09d31e4a0523fc00f75",
+  "execution_order": [
+    "C",
+    "Z",
+    "D",
+    "X",
+    "D",
+    "X",
+    "C",
+    "Z"
+  ],
+  "execution_schedule": [
+    {
+      "blinded_attempt_id": "A_39276f79d4d0b99f",
+      "blinded_request_id": "Q_9c19934ca3e89315",
+      "block_id": "A",
+      "payload_fingerprint_sha256": "cd79b48764fcf316a794dd43d854308cfbfb45895adccd405ba64340e6a35b05",
+      "sequence_index": 1,
+      "treatment_id": "C",
+      "within_block_index": 1
+    },
+    {
+      "blinded_attempt_id": "A_21009567d2b053a7",
+      "blinded_request_id": "Q_164a956eb63d7d9f",
+      "block_id": "A",
+      "payload_fingerprint_sha256": "ffa986deea3af1c9e63d5633e407c86e81b70b0a29b7eb2401be91f08197995a",
+      "sequence_index": 2,
+      "treatment_id": "Z",
+      "within_block_index": 2
+    },
+    {
+      "blinded_attempt_id": "A_2e4f7eee0d24f793",
+      "blinded_request_id": "Q_d5e1d40fbdddf363",
+      "block_id": "A",
+      "payload_fingerprint_sha256": "1c3eb3971d4c6e5f418b6e3ff40c9d02177812d2307a140367d82c581c66279a",
+      "sequence_index": 3,
+      "treatment_id": "D",
+      "within_block_index": 3
+    },
+    {
+      "blinded_attempt_id": "A_a6b410a44c449443",
+      "blinded_request_id": "Q_d01c5582258746a7",
+      "block_id": "A",
+      "payload_fingerprint_sha256": "1e1a3bb4a16ac2592a8fe8e72ee6d943f2257f87e4cfc8dfbac4534315e94fef",
+      "sequence_index": 4,
+      "treatment_id": "X",
+      "within_block_index": 4
+    },
+    {
+      "blinded_attempt_id": "A_4c5f5a302b77395a",
+      "blinded_request_id": "Q_d5e1d40fbdddf363",
+      "block_id": "B",
+      "payload_fingerprint_sha256": "1c3eb3971d4c6e5f418b6e3ff40c9d02177812d2307a140367d82c581c66279a",
+      "sequence_index": 5,
+      "treatment_id": "D",
+      "within_block_index": 1
+    },
+    {
+      "blinded_attempt_id": "A_8c46e16cbc877b13",
+      "blinded_request_id": "Q_d01c5582258746a7",
+      "block_id": "B",
+      "payload_fingerprint_sha256": "1e1a3bb4a16ac2592a8fe8e72ee6d943f2257f87e4cfc8dfbac4534315e94fef",
+      "sequence_index": 6,
+      "treatment_id": "X",
+      "within_block_index": 2
+    },
+    {
+      "blinded_attempt_id": "A_256e156a33fa6895",
+      "blinded_request_id": "Q_9c19934ca3e89315",
+      "block_id": "B",
+      "payload_fingerprint_sha256": "cd79b48764fcf316a794dd43d854308cfbfb45895adccd405ba64340e6a35b05",
+      "sequence_index": 7,
+      "treatment_id": "C",
+      "within_block_index": 3
+    },
+    {
+      "blinded_attempt_id": "A_fbb3e5ecef6097ca",
+      "blinded_request_id": "Q_164a956eb63d7d9f",
+      "block_id": "B",
+      "payload_fingerprint_sha256": "ffa986deea3af1c9e63d5633e407c86e81b70b0a29b7eb2401be91f08197995a",
+      "sequence_index": 8,
+      "treatment_id": "Z",
+      "within_block_index": 4
+    }
+  ],
+  "fingerprint_sha256": "6b9125b40dbb2d00c84bf7609deca4389c04ab33d262b0fc6000c2c939ffecd4",
+  "fixture_audit": {
+    "candidate_ids": [
+      "K_fff6ffe598",
+      "K_265e97f857",
+      "K_16b90151c4",
+      "K_8027291974"
+    ],
+    "case_id": "orbital_manifest_revision_f",
+    "chunk_hashes": [
+      "d56b80634983d3cade1b8ad7d8a389241879584ff28119a28e5357ad788bf350",
+      "e3520b97cb990c972c058542fab70a604682f227cacaeb8f0146fe1a46fa4122",
+      "eafd7c2293f255a72bd206ff488203e30b397d49cdbd73c50dc81941bbaaa9b9",
+      "4f2da4ecf8900fcc3da43c5d648eb65318668cfdae39e8a8ed604891ac8b7d84",
+      "53f0e958bf4921115f23770cd44e7df99baa231d8a449a5861a72fcf756afada",
+      "d483c57a9abefdca7cc5b9bc7a57c03bf82bbff8743a1732a3ec8ae22eb43ef1",
+      "85c9e1b766f33501a6f7d4998410c724c1401a2ea24e06200aff1dc536bfdbfe"
+    ],
+    "evidence_ids": [
+      "N1",
+      "N2",
+      "N3",
+      "N4",
+      "N5",
+      "N6",
+      "N7"
+    ]
+  },
+  "gold_load_count_after_release": 1,
+  "gold_release_condition": "AFTER_EIGHT_STRUCTURALLY_VALID_TERMINALS",
+  "gold_used_for_projection": false,
+  "operator": "evidence_permutation",
+  "permutation_geometry": {
+    "case_id": "orbital_manifest_revision_f",
+    "checks": {
+      "all_four_orders_distinct": true,
+      "d_alignment_exceeds_c": true,
+      "d_c_anchor_positions_matched": true,
+      "d_c_fixed_points_matched": true,
+      "d_c_footrule_matched": true,
+      "d_c_kendall_matched": true
+    },
+    "d_minus_c_alignment": 0.3716460863781119,
+    "distances_from_z": {
+      "C": {
+        "fixed_points": 4,
+        "kendall": 4,
+        "spearman_footrule": 6
+      },
+      "D": {
+        "fixed_points": 4,
+        "kendall": 4,
+        "spearman_footrule": 6
+      }
+    },
+    "fingerprint_sha256": "9b6f132da5255b57f176d3aeec454ee1a0e4e9341b5ccdf8b583bacde6defdb1",
+    "orders": {
+      "C": [
+        "N3",
+        "N4",
+        "N6",
+        "N1",
+        "N2",
+        "N5",
+        "N7"
+      ],
+      "D": [
+        "N1",
+        "N2",
+        "N6",
+        "N3",
+        "N4",
+        "N5",
+        "N7"
+      ],
+      "X": [
+        "N6",
+        "N5",
+        "N1",
+        "N2",
+        "N3",
+        "N4",
+        "N7"
+      ],
+      "Z": [
+        "N1",
+        "N3",
+        "N6",
+        "N4",
+        "N2",
+        "N5",
+        "N7"
+      ]
+    },
+    "positional_alignment": {
+      "C": 0.7774146000668161,
+      "D": 1.149060686444928
+    },
+    "schema_version": "ebrt-actuator-uptake-permutation-geometry-v0.6.3.2"
+  },
+  "primary_public_action_field": "selected_closure_id",
+  "provider_calls_authorized": 0,
+  "provider_calls_observed": 0,
+  "provider_payload_count": 4,
+  "provider_payloads": [
+    {
+      "blinded_request_id": "Q_164a956eb63d7d9f",
+      "payload": {
+        "answer_choices": [
+          "SILVER",
+          "JADE"
+        ],
+        "candidate_closures": [
+          {
+            "closure_id": "K_fff6ffe598",
+            "selected_evidence_ids": [
+              "N1",
+              "N3",
+              "N6",
+              "N7"
+            ]
+          },
+          {
+            "closure_id": "K_265e97f857",
+            "selected_evidence_ids": [
+              "N1",
+              "N2",
+              "N6",
+              "N7"
+            ]
+          },
+          {
+            "closure_id": "K_16b90151c4",
+            "selected_evidence_ids": [
+              "N1",
+              "N2",
+              "N5",
+              "N7"
+            ]
+          },
+          {
+            "closure_id": "K_8027291974",
+            "selected_evidence_ids": [
+              "N3",
+              "N4",
+              "N6",
+              "N7"
+            ]
+          }
+        ],
+        "checkpoint_id": "orbital_manifest_revision_f:post_event",
+        "fingerprint_sha256": "ffa986deea3af1c9e63d5633e407c86e81b70b0a29b7eb2401be91f08197995a",
+        "ordered_raw_evidence": [
+          {
+            "evidence_id": "N1",
+            "text": "Certified dispatch rule: one complete current manifest chain is sufficient to establish the active corridor for shipment M."
+          },
+          {
+            "evidence_id": "N3",
+            "text": "Independent port clearance PC-31 records corridor JADE for shipment M when paired with its attestation receipt."
+          },
+          {
+            "evidence_id": "N6",
+            "text": "Latest cancellation: legacy routing bulletin RB-8 is withdrawn. Use one complete currently authorized chain; N5 is invalidated."
+          },
+          {
+            "evidence_id": "N4",
+            "text": "Attestation receipt AR-31 authenticates port clearance PC-31 for the current dispatch epoch."
+          },
+          {
+            "evidence_id": "N2",
+            "text": "Current manifest channel A records corridor JADE for shipment M and is valid for this dispatch epoch."
+          },
+          {
+            "evidence_id": "N5",
+            "text": "Legacy routing bulletin RB-8 records corridor SILVER and remains usable unless a later cancellation names it."
+          },
+          {
+            "evidence_id": "N7",
+            "text": "The final machine-readable dispatch record must remain ATTESTED_CBOR regardless of the selected corridor."
+          }
+        ],
+        "question": "Which dispatch corridor is active for shipment M after applying the latest valid evidence? Answer SILVER or JADE.",
+        "record_format_choices": [
+          "ATTESTED_CBOR"
+        ],
+        "response_contract": {
+          "choose_exactly_one_candidate_closure": true,
+          "return_private_reasoning": false,
+          "reviewed_evidence_count": 3,
+          "schema_version": "ebrt-actuator-uptake-provider-output-v0.6.3.1"
+        },
+        "schema_version": "ebrt-actuator-uptake-provider-input-v0.6.3.1",
+        "task_instructions": [
+          "Use the full evidence set and inspect the immutable chunks in the order presented.",
+          "Select exactly one candidate closure and emit only the typed public response.",
+          "Do not return private chain-of-thought or invent a closure outside the catalog."
+        ]
+      }
+    },
+    {
+      "blinded_request_id": "Q_9c19934ca3e89315",
+      "payload": {
+        "answer_choices": [
+          "SILVER",
+          "JADE"
+        ],
+        "candidate_closures": [
+          {
+            "closure_id": "K_fff6ffe598",
+            "selected_evidence_ids": [
+              "N1",
+              "N3",
+              "N6",
+              "N7"
+            ]
+          },
+          {
+            "closure_id": "K_265e97f857",
+            "selected_evidence_ids": [
+              "N1",
+              "N2",
+              "N6",
+              "N7"
+            ]
+          },
+          {
+            "closure_id": "K_16b90151c4",
+            "selected_evidence_ids": [
+              "N1",
+              "N2",
+              "N5",
+              "N7"
+            ]
+          },
+          {
+            "closure_id": "K_8027291974",
+            "selected_evidence_ids": [
+              "N3",
+              "N4",
+              "N6",
+              "N7"
+            ]
+          }
+        ],
+        "checkpoint_id": "orbital_manifest_revision_f:post_event",
+        "fingerprint_sha256": "cd79b48764fcf316a794dd43d854308cfbfb45895adccd405ba64340e6a35b05",
+        "ordered_raw_evidence": [
+          {
+            "evidence_id": "N3",
+            "text": "Independent port clearance PC-31 records corridor JADE for shipment M when paired with its attestation receipt."
+          },
+          {
+            "evidence_id": "N4",
+            "text": "Attestation receipt AR-31 authenticates port clearance PC-31 for the current dispatch epoch."
+          },
+          {
+            "evidence_id": "N6",
+            "text": "Latest cancellation: legacy routing bulletin RB-8 is withdrawn. Use one complete currently authorized chain; N5 is invalidated."
+          },
+          {
+            "evidence_id": "N1",
+            "text": "Certified dispatch rule: one complete current manifest chain is sufficient to establish the active corridor for shipment M."
+          },
+          {
+            "evidence_id": "N2",
+            "text": "Current manifest channel A records corridor JADE for shipment M and is valid for this dispatch epoch."
+          },
+          {
+            "evidence_id": "N5",
+            "text": "Legacy routing bulletin RB-8 records corridor SILVER and remains usable unless a later cancellation names it."
+          },
+          {
+            "evidence_id": "N7",
+            "text": "The final machine-readable dispatch record must remain ATTESTED_CBOR regardless of the selected corridor."
+          }
+        ],
+        "question": "Which dispatch corridor is active for shipment M after applying the latest valid evidence? Answer SILVER or JADE.",
+        "record_format_choices": [
+          "ATTESTED_CBOR"
+        ],
+        "response_contract": {
+          "choose_exactly_one_candidate_closure": true,
+          "return_private_reasoning": false,
+          "reviewed_evidence_count": 3,
+          "schema_version": "ebrt-actuator-uptake-provider-output-v0.6.3.1"
+        },
+        "schema_version": "ebrt-actuator-uptake-provider-input-v0.6.3.1",
+        "task_instructions": [
+          "Use the full evidence set and inspect the immutable chunks in the order presented.",
+          "Select exactly one candidate closure and emit only the typed public response.",
+          "Do not return private chain-of-thought or invent a closure outside the catalog."
+        ]
+      }
+    },
+    {
+      "blinded_request_id": "Q_d5e1d40fbdddf363",
+      "payload": {
+        "answer_choices": [
+          "SILVER",
+          "JADE"
+        ],
+        "candidate_closures": [
+          {
+            "closure_id": "K_fff6ffe598",
+            "selected_evidence_ids": [
+              "N1",
+              "N3",
+              "N6",
+              "N7"
+            ]
+          },
+          {
+            "closure_id": "K_265e97f857",
+            "selected_evidence_ids": [
+              "N1",
+              "N2",
+              "N6",
+              "N7"
+            ]
+          },
+          {
+            "closure_id": "K_16b90151c4",
+            "selected_evidence_ids": [
+              "N1",
+              "N2",
+              "N5",
+              "N7"
+            ]
+          },
+          {
+            "closure_id": "K_8027291974",
+            "selected_evidence_ids": [
+              "N3",
+              "N4",
+              "N6",
+              "N7"
+            ]
+          }
+        ],
+        "checkpoint_id": "orbital_manifest_revision_f:post_event",
+        "fingerprint_sha256": "1c3eb3971d4c6e5f418b6e3ff40c9d02177812d2307a140367d82c581c66279a",
+        "ordered_raw_evidence": [
+          {
+            "evidence_id": "N1",
+            "text": "Certified dispatch rule: one complete current manifest chain is sufficient to establish the active corridor for shipment M."
+          },
+          {
+            "evidence_id": "N2",
+            "text": "Current manifest channel A records corridor JADE for shipment M and is valid for this dispatch epoch."
+          },
+          {
+            "evidence_id": "N6",
+            "text": "Latest cancellation: legacy routing bulletin RB-8 is withdrawn. Use one complete currently authorized chain; N5 is invalidated."
+          },
+          {
+            "evidence_id": "N3",
+            "text": "Independent port clearance PC-31 records corridor JADE for shipment M when paired with its attestation receipt."
+          },
+          {
+            "evidence_id": "N4",
+            "text": "Attestation receipt AR-31 authenticates port clearance PC-31 for the current dispatch epoch."
+          },
+          {
+            "evidence_id": "N5",
+            "text": "Legacy routing bulletin RB-8 records corridor SILVER and remains usable unless a later cancellation names it."
+          },
+          {
+            "evidence_id": "N7",
+            "text": "The final machine-readable dispatch record must remain ATTESTED_CBOR regardless of the selected corridor."
+          }
+        ],
+        "question": "Which dispatch corridor is active for shipment M after applying the latest valid evidence? Answer SILVER or JADE.",
+        "record_format_choices": [
+          "ATTESTED_CBOR"
+        ],
+        "response_contract": {
+          "choose_exactly_one_candidate_closure": true,
+          "return_private_reasoning": false,
+          "reviewed_evidence_count": 3,
+          "schema_version": "ebrt-actuator-uptake-provider-output-v0.6.3.1"
+        },
+        "schema_version": "ebrt-actuator-uptake-provider-input-v0.6.3.1",
+        "task_instructions": [
+          "Use the full evidence set and inspect the immutable chunks in the order presented.",
+          "Select exactly one candidate closure and emit only the typed public response.",
+          "Do not return private chain-of-thought or invent a closure outside the catalog."
+        ]
+      }
+    },
+    {
+      "blinded_request_id": "Q_d01c5582258746a7",
+      "payload": {
+        "answer_choices": [
+          "SILVER",
+          "JADE"
+        ],
+        "candidate_closures": [
+          {
+            "closure_id": "K_fff6ffe598",
+            "selected_evidence_ids": [
+              "N1",
+              "N3",
+              "N6",
+              "N7"
+            ]
+          },
+          {
+            "closure_id": "K_265e97f857",
+            "selected_evidence_ids": [
+              "N1",
+              "N2",
+              "N6",
+              "N7"
+            ]
+          },
+          {
+            "closure_id": "K_16b90151c4",
+            "selected_evidence_ids": [
+              "N1",
+              "N2",
+              "N5",
+              "N7"
+            ]
+          },
+          {
+            "closure_id": "K_8027291974",
+            "selected_evidence_ids": [
+              "N3",
+              "N4",
+              "N6",
+              "N7"
+            ]
+          }
+        ],
+        "checkpoint_id": "orbital_manifest_revision_f:post_event",
+        "fingerprint_sha256": "1e1a3bb4a16ac2592a8fe8e72ee6d943f2257f87e4cfc8dfbac4534315e94fef",
+        "ordered_raw_evidence": [
+          {
+            "evidence_id": "N6",
+            "text": "Latest cancellation: legacy routing bulletin RB-8 is withdrawn. Use one complete currently authorized chain; N5 is invalidated."
+          },
+          {
+            "evidence_id": "N5",
+            "text": "Legacy routing bulletin RB-8 records corridor SILVER and remains usable unless a later cancellation names it."
+          },
+          {
+            "evidence_id": "N1",
+            "text": "Certified dispatch rule: one complete current manifest chain is sufficient to establish the active corridor for shipment M."
+          },
+          {
+            "evidence_id": "N2",
+            "text": "Current manifest channel A records corridor JADE for shipment M and is valid for this dispatch epoch."
+          },
+          {
+            "evidence_id": "N3",
+            "text": "Independent port clearance PC-31 records corridor JADE for shipment M when paired with its attestation receipt."
+          },
+          {
+            "evidence_id": "N4",
+            "text": "Attestation receipt AR-31 authenticates port clearance PC-31 for the current dispatch epoch."
+          },
+          {
+            "evidence_id": "N7",
+            "text": "The final machine-readable dispatch record must remain ATTESTED_CBOR regardless of the selected corridor."
+          }
+        ],
+        "question": "Which dispatch corridor is active for shipment M after applying the latest valid evidence? Answer SILVER or JADE.",
+        "record_format_choices": [
+          "ATTESTED_CBOR"
+        ],
+        "response_contract": {
+          "choose_exactly_one_candidate_closure": true,
+          "return_private_reasoning": false,
+          "reviewed_evidence_count": 3,
+          "schema_version": "ebrt-actuator-uptake-provider-output-v0.6.3.1"
+        },
+        "schema_version": "ebrt-actuator-uptake-provider-input-v0.6.3.1",
+        "task_instructions": [
+          "Use the full evidence set and inspect the immutable chunks in the order presented.",
+          "Select exactly one candidate closure and emit only the typed public response.",
+          "Do not return private chain-of-thought or invent a closure outside the catalog."
+        ]
+      }
+    }
+  ],
+  "public_treatment_key": [
+    {
+      "blinded_request_id": "Q_164a956eb63d7d9f",
+      "treatment_id": "Z"
+    },
+    {
+      "blinded_request_id": "Q_9c19934ca3e89315",
+      "treatment_id": "C"
+    },
+    {
+      "blinded_request_id": "Q_d5e1d40fbdddf363",
+      "treatment_id": "D"
+    },
+    {
+      "blinded_request_id": "Q_d01c5582258746a7",
+      "treatment_id": "X"
+    }
+  ],
+  "reviewed_evidence_ids_primary": false,
+  "scheduled_call_count": 8,
+  "schema_version": "ebrt-actuator-uptake-projection-v0.6.3.2",
+  "status": "READY_ZERO_CALL_PREFLIGHT_ONLY"
+}

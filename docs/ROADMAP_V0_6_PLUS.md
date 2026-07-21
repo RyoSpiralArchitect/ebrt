@@ -1,6 +1,6 @@
 # EBRT v0.6+ — Execution, Evaluation, and Orchestration Roadmap
 
-Status: **v0.6.0 PREFLIGHT PASS; v0.6.1 FIVE-CALL BLOCK COMPLETE, GATE HELD; v0.6.3 LIVE R01 EXECUTED ONCE, STOP_OUTPUT_CONTRACT; v0.6.3.1 LIVE R01 COMPLETE, PROMOTE TO FRESH REPLICATION; v0.6.3.2 NETWORK-ZERO PREFLIGHT READY, LIVE NOT AUTHORIZED; v0.6.4 BLOCKED**
+Status: **v0.6.0 PREFLIGHT PASS; v0.6.1 FIVE-CALL BLOCK COMPLETE, GATE HELD; v0.6.3 LIVE R01 EXECUTED ONCE, STOP_OUTPUT_CONTRACT; v0.6.3.1 LIVE R01 COMPLETE, PROMOTE TO FRESH REPLICATION; v0.6.3.2 LIVE R01 COMPLETE, D/C REPEATED, X/Z CEILING STOP; v0.6.4 BLOCKED; RETURN TO REASONING IDE**
 
 The one allowed v0.6.1 block ran on 2026-07-20 in the preregistered order
 `P -> A -> B -> D -> C`. All five calls completed and the committed artifact
@@ -87,10 +87,10 @@ v0.6.3    preserve the consumed r01 output-contract stop
 v0.6.3.1  repair the uptake measurement with one discrete public action
 live-r01   execute exactly C -> X -> D -> Z under a separate merged lock/tag
            ↓ a favorable four-call canary opens only fresh replication
-v0.6.3.2  confirm the same actuator on one new sealed case in mirrored blocks
+v0.6.3.2  test the same actuator on one new sealed case in mirrored blocks
            A: C -> Z -> D -> X; B: D -> X -> C -> Z
-v0.6.4    measure whether scaffold aperture suppresses the replicated actuator
-           ↓ only after a non-null, directionally attributable replicated result
+           ↓ D/C repeated, but required X/Z contrast hit ceiling; gate stopped
+v0.6.4    remains future research; no current preflight or live path is opened
 converge the promoted runtime into one readable monolith
          ↓
 v0.7    ask the first fresh matched quality question
@@ -586,15 +586,37 @@ project returns to the Reasoning IDE and submission surface.
 The separate
 [`v0.6.3.2-live-r01 authorization protocol`](RND_ACTUATOR_UPTAKE_REPLICATION_V0_6_3_2_LIVE_R01.md)
 freezes the exact eight-call runner, delayed-gold barrier, unique attempt-key
-contract, and annotated-tag gate. It contains no hosted result and does not
-authorize v0.6.4 live use.
+contract, and annotated-tag gate. The tag was published and the exact block was
+consumed once. Both blocks selected the aligned closure for D and the
+alternative event-consistent closure for C, producing
+`REPLICATED_DIRECTIONAL`. Both also selected aligned for X and Z, producing
+`REPLICATED_CEILING`; the locked terminal is
+`STOP_REPLICATION_CEILING_NOT_ASSESSED`, and v0.6.4 was not opened.
+
+The result is not a null D-versus-C observation, but the strict aggregate gate
+cannot discard its required positive contrast after seeing a favorable
+placement contrast. The complete geometry was `D = Z = X`, with only C on the
+alternative closure, so D was not shown to move beyond neutral and C
+anti-placement sensitivity remains an equally compatible account. Both
+closures are independently quality-valid and all arms returned `JADE`, so the
+result establishes no quality advantage. The frozen
+stop rule forbids a third block, alternate seed, replacement case, relaxed
+gold, rescue call, or ninth call. The current submission therefore closes this
+research branch and returns to Reasoning IDE product convergence. See the
+[`live-r01 result`](RND_ACTUATOR_UPTAKE_REPLICATION_V0_6_3_2_LIVE_R01_RESULT.md),
+its
+[`canonical artifact`](../artifacts/actuator_uptake_replication_v0_6_3_2_live_r01),
+and the
+[`portable verifier`](../verify_actuator_uptake_replication_v0_6_3_2_live_r01.py).
 
 ## v0.6.4 — Scaffold Aperture
 
-Proceed only if a separately sealed fresh replication confirms the observed
-v0.6.3.1 channel and a directionally attributable D-versus-C placement effect.
-A favorable four-call sensitivity canary alone is insufficient; the current
-live-r01 result therefore does not open v0.6.4. Keep the
+Proceed only in a future research cycle with a newly preregistered basis for
+both a positive channel contrast and a directionally attributable D-versus-C
+placement effect. The sealed v0.6.3.2 result repeated D versus C but hit an X/Z
+ceiling, so the strict gate did not open v0.6.4. Do not rescue it with another
+block or revised gold in the consumed namespace. If this future lane is ever
+reopened, keep the
 replicated actuator, projection, raw history, output contract, and budgets
 fixed, then test the separate hypothesis that a complete answer-adjacent DAG
 saturates the provider-visible control surface:
