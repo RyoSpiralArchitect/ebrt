@@ -8,7 +8,9 @@
     "artifact:validate": "python3 build_apply_revision_snapshot_v0_6_2_1.py validate",
     "dev": "vite --host 127.0.0.1",
     "build": "tsc -b && vite build",
-    "build:recorded": "VITE_EBRT_RECORDED_ONLY=true tsc -b && VITE_EBRT_RECORDED_ONLY=true vite build && node scripts/stage-sites-build.mjs",
+    "build:recorded": "VITE_EBRT_RECORDED_ONLY=true tsc -b && VITE_EBRT_RECORDED_ONLY=true vite build && node scripts/stage-sites-build.mjs recorded",
+    "build:public-live": "VITE_EBRT_RECORDED_ONLY=false VITE_EBRT_PUBLIC_LIVE=true tsc -b && VITE_EBRT_RECORDED_ONLY=false VITE_EBRT_PUBLIC_LIVE=true vite build && node scripts/stage-sites-build.mjs public-live",
+    "test:worker": "node --test worker/index.test.js",
     "preview": "vite preview --host 127.0.0.1"
   },
   "dependencies": {

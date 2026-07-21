@@ -19,6 +19,7 @@ from __future__ import annotations
 import argparse
 import copy
 import hashlib
+import hmac
 import http.client
 import http.server
 import json
@@ -140,6 +141,16 @@ MAX_SUPPORTS = 128
 MAX_IDEMPOTENCY_ENTRIES = 128
 MAX_COMPACT_TOMBSTONES = 65_536
 
+RELAY_TOKEN_ENV = "EBRT_RELAY_TOKEN"
+RELAY_TOTAL_BUDGET_ENV = "EBRT_RELAY_MAX_PROVIDER_ATTEMPTS_TOTAL"
+RELAY_CLIENT_BUDGET_ENV = "EBRT_RELAY_MAX_PROVIDER_ATTEMPTS_PER_CLIENT"
+RELAY_TOKEN_HEADER = "X-EBRT-Relay-Token"
+RELAY_CLIENT_KEY_HEADER = "X-EBRT-Client-Key"
+DEFAULT_RELAY_MAX_PROVIDER_ATTEMPTS_TOTAL = 64
+DEFAULT_RELAY_MAX_PROVIDER_ATTEMPTS_PER_CLIENT = 4
+MAX_RELAY_PROVIDER_ATTEMPT_BUDGET = 1_000_000
+INTERNAL_DIRECT_CLIENT_KEY = "0" * 64
+
 ALLOWED_ORIGINS = frozenset(
     {
         "http://localhost:5173",
@@ -242,6 +253,53 @@ def _require(
 ) -> None:
     if not condition:
         raise LiveRevisionError(reason_code, detail, http_status=http_status)
+
+
+def _relay_token_from_env() -> str | None:
+    value = os.environ.get(RELAY_TOKEN_ENV)
+    return value if value else None
+
+
+def _relay_budget_from_env(name: str, default: int, reason_code: str) -> int:
+    raw = os.environ.get(name)
+    if raw is None:
+        return default
+    try:
+        value = int(raw, 10)
+    except (TypeError, ValueError):
+        raise LiveRevisionError(reason_code, http_status=500) from None
+    _require(
+        1 <= value <= MAX_RELAY_PROVIDER_ATTEMPT_BUDGET,
+        reason_code,
+        http_status=500,
+    )
+    return value
+
+
+def _valid_relay_client_key(value: str | None) -> bool:
+    return (
+        isinstance(value, str)
+        and len(value) == 64
+        and all(character in "0123456789abcdef" for character in value)
+    )
+
+
+def _require_relay_client_key(value: str | None) -> str:
+    _require(
+        _valid_relay_client_key(value),
+        "RELAY_CLIENT_KEY_INVALID",
+        http_status=400,
+    )
+    assert value is not None
+    return value
+
+
+def _relay_token_matches(expected: str, observed: str | None) -> bool:
+    """Compare fixed-length digests so absent and malformed tokens share one path."""
+
+    expected_digest = hashlib.sha256(expected.encode("utf-8")).digest()
+    observed_digest = hashlib.sha256((observed or "").encode("utf-8")).digest()
+    return hmac.compare_digest(expected_digest, observed_digest)
 
 
 def _canonical_bytes(value: Any, *, trailing_newline: bool = False) -> bytes:
@@ -4136,6 +4194,9 @@ class RevisionService:
         provider_mode: Literal["openai", "scripted"],
         terminal_cache_capacity: int = MAX_IDEMPOTENCY_ENTRIES,
         compact_tombstone_capacity: int = MAX_COMPACT_TOMBSTONES,
+        relay_token: str | None = None,
+        max_provider_attempts_total: int = DEFAULT_RELAY_MAX_PROVIDER_ATTEMPTS_TOTAL,
+        max_provider_attempts_per_client: int = DEFAULT_RELAY_MAX_PROVIDER_ATTEMPTS_PER_CLIENT,
     ) -> None:
         _require(
             terminal_cache_capacity > 0,
@@ -4147,11 +4208,26 @@ class RevisionService:
             "COMPACT_TOMBSTONE_CAPACITY_INVALID",
             http_status=500,
         )
+        _require(
+            1 <= max_provider_attempts_total <= MAX_RELAY_PROVIDER_ATTEMPT_BUDGET,
+            "RELAY_TOTAL_PROVIDER_BUDGET_INVALID",
+            http_status=500,
+        )
+        _require(
+            1
+            <= max_provider_attempts_per_client
+            <= MAX_RELAY_PROVIDER_ATTEMPT_BUDGET,
+            "RELAY_CLIENT_PROVIDER_BUDGET_INVALID",
+            http_status=500,
+        )
         self.provider_factory = provider_factory
         self.provider_mode = provider_mode
         self.engine = EBRTRevisionEngine()
         self.terminal_cache_capacity = terminal_cache_capacity
         self.compact_tombstone_capacity = compact_tombstone_capacity
+        self.relay_token = relay_token
+        self.max_provider_attempts_total = max_provider_attempts_total
+        self.max_provider_attempts_per_client = max_provider_attempts_per_client
         self._gate = threading.BoundedSemaphore(1)
         self._lock = threading.Lock()
         self._terminal: OrderedDict[
@@ -4160,6 +4236,7 @@ class RevisionService:
         self._spent: dict[str, str] = {}
         self._inflight: dict[str, str] = {}
         self.provider_attempts_started = 0
+        self.provider_attempts_by_client: defaultdict[str, int] = defaultdict(int)
 
     @property
     def provider_configured(self) -> bool:
@@ -4169,6 +4246,8 @@ class RevisionService:
         with self._lock:
             terminal_results_cached = len(self._terminal)
             spent_identities = len(self._spent)
+            provider_attempts_started = self.provider_attempts_started
+            clients_observed = len(self.provider_attempts_by_client)
         return {
             "schema_version": "ebrt-live-health-v0.6.2.4",
             "status": "READY" if self.provider_configured else "PROVIDER_UNCONFIGURED",
@@ -4176,6 +4255,19 @@ class RevisionService:
             "provider_configured": self.provider_configured,
             "model": MODEL if self.provider_mode == "openai" else "SCRIPTED_TEST_ONLY",
             "credentials_exposed": False,
+            "relay": {
+                "token_required": self.relay_token is not None,
+                "provider_attempt_budgets_enforced": self.relay_token is not None,
+                "client_key_format": "HMAC_SHA256_LOWERCASE_HEX_64",
+                "provider_attempts_started": provider_attempts_started,
+                "provider_attempts_remaining_total": max(
+                    0,
+                    self.max_provider_attempts_total - provider_attempts_started,
+                ),
+                "max_provider_attempts_total": self.max_provider_attempts_total,
+                "max_provider_attempts_per_client": self.max_provider_attempts_per_client,
+                "clients_observed": clients_observed,
+            },
             "idempotency": {
                 "terminal_results_cached": terminal_results_cached,
                 "spent_identities": spent_identities,
@@ -4203,7 +4295,13 @@ class RevisionService:
         while len(self._terminal) > self.terminal_cache_capacity:
             self._terminal.popitem(last=False)
 
-    def apply(self, request_value: Mapping[str, Any]) -> tuple[JsonObject, bool]:
+    def apply(
+        self,
+        request_value: Mapping[str, Any],
+        *,
+        client_key: str = INTERNAL_DIRECT_CLIENT_KEY,
+    ) -> tuple[JsonObject, bool]:
+        client_key = _require_relay_client_key(client_key)
         request = validate_request_mapping(request_value)
         canonical = request.model_dump(mode="json")
         fingerprint = _fingerprint(canonical)
@@ -4250,10 +4348,24 @@ class RevisionService:
                 raise LiveRevisionError(
                     "IDEMPOTENCY_CAPACITY_EXHAUSTED", http_status=503
                 )
+            if self.relay_token is not None:
+                if self.provider_attempts_started >= self.max_provider_attempts_total:
+                    raise LiveRevisionError(
+                        "RELAY_TOTAL_PROVIDER_BUDGET_EXHAUSTED", http_status=429
+                    )
+                if (
+                    self.provider_attempts_by_client.get(client_key, 0)
+                    >= self.max_provider_attempts_per_client
+                ):
+                    raise LiveRevisionError(
+                        "RELAY_CLIENT_PROVIDER_BUDGET_EXHAUSTED", http_status=429
+                    )
             if not self._gate.acquire(blocking=False):
                 raise LiveRevisionError("PROVIDER_BUSY", http_status=429)
             self._inflight[request_id] = fingerprint
             self.provider_attempts_started += 1
+            if self.relay_token is not None:
+                self.provider_attempts_by_client[client_key] += 1
         try:
             response = self.engine.execute(request, self.provider_factory())
         except LiveRevisionError as error:
@@ -4324,6 +4436,42 @@ def _handler_type(service: RevisionService) -> type[http.server.BaseHTTPRequestH
         def _origin_allowed(self) -> bool:
             return self._origin is None or self._origin in ALLOWED_ORIGINS
 
+        def _guard_relay_auth(self) -> bool:
+            expected = service.relay_token
+            if expected is None:
+                return True
+            if not _relay_token_matches(
+                expected,
+                self.headers.get(RELAY_TOKEN_HEADER),
+            ):
+                self._send_json(
+                    401,
+                    _error_value(
+                        LiveRevisionError("RELAY_AUTH_FAILED", http_status=401)
+                    ),
+                )
+                return False
+            if not _valid_relay_client_key(
+                self.headers.get(RELAY_CLIENT_KEY_HEADER)
+            ):
+                self._send_json(
+                    400,
+                    _error_value(
+                        LiveRevisionError(
+                            "RELAY_CLIENT_KEY_INVALID", http_status=400
+                        )
+                    ),
+                )
+                return False
+            return True
+
+        def _trusted_client_key(self) -> str:
+            if service.relay_token is None:
+                return INTERNAL_DIRECT_CLIENT_KEY
+            return _require_relay_client_key(
+                self.headers.get(RELAY_CLIENT_KEY_HEADER)
+            )
+
         def _send_json(
             self,
             status: int,
@@ -4368,7 +4516,7 @@ def _handler_type(service: RevisionService) -> type[http.server.BaseHTTPRequestH
             return False
 
         def do_OPTIONS(self) -> None:  # noqa: N802
-            if not self._guard_origin():
+            if not self._guard_relay_auth() or not self._guard_origin():
                 return
             if self.path != "/api/apply-revision":
                 self._send_json(
@@ -4382,7 +4530,8 @@ def _handler_type(service: RevisionService) -> type[http.server.BaseHTTPRequestH
             self.send_header("Access-Control-Allow-Methods", "POST, OPTIONS")
             self.send_header(
                 "Access-Control-Allow-Headers",
-                "Accept, Content-Type, Idempotency-Key",
+                "Accept, Content-Type, Idempotency-Key, "
+                f"{RELAY_TOKEN_HEADER}, {RELAY_CLIENT_KEY_HEADER}",
             )
             self.send_header(
                 "Access-Control-Expose-Headers",
@@ -4394,7 +4543,7 @@ def _handler_type(service: RevisionService) -> type[http.server.BaseHTTPRequestH
             self.end_headers()
 
         def do_GET(self) -> None:  # noqa: N802
-            if not self._guard_origin():
+            if not self._guard_relay_auth() or not self._guard_origin():
                 return
             try:
                 if self.path == "/api/health":
@@ -4421,7 +4570,7 @@ def _handler_type(service: RevisionService) -> type[http.server.BaseHTTPRequestH
                 )
 
         def do_POST(self) -> None:  # noqa: N802
-            if not self._guard_origin():
+            if not self._guard_relay_auth() or not self._guard_origin():
                 return
             try:
                 _require(
@@ -4458,7 +4607,10 @@ def _handler_type(service: RevisionService) -> type[http.server.BaseHTTPRequestH
                     "IDEMPOTENCY_KEY_MISMATCH",
                     http_status=400,
                 )
-                response, replay = service.apply(value)
+                response, replay = service.apply(
+                    value,
+                    client_key=self._trusted_client_key(),
+                )
                 self._send_json(200, response, idempotent_replay=replay)
             except LiveRevisionError as error:
                 self._send_json(
@@ -4475,6 +4627,8 @@ def _handler_type(service: RevisionService) -> type[http.server.BaseHTTPRequestH
                 )
 
         def do_HEAD(self) -> None:  # noqa: N802
+            if not self._guard_relay_auth() or not self._guard_origin():
+                return
             self._send_json(
                 405,
                 _error_value(LiveRevisionError("METHOD_NOT_ALLOWED", http_status=405)),
@@ -4519,8 +4673,23 @@ def create_http_server(
         http_status=400,
     )
     _require(0 <= port <= 65535, "PORT_INVALID", http_status=400)
+    relay_token = _relay_token_from_env()
+    max_provider_attempts_total = _relay_budget_from_env(
+        RELAY_TOTAL_BUDGET_ENV,
+        DEFAULT_RELAY_MAX_PROVIDER_ATTEMPTS_TOTAL,
+        "RELAY_TOTAL_PROVIDER_BUDGET_INVALID",
+    )
+    max_provider_attempts_per_client = _relay_budget_from_env(
+        RELAY_CLIENT_BUDGET_ENV,
+        DEFAULT_RELAY_MAX_PROVIDER_ATTEMPTS_PER_CLIENT,
+        "RELAY_CLIENT_PROVIDER_BUDGET_INVALID",
+    )
     service = RevisionService(
-        _provider_factory(provider_mode), provider_mode=provider_mode
+        _provider_factory(provider_mode),
+        provider_mode=provider_mode,
+        relay_token=relay_token,
+        max_provider_attempts_total=max_provider_attempts_total,
+        max_provider_attempts_per_client=max_provider_attempts_per_client,
     )
     server = _ThreadingServer((host, port), _handler_type(service))
     return server, service
@@ -4532,7 +4701,7 @@ def serve(
     port: int,
     provider_mode: Literal["openai", "scripted"],
 ) -> None:
-    server, _service = create_http_server(
+    server, service = create_http_server(
         host=host, port=port, provider_mode=provider_mode
     )
     observed_host, observed_port = server.server_address[:2]
@@ -4543,6 +4712,9 @@ def serve(
                 "status": "READY",
                 "url": f"http://{observed_host}:{observed_port}",
                 "provider_mode": provider_mode,
+                "relay_token_required": service.relay_token is not None,
+                "max_provider_attempts_total": service.max_provider_attempts_total,
+                "max_provider_attempts_per_client": service.max_provider_attempts_per_client,
                 "credentials_exposed": False,
             }
         ),
@@ -5581,20 +5753,66 @@ def self_test() -> JsonObject:
         locked_runtime_sha == observed_runtime_sha
     )
 
-    server, service = create_http_server(
-        host="127.0.0.1", port=0, provider_mode="scripted"
-    )
+    relay_token = "self-test-relay-token-7d2d469f"
+    relay_headers = {
+        RELAY_TOKEN_HEADER: relay_token,
+        RELAY_CLIENT_KEY_HEADER: "a" * 64,
+    }
+    with mock.patch.dict(
+        os.environ,
+        {
+            RELAY_TOKEN_ENV: relay_token,
+            RELAY_TOTAL_BUDGET_ENV: "2",
+            RELAY_CLIENT_BUDGET_ENV: "1",
+        },
+        clear=False,
+    ):
+        server, service = create_http_server(
+            host="127.0.0.1", port=0, provider_mode="scripted"
+        )
     port = int(server.server_address[1])
     thread = threading.Thread(target=server.serve_forever, kwargs={"poll_interval": 0.05})
     thread.daemon = True
     thread.start()
     try:
-        health_status, health, _ = _http_json(port, "GET", "/api/health")
+        unauth_status, unauth_body, _ = _http_json(
+            port,
+            "GET",
+            "/api/health",
+        )
+        invalid_client_status, invalid_client_body, _ = _http_json(
+            port,
+            "GET",
+            "/api/health",
+            headers={
+                RELAY_TOKEN_HEADER: relay_token,
+                RELAY_CLIENT_KEY_HEADER: "NOT-A-TRUSTED-CLIENT-KEY",
+            },
+        )
+        health_status, health, _ = _http_json(
+            port,
+            "GET",
+            "/api/health",
+            headers=relay_headers,
+        )
         demo_status, envelope, demo_headers = _http_json(
-            port, "GET", "/api/demo-request"
+            port,
+            "GET",
+            "/api/demo-request",
+            headers=relay_headers,
         )
         http_request = envelope["request"]
-        post_headers = {"Idempotency-Key": http_request["request_id"]}
+        unauth_post_status, unauth_post_body, _ = _http_json(
+            port,
+            "POST",
+            "/api/apply-revision",
+            value=http_request,
+            headers={"Idempotency-Key": http_request["request_id"]},
+        )
+        post_headers = {
+            **relay_headers,
+            "Idempotency-Key": http_request["request_id"],
+        }
         post_status, first, first_headers = _http_json(
             port,
             "POST",
@@ -5609,6 +5827,7 @@ def self_test() -> JsonObject:
             value=http_request,
             headers=post_headers,
         )
+        attempts_after_repeat = service.provider_attempts_started
         conflict = _clone(http_request)
         conflict["question"] = conflict["question"] + " "
         conflict_status, conflict_body, _ = _http_json(
@@ -5618,11 +5837,50 @@ def self_test() -> JsonObject:
             value=conflict,
             headers=post_headers,
         )
+        same_client_new = _clone(http_request)
+        same_client_new["request_id"] = "http-same-client-quota-0001"
+        same_client_status, same_client_body, _ = _http_json(
+            port,
+            "POST",
+            "/api/apply-revision",
+            value=same_client_new,
+            headers={
+                **relay_headers,
+                "Idempotency-Key": same_client_new["request_id"],
+            },
+        )
+        second_client_request = _clone(http_request)
+        second_client_request["request_id"] = "http-second-client-0001"
+        second_client_headers = {
+            RELAY_TOKEN_HEADER: relay_token,
+            RELAY_CLIENT_KEY_HEADER: "b" * 64,
+            "Idempotency-Key": second_client_request["request_id"],
+        }
+        second_client_status, second_client_body, _ = _http_json(
+            port,
+            "POST",
+            "/api/apply-revision",
+            value=second_client_request,
+            headers=second_client_headers,
+        )
+        total_quota_request = _clone(http_request)
+        total_quota_request["request_id"] = "http-total-quota-0001"
+        total_quota_status, total_quota_body, _ = _http_json(
+            port,
+            "POST",
+            "/api/apply-revision",
+            value=total_quota_request,
+            headers={
+                RELAY_TOKEN_HEADER: relay_token,
+                RELAY_CLIENT_KEY_HEADER: "c" * 64,
+                "Idempotency-Key": total_quota_request["request_id"],
+            },
+        )
         origin_status, origin_body, _ = _http_json(
             port,
             "GET",
             "/api/health",
-            headers={"Origin": "https://attacker.invalid"},
+            headers={**relay_headers, "Origin": "https://attacker.invalid"},
         )
         duplicate_body = (
             b'{"request_id":"duplicate-0001","request_id":"duplicate-0002"}'
@@ -5632,16 +5890,31 @@ def self_test() -> JsonObject:
             "POST",
             "/api/apply-revision",
             raw=duplicate_body,
-            headers={"Idempotency-Key": "duplicate-0001"},
+            headers={
+                **relay_headers,
+                "Idempotency-Key": "duplicate-0001",
+            },
         )
     finally:
         server.shutdown()
         server.server_close()
         thread.join(timeout=5)
 
-    checks["http_health_and_demo_are_zero_call"] = (
+    checks["http_relay_auth_and_client_key_enforced"] = (
+        unauth_status == unauth_post_status == 401
+        and unauth_body["error"]["code"] == "RELAY_AUTH_FAILED"
+        and unauth_post_body["error"]["code"] == "RELAY_AUTH_FAILED"
+        and invalid_client_status == 400
+        and invalid_client_body["error"]["code"]
+        == "RELAY_CLIENT_KEY_INVALID"
+    )
+    checks["http_health_and_demo_are_authenticated_zero_call"] = (
         health_status == demo_status == 200
         and health["provider_mode"] == "scripted"
+        and health["relay"]["token_required"]
+        and health["relay"]["provider_attempts_started"] == 0
+        and health["relay"]["max_provider_attempts_total"] == 2
+        and health["relay"]["max_provider_attempts_per_client"] == 1
         and envelope["schema_version"] == DEMO_REQUEST_SCHEMA
         and envelope["request_fingerprint_sha256"]
         == _fingerprint(envelope["request"])
@@ -5663,7 +5936,22 @@ def self_test() -> JsonObject:
         and repeat_headers.get("x-ebrt-idempotent-replay") == "true"
         and repeat_headers.get("x-ebrt-body-sha256")
         == first_headers.get("x-ebrt-body-sha256")
-        and service.provider_attempts_started == 1
+        and attempts_after_repeat == 1
+    )
+    checks["http_client_and_total_provider_budgets_are_hard"] = (
+        same_client_status == 429
+        and same_client_body["error"]["code"]
+        == "RELAY_CLIENT_PROVIDER_BUDGET_EXHAUSTED"
+        and second_client_status == 200
+        and second_client_body["verification"]["operational_acceptance_status"]
+        == "PASS"
+        and total_quota_status == 429
+        and total_quota_body["error"]["code"]
+        == "RELAY_TOTAL_PROVIDER_BUDGET_EXHAUSTED"
+        and service.provider_attempts_started == 2
+        and service.provider_attempts_by_client.get("a" * 64) == 1
+        and service.provider_attempts_by_client.get("b" * 64) == 1
+        and service.provider_attempts_by_client.get("c" * 64, 0) == 0
     )
     checks["http_idempotency_conflict_rejected"] = (
         conflict_status == 409

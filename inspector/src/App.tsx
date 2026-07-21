@@ -19,6 +19,7 @@ type Stage = "before" | "engine" | "after";
 type InspectorMode = "recorded" | "live";
 
 const RECORDED_ONLY = import.meta.env.VITE_EBRT_RECORDED_ONLY === "true";
+const PUBLIC_LIVE = import.meta.env.VITE_EBRT_PUBLIC_LIVE === "true";
 
 const STAGES: Array<{ id: Stage; label: string }> = [
   { id: "before", label: "Before + Event" },
@@ -63,7 +64,7 @@ function MobileStageNav({ active, onSelect }: { active: Stage; onSelect: (stage:
 export default function App() {
   const [recordedSnapshot, setRecordedSnapshot] = useState<ApplyRevisionSnapshot | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [mode, setMode] = useState<InspectorMode>("recorded");
+  const [mode, setMode] = useState<InspectorMode>(PUBLIC_LIVE ? "live" : "recorded");
   const [liveView, setLiveView] = useState<ApplyRevisionView | null>(null);
   const [livePhase, setLivePhase] = useState<LiveRevisionPhase>("idle");
   const [liveError, setLiveError] = useState<string | null>(null);
@@ -186,7 +187,7 @@ export default function App() {
   }
 
   function openEditor() {
-    if (RECORDED_ONLY || liveInFlight.current) return;
+    if (RECORDED_ONLY || PUBLIC_LIVE || liveInFlight.current) return;
     setMode("live");
     setLiveError(null);
     setEditorError(null);
@@ -259,6 +260,7 @@ export default function App() {
         mode={mode}
         onModeChange={selectMode}
         onOpenEditor={openEditor}
+        publicLive={PUBLIC_LIVE}
         recordedOnly={RECORDED_ONLY}
         snapshot={snapshot}
       />

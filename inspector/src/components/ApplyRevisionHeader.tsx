@@ -8,6 +8,7 @@ export function ApplyRevisionHeader({
   mode,
   onModeChange,
   onOpenEditor,
+  publicLive,
   recordedOnly,
   snapshot,
 }: {
@@ -15,6 +16,7 @@ export function ApplyRevisionHeader({
   mode: InspectorMode;
   onModeChange: (mode: InspectorMode) => void;
   onOpenEditor: () => void;
+  publicLive: boolean;
   recordedOnly: boolean;
   snapshot: ApplyRevisionView;
 }) {
@@ -52,9 +54,11 @@ export function ApplyRevisionHeader({
           >
             Live
           </button>
-          <button aria-pressed="false" disabled={busy} onClick={onOpenEditor} type="button">
-            Editor
-          </button>
+          {!publicLive ? (
+            <button aria-pressed="false" disabled={busy} onClick={onOpenEditor} type="button">
+              Editor
+            </button>
+          ) : null}
         </div> : null}
         <div className={`ar-mode-status ${mode === "live" ? "live" : "recorded"}`}>
           <Icon name={mode === "live" ? "runs" : "lock"} size={16} />
@@ -64,8 +68,12 @@ export function ApplyRevisionHeader({
                 ? "PUBLIC RECORDED DEMO · NO API OR MODEL CALL"
                 : "RECORDED ACCEPTANCE · NO NEW MODEL CALL"
               : liveResult
-                ? "LIVE AFTER REGENERATION · 1 PROVIDER ATTEMPT"
-                : "LIVE READY · APPLY TO REGENERATE"}
+                ? publicLive
+                  ? "PUBLIC LIVE RESULT · SEALED CASE · 1 PROVIDER ATTEMPT"
+                  : "LIVE AFTER REGENERATION · 1 PROVIDER ATTEMPT"
+                : publicLive
+                  ? "PUBLIC LIVE READY · SEALED CASE · APPLY TO REGENERATE"
+                  : "LIVE READY · APPLY TO REGENERATE"}
           </span>
         </div>
       </div>

@@ -13,7 +13,7 @@ verify.**
 
 **Developer Tools**
 
-## Devpost description (132 words)
+## Devpost description (140 words)
 
 Hosted language models do not expose editable reasoning states, so EBRT adds
 an external differentiable revision layer that developers can inspect and
@@ -24,17 +24,18 @@ and compiles an executable Reinspect / Suppress / Preserve operation. GPT-5.6
 then performs one structured full-context regeneration, while the Reasoning IDE
 displays the Before/After diff, evidence lineage, stable facts, operational
 checks, and gradient boundary. The scripted mode runs without network access;
-OpenAI mode keeps credentials server-side. EBRT does not edit model hidden
+the public sealed-case demo relays to OpenAI mode while keeping credentials
+server-side. EBRT does not edit model hidden
 states, attention, KV cache, or private chain-of-thought, and it does not claim
 causal superiority or general reasoning improvement. It makes revision
 operations executable, observable, and auditable.
 
 ## Judge links
 
-- Public repository: `TODO_PUBLIC_REPOSITORY_URL`
+- Public repository: `https://github.com/RyoSpiralArchitect/ebrt`
 - Public runnable demo: `TODO_PUBLIC_DEMO_URL`
 - Public YouTube video: `TODO_PUBLIC_YOUTUBE_URL`
-- Codex feedback/session link or ID: `TODO_CODEX_FEEDBACK_SESSION`
+- Codex feedback/session ID: `019f70e8-b94c-7002-bc14-512338e2c5fd`
 - Devpost project: `TODO_DEVPOST_PROJECT_URL`
 
 These placeholders must be replaced before submission. Do not replace the
@@ -56,8 +57,12 @@ has actually been validated.
   provider credentials server-side.
 - A local Protocol Editor for arbitrary complete public-state requests, with no
   hidden semantic adapter and the same fail-closed runtime validator.
-- A public recorded-only replay that exposes neither Live controls nor a
-  credential-bearing backend.
+- A public Live/Recorded IDE whose same-origin Worker accepts only the sealed
+  demo request and relays it through an authenticated HTTPS Quick Tunnel.
+- Process-lifetime public budgets of 32 provider attempts globally and 2 per
+  anonymous client, plus idempotency and no automatic retry.
+- A recorded zero-call replay fallback that remains usable without the Live
+  bridge.
 - Recorded artifacts, fingerprints, matched temporal sham diagnostics, and an
   explicit `NOT_ASSESSED` boundary for semantic quality and causal effect.
 
@@ -69,8 +74,9 @@ has actually been validated.
   identity is not claimed.
 - Inspector: Node.js `^20.19.0` or `>=22.12.0`, pnpm, and a modern browser.
 - Responsive Inspector layouts are provided for desktop, tablet, and mobile.
-- Windows, remote binding, multi-process idempotency, and a hosted public
-  service are not validated in Runtime Preview 3.
+- Windows, multi-process idempotency, production hosting, and uptime are not
+  validated in Runtime Preview 3. The public Quick Tunnel is a temporary demo
+  bridge to the loopback monolith.
 
 ## GPT-5.6 and Codex usage
 
@@ -121,8 +127,8 @@ Not claimed:
 - autonomous discovery of semantic truth or a correct dependency graph;
 - provider uptake, counterfactual necessity, causal superiority, semantic
   correctness, accuracy improvement, or general reasoning improvement;
-- a fresh benchmark, population estimate, remote deployment, or hosted public
-  service.
+- a fresh benchmark, population estimate, production-service readiness, or
+  uptime guarantee.
 
 The built-in scripted and live demo case is a known, contaminated product
 fixture. Operational `PASS` means that the declared public revision operation
@@ -137,6 +143,8 @@ completed and satisfied its structural contract. Both
 - [x] Current product and 30-second network-zero path placed at the top of the
   README.
 - [x] Local scripted backend and Reasoning IDE paths documented.
+- [x] Public Live/Recorded bridge, sealed-request restriction, provider
+  budgets, and Quick Tunnel limitation documented.
 - [x] GPT-5.6 and Codex roles documented without crossing the claim boundary.
 - [ ] Replace every `TODO_...` judge-link placeholder above.
 - [ ] Confirm the GitHub repository is public and the default branch contains
