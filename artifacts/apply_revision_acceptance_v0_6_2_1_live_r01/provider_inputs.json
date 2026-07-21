@@ -1,0 +1,531 @@
+{
+  "after_payload_was_dynamic": true,
+  "fingerprint_sha256": "a2aa446099b7cf498e307cf2bdb261c6c8aa705db034935bc88bbf040c9936a1",
+  "payloads": [
+    {
+      "payload": {
+        "all_raw_evidence": [
+          {
+            "evidence_id": "R1",
+            "text": "Team Spiral must choose exactly one final-build priority for its hackathon submission."
+          },
+          {
+            "evidence_id": "R2",
+            "text": "Decision rule: follow the latest valid judging weights. If one criterion is dominant, optimize for that criterion; if Technological Implementation, Design, Potential Impact, and Quality of the Idea are equally weighted, prioritize an end-to-end proof that demonstrates all four in one flow."
+          },
+          {
+            "evidence_id": "R3",
+            "text": "Current internal brief: Design is the dominant judging criterion, so spend the remaining build time on additional UI polish and make polished screens the demo centerpiece. This brief remains operative unless a later correction explicitly supersedes it."
+          },
+          {
+            "evidence_id": "R4",
+            "text": "The screens are already judge-readable; a live before-to-after reasoning diff is the missing element needed for an end-to-end proof."
+          },
+          {
+            "evidence_id": "R5",
+            "text": "The submission video must remain a narrated three-minute demo regardless of which final-build priority is chosen."
+          }
+        ],
+        "allowed_evidence_ids": [
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5"
+        ],
+        "answer_choices": [
+          "POLISH",
+          "PROVE"
+        ],
+        "apply_revision": null,
+        "candidate_closures": [
+          {
+            "closure_id": "K_4f9d103c2b",
+            "graph": {
+              "invalidation_edges": [],
+              "support_nodes": [
+                {
+                  "evidence_ids": [
+                    "R2"
+                  ],
+                  "support_id": "support:judging_basis"
+                },
+                {
+                  "evidence_ids": [
+                    "R4"
+                  ],
+                  "support_id": "support:demo_readiness"
+                },
+                {
+                  "evidence_ids": [
+                    "R5"
+                  ],
+                  "support_id": "support:video_constraint"
+                }
+              ],
+              "targets": [
+                {
+                  "depends_on_target_ids": [],
+                  "direct_support_ids": [
+                    "support:video_constraint"
+                  ],
+                  "slot": "video_constraint",
+                  "target_id": "constraint:video_constraint",
+                  "target_type": "constraint"
+                },
+                {
+                  "depends_on_target_ids": [
+                    "fact:final_priority"
+                  ],
+                  "direct_support_ids": [
+                    "support:demo_readiness"
+                  ],
+                  "slot": "demo_centerpiece",
+                  "target_id": "fact:demo_centerpiece",
+                  "target_type": "fact"
+                },
+                {
+                  "depends_on_target_ids": [],
+                  "direct_support_ids": [
+                    "support:judging_basis",
+                    "support:demo_readiness"
+                  ],
+                  "slot": "final_priority",
+                  "target_id": "fact:final_priority",
+                  "target_type": "fact"
+                }
+              ]
+            }
+          },
+          {
+            "closure_id": "K_c9dc959be3",
+            "graph": {
+              "invalidation_edges": [],
+              "support_nodes": [
+                {
+                  "evidence_ids": [
+                    "R2"
+                  ],
+                  "support_id": "support:judging_basis"
+                },
+                {
+                  "evidence_ids": [
+                    "R3"
+                  ],
+                  "support_id": "support:legacy_guidance"
+                },
+                {
+                  "evidence_ids": [
+                    "R5"
+                  ],
+                  "support_id": "support:video_constraint"
+                }
+              ],
+              "targets": [
+                {
+                  "depends_on_target_ids": [],
+                  "direct_support_ids": [
+                    "support:video_constraint"
+                  ],
+                  "slot": "video_constraint",
+                  "target_id": "constraint:video_constraint",
+                  "target_type": "constraint"
+                },
+                {
+                  "depends_on_target_ids": [],
+                  "direct_support_ids": [
+                    "support:legacy_guidance"
+                  ],
+                  "slot": "demo_centerpiece",
+                  "target_id": "fact:demo_centerpiece",
+                  "target_type": "fact"
+                },
+                {
+                  "depends_on_target_ids": [],
+                  "direct_support_ids": [
+                    "support:judging_basis",
+                    "support:legacy_guidance"
+                  ],
+                  "slot": "final_priority",
+                  "target_id": "fact:final_priority",
+                  "target_type": "fact"
+                }
+              ]
+            }
+          }
+        ],
+        "case_id": "hackathon_strategy_walkthrough",
+        "checkpoint_id": "hackathon_strategy_walkthrough:pre_event",
+        "decision_slots": [
+          {
+            "allowed_values": [
+              "ADDITIONAL_UI_POLISH",
+              "END_TO_END_PROOF"
+            ],
+            "description": "Team Spiral's single final-build priority",
+            "slot_id": "final_priority"
+          },
+          {
+            "allowed_values": [
+              "POLISHED_SCREENS",
+              "LIVE_REASONING_DIFF"
+            ],
+            "description": "the centerpiece shown to hackathon judges",
+            "slot_id": "demo_centerpiece"
+          },
+          {
+            "allowed_values": [
+              "THREE_MINUTE_NARRATED"
+            ],
+            "description": "the stable submission-video format constraint",
+            "slot_id": "video_constraint"
+          }
+        ],
+        "prior_public_state": null,
+        "question": "Which single final-build priority should Team Spiral choose to maximize its chance of winning? Follow the latest valid judging guidance. Answer POLISH or PROVE.",
+        "schema_version": "ebrt-apply-revision-provider-input-v0.6.2.1"
+      },
+      "payload_fingerprint_sha256": "088efd8ad4ab606169878045f780e4c3e93fbfe70efcd18f6e42850132b2b8e3",
+      "phase_id": "before_event"
+    },
+    {
+      "payload": {
+        "all_raw_evidence": [
+          {
+            "evidence_id": "R1",
+            "text": "Team Spiral must choose exactly one final-build priority for its hackathon submission."
+          },
+          {
+            "evidence_id": "R2",
+            "text": "Decision rule: follow the latest valid judging weights. If one criterion is dominant, optimize for that criterion; if Technological Implementation, Design, Potential Impact, and Quality of the Idea are equally weighted, prioritize an end-to-end proof that demonstrates all four in one flow."
+          },
+          {
+            "evidence_id": "R3",
+            "text": "Current internal brief: Design is the dominant judging criterion, so spend the remaining build time on additional UI polish and make polished screens the demo centerpiece. This brief remains operative unless a later correction explicitly supersedes it."
+          },
+          {
+            "evidence_id": "R4",
+            "text": "The screens are already judge-readable; a live before-to-after reasoning diff is the missing element needed for an end-to-end proof."
+          },
+          {
+            "evidence_id": "R5",
+            "text": "The submission video must remain a narrated three-minute demo regardless of which final-build priority is chosen."
+          },
+          {
+            "evidence_id": "R6",
+            "text": "Latest judging correction: Technological Implementation, Design, Potential Impact, and Quality of the Idea are equally weighted. This guidance explicitly supersedes evidence R3; use the existing readable UI and prioritize an end-to-end proof with a live reasoning diff."
+          }
+        ],
+        "allowed_evidence_ids": [
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6"
+        ],
+        "answer_choices": [
+          "POLISH",
+          "PROVE"
+        ],
+        "apply_revision": {
+          "event": {
+            "correction_evidence_id": "R6",
+            "event_id": "EV_JUDGING_GUIDANCE_CORRECTION_R6",
+            "invalidated_evidence_ids": [
+              "R3"
+            ]
+          },
+          "gradient_boundary": "gradient stopped before this JSON operation and hosted generation",
+          "operation": "APPLY_REVISION",
+          "preserve_evidence_ids": [
+            "R5"
+          ],
+          "reinspect_evidence_ids": [
+            "R6",
+            "R4",
+            "R2"
+          ],
+          "schema_version": "ebrt-apply-revision-operation-v0.6.2.1",
+          "semantic_authority": "ordered raw evidence only",
+          "source_actuator_fingerprint_sha256": "21eb4312bb7e87af4272ad4ae352becdbd1ada1bc1c961476f1efe34360723b4",
+          "source_control_map_fingerprint_sha256": "7336d8f9f8b3e5d21875eb1ba4bbde71a9f3be88874b57f291ccbd39f69bc8aa",
+          "source_prior_state_fingerprint_sha256": "5d209ad6ca2cd3ce64dfbb38d7c213c04ec570b34e784eca6b3de185e83a332e",
+          "suppress_evidence_ids": [
+            "R3"
+          ]
+        },
+        "candidate_closures": [
+          {
+            "closure_id": "K_87b5857bbb",
+            "graph": {
+              "invalidation_edges": [
+                {
+                  "source_evidence_id": "R6",
+                  "target_evidence_id": "R3"
+                }
+              ],
+              "support_nodes": [
+                {
+                  "evidence_ids": [
+                    "R2"
+                  ],
+                  "support_id": "support:judging_basis"
+                },
+                {
+                  "evidence_ids": [
+                    "R4"
+                  ],
+                  "support_id": "support:demo_readiness"
+                },
+                {
+                  "evidence_ids": [
+                    "R6"
+                  ],
+                  "support_id": "support:superseding_guidance"
+                },
+                {
+                  "evidence_ids": [
+                    "R5"
+                  ],
+                  "support_id": "support:video_constraint"
+                }
+              ],
+              "targets": [
+                {
+                  "depends_on_target_ids": [],
+                  "direct_support_ids": [
+                    "support:video_constraint"
+                  ],
+                  "slot": "video_constraint",
+                  "target_id": "constraint:video_constraint",
+                  "target_type": "constraint"
+                },
+                {
+                  "depends_on_target_ids": [],
+                  "direct_support_ids": [
+                    "support:demo_readiness",
+                    "support:superseding_guidance"
+                  ],
+                  "slot": "demo_centerpiece",
+                  "target_id": "fact:demo_centerpiece",
+                  "target_type": "fact"
+                },
+                {
+                  "depends_on_target_ids": [],
+                  "direct_support_ids": [
+                    "support:judging_basis",
+                    "support:superseding_guidance"
+                  ],
+                  "slot": "final_priority",
+                  "target_id": "fact:final_priority",
+                  "target_type": "fact"
+                }
+              ]
+            }
+          },
+          {
+            "closure_id": "K_4486fd43a1",
+            "graph": {
+              "invalidation_edges": [],
+              "support_nodes": [
+                {
+                  "evidence_ids": [
+                    "R2"
+                  ],
+                  "support_id": "support:judging_basis"
+                },
+                {
+                  "evidence_ids": [
+                    "R3"
+                  ],
+                  "support_id": "support:legacy_guidance"
+                },
+                {
+                  "evidence_ids": [
+                    "R6"
+                  ],
+                  "support_id": "support:superseding_guidance"
+                },
+                {
+                  "evidence_ids": [
+                    "R5"
+                  ],
+                  "support_id": "support:video_constraint"
+                }
+              ],
+              "targets": [
+                {
+                  "depends_on_target_ids": [],
+                  "direct_support_ids": [
+                    "support:video_constraint"
+                  ],
+                  "slot": "video_constraint",
+                  "target_id": "constraint:video_constraint",
+                  "target_type": "constraint"
+                },
+                {
+                  "depends_on_target_ids": [],
+                  "direct_support_ids": [
+                    "support:legacy_guidance",
+                    "support:superseding_guidance"
+                  ],
+                  "slot": "demo_centerpiece",
+                  "target_id": "fact:demo_centerpiece",
+                  "target_type": "fact"
+                },
+                {
+                  "depends_on_target_ids": [],
+                  "direct_support_ids": [
+                    "support:judging_basis",
+                    "support:legacy_guidance",
+                    "support:superseding_guidance"
+                  ],
+                  "slot": "final_priority",
+                  "target_id": "fact:final_priority",
+                  "target_type": "fact"
+                }
+              ]
+            }
+          },
+          {
+            "closure_id": "K_d59ad14817",
+            "graph": {
+              "invalidation_edges": [
+                {
+                  "source_evidence_id": "R6",
+                  "target_evidence_id": "R3"
+                }
+              ],
+              "support_nodes": [
+                {
+                  "evidence_ids": [
+                    "R2"
+                  ],
+                  "support_id": "support:judging_basis"
+                },
+                {
+                  "evidence_ids": [
+                    "R4"
+                  ],
+                  "support_id": "support:demo_readiness"
+                },
+                {
+                  "evidence_ids": [
+                    "R6"
+                  ],
+                  "support_id": "support:superseding_guidance"
+                },
+                {
+                  "evidence_ids": [
+                    "R5"
+                  ],
+                  "support_id": "support:video_constraint"
+                }
+              ],
+              "targets": [
+                {
+                  "depends_on_target_ids": [],
+                  "direct_support_ids": [
+                    "support:video_constraint"
+                  ],
+                  "slot": "video_constraint",
+                  "target_id": "constraint:video_constraint",
+                  "target_type": "constraint"
+                },
+                {
+                  "depends_on_target_ids": [
+                    "fact:final_priority"
+                  ],
+                  "direct_support_ids": [
+                    "support:demo_readiness",
+                    "support:superseding_guidance"
+                  ],
+                  "slot": "demo_centerpiece",
+                  "target_id": "fact:demo_centerpiece",
+                  "target_type": "fact"
+                },
+                {
+                  "depends_on_target_ids": [],
+                  "direct_support_ids": [
+                    "support:judging_basis",
+                    "support:demo_readiness",
+                    "support:superseding_guidance"
+                  ],
+                  "slot": "final_priority",
+                  "target_id": "fact:final_priority",
+                  "target_type": "fact"
+                }
+              ]
+            }
+          }
+        ],
+        "case_id": "hackathon_strategy_walkthrough",
+        "checkpoint_id": "hackathon_strategy_walkthrough:apply_revision_final",
+        "decision_slots": [
+          {
+            "allowed_values": [
+              "ADDITIONAL_UI_POLISH",
+              "END_TO_END_PROOF"
+            ],
+            "description": "Team Spiral's single final-build priority",
+            "slot_id": "final_priority"
+          },
+          {
+            "allowed_values": [
+              "POLISHED_SCREENS",
+              "LIVE_REASONING_DIFF"
+            ],
+            "description": "the centerpiece shown to hackathon judges",
+            "slot_id": "demo_centerpiece"
+          },
+          {
+            "allowed_values": [
+              "THREE_MINUTE_NARRATED"
+            ],
+            "description": "the stable submission-video format constraint",
+            "slot_id": "video_constraint"
+          }
+        ],
+        "prior_public_state": {
+          "checkpoint_id": "hackathon_strategy_walkthrough:pre_event",
+          "compiled_closure_fingerprint_sha256": "108f2da7e391cdaed8911a3cbc5f4493c281c1fe45d7d50900e9e20d1d601582",
+          "current_answer": "POLISH",
+          "fingerprint_sha256": "5d209ad6ca2cd3ce64dfbb38d7c213c04ec570b34e784eca6b3de185e83a332e",
+          "schema_version": "ebrt-apply-revision-prior-state-v0.6.2.1",
+          "selected_closure_id": "K_c9dc959be3",
+          "target_values": [
+            {
+              "slot": "video_constraint",
+              "target_id": "constraint:video_constraint",
+              "target_type": "constraint",
+              "value": "THREE_MINUTE_NARRATED"
+            },
+            {
+              "slot": "demo_centerpiece",
+              "target_id": "fact:demo_centerpiece",
+              "target_type": "fact",
+              "value": "POLISHED_SCREENS"
+            },
+            {
+              "slot": "final_priority",
+              "target_id": "fact:final_priority",
+              "target_type": "fact",
+              "value": "ADDITIONAL_UI_POLISH"
+            }
+          ]
+        },
+        "question": "Which single final-build priority should Team Spiral choose to maximize its chance of winning? Follow the latest valid judging guidance. Answer POLISH or PROVE.",
+        "schema_version": "ebrt-apply-revision-provider-input-v0.6.2.1"
+      },
+      "payload_fingerprint_sha256": "a986184662fe719b5a2b229cdd47efe9929a6c6d79ee5efa7de4edb2fd563e3f",
+      "phase_id": "after_event"
+    }
+  ],
+  "phase_order": [
+    "before_event",
+    "after_event"
+  ],
+  "schema_version": "ebrt-apply-revision-provider-inputs-v0.6.2.1-r01",
+  "semantic_gold_provider_visible": false
+}

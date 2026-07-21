@@ -1,6 +1,6 @@
 # EBRT v0.6+ — Execution, Evaluation, and Orchestration Roadmap
 
-Status: **v0.6.0 PREFLIGHT PASS; v0.6.1 FIVE-CALL BLOCK COMPLETE, GATE HELD; v0.6.2.1 APPLY-REVISION ZERO-CALL CONTRACT PASS, LIVE AUTHORIZATION PENDING; v0.6.3 LIVE R01 EXECUTED ONCE, STOP_OUTPUT_CONTRACT; v0.6.3.1 LIVE R01 COMPLETE, PROMOTE TO FRESH REPLICATION; v0.6.3.2 LIVE R01 COMPLETE, D/C REPEATED, X/Z CEILING STOP; v0.6.4 BLOCKED; RETURN TO REASONING IDE**
+Status: **v0.6.0 PREFLIGHT PASS; v0.6.1 FIVE-CALL BLOCK COMPLETE, GATE HELD; v0.6.2.1 APPLY-REVISION LIVE R01 PRODUCT ACCEPTANCE PASS, EFFECT NOT ASSESSED; v0.6.3 LIVE R01 EXECUTED ONCE, STOP_OUTPUT_CONTRACT; v0.6.3.1 LIVE R01 COMPLETE, PROMOTE TO FRESH REPLICATION; v0.6.3.2 LIVE R01 COMPLETE, D/C REPEATED, X/Z CEILING STOP; v0.6.4 BLOCKED; REASONING IDE CONVERGENCE IN PROGRESS**
 
 The one allowed v0.6.1 block ran on 2026-07-20 in the preregistered order
 `P -> A -> B -> D -> C`. All five calls completed and the committed artifact
@@ -317,6 +317,16 @@ payload binding, artifact round-trip, and coherent tamper rejection. Live use
 requires a separately merged policy lock and the exact annotated authorization
 tag, then consumes at most two no-retry attempts in one namespace. Regardless
 of the product endpoint, `effect_attribution_status` remains `NOT_ASSESSED`.
+
+Live r01 has now consumed that authorization exactly once. Both provider calls
+completed; the actual `POLISH` Before passed its own horizon and became stale
+after R6; one local backward pass compiled `R6 -> R4 -> R2`, suppress R3, and
+preserve R5; and the full-context After returned `PROVE` with strict answer,
+invalidation, stable-fact, and fact-local lineage PASS. The terminal is
+`ACCEPT_APPLY_REVISION_PATH`, while effect attribution remains deliberately
+`NOT_ASSESSED`. The result is frozen under
+`artifacts/apply_revision_acceptance_v0_6_2_1_live_r01/` and documented in
+`RND_APPLY_REVISION_ACCEPTANCE_V0_6_2_1_LIVE_R01.md`.
 
 ## v0.6.3 — Provider Actuator Calibration Canary
 
@@ -676,11 +686,9 @@ improves reasoning quality.
 
 ## Runtime convergence target
 
-The research tree may remain modular and frozen for auditability, but the
-promoted product path must converge before v0.7. Once a fresh replication
-confirms the v0.6.3.1 actuator and v0.6.4 selects its smallest sufficient
-scaffold, rewrite that accepted path into one readable EBRT monolith
-containing:
+The research tree remains modular and frozen for auditability, while
+v0.6.2.1 now supplies the first converged product-acceptance path in one
+readable EBRT monolith, `ebrt.py`, containing:
 
 ```text
 raw semantic projection
@@ -695,16 +703,16 @@ Keep only minimal surrounding scripts for matched benchmarking, portable
 artifact verification, and launching the frontend. The polished Reasoning IDE
 consumes the same stable trace contract but remains a separate frontend. Do not
 grow a general ontology, agent framework, control-plugin system, or second
-runtime path during this convergence. A new abstraction is admitted only when
-it replaces an older one in the promoted path. Historical modules and artifacts
-remain immutable evidence rather than being rewritten to resemble the
-monolith.
+product runtime path. A new abstraction is admitted only when it replaces an
+older one in the product path. Historical modules and artifacts remain
+immutable evidence rather than being rewritten to resemble the monolith.
 
-The rewrite is accepted only if network-zero differential fixtures show
-byte-identical raw projection, local control map, actuator schedule, provider
-payload, output schema, and strict grading trace between the promoted modular
-path and the monolith. This equivalence gate prevents simplification from
-silently creating a new, uncalibrated intervention.
+This convergence is product acceptance, not promotion of a causally validated
+quality actuator. Any future research actuator brought into `ebrt.py` must
+first pass network-zero differential fixtures covering raw projection, local
+control, actuator schedule, provider payload, output schema, and strict grading
+trace. That gate prevents later simplification from silently creating a new,
+uncalibrated intervention.
 
 ## v0.7 — Fresh Matched Hosted Evaluation
 
@@ -797,6 +805,7 @@ control. Novelty is not allowed to rescue a failed v0.6-v0.8 endpoint.
 | v0.6.0 | the exact sealed bundle has a deterministic provider-safe projection | any hosted execution or answer improvement |
 | v0.6.1 | a real full-context bundle-to-output path and separately graded answer/lineage effect | controlled superiority, general quality, or gradients through the hosted model |
 | v0.6.2 | a judge-readable, reproducible Reasoning IDE workflow | a final frontend or a population-level algorithm claim |
+| v0.6.2.1 | one exact `Apply Revision -> Regenerate` product path is executable, observable, independently verifiable, and replayable in the IDE | causal necessity of the control, quality improvement, hidden-state editing, or general reasoning improvement |
 | v0.6.3 | the hosted provider observably consumes one bounded public actuator and gradient placement differs directionally from its matched anti-placement construct control | that the changed output is better or that placement generalizes |
 | v0.6.3.1 | in a separately authorized four-call canary, public selected-closure endpoints differ across the position-only payloads and gradient placement differs directionally from matched anti-placement | quality improvement, causality, population reliability, or direct promotion to v0.6.4; success opens only fresh replication |
 | v0.6.3.2 | on one synthetic case fresh relative to the frozen v0.6.3.1 predecessor, the preregistered X/Z and D/C closure pattern repeats in both pairwise serial-position-counterbalanced blocks | causality, quality improvement, population reliability, an independently sampled case, or permission for v0.6.4 live execution |

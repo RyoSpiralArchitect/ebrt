@@ -1,52 +1,44 @@
-# EBRT Reasoning Workbench (provisional)
+# EBRT Apply Revision · recorded Reasoning IDE
 
-This local, read-only workbench projects one immutable recorded revision
-episode and one separate provider-boundary diagnostic. It is a replaceable
-product experiment, not a commitment to the final frontend architecture,
-navigation, brand, or hosting model.
-
-The default episode is selected mechanically from the frozen v0.4 live-smoke
-artifact: `manifest.case_ids[0]`, trial `0`, uniquely matching
-`route_code_supersession`. The page shows the complete public flow:
+This interface replays the sealed `v0.6.2.1` Apply Revision acceptance
+artifact. It presents one public product path:
 
 ```text
-Evidence -> GPT public observer -> declared revision plan
-         -> every recorded replay lane -> final public-card diff
+Before + late event
+  -> local public surrogate backward()
+  -> public control map
+  -> compiled provider-visible actuator
+  -> recorded GPT-5.6 full-context output
+  -> strict verification
 ```
 
-All three replay attempts remain visible. Card-only and Selective both retain
-their recorded strict failures; Full restart retains its recorded strict pass.
-The Initial row is labelled `PRE-EVENT`, not retroactively graded as a
-post-event pass or failure. `Play recorded revision` only reveals already
-stored public cards. It never invokes a model, edits an artifact, regenerates
-an answer, or applies a live revision.
+`Replay recorded Apply Revision` only animates already-recorded public states.
+It makes no provider request, does not regenerate output, and does not edit the
+sealed artifact. The UI keeps the local surrogate, control map, compiled
+actuator, actual provider output, semantic grade, product acceptance, and
+effect-attribution boundary visibly separate.
 
-The Provider Failure Atlas is a different recorded runtime-health episode. It
-shows eight client attempts reaching HTTP 429 and zero structured parses,
-accepted outputs, or reasoning assessments. Its `8/8` native classification is
-diagnostic coverage, not a reasoning result. The frozen r01 comparison remains
-`0/31`, the cross-block effect remains `null`, the v0.4.3 full block was not
-launched, and the reasoning-decision gate remains closed.
+## Deterministic public projection
 
-## Build and verify the public projection
+The allowlist projector verifies all six manifest-bound result files plus the
+manifest itself, pins the exact live-r01 manifest/result/trace publication,
+validates their seals, and reproduces the committed browser snapshot
+byte-for-byte. Its self-test rejects a coherently resealed replacement result
+and manifest. The browser independently hashes the raw snapshot before
+rendering. The projection excludes provider bodies, request identifiers,
+credentials, and private reasoning text.
 
 From the repository root:
 
 ```bash
-python3 build_reasoning_workbench_snapshot_v0_4_4.py self-test
-python3 build_reasoning_workbench_snapshot_v0_4_4.py validate
+python3 inspector/build_apply_revision_snapshot_v0_6_2_1.py validate
+python3 inspector/build_apply_revision_snapshot_v0_6_2_1.py self-test
 ```
 
-The builder verifies pinned source manifests and hashes, unique fixture
-selection, observer/event/plan fingerprints, all replay cards and grades,
-public-card-derived diffs, v0.4.3 coverage lineage, privacy allowlists,
-deterministic regeneration, and canonical/public byte identity. Its self-test
-makes no network call.
-
-The normalized public artifact is committed at:
+The browser reads:
 
 ```text
-public/data/ebrt-reasoning-workbench-v0.4.4.json
+inspector/public/data/ebrt-apply-revision-acceptance-v0.6.2.1.json
 ```
 
 ## Run locally
@@ -54,27 +46,18 @@ public/data/ebrt-reasoning-workbench-v0.4.4.json
 ```bash
 cd inspector
 pnpm install
+pnpm build
 pnpm dev
 ```
 
-Production build:
-
-```bash
-pnpm build
-```
+The desktop layout shows three simultaneous lanes. Tablet and mobile layouts
+use an accessible three-step tab surface with ArrowLeft/ArrowRight navigation.
+Motion respects `prefers-reduced-motion`.
 
 ## Interpretation boundary
 
-The workbench exposes fixed fixture evidence, emitted public Reasoning Cards,
-a typed public observer event, declared revision metadata, machine grades, and
-sanitized usage/diagnostic aggregates. It does not expose private
-chain-of-thought, attention, hidden state, raw provider bodies, credentials, or
-model-weight changes. `reasoning_tokens` is a provider usage count, not
-reasoning text or reasoning quality.
-
-The displayed episode proves that the recorded public pipeline can be audited
-through final output. It does not establish general reasoning improvement,
-Selective replay parity, a causal aperture effect, current provider health, or
-promotion readiness. See
-[`docs/RND_REASONING_WORKBENCH_V0_4_4.md`](../docs/RND_REASONING_WORKBENCH_V0_4_4.md)
-for the projection protocol and full claim boundary.
+The recorded path establishes that Apply Revision was executable, observable,
+and strictly verifiable in one contaminated synthetic product-acceptance case.
+It does not establish causal control, hidden-state editing, quality
+improvement, or general reasoning improvement. Effect attribution remains
+`NOT_ASSESSED`.
