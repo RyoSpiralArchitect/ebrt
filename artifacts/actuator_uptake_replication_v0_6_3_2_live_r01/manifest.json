@@ -1,0 +1,64 @@
+{
+  "artifacts": {
+    "attempt_journal.jsonl": {
+      "bytes": 35909,
+      "sha256": "d916bfd351df8820bf9a4b4f9c7ff48a0f29667a011436c9111ae81d5b63c231"
+    },
+    "calls.jsonl": {
+      "bytes": 15725,
+      "sha256": "747a08604f5595ab9069e2f940278207b445b50679736a6bd80c5b10e17cca2a"
+    },
+    "projection_bundle.json": {
+      "bytes": 20628,
+      "sha256": "b564c66dea7caec3cb67b434774d234b4fd5691aac196ce5f37370a8fc376d7d"
+    },
+    "provider_inputs.json": {
+      "bytes": 17342,
+      "sha256": "937bcebc9fb03fa6a241c72b80968ec1fe354bbd72c1ff2484a71a42cb9066a1"
+    },
+    "report.md": {
+      "bytes": 2154,
+      "sha256": "ab7da3341b00e8201477c099423bc7a714478f749ba26814ffb8a8b9c2f4dc3d"
+    },
+    "result.json": {
+      "bytes": 62935,
+      "sha256": "7e37a37751fe273d895c8d62709cf03ad8c18480f5c5e890191fa030c7b1b353"
+    }
+  },
+  "assessment_status": "ASSESSED",
+  "attempt_block_status": "COMPLETE_EXACT_EIGHT_TERMINALS",
+  "claim_boundary": [
+    "This is one sealed mirrored eight-call replication on a synthetic case fresh relative to the frozen v0.6.3.1 predecessor, not an independently sampled population case or quality benchmark.",
+    "The sole intentionally treatment-varying semantic payload field is evidence order.",
+    "The provider never sees C/X/D/Z, treatment metadata, gradient values, controller internals, closure roles, gold, or grades.",
+    "The local float64 backward pass ends before JSON; no gradient crosses GPT or the provider boundary.",
+    "Known stale or mixed closures are valid semantic endpoints; only transport, parse, schema, and unknown-ID failures are structural invalidity.",
+    "Only two directional blocks may open a separately reviewed v0.6.4 network-zero preflight; no v0.6.4 live call is authorized.",
+    "Pairwise position counterbalancing narrows but does not eliminate temporal or provider drift.",
+    "Provider receipts and execution provenance are operator-attested local records, not provider-signed proof.",
+    "The authorization tag prevents accidental execution from an unreviewed checkout but does not provide global exactly-once semantics across clones.",
+    "The semantic-gold barrier is a locked Path.read_bytes guard, not an operating-system sandbox.",
+    "No result supports hidden-state editing, causal superiority, quality improvement, or general reasoning improvement."
+  ],
+  "fingerprint_sha256": "8cfd4018248e482a89b164c585ca816d80b78da3e225a7616905a7cfd56b7790",
+  "policy_lock_fingerprint_sha256": "7cf24f5f9a57c3c8bf9d9b56d3dd2ae3cc7bafdbf7355bd0aec4d6a57d44af17",
+  "result_fingerprint_sha256": "97634c76bfaf2b027368379d8ee7a5520a866c1a999e8686741577febaff7c52",
+  "schema_version": "ebrt-actuator-uptake-replication-live-manifest-v0.6.3.2-r01",
+  "source_snapshot_sha256": {
+    "core": "8bb31f3efe169c92acef69ce6e85ccdc02df058654950834641199517bcfabf7",
+    "fixture": "af5f7ce2ec987bea4b7cb64a32d9549d390bf688438ecdcbdcb6c529391f9e24",
+    "protocol_note": "0f09061e515492345b81c5a9f48f26f8863f279eb7dd382b3a6588b67a6fe9e6",
+    "provider_base": "840d019811ecfab2b6bb25f2969d3c27e405b8cc148c068308393c2207c31689",
+    "receipt_contract": "5fd765ec5ca55562e7b712ec48adc6f54588080c276cbfa58aabcb72492666c2",
+    "requirements": "024ff69128d68a1c08bba956e318301500b7aebb7c917b19ff913a9bf5e373d7",
+    "requirements_live": "73a8bd6fd5d0a6aa2ec01c216b1ddc50f2c5f32746bcf907ec7ca3ab793e7c83",
+    "response_boundary": "7f78fce94cb141a4355d3c040010e11e049ff67a3a8c603099d0548a47b7cf03",
+    "runner": "2a974659364093775d060858138756928220ca3e69d367da96bb51dff7a2a63f",
+    "semantic_adapter": "836b7afadabb2e2e5b6ea53afe2795e529ab20193b00d83af9a5624d4f32d2ca",
+    "zero_call_manifest": "cdf7ae043141a13056f33a0176f8777e8a0e2a24e8ba02f5c8cab5f0a059509b",
+    "zero_call_policy": "b3c14706f11700770e4b7b6ce71acc45dab38f317f249464f18ea74d142652b8",
+    "zero_call_projection": "b564c66dea7caec3cb67b434774d234b4fd5691aac196ce5f37370a8fc376d7d"
+  },
+  "status": "SEALED_LIVE_RESULT",
+  "terminal_decision": "STOP_REPLICATION_CEILING_NOT_ASSESSED"
+}

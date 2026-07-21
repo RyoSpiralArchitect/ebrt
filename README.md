@@ -261,8 +261,9 @@ python3 -I -S verify_actuator_uptake_canary_v0_6_3_1_portable.py self-test
 
 The monolith has no live command and authorizes zero provider calls. Its
 separately authorized four-call successor could return at most
-`PROMOTE_TO_FRESH_REPLICATION`; v0.6.4 stays blocked until a new sealed case
-replicates any directional uptake. See the
+`PROMOTE_TO_FRESH_REPLICATION`; it could not directly open v0.6.4. That
+historical successor later opened only the separately sealed v0.6.3.2
+replication recorded below. See the
 [`v0.6.3.1 R&D note`](docs/RND_ACTUATOR_UPTAKE_CANARY_V0_6_3_1.md).
 
 The separately reviewed live successor is
@@ -284,8 +285,9 @@ All four calls completed. C, X, D, and Z selected `K_5c1377f2fc`,
 classifier returned `CHANNEL_OPEN_DIRECTIONAL`,
 `GRADIENT_PLACEMENT_DIRECTIONAL`, and `PROMOTE_TO_FRESH_REPLICATION`; direct
 v0.6.4 promotion remains false. This is one fixed serial block and cannot
-separate evidence-order treatment from temporal or provider drift. The next
-action is fresh preregistered replication, not UI work or v0.6.4. See the
+separate evidence-order treatment from temporal or provider drift. Its frozen
+next action was fresh preregistered replication rather than direct v0.6.4; that
+replication has now been consumed as the v0.6.3.2 ceiling result below. See the
 [`live-r01 result note`](docs/RND_ACTUATOR_UPTAKE_CANARY_V0_6_3_1_LIVE_R01_RESULT.md),
 the
 [`canonical artifact`](artifacts/actuator_uptake_canary_v0_6_3_1_live_r01),
@@ -330,12 +332,22 @@ reliability, hidden-state editing, or permission for a v0.6.4 live run. See the
 [`v0.6.3.2 protocol`](docs/RND_ACTUATOR_UPTAKE_REPLICATION_V0_6_3_2.md) and
 [`network-zero artifact`](artifacts/actuator_uptake_replication_v0_6_3_2_preflight/).
 
-The separately reviewed live-r01 authorization surface is frozen in the
+The separately reviewed live-r01 authorization surface was frozen in the
 [`eight-call live protocol`](docs/RND_ACTUATOR_UPTAKE_REPLICATION_V0_6_3_2_LIVE_R01.md),
 [`runner`](run_actuator_uptake_replication_v0_6_3_2_live_r01.py), and
 [`policy lock`](policy_lock_actuator_uptake_replication_v0_6_3_2_live_r01.json).
-They authorize no call until the exact annotated
-`v0.6.3.2-live-r01-authorized` tag exists; no hosted result is claimed here.
+The exact annotated `v0.6.3.2-live-r01-authorized` tag was published and the
+eight-call block was consumed once. Both mirrored blocks returned C as the
+alternative event-consistent closure and D, X, and Z as the aligned closure.
+The locked aggregate therefore records `REPLICATED_DIRECTIONAL` for D versus C
+but `REPLICATED_CEILING` for X versus Z, with terminal
+`STOP_REPLICATION_CEILING_NOT_ASSESSED`. The strict conjunction did not open
+v0.6.4. No retry, third block, replacement case, or ninth call is permitted;
+the project now returns to the Reasoning IDE. See the
+[`live-r01 result note`](docs/RND_ACTUATOR_UPTAKE_REPLICATION_V0_6_3_2_LIVE_R01_RESULT.md),
+[`canonical artifact`](artifacts/actuator_uptake_replication_v0_6_3_2_live_r01),
+and
+[`portable verifier`](verify_actuator_uptake_replication_v0_6_3_2_live_r01.py).
 
 > [!IMPORTANT]
 > v0.1-v0.3.1 are **not** a Transformer implementation, a GPT latent-state
@@ -392,10 +404,12 @@ They authorize no call until the exact annotated
 > the fixed serial one-case block cannot separate treatment from temporal or
 > provider drift. It establishes no quality improvement, causal effect,
 > population reliability, hidden-state editing, or general reasoning result.
-> v0.6.3.2 is a fresh-case, pairwise-position-counterbalanced replication
-> preflight with zero provider calls. Its deterministic conformance outputs are
-> not hosted effects, and its two serial blocks cannot eliminate all time drift
-> or support quality, causal, population, attention, KV, or hidden-state claims.
+> v0.6.3.2 consumed one fresh-case, pairwise-position-counterbalanced hosted
+> block. D-versus-C closure selection was directionally repeated in both
+> mirrored blocks, but X and Z both selected aligned in both blocks, producing
+> the preregistered positive-control ceiling and stopping without opening
+> v0.6.4. The two serial blocks cannot eliminate all time drift, and the result
+> supports no quality, causal, population, attention, KV, or hidden-state claim.
 
 ## Why EBRT?
 
@@ -511,9 +525,13 @@ artifacts/actuator_uptake_canary_v0_6_3_1_preflight/ canonical four-payload netw
 actuator_uptake_replication_v0_6_3_2.py fresh-case mirrored replication preflight monolith
 verify_actuator_uptake_replication_v0_6_3_2_portable.py independent exact-byte and tamper verifier
 policy_lock_actuator_uptake_replication_v0_6_3_2.json zero-call mirrored schedule and claim lock
+run_actuator_uptake_replication_v0_6_3_2_live_r01.py authorized one-shot eight-attempt hosted runner
+policy_lock_actuator_uptake_replication_v0_6_3_2_live_r01.json exact source, runtime, schedule, and authorization lock
+verify_actuator_uptake_replication_v0_6_3_2_live_r01.py host-independent frozen-result and tamper verifier
 fixtures/actuator_uptake_replication_v0_6_3_2.json fresh N1-N7 public actuator fixture
 fixtures/actuator_uptake_replication_gold_v0_6_3_2.json delayed provider-excluded closure roles and gold
 artifacts/actuator_uptake_replication_v0_6_3_2_preflight/ canonical four-payload/eight-attempt bundle
+artifacts/actuator_uptake_replication_v0_6_3_2_live_r01/ canonical consumed eight-call result bundle
 docs/RND_BENCHMARK_V0_1.md    protocol, results, limits, and claim ledger
 docs/RND_INSTRUMENTATION_V0_2.md measurement contract and algorithm findings
 docs/RND_DUAL_ROUTE_V0_3.md   terminal invariant result and v0.3.1 direction
@@ -1455,7 +1473,8 @@ retrospectively relabeling failures. See the
 | v0.6.3.1-live-r01 observed a non-zero public endpoint difference | Yes, narrowly: one authorized `C -> X -> D -> Z` block completed 4/4 calls; X and D selected the aligned closure while C selected the alternative and Z the mixed closure, yielding `CHANNEL_OPEN_DIRECTIONAL` and `GRADIENT_PLACEMENT_DIRECTIONAL` |
 | The v0.6.3.1-live-r01 result establishes evidence-order causality or quality improvement | No; evidence order was the sole intentionally varying semantic payload field, but the one fixed serial block cannot separate treatment from temporal/provider drift, and all arms returned the same public answer `VIOLET` |
 | The favorable v0.6.3.1 four-call canary opens v0.6.4 | No; its terminal decision is only `PROMOTE_TO_FRESH_REPLICATION`. v0.6.4 remains blocked until a new sealed case replicates the directional result |
-| v0.6.3.2 has already replicated the hosted actuator result | No; only its fresh fixture, four reusable payloads, mirrored eight-attempt schedule, classifiers, artifact, and independent zero-call verifier are frozen. Live execution is separately gated and has not occurred |
+| v0.6.3.2 repeated the D-versus-C public closure contrast under mirrored positions | Yes, narrowly: both blocks selected aligned for D and alternative for C, yielding `REPLICATED_DIRECTIONAL`; one serial synthetic-case execution still cannot establish causality or population reliability |
+| The v0.6.3.2 result opens v0.6.4 | No; X and Z both selected aligned in both blocks, so the required positive contrast was `REPLICATED_CEILING` and the locked terminal is `STOP_REPLICATION_CEILING_NOT_ASSESSED` |
 | Selective replay should be optimized before state sufficiency | Not supported by current evidence; it is paused as a quality direction and remains an unranked future efficiency ablation |
 | EBRT edits hidden states inside a trained Transformer or GPT model | Not implemented |
 | EBRT improves real-world LLM reasoning accuracy | Not established |
