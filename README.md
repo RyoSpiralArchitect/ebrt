@@ -25,6 +25,30 @@ Before public state + late event
   -> After diff + structural verification
 ```
 
+## Primary entrypoints — just two places to look
+
+| Target | Entrypoint | Command / link |
+| --- | --- | --- |
+| **Backend and revision engine** | [`ebrt_live.py`](ebrt_live.py) | `python3 ebrt_live.py self-test` |
+| **Reasoning IDE** | [`inspector/`](inspector/) | [Open the public Live demo](https://ebrt-apply-revision.ryospiralreality.chatgpt.site/) |
+
+> **Repository orientation:** root-level versioned modules from v0.1 through
+> v0.6.3.2 and `policy_lock_*.json` files are sealed, immutable audit trails,
+> not additional setup choices. The [repository map](#repository-map) and
+> folded research appendices preserve their provenance.
+
+## How Codex and GPT-5.6 shaped EBRT
+
+| Contributor | Concrete role in the submitted project | Where judges can see it |
+| --- | --- | --- |
+| **Codex** | Collaborated from the originating research sketch through the Python monolith, adversarial and finite-difference checks, artifact verification, PR review repair, public documentation, and the Reasoning IDE. | Commit and PR history, `ebrt_live.py self-test`, the Inspector source, and the submission materials. |
+| **GPT-5.6** | Powers the non-differentiable runtime boundary. After **Apply Revision**, `gpt-5.6-sol` receives the complete raw context plus EBRT's compiled public revision operation and returns one structured After result with no automatic retry. | Public **Live** mode: `POLISH → PROVE`, followed by public diff and lineage verification. |
+
+The Live path is materially model-backed: without the GPT-5.6 regeneration,
+there is no new After output. EBRT's local `torch.float64` gradient stops at
+the public control map; GPT-5.6 is neither trained nor differentiated by EBRT.
+Recorded mode remains an explicit zero-call fallback.
+
 ### 30-second judge path (network-zero)
 
 After installing the product dependencies, this scripted path exercises the
@@ -76,7 +100,7 @@ pnpm dev
 ```
 
 Open `http://127.0.0.1:5173`, switch to **Live**, then choose
-**Apply Revision -> Regenerate**. To use the real provider boundary, set
+**Apply Revision -> Regenerate**. For the real provider boundary, set
 `OPENAI_API_KEY` only in the backend environment and replace `scripted` with
 `openai`; credentials never enter the browser or public response.
 
@@ -137,11 +161,11 @@ not a general remote execution API.
 - **Supported local runtime:** CPython 3.11+, PyTorch 2.x, and a CPU. The
   committed runs were produced on macOS arm64; POSIX Linux is an intended
   local target but cross-platform byte identity is not claimed. The Inspector
-  uses Node.js `^20.19.0` or `>=22.12.0` and pnpm. Windows and remote,
+  runs on Node.js `^20.19.0` or `>=22.12.0` and pnpm. Windows and remote,
   multi-process hosting are not validated in this preview.
 - **GPT-5.6 role:** `gpt-5.6-sol` performs the one structured, full-context
   After regeneration at a non-differentiable provider boundary. It is not
-  trained, differentiated, or used as the local trajectory state.
+  trained, differentiated, or treated as the local trajectory state.
 - **Codex role:** Codex collaborated on implementation, adversarial tests,
   artifact validation, review repair, documentation, and the Reasoning IDE.
   Codex is not a runtime dependency and does not decide semantic correctness.
@@ -155,8 +179,13 @@ not a general remote execution API.
   bridge; this establishes neither production readiness nor an uptime claim.
 
 Submission copy and the final video checklist live in
-[`SUBMISSION.md`](SUBMISSION.md). The complete, immutable research history
-continues below.
+[`SUBMISSION.md`](SUBMISSION.md). The complete, immutable research history is
+folded below so the current product path remains easy to scan.
+
+<details>
+<summary><strong>Research appendix I — architecture and experiment history (v0.1–v0.6.3.2)</strong></summary>
+
+<br>
 
 EBRT v0.1 is an executable mechanism proof for a simple question: can a
 reasoning process detect a structured change, route a bounded revision to an
@@ -738,6 +767,8 @@ and
 > v0.6.4. The two serial blocks cannot eliminate all time drift, and the result
 > supports no quality, causal, population, attention, KV, or hidden-state claim.
 
+</details>
+
 ## Why EBRT?
 
 Most inference pipelines move only forward. If later evidence invalidates an
@@ -1226,6 +1257,11 @@ card misses the frozen slot-level citation closure. The portable verifier is a
 post-run inspection layer, not part of the preregistered source snapshot; it
 does not reproduce local autograd or cryptographically attest the provider.
 `preflight` constructs no provider request.
+
+<details>
+<summary><strong>Research appendix II — full evidence ledger, benchmarks, roadmap, and human decisions</strong></summary>
+
+<br>
 
 ## Judge path: inspect first, rerun second
 
@@ -1968,13 +2004,11 @@ category determination.
 
 The roadmap is a plan, not a list of completed capabilities.
 
-## How Codex and humans collaborated
+## Human research decisions
 
-Codex was used as an implementation and research collaborator to turn the
-initial reasoning sketch into an executable monolith, design falsifiable
-comparison arms, construct validation checks, run repository diagnostics, and
-draft the public evidence surface. The commit history and submission materials
-are intended to preserve that development record.
+The project owner retained final authority over experimental locks, claim
+boundaries, promotion gates, and publication decisions. The commit history and
+submission materials preserve that development record.
 
 Human decisions remain explicit. In particular, the project owner chose to:
 
@@ -1984,15 +2018,16 @@ Human decisions remain explicit. In particular, the project owner chose to:
 - defer the final product UI until the benchmark reveals the most informative
   interaction, while using a provisional read-only viewer to test the public
   artifact and observation contract;
-- use instrumentation to generate and falsify new routing/revision policies,
+- treat instrumentation as a generator and falsifier of new routing/revision
+  policies,
   not only to police public claims;
 - keep semantic-cause routing separate from the narrower source-projection
   leverage diagnostic;
 - preserve the terminal v0.3 attempt instead of recovering unpublished partial
   metrics, and turn its replay/loss coupling into the next causal experiment;
 - keep mechanism, model-integration, and accuracy claims separate;
-- require meaningful GPT-5.6 use before representing the project as
-  hackathon-ready;
+- require a material GPT-5.6 runtime contribution before representing the
+  project as hackathon-ready;
 - preserve a failed selective-quality guardrail and turn the observed public
   routing/state-sufficiency interaction into the next algorithm experiment;
 - insert a one-shot Direct control before tuning selective replay, freeze its
@@ -2001,6 +2036,8 @@ Human decisions remain explicit. In particular, the project owner chose to:
 
 Codex accelerated implementation and audit work; it did not decide whether the
 evidence is sufficient for a scientific or product claim.
+
+</details>
 
 ## Development status
 
