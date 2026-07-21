@@ -15,6 +15,7 @@ export function ApplyRevisionHeader({
   snapshot: ApplyRevisionView;
 }) {
   const liveResult = snapshot.mode === "LIVE_AFTER_REGENERATION";
+  const livePending = snapshot.mode === "LIVE_RECORDED_REFERENCE";
   return (
     <header className="ar-header">
       <div className="ar-brand">
@@ -27,7 +28,7 @@ export function ApplyRevisionHeader({
         <i aria-hidden="true">·</i>
         <b>{snapshot.before.answer}</b>
         <Icon name="arrow" size={18} />
-        <b className="ar-blue">{snapshot.after.answer}</b>
+        <b className={livePending ? "ar-pending" : "ar-blue"}>{snapshot.after.answer}</b>
       </div>
       <div className="ar-mode-area">
         <div aria-label="Inspector mode" className="ar-mode-switch" role="group">
@@ -55,7 +56,7 @@ export function ApplyRevisionHeader({
               ? "RECORDED ACCEPTANCE · NO NEW MODEL CALL"
               : liveResult
                 ? "LIVE AFTER REGENERATION · 1 PROVIDER ATTEMPT"
-                : "LIVE READY · RECORDED REFERENCE DISPLAYED"}
+                : "LIVE READY · APPLY TO REGENERATE"}
           </span>
         </div>
       </div>

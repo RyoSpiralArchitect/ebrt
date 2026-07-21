@@ -28,6 +28,15 @@ prior public state, closure graphs, fingerprints, or provider configuration.
 There is no automatic retry. Stopping the browser wait aborts only the browser
 request; the server operation may still complete.
 
+Before that operation completes, Live mode deliberately withholds the sealed
+recorded After output and displays `POLISH → PENDING`. The live After card,
+public diff, and verification rows are revealed only from the returned live
+response. The center panel keeps the late event, objective change, local
+`backward()`, top three public credits, compiled actuator, and gradient
+boundary on the primary demo surface; full trajectories, matched controls,
+allocation rows, and execution receipts remain available under
+**Inspect trajectory receipts**.
+
 Live protocol `v0.6.2.4` exposes Runtime Preview 3's public temporal revision
 path. The backend starts from the compiled public Before vector, executes a
 chronological neutral trajectory, performs one real local `float64` backward

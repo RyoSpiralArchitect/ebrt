@@ -1,4 +1,4 @@
-import type { ApplyRevisionView } from "../applyRevisionTypes";
+import type { ApplyRevisionView, CreditRow } from "../applyRevisionTypes";
 import { Icon } from "./Icon";
 
 export type LiveRevisionPhase = "idle" | "loading-template" | "regenerating" | "complete" | "error" | "aborted";
@@ -9,6 +9,45 @@ function formatObjective(value: number) {
 
 function formatTrajectoryState(values: number[]) {
   return `[${values.map((value) => value.toFixed(3)).join(" / ")}]`;
+}
+
+type DisplayCredit = {
+  row: CreditRow;
+  value: number;
+};
+
+function CreditMap({
+  credits,
+  label,
+  suppressEvidenceIds,
+  trajectory,
+}: {
+  credits: DisplayCredit[];
+  label: string;
+  suppressEvidenceIds: string[];
+  trajectory: boolean;
+}) {
+  const maxCredit = Math.max(0, ...credits.map(({ value }) => Math.abs(value)));
+  return (
+    <div className="ar-credit-map" aria-label={label}>
+      {credits.map(({ row, value }) => (
+        <div className={suppressEvidenceIds.includes(row.evidence_id) ? "suppressed" : ""} key={row.evidence_id}>
+          <strong>{row.evidence_id}</strong>
+          <span>
+            <i
+              style={{
+                width: maxCredit === 0 ? "0%" : `${Math.max(2, Math.abs(value) / maxCredit * 100)}%`,
+              }}
+            />
+          </span>
+          <code>
+            {value.toFixed(4)}
+            {trajectory && row.control_value !== undefined ? ` · u ${row.control_value.toFixed(4)}` : ""}
+          </code>
+        </div>
+      ))}
+    </div>
+  );
 }
 
 export function RevisionEnginePanel({
@@ -56,7 +95,10 @@ export function RevisionEnginePanel({
     (row) => row.active_before || Math.abs(controlMetric(row)) > Number.EPSILON || actuatorEvidence.has(row.evidence_id),
   );
   const visibleCredits = selectedCredits.length ? selectedCredits : control.credit_rows;
-  const maxCredit = Math.max(0, ...visibleCredits.map((row) => Math.abs(controlMetric(row))));
+  const displayCredits = visibleCredits.map((row) => ({ row, value: controlMetric(row) }));
+  const focusCredits = [...displayCredits]
+    .sort((left, right) => Math.abs(right.value) - Math.abs(left.value))
+    .slice(0, 3);
   const liveBusy = livePhase === "loading-template" || livePhase === "regenerating";
   const actionBusy = mode === "recorded" ? playing : liveBusy;
 
@@ -102,83 +144,21 @@ export function RevisionEnginePanel({
           <span>backward()</span>
           <strong>EXECUTED LOCALLY · {surrogate.dtype}</strong>
         </div>
-        {trajectory ? (
-          <>
-            <div className="ar-objective-row">
-              <span>Matched temporal sham</span>
-              <strong>{formatObjective(trajectory.matched_temporal_sham.objective)}</strong>
-              <span>0 provider calls</span>
-            </div>
-            <dl aria-label="Neutral and revised public trajectories">
-              <div>
-                <dt>Neutral trajectory</dt>
-                <dd>
-                  {trajectory.neutral.points.map((point) =>
-                    `${point.evidence_id}${formatTrajectoryState(point.state)}`,
-                  ).join(" → ")}
-                </dd>
-              </div>
-              <div>
-                <dt>Revised trajectory</dt>
-                <dd className="ar-blue">
-                  {trajectory.revised.points.map((point) =>
-                    `${point.evidence_id}${formatTrajectoryState(point.state)}`,
-                  ).join(" → ")}
-                </dd>
-              </div>
-              <div>
-                <dt>Full-admission support reference</dt>
-                <dd>
-                  {trajectory.neutral.points.map((point) =>
-                    `${point.evidence_id}[${point.full_admission_support_reference.toFixed(3)}]`,
-                  ).join(" → ")}
-                </dd>
-              </div>
-            </dl>
-            <p className="ar-reference-note">
-              Axis order · {trajectory.axis_order.join(" / ")} · public surrogate only
-            </p>
-          </>
-        ) : null}
-        {surrogate.surrogate_terminal_state_before !== undefined &&
-        surrogate.surrogate_terminal_state_after !== undefined ? (
-          <div className="ar-objective-row">
-            <span>Surrogate terminal state</span>
-            <strong>{formatObjective(surrogate.surrogate_terminal_state_before)}</strong>
-            <Icon name="arrow" size={16} />
-            <strong>{formatObjective(surrogate.surrogate_terminal_state_after)}</strong>
-          </div>
-        ) : null}
       </div>
 
       <div className={`ar-engine-step ar-control-block ${replayStep >= 1 ? "is-replaying" : ""}`}>
         <div className="ar-block-heading">
           <span className="ar-block-label">
-            {trajectory ? "Temporal credit · |∂L/∂uₜ|" : liveAllocation ? "Optimized inspection allocation" : "Signed public credit"}
+            {trajectory ? "Top temporal credit · |∂L/∂uₜ|" : liveAllocation ? "Top inspection allocation" : "Top signed public credit"}
           </span>
           <code>L2 {control.control_l2.toFixed(4)} / {control.max_control_l2.toFixed(2)}</code>
         </div>
-        <div
-          className="ar-credit-map"
-          aria-label={trajectory ? "Temporal credit by public trajectory step" : liveAllocation ? "Optimized public inspection allocation by evidence" : "Signed public credit by evidence"}
-        >
-          {visibleCredits.map((row) => (
-            <div className={actuator.suppress_evidence_ids.includes(row.evidence_id) ? "suppressed" : ""} key={row.evidence_id}>
-              <strong>{row.evidence_id}</strong>
-              <span>
-                <i
-                  style={{
-                    width: maxCredit === 0 ? "0%" : `${Math.max(2, Math.abs(controlMetric(row)) / maxCredit * 100)}%`,
-                  }}
-                />
-              </span>
-              <code>
-                {controlMetric(row).toFixed(4)}
-                {trajectory && row.control_value !== undefined ? ` · u ${row.control_value.toFixed(4)}` : ""}
-              </code>
-            </div>
-          ))}
-        </div>
+        <CreditMap
+          credits={focusCredits}
+          label={trajectory ? "Top temporal credit by public trajectory step" : liveAllocation ? "Top optimized public inspection allocation by evidence" : "Top signed public credit by evidence"}
+          suppressEvidenceIds={actuator.suppress_evidence_ids}
+          trajectory={Boolean(trajectory)}
+        />
       </div>
 
       <div className={`ar-engine-step ar-actuator-block ${replayStep >= 2 ? "is-replaying" : ""}`}>
@@ -188,52 +168,120 @@ export function RevisionEnginePanel({
           <div><dt>{actuator.suppress_source ? "Suppress · typed event" : "Suppress"}</dt><dd className="ar-red">{actuator.suppress_evidence_ids.join(", ")}</dd></div>
           <div><dt>{actuator.preserve_source ? "Preserve · typed event" : "Preserve"}</dt><dd>{actuator.preserve_evidence_ids.join(", ")}</dd></div>
         </dl>
-        {inspectionPlan ? (
-          <>
-            <span className="ar-block-label">
-              Continuous inspection plan · {inspectionPlan.total_budget_units} abstract units
-            </span>
-            <div className="ar-credit-map" aria-label="Provider-visible continuous inspection allocation">
-              {inspectionPlan.steps.map((step) => (
-                <div key={step.evidence_id}>
-                  <strong>#{step.priority_rank} {step.evidence_id}</strong>
-                  <span>
-                    <i style={{ width: `${Math.max(2, step.inspection_share * 100)}%` }} />
-                  </span>
-                  <code>
-                    {(step.inspection_share * 100).toFixed(2)}% · {step.inspection_budget_units}u · {step.review_depth}
-                  </code>
-                </div>
-              ))}
-            </div>
-            <p className="ar-reference-note">
-              Allocation and units are public review directives, not attention probabilities or provider token budgets.
-            </p>
-          </>
-        ) : null}
-        {execution ? (
-          <>
-            <span className="ar-block-label">Actuator execution trace · {execution.final_state}</span>
-            <dl aria-label="Public actuator state-machine execution trace">
-              {execution.trace.map((step) => (
-                <div key={step.step_index}>
-                  <dt>{String(step.step_index).padStart(2, "0")} · {step.operation}</dt>
+      </div>
+
+      <details className="ar-receipt-details">
+        <summary>
+          <Icon name="document" size={16} />
+          <span>Inspect trajectory receipts</span>
+          <Icon name="chevron" size={15} />
+        </summary>
+        <div className="ar-receipt-content">
+          {trajectory ? (
+            <>
+              <div className="ar-objective-row">
+                <span>Matched temporal sham</span>
+                <strong>{formatObjective(trajectory.matched_temporal_sham.objective)}</strong>
+                <span>0 provider calls</span>
+              </div>
+              <dl aria-label="Neutral and revised public trajectories">
+                <div>
+                  <dt>Neutral trajectory</dt>
                   <dd>
-                    {step.evidence_id ?? "full context"} · {step.state_before} → {step.state_after}
+                    {trajectory.neutral.points.map((point) =>
+                      `${point.evidence_id}${formatTrajectoryState(point.state)}`,
+                    ).join(" → ")}
                   </dd>
                 </div>
-              ))}
-            </dl>
-          </>
-        ) : null}
-        {snapshot.public_dependency_audit ? (
-          <p className="ar-reference-note">
-            Public graph block/unblock · {snapshot.public_dependency_audit.blocked_evidence_id} ·{" "}
-            {snapshot.public_dependency_audit.structural_dependency_status}. Hosted causality{" "}
-            {snapshot.public_dependency_audit.hosted_causality_status.toLowerCase().replaceAll("_", " ")}.
-          </p>
-        ) : null}
-      </div>
+                <div>
+                  <dt>Revised trajectory</dt>
+                  <dd className="ar-blue">
+                    {trajectory.revised.points.map((point) =>
+                      `${point.evidence_id}${formatTrajectoryState(point.state)}`,
+                    ).join(" → ")}
+                  </dd>
+                </div>
+                <div>
+                  <dt>Full-admission support reference</dt>
+                  <dd>
+                    {trajectory.neutral.points.map((point) =>
+                      `${point.evidence_id}[${point.full_admission_support_reference.toFixed(3)}]`,
+                    ).join(" → ")}
+                  </dd>
+                </div>
+              </dl>
+              <p className="ar-reference-note">
+                Axis order · {trajectory.axis_order.join(" / ")} · public surrogate only
+              </p>
+            </>
+          ) : null}
+          {surrogate.surrogate_terminal_state_before !== undefined &&
+          surrogate.surrogate_terminal_state_after !== undefined ? (
+            <div className="ar-objective-row">
+              <span>Surrogate terminal state</span>
+              <strong>{formatObjective(surrogate.surrogate_terminal_state_before)}</strong>
+              <Icon name="arrow" size={16} />
+              <strong>{formatObjective(surrogate.surrogate_terminal_state_after)}</strong>
+            </div>
+          ) : null}
+          {displayCredits.length > focusCredits.length ? (
+            <>
+              <span className="ar-block-label">Complete public credit receipt</span>
+              <CreditMap
+                credits={displayCredits}
+                label="Complete public credit receipt by evidence"
+                suppressEvidenceIds={actuator.suppress_evidence_ids}
+                trajectory={Boolean(trajectory)}
+              />
+            </>
+          ) : null}
+          {inspectionPlan ? (
+            <>
+              <span className="ar-block-label">
+                Continuous inspection plan · {inspectionPlan.total_budget_units} abstract units
+              </span>
+              <div className="ar-credit-map" aria-label="Provider-visible continuous inspection allocation">
+                {inspectionPlan.steps.map((step) => (
+                  <div key={step.evidence_id}>
+                    <strong>#{step.priority_rank} {step.evidence_id}</strong>
+                    <span>
+                      <i style={{ width: `${Math.max(2, step.inspection_share * 100)}%` }} />
+                    </span>
+                    <code>
+                      {(step.inspection_share * 100).toFixed(2)}% · {step.inspection_budget_units}u · {step.review_depth}
+                    </code>
+                  </div>
+                ))}
+              </div>
+              <p className="ar-reference-note">
+                Allocation and units are public review directives, not attention probabilities or provider token budgets.
+              </p>
+            </>
+          ) : null}
+          {execution ? (
+            <>
+              <span className="ar-block-label">Actuator execution trace · {execution.final_state}</span>
+              <dl aria-label="Public actuator state-machine execution trace">
+                {execution.trace.map((step) => (
+                  <div key={step.step_index}>
+                    <dt>{String(step.step_index).padStart(2, "0")} · {step.operation}</dt>
+                    <dd>
+                      {step.evidence_id ?? "full context"} · {step.state_before} → {step.state_after}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </>
+          ) : null}
+          {snapshot.public_dependency_audit ? (
+            <p className="ar-reference-note">
+              Public graph block/unblock · {snapshot.public_dependency_audit.blocked_evidence_id} ·{" "}
+              {snapshot.public_dependency_audit.structural_dependency_status}. Hosted causality{" "}
+              {snapshot.public_dependency_audit.hosted_causality_status.toLowerCase().replaceAll("_", " ")}.
+            </p>
+          ) : null}
+        </div>
+      </details>
 
       <div className="ar-boundary">
         <span>GRADIENT STOPS HERE</span>

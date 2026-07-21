@@ -61,13 +61,34 @@ export function liveRecordedReferenceView(snapshot: ApplyRevisionSnapshot): Appl
     },
     after: {
       ...recorded.after,
+      answer: "PENDING",
+      selected_closure_id: "NOT_AVAILABLE",
+      target_values: [],
+      active_support_evidence_ids: [],
+      invalidated_evidence_ids: [],
+      invalidation_edges: [],
+      provider_output_fingerprint_sha256: "NOT_AVAILABLE",
       strict_status: "NOT_ASSESSED",
       fact_local_lineage_status: "NOT_ASSESSED",
+    },
+    output_diff: {
+      answer: {
+        before: recorded.before.answer,
+        after: "PENDING",
+      },
+      selected_closure_id: {
+        before: recorded.before.selected_closure_id,
+        after: "NOT_AVAILABLE",
+      },
+      support_added_evidence_ids: [],
+      support_dropped_evidence_ids: [],
+      stable_target_ids: [],
+      target_values: [],
     },
     verification: [
       {
         label: "Live result",
-        detail: "Recorded output is displayed only as a reference",
+        detail: "No provider attempt has run",
         status: "NOT_ASSESSED",
       },
       {
@@ -90,7 +111,7 @@ export function liveRecordedReferenceView(snapshot: ApplyRevisionSnapshot): Appl
       semantic_correctness_status: "NOT_ASSESSED",
       effect_attribution_status: "NOT_ASSESSED",
       provider_attempts: 0,
-      terminal_label: "NO LIVE RESULT · RECORDED REFERENCE",
+      terminal_label: "LIVE REVISION READY · OUTPUT PENDING",
       cost_label: "Live cost",
     },
   };
