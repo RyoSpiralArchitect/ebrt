@@ -175,6 +175,8 @@ export type ApplyRevisionView = Omit<
     input_fingerprint_sha256?: string;
     input_provenance?: "CALLER_SUPPLIED_UNVERIFIED" | "CONTAMINATED_REGRESSION_FIXTURE";
     source_artifact_fingerprint_sha256?: string;
+    transport_body_sha256?: string;
+    server_response_fingerprint_sha256?: string;
     manifest_fingerprint_sha256?: string;
     manifest_sha256?: string;
     trace_fingerprint_sha256?: string;
@@ -211,11 +213,14 @@ export type LiveDemoRequestEnvelope = {
   schema_version: "ebrt-live-demo-request-v0.6.2.2";
   provenance: "CONTAMINATED_REGRESSION_FIXTURE";
   source_artifact_fingerprint_sha256: string;
+  request_fingerprint_sha256: string;
+  fingerprint_sha256: string;
   request: Record<string, unknown> & { request_id: string };
 };
 
 export type LiveApplyRevisionResponse = {
   schema_version: "ebrt-live-apply-revision-response-v0.6.2.2";
+  transport_body_sha256: string;
   request_id: string;
   status: "COMPLETE";
   mode: "LIVE_AFTER_REGENERATION";

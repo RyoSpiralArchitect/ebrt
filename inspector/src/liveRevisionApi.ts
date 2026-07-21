@@ -11,6 +11,23 @@ import type {
 const DEMO_REQUEST_SCHEMA = "ebrt-live-demo-request-v0.6.2.2";
 const LIVE_RESPONSE_SCHEMA = "ebrt-live-apply-revision-response-v0.6.2.2";
 const SHA256 = /^[0-9a-f]{64}$/;
+const BODY_SHA256_HEADER = "X-EBRT-Body-SHA256";
+const OPERATIONAL_ROW_LABELS: Record<string, string> = {
+  provider_output_schema_valid: "Provider output schema",
+  selected_closure_lineage_bound: "Selected closure lineage",
+  correction_evidence_active: "Correction evidence active",
+  all_invalidated_evidence_absent: "All invalidated support removed",
+  invalidation_transition_exact: "Exact invalidation transition",
+  prior_invalidations_preserved: "Prior invalidations preserved",
+  no_previously_invalidated_evidence_resurrected: "No invalidated evidence resurrected",
+  changed_fact_targets_exist: "Changed fact target",
+  changed_fact_targets_bind_correction: "Fact-local correction lineage",
+  stable_bound_targets_exist: "Stable target binding",
+  stable_bound_targets_preserved: "Stable target preserved",
+  public_diff_observable: "Public output diff",
+};
+const SEMANTIC_ROW_DETAIL = "Reserved gold fields are rejected; caller semantic content is unverified";
+const EFFECT_ROW_DETAIL = "One regeneration is not a causal contrast";
 
 export class LiveRevisionApiError extends Error {
   readonly code: string;
@@ -42,6 +59,39 @@ function sha256(value: unknown, label: string): string {
   const observed = string(value, label);
   if (!SHA256.test(observed)) return fail(label);
   return observed;
+}
+
+function canonicalJson(value: unknown): string {
+  if (value === null) return "null";
+  if (typeof value === "string" || typeof value === "boolean") return JSON.stringify(value);
+  if (typeof value === "number") {
+    if (!Number.isFinite(value)) return fail("canonical JSON contains a non-finite number");
+    return JSON.stringify(value);
+  }
+  if (Array.isArray(value)) return `[${value.map(canonicalJson).join(",")}]`;
+  if (typeof value === "object") {
+    const candidate = value as Record<string, unknown>;
+    return `{${Object.keys(candidate)
+      .sort()
+      .map((key) => `${JSON.stringify(key)}:${canonicalJson(candidate[key])}`)
+      .join(",")}}`;
+  }
+  return fail("canonical JSON contains an unsupported value");
+}
+
+async function digestSha256(value: string): Promise<string> {
+  if (!globalThis.crypto?.subtle) {
+    throw new LiveRevisionApiError(
+      "Browser SHA-256 support is required for Live response binding",
+      "INTEGRITY_CHECK_UNAVAILABLE",
+    );
+  }
+  const digest = await globalThis.crypto.subtle.digest("SHA-256", new TextEncoder().encode(value));
+  return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, "0")).join("");
+}
+
+function sameCanonical(left: unknown, right: unknown): boolean {
+  return canonicalJson(left) === canonicalJson(right);
 }
 
 function finiteNumber(value: unknown, label: string, nonnegative = false): number {
@@ -146,6 +196,11 @@ function parseDemoRequest(value: unknown): LiveDemoRequestEnvelope {
       candidate.source_artifact_fingerprint_sha256,
       "demo request.source_artifact_fingerprint_sha256",
     ),
+    request_fingerprint_sha256: sha256(
+      candidate.request_fingerprint_sha256,
+      "demo request.request_fingerprint_sha256",
+    ),
+    fingerprint_sha256: sha256(candidate.fingerprint_sha256, "demo request.fingerprint_sha256"),
     request: request as LiveDemoRequestEnvelope["request"],
   };
 }
@@ -158,13 +213,24 @@ function invalidationEdge(value: unknown, label: string) {
   };
 }
 
-function parseResponse(value: unknown, expectedRequestId: string): LiveApplyRevisionResponse {
+function parseResponse(
+  value: unknown,
+  expectedEnvelope: LiveDemoRequestEnvelope,
+  expectedInputFingerprint: string,
+  transportBodySha256: string,
+): LiveApplyRevisionResponse {
+  const expectedRequest = record(expectedEnvelope.request, "expected request");
+  const expectedRequestId = string(expectedRequest.request_id, "expected request.request_id");
   const candidate = record(value, "response");
   if (candidate.schema_version !== LIVE_RESPONSE_SCHEMA) return fail("response.schema_version");
   if (candidate.status !== "COMPLETE") return fail("response.status");
   if (candidate.mode !== "LIVE_AFTER_REGENERATION") return fail("response.mode");
   const requestId = string(candidate.request_id, "response.request_id");
   if (requestId !== expectedRequestId) return fail("response.request_id correlation");
+  if (candidate.input_fingerprint_sha256 !== expectedInputFingerprint) {
+    return fail("response.input_fingerprint_sha256 correlation");
+  }
+  if (candidate.case_id !== expectedRequest.case_id) return fail("response.case_id correlation");
 
   const context = record(candidate.context, "response.context");
   const contextEvidence = array(context.evidence, "response.context.evidence").map((row, index) =>
@@ -176,6 +242,45 @@ function parseResponse(value: unknown, expectedRequestId: string): LiveApplyRevi
   const inputProvenance = string(context.input_provenance, "response.context.input_provenance");
   if (!["CALLER_SUPPLIED_UNVERIFIED", "CONTAMINATED_REGRESSION_FIXTURE"].includes(inputProvenance)) {
     return fail("response.context.input_provenance");
+  }
+  if (inputProvenance !== expectedEnvelope.provenance) {
+    return fail("response.context.input_provenance correlation");
+  }
+  if (
+    context.source_artifact_fingerprint_sha256 !==
+    expectedEnvelope.source_artifact_fingerprint_sha256
+  ) {
+    return fail("response.context.source_artifact_fingerprint_sha256 correlation");
+  }
+  if (context.question !== expectedRequest.question) return fail("response.context.question correlation");
+  if (!sameCanonical(context.before_horizon_evidence_ids, expectedRequest.before_horizon_evidence_ids)) {
+    return fail("response.context.before_horizon_evidence_ids correlation");
+  }
+  const expectedEvidence = array(expectedRequest.all_raw_evidence, "expected request.all_raw_evidence").map(
+    (row, index) => {
+      const item = record(row, `expected request.all_raw_evidence[${index}]`);
+      return {
+        evidence_id: string(item.evidence_id, `expected request.all_raw_evidence[${index}].evidence_id`),
+        text: string(item.text, `expected request.all_raw_evidence[${index}].text`),
+      };
+    },
+  );
+  if (
+    !sameCanonical(
+      contextEvidence.map(({ evidence_id, text }) => ({ evidence_id, text })),
+      expectedEvidence,
+    )
+  ) {
+    return fail("response.context.evidence correlation");
+  }
+  const expectedEvent = record(expectedRequest.event, "expected request.event");
+  if (
+    lateEvent.event_id !== expectedEvent.event_id ||
+    lateEvent.evidence_id !== expectedEvent.correction_evidence_id ||
+    !sameCanonical(lateEvent.invalidated_evidence_ids, expectedEvent.invalidated_evidence_ids) ||
+    !sameCanonical(lateEvent.stable_evidence_ids, expectedEvent.stable_evidence_ids)
+  ) {
+    return fail("response.context.late_event correlation");
   }
 
   const mechanism = record(candidate.mechanism, "response.mechanism");
@@ -190,6 +295,9 @@ function parseResponse(value: unknown, expectedRequestId: string): LiveApplyRevi
   const diff = record(output.diff, "response.output.diff");
   const diffAnswer = record(diff.answer, "response.output.diff.answer");
   const diffClosure = record(diff.selected_closure_id, "response.output.diff.selected_closure_id");
+  if (!sameCanonical(before.public_output, expectedRequest.prior_public_state)) {
+    return fail("response.output.before.public_output correlation");
+  }
 
   const verification = record(candidate.verification, "response.verification");
   const providerAttempts = finiteNumber(verification.provider_attempts, "response.verification.provider_attempts", true);
@@ -201,10 +309,91 @@ function parseResponse(value: unknown, expectedRequestId: string): LiveApplyRevi
     return fail("response.verification.effect_attribution_status");
   }
 
+  const mechanismStatus = binaryStatus(mechanism.status, "response.mechanism.status");
+  const controlChecks = booleanRecord(control.checks, "response.mechanism.public_control_map.checks");
+  if (!Object.keys(controlChecks).length || !Object.values(controlChecks).every(Boolean)) {
+    return fail("response.mechanism.public_control_map.checks hard gate");
+  }
+  if (mechanismStatus !== "PASS") return fail("response.mechanism.status hard gate");
+
+  const verificationRows = array(verification.rows, "response.verification.rows").map((row, index) => {
+    const item = record(row, `response.verification.rows[${index}]`);
+    return {
+      label: string(item.label, `response.verification.rows[${index}].label`),
+      detail: string(item.detail, `response.verification.rows[${index}].detail`),
+      status: status(item.status, `response.verification.rows[${index}].status`),
+    };
+  });
+  const rowLabels = verificationRows.map((row) => row.label);
+  if (new Set(rowLabels).size !== rowLabels.length) return fail("response.verification.rows duplicate labels");
+  const semanticRows = verificationRows.filter((row) => row.label === "Semantic correctness");
+  const effectRows = verificationRows.filter((row) => row.label === "Effect attribution");
+  if (
+    semanticRows.length !== 1 ||
+    semanticRows[0].status !== "NOT_ASSESSED" ||
+    semanticRows[0].detail !== SEMANTIC_ROW_DETAIL
+  ) {
+    return fail("response.verification.rows semantic correctness boundary");
+  }
+  if (
+    effectRows.length !== 1 ||
+    effectRows[0].status !== "NOT_ASSESSED" ||
+    effectRows[0].detail !== EFFECT_ROW_DETAIL
+  ) {
+    return fail("response.verification.rows effect attribution boundary");
+  }
+  const operationalRows = verificationRows.filter(
+    (row) => row.label !== "Semantic correctness" && row.label !== "Effect attribution",
+  );
+  const operationalKeys = Object.keys(OPERATIONAL_ROW_LABELS);
+  if (
+    operationalRows.length !== operationalKeys.length ||
+    operationalRows.some(
+      (row) =>
+        row.status === "NOT_ASSESSED" ||
+        OPERATIONAL_ROW_LABELS[row.detail] !== row.label,
+    ) ||
+    new Set(operationalRows.map((row) => row.detail)).size !== operationalKeys.length ||
+    operationalKeys.some((key) => !operationalRows.some((row) => row.detail === key))
+  ) {
+    return fail("response.verification.rows operational coverage");
+  }
+  const auditPassed = operationalRows.every((row) => row.status === "PASS");
+  const operationalStatus = binaryStatus(
+    verification.operational_acceptance_status,
+    "response.verification.operational_acceptance_status",
+  );
+  const providerSchemaStatus = binaryStatus(
+    verification.provider_output_schema_status,
+    "response.verification.provider_output_schema_status",
+  );
+  const lineageStatus = binaryStatus(
+    verification.lineage_binding_status,
+    "response.verification.lineage_binding_status",
+  );
+  if (providerSchemaStatus !== "PASS") return fail("response.verification.provider_output_schema_status hard gate");
+  if (
+    operationalRows.find((row) => row.detail === "provider_output_schema_valid")?.status !==
+    providerSchemaStatus
+  ) {
+    return fail("response.verification.provider_output_schema_status consistency");
+  }
+  if (lineageStatus !== (auditPassed ? "PASS" : "FAIL")) {
+    return fail("response.verification.lineage_binding_status consistency");
+  }
+  const expectedOperationalStatus =
+    mechanismStatus === "PASS" && providerSchemaStatus === "PASS" && lineageStatus === "PASS"
+      ? "PASS"
+      : "FAIL";
+  if (operationalStatus !== expectedOperationalStatus) {
+    return fail("response.verification.operational_acceptance_status consistency");
+  }
+
   const accounting = record(candidate.accounting, "response.accounting");
 
   return {
     schema_version: LIVE_RESPONSE_SCHEMA,
+    transport_body_sha256: transportBodySha256,
     request_id: requestId,
     status: "COMPLETE",
     mode: "LIVE_AFTER_REGENERATION",
@@ -241,7 +430,7 @@ function parseResponse(value: unknown, expectedRequestId: string): LiveApplyRevi
       },
     },
     mechanism: {
-      status: binaryStatus(mechanism.status, "response.mechanism.status"),
+      status: mechanismStatus,
       actual_before_state: {
         fingerprint_sha256: sha256(actualBefore.fingerprint_sha256, "response.mechanism.actual_before_state.fingerprint_sha256"),
         source_selected_closure_id: string(
@@ -273,7 +462,7 @@ function parseResponse(value: unknown, expectedRequestId: string): LiveApplyRevi
         credit_rows: array(control.credit_rows, "response.mechanism.public_control_map.credit_rows").map((row, index) =>
           creditRow(row, `response.mechanism.public_control_map.credit_rows[${index}]`),
         ),
-        checks: booleanRecord(control.checks, "response.mechanism.public_control_map.checks"),
+        checks: controlChecks,
       },
       compiled_actuator: {
         fingerprint_sha256: sha256(actuator.fingerprint_sha256, "response.mechanism.compiled_actuator.fingerprint_sha256"),
@@ -383,26 +572,10 @@ function parseResponse(value: unknown, expectedRequestId: string): LiveApplyRevi
       },
     },
     verification: {
-      rows: array(verification.rows, "response.verification.rows").map((row, index) => {
-        const item = record(row, `response.verification.rows[${index}]`);
-        return {
-          label: string(item.label, `response.verification.rows[${index}].label`),
-          detail: string(item.detail, `response.verification.rows[${index}].detail`),
-          status: status(item.status, `response.verification.rows[${index}].status`),
-        };
-      }),
-      operational_acceptance_status: binaryStatus(
-        verification.operational_acceptance_status,
-        "response.verification.operational_acceptance_status",
-      ),
-      provider_output_schema_status: binaryStatus(
-        verification.provider_output_schema_status,
-        "response.verification.provider_output_schema_status",
-      ),
-      lineage_binding_status: binaryStatus(
-        verification.lineage_binding_status,
-        "response.verification.lineage_binding_status",
-      ),
+      rows: verificationRows,
+      operational_acceptance_status: operationalStatus,
+      provider_output_schema_status: providerSchemaStatus,
+      lineage_binding_status: lineageStatus,
       semantic_correctness_status: "NOT_ASSESSED",
       effect_attribution_status: "NOT_ASSESSED",
       provider_attempts: 1,
@@ -434,9 +607,29 @@ function endpoint(path: string): string {
   return new URL(path, base).toString();
 }
 
-async function json(response: Response, label: string): Promise<unknown> {
+async function verifiedJson(
+  response: Response,
+  label: string,
+): Promise<{ value: unknown; bodySha256: string }> {
+  const expectedBodySha256 = response.headers.get(BODY_SHA256_HEADER);
+  if (!expectedBodySha256 || !SHA256.test(expectedBodySha256)) {
+    throw new LiveRevisionApiError(
+      `${label} omitted its response-body integrity header`,
+      "MISSING_BODY_INTEGRITY_HEADER",
+      response.status,
+    );
+  }
+  const raw = await response.text();
+  const bodySha256 = await digestSha256(raw);
+  if (bodySha256 !== expectedBodySha256) {
+    throw new LiveRevisionApiError(
+      `${label} failed its response-body integrity check`,
+      "BODY_INTEGRITY_MISMATCH",
+      response.status,
+    );
+  }
   try {
-    return await response.json();
+    return { value: JSON.parse(raw) as unknown, bodySha256 };
   } catch {
     throw new LiveRevisionApiError(`${label} did not return JSON`, "INVALID_JSON", response.status);
   }
@@ -445,7 +638,8 @@ async function json(response: Response, label: string): Promise<unknown> {
 async function responseError(response: Response, label: string): Promise<LiveRevisionApiError> {
   let code = "HTTP_ERROR";
   try {
-    const payload = record(await response.json(), `${label} error`);
+    const { value } = await verifiedJson(response, `${label} error`);
+    const payload = record(value, `${label} error`);
     const error = payload.error && typeof payload.error === "object" ? record(payload.error, `${label} error.error`) : payload;
     if (typeof error.code === "string" && error.code) code = error.code;
   } catch {
@@ -464,14 +658,30 @@ export async function loadLiveDemoRequest(signal: AbortSignal): Promise<LiveDemo
     signal,
   });
   if (!response.ok) throw await responseError(response, "Live request template");
-  return parseDemoRequest(await json(response, "Live request template"));
+  const { value } = await verifiedJson(response, "Live request template");
+  const envelope = parseDemoRequest(value);
+  const requestFingerprint = await digestSha256(canonicalJson(envelope.request));
+  if (requestFingerprint !== envelope.request_fingerprint_sha256) {
+    return fail("demo request.request_fingerprint_sha256 integrity");
+  }
+  const { fingerprint_sha256: _fingerprint, ...unsealedEnvelope } = envelope;
+  const envelopeFingerprint = await digestSha256(canonicalJson(unsealedEnvelope));
+  if (envelopeFingerprint !== envelope.fingerprint_sha256) {
+    return fail("demo request.fingerprint_sha256 integrity");
+  }
+  return envelope;
 }
 
 export async function applyLiveRevision(
-  request: LiveDemoRequestEnvelope["request"],
+  envelope: LiveDemoRequestEnvelope,
   signal: AbortSignal,
 ): Promise<LiveApplyRevisionResponse> {
+  const request = envelope.request;
   const requestId = string(request.request_id, "live request.request_id");
+  const expectedInputFingerprint = await digestSha256(canonicalJson(request));
+  if (expectedInputFingerprint !== envelope.request_fingerprint_sha256) {
+    return fail("live request.request_fingerprint_sha256 integrity");
+  }
   const response = await fetch(endpoint("apply-revision"), {
     method: "POST",
     headers: {
@@ -486,5 +696,6 @@ export async function applyLiveRevision(
     signal,
   });
   if (!response.ok) throw await responseError(response, "Live Apply Revision");
-  return parseResponse(await json(response, "Live Apply Revision"), requestId);
+  const { value, bodySha256 } = await verifiedJson(response, "Live Apply Revision");
+  return parseResponse(value, envelope, expectedInputFingerprint, bodySha256);
 }

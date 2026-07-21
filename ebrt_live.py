@@ -50,6 +50,10 @@ DEMO_PROVIDER_INPUTS_PATH = (
     / "apply_revision_acceptance_v0_6_2_1_live_r01"
     / "provider_inputs.json"
 )
+DEMO_MANIFEST_PATH = DEMO_PROVIDER_INPUTS_PATH.with_name("manifest.json")
+PINNED_DEMO_MANIFEST_SHA256 = "532dd593ef4464d87dd02fd2eeaa712855f47e5de799c669889c0302ee2fe3a4"
+PINNED_DEMO_PROVIDER_INPUTS_SHA256 = "d57b33860db84a0378ffd6b6e18ef67ae64d66eb75bd1959c1a1c7424ea90a3f"
+PINNED_DEMO_PROVIDER_INPUTS_FINGERPRINT = "a2aa446099b7cf498e307cf2bdb261c6c8aa705db034935bc88bbf040c9936a1"
 
 REQUEST_SCHEMA = "ebrt-live-apply-revision-request-v0.6.2.2"
 PROVIDER_INPUT_SCHEMA = "ebrt-live-provider-input-v0.6.2.2"
@@ -702,7 +706,18 @@ def _validate_public_output(
     expected_checkpoint_id: str,
     allowed_closure_ids: set[str],
     require_live_schema: bool,
+    failure_http_status: int,
 ) -> JsonObject:
+    def output_require(
+        condition: bool, reason_code: str, detail: str | None = None
+    ) -> None:
+        _require(
+            condition,
+            reason_code,
+            detail,
+            http_status=failure_http_status,
+        )
+
     expected_keys = {
         "schema_version",
         "checkpoint_id",
@@ -710,37 +725,60 @@ def _validate_public_output(
         "selected_closure_id",
         "target_values",
     }
-    _require(set(output) == expected_keys, "OUTPUT_SCHEMA_INVALID")
+    output_require(set(output) == expected_keys, "OUTPUT_SCHEMA_INVALID")
     if require_live_schema:
-        _require(output["schema_version"] == PROVIDER_OUTPUT_SCHEMA, "OUTPUT_SCHEMA_VERSION_INVALID")
-    _require(output["checkpoint_id"] == expected_checkpoint_id, "OUTPUT_CHECKPOINT_MISMATCH")
-    _require(output["current_answer"] in request.answer_choices, "OUTPUT_ANSWER_OUTSIDE_DOMAIN")
-    _require(output["selected_closure_id"] in allowed_closure_ids, "OUTPUT_CLOSURE_UNKNOWN")
+        output_require(
+            output["schema_version"] == PROVIDER_OUTPUT_SCHEMA,
+            "OUTPUT_SCHEMA_VERSION_INVALID",
+        )
+    output_require(
+        output["checkpoint_id"] == expected_checkpoint_id,
+        "OUTPUT_CHECKPOINT_MISMATCH",
+    )
+    output_require(
+        output["current_answer"] in request.answer_choices,
+        "OUTPUT_ANSWER_OUTSIDE_DOMAIN",
+    )
+    output_require(
+        output["selected_closure_id"] in allowed_closure_ids,
+        "OUTPUT_CLOSURE_UNKNOWN",
+    )
     rows = output["target_values"]
-    _require(isinstance(rows, list) and len(rows) == len(request.decision_slots), "OUTPUT_TARGET_COUNT_INVALID")
+    output_require(
+        isinstance(rows, list) and len(rows) == len(request.decision_slots),
+        "OUTPUT_TARGET_COUNT_INVALID",
+    )
     slots = _slot_map(request)
     normalized_rows: list[JsonObject] = []
     seen: set[str] = set()
     for raw in rows:
-        _require(isinstance(raw, Mapping), "OUTPUT_TARGET_NOT_OBJECT")
-        _require(
+        output_require(isinstance(raw, Mapping), "OUTPUT_TARGET_NOT_OBJECT")
+        output_require(
             set(raw) == {"target_id", "target_type", "slot", "value"},
             "OUTPUT_TARGET_SCHEMA_INVALID",
         )
         row = TargetValue.model_validate(raw)
-        _require(row.target_id not in seen, "OUTPUT_TARGET_DUPLICATE", row.target_id)
-        _require(row.slot in slots, "OUTPUT_TARGET_SLOT_UNKNOWN", row.slot)
+        output_require(
+            row.target_id not in seen, "OUTPUT_TARGET_DUPLICATE", row.target_id
+        )
+        output_require(row.slot in slots, "OUTPUT_TARGET_SLOT_UNKNOWN", row.slot)
         spec = slots[row.slot]
-        _require(
+        output_require(
             row.target_type == spec.target_type
             and row.target_id == f"{spec.target_type}:{row.slot}",
             "OUTPUT_TARGET_TYPE_MISMATCH",
             row.target_id,
         )
-        _require(row.value in spec.allowed_values, "OUTPUT_TARGET_VALUE_OUTSIDE_DOMAIN", row.target_id)
+        output_require(
+            row.value in spec.allowed_values,
+            "OUTPUT_TARGET_VALUE_OUTSIDE_DOMAIN",
+            row.target_id,
+        )
         seen.add(row.target_id)
         normalized_rows.append(row.model_dump(mode="json"))
-    _require(seen == _expected_target_ids(request), "OUTPUT_TARGET_SET_MISMATCH")
+    output_require(
+        seen == _expected_target_ids(request), "OUTPUT_TARGET_SET_MISMATCH"
+    )
     normalized = {
         "schema_version": str(output["schema_version"]),
         "checkpoint_id": str(output["checkpoint_id"]),
@@ -772,6 +810,7 @@ def _compile_output(
         expected_checkpoint_id=expected_checkpoint,
         allowed_closure_ids=allowed_closure_ids,
         require_live_schema=require_live_schema,
+        failure_http_status=502 if phase_id == "after_event" else 422,
     )
     closure = _structural_closure(graph, evidence_order=evidence_order)
     value_by_id = {row["target_id"]: row for row in normalized["target_values"]}
@@ -1542,9 +1581,7 @@ def _derived_request_provenance(
 ) -> tuple[Literal["CALLER_SUPPLIED_UNVERIFIED", "CONTAMINATED_REGRESSION_FIXTURE"], str | None]:
     try:
         expected = build_demo_request(request_id=request.request_id)
-        source = _validated_json_file(
-            DEMO_PROVIDER_INPUTS_PATH, label="demo_provider_inputs"
-        )
+        source = _validated_demo_source()
     except (LiveRevisionError, KeyError, OSError, TypeError, ValueError):
         return "CALLER_SUPPLIED_UNVERIFIED", None
     if request.model_dump(mode="json") != expected:
@@ -1804,12 +1841,58 @@ def _validated_json_file(path: Path, *, label: str) -> JsonObject:
     return value
 
 
+def _validated_demo_source(
+    *,
+    provider_inputs_path: Path = DEMO_PROVIDER_INPUTS_PATH,
+    manifest_path: Path = DEMO_MANIFEST_PATH,
+) -> JsonObject:
+    """Bind the contaminated demo adapter to the published v0.6.2.1 bytes."""
+
+    _require(
+        manifest_path.is_file() and not manifest_path.is_symlink(),
+        "DEMO_MANIFEST_UNAVAILABLE",
+    )
+    manifest_bytes = manifest_path.read_bytes()
+    _require(
+        hashlib.sha256(manifest_bytes).hexdigest() == PINNED_DEMO_MANIFEST_SHA256,
+        "DEMO_MANIFEST_PIN_MISMATCH",
+    )
+    manifest = strict_json_bytes(manifest_bytes, label="demo_manifest")
+    _require(isinstance(manifest, Mapping), "DEMO_MANIFEST_INVALID")
+    artifacts = manifest.get("artifacts")
+    _require(isinstance(artifacts, Mapping), "DEMO_MANIFEST_ARTIFACTS_INVALID")
+    provider_entry = artifacts.get("provider_inputs.json")
+    _require(isinstance(provider_entry, Mapping), "DEMO_MANIFEST_PROVIDER_INPUTS_MISSING")
+    _require(
+        provider_entry.get("sha256") == PINNED_DEMO_PROVIDER_INPUTS_SHA256,
+        "DEMO_MANIFEST_PROVIDER_INPUTS_PIN_MISMATCH",
+    )
+    _require(
+        provider_inputs_path.is_file() and not provider_inputs_path.is_symlink(),
+        "DEMO_SOURCE_UNAVAILABLE",
+        "demo_provider_inputs",
+    )
+    provider_bytes = provider_inputs_path.read_bytes()
+    _require(
+        hashlib.sha256(provider_bytes).hexdigest()
+        == PINNED_DEMO_PROVIDER_INPUTS_SHA256,
+        "DEMO_SOURCE_BYTE_PIN_MISMATCH",
+    )
+    source = _validated_json_file(
+        provider_inputs_path, label="demo_provider_inputs"
+    )
+    _require(
+        source.get("fingerprint_sha256")
+        == PINNED_DEMO_PROVIDER_INPUTS_FINGERPRINT,
+        "DEMO_SOURCE_FINGERPRINT_PIN_MISMATCH",
+    )
+    return source
+
+
 def build_demo_request(*, request_id: str | None = None) -> JsonObject:
     """Adapt only the public provider inputs from sealed v0.6.2.1."""
 
-    source = _validated_json_file(
-        DEMO_PROVIDER_INPUTS_PATH, label="demo_provider_inputs"
-    )
+    source = _validated_demo_source()
     rows = source.get("payloads")
     _require(isinstance(rows, list) and len(rows) == 2, "DEMO_PHASES_INVALID")
     phase_by_id = {
@@ -2015,15 +2098,14 @@ def _synthetic_generic_request(*, request_id: str = "synthetic-generic-001") -> 
 
 def demo_request_envelope() -> JsonObject:
     request = build_demo_request()
-    source = _validated_json_file(
-        DEMO_PROVIDER_INPUTS_PATH, label="demo_provider_inputs"
-    )
-    return {
+    source = _validated_demo_source()
+    return _seal({
         "schema_version": DEMO_REQUEST_SCHEMA,
         "provenance": "CONTAMINATED_REGRESSION_FIXTURE",
         "source_artifact_fingerprint_sha256": source["fingerprint_sha256"],
+        "request_fingerprint_sha256": _fingerprint(request),
         "request": request,
-    }
+    })
 
 
 def capabilities_value(*, provider_mode: str) -> JsonObject:
@@ -2205,9 +2287,11 @@ def _handler_type(service: RevisionService) -> type[http.server.BaseHTTPRequestH
             idempotent_replay: bool = False,
         ) -> None:
             raw = _canonical_bytes(value, trailing_newline=True)
+            body_sha256 = hashlib.sha256(raw).hexdigest()
             self.send_response(status)
             self.send_header("Content-Type", "application/json; charset=utf-8")
             self.send_header("Content-Length", str(len(raw)))
+            self.send_header("X-EBRT-Body-SHA256", body_sha256)
             self.send_header("Cache-Control", "no-store")
             self.send_header("X-Content-Type-Options", "nosniff")
             self.send_header("Referrer-Policy", "no-referrer")
@@ -2216,6 +2300,10 @@ def _handler_type(service: RevisionService) -> type[http.server.BaseHTTPRequestH
             self.send_header("Connection", "close")
             if self._origin in ALLOWED_ORIGINS:
                 self.send_header("Access-Control-Allow-Origin", self._origin)
+                self.send_header(
+                    "Access-Control-Expose-Headers",
+                    "X-EBRT-Body-SHA256, X-EBRT-Idempotent-Replay",
+                )
                 self.send_header("Vary", "Origin")
             if idempotent_replay:
                 self.send_header("X-EBRT-Idempotent-Replay", "true")
@@ -2250,6 +2338,10 @@ def _handler_type(service: RevisionService) -> type[http.server.BaseHTTPRequestH
             self.send_header(
                 "Access-Control-Allow-Headers",
                 "Accept, Content-Type, Idempotency-Key",
+            )
+            self.send_header(
+                "Access-Control-Expose-Headers",
+                "X-EBRT-Body-SHA256, X-EBRT-Idempotent-Replay",
             )
             self.send_header("Access-Control-Max-Age", "600")
             self.send_header("Vary", "Origin")
@@ -2465,13 +2557,45 @@ def _http_json(
 
 def self_test() -> JsonObject:
     checks: dict[str, bool] = {}
+    pinned_demo_source = _validated_demo_source()
+    pin_rejection_code = None
+    with mock.patch(
+        f"{__name__}.PINNED_DEMO_PROVIDER_INPUTS_SHA256", "0" * 64
+    ):
+        try:
+            _validated_demo_source()
+        except LiveRevisionError as error:
+            pin_rejection_code = error.reason_code
+    checks["demo_source_is_publication_pinned"] = (
+        pinned_demo_source.get("fingerprint_sha256")
+        == PINNED_DEMO_PROVIDER_INPUTS_FINGERPRINT
+        and pin_rejection_code == "DEMO_MANIFEST_PROVIDER_INPUTS_PIN_MISMATCH"
+    )
     engine = EBRTRevisionEngine()
     demo = build_demo_request(request_id="live-demo-self-test-001")
     generic = _synthetic_generic_request()
     with _network_denied() as network:
         demo_result = engine.execute(demo, ScriptedLiveRevisionProvider())
         generic_result = engine.execute(generic, ScriptedLiveRevisionProvider())
+
+        class ContractInvalidProvider(ScriptedLiveRevisionProvider):
+            def generate(
+                self, payload: Mapping[str, Any]
+            ) -> tuple[Mapping[str, Any], ProviderReceipt]:
+                output, receipt = super().generate(payload)
+                return {**output, "current_answer": "OUTSIDE_REQUEST_DOMAIN"}, receipt
+
+        provider_contract_error: LiveRevisionError | None = None
+        try:
+            engine.execute(demo, ContractInvalidProvider())
+        except LiveRevisionError as error:
+            provider_contract_error = error
     checks["engine_self_test_network_zero"] = network["network_calls"] == 0
+    checks["provider_contract_failures_are_upstream_502"] = (
+        provider_contract_error is not None
+        and provider_contract_error.reason_code == "OUTPUT_ANSWER_OUTSIDE_DOMAIN"
+        and provider_contract_error.http_status == 502
+    )
     checks["sealed_demo_operational_pass"] = (
         demo_result["verification"]["operational_acceptance_status"] == "PASS"
         and demo_result["output"]["diff"]["answer"]
@@ -2796,7 +2920,9 @@ def self_test() -> JsonObject:
     thread.start()
     try:
         health_status, health, _ = _http_json(port, "GET", "/api/health")
-        demo_status, envelope, _ = _http_json(port, "GET", "/api/demo-request")
+        demo_status, envelope, demo_headers = _http_json(
+            port, "GET", "/api/demo-request"
+        )
         http_request = envelope["request"]
         post_headers = {"Idempotency-Key": http_request["request_id"]}
         post_status, first, first_headers = _http_json(
@@ -2847,16 +2973,26 @@ def self_test() -> JsonObject:
         health_status == demo_status == 200
         and health["provider_mode"] == "scripted"
         and envelope["schema_version"] == DEMO_REQUEST_SCHEMA
+        and envelope["request_fingerprint_sha256"]
+        == _fingerprint(envelope["request"])
+        and envelope["fingerprint_sha256"]
+        == _fingerprint(_without_fingerprint(envelope))
+        and demo_headers.get("x-ebrt-body-sha256")
+        == hashlib.sha256(_canonical_bytes(envelope, trailing_newline=True)).hexdigest()
     )
     checks["http_live_post_completes_once"] = (
         post_status == 200
         and first["verification"]["operational_acceptance_status"] == "PASS"
         and first_headers.get("x-ebrt-idempotent-replay") is None
+        and first_headers.get("x-ebrt-body-sha256")
+        == hashlib.sha256(_canonical_bytes(first, trailing_newline=True)).hexdigest()
     )
     checks["http_idempotent_repeat_is_cached"] = (
         repeat_status == 200
         and repeat == first
         and repeat_headers.get("x-ebrt-idempotent-replay") == "true"
+        and repeat_headers.get("x-ebrt-body-sha256")
+        == first_headers.get("x-ebrt-body-sha256")
         and service.provider_attempts_started == 1
     )
     checks["http_idempotency_conflict_rejected"] = (

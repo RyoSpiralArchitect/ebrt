@@ -191,7 +191,7 @@ and effect attribution remain `NOT_ASSESSED`.
 Run the offline contract and contaminated demo adapter without a provider:
 
 ```bash
-python3 -m pip install -r requirements-live.txt
+python3 -m pip install -r requirements-product.txt
 python3 ebrt_live.py self-test
 python3 ebrt_live.py demo-request
 python3 ebrt_live.py apply-demo --provider scripted
@@ -215,8 +215,15 @@ Its bounded API surface is `GET /api/health`, `GET /api/capabilities`,
 `GET /api/demo-request`, and `POST /api/apply-revision`. The demo request is a
 server-owned adapter over the known v0.6.2.1 case; it is contaminated product
 plumbing, not a benchmark, and that provenance is derived server-side from the
-known source fingerprint. Request IDs terminally bind both successful and
-failed attempts; provider retries are disabled. Provider credentials, raw
+published manifest bytes and provider-input bytes, not merely from a
+self-consistent embedded hash. Its envelope seals the exact request. Before the
+Live UI renders a result, it recomputes that request fingerprint, binds response
+provenance back to the envelope, verifies the API response-body SHA-256, and
+enforces the pinned 12-row operational status graph plus two exact
+`NOT_ASSESSED` rows. These hashes are integrity/correlation checks inside the
+trusted loopback deployment, not signatures or remote-server authentication.
+Request IDs terminally bind both successful and failed attempts; provider
+retries are disabled. Provider credentials, raw
 receipts, reserved gold fields, and private reasoning never enter the public
 response. Local public-surrogate objectives, gradients, finite-difference
 diagnostics, and salience values are intentionally returned as Inspector data;
@@ -716,7 +723,8 @@ artifacts/benchmark_controlled_raw_restart_v0_5_1_live_canary/ preserved four-re
 artifacts/benchmark_controlled_raw_restart_v0_5_1_quota_recovery_r01/ complete null-diff recovery block
 artifacts/demo_hackathon_strategy_walkthrough_v0_5_2_live_r01/ complete two-call near-pass and output diff
 requirements.txt              runtime dependency declaration
-requirements-live.txt         complete live runtime set (base + pinned OpenAI SDK)
+requirements-live.txt         sealed OpenAI/Pydantic dependency receipt
+requirements-product.txt      complete current product runtime set
 LICENSE                       Apache License 2.0
 ```
 

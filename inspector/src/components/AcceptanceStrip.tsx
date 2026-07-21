@@ -17,7 +17,7 @@ export function AcceptanceStrip({ snapshot }: { snapshot: ApplyRevisionView }) {
         <span>{snapshot.assessment.run_label}</span>
         <strong>{snapshot.assessment.run_status.replaceAll("_", " ")} · {snapshot.assessment.provider_attempts} {snapshot.assessment.provider_attempts === 1 ? "attempt" : "attempts"}</strong>
         <code title={snapshot.source.display_fingerprint_sha256}>
-          {recordedReference ? "reference " : ""}{shortFingerprint}…
+          {recordedReference ? "reference " : snapshot.mode === "LIVE_AFTER_REGENERATION" ? "verified body " : ""}{shortFingerprint}…
         </code>
       </div>
       <div>

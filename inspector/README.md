@@ -26,6 +26,16 @@ prior public state, closure graphs, fingerprints, or provider configuration.
 There is no automatic retry. Stopping the browser wait aborts only the browser
 request; the server operation may still complete.
 
+The Live display retains the whole demo envelope, recomputes its request and
+envelope fingerprints, and requires the response input fingerprint, provenance,
+source fingerprint, Before state, event, and evidence to bind back to that
+envelope. Every JSON response carries `X-EBRT-Body-SHA256`; the browser hashes
+the received bytes before parsing and displays that verified body digest rather
+than presenting an unchecked server seal. The parser also requires the exact 12
+operational rows, two exact `NOT_ASSESSED` rows, and their aggregate status
+relationships before the UI can render a terminal. These unkeyed hashes are
+loopback integrity checks, not signatures or remote-backend authentication.
+
 The API defaults to same-origin `/api/`. Dev and preview are deliberately fixed
 to loopback ports `5173` and `4173`; startup fails instead of silently moving to
 an Origin the backend has not allowlisted. A direct loopback API base may be
@@ -68,6 +78,7 @@ Start the loopback backend from the repository root (use `openai` for the real
 provider or `scripted` for network-zero UI work):
 
 ```bash
+python3 -m pip install -r requirements-product.txt
 python3 ebrt_live.py serve --provider scripted --host 127.0.0.1 --port 8765
 ```
 

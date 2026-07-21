@@ -201,27 +201,36 @@ export function liveApplyRevisionView(response: LiveApplyRevisionResponse): Appl
     "target diff is not public-output-bound",
   );
   requireView(mechanism.compiled_actuator.gradient_stops_here, "gradient boundary is open");
+  requireView(
+    Object.keys(mechanism.public_control_map.checks).length > 0 &&
+      Object.values(mechanism.public_control_map.checks).every(Boolean),
+    "public control hard gate failed",
+  );
   requireView(response.accounting.api_calls === 1, "live path must account for one API call");
+  requireView(
+    verification.provider_output_schema_status === "PASS",
+    "completed response has a failed provider schema",
+  );
   requireView(
     verification.operational_acceptance_status !== "PASS" || mechanism.status === "PASS",
     "operational acceptance passed a failed mechanism",
   );
 
-  const verificationRows = [...verification.rows];
-  if (!verificationRows.some((row) => row.label.toLowerCase().includes("semantic correctness"))) {
-    verificationRows.push({
+  const verificationRows = [
+    ...verification.rows.filter(
+      (row) => row.label !== "Semantic correctness" && row.label !== "Effect attribution",
+    ),
+    {
       label: "Semantic correctness",
       detail: "Reserved gold fields are rejected; caller semantic content is unverified",
-      status: "NOT_ASSESSED",
-    });
-  }
-  if (!verificationRows.some((row) => row.label.toLowerCase().includes("effect attribution"))) {
-    verificationRows.push({
+      status: "NOT_ASSESSED" as const,
+    },
+    {
       label: "Effect attribution",
       detail: "A single regeneration is not a causal contrast",
-      status: "NOT_ASSESSED",
-    });
-  }
+      status: "NOT_ASSESSED" as const,
+    },
+  ];
 
   return {
     schema_version: response.schema_version,
@@ -234,11 +243,13 @@ export function liveApplyRevisionView(response: LiveApplyRevisionResponse): Appl
     },
     source: {
       kind: "live",
-      display_fingerprint_sha256: response.fingerprint_sha256,
+      display_fingerprint_sha256: response.transport_body_sha256,
       input_fingerprint_sha256: response.input_fingerprint_sha256,
       input_provenance: context.input_provenance,
       source_artifact_fingerprint_sha256:
         context.source_artifact_fingerprint_sha256 ?? undefined,
+      transport_body_sha256: response.transport_body_sha256,
+      server_response_fingerprint_sha256: response.fingerprint_sha256,
     },
     evidence: context.evidence,
     before: {

@@ -146,7 +146,7 @@ export default function App() {
       if (sequence !== liveSequence.current || controller.signal.aborted) return;
       setLivePhase("regenerating");
       setReplayStep(2);
-      const response = await applyLiveRevision(template.request, controller.signal);
+      const response = await applyLiveRevision(template, controller.signal);
       if (sequence !== liveSequence.current || controller.signal.aborted) return;
       const nextView = liveApplyRevisionView(response);
       setLiveView(nextView);

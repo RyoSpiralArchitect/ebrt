@@ -66,14 +66,21 @@ effect_attribution_status   = NOT_ASSESSED
 provider_attempts           = 1
 ```
 
-No response exposes raw provider input, receipts, headers, exception text,
+No response exposes raw provider input, receipts, provider HTTP headers, exception text,
 credentials, reserved gold fields, provider-private gradients/losses, or
 post-hoc grades. The response intentionally exposes the local public-surrogate
 objective, gradient, finite-difference check, and reinspection salience as
 auditable mechanism diagnostics; none of those fields enter provider input.
 The server marks the built-in demo as `CONTAMINATED_REGRESSION_FIXTURE` only
-after exact normalized-template and source-fingerprint matching; all other
-requests are `CALLER_SUPPLIED_UNVERIFIED`. v0.6.2.2 therefore establishes
+after exact normalized-template matching and byte pins for the published
+v0.6.2.1 manifest and `provider_inputs.json`; all other requests are
+`CALLER_SUPPLIED_UNVERIFIED`. The demo envelope seals both the request and the
+envelope. The Inspector recomputes those seals, correlates provenance and source
+identity through the submitted request, verifies `X-EBRT-Body-SHA256` over the
+received API bytes, and rejects any inconsistent operational/reserved status
+graph before rendering. These SHA-256 values are deterministic integrity and
+correlation checks within the trusted loopback deployment, not authentication
+of an untrusted remote server. v0.6.2.2 therefore establishes
 an executable and auditable product operation, not semantic correctness,
 causal necessity, quality improvement, or general reasoning improvement.
 
@@ -89,7 +96,7 @@ SDK and application retries are zero, and new provider execution is serialized.
 Run the offline contract and contaminated demo adapter:
 
 ```bash
-python3 -m pip install -r requirements-live.txt
+python3 -m pip install -r requirements-product.txt
 python3 ebrt_live.py self-test
 python3 ebrt_live.py demo-request
 python3 ebrt_live.py apply-demo --provider scripted
@@ -139,8 +146,12 @@ The network-zero self-test covers enum-order invariance of the salience map,
 exact pre-event horizon binding, duplicate candidate rejection, exact
 invalidation transitions, inherited invalidation preservation, fact-local
 correction binding, server-opaque provider IDs, one-call failure tombstones,
-and concurrent same-ID suppression. The historical `ebrt.py` byte lock and the
-recorded Inspector projection are checked independently.
+concurrent same-ID suppression, the publication-pinned demo source, sealed demo
+envelope, and API response-body digest. The historical `ebrt.py` byte lock and
+the recorded Inspector projection are checked independently. A headless-browser
+negative test intercepted an otherwise valid scripted response, changed the
+`Semantic correctness` row to `PASS`, recomputed the body SHA-256, and confirmed
+that the Inspector rejected the coherent mutation before rendering a terminal.
 
 ## Manual real-provider smoke
 
