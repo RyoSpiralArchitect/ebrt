@@ -37,11 +37,12 @@ operations executable, observable, and auditable.
   `https://ebrt-apply-revision.ryospiralreality.chatgpt.site/`
 - Public YouTube video: `TODO_PUBLIC_YOUTUBE_URL`
 - Codex feedback/session ID: `019f70e8-b94c-7002-bc14-512338e2c5fd`
-- Devpost project: `TODO_DEVPOST_PROJECT_URL`
+- Devpost project:
+  `https://devpost.com/software/ebrt-apply-revision-for-hosted-reasoning`
 
-The remaining placeholders must be replaced before submission. Do not replace the
-local runtime wording with a hosted-service claim unless a public deployment
-has actually been validated.
+The remaining placeholders must be replaced before submission. Do not replace
+the local runtime wording with a hosted-service claim unless a public
+deployment has actually been validated.
 
 ## Features
 
@@ -148,10 +149,10 @@ completed and satisfied its structural contract. Both
   budgets, and Quick Tunnel limitation documented.
 - [x] GPT-5.6 and Codex roles documented without crossing the claim boundary.
 - [ ] Replace every `TODO_...` judge-link placeholder above.
-- [ ] Confirm the GitHub repository is public and the default branch contains
+- [x] Confirm the GitHub repository is public and the default branch contains
   the final submission commit.
-- [ ] Run the scripted judge path from a fresh clone.
-- [ ] Run the full Inspector path and verify the final UI at desktop and mobile
+- [x] Run the scripted judge path from a fresh clone.
+- [x] Run the full Inspector path and verify the final UI at desktop and mobile
   widths.
 - [ ] Record an English narrated video no longer than three minutes.
 - [ ] Confirm the YouTube video and runnable demo are public without sign-in.
