@@ -1,0 +1,285 @@
+{
+  "artifact": {
+    "directory": "artifacts/actuator_uptake_replication_v0_6_3_2_live_r01",
+    "files": [
+      "result.json",
+      "calls.jsonl",
+      "attempt_journal.jsonl",
+      "provider_inputs.json",
+      "projection_bundle.json",
+      "report.md",
+      "manifest.json"
+    ]
+  },
+  "claim_boundary": [
+    "This is one sealed mirrored eight-call replication on a synthetic case fresh relative to the frozen v0.6.3.1 predecessor, not an independently sampled population case or quality benchmark.",
+    "The sole intentionally treatment-varying semantic payload field is evidence order.",
+    "The provider never sees C/X/D/Z, treatment metadata, gradient values, controller internals, closure roles, gold, or grades.",
+    "The local float64 backward pass ends before JSON; no gradient crosses GPT or the provider boundary.",
+    "Known stale or mixed closures are valid semantic endpoints; only transport, parse, schema, and unknown-ID failures are structural invalidity.",
+    "Only two directional blocks may open a separately reviewed v0.6.4 network-zero preflight; no v0.6.4 live call is authorized.",
+    "Pairwise position counterbalancing narrows but does not eliminate temporal or provider drift.",
+    "Provider receipts and execution provenance are operator-attested local records, not provider-signed proof.",
+    "The authorization tag prevents accidental execution from an unreviewed checkout but does not provide global exactly-once semantics across clones.",
+    "The semantic-gold barrier is a locked Path.read_bytes guard, not an operating-system sandbox.",
+    "No result supports hidden-state editing, causal superiority, quality improvement, or general reasoning improvement."
+  ],
+  "execution": {
+    "authorization_requires_exact_head": true,
+    "authorization_requires_origin_main_ancestry": true,
+    "authorization_requires_preflight_anchor_ancestry": true,
+    "authorization_tag": "v0.6.3.2-live-r01-authorized",
+    "block_schedules": {
+      "A": [
+        "C",
+        "Z",
+        "D",
+        "X"
+      ],
+      "B": [
+        "D",
+        "X",
+        "C",
+        "Z"
+      ]
+    },
+    "call_schedule": [
+      {
+        "blinded_attempt_id": "A_39276f79d4d0b99f",
+        "blinded_request_id": "Q_9c19934ca3e89315",
+        "block_id": "A",
+        "provider_payload_fingerprint_sha256": "cd79b48764fcf316a794dd43d854308cfbfb45895adccd405ba64340e6a35b05",
+        "sequence_index": 1,
+        "treatment_id": "C",
+        "within_block_index": 1
+      },
+      {
+        "blinded_attempt_id": "A_21009567d2b053a7",
+        "blinded_request_id": "Q_164a956eb63d7d9f",
+        "block_id": "A",
+        "provider_payload_fingerprint_sha256": "ffa986deea3af1c9e63d5633e407c86e81b70b0a29b7eb2401be91f08197995a",
+        "sequence_index": 2,
+        "treatment_id": "Z",
+        "within_block_index": 2
+      },
+      {
+        "blinded_attempt_id": "A_2e4f7eee0d24f793",
+        "blinded_request_id": "Q_d5e1d40fbdddf363",
+        "block_id": "A",
+        "provider_payload_fingerprint_sha256": "1c3eb3971d4c6e5f418b6e3ff40c9d02177812d2307a140367d82c581c66279a",
+        "sequence_index": 3,
+        "treatment_id": "D",
+        "within_block_index": 3
+      },
+      {
+        "blinded_attempt_id": "A_a6b410a44c449443",
+        "blinded_request_id": "Q_d01c5582258746a7",
+        "block_id": "A",
+        "provider_payload_fingerprint_sha256": "1e1a3bb4a16ac2592a8fe8e72ee6d943f2257f87e4cfc8dfbac4534315e94fef",
+        "sequence_index": 4,
+        "treatment_id": "X",
+        "within_block_index": 4
+      },
+      {
+        "blinded_attempt_id": "A_4c5f5a302b77395a",
+        "blinded_request_id": "Q_d5e1d40fbdddf363",
+        "block_id": "B",
+        "provider_payload_fingerprint_sha256": "1c3eb3971d4c6e5f418b6e3ff40c9d02177812d2307a140367d82c581c66279a",
+        "sequence_index": 5,
+        "treatment_id": "D",
+        "within_block_index": 1
+      },
+      {
+        "blinded_attempt_id": "A_8c46e16cbc877b13",
+        "blinded_request_id": "Q_d01c5582258746a7",
+        "block_id": "B",
+        "provider_payload_fingerprint_sha256": "1e1a3bb4a16ac2592a8fe8e72ee6d943f2257f87e4cfc8dfbac4534315e94fef",
+        "sequence_index": 6,
+        "treatment_id": "X",
+        "within_block_index": 2
+      },
+      {
+        "blinded_attempt_id": "A_256e156a33fa6895",
+        "blinded_request_id": "Q_9c19934ca3e89315",
+        "block_id": "B",
+        "provider_payload_fingerprint_sha256": "cd79b48764fcf316a794dd43d854308cfbfb45895adccd405ba64340e6a35b05",
+        "sequence_index": 7,
+        "treatment_id": "C",
+        "within_block_index": 3
+      },
+      {
+        "blinded_attempt_id": "A_fbb3e5ecef6097ca",
+        "blinded_request_id": "Q_164a956eb63d7d9f",
+        "block_id": "B",
+        "provider_payload_fingerprint_sha256": "ffa986deea3af1c9e63d5633e407c86e81b70b0a29b7eb2401be91f08197995a",
+        "sequence_index": 8,
+        "treatment_id": "Z",
+        "within_block_index": 4
+      }
+    ],
+    "continue_after_structural_invalid_arm": true,
+    "exact_attempt_count": 8,
+    "execution_order": [
+      "C",
+      "Z",
+      "D",
+      "X",
+      "D",
+      "X",
+      "C",
+      "Z"
+    ],
+    "gold_loaded_after_eight_valid_compilations_only": true,
+    "no_backfill": true,
+    "no_reorder": true,
+    "no_resume": true,
+    "no_retry": true,
+    "no_tiebreak_or_ninth_call": true,
+    "positive_result": "REPLICATION_DIRECTIONAL_COUNTERBALANCED",
+    "provider_calls_authorized": 8,
+    "provider_payload_count": 4,
+    "stop_after_integrity_guard_failure": true,
+    "structural_invalid_block_status": "INCOMPLETE_NOT_ASSESSED",
+    "v0_6_4_live_execution_authorized": false,
+    "v0_6_4_network_zero_preflight_may_open_only_after_aggregate_success": true
+  },
+  "fingerprint_sha256": "7cf24f5f9a57c3c8bf9d9b56d3dd2ae3cc7bafdbf7355bd0aec4d6a57d44af17",
+  "instructions_fingerprint_sha256": "9f3eacea0d23d502ee22bac3317a41707b634d3a83c724845f6fc38f8d4d5ae2",
+  "preflight_anchor": {
+    "commit": "27ad46cc1479b855fbbc450a430afeaeb97a7976",
+    "manifest_bytes_sha256": "cdf7ae043141a13056f33a0176f8777e8a0e2a24e8ba02f5c8cab5f0a059509b",
+    "manifest_fingerprint_sha256": "d93542c3a0953c40a0bbb2d04da2415680280faf99e4846211ba24cbfa3aae6b",
+    "projection_bytes_sha256": "b564c66dea7caec3cb67b434774d234b4fd5691aac196ce5f37370a8fc376d7d",
+    "projection_fingerprint_sha256": "6b9125b40dbb2d00c84bf7609deca4389c04ab33d262b0fc6000c2c939ffecd4",
+    "tag_name": "v0.6.3.2-preflight",
+    "tag_object": "f7770f4d4ac81fc148bda99f722e50e6ad47b47c",
+    "zero_call_policy_bytes_sha256": "b3c14706f11700770e4b7b6ce71acc45dab38f317f249464f18ea74d142652b8",
+    "zero_call_policy_fingerprint_sha256": "d5c6e7c14978ce9c962d4b2add8f2a605fb25b9f6a3021e144166c9c7d0b4c5f"
+  },
+  "provider_visibility": {
+    "forbidden_metadata": [
+      "anti_placement",
+      "arm",
+      "arm_id",
+      "block",
+      "block_id",
+      "closure_roles",
+      "controller",
+      "correct_answer",
+      "expected_answer",
+      "gold",
+      "grade",
+      "gradient",
+      "gradient_target_closure_id",
+      "local_controller",
+      "path_blocks",
+      "positive_control_target_closure_id",
+      "preferred_path",
+      "quality_valid_closure_ids",
+      "replicate",
+      "replicate_id",
+      "sequence_index",
+      "sham",
+      "target_closure",
+      "target_closure_id",
+      "treatment",
+      "treatment_id",
+      "within_block_index"
+    ],
+    "only_raw_payload_sent": true,
+    "sealed_payload_compiled_locally": true
+  },
+  "response_schema_fingerprint_sha256": "03ee5e80f116c604e16a112aebdb77a33eb7ea4f5b494e3ec01fa1d8d007d18f",
+  "runtime": {
+    "api": "responses.with_raw_response.parse+raw.parse",
+    "machine": "arm64",
+    "max_output_tokens": 1024,
+    "model": "gpt-5.6-sol",
+    "openai_sdk": "2.45.0",
+    "previous_response_id": false,
+    "provider": "openai_responses",
+    "pydantic": "2.12.5",
+    "python": "3.13.13",
+    "reasoning_effort": "low",
+    "sdk_retries": 0,
+    "service_tier": "default",
+    "store": false,
+    "timeout_seconds": 60,
+    "torch": "2.11.0",
+    "truncation": "disabled"
+  },
+  "schema_version": "ebrt-actuator-uptake-replication-live-policy-v0.6.3.2-r01",
+  "sources": {
+    "core": {
+      "bytes": 109640,
+      "path": "actuator_uptake_replication_v0_6_3_2.py",
+      "sha256": "8bb31f3efe169c92acef69ce6e85ccdc02df058654950834641199517bcfabf7"
+    },
+    "fixture": {
+      "bytes": 4352,
+      "path": "fixtures/actuator_uptake_replication_v0_6_3_2.json",
+      "sha256": "af5f7ce2ec987bea4b7cb64a32d9549d390bf688438ecdcbdcb6c529391f9e24"
+    },
+    "post_call_gold": {
+      "bytes": 1107,
+      "path": "fixtures/actuator_uptake_replication_gold_v0_6_3_2.json",
+      "sha256": "90b83aa6d073474ed4b71f3c0b36a4235db13354bb00747f47b0824fc84f0e4e"
+    },
+    "protocol_note": {
+      "bytes": 5112,
+      "path": "docs/RND_ACTUATOR_UPTAKE_REPLICATION_V0_6_3_2_LIVE_R01.md",
+      "sha256": "0f09061e515492345b81c5a9f48f26f8863f279eb7dd382b3a6588b67a6fe9e6"
+    },
+    "provider_base": {
+      "bytes": 23671,
+      "path": "openai_reasoning_provider_v0_4.py",
+      "sha256": "840d019811ecfab2b6bb25f2969d3c27e405b8cc148c068308393c2207c31689"
+    },
+    "receipt_contract": {
+      "bytes": 49804,
+      "path": "language_replay_bridge_v0_4.py",
+      "sha256": "5fd765ec5ca55562e7b712ec48adc6f54588080c276cbfa58aabcb72492666c2"
+    },
+    "requirements": {
+      "bytes": 28,
+      "path": "requirements.txt",
+      "sha256": "024ff69128d68a1c08bba956e318301500b7aebb7c917b19ff913a9bf5e373d7"
+    },
+    "requirements_live": {
+      "bytes": 32,
+      "path": "requirements-live.txt",
+      "sha256": "73a8bd6fd5d0a6aa2ec01c216b1ddc50f2c5f32746bcf907ec7ca3ab793e7c83"
+    },
+    "response_boundary": {
+      "bytes": 54590,
+      "path": "openai_response_boundary_v0_4_3.py",
+      "sha256": "7f78fce94cb141a4355d3c040010e11e049ff67a3a8c603099d0548a47b7cf03"
+    },
+    "runner": {
+      "bytes": 140672,
+      "path": "run_actuator_uptake_replication_v0_6_3_2_live_r01.py",
+      "sha256": "2a974659364093775d060858138756928220ca3e69d367da96bb51dff7a2a63f"
+    },
+    "semantic_adapter": {
+      "bytes": 7809,
+      "path": "semantic_adapter_v0_2.py",
+      "sha256": "836b7afadabb2e2e5b6ea53afe2795e529ab20193b00d83af9a5624d4f32d2ca"
+    },
+    "zero_call_manifest": {
+      "bytes": 1576,
+      "path": "artifacts/actuator_uptake_replication_v0_6_3_2_preflight/manifest.json",
+      "sha256": "cdf7ae043141a13056f33a0176f8777e8a0e2a24e8ba02f5c8cab5f0a059509b"
+    },
+    "zero_call_policy": {
+      "bytes": 10053,
+      "path": "policy_lock_actuator_uptake_replication_v0_6_3_2.json",
+      "sha256": "b3c14706f11700770e4b7b6ce71acc45dab38f317f249464f18ea74d142652b8"
+    },
+    "zero_call_projection": {
+      "bytes": 20628,
+      "path": "artifacts/actuator_uptake_replication_v0_6_3_2_preflight/projection_bundle.json",
+      "sha256": "b564c66dea7caec3cb67b434774d234b4fd5691aac196ce5f37370a8fc376d7d"
+    }
+  },
+  "status": "PREREGISTERED_EXACT_EIGHT_CALL_MIRRORED_LIVE_BLOCK"
+}
