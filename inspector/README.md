@@ -26,14 +26,21 @@ prior public state, closure graphs, fingerprints, or provider configuration.
 There is no automatic retry. Stopping the browser wait aborts only the browser
 request; the server operation may still complete.
 
+Live protocol `v0.6.2.3` exposes Runtime Preview 2's one-horizon continuous
+revision program. The Inspector shows the optimized public inspection shares,
+deterministic abstract budget units, compiled program, and executed state trace.
+Those fields are external review directives—not provider attention
+probabilities or token budgets. Provider uptake remains `NOT_ASSESSED`.
+
 The Live display retains the whole demo envelope, recomputes its request and
 envelope fingerprints, and requires the response input fingerprint, provenance,
 source fingerprint, Before state, event, and evidence to bind back to that
 envelope. Every JSON response carries `X-EBRT-Body-SHA256`; the browser hashes
 the received bytes before parsing, recomputes the live response self-seal from
 the number-lexeme-preserving canonical body, and displays the independently
-verified transport digest. The parser also requires the exact 12
-operational rows, two exact `NOT_ASSESSED` rows, and their aggregate status
+verified transport digest. The parser also requires the exact operational
+rows, two exact `NOT_ASSESSED` rows, the controller/actuator/execution hard
+gates, and their aggregate status
 relationships before the UI can render a terminal. These unkeyed hashes are
 loopback integrity checks, not signatures or remote-backend authentication.
 
@@ -47,8 +54,9 @@ VITE_EBRT_API_BASE_URL=http://127.0.0.1:8765/api/ pnpm dev
 ```
 
 Provider credentials remain server-side. Live results report operational path
-status only. Semantic correctness and effect attribution remain
-`NOT_ASSESSED`.
+status only. Semantic correctness, provider uptake, hosted counterfactual
+effect, and effect attribution remain `NOT_ASSESSED`. The public
+block/unblock audit is limited to the selected caller-supplied graph.
 
 ## Deterministic public projection
 

@@ -110,6 +110,8 @@ export function liveApplyRevisionView(response: LiveApplyRevisionResponse): Appl
     ...mechanism.compiled_actuator.reinspect_evidence_ids,
     ...mechanism.compiled_actuator.suppress_evidence_ids,
     ...mechanism.compiled_actuator.preserve_evidence_ids,
+    ...mechanism.compiled_actuator.inspection_plan.steps.map((row) => row.evidence_id),
+    ...mechanism.actuator_execution.trace.flatMap((row) => row.evidence_id === null ? [] : [row.evidence_id]),
     ...output.before.active_support_evidence_ids,
     ...output.after.active_support_evidence_ids,
     ...output.after.invalidated_evidence_ids,
@@ -147,6 +149,36 @@ export function liveApplyRevisionView(response: LiveApplyRevisionResponse): Appl
   requireView(
     sameValues(mechanism.compiled_actuator.preserve_evidence_ids, context.late_event.stable_evidence_ids),
     "preservation and stable-evidence sets differ",
+  );
+  requireView(
+    mechanism.compiled_actuator.source_control_map_fingerprint_sha256 ===
+      mechanism.public_control_map.fingerprint_sha256 &&
+      mechanism.compiled_actuator.program.source_control_map_fingerprint_sha256 ===
+        mechanism.public_control_map.fingerprint_sha256,
+    "continuous actuator is not control-map-bound",
+  );
+  requireView(
+    sameValues(
+      mechanism.compiled_actuator.inspection_plan.steps.map((row) => row.evidence_id),
+      mechanism.compiled_actuator.reinspect_evidence_ids,
+    ),
+    "inspection plan and reinspection summary differ",
+  );
+  requireView(
+    mechanism.actuator_execution.source_actuator_fingerprint_sha256 ===
+      mechanism.compiled_actuator.fingerprint_sha256 &&
+      mechanism.actuator_execution.source_program_fingerprint_sha256 ===
+        mechanism.compiled_actuator.program.fingerprint_sha256 &&
+      mechanism.actuator_execution.final_state === "READY_FOR_PROVIDER",
+    "actuator execution is not source-bound or terminal",
+  );
+  requireView(
+    response.public_dependency_audit.blocked_evidence_id === context.late_event.evidence_id &&
+      response.public_dependency_audit.provider_calls === 0 &&
+      !response.public_dependency_audit.hosted_output_regenerated &&
+      response.public_dependency_audit.hosted_causality_status === "NOT_ASSESSED" &&
+      response.public_dependency_audit.counterfactual_output_effect_status === "NOT_ASSESSED",
+    "public dependency audit crossed its non-causal boundary",
   );
   const expectedAfterInvalidated = [
     ...new Set([
@@ -237,7 +269,7 @@ export function liveApplyRevisionView(response: LiveApplyRevisionResponse): Appl
     mode: "LIVE_AFTER_REGENERATION",
     case: {
       case_id: response.case_id,
-      version: "v0.6.2.2",
+      version: "Runtime Preview 2 · protocol v0.6.2.3",
       question: context.question,
       model: context.model,
     },
@@ -269,6 +301,7 @@ export function liveApplyRevisionView(response: LiveApplyRevisionResponse): Appl
       surrogate: mechanism.surrogate,
       public_control_map: mechanism.public_control_map,
       compiled_actuator: mechanism.compiled_actuator,
+      actuator_execution: mechanism.actuator_execution,
       boundary: mechanism.boundary,
     },
     after: {
@@ -283,6 +316,7 @@ export function liveApplyRevisionView(response: LiveApplyRevisionResponse): Appl
       fact_local_lineage_status: verification.lineage_binding_status,
     },
     output_diff: output.diff,
+    public_dependency_audit: response.public_dependency_audit,
     verification: verificationRows,
     assessment: {
       run_label: "Live run",

@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
-"""EBRT v0.6.2.2 live Apply Revision product monolith.
+"""EBRT Runtime Preview 2 live Apply Revision product monolith.
 
 This is the current, generic, one-call product path.  The sealed ``ebrt.py``
 v0.6.2.1 acceptance runtime is historical evidence and is intentionally not
 imported or modified here.
 
 The live path accepts an already-emitted public Before state and a typed late
-event, compiles a bounded public actuator with one local float64 backward pass,
+event, optimizes one bounded continuous public inspection allocation with one
+local float64 backward pass, executes a deterministic public actuator program,
 then makes at most one fresh After regeneration call. Reserved gold fields,
 graders, provider hidden state, and provider gradients are outside this runtime;
 caller semantic content is not certified as gold-free.
@@ -55,17 +56,20 @@ PINNED_DEMO_MANIFEST_SHA256 = "532dd593ef4464d87dd02fd2eeaa712855f47e5de799c6698
 PINNED_DEMO_PROVIDER_INPUTS_SHA256 = "d57b33860db84a0378ffd6b6e18ef67ae64d66eb75bd1959c1a1c7424ea90a3f"
 PINNED_DEMO_PROVIDER_INPUTS_FINGERPRINT = "a2aa446099b7cf498e307cf2bdb261c6c8aa705db034935bc88bbf040c9936a1"
 
-REQUEST_SCHEMA = "ebrt-live-apply-revision-request-v0.6.2.2"
-PROVIDER_INPUT_SCHEMA = "ebrt-live-provider-input-v0.6.2.2"
-PROVIDER_OUTPUT_SCHEMA = "ebrt-live-provider-output-v0.6.2.2"
-COMPILED_SCHEMA = "ebrt-live-compiled-closure-v0.6.2.2"
-ACTUAL_STATE_SCHEMA = "ebrt-live-actual-before-state-v0.6.2.2"
-CONTROL_SCHEMA = "ebrt-live-public-control-map-v0.6.2.2"
-ACTUATOR_SCHEMA = "ebrt-live-compiled-actuator-v0.6.2.2"
-DIFF_SCHEMA = "ebrt-live-public-diff-v0.6.2.2"
-RESPONSE_SCHEMA = "ebrt-live-apply-revision-response-v0.6.2.2"
-DEMO_REQUEST_SCHEMA = "ebrt-live-demo-request-v0.6.2.2"
-ERROR_SCHEMA = "ebrt-live-error-v0.6.2.2"
+REQUEST_SCHEMA = "ebrt-live-apply-revision-request-v0.6.2.3"
+PROVIDER_INPUT_SCHEMA = "ebrt-live-provider-input-v0.6.2.3"
+PROVIDER_OUTPUT_SCHEMA = "ebrt-live-provider-output-v0.6.2.3"
+COMPILED_SCHEMA = "ebrt-live-compiled-closure-v0.6.2.3"
+ACTUAL_STATE_SCHEMA = "ebrt-live-actual-before-state-v0.6.2.3"
+CONTROL_SCHEMA = "ebrt-live-public-control-map-v0.6.2.3"
+ACTUATOR_SCHEMA = "ebrt-live-compiled-actuator-v0.6.2.3"
+ACTUATOR_EXECUTION_SCHEMA = "ebrt-live-actuator-execution-v0.6.2.3"
+REVISION_OPERATION_SCHEMA = "ebrt-live-apply-revision-operation-v0.6.2.3"
+DEPENDENCY_AUDIT_SCHEMA = "ebrt-live-public-dependency-audit-v0.6.2.3"
+DIFF_SCHEMA = "ebrt-live-public-diff-v0.6.2.3"
+RESPONSE_SCHEMA = "ebrt-live-apply-revision-response-v0.6.2.3"
+DEMO_REQUEST_SCHEMA = "ebrt-live-demo-request-v0.6.2.3"
+ERROR_SCHEMA = "ebrt-live-error-v0.6.2.3"
 
 MODEL = "gpt-5.6-sol"
 REASONING_EFFORT = "low"
@@ -77,6 +81,9 @@ STATE_DECAY = 0.82
 STEP_SIZE = 0.05
 CONTROL_REGULARIZATION = 0.01
 TERMINAL_TARGET = 1.0
+INSPECTION_TEMPERATURE = 1.0
+INSPECTION_BUDGET_UNITS = 100
+ALLOCATION_TOLERANCE = 1.0e-12
 FINITE_DIFFERENCE_EPSILON = 1.0e-6
 FINITE_DIFFERENCE_TOLERANCE = 1.0e-8
 MAX_CONTROL_L2 = 0.25
@@ -130,6 +137,7 @@ PROVIDER_FORBIDDEN_KEYS = FORBIDDEN_REQUEST_KEYS | frozenset(
         "finite_difference_gradient",
         "objective_after",
         "objective_before",
+        "optimized_allocation_fraction",
         "signed_public_credit",
         "reinspection_salience",
         "source_effect",
@@ -138,9 +146,11 @@ PROVIDER_FORBIDDEN_KEYS = FORBIDDEN_REQUEST_KEYS | frozenset(
 
 CLAIM_BOUNDARY = (
     "This invalidation-revision path applies one bounded public revision operation to caller-supplied public structure; it is not a semantic correctness oracle.",
-    "The local float64 surrogate computes a differentiable reinspection-salience ranking from the compiled public Before support state, role-blind graph incidence, and the typed event.",
+    "The local float64 surrogate performs one projected optimization step over a continuous public inspection allocation constructed from the compiled public Before support state, role-blind graph incidence, and the typed event.",
+    "Inspection allocation fractions and units are external public review directives; they are not provider attention probabilities, reasoning-token budgets, or measurements of provider uptake.",
     "Suppress and preserve operations are typed-event compiler outputs, not signs inferred from the backward pass.",
     "The gradient stops at the public control map; JSON, provider parsing, generation, and verification are not differentiated.",
+    "The block/restore dependency probe concerns only the selected caller-supplied public graph; it does not regenerate a counterfactual hosted output or establish hosted-model causality.",
     "Operational acceptance means the one-call output is structurally valid and event-consistent; semantic correctness is NOT_ASSESSED.",
     "Effect attribution, causal superiority, quality improvement, hidden-state editing, attention control, and KV-cache control are NOT_ASSESSED.",
 )
@@ -148,8 +158,11 @@ CLAIM_BOUNDARY = (
 PROVIDER_INSTRUCTIONS = (
     "Return only the strict public Apply Revision response. Ordered raw evidence is the only semantic authority. "
     "Candidate closure IDs are opaque public alternatives. Select exactly one supplied closure, derive the current answer "
-    "and every target value from the visible raw evidence, and honor the supplied Apply Revision operation by reinspecting "
-    "the listed evidence, suppressing invalidated active evidence, and preserving listed stable evidence. The operation is "
+    "and every target value from the visible raw evidence, and execute the supplied Apply Revision program in its listed "
+    "order: load the event, suppress invalidated active evidence, reinspect evidence according to its relative public "
+    "inspection allocation, preserve stable evidence, then regenerate from the full context. Inspection shares, abstract "
+    "budget units, depth labels, and emphasis weights are review directives, not new evidence, provider token budgets, "
+    "attention probabilities, or semantic authority. The operation is "
     "not new evidence, semantic gold, or an expected answer. Do not return private reasoning, prose, invented evidence, "
     "an unknown closure ID, or fields outside the response schema."
 )
@@ -472,7 +485,10 @@ def _validate_graph(
 
 
 def _structural_closure(
-    graph: ClosureGraph, *, evidence_order: Sequence[str]
+    graph: ClosureGraph,
+    *,
+    evidence_order: Sequence[str],
+    blocked_evidence_ids: frozenset[str] = frozenset(),
 ) -> JsonObject:
     supports = {row.support_id: row for row in graph.support_nodes}
     targets = {row.target_id: row for row in graph.targets}
@@ -502,6 +518,7 @@ def _structural_closure(
             evidence_id
             for support_id in row.direct_support_ids
             for evidence_id in supports[support_id].evidence_ids
+            if evidence_id not in blocked_evidence_ids
         }
         ancestor = {
             evidence_id
@@ -511,7 +528,13 @@ def _structural_closure(
         direct[target_id] = direct_set
         inherited[target_id] = ancestor - direct_set
         total[target_id] = direct_set | ancestor
-    invalidated = {row.target_evidence_id for row in graph.invalidation_edges}
+    retained_invalidation_edges = [
+        row
+        for row in graph.invalidation_edges
+        if row.source_evidence_id not in blocked_evidence_ids
+        and row.target_evidence_id not in blocked_evidence_ids
+    ]
+    invalidated = {row.target_evidence_id for row in retained_invalidation_edges}
     active = {item for values in total.values() for item in values}
     _require(not (active & invalidated), "INVALIDATED_SUPPORT_ACTIVE")
     ordinal = {evidence_id: index for index, evidence_id in enumerate(evidence_order)}
@@ -519,7 +542,7 @@ def _structural_closure(
         "active_support_evidence_ids": sorted(active, key=ordinal.__getitem__),
         "invalidated_evidence_ids": sorted(invalidated, key=ordinal.__getitem__),
         "invalidation_edges": sorted(
-            (row.model_dump(mode="json") for row in graph.invalidation_edges),
+            (row.model_dump(mode="json") for row in retained_invalidation_edges),
             key=lambda row: (row["source_evidence_id"], row["target_evidence_id"]),
         ),
         "targets": {
@@ -565,6 +588,27 @@ def _canonical_graph_value(graph: ClosureGraph) -> JsonObject:
         "targets": targets,
         "invalidation_edges": invalidation_edges,
     }
+
+
+def _eligible_reinspection_evidence_ids(
+    request: LiveRevisionRequest,
+) -> list[str]:
+    """Return the frozen public allocation domain in chronological order."""
+
+    invalidated = set(request.event.invalidated_evidence_ids)
+    stable = set(request.event.stable_evidence_ids)
+    candidate_active: set[str] = set()
+    evidence_order = [row.evidence_id for row in request.all_raw_evidence]
+    for candidate in request.candidate_closures:
+        closure = _structural_closure(candidate.graph, evidence_order=evidence_order)
+        candidate_active.update(closure["active_support_evidence_ids"])
+    return [
+        evidence_id
+        for evidence_id in evidence_order
+        if evidence_id in candidate_active
+        and evidence_id not in invalidated
+        and evidence_id not in stable
+    ]
 
 
 def _validate_request_cross_fields(request: LiveRevisionRequest) -> None:
@@ -716,8 +760,8 @@ def _validate_request_cross_fields(request: LiveRevisionRequest) -> None:
         )
     _require(operational_candidate_exists, "NO_EVENT_CONSISTENT_CANDIDATE")
     _require(
-        len(enough_rankable) >= request.reinspection_count,
-        "REINSPECTION_COUNT_EXCEEDS_ELIGIBLE_EVIDENCE",
+        len(enough_rankable) >= max(request.reinspection_count, 2),
+        "CONTINUOUS_ALLOCATION_DOMAIN_TOO_SMALL",
     )
 
 
@@ -958,7 +1002,7 @@ def _public_incidence_effects(request: LiveRevisionRequest) -> tuple[dict[str, f
     }
     receipt = _seal(
         {
-            "schema_version": "ebrt-live-public-incidence-basis-v0.6.2.2",
+            "schema_version": "ebrt-live-public-incidence-basis-v0.6.2.3",
             "source_kind": "CANDIDATE_GRAPH_INCIDENCE_PLUS_TYPED_EVENT",
             "candidate_graph_fingerprints_sha256": sorted(
                 _fingerprint(_canonical_graph_value(candidate.graph))
@@ -985,16 +1029,35 @@ def _public_incidence_effects(request: LiveRevisionRequest) -> tuple[dict[str, f
 def _controller_loss(
     controls: torch.Tensor,
     effects: torch.Tensor,
+    eligibility: torch.Tensor,
     *,
     initial_state: float,
-) -> tuple[torch.Tensor, torch.Tensor]:
+) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+    _require(bool(torch.any(eligibility)), "CONTINUOUS_ALLOCATION_DOMAIN_EMPTY")
+    masked_logits = (controls / INSPECTION_TEMPERATURE).masked_fill(
+        ~eligibility, -torch.inf
+    )
+    allocation = torch.softmax(masked_logits, dim=0)
     state = torch.tensor(initial_state, dtype=FLOAT_DTYPE)
     states: list[torch.Tensor] = []
-    for control, effect in zip(controls, effects, strict=True):
-        state = torch.tanh(STATE_DECAY * state + control * effect)
+    for allocation_fraction, effect in zip(allocation, effects, strict=True):
+        state = torch.tanh(
+            STATE_DECAY * state + allocation_fraction * effect
+        )
         states.append(state)
-    loss = (state - TERMINAL_TARGET).square() + CONTROL_REGULARIZATION * controls.square().sum()
-    return loss, torch.stack(states)
+    eligible_allocation = allocation[eligibility]
+    uniform = torch.full_like(
+        eligible_allocation, 1.0 / int(eligibility.sum().item())
+    )
+    allocation_regularization = (
+        eligible_allocation
+        * (torch.log(eligible_allocation) - torch.log(uniform))
+    ).sum()
+    loss = (
+        (state - TERMINAL_TARGET).square()
+        + CONTROL_REGULARIZATION * allocation_regularization
+    )
+    return loss, torch.stack(states), allocation
 
 
 def _derive_control_map(
@@ -1004,9 +1067,18 @@ def _derive_control_map(
     initial_scalar, actual_state = _actual_before_state(request, compiled_before)
     effect_by_id, source_receipt = _public_incidence_effects(request)
     effects = torch.tensor([effect_by_id[item] for item in evidence_ids], dtype=FLOAT_DTYPE)
+    eligible_ids = set(_eligible_reinspection_evidence_ids(request))
+    eligibility = torch.tensor(
+        [evidence_id in eligible_ids for evidence_id in evidence_ids],
+        dtype=torch.bool,
+    )
+    _require(
+        int(eligibility.sum().item()) >= max(request.reinspection_count, 2),
+        "CONTINUOUS_ALLOCATION_DOMAIN_TOO_SMALL",
+    )
     controls = torch.zeros(len(evidence_ids), dtype=FLOAT_DTYPE, requires_grad=True)
-    loss_before, states_before = _controller_loss(
-        controls, effects, initial_state=initial_scalar
+    loss_before, states_before, allocation_before = _controller_loss(
+        controls, effects, eligibility, initial_state=initial_scalar
     )
     loss_before.backward()
     _require(controls.grad is not None, "BACKWARD_GRADIENT_MISSING")
@@ -1021,20 +1093,26 @@ def _derive_control_map(
     accepted: torch.Tensor | None = None
     accepted_states: torch.Tensor | None = None
     accepted_loss: torch.Tensor | None = None
+    accepted_allocation: torch.Tensor | None = None
     accepted_backtrack = -1
     for backtrack in range(MAX_BACKTRACKS + 1):
         candidate = bounded * (0.5**backtrack)
-        candidate_loss, candidate_states = _controller_loss(
-            candidate, effects, initial_state=initial_scalar
+        candidate_loss, candidate_states, candidate_allocation = _controller_loss(
+            candidate, effects, eligibility, initial_state=initial_scalar
         )
         if float(candidate_loss.detach()) < float(loss_before.detach()):
             accepted = candidate
             accepted_states = candidate_states
             accepted_loss = candidate_loss
+            accepted_allocation = candidate_allocation
             accepted_backtrack = backtrack
             break
     _require(accepted is not None, "SURROGATE_NO_DESCENT")
-    assert accepted_states is not None and accepted_loss is not None
+    assert (
+        accepted_states is not None
+        and accepted_loss is not None
+        and accepted_allocation is not None
+    )
 
     epsilon = FINITE_DIFFERENCE_EPSILON
     finite_difference: list[float] = []
@@ -1043,8 +1121,12 @@ def _derive_control_map(
         negative = torch.zeros(len(evidence_ids), dtype=FLOAT_DTYPE)
         positive[index] = epsilon
         negative[index] = -epsilon
-        plus, _ = _controller_loss(positive, effects, initial_state=initial_scalar)
-        minus, _ = _controller_loss(negative, effects, initial_state=initial_scalar)
+        plus, _, _ = _controller_loss(
+            positive, effects, eligibility, initial_state=initial_scalar
+        )
+        minus, _, _ = _controller_loss(
+            negative, effects, eligibility, initial_state=initial_scalar
+        )
         finite_difference.append(float((plus - minus) / (2.0 * epsilon)))
     errors = [
         abs(float(gradient[index]) - finite_difference[index])
@@ -1058,7 +1140,24 @@ def _derive_control_map(
             "source_effect": float(effects[index]),
             "gradient": float(gradient[index]),
             "finite_difference_gradient": finite_difference[index],
+            "control_value": float(accepted[index]),
             "reinspection_salience": abs(float(accepted[index])),
+            "eligible_for_reinspection": evidence_id in eligible_ids,
+            "baseline_allocation_fraction": float(
+                allocation_before[index].detach()
+            ),
+            "optimized_allocation_fraction": float(
+                accepted_allocation[index].detach()
+            ),
+            "allocation_delta": float(
+                (accepted_allocation[index] - allocation_before[index]).detach()
+            ),
+            "surrogate_contribution_before": float(
+                (allocation_before[index] * effects[index]).detach()
+            ),
+            "surrogate_contribution_after": float(
+                (accepted_allocation[index] * effects[index]).detach()
+            ),
             "active_before": evidence_id in active_before,
         }
         for index, evidence_id in enumerate(evidence_ids)
@@ -1069,16 +1168,32 @@ def _derive_control_map(
             == compiled_before["fingerprint_sha256"]
         ),
         "local_backward_executed": controls.grad is not None,
-        "finite_reinspection_salience": all(
-            math.isfinite(float(row["reinspection_salience"])) for row in rows
+        "finite_continuous_allocation": all(
+            math.isfinite(float(row["control_value"]))
+            and math.isfinite(float(row["optimized_allocation_fraction"]))
+            for row in rows
         ),
         "surrogate_objective_decreased": (
             float(accepted_loss.detach()) < float(loss_before.detach())
         ),
         "non_neutral_control_map": any(
-            float(row["reinspection_salience"]) > 0.0 for row in rows
+            abs(float(row["allocation_delta"])) > ALLOCATION_TOLERANCE
+            for row in rows
         ),
         "control_budget_respected": norm <= MAX_CONTROL_L2 + 1.0e-15,
+        "allocation_simplex_respected": abs(
+            sum(float(row["optimized_allocation_fraction"]) for row in rows)
+            - 1.0
+        )
+        <= ALLOCATION_TOLERANCE,
+        "ineligible_allocation_zero": all(
+            bool(row["eligible_for_reinspection"])
+            or abs(float(row["optimized_allocation_fraction"]))
+            <= ALLOCATION_TOLERANCE
+            for row in rows
+        ),
+        "surrogate_terminal_state_increased": float(accepted_states[-1].detach())
+        > float(states_before[-1].detach()),
         "finite_difference_agreement": max(errors) <= FINITE_DIFFERENCE_TOLERANCE,
         "gradient_stops_before_provider": True,
         "reserved_gold_fields_absent": not bool(
@@ -1098,6 +1213,16 @@ def _derive_control_map(
             "objective_before": float(loss_before.detach()),
             "objective_after": float(accepted_loss.detach()),
             "terminal_target": TERMINAL_TARGET,
+            "inspection_temperature": INSPECTION_TEMPERATURE,
+            "allocation_domain_evidence_ids": [
+                evidence_id for evidence_id in evidence_ids if evidence_id in eligible_ids
+            ],
+            "surrogate_terminal_state_before": float(
+                states_before[-1].detach()
+            ),
+            "surrogate_terminal_state_after": float(
+                accepted_states[-1].detach()
+            ),
             "state_trace_before": [float(value) for value in states_before.detach()],
             "state_trace_after": [float(value) for value in accepted_states.detach()],
             "unprojected_control_l2": raw_norm,
@@ -1122,6 +1247,221 @@ def _derive_control_map(
     )
 
 
+def _largest_remainder_units(
+    rows: Sequence[Mapping[str, Any]], *, total_units: int
+) -> dict[str, int]:
+    _require(bool(rows) and total_units >= len(rows), "INSPECTION_BUDGET_TOO_SMALL")
+    remaining = total_units - len(rows)
+    raw = {
+        str(row["evidence_id"]): float(row["inspection_share"]) * remaining
+        for row in rows
+    }
+    units = {evidence_id: 1 + math.floor(value) for evidence_id, value in raw.items()}
+    remainder = total_units - sum(units.values())
+    order = sorted(
+        raw,
+        key=lambda evidence_id: (
+            -(raw[evidence_id] - math.floor(raw[evidence_id])),
+            evidence_id,
+        ),
+    )
+    for evidence_id in order[:remainder]:
+        units[evidence_id] += 1
+    _require(sum(units.values()) == total_units, "INSPECTION_BUDGET_ALLOCATION_INVALID")
+    return units
+
+
+def _review_depth(relative_emphasis: float) -> str:
+    if relative_emphasis >= 1.25:
+        return "DEEP"
+    if relative_emphasis >= 0.75:
+        return "STANDARD"
+    return "LIGHT"
+
+
+def _expected_program_steps(
+    *,
+    correction_evidence_id: str,
+    suppress_evidence_ids: Sequence[str],
+    inspection_steps: Sequence[Mapping[str, Any]],
+    preserve_evidence_ids: Sequence[str],
+) -> list[JsonObject]:
+    steps: list[JsonObject] = [
+        {
+            "step_index": 0,
+            "operation": "LOAD_EVENT",
+            "evidence_id": correction_evidence_id,
+        }
+    ]
+    for evidence_id in suppress_evidence_ids:
+        steps.append(
+            {
+                "step_index": len(steps),
+                "operation": "SUPPRESS",
+                "evidence_id": evidence_id,
+            }
+        )
+    for row in inspection_steps:
+        steps.append(
+            {
+                "step_index": len(steps),
+                "operation": "REINSPECT",
+                **dict(row),
+            }
+        )
+    for evidence_id in preserve_evidence_ids:
+        steps.append(
+            {
+                "step_index": len(steps),
+                "operation": "PRESERVE",
+                "evidence_id": evidence_id,
+            }
+        )
+    steps.append(
+        {
+            "step_index": len(steps),
+            "operation": "PREPARE_FULL_CONTEXT_REGENERATION",
+        }
+    )
+    return steps
+
+
+def _validate_inspection_plan_and_program(
+    *,
+    allowed_evidence_ids: set[str],
+    correction_evidence_id: str,
+    suppress_evidence_ids: Sequence[str],
+    reinspect_evidence_ids: Sequence[str],
+    preserve_evidence_ids: Sequence[str],
+    inspection_plan: Mapping[str, Any],
+    program: Mapping[str, Any],
+) -> None:
+    _require(
+        inspection_plan.get("schema_version")
+        == "ebrt-live-continuous-inspection-plan-v0.6.2.3"
+        and inspection_plan.get("fingerprint_sha256")
+        == _fingerprint(_without_fingerprint(inspection_plan)),
+        "ACTUATOR_INSPECTION_PLAN_FINGERPRINT_INVALID",
+    )
+    _require(
+        inspection_plan.get("allocation_scope")
+        == "SELECTED_PUBLIC_REINSPECTION_STEPS"
+        and inspection_plan.get("total_budget_units")
+        == INSPECTION_BUDGET_UNITS
+        and inspection_plan.get("budget_unit_semantics")
+        == "ABSTRACT_PUBLIC_REVIEW_ALLOCATION_NOT_PROVIDER_TOKENS",
+        "ACTUATOR_INSPECTION_PLAN_CONTRACT_INVALID",
+    )
+    rows = inspection_plan.get("steps")
+    _require(
+        isinstance(rows, list)
+        and len(rows) == len(reinspect_evidence_ids)
+        and 1 <= len(rows) <= 8,
+        "ACTUATOR_INSPECTION_STEPS_INVALID",
+    )
+    expected_row_keys = {
+        "evidence_id",
+        "priority_rank",
+        "controller_allocation_fraction",
+        "inspection_share",
+        "allocation_delta",
+        "relative_emphasis",
+        "review_depth",
+        "inspection_budget_units",
+    }
+    seen_ids: set[str] = set()
+    for index, row in enumerate(rows, start=1):
+        _require(
+            isinstance(row, Mapping) and set(row) == expected_row_keys,
+            "ACTUATOR_INSPECTION_ROW_SCHEMA_INVALID",
+        )
+        evidence_id = row["evidence_id"]
+        rank = row["priority_rank"]
+        controller_fraction = row["controller_allocation_fraction"]
+        share = row["inspection_share"]
+        delta = row["allocation_delta"]
+        relative_emphasis = row["relative_emphasis"]
+        budget_units = row["inspection_budget_units"]
+        _require(
+            isinstance(evidence_id, str)
+            and evidence_id in allowed_evidence_ids
+            and evidence_id not in seen_ids
+            and evidence_id == reinspect_evidence_ids[index - 1],
+            "ACTUATOR_INSPECTION_EVIDENCE_INVALID",
+        )
+        seen_ids.add(evidence_id)
+        _require(
+            isinstance(rank, int)
+            and not isinstance(rank, bool)
+            and rank == index,
+            "ACTUATOR_INSPECTION_RANK_INVALID",
+        )
+        for value, label in (
+            (controller_fraction, "CONTROLLER_FRACTION"),
+            (share, "SHARE"),
+            (delta, "DELTA"),
+            (relative_emphasis, "EMPHASIS"),
+        ):
+            _require(
+                isinstance(value, (int, float))
+                and not isinstance(value, bool)
+                and math.isfinite(float(value)),
+                f"ACTUATOR_INSPECTION_{label}_INVALID",
+            )
+        _require(
+            0.0 < float(controller_fraction) <= 1.0
+            and 0.0 < float(share) <= 1.0
+            and float(relative_emphasis) > 0.0,
+            "ACTUATOR_INSPECTION_BOUNDS_INVALID",
+        )
+        _require(
+            abs(float(relative_emphasis) - float(share) * len(rows))
+            <= ALLOCATION_TOLERANCE
+            and row["review_depth"]
+            == _review_depth(float(relative_emphasis)),
+            "ACTUATOR_INSPECTION_DERIVATION_INVALID",
+        )
+        _require(
+            isinstance(budget_units, int)
+            and not isinstance(budget_units, bool)
+            and budget_units >= 1,
+            "ACTUATOR_INSPECTION_BUDGET_UNIT_INVALID",
+        )
+    _require(
+        abs(sum(float(row["inspection_share"]) for row in rows) - 1.0)
+        <= ALLOCATION_TOLERANCE
+        and sum(int(row["inspection_budget_units"]) for row in rows)
+        == INSPECTION_BUDGET_UNITS,
+        "ACTUATOR_INSPECTION_TOTAL_INVALID",
+    )
+    expected_order = sorted(
+        rows,
+        key=lambda row: (
+            -float(row["controller_allocation_fraction"]),
+            row["evidence_id"],
+        ),
+    )
+    _require(rows == expected_order, "ACTUATOR_INSPECTION_ORDER_INVALID")
+    _require(
+        program.get("schema_version")
+        == "ebrt-live-public-revision-program-v0.6.2.3"
+        and program.get("state") == "COMPILED"
+        and program.get("fingerprint_sha256")
+        == _fingerprint(_without_fingerprint(program)),
+        "ACTUATOR_PROGRAM_FINGERPRINT_INVALID",
+    )
+    expected_program = _expected_program_steps(
+        correction_evidence_id=correction_evidence_id,
+        suppress_evidence_ids=suppress_evidence_ids,
+        inspection_steps=rows,
+        preserve_evidence_ids=preserve_evidence_ids,
+    )
+    _require(
+        program.get("steps") == expected_program,
+        "ACTUATOR_PROGRAM_MATERIALIZATION_INVALID",
+    )
+
+
 def _compile_actuator(
     request: LiveRevisionRequest,
     compiled_before: Mapping[str, Any],
@@ -1132,21 +1472,48 @@ def _compile_actuator(
     eligible = [
         row
         for row in control_map["credit_rows"]
-        if row["evidence_id"] not in invalidated
-        and row["evidence_id"] not in stable
-        and float(row["reinspection_salience"]) > 0.0
+        if bool(row["eligible_for_reinspection"])
+        and float(row["optimized_allocation_fraction"]) > 0.0
     ]
     eligible.sort(
-        key=lambda row: (-float(row["reinspection_salience"]), row["evidence_id"])
+        key=lambda row: (
+            -float(row["optimized_allocation_fraction"]),
+            row["evidence_id"],
+        )
     )
     _require(
         len(eligible) >= request.reinspection_count,
         "ACTUATOR_REINSPECTION_COUNT_UNAVAILABLE",
     )
-    reinspect = [
-        str(row["evidence_id"])
-        for row in eligible[: request.reinspection_count]
-    ]
+    selected = eligible[: request.reinspection_count]
+    selected_total = sum(
+        float(row["optimized_allocation_fraction"]) for row in selected
+    )
+    _require(selected_total > 0.0, "ACTUATOR_ALLOCATION_ZERO")
+    plan_rows: list[JsonObject] = []
+    for rank, row in enumerate(selected, start=1):
+        share = float(row["optimized_allocation_fraction"]) / selected_total
+        relative_emphasis = share * len(selected)
+        review_depth = _review_depth(relative_emphasis)
+        plan_rows.append(
+            {
+                "evidence_id": str(row["evidence_id"]),
+                "priority_rank": rank,
+                "controller_allocation_fraction": float(
+                    row["optimized_allocation_fraction"]
+                ),
+                "inspection_share": share,
+                "allocation_delta": float(row["allocation_delta"]),
+                "relative_emphasis": relative_emphasis,
+                "review_depth": review_depth,
+            }
+        )
+    units = _largest_remainder_units(
+        plan_rows, total_units=INSPECTION_BUDGET_UNITS
+    )
+    for row in plan_rows:
+        row["inspection_budget_units"] = units[str(row["evidence_id"])]
+    reinspect = [str(row["evidence_id"]) for row in plan_rows]
     active_before = set(compiled_before["active_support_evidence_ids"])
     evidence_order = [row.evidence_id for row in request.all_raw_evidence]
     suppress = [
@@ -1164,6 +1531,77 @@ def _compile_actuator(
         and not (set(suppress) & set(preserve)),
         "ACTUATOR_OPERATION_OVERLAP",
     )
+    inspection_plan = _seal(
+        {
+            "schema_version": "ebrt-live-continuous-inspection-plan-v0.6.2.3",
+            "allocation_scope": "SELECTED_PUBLIC_REINSPECTION_STEPS",
+            "total_budget_units": INSPECTION_BUDGET_UNITS,
+            "budget_unit_semantics": "ABSTRACT_PUBLIC_REVIEW_ALLOCATION_NOT_PROVIDER_TOKENS",
+            "steps": plan_rows,
+        }
+    )
+    program_steps = _expected_program_steps(
+        correction_evidence_id=request.event.correction_evidence_id,
+        suppress_evidence_ids=suppress,
+        inspection_steps=plan_rows,
+        preserve_evidence_ids=preserve,
+    )
+    program = _seal(
+        {
+            "schema_version": "ebrt-live-public-revision-program-v0.6.2.3",
+            "state": "COMPILED",
+            "source_control_map_fingerprint_sha256": control_map[
+                "fingerprint_sha256"
+            ],
+            "steps": program_steps,
+        }
+    )
+    _validate_inspection_plan_and_program(
+        allowed_evidence_ids={row.evidence_id for row in request.all_raw_evidence},
+        correction_evidence_id=request.event.correction_evidence_id,
+        suppress_evidence_ids=suppress,
+        reinspect_evidence_ids=reinspect,
+        preserve_evidence_ids=preserve,
+        inspection_plan=inspection_plan,
+        program=program,
+    )
+    checks = {
+        "source_control_map_bound": control_map["fingerprint_sha256"]
+        == program["source_control_map_fingerprint_sha256"],
+        "selected_count_exact": len(plan_rows) == request.reinspection_count,
+        "continuous_allocation_finite": all(
+            math.isfinite(float(row["inspection_share"]))
+            and math.isfinite(float(row["relative_emphasis"]))
+            for row in plan_rows
+        ),
+        "selected_allocation_simplex_respected": abs(
+            sum(float(row["inspection_share"]) for row in plan_rows) - 1.0
+        )
+        <= ALLOCATION_TOLERANCE,
+        "abstract_inspection_budget_exact": sum(
+            int(row["inspection_budget_units"]) for row in plan_rows
+        )
+        == INSPECTION_BUDGET_UNITS,
+        "deterministic_priority_order": reinspect
+        == [
+            str(row["evidence_id"])
+            for row in sorted(
+                selected,
+                key=lambda row: (
+                    -float(row["optimized_allocation_fraction"]),
+                    row["evidence_id"],
+                ),
+            )
+        ],
+        "operation_sets_disjoint": not (
+            set(reinspect) & (set(suppress) | set(preserve))
+            or set(suppress) & set(preserve)
+        ),
+        "program_steps_bounded": len(program_steps)
+        <= 2 + len(suppress) + len(preserve) + request.reinspection_count,
+        "gradient_stops_at_public_program": True,
+    }
+    _require(all(checks.values()), "ACTUATOR_COMPILER_HARD_GATE_FAILED")
     return _seal(
         {
             "schema_version": ACTUATOR_SCHEMA,
@@ -1172,15 +1610,229 @@ def _compile_actuator(
             "event_id": request.event.event_id,
             "correction_evidence_id": request.event.correction_evidence_id,
             "reinspect_evidence_ids": reinspect,
-            "reinspect_source": "DIFFERENTIABLE_REINSPECTION_SALIENCE_RANKING",
+            "reinspect_source": "DIFFERENTIABLE_CONTINUOUS_INSPECTION_ALLOCATION",
             "suppress_evidence_ids": suppress,
             "suppress_source": "TYPED_EVENT_INVALIDATION",
             "preserve_evidence_ids": preserve,
             "preserve_source": "TYPED_EVENT_STABILITY",
             "reinspection_limit": request.reinspection_count,
+            "inspection_plan": inspection_plan,
+            "program": program,
             "control_l2": control_map["control_l2"],
             "max_control_l2": control_map["max_control_l2"],
+            "checks": checks,
             "gradient_stops_here": True,
+        }
+    )
+
+
+def _materialize_program_trace(
+    steps: Sequence[Mapping[str, Any]],
+) -> tuple[list[JsonObject], str]:
+    trace: list[JsonObject] = []
+    state = "INITIALIZED"
+    for expected_index, step in enumerate(steps):
+        _require(
+            isinstance(step.get("step_index"), int)
+            and not isinstance(step.get("step_index"), bool)
+            and step["step_index"] == expected_index,
+            "ACTUATOR_PROGRAM_INDEX_INVALID",
+        )
+        operation = str(step["operation"])
+        before_state = state
+        if operation == "LOAD_EVENT":
+            _require(state == "INITIALIZED", "ACTUATOR_TRANSITION_INVALID")
+            state = "EVENT_LOADED"
+        elif operation == "SUPPRESS":
+            _require(
+                state in {"EVENT_LOADED", "INVALIDATIONS_APPLIED"},
+                "ACTUATOR_TRANSITION_INVALID",
+            )
+            state = "INVALIDATIONS_APPLIED"
+        elif operation == "REINSPECT":
+            _require(
+                state in {"INVALIDATIONS_APPLIED", "INSPECTION_ALLOCATED"},
+                "ACTUATOR_TRANSITION_INVALID",
+            )
+            state = "INSPECTION_ALLOCATED"
+        elif operation == "PRESERVE":
+            _require(
+                state in {"INSPECTION_ALLOCATED", "STABILITY_LOCKED"},
+                "ACTUATOR_TRANSITION_INVALID",
+            )
+            state = "STABILITY_LOCKED"
+        elif operation == "PREPARE_FULL_CONTEXT_REGENERATION":
+            _require(
+                state in {"INSPECTION_ALLOCATED", "STABILITY_LOCKED"},
+                "ACTUATOR_TRANSITION_INVALID",
+            )
+            state = "READY_FOR_PROVIDER"
+        else:
+            raise LiveRevisionError("ACTUATOR_OPERATION_UNKNOWN", operation)
+        trace.append(
+            {
+                "step_index": expected_index,
+                "operation": operation,
+                "state_before": before_state,
+                "state_after": state,
+                "evidence_id": step.get("evidence_id"),
+            }
+        )
+    _require(state == "READY_FOR_PROVIDER", "ACTUATOR_PROGRAM_INCOMPLETE")
+    return trace, state
+
+
+def _execute_actuator_program(
+    request: LiveRevisionRequest,
+    actuator: Mapping[str, Any],
+    *,
+    source_control_map_fingerprint_sha256: str,
+    source_prior_state_fingerprint_sha256: str,
+) -> JsonObject:
+    _require(
+        actuator["fingerprint_sha256"]
+        == _fingerprint(_without_fingerprint(actuator)),
+        "ACTUATOR_FINGERPRINT_INVALID",
+    )
+    _require(
+        actuator["inspection_plan"]["fingerprint_sha256"]
+        == _fingerprint(_without_fingerprint(actuator["inspection_plan"])),
+        "ACTUATOR_INSPECTION_PLAN_FINGERPRINT_INVALID",
+    )
+    _require(
+        actuator["event_id"] == request.event.event_id
+        and actuator["correction_evidence_id"]
+        == request.event.correction_evidence_id,
+        "ACTUATOR_EVENT_BINDING_INVALID",
+    )
+    _require(
+        actuator["source_control_map_fingerprint_sha256"]
+        == source_control_map_fingerprint_sha256,
+        "ACTUATOR_CONTROL_MAP_BINDING_INVALID",
+    )
+    evidence_ids = {row.evidence_id for row in request.all_raw_evidence}
+    _require(
+        set(actuator["reinspect_evidence_ids"]) <= evidence_ids
+        and set(actuator["suppress_evidence_ids"])
+        == set(request.event.invalidated_evidence_ids)
+        and set(actuator["preserve_evidence_ids"])
+        == set(request.event.stable_evidence_ids),
+        "ACTUATOR_EVIDENCE_BINDING_INVALID",
+    )
+    program = actuator["program"]
+    _validate_inspection_plan_and_program(
+        allowed_evidence_ids=evidence_ids,
+        correction_evidence_id=request.event.correction_evidence_id,
+        suppress_evidence_ids=actuator["suppress_evidence_ids"],
+        reinspect_evidence_ids=actuator["reinspect_evidence_ids"],
+        preserve_evidence_ids=actuator["preserve_evidence_ids"],
+        inspection_plan=actuator["inspection_plan"],
+        program=program,
+    )
+    steps = list(program["steps"])
+    _require(program["state"] == "COMPILED", "ACTUATOR_PROGRAM_STATE_INVALID")
+    _require(
+        program["fingerprint_sha256"]
+        == _fingerprint(_without_fingerprint(program)),
+        "ACTUATOR_PROGRAM_FINGERPRINT_INVALID",
+    )
+    _require(
+        program["source_control_map_fingerprint_sha256"]
+        == actuator["source_control_map_fingerprint_sha256"],
+        "ACTUATOR_PROGRAM_CONTROL_BINDING_INVALID",
+    )
+    load_steps = [row for row in steps if row["operation"] == "LOAD_EVENT"]
+    suppress_steps = [row for row in steps if row["operation"] == "SUPPRESS"]
+    reinspect_steps = [row for row in steps if row["operation"] == "REINSPECT"]
+    preserve_steps = [row for row in steps if row["operation"] == "PRESERVE"]
+    prepare_steps = [
+        row
+        for row in steps
+        if row["operation"] == "PREPARE_FULL_CONTEXT_REGENERATION"
+    ]
+    _require(
+        len(load_steps) == len(prepare_steps) == 1
+        and load_steps[0]["evidence_id"]
+        == request.event.correction_evidence_id,
+        "ACTUATOR_PROGRAM_BOUNDARY_STEPS_INVALID",
+    )
+    _require(
+        [row["evidence_id"] for row in suppress_steps]
+        == list(actuator["suppress_evidence_ids"])
+        and [row["evidence_id"] for row in preserve_steps]
+        == list(actuator["preserve_evidence_ids"]),
+        "ACTUATOR_PROGRAM_TYPED_SUMMARY_MISMATCH",
+    )
+    program_reinspection_rows = [
+        {
+            key: value
+            for key, value in row.items()
+            if key not in {"step_index", "operation"}
+        }
+        for row in reinspect_steps
+    ]
+    _require(
+        program_reinspection_rows == actuator["inspection_plan"]["steps"],
+        "ACTUATOR_PROGRAM_INSPECTION_PLAN_MISMATCH",
+    )
+    trace, state = _materialize_program_trace(steps)
+    provider_operation = _seal(
+        {
+            "schema_version": REVISION_OPERATION_SCHEMA,
+            "operation": "APPLY_REVISION",
+            "event": request.event.model_dump(mode="json"),
+            "program": program,
+            "inspection_plan": actuator["inspection_plan"],
+            "reinspect_evidence_ids": list(actuator["reinspect_evidence_ids"]),
+            "suppress_evidence_ids": list(actuator["suppress_evidence_ids"]),
+            "preserve_evidence_ids": list(actuator["preserve_evidence_ids"]),
+            "source_prior_state_fingerprint_sha256": source_prior_state_fingerprint_sha256,
+            "source_actuator_fingerprint_sha256": actuator["fingerprint_sha256"],
+            "semantic_authority": "ordered raw evidence only",
+            "gradient_boundary": "gradient stopped before this JSON operation and hosted generation",
+        }
+    )
+    checks = {
+        "source_actuator_bound": provider_operation[
+            "source_actuator_fingerprint_sha256"
+        ]
+        == actuator["fingerprint_sha256"],
+        "source_control_map_bound": actuator[
+            "source_control_map_fingerprint_sha256"
+        ]
+        == source_control_map_fingerprint_sha256,
+        "program_state_machine_complete": state == "READY_FOR_PROVIDER",
+        "execution_trace_exact": len(trace) == len(steps)
+        and all(
+            row["step_index"] == index for index, row in enumerate(trace)
+        ),
+        "program_summaries_exact": program_reinspection_rows
+        == actuator["inspection_plan"]["steps"],
+        "emitted_operation_sealed": provider_operation["fingerprint_sha256"]
+        == _fingerprint(_without_fingerprint(provider_operation)),
+        "abstract_inspection_budget_exact": sum(
+            int(row["inspection_budget_units"])
+            for row in provider_operation["inspection_plan"]["steps"]
+        )
+        == INSPECTION_BUDGET_UNITS,
+        "provider_operation_gold_free": not bool(
+            _recursive_keys(provider_operation) & PROVIDER_FORBIDDEN_KEYS
+        ),
+    }
+    _require(all(checks.values()), "ACTUATOR_EXECUTION_HARD_GATE_FAILED")
+    return _seal(
+        {
+            "schema_version": ACTUATOR_EXECUTION_SCHEMA,
+            "status": "COMPLETED",
+            "source_actuator_fingerprint_sha256": actuator["fingerprint_sha256"],
+            "source_program_fingerprint_sha256": program["fingerprint_sha256"],
+            "final_state": state,
+            "trace": trace,
+            "emitted_provider_operation": provider_operation,
+            "emitted_provider_operation_fingerprint_sha256": provider_operation[
+                "fingerprint_sha256"
+            ],
+            "checks": checks,
         }
     )
 
@@ -1205,13 +1857,12 @@ def _provider_candidate_rows(request: LiveRevisionRequest) -> list[JsonObject]:
     return rows
 
 
-def _build_provider_payload(
+def _build_prior_public_state(
     request: LiveRevisionRequest,
     compiled_before: Mapping[str, Any],
-    actuator: Mapping[str, Any],
 ) -> JsonObject:
-    prior = {
-        "schema_version": "ebrt-live-prior-state-v0.6.2.2",
+    return {
+        "schema_version": "ebrt-live-prior-state-v0.6.2.3",
         "checkpoint_id": compiled_before["checkpoint_id"],
         "current_answer": compiled_before["current_answer"],
         "selected_closure_id": _opaque_closure_id("P", request.prior_closure),
@@ -1226,6 +1877,152 @@ def _build_provider_payload(
         ],
         "compiled_closure_fingerprint_sha256": compiled_before["fingerprint_sha256"],
     }
+
+
+def _validate_provider_operation(
+    operation: Mapping[str, Any], *, allowed_evidence_ids: set[str]
+) -> None:
+    expected_keys = {
+        "schema_version",
+        "operation",
+        "event",
+        "program",
+        "inspection_plan",
+        "reinspect_evidence_ids",
+        "suppress_evidence_ids",
+        "preserve_evidence_ids",
+        "source_prior_state_fingerprint_sha256",
+        "source_actuator_fingerprint_sha256",
+        "semantic_authority",
+        "gradient_boundary",
+        "fingerprint_sha256",
+    }
+    _require(
+        set(operation) == expected_keys
+        and operation.get("schema_version") == REVISION_OPERATION_SCHEMA,
+        "PROVIDER_OPERATION_SCHEMA_INVALID",
+    )
+    _require(operation.get("operation") == "APPLY_REVISION", "PROVIDER_OPERATION_INVALID")
+    _require(
+        operation.get("fingerprint_sha256")
+        == _fingerprint(_without_fingerprint(operation)),
+        "PROVIDER_OPERATION_FINGERPRINT_INVALID",
+    )
+    event_value = operation.get("event")
+    try:
+        event = RevisionEvent.model_validate(event_value)
+    except ValidationError as error:
+        raise LiveRevisionError("PROVIDER_OPERATION_EVENT_INVALID") from error
+    plan = operation.get("inspection_plan")
+    program = operation.get("program")
+    _require(
+        isinstance(plan, Mapping) and isinstance(program, Mapping),
+        "PROVIDER_INSPECTION_PLAN_INVALID",
+    )
+    reinspect = operation.get("reinspect_evidence_ids")
+    suppress = operation.get("suppress_evidence_ids")
+    preserve = operation.get("preserve_evidence_ids")
+    _require(
+        isinstance(reinspect, list)
+        and isinstance(suppress, list)
+        and isinstance(preserve, list)
+        and all(isinstance(value, str) for value in reinspect + suppress + preserve),
+        "PROVIDER_OPERATION_SUMMARY_INVALID",
+    )
+    _validate_inspection_plan_and_program(
+        allowed_evidence_ids=allowed_evidence_ids,
+        correction_evidence_id=event.correction_evidence_id,
+        suppress_evidence_ids=suppress,
+        reinspect_evidence_ids=reinspect,
+        preserve_evidence_ids=preserve,
+        inspection_plan=plan,
+        program=program,
+    )
+    _require(
+        set(suppress) == set(event.invalidated_evidence_ids)
+        and set(preserve) == set(event.stable_evidence_ids)
+        and not (set(reinspect) & (set(suppress) | set(preserve))),
+        "PROVIDER_OPERATION_EVENT_SUMMARY_MISMATCH",
+    )
+    _require(
+        not (_recursive_keys(operation) & PROVIDER_FORBIDDEN_KEYS),
+        "PROVIDER_PAYLOAD_FORBIDDEN_KEY",
+    )
+
+
+def _build_provider_payload(
+    request: LiveRevisionRequest,
+    compiled_before: Mapping[str, Any],
+    prior: Mapping[str, Any],
+    control_map: Mapping[str, Any],
+    actuator: Mapping[str, Any],
+    actuator_execution: Mapping[str, Any],
+) -> JsonObject:
+    provider_operation = actuator_execution["emitted_provider_operation"]
+    _require(
+        control_map["fingerprint_sha256"]
+        == _fingerprint(_without_fingerprint(control_map)),
+        "PROVIDER_CONTROL_MAP_FINGERPRINT_INVALID",
+    )
+    expected_actuator = _compile_actuator(
+        request, compiled_before, control_map
+    )
+    _require(
+        actuator == expected_actuator,
+        "PROVIDER_ACTUATOR_BINDING_INVALID",
+    )
+    expected_execution = _execute_actuator_program(
+        request,
+        expected_actuator,
+        source_control_map_fingerprint_sha256=control_map[
+            "fingerprint_sha256"
+        ],
+        source_prior_state_fingerprint_sha256=_fingerprint(prior),
+    )
+    _require(
+        actuator_execution == expected_execution,
+        "PROVIDER_ACTUATOR_EXECUTION_INVALID",
+    )
+    _require(
+        actuator_execution["source_actuator_fingerprint_sha256"]
+        == actuator["fingerprint_sha256"]
+        and actuator_execution["source_program_fingerprint_sha256"]
+        == actuator["program"]["fingerprint_sha256"]
+        and actuator_execution[
+            "emitted_provider_operation_fingerprint_sha256"
+        ]
+        == provider_operation["fingerprint_sha256"],
+        "PROVIDER_ACTUATOR_EXECUTION_BINDING_INVALID",
+    )
+    _require(
+        actuator_execution["trace"]
+        == _materialize_program_trace(provider_operation["program"]["steps"])[0],
+        "PROVIDER_ACTUATOR_EXECUTION_TRACE_INVALID",
+    )
+    _require(
+        provider_operation["source_prior_state_fingerprint_sha256"]
+        == _fingerprint(prior)
+        and provider_operation["source_actuator_fingerprint_sha256"]
+        == actuator["fingerprint_sha256"],
+        "PROVIDER_OPERATION_SOURCE_BINDING_INVALID",
+    )
+    _require(
+        provider_operation["event"] == request.event.model_dump(mode="json")
+        and provider_operation["program"] == actuator["program"]
+        and provider_operation["inspection_plan"]
+        == actuator["inspection_plan"]
+        and provider_operation["reinspect_evidence_ids"]
+        == actuator["reinspect_evidence_ids"]
+        and provider_operation["suppress_evidence_ids"]
+        == actuator["suppress_evidence_ids"]
+        and provider_operation["preserve_evidence_ids"]
+        == actuator["preserve_evidence_ids"],
+        "PROVIDER_OPERATION_MATERIAL_BINDING_INVALID",
+    )
+    _validate_provider_operation(
+        provider_operation,
+        allowed_evidence_ids={row.evidence_id for row in request.all_raw_evidence},
+    )
     payload: JsonObject = {
         "schema_version": PROVIDER_INPUT_SCHEMA,
         "case_id": request.case_id,
@@ -1236,19 +2033,8 @@ def _build_provider_payload(
         "all_raw_evidence": [row.model_dump(mode="json") for row in request.all_raw_evidence],
         "allowed_evidence_ids": [row.evidence_id for row in request.all_raw_evidence],
         "candidate_closures": _provider_candidate_rows(request),
-        "prior_public_state": prior,
-        "apply_revision": {
-            "schema_version": "ebrt-live-apply-revision-operation-v0.6.2.2",
-            "operation": "APPLY_REVISION",
-            "event": request.event.model_dump(mode="json"),
-            "reinspect_evidence_ids": list(actuator["reinspect_evidence_ids"]),
-            "suppress_evidence_ids": list(actuator["suppress_evidence_ids"]),
-            "preserve_evidence_ids": list(actuator["preserve_evidence_ids"]),
-            "source_prior_state_fingerprint_sha256": _fingerprint(prior),
-            "source_actuator_fingerprint_sha256": actuator["fingerprint_sha256"],
-            "semantic_authority": "ordered raw evidence only",
-            "gradient_boundary": "gradient stopped before this JSON operation and hosted generation",
-        },
+        "prior_public_state": dict(prior),
+        "apply_revision": dict(provider_operation),
     }
     forbidden = _recursive_keys(payload) & PROVIDER_FORBIDDEN_KEYS
     _require(
@@ -1396,6 +2182,142 @@ def _audit_after(
     }
 
 
+def _public_dependency_audit(
+    request: LiveRevisionRequest,
+    selected_graph: ClosureGraph,
+    before: Mapping[str, Any],
+    after: Mapping[str, Any],
+) -> JsonObject:
+    """Zero-call block/restore probe over the selected public graph only."""
+
+    evidence_order = [row.evidence_id for row in request.all_raw_evidence]
+    correction = request.event.correction_evidence_id
+    baseline = _structural_closure(
+        selected_graph, evidence_order=evidence_order
+    )
+    active_block = {correction}
+    blocked = _structural_closure(
+        selected_graph,
+        evidence_order=evidence_order,
+        blocked_evidence_ids=frozenset(active_block),
+    )
+    active_block.remove(correction)
+    unblocked = _structural_closure(
+        selected_graph,
+        evidence_order=evidence_order,
+        blocked_evidence_ids=frozenset(active_block),
+    )
+    before_targets = {row["target_id"]: row for row in before["targets"]}
+    after_targets = {row["target_id"]: row for row in after["targets"]}
+    changed_fact_ids = [
+        target_id
+        for target_id, row in before_targets.items()
+        if row["target_type"] == "fact"
+        and row["value"] != after_targets[target_id]["value"]
+    ]
+    target_rows: list[JsonObject] = []
+    for target_id in changed_fact_ids:
+        baseline_ids = baseline["targets"][target_id][
+            "all_active_evidence_ids"
+        ]
+        blocked_ids = blocked["targets"][target_id][
+            "all_active_evidence_ids"
+        ]
+        unblocked_ids = unblocked["targets"][target_id][
+            "all_active_evidence_ids"
+        ]
+        target_rows.append(
+            {
+                "target_id": target_id,
+                "baseline_contains_correction": correction in baseline_ids,
+                "blocked_contains_correction": correction in blocked_ids,
+                "blocked_lineage_changed": blocked_ids != baseline_ids,
+                "blocked_lineage_evidence_ids": blocked_ids,
+                "unblocked_lineage_exact": unblocked_ids == baseline_ids,
+            }
+        )
+    stable = set(request.event.stable_evidence_ids)
+    stable_target_ids = [
+        target_id
+        for target_id, row in after_targets.items()
+        if row["target_type"] == "constraint"
+        and set(baseline["targets"][target_id]["all_active_evidence_ids"])
+        & stable
+    ]
+    stable_evidence_preserved = bool(stable_target_ids) and all(
+        (
+            set(baseline["targets"][target_id]["all_active_evidence_ids"])
+            & stable
+        )
+        == (
+            set(blocked["targets"][target_id]["all_active_evidence_ids"])
+            & stable
+        )
+        for target_id in stable_target_ids
+    )
+    expected_event_edges = {
+        (correction, evidence_id)
+        for evidence_id in request.event.invalidated_evidence_ids
+    }
+    baseline_edges = {
+        (row["source_evidence_id"], row["target_evidence_id"])
+        for row in baseline["invalidation_edges"]
+    }
+    blocked_edges = {
+        (row["source_evidence_id"], row["target_evidence_id"])
+        for row in blocked["invalidation_edges"]
+    }
+    checks = {
+        "changed_fact_targets_exist": bool(target_rows),
+        "correction_bound_before_block": bool(target_rows)
+        and all(row["baseline_contains_correction"] for row in target_rows),
+        "correction_absent_when_blocked": bool(target_rows)
+        and all(not row["blocked_contains_correction"] for row in target_rows),
+        "changed_fact_lineage_changes_when_blocked": bool(target_rows)
+        and all(row["blocked_lineage_changed"] for row in target_rows),
+        "event_consistency_breaks_when_blocked": expected_event_edges
+        <= baseline_edges
+        and not expected_event_edges <= blocked_edges,
+        "stable_evidence_binding_preserved": stable_evidence_preserved,
+        "unblocked_recomputation_exact": not active_block
+        and canonical_json(unblocked)
+        == canonical_json(baseline),
+    }
+    return _seal(
+        {
+            "schema_version": DEPENDENCY_AUDIT_SCHEMA,
+            "mode": "PUBLIC_GRAPH_BLOCK_RESTORE",
+            "scope": "SELECTED_CALLER_SUPPLIED_PUBLIC_GRAPH_ONLY",
+            "blocked_evidence_id": correction,
+            "provider_calls": 0,
+            "hosted_output_regenerated": False,
+            "structural_dependency_status": (
+                "PASS" if all(checks.values()) else "FAIL"
+            ),
+            "hosted_causality_status": "NOT_ASSESSED",
+            "counterfactual_output_effect_status": "NOT_ASSESSED",
+            "baseline_closure_fingerprint_sha256": _fingerprint(baseline),
+            "blocked_closure_fingerprint_sha256": _fingerprint(blocked),
+            "unblocked_closure_fingerprint_sha256": _fingerprint(unblocked),
+            "mask_trace": [
+                {
+                    "phase": "BLOCK",
+                    "blocked_evidence_ids": [correction],
+                    "closure_fingerprint_sha256": _fingerprint(blocked),
+                },
+                {
+                    "phase": "UNBLOCK_AND_RECOMPUTE",
+                    "blocked_evidence_ids": [],
+                    "closure_fingerprint_sha256": _fingerprint(unblocked),
+                },
+            ],
+            "changed_fact_targets": target_rows,
+            "stable_target_ids": stable_target_ids,
+            "checks": checks,
+        }
+    )
+
+
 class RevisionProvider(Protocol):
     """One-attempt provider boundary used by the live engine."""
 
@@ -1477,6 +2399,10 @@ class ScriptedLiveRevisionProvider:
     ) -> tuple[Mapping[str, Any], ProviderReceipt]:
         self.attempts += 1
         _require(self.attempts == 1, "SCRIPTED_PROVIDER_REUSED", http_status=500)
+        _validate_provider_operation(
+            payload["apply_revision"],
+            allowed_evidence_ids=set(payload["allowed_evidence_ids"]),
+        )
         candidate = self._choose_candidate(payload)
         output = {
             "schema_version": PROVIDER_OUTPUT_SCHEMA,
@@ -1590,6 +2516,7 @@ def _verification_rows(audit: Mapping[str, bool]) -> list[JsonObject]:
         "stable_bound_targets_exist": "Stable target binding",
         "stable_bound_targets_preserved": "Stable target preserved",
         "public_diff_observable": "Public output diff",
+        "public_structural_dependency_block_restore": "Public structural dependency",
     }
     rows = [
         {
@@ -1655,7 +2582,23 @@ class EBRTRevisionEngine:
         )
         control_map = _derive_control_map(request, compiled_before)
         actuator = _compile_actuator(request, compiled_before, control_map)
-        payload = _build_provider_payload(request, compiled_before, actuator)
+        prior_payload = _build_prior_public_state(request, compiled_before)
+        actuator_execution = _execute_actuator_program(
+            request,
+            actuator,
+            source_control_map_fingerprint_sha256=control_map[
+                "fingerprint_sha256"
+            ],
+            source_prior_state_fingerprint_sha256=_fingerprint(prior_payload),
+        )
+        payload = _build_provider_payload(
+            request,
+            compiled_before,
+            prior_payload,
+            control_map,
+            actuator,
+            actuator_execution,
+        )
         try:
             raw_output, raw_receipt = provider.generate(payload)
         except OpenAIProviderBoundaryError as error:
@@ -1698,9 +2641,25 @@ class EBRTRevisionEngine:
             require_live_schema=True,
         )
         diff = _public_diff(compiled_before, compiled_after)
-        audit = _audit_after(request, compiled_before, compiled_after)
-        mechanism_pass = control_map["status"] == "PASS" and bool(
-            actuator["gradient_stops_here"]
+        dependency_audit = _public_dependency_audit(
+            request,
+            candidate_by_id[selected_id],
+            compiled_before,
+            compiled_after,
+        )
+        audit = {
+            **_audit_after(request, compiled_before, compiled_after),
+            "public_structural_dependency_block_restore": dependency_audit[
+                "structural_dependency_status"
+            ]
+            == "PASS",
+        }
+        mechanism_pass = (
+            control_map["status"] == "PASS"
+            and bool(actuator["gradient_stops_here"])
+            and all(actuator["checks"].values())
+            and actuator_execution["status"] == "COMPLETED"
+            and all(actuator_execution["checks"].values())
         )
         operational_pass = mechanism_pass and all(audit.values())
 
@@ -1774,12 +2733,24 @@ class EBRTRevisionEngine:
                     "maximum_finite_difference_error": control_map[
                         "maximum_finite_difference_error"
                     ],
+                    "inspection_temperature": control_map[
+                        "inspection_temperature"
+                    ],
+                    "surrogate_terminal_state_before": control_map[
+                        "surrogate_terminal_state_before"
+                    ],
+                    "surrogate_terminal_state_after": control_map[
+                        "surrogate_terminal_state_after"
+                    ],
                 },
                 "public_control_map": {
                     "fingerprint_sha256": control_map["fingerprint_sha256"],
                     "control_l2": control_map["control_l2"],
                     "max_control_l2": control_map["max_control_l2"],
                     "credit_rows": control_map["credit_rows"],
+                    "allocation_domain_evidence_ids": control_map[
+                        "allocation_domain_evidence_ids"
+                    ],
                     "checks": control_map["checks"],
                 },
                 "compiled_actuator": {
@@ -1799,7 +2770,33 @@ class EBRTRevisionEngine:
                     "correction_evidence_id": actuator[
                         "correction_evidence_id"
                     ],
+                    "source_control_map_fingerprint_sha256": actuator[
+                        "source_control_map_fingerprint_sha256"
+                    ],
+                    "inspection_plan": actuator["inspection_plan"],
+                    "program": actuator["program"],
+                    "checks": actuator["checks"],
                     "gradient_stops_here": actuator["gradient_stops_here"],
+                },
+                "actuator_execution": {
+                    "fingerprint_sha256": actuator_execution[
+                        "fingerprint_sha256"
+                    ],
+                    "status": actuator_execution["status"],
+                    "source_actuator_fingerprint_sha256": actuator_execution[
+                        "source_actuator_fingerprint_sha256"
+                    ],
+                    "source_program_fingerprint_sha256": actuator_execution[
+                        "source_program_fingerprint_sha256"
+                    ],
+                    "final_state": actuator_execution["final_state"],
+                    "trace": actuator_execution["trace"],
+                    "emitted_provider_operation_fingerprint_sha256": actuator_execution[
+                        "emitted_provider_operation_fingerprint_sha256"
+                    ],
+                    "provider_payload_fingerprint_sha256": _fingerprint(payload),
+                    "provider_payload_receipt_binding_status": "PASS",
+                    "checks": actuator_execution["checks"],
                 },
                 "boundary": (
                     "Gradient stops at the public control map. GPT-5.6, JSON "
@@ -1848,10 +2845,20 @@ class EBRTRevisionEngine:
                 "lineage_binding_status": (
                     "PASS" if all(audit.values()) else "FAIL"
                 ),
+                "public_actuator_execution_status": (
+                    "PASS" if all(actuator_execution["checks"].values()) else "FAIL"
+                ),
+                "provider_delivery_status": "PASS",
+                "provider_uptake_status": "NOT_ASSESSED",
+                "structural_dependency_status": dependency_audit[
+                    "structural_dependency_status"
+                ],
+                "counterfactual_output_effect_status": "NOT_ASSESSED",
                 "semantic_correctness_status": "NOT_ASSESSED",
                 "effect_attribution_status": "NOT_ASSESSED",
                 "provider_attempts": 1,
             },
+            "public_dependency_audit": dependency_audit,
             "accounting": {
                 "api_calls": usage["api_calls"],
                 "logical_calls": usage["logical_calls"],
@@ -2150,8 +3157,9 @@ def demo_request_envelope() -> JsonObject:
 
 def capabilities_value(*, provider_mode: str) -> JsonObject:
     return {
-        "schema_version": "ebrt-live-capabilities-v0.6.2.2",
+        "schema_version": "ebrt-live-capabilities-v0.6.2.3",
         "status": "READY",
+        "runtime_label": "EBRT Runtime Preview 2",
         "provider_mode": provider_mode,
         "model": MODEL if provider_mode == "openai" else "SCRIPTED_TEST_ONLY",
         "request_schema_version": REQUEST_SCHEMA,
@@ -2172,7 +3180,10 @@ def capabilities_value(*, provider_mode: str) -> JsonObject:
             "evicted_identity_reexecution": False,
         },
         "operation_scope": "TYPED_INVALIDATION_REVISION",
+        "control_surface": "CONTINUOUS_PUBLIC_INSPECTION_ALLOCATION",
+        "actuator_model": "ONE_HORIZON_EXECUTABLE_PUBLIC_REVISION_PROGRAM",
         "gradient_boundary": "public control map",
+        "provider_uptake_status": "NOT_ASSESSED",
         "semantic_correctness_status": "NOT_ASSESSED",
         "effect_attribution_status": "NOT_ASSESSED",
     }
@@ -2225,7 +3236,7 @@ class RevisionService:
             terminal_results_cached = len(self._terminal)
             spent_identities = len(self._spent)
         return {
-            "schema_version": "ebrt-live-health-v0.6.2.2",
+            "schema_version": "ebrt-live-health-v0.6.2.3",
             "status": "READY" if self.provider_configured else "PROVIDER_UNCONFIGURED",
             "provider_mode": self.provider_mode,
             "provider_configured": self.provider_configured,
@@ -2365,7 +3376,7 @@ def _error_value(error: LiveRevisionError) -> JsonObject:
 
 def _handler_type(service: RevisionService) -> type[http.server.BaseHTTPRequestHandler]:
     class LiveRevisionHandler(http.server.BaseHTTPRequestHandler):
-        server_version = "EBRTLive/0.6.2.2"
+        server_version = "EBRTLive/0.6.2.3-RuntimePreview2"
         sys_version = ""
 
         def log_message(self, _format: str, *_args: Any) -> None:
@@ -2594,7 +3605,7 @@ def serve(
     print(
         _pretty(
             {
-                "schema_version": "ebrt-live-server-start-v0.6.2.2",
+                "schema_version": "ebrt-live-server-start-v0.6.2.3",
                 "status": "READY",
                 "url": f"http://{observed_host}:{observed_port}",
                 "provider_mode": provider_mode,
@@ -2729,9 +3740,52 @@ def self_test() -> JsonObject:
         ]
         for result in (demo_result, generic_result)
     )
+    checks["continuous_allocation_reaches_executable_program"] = all(
+        abs(
+            sum(
+                row["optimized_allocation_fraction"]
+                for row in result["mechanism"]["public_control_map"][
+                    "credit_rows"
+                ]
+            )
+            - 1.0
+        )
+        <= ALLOCATION_TOLERANCE
+        and sum(
+            row["inspection_budget_units"]
+            for row in result["mechanism"]["compiled_actuator"][
+                "inspection_plan"
+            ]["steps"]
+        )
+        == INSPECTION_BUDGET_UNITS
+        and result["mechanism"]["actuator_execution"]["status"]
+        == "COMPLETED"
+        and result["mechanism"]["actuator_execution"]["final_state"]
+        == "READY_FOR_PROVIDER"
+        and all(
+            result["mechanism"]["compiled_actuator"]["checks"].values()
+        )
+        and all(
+            result["mechanism"]["actuator_execution"]["checks"].values()
+        )
+        for result in (demo_result, generic_result)
+    )
+    checks["public_block_restore_dependency_is_scoped"] = all(
+        result["public_dependency_audit"]["structural_dependency_status"]
+        == "PASS"
+        and result["public_dependency_audit"]["provider_calls"] == 0
+        and not result["public_dependency_audit"]["hosted_output_regenerated"]
+        and result["public_dependency_audit"]["hosted_causality_status"]
+        == "NOT_ASSESSED"
+        and result["verification"]["counterfactual_output_effect_status"]
+        == "NOT_ASSESSED"
+        for result in (demo_result, generic_result)
+    )
     checks["claim_boundaries_remain_separate"] = all(
         result["verification"]["semantic_correctness_status"] == "NOT_ASSESSED"
         and result["verification"]["effect_attribution_status"] == "NOT_ASSESSED"
+        and result["verification"]["provider_uptake_status"]
+        == "NOT_ASSESSED"
         for result in (demo_result, generic_result)
     )
 
@@ -2741,6 +3795,12 @@ def self_test() -> JsonObject:
         except LiveRevisionError as error:
             return error.reason_code == reason_code
         return False
+
+    old_protocol = _clone(generic)
+    old_protocol["schema_version"] = "ebrt-live-apply-revision-request-v0.6.2.2"
+    checks["old_live_protocol_rejected_before_provider"] = rejected_with(
+        old_protocol, "REQUEST_SCHEMA_INVALID"
+    )
 
     forged_provenance = _clone(generic)
     forged_provenance["input_provenance"] = "CONTAMINATED_REGRESSION_FIXTURE"
@@ -2896,14 +3956,165 @@ def self_test() -> JsonObject:
     checks["controller_is_enum_order_invariant"] = (
         generic_control["actual_before_state"]["initial_scalar"]
         == reversed_control["actual_before_state"]["initial_scalar"]
-        and [row["reinspection_salience"] for row in generic_control["credit_rows"]]
-        == [row["reinspection_salience"] for row in reversed_control["credit_rows"]]
+        and [
+            row["optimized_allocation_fraction"]
+            for row in generic_control["credit_rows"]
+        ]
+        == [
+            row["optimized_allocation_fraction"]
+            for row in reversed_control["credit_rows"]
+        ]
     )
 
+    generic_actuator = _compile_actuator(
+        generic_request, generic_before, generic_control
+    )
+    generic_prior_payload = _build_prior_public_state(
+        generic_request, generic_before
+    )
+    generic_execution = _execute_actuator_program(
+        generic_request,
+        generic_actuator,
+        source_control_map_fingerprint_sha256=generic_control[
+            "fingerprint_sha256"
+        ],
+        source_prior_state_fingerprint_sha256=_fingerprint(
+            generic_prior_payload
+        ),
+    )
+    tampered_actuator = _clone(generic_actuator)
+    tampered_program = _without_fingerprint(tampered_actuator["program"])
+    tampered_reinspect_step = next(
+        row
+        for row in tampered_program["steps"]
+        if row["operation"] == "REINSPECT"
+    )
+    tampered_reinspect_step["evidence_id"] = "UNKNOWN-EVIDENCE"
+    tampered_actuator["program"] = _seal(tampered_program)
+    tampered_actuator = _seal(_without_fingerprint(tampered_actuator))
+    tampered_program_rejection = ""
+    try:
+        _execute_actuator_program(
+            generic_request,
+            tampered_actuator,
+            source_control_map_fingerprint_sha256=generic_control[
+                "fingerprint_sha256"
+            ],
+            source_prior_state_fingerprint_sha256=_fingerprint(
+                generic_prior_payload
+            ),
+        )
+    except LiveRevisionError as error:
+        tampered_program_rejection = error.reason_code
+    checks["tampered_actuator_program_rejected_before_provider"] = (
+        tampered_program_rejection
+        == "ACTUATOR_PROGRAM_MATERIALIZATION_INVALID"
+    )
     provider_payload = _build_provider_payload(
         generic_request,
         generic_before,
-        _compile_actuator(generic_request, generic_before, generic_control),
+        generic_prior_payload,
+        generic_control,
+        generic_actuator,
+        generic_execution,
+    )
+    resealed_actuator = _clone(generic_actuator)
+    resealed_plan_value = _without_fingerprint(
+        resealed_actuator["inspection_plan"]
+    )
+    for row, fraction, units in zip(
+        resealed_plan_value["steps"],
+        (0.6, 0.4),
+        (60, 40),
+        strict=True,
+    ):
+        row["controller_allocation_fraction"] = fraction
+        row["inspection_share"] = fraction
+        row["allocation_delta"] = fraction - 0.5
+        row["relative_emphasis"] = fraction * 2.0
+        row["review_depth"] = _review_depth(fraction * 2.0)
+        row["inspection_budget_units"] = units
+    resealed_plan = _seal(resealed_plan_value)
+    resealed_program = _seal(
+        {
+            "schema_version": "ebrt-live-public-revision-program-v0.6.2.3",
+            "state": "COMPILED",
+            "source_control_map_fingerprint_sha256": generic_control[
+                "fingerprint_sha256"
+            ],
+            "steps": _expected_program_steps(
+                correction_evidence_id=generic_request.event.correction_evidence_id,
+                suppress_evidence_ids=resealed_actuator[
+                    "suppress_evidence_ids"
+                ],
+                inspection_steps=resealed_plan["steps"],
+                preserve_evidence_ids=resealed_actuator[
+                    "preserve_evidence_ids"
+                ],
+            ),
+        }
+    )
+    resealed_actuator["inspection_plan"] = resealed_plan
+    resealed_actuator["program"] = resealed_program
+    resealed_actuator = _seal(_without_fingerprint(resealed_actuator))
+    resealed_execution = _execute_actuator_program(
+        generic_request,
+        resealed_actuator,
+        source_control_map_fingerprint_sha256=generic_control[
+            "fingerprint_sha256"
+        ],
+        source_prior_state_fingerprint_sha256=_fingerprint(
+            generic_prior_payload
+        ),
+    )
+    resealed_derivation_rejection = ""
+    try:
+        _build_provider_payload(
+            generic_request,
+            generic_before,
+            generic_prior_payload,
+            generic_control,
+            resealed_actuator,
+            resealed_execution,
+        )
+    except LiveRevisionError as error:
+        resealed_derivation_rejection = error.reason_code
+    checks["resealed_actuator_control_derivation_rejected_before_provider"] = (
+        resealed_derivation_rejection == "PROVIDER_ACTUATOR_BINDING_INVALID"
+    )
+    with mock.patch(f"{__name__}.STEP_SIZE", STEP_SIZE * 0.5):
+        magnitude_control = _derive_control_map(
+            generic_request, generic_before
+        )
+    magnitude_actuator = _compile_actuator(
+        generic_request, generic_before, magnitude_control
+    )
+    magnitude_execution = _execute_actuator_program(
+        generic_request,
+        magnitude_actuator,
+        source_control_map_fingerprint_sha256=magnitude_control[
+            "fingerprint_sha256"
+        ],
+        source_prior_state_fingerprint_sha256=_fingerprint(
+            generic_prior_payload
+        ),
+    )
+    magnitude_payload = _build_provider_payload(
+        generic_request,
+        generic_before,
+        generic_prior_payload,
+        magnitude_control,
+        magnitude_actuator,
+        magnitude_execution,
+    )
+    checks["continuous_magnitude_changes_provider_visible_allocation"] = (
+        magnitude_actuator["reinspect_evidence_ids"]
+        == generic_actuator["reinspect_evidence_ids"]
+        and magnitude_actuator["inspection_plan"]["steps"]
+        != generic_actuator["inspection_plan"]["steps"]
+        and magnitude_actuator["fingerprint_sha256"]
+        != generic_actuator["fingerprint_sha256"]
+        and _fingerprint(magnitude_payload) != _fingerprint(provider_payload)
     )
     permuted_provider_value = _clone(generic)
     for candidate in permuted_provider_value["candidate_closures"]:
@@ -2981,6 +4192,16 @@ def self_test() -> JsonObject:
         canonical_probe_permutation
     )
     opaque_ids = [row["closure_id"] for row in provider_payload["candidate_closures"]]
+    expected_graph_by_id = {
+        _opaque_closure_id("K", candidate.graph): _canonical_graph_value(
+            candidate.graph
+        )
+        for candidate in generic_request.candidate_closures
+    }
+    observed_graph_by_id = {
+        row["closure_id"]: row["graph"]
+        for row in provider_payload["candidate_closures"]
+    }
     checks["provider_closure_ids_are_server_opaque"] = (
         all(
             value.startswith("K_")
@@ -3002,14 +4223,7 @@ def self_test() -> JsonObject:
         == _canonical_graph_value(permuted_canonical_probe)
         and _opaque_closure_id("K", canonical_probe)
         == _opaque_closure_id("K", permuted_canonical_probe)
-        and all(
-            row["graph"] == _canonical_graph_value(candidate.graph)
-            for row, candidate in zip(
-                provider_payload["candidate_closures"],
-                generic_request.candidate_closures,
-                strict=True,
-            )
-        )
+        and observed_graph_by_id == expected_graph_by_id
     )
 
     forbidden_rejected = False
@@ -3269,7 +4483,7 @@ def self_test() -> JsonObject:
     )
     return _seal(
         {
-            "schema_version": "ebrt-live-self-test-v0.6.2.2",
+            "schema_version": "ebrt-live-self-test-v0.6.2.3",
             "status": "PASS",
             "checks": checks,
             "demo_result_fingerprint_sha256": demo_result["fingerprint_sha256"],

@@ -1,6 +1,6 @@
 # EBRT v0.6+ — Execution, Evaluation, and Orchestration Roadmap
 
-Status: **v0.6.0 PREFLIGHT PASS; v0.6.1 FIVE-CALL BLOCK COMPLETE, GATE HELD; v0.6.2.1 APPLY-REVISION LIVE R01 PRODUCT ACCEPTANCE PASS, EFFECT NOT ASSESSED; v0.6.2.2 CURRENT TYPED INVALIDATION-REVISION MONOLITH, SEMANTIC QUALITY AND EFFECT NOT ASSESSED; v0.6.3 LIVE R01 EXECUTED ONCE, STOP_OUTPUT_CONTRACT; v0.6.3.1 LIVE R01 COMPLETE, PROMOTE TO FRESH REPLICATION; v0.6.3.2 LIVE R01 COMPLETE, D/C REPEATED, X/Z CEILING STOP; v0.6.4 BLOCKED; REASONING IDE CONVERGENCE IN PROGRESS**
+Status: **v0.6.0 PREFLIGHT PASS; v0.6.1 FIVE-CALL BLOCK COMPLETE, GATE HELD; v0.6.2.1 APPLY-REVISION LIVE R01 PRODUCT ACCEPTANCE PASS, EFFECT NOT ASSESSED; RUNTIME PREVIEW 2 CONTINUOUS REVISION PROGRAM NETWORK-ZERO PASS, HOSTED UPTAKE NOT ASSESSED; v0.6.3 LIVE R01 EXECUTED ONCE, STOP_OUTPUT_CONTRACT; v0.6.3.1 LIVE R01 COMPLETE, PROMOTE TO FRESH REPLICATION; v0.6.3.2 LIVE R01 COMPLETE, D/C REPEATED, X/Z CEILING STOP; v0.6.4 BLOCKED; REASONING IDE CONVERGENCE IN PROGRESS**
 
 The one allowed v0.6.1 block ran on 2026-07-20 in the preregistered order
 `P -> A -> B -> D -> C`. All five calls completed and the committed artifact
@@ -368,6 +368,26 @@ unverified. The initial HTTP surface is loopback-only:
 This milestone closes the product-monolith convergence item. It does not open
 v0.6.4, answer the fresh matched-quality question reserved for v0.7, or convert
 the historical demo into independent evidence.
+
+### Runtime Preview 2 — Continuous Revision Program
+
+The live monolith now preserves the continuous controller output through the
+provider boundary instead of reducing it to a rank-only map. One projected
+float64 optimization step produces a simplex allocation, which is compiled
+into deterministic abstract inspection units, relative emphasis, review depth,
+and execution order. A local state machine validates and executes
+`LOAD_EVENT -> SUPPRESS* -> REINSPECT* -> PRESERVE* -> PREPARE`, then seals the
+single provider-visible operation.
+
+The selected public graph also receives a zero-call correction-mask probe. It
+can establish that changed fact lineage structurally depends on the correction
+inside that caller-supplied graph and that removing the mask reconstructs the
+baseline. It cannot establish a hosted counterfactual output effect.
+
+This is deliberately one-horizon control, not MPC. Provider uptake, semantic
+correctness, attention/token control, causal superiority, and output effect
+attribution remain `NOT_ASSESSED`. v0.6.4 remains blocked by its independent
+research gate.
 
 ## v0.6.3 — Provider Actuator Calibration Canary
 

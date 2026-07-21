@@ -168,17 +168,20 @@ passing public outputs. Raw arm A returned the correct `PROVE` answer but
 omitted R4 from `final_priority`. This is a real bridge and a useful control-
 channel null result, not evidence that gradient placement improves GPT.
 
-### v0.6.2.2 live Apply Revision runtime
+### EBRT Runtime Preview 2 — continuous Apply Revision program
 
 The current live product monolith is [`ebrt_live.py`](ebrt_live.py). It accepts
 a typed public invalidation-revision request containing the case and ordered
 evidence, an already emitted Before state and its selected closure graph, a typed late event,
 and at least two structurally distinct After closure candidates. It validates
 that public surface as a single-late-event horizon (the declared correction
-must be the final visible evidence), runs one local float64 `backward()` to rank reinspection
-salience, then combines that ranking with typed-event `Suppress / Preserve`
-operations. Candidate IDs are remapped to server-generated opaque hashes before
-exactly one After provider attempt for each new request identity.
+must be the final visible evidence), then runs one projected float64
+`backward()` step over a continuous public inspection allocation. That
+allocation is compiled into a fixed abstract review budget, ordered
+`Reinspect` steps, and typed-event `Suppress / Preserve` steps. A deterministic
+state machine executes and seals the complete public revision program before
+candidate IDs are remapped to server-generated opaque hashes and exactly one
+After provider attempt is allowed for each new request identity.
 
 This is a new operational runtime, not a mutable continuation of the sealed
 acceptance runner. Root [`ebrt.py`](ebrt.py), its v0.6.2.1 policy surface, and
@@ -221,7 +224,7 @@ self-consistent embedded hash. Its envelope seals the exact request. Before the
 Live UI renders a result, it recomputes that request fingerprint, binds response
 provenance back to the envelope, verifies the API response-body SHA-256,
 recomputes the live response self-seal without normalizing away numeric lexemes, and
-enforces the pinned 12-row operational status graph plus two exact
+enforces the pinned operational status graph plus two exact
 `NOT_ASSESSED` rows. These hashes are integrity/correlation checks inside the
 trusted loopback deployment, not signatures or remote-server authentication.
 Request IDs terminally bind both successful and failed attempts; provider
@@ -232,10 +235,22 @@ again; the service safely rejects new identities if the compact ledger fills.
 Provider credentials, raw
 receipts, reserved gold fields, and private reasoning never enter the public
 response. Local public-surrogate objectives, gradients, finite-difference
-diagnostics, and salience values are intentionally returned as Inspector data;
-they are not provider-private gradients or losses and never enter provider input.
+diagnostics, and continuous allocations are intentionally returned as Inspector
+data. Only the compiled public review allocation—not gradients, losses, or
+source effects—enters provider input. Inspection units are not provider tokens
+or attention weights, and provider uptake remains `NOT_ASSESSED`. A zero-call
+block/restore probe additionally checks dependency only on the selected public
+graph; hosted counterfactual effects remain `NOT_ASSESSED`.
 See
-[`RND_LIVE_APPLY_REVISION_RUNTIME_V0_6_2_2.md`](docs/RND_LIVE_APPLY_REVISION_RUNTIME_V0_6_2_2.md).
+[`RND_CONTINUOUS_REVISION_PROGRAM_V0_6_2_3.md`](docs/RND_CONTINUOUS_REVISION_PROGRAM_V0_6_2_3.md).
+
+After the full network-zero and Inspector gates passed, one explicit no-retry
+GPT-5.6 delivery canary exercised the v0.6.2.3 payload. It completed one API
+attempt in 6.32 seconds with 2,820 input and 150 output tokens, returned
+`POLISH -> PROVE`, and passed actuator execution, provider delivery, public
+structural dependency, and operational acceptance. The fixture is contaminated
+and the run is not a matched contrast: provider uptake, semantic quality, and
+effect attribution remain `NOT_ASSESSED`.
 
 ### v0.6.2.1 immutable Apply Revision acceptance
 
@@ -658,7 +673,7 @@ policy_lock_hosted_bundle_v0_6.json frozen source, runtime, order, endpoint, and
 fixtures/hosted_bundle_projection_v0_6.json contaminated projection and matched-control fixture
 fixtures/hosted_bundle_lineage_gold_v0_6.json post-call-only exact lineage gold
 ebrt.py                       immutable v0.6.2.1 two-call acceptance runner and artifact validator
-ebrt_live.py                  current v0.6.2.2 typed invalidation-revision monolith and loopback API
+ebrt_live.py                  current Runtime Preview 2 continuous revision-program monolith and loopback API
 actuator_uptake_canary_v0_6_3_1.py discrete closure-choice uptake preflight monolith
 verify_actuator_uptake_canary_v0_6_3_1_portable.py pure-stdlib exact-byte and tamper verifier
 policy_lock_actuator_uptake_canary_v0_6_3_1.json zero-call source, runtime, order, and claim lock
@@ -1621,6 +1636,8 @@ retrospectively relabeling failures. See the
 | The v0.6.2.1 Reasoning IDE performs a new model call when replayed | No; it verifies and animates an exact hash-pinned public projection of the recorded artifact, and the replay CTA issues zero provider requests |
 | v0.6.2.2 exposes Apply Revision as a live reusable product operation | Yes, operationally within typed invalidation revisions: `ebrt_live.py` validates a strict public request, uses one local float64 backward pass to rank reinspection salience, compiles typed-event suppression/preservation, server-remaps closure IDs, and terminally binds at most one no-retry After attempt to each request identity |
 | A v0.6.2.2 operational `PASS` establishes semantic correctness or control efficacy | No; live verification covers request, mechanism, lineage, provider, and accounting contracts only. Semantic quality and effect attribution are both `NOT_ASSESSED` |
+| Runtime Preview 2 makes the public control continuous and executable | Yes, operationally: one projected allocation step changes provider-visible review shares and abstract budget units, then a validated state machine emits the exact one-call revision operation |
+| Runtime Preview 2 proves provider uptake, attention control, token-budget control, or a counterfactual output effect | No; those axes remain `NOT_ASSESSED`. Its block/restore probe establishes only structural dependency inside the selected caller-supplied public graph |
 | v0.6.3-live-r01 establishes a null provider actuator | No; it stopped after one completed call on `EXACT_ONE_CLOSURE_FAILED`, with 15 calls unattempted and all X/Z and D/C effects not assessed |
 | v0.6.3.1-live-r01 observed a non-zero public endpoint difference | Yes, narrowly: one authorized `C -> X -> D -> Z` block completed 4/4 calls; X and D selected the aligned closure while C selected the alternative and Z the mixed closure, yielding `CHANNEL_OPEN_DIRECTIONAL` and `GRADIENT_PLACEMENT_DIRECTIONAL` |
 | The v0.6.3.1-live-r01 result establishes evidence-order causality or quality improvement | No; evidence order was the sole intentionally varying semantic payload field, but the one fixed serial block cannot separate treatment from temporal/provider drift, and all arms returned the same public answer `VIOLET` |
