@@ -583,6 +583,12 @@ improvement, population reliability, hidden-state/attention/KV editing, or a
 v0.6.4 live launch. This is the final actuator-replication block before the
 project returns to the Reasoning IDE and submission surface.
 
+The separate
+[`v0.6.3.2-live-r01 authorization protocol`](RND_ACTUATOR_UPTAKE_REPLICATION_V0_6_3_2_LIVE_R01.md)
+freezes the exact eight-call runner, delayed-gold barrier, unique attempt-key
+contract, and annotated-tag gate. It contains no hosted result and does not
+authorize v0.6.4 live use.
+
 ## v0.6.4 — Scaffold Aperture
 
 Proceed only if a separately sealed fresh replication confirms the observed
@@ -743,7 +749,7 @@ control. Novelty is not allowed to rescue a failed v0.6-v0.8 endpoint.
 | v0.6.2 | a judge-readable, reproducible Reasoning IDE workflow | a final frontend or a population-level algorithm claim |
 | v0.6.3 | the hosted provider observably consumes one bounded public actuator and gradient placement differs directionally from its matched anti-placement construct control | that the changed output is better or that placement generalizes |
 | v0.6.3.1 | in a separately authorized four-call canary, public selected-closure endpoints differ across the position-only payloads and gradient placement differs directionally from matched anti-placement | quality improvement, causality, population reliability, or direct promotion to v0.6.4; success opens only fresh replication |
-| v0.6.3.2 | on one fresh sealed case, the preregistered X/Z and D/C closure pattern repeats in both pairwise serial-position-counterbalanced blocks | causality, quality improvement, population reliability, a second independent fresh case, or permission for v0.6.4 live execution |
+| v0.6.3.2 | on one synthetic case fresh relative to the frozen v0.6.3.1 predecessor, the preregistered X/Z and D/C closure pattern repeats in both pairwise serial-position-counterbalanced blocks | causality, quality improvement, population reliability, an independently sampled case, or permission for v0.6.4 live execution |
 | v0.6.4 | scaffold density moderates that fixed actuator under a matched aperture experiment | that partial scaffolds or the actuator generalize |
 | v0.7 | a paired effect on one fresh frozen hosted suite | provider- or task-general superiority |
 | v0.8 | independently executed same-model public lanes can be sealed before outcome and composed into one regeneration | autonomous agents, heterogeneous superiority, or optimal routing |

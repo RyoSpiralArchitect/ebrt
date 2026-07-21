@@ -330,6 +330,13 @@ reliability, hidden-state editing, or permission for a v0.6.4 live run. See the
 [`v0.6.3.2 protocol`](docs/RND_ACTUATOR_UPTAKE_REPLICATION_V0_6_3_2.md) and
 [`network-zero artifact`](artifacts/actuator_uptake_replication_v0_6_3_2_preflight/).
 
+The separately reviewed live-r01 authorization surface is frozen in the
+[`eight-call live protocol`](docs/RND_ACTUATOR_UPTAKE_REPLICATION_V0_6_3_2_LIVE_R01.md),
+[`runner`](run_actuator_uptake_replication_v0_6_3_2_live_r01.py), and
+[`policy lock`](policy_lock_actuator_uptake_replication_v0_6_3_2_live_r01.json).
+They authorize no call until the exact annotated
+`v0.6.3.2-live-r01-authorized` tag exists; no hosted result is claimed here.
+
 > [!IMPORTANT]
 > v0.1-v0.3.1 are **not** a Transformer implementation, a GPT latent-state
 > editor, or evidence of improved language-model accuracy. v0.4 meaningfully
