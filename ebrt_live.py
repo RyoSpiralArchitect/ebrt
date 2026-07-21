@@ -88,6 +88,7 @@ MAX_SLOTS = 32
 MAX_CANDIDATES = 16
 MAX_SUPPORTS = 128
 MAX_IDEMPOTENCY_ENTRIES = 128
+MAX_COMPACT_TOMBSTONES = 65_536
 
 ALLOWED_ORIGINS = frozenset(
     {
@@ -565,6 +566,10 @@ def _validate_request_cross_fields(request: LiveRevisionRequest) -> None:
     _require(
         before_ids == evidence_ids[:correction_position],
         "BEFORE_HORIZON_MUST_BE_EXACT_PRE_EVENT_PREFIX",
+    )
+    _require(
+        correction_position == len(evidence_ids) - 1,
+        "CORRECTION_MUST_TERMINATE_VISIBLE_HORIZON",
     )
     _require(
         set(event.invalidated_evidence_ids) <= set(before_ids),
@@ -2127,7 +2132,9 @@ def capabilities_value(*, provider_mode: str) -> JsonObject:
             "max_concurrent_provider_executions": 1,
             "provider_attempts_per_uncached_request": 1,
             "automatic_retries": 0,
-            "terminal_idempotency_capacity": MAX_IDEMPOTENCY_ENTRIES,
+            "terminal_result_cache_capacity": MAX_IDEMPOTENCY_ENTRIES,
+            "compact_tombstone_capacity": MAX_COMPACT_TOMBSTONES,
+            "evicted_identity_reexecution": False,
         },
         "operation_scope": "TYPED_INVALIDATION_REVISION",
         "gradient_boundary": "public control map",
@@ -2147,15 +2154,30 @@ class RevisionService:
         provider_factory: ProviderFactory,
         *,
         provider_mode: Literal["openai", "scripted"],
+        terminal_cache_capacity: int = MAX_IDEMPOTENCY_ENTRIES,
+        compact_tombstone_capacity: int = MAX_COMPACT_TOMBSTONES,
     ) -> None:
+        _require(
+            terminal_cache_capacity > 0,
+            "TERMINAL_CACHE_CAPACITY_INVALID",
+            http_status=500,
+        )
+        _require(
+            compact_tombstone_capacity >= terminal_cache_capacity,
+            "COMPACT_TOMBSTONE_CAPACITY_INVALID",
+            http_status=500,
+        )
         self.provider_factory = provider_factory
         self.provider_mode = provider_mode
         self.engine = EBRTRevisionEngine()
+        self.terminal_cache_capacity = terminal_cache_capacity
+        self.compact_tombstone_capacity = compact_tombstone_capacity
         self._gate = threading.BoundedSemaphore(1)
         self._lock = threading.Lock()
         self._terminal: OrderedDict[
             str, tuple[str, Literal["success", "error"], JsonObject, int]
         ] = OrderedDict()
+        self._spent: dict[str, str] = {}
         self._inflight: dict[str, str] = {}
         self.provider_attempts_started = 0
 
@@ -2164,6 +2186,9 @@ class RevisionService:
         return self.provider_mode == "scripted" or bool(os.environ.get("OPENAI_API_KEY"))
 
     def health(self) -> JsonObject:
+        with self._lock:
+            terminal_results_cached = len(self._terminal)
+            spent_identities = len(self._spent)
         return {
             "schema_version": "ebrt-live-health-v0.6.2.2",
             "status": "READY" if self.provider_configured else "PROVIDER_UNCONFIGURED",
@@ -2171,7 +2196,32 @@ class RevisionService:
             "provider_configured": self.provider_configured,
             "model": MODEL if self.provider_mode == "openai" else "SCRIPTED_TEST_ONLY",
             "credentials_exposed": False,
+            "idempotency": {
+                "terminal_results_cached": terminal_results_cached,
+                "spent_identities": spent_identities,
+                "terminal_result_cache_capacity": self.terminal_cache_capacity,
+                "compact_tombstone_capacity": self.compact_tombstone_capacity,
+            },
         }
+
+    def _store_terminal_locked(
+        self,
+        request_id: str,
+        fingerprint: str,
+        terminal_kind: Literal["success", "error"],
+        value: JsonObject,
+        http_status: int,
+    ) -> None:
+        self._spent[request_id] = fingerprint
+        self._terminal[request_id] = (
+            fingerprint,
+            terminal_kind,
+            _clone(value),
+            http_status,
+        )
+        self._terminal.move_to_end(request_id)
+        while len(self._terminal) > self.terminal_cache_capacity:
+            self._terminal.popitem(last=False)
 
     def apply(self, request_value: Mapping[str, Any]) -> tuple[JsonObject, bool]:
         request = validate_request_mapping(request_value)
@@ -2186,11 +2236,24 @@ class RevisionService:
                     "IDEMPOTENCY_KEY_CONFLICT",
                     http_status=409,
                 )
+                self._terminal.move_to_end(request_id)
                 if terminal[1] == "success":
                     return _clone(terminal[2]), True
                 raise LiveRevisionError(
                     str(terminal[2]["error"]["code"]),
                     http_status=terminal[3],
+                    idempotent_replay=True,
+                )
+            spent_fingerprint = self._spent.get(request_id)
+            if spent_fingerprint is not None:
+                _require(
+                    spent_fingerprint == fingerprint,
+                    "IDEMPOTENCY_KEY_CONFLICT",
+                    http_status=409,
+                )
+                raise LiveRevisionError(
+                    "IDEMPOTENCY_RESULT_EVICTED",
+                    http_status=410,
                     idempotent_replay=True,
                 )
             inflight = self._inflight.get(request_id)
@@ -2203,13 +2266,12 @@ class RevisionService:
                 raise LiveRevisionError(
                     "REQUEST_ALREADY_IN_FLIGHT", http_status=409
                 )
-            if not self._gate.acquire(blocking=False):
-                raise LiveRevisionError("PROVIDER_BUSY", http_status=429)
-            if len(self._terminal) >= MAX_IDEMPOTENCY_ENTRIES:
-                self._gate.release()
+            if len(self._spent) >= self.compact_tombstone_capacity:
                 raise LiveRevisionError(
                     "IDEMPOTENCY_CAPACITY_EXHAUSTED", http_status=503
                 )
+            if not self._gate.acquire(blocking=False):
+                raise LiveRevisionError("PROVIDER_BUSY", http_status=429)
             self._inflight[request_id] = fingerprint
             self.provider_attempts_started += 1
         try:
@@ -2220,7 +2282,8 @@ class RevisionService:
                 http_status=error.http_status,
             )
             with self._lock:
-                self._terminal[request_id] = (
+                self._store_terminal_locked(
+                    request_id,
                     fingerprint,
                     "error",
                     _error_value(terminal_error),
@@ -2234,7 +2297,8 @@ class RevisionService:
                 "INTERNAL_SERVER_ERROR", http_status=500
             )
             with self._lock:
-                self._terminal[request_id] = (
+                self._store_terminal_locked(
+                    request_id,
                     fingerprint,
                     "error",
                     _error_value(terminal_error),
@@ -2244,10 +2308,11 @@ class RevisionService:
                 self._gate.release()
             raise terminal_error from None
         with self._lock:
-            self._terminal[request_id] = (
+            self._store_terminal_locked(
+                request_id,
                 fingerprint,
                 "success",
-                _clone(response),
+                response,
                 200,
             )
             self._inflight.pop(request_id, None)
@@ -2668,12 +2733,23 @@ def self_test() -> JsonObject:
     duplicate_catalog["candidate_closures"][1]["graph"] = _clone(
         duplicate_catalog["candidate_closures"][0]["graph"]
     )
+    future_evidence = _clone(generic)
+    future_evidence["all_raw_evidence"].append(
+        {
+            "evidence_id": "E-future",
+            "text": "A second untyped event outside the declared revision horizon.",
+        }
+    )
     checks["temporal_prefix_and_duplicate_catalog_rejected"] = (
         rejected_with(
             prefix_violation,
             "BEFORE_HORIZON_MUST_BE_EXACT_PRE_EVENT_PREFIX",
         )
         and rejected_with(duplicate_catalog, "CANDIDATE_GRAPH_DUPLICATE")
+        and rejected_with(
+            future_evidence,
+            "CORRECTION_MUST_TERMINATE_VISIBLE_HORIZON",
+        )
     )
 
     extra_invalidation = _clone(generic)
@@ -2850,6 +2926,43 @@ def self_test() -> JsonObject:
             ("SCRIPTED_PROVIDER_FAILURE", False),
             ("SCRIPTED_PROVIDER_FAILURE", True),
         ]
+    )
+
+    lru_service = RevisionService(
+        ScriptedLiveRevisionProvider,
+        provider_mode="scripted",
+        terminal_cache_capacity=2,
+        compact_tombstone_capacity=8,
+    )
+    lru_requests: list[JsonObject] = []
+    with _network_denied() as lru_network:
+        for index in range(3):
+            request_value = _clone(generic)
+            request_value["request_id"] = f"lru-request-{index:02d}"
+            lru_requests.append(request_value)
+            lru_service.apply(request_value)
+        evicted_error: LiveRevisionError | None = None
+        try:
+            lru_service.apply(lru_requests[0])
+        except LiveRevisionError as error:
+            evicted_error = error
+        fourth_request = _clone(generic)
+        fourth_request["request_id"] = "lru-request-03"
+        lru_service.apply(fourth_request)
+        repeated_fourth, repeated_fourth_is_replay = lru_service.apply(
+            fourth_request
+        )
+    checks["terminal_results_lru_without_identity_reexecution"] = (
+        lru_network["network_calls"] == 0
+        and evicted_error is not None
+        and evicted_error.reason_code == "IDEMPOTENCY_RESULT_EVICTED"
+        and evicted_error.http_status == 410
+        and evicted_error.idempotent_replay
+        and lru_service.provider_attempts_started == 4
+        and len(lru_service._terminal) == 2
+        and len(lru_service._spent) == 4
+        and repeated_fourth_is_replay
+        and repeated_fourth["request_id"] == fourth_request["request_id"]
     )
 
     provider_started = threading.Event()

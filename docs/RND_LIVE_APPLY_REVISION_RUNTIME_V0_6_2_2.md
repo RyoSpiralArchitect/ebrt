@@ -87,9 +87,15 @@ causal necessity, quality improvement, or general reasoning improvement.
 `request_id` is the idempotency key. Repeating the same identity and canonical
 request returns the same terminal success or sanitized terminal error; a
 different canonical request conflicts, and an in-flight duplicate never starts
-another attempt. The session retains up to 128 terminal identities without
-eviction, then rejects new identities instead of risking a repeated old call.
-SDK and application retries are zero, and new provider execution is serialized.
+another attempt. The session keeps complete terminal results in a 128-entry LRU
+cache and separately retains compact request fingerprints for up to 65,536
+spent identities. A repeated identity whose complete result was evicted returns
+`410 IDEMPOTENCY_RESULT_EVICTED` without provider execution, while new identities
+continue normally. Once the compact ledger fills, the service safely rejects
+new identities rather than risking an old call being repeated. SDK and
+application retries are zero, and new provider execution is serialized. This
+ledger is process-local in v0.6.2.2; durable multi-process idempotency is outside
+the loopback runtime's declared surface.
 
 ## CLI and loopback API
 
@@ -143,9 +149,10 @@ comparison, accuracy result, or population estimate.
 ## Adversarial contract checks
 
 The network-zero self-test covers enum-order invariance of the salience map,
-exact pre-event horizon binding, duplicate candidate rejection, exact
+exact single-late-event horizon binding, duplicate candidate rejection, exact
 invalidation transitions, inherited invalidation preservation, fact-local
 correction binding, server-opaque provider IDs, one-call failure tombstones,
+terminal-result LRU eviction without identity reexecution,
 concurrent same-ID suppression, the publication-pinned demo source, sealed demo
 envelope, and API response-body digest. The historical `ebrt.py` byte lock and
 the recorded Inspector projection are checked independently. A headless-browser

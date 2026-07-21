@@ -174,7 +174,8 @@ The current live product monolith is [`ebrt_live.py`](ebrt_live.py). It accepts
 a typed public invalidation-revision request containing the case and ordered
 evidence, an already emitted Before state and its selected closure graph, a typed late event,
 and at least two structurally distinct After closure candidates. It validates
-that public surface, runs one local float64 `backward()` to rank reinspection
+that public surface as a single-late-event horizon (the declared correction
+must be the final visible evidence), runs one local float64 `backward()` to rank reinspection
 salience, then combines that ranking with typed-event `Suppress / Preserve`
 operations. Candidate IDs are remapped to server-generated opaque hashes before
 exactly one After provider attempt for each new request identity.
@@ -223,7 +224,11 @@ enforces the pinned 12-row operational status graph plus two exact
 `NOT_ASSESSED` rows. These hashes are integrity/correlation checks inside the
 trusted loopback deployment, not signatures or remote-server authentication.
 Request IDs terminally bind both successful and failed attempts; provider
-retries are disabled. Provider credentials, raw
+retries are disabled. The session keeps 128 complete terminal responses in an
+LRU cache plus compact fingerprints for up to 65,536 spent identities. An
+identity whose full result has been evicted returns `410` and is never executed
+again; the service safely rejects new identities if the compact ledger fills.
+Provider credentials, raw
 receipts, reserved gold fields, and private reasoning never enter the public
 response. Local public-surrogate objectives, gradients, finite-difference
 diagnostics, and salience values are intentionally returned as Inspector data;
