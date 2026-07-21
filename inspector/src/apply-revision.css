@@ -212,7 +212,7 @@ code { font-family: var(--ar-mono); }
   100% { opacity: 1; transform: translateY(0); }
 }
 
-@media (max-width: 1179px) {
+@media (max-width: 1215px) {
   .ar-shell { grid-template-rows: auto auto minmax(0, 1fr) auto auto; }
   .ar-header { min-height: 64px; grid-template-columns: 1fr auto; gap: 10px; padding: 10px 18px; }
   .ar-case-line { grid-column: 1 / -1; grid-row: 2; justify-content: flex-start; }
