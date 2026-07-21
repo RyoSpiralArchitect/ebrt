@@ -209,13 +209,31 @@ This is product acceptance only: `effect_attribution_status` remains
 answer.
 
 Revalidate the immutable publication without importing EBRT, Torch, Pydantic,
-or the OpenAI SDK:
+or the OpenAI SDK. Full provenance validation requires the published annotated
+authorization tag; fetch it once if the checkout does not already have it:
+
+```bash
+git fetch origin tag v0.6.2.1-apply-revision-live-r01-authorized
+```
+
+Then run:
 
 ```bash
 python3 -I -S verify_apply_revision_acceptance_v0_6_2_1_live_r01.py \
   artifacts/apply_revision_acceptance_v0_6_2_1_live_r01
 python3 -I -S verify_apply_revision_acceptance_v0_6_2_1_live_r01.py \
   --self-test artifacts/apply_revision_acceptance_v0_6_2_1_live_r01
+```
+
+For a tag-free archive or foreign-root copy, pass `--no-git` to either command.
+All locked source receipts remain mandatory, while annotated-tag authorization
+is explicitly reported as not assessed:
+
+```bash
+python3 -I -S verify_apply_revision_acceptance_v0_6_2_1_live_r01.py \
+  --no-git artifacts/apply_revision_acceptance_v0_6_2_1_live_r01
+python3 -I -S verify_apply_revision_acceptance_v0_6_2_1_live_r01.py \
+  --self-test --no-git artifacts/apply_revision_acceptance_v0_6_2_1_live_r01
 ```
 
 The [`recorded Reasoning IDE`](inspector/README.md) consumes a separate,
