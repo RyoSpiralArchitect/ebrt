@@ -765,6 +765,248 @@ def _validate_gold(gold: Mapping[str, Any], fixture: Mapping[str, Any]) -> None:
     _unique_strings(gold.get("claim_boundary"), label="gold claim boundary")
 
 
+def _portable_classify_block(
+    z_id: str,
+    c_id: str,
+    d_id: str,
+    x_id: str,
+    *,
+    target: str,
+    candidate_ids: frozenset[str],
+) -> tuple[str, str, str]:
+    """Independently classify one complete four-arm closure assignment."""
+
+    selected = {"Z": z_id, "C": c_id, "D": d_id, "X": x_id}
+    _require(
+        all(value in candidate_ids for value in selected.values()),
+        "portable classifier received an unknown closure ID",
+    )
+    _require(target in candidate_ids, "portable classifier target is unknown")
+
+    if z_id == target and x_id == target:
+        positive = "POSITIVE_CONTROL_CEILING"
+    elif z_id != target and x_id == target:
+        positive = "CHANNEL_OPEN_DIRECTIONAL"
+    elif z_id == x_id:
+        positive = "ACTUATOR_CHANNEL_INERT"
+    elif z_id == target and x_id != target:
+        positive = "CHANNEL_OPEN_ADVERSE"
+    else:
+        positive = "CHANNEL_OPEN_DIRECTION_AMBIGUOUS"
+
+    if c_id == target and d_id == target:
+        placement = "D_C_TARGET_CEILING"
+    elif d_id == target and c_id != target:
+        placement = "GRADIENT_PLACEMENT_DIRECTIONAL"
+    elif c_id == d_id:
+        placement = "GRADIENT_PLACEMENT_NULL"
+    elif c_id == target and d_id != target:
+        placement = "GRADIENT_PLACEMENT_ADVERSE"
+    else:
+        placement = "GRADIENT_PLACEMENT_AMBIGUOUS"
+
+    if (
+        positive == "CHANNEL_OPEN_DIRECTIONAL"
+        and placement == "GRADIENT_PLACEMENT_DIRECTIONAL"
+    ):
+        terminal = "BLOCK_DIRECTIONAL"
+    elif positive == "POSITIVE_CONTROL_CEILING":
+        terminal = "STOP_POSITIVE_CONTROL_CEILING_NOT_ASSESSED"
+    elif positive == "ACTUATOR_CHANNEL_INERT":
+        terminal = "STOP_CHANNEL_INERT"
+    elif positive == "CHANNEL_OPEN_DIRECTION_AMBIGUOUS":
+        terminal = "STOP_CHANNEL_AMBIGUOUS"
+    elif positive == "CHANNEL_OPEN_ADVERSE":
+        terminal = "STOP_CHANNEL_ADVERSE"
+    elif placement == "D_C_TARGET_CEILING":
+        terminal = "STOP_PLACEMENT_CEILING_NOT_ASSESSED"
+    elif placement == "GRADIENT_PLACEMENT_NULL":
+        terminal = "STOP_PLACEMENT_NULL"
+    elif placement == "GRADIENT_PLACEMENT_AMBIGUOUS":
+        terminal = "STOP_PLACEMENT_AMBIGUOUS"
+    else:
+        terminal = "STOP_PLACEMENT_ADVERSE"
+    return positive, placement, terminal
+
+
+def _portable_aggregate_contrast(statuses: Sequence[str]) -> str:
+    """Independently reduce two per-block contrast statuses."""
+
+    _require(len(statuses) == 2, "portable aggregate block count drifted")
+    directional_count = sum(status.endswith("DIRECTIONAL") for status in statuses)
+    if directional_count == 2:
+        return "REPLICATED_DIRECTIONAL"
+    if directional_count == 1:
+        return "MIXED"
+    if statuses[0] != statuses[1]:
+        return "HETEROGENEOUS_NON_DIRECTIONAL"
+    suffix = {
+        "POSITIVE_CONTROL_CEILING": "REPLICATED_CEILING",
+        "ACTUATOR_CHANNEL_INERT": "REPLICATED_NULL",
+        "CHANNEL_OPEN_ADVERSE": "REPLICATED_ADVERSE",
+        "CHANNEL_OPEN_DIRECTION_AMBIGUOUS": "REPLICATED_AMBIGUOUS",
+        "D_C_TARGET_CEILING": "REPLICATED_CEILING",
+        "GRADIENT_PLACEMENT_NULL": "REPLICATED_NULL",
+        "GRADIENT_PLACEMENT_ADVERSE": "REPLICATED_ADVERSE",
+        "GRADIENT_PLACEMENT_AMBIGUOUS": "REPLICATED_AMBIGUOUS",
+    }
+    _require(statuses[0] in suffix, "portable aggregate status is unknown")
+    return suffix[statuses[0]]
+
+
+def _portable_aggregate_terminal(positive: str, placement: str) -> str:
+    """Independently apply the strict two-block terminal precedence."""
+
+    statuses = {positive, placement}
+    if statuses == {"REPLICATED_DIRECTIONAL"}:
+        return "REPLICATION_DIRECTIONAL_COUNTERBALANCED"
+    if "MIXED" in statuses:
+        return "STOP_REPLICATION_MIXED"
+    if "REPLICATED_ADVERSE" in statuses:
+        return "STOP_REPLICATION_ADVERSE"
+    if statuses & {"REPLICATED_AMBIGUOUS", "HETEROGENEOUS_NON_DIRECTIONAL"}:
+        return "STOP_REPLICATION_AMBIGUOUS"
+    if "REPLICATED_CEILING" in statuses:
+        return "STOP_REPLICATION_CEILING_NOT_ASSESSED"
+    return "STOP_REPLICATION_NULL"
+
+
+def _verify_classifier_contract(
+    fixture: Mapping[str, Any], gold: Mapping[str, Any]
+) -> dict[str, Any]:
+    """Exhaustively verify the sealed classifier contract without the producer."""
+
+    candidate_ids = tuple(
+        str(row["closure_id"]) for row in fixture["case"]["candidate_closures"]
+    )
+    candidate_set = frozenset(candidate_ids)
+    _require(
+        len(candidate_ids) == 4 and len(candidate_set) == 4,
+        "portable classifier requires exactly four unique closures",
+    )
+    target = str(gold["gradient_target_closure_id"])
+    _require(target in candidate_set, "portable classifier target drifted")
+
+    block_status_pairs: list[tuple[str, str]] = []
+    block_terminals: set[str] = set()
+    directional_blocks = 0
+    for z_id in candidate_ids:
+        for c_id in candidate_ids:
+            for d_id in candidate_ids:
+                for x_id in candidate_ids:
+                    positive, placement, terminal = _portable_classify_block(
+                        z_id,
+                        c_id,
+                        d_id,
+                        x_id,
+                        target=target,
+                        candidate_ids=candidate_set,
+                    )
+                    block_status_pairs.append((positive, placement))
+                    block_terminals.add(terminal)
+                    directional_blocks += terminal == "BLOCK_DIRECTIONAL"
+
+    expected_block_terminals = {
+        "BLOCK_DIRECTIONAL",
+        "STOP_POSITIVE_CONTROL_CEILING_NOT_ASSESSED",
+        "STOP_CHANNEL_INERT",
+        "STOP_CHANNEL_AMBIGUOUS",
+        "STOP_CHANNEL_ADVERSE",
+        "STOP_PLACEMENT_CEILING_NOT_ASSESSED",
+        "STOP_PLACEMENT_NULL",
+        "STOP_PLACEMENT_AMBIGUOUS",
+        "STOP_PLACEMENT_ADVERSE",
+    }
+    _require(
+        len(block_status_pairs) == 256,
+        "portable per-block classifier space is incomplete",
+    )
+    _require(
+        block_terminals == expected_block_terminals,
+        "portable per-block terminal coverage drifted",
+    )
+    _require(
+        directional_blocks == 9,
+        "portable per-block directional cardinality drifted",
+    )
+
+    aggregate_statuses = (
+        "REPLICATED_DIRECTIONAL",
+        "MIXED",
+        "REPLICATED_CEILING",
+        "REPLICATED_NULL",
+        "REPLICATED_ADVERSE",
+        "REPLICATED_AMBIGUOUS",
+        "HETEROGENEOUS_NON_DIRECTIONAL",
+    )
+    expected_aggregate_terminals = {
+        "REPLICATION_DIRECTIONAL_COUNTERBALANCED",
+        "STOP_REPLICATION_MIXED",
+        "STOP_REPLICATION_ADVERSE",
+        "STOP_REPLICATION_AMBIGUOUS",
+        "STOP_REPLICATION_CEILING_NOT_ASSESSED",
+        "STOP_REPLICATION_NULL",
+    }
+    aggregate_terminals = {
+        _portable_aggregate_terminal(positive, placement)
+        for positive in aggregate_statuses
+        for placement in aggregate_statuses
+    }
+    _require(
+        len(aggregate_statuses) ** 2 == 49,
+        "portable aggregate status-pair space drifted",
+    )
+    _require(
+        aggregate_terminals == expected_aggregate_terminals,
+        "portable aggregate terminal precedence drifted",
+    )
+
+    aggregate_closure_terminals: set[str] = set()
+    aggregate_successes = 0
+    for left in block_status_pairs:
+        for right in block_status_pairs:
+            positive = _portable_aggregate_contrast((left[0], right[0]))
+            placement = _portable_aggregate_contrast((left[1], right[1]))
+            terminal = _portable_aggregate_terminal(positive, placement)
+            aggregate_closure_terminals.add(terminal)
+            is_success = terminal == "REPLICATION_DIRECTIONAL_COUNTERBALANCED"
+            strict_and = left == (
+                "CHANNEL_OPEN_DIRECTIONAL",
+                "GRADIENT_PLACEMENT_DIRECTIONAL",
+            ) and right == (
+                "CHANNEL_OPEN_DIRECTIONAL",
+                "GRADIENT_PLACEMENT_DIRECTIONAL",
+            )
+            _require(
+                is_success == strict_and,
+                "portable aggregate success escaped the strict two-block AND gate",
+            )
+            aggregate_successes += is_success
+
+    aggregate_closure_pairs = len(block_status_pairs) ** 2
+    _require(
+        aggregate_closure_pairs == 65536,
+        "portable aggregate closure-pair space is incomplete",
+    )
+    _require(
+        aggregate_closure_terminals == expected_aggregate_terminals,
+        "portable aggregate closure-pair terminal coverage drifted",
+    )
+    _require(
+        aggregate_successes == 81,
+        "portable aggregate directional cardinality drifted",
+    )
+    return {
+        "per_block_classifier_combinations_verified": len(block_status_pairs),
+        "per_block_directional_combinations_verified": directional_blocks,
+        "aggregate_status_pairs_verified": len(aggregate_statuses) ** 2,
+        "aggregate_closure_block_pairs_verified": aggregate_closure_pairs,
+        "aggregate_success_combinations_verified": aggregate_successes,
+        "per_block_terminals_verified": sorted(block_terminals),
+        "aggregate_terminals_verified": sorted(aggregate_closure_terminals),
+    }
+
+
 def _validate_freshness(
     fixture: Mapping[str, Any],
     gold: Mapping[str, Any],
@@ -1576,6 +1818,7 @@ def _validate_self_test(
     *,
     controller: Mapping[str, Any],
     projection: Mapping[str, Any],
+    classifier_audit: Mapping[str, Any],
 ) -> None:
     _validate_fingerprint(self_test, label="self-test")
     _require(
@@ -1621,15 +1864,18 @@ def _validate_self_test(
         "self-test projection receipt drifted",
     )
     _require(
-        self_test.get("classifier_combinations_exercised") == 256,
+        self_test.get("classifier_combinations_exercised")
+        == classifier_audit["per_block_classifier_combinations_verified"],
         "self-test classifier coverage drifted",
     )
     _require(
-        self_test.get("aggregate_status_pairs_exercised") == 49,
+        self_test.get("aggregate_status_pairs_exercised")
+        == classifier_audit["aggregate_status_pairs_verified"],
         "self-test aggregate status coverage drifted",
     )
     _require(
-        self_test.get("aggregate_closure_block_pairs_exercised") == 65536,
+        self_test.get("aggregate_closure_block_pairs_exercised")
+        == classifier_audit["aggregate_closure_block_pairs_verified"],
         "self-test aggregate closure-pair coverage drifted",
     )
     _require(self_test.get("network_calls") == 0, "self-test network calls are nonzero")
@@ -2016,6 +2262,7 @@ def verify(root: Path = ROOT, artifact_dir: Path | None = None) -> dict[str, Any
     gold_raw, gold = _strict_object(root / GOLD_RELATIVE, label="gold")
     _validate_fixture(fixture)
     _validate_gold(gold, fixture)
+    classifier_audit = _verify_classifier_contract(fixture, gold)
     _, predecessor_fixture = _strict_object(
         root / PREDECESSOR_FIXTURE_RELATIVE, label="predecessor fixture"
     )
@@ -2067,7 +2314,12 @@ def verify(root: Path = ROOT, artifact_dir: Path | None = None) -> dict[str, Any
     projection_audit = _validate_projection(
         projection, fixture=fixture, controller=controller
     )
-    _validate_self_test(self_test_value, controller=controller, projection=projection)
+    _validate_self_test(
+        self_test_value,
+        controller=controller,
+        projection=projection,
+        classifier_audit=classifier_audit,
+    )
     _validate_policy(root, policy, fixture=fixture, projection=projection)
     _require(
         self_test_value.get("predecessor_anchor_fingerprint_sha256")
@@ -2123,6 +2375,7 @@ def verify(root: Path = ROOT, artifact_dir: Path | None = None) -> dict[str, Any
         "provider_payload_fingerprints_verified": len(
             projection_audit["payload_fingerprints"]
         ),
+        **classifier_audit,
         "recorded_call_fields_verified": call_fields,
         "provider_calls": 0,
         "network_calls": 0,
