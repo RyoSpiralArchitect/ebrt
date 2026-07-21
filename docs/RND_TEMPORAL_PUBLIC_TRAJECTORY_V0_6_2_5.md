@@ -87,12 +87,13 @@ PROVE.
 It renders the public decision change as:
 
 ```text
-No revision applied: POLISH — Prioritize additional UI polish; center the demo on polished screens.
-Apply Revision result: PROVE — Prioritize end-to-end proof; center the demo on a live reasoning diff.
+Bound prior output · R1-R5: POLISH — Prioritize additional UI polish; center the demo on polished screens.
+Regenerated After · R1-R6 + public operation: PROVE — Prioritize end-to-end proof; center the demo on a live reasoning diff.
 ```
 
 This projection is deterministic UI copy over public fields, not a second model
-call or hidden rationale.
+call or hidden rationale. The bound prior output is not a matched hosted
+zero-control arm; the zero-control trajectory is a local-surrogate receipt.
 
 ## Network-zero evidence
 

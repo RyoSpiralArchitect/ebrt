@@ -69,8 +69,8 @@ export function AfterVerificationPanel({
       {!recordedReference ? (
         <div className="ar-language-diff">
           <span>Natural-language output diff · deterministic public-field projection</span>
-          <p className="removed">− No revision applied: {readableDecision(snapshot.before.answer, snapshot.before.target_values)}</p>
-          <p className="added">+ Apply Revision result: {readableDecision(snapshot.after.answer, snapshot.after.target_values)}</p>
+          <p className="removed">− Bound prior output · R1–R5: {readableDecision(snapshot.before.answer, snapshot.before.target_values)}</p>
+          <p className="added">+ Regenerated After · R1–R6 + public operation: {readableDecision(snapshot.after.answer, snapshot.after.target_values)}</p>
         </div>
       ) : null}
 
