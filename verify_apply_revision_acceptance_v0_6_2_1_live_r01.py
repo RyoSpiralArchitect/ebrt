@@ -1423,9 +1423,13 @@ def reseal_manifest(bundle: Path) -> None:
     (bundle / "manifest.json").write_bytes(pretty_bytes(seal(without_fingerprint(manifest))))
 
 
-def self_test(artifact: Path) -> dict[str, Any]:
+def self_test(artifact: Path, *, verify_git: bool = True) -> dict[str, Any]:
     checks: dict[str, bool] = {}
-    pristine = validate_bundle(artifact, verify_exact_publication=True, verify_git=True)
+    pristine = validate_bundle(
+        artifact,
+        verify_exact_publication=True,
+        verify_git=verify_git,
+    )
     checks["pristine_exact_publication_valid"] = pristine["status"] == "VALID"
     with tempfile.TemporaryDirectory(prefix="ebrt-v0621-portable-verifier-") as raw_tmp:
         temporary = Path(raw_tmp)
@@ -1586,7 +1590,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     args = parser.parse_args(argv)
     try:
         output = (
-            self_test(args.artifact)
+            self_test(args.artifact, verify_git=not args.no_git)
             if args.self_test
             else validate_bundle(
                 args.artifact,
