@@ -65,9 +65,40 @@ code { font-family: var(--ar-mono); }
   backdrop-filter: blur(12px);
   padding: 0 21px;
 }
-.ar-brand { display: flex; align-items: baseline; gap: 16px; }
+.ar-brand { min-width: 0; display: flex; align-items: center; gap: 12px; }
+.ar-spiral-hero {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  display: block;
+  flex: 0 0 auto;
+  overflow: hidden;
+  background: var(--ar-metal-highlight);
+  line-height: 0;
+  isolation: isolate;
+}
+.ar-spiral-hero::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, rgba(9, 12, 18, .075) 0 1px, transparent 1px 3px);
+  mix-blend-mode: multiply;
+  opacity: .32;
+  pointer-events: none;
+}
+.ar-spiral-hero img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  filter: grayscale(.2) saturate(.58) contrast(1.12);
+  image-rendering: auto;
+  mix-blend-mode: multiply;
+  opacity: .7;
+}
 .ar-brand strong { font-size: 28px; font-weight: 850; letter-spacing: -.055em; }
-.ar-brand span { color: var(--ar-muted); font-family: var(--ar-mono); font-size: 10px; text-transform: uppercase; }
+.ar-brand-subtitle { color: var(--ar-muted); font-family: var(--ar-mono); font-size: 10px; text-transform: uppercase; }
 .ar-case-line {
   min-width: 0;
   display: flex;
@@ -317,8 +348,9 @@ code { font-family: var(--ar-mono); }
   .ar-editor > footer { align-items: stretch; flex-direction: column; }
   .ar-editor > footer button { width: 100%; }
   .ar-header { grid-template-columns: 1fr; padding: 11px 14px; }
-  .ar-brand { justify-content: space-between; }
+  .ar-brand { justify-content: flex-start; gap: 10px; }
   .ar-brand strong { font-size: 24px; }
+  .ar-brand-subtitle { margin-left: auto; }
   .ar-mode-area { grid-column: 1; grid-row: 2; justify-content: space-between; }
   .ar-mode-status { justify-content: flex-start; text-align: left; }
   .ar-case-line { grid-column: 1; grid-row: 3; gap: 6px; justify-content: flex-start; font-size: 8px; }
