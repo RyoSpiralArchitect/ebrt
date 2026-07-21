@@ -44,6 +44,11 @@ export function BeforeLateEventPanel({
         <p className="ar-reference-note">Contaminated regression fixture · operational demo only</p>
       ) : null}
 
+      <div className="ar-user-prompt">
+        <span>User prompt</span>
+        <p>{snapshot.case.question}</p>
+      </div>
+
       <div className="ar-before-answer">
         <strong>{snapshot.before.answer}</strong>
         <span>

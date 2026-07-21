@@ -38,7 +38,7 @@ export function ProtocolEditor({
         </header>
 
         <p>
-          Edit or paste one complete <code>v0.6.2.4</code> request. The backend validates the same
+          Edit or paste one complete <code>v0.6.2.5</code> request. The backend validates the same
           fail-closed schema used by the runtime. Caller semantics remain unverified.
         </p>
 

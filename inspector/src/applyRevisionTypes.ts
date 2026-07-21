@@ -76,15 +76,41 @@ export type PublicRevisionTrajectory = {
   source_actual_before_state_fingerprint_sha256: string;
   source_credit_basis_fingerprint_sha256: string;
   correction_step_index: number;
+  control_gate: {
+    transform: "BOUNDED_SIGNED_RESIDUAL_GATE";
+    zero_control_semantics: "EXACT_NO_EVENT_PROPOSAL_ADMISSION";
+    maximum_absolute_coordinate: number;
+  };
+  smoothness_domain: "ADJACENT_ELIGIBLE_TEMPORAL_CONTROL_SITES";
   neutral: PublicTrajectoryRun;
   revised: PublicTrajectoryRun;
   matched_temporal_sham: {
     construction: "REVERSE_ACCEPTED_CONTROL_VALUES_OVER_ELIGIBLE_TIME_SITES";
     objective: number;
+    loss_components: PublicTrajectoryRun["loss_components"];
     terminal_state: number[];
     control_l2: number;
     provider_calls: 0;
-    claim_scope: "PUBLIC_RECURRENCE_TEMPORAL_PLACEMENT_ONLY";
+    claim_scope: "LOCAL_PUBLIC_SURROGATE_ONLY";
+  };
+  research_diagnostics: {
+    temporal_sham: {
+      fingerprint_sha256: string;
+      schema_version: "ebrt-live-temporal-sham-diagnostic-v0.6.2.5";
+      status: "POSITIVE" | "NON_POSITIVE" | "UNAVAILABLE_DEGENERATE" | "INVALID_GEOMETRY";
+      construction: "REVERSE_ACCEPTED_CONTROL_VALUES_OVER_ELIGIBLE_TIME_SITES";
+      smoothness_domain: "ADJACENT_ELIGIBLE_TEMPORAL_CONTROL_SITES";
+      exact_objective: number;
+      sham_objective: number;
+      objective_margin_sham_minus_exact: number;
+      exact_temporal_placement_beats_matched_sham: boolean;
+      exact_control_l2: number;
+      sham_control_l2: number;
+      checks: Record<string, boolean>;
+      provider_calls: 0;
+      product_gate_participation: false;
+      claim_scope: "LOCAL_PUBLIC_SURROGATE_ONLY";
+    };
   };
   gradient_boundary: {
     starts_at: string;
@@ -229,6 +255,8 @@ export type ApplyRevisionSnapshot = {
       max_control_l2: number;
       credit_rows: CreditRow[];
       allocation_domain_evidence_ids?: string[];
+      provider_visible_allocation_transform?: "SOFTMAX_ABSOLUTE_CONTROL_MAGNITUDE";
+      semantic_operation_source?: "TYPED_EVENT_COMPILER";
       checks: Record<string, boolean>;
     };
     public_trajectory?: PublicRevisionTrajectory;
@@ -384,7 +412,7 @@ export type ApplyRevisionView = Omit<
 };
 
 export type LiveApplyRevisionRequest = Record<string, unknown> & {
-  schema_version: "ebrt-live-apply-revision-request-v0.6.2.4";
+  schema_version: "ebrt-live-apply-revision-request-v0.6.2.5";
   request_id: string;
 };
 
@@ -396,14 +424,14 @@ export type LiveRequestBinding = {
 };
 
 export type LiveDemoRequestEnvelope = LiveRequestBinding & {
-  schema_version: "ebrt-live-demo-request-v0.6.2.4";
+  schema_version: "ebrt-live-demo-request-v0.6.2.5";
   provenance: "CONTAMINATED_REGRESSION_FIXTURE";
   source_artifact_fingerprint_sha256: string;
   fingerprint_sha256: string;
 };
 
 export type LiveApplyRevisionResponse = {
-  schema_version: "ebrt-live-apply-revision-response-v0.6.2.4";
+  schema_version: "ebrt-live-apply-revision-response-v0.6.2.5";
   transport_body_sha256: string;
   request_id: string;
   status: "COMPLETE";

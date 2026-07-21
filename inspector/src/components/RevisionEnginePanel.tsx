@@ -164,10 +164,15 @@ export function RevisionEnginePanel({
       <div className={`ar-engine-step ar-actuator-block ${replayStep >= 2 ? "is-replaying" : ""}`}>
         <span className="ar-block-label">Compiled actuator · provider-visible</span>
         <dl>
-          <div><dt>{inspectionPlan ? "Reinspect · optimized allocation" : actuator.reinspect_source ? "Reinspect · backward-ranked" : "Reinspect"}</dt><dd className="ar-blue">{actuator.reinspect_evidence_ids.join(" → ")}</dd></div>
+          <div><dt>{inspectionPlan ? "Reinspect · |uₜ| allocation" : actuator.reinspect_source ? "Reinspect · backward-ranked" : "Reinspect"}</dt><dd className="ar-blue">{actuator.reinspect_evidence_ids.join(" → ")}</dd></div>
           <div><dt>{actuator.suppress_source ? "Suppress · typed event" : "Suppress"}</dt><dd className="ar-red">{actuator.suppress_evidence_ids.join(", ")}</dd></div>
           <div><dt>{actuator.preserve_source ? "Preserve · typed event" : "Preserve"}</dt><dd>{actuator.preserve_evidence_ids.join(", ")}</dd></div>
         </dl>
+        {trajectory ? (
+          <p className="ar-reference-note">
+            Control magnitude allocates reinspection; the typed event defines suppress and preserve.
+          </p>
+        ) : null}
       </div>
 
       <details className="ar-receipt-details">
@@ -180,13 +185,13 @@ export function RevisionEnginePanel({
           {trajectory ? (
             <>
               <div className="ar-objective-row">
-                <span>Matched temporal sham</span>
+                <span>Matched temporal sham · {trajectory.research_diagnostics.temporal_sham.status.replaceAll("_", " ")}</span>
                 <strong>{formatObjective(trajectory.matched_temporal_sham.objective)}</strong>
-                <span>0 provider calls</span>
+                <span>diagnostic only · 0 calls</span>
               </div>
               <dl aria-label="Neutral and revised public trajectories">
                 <div>
-                  <dt>Neutral trajectory</dt>
+                  <dt>Zero-control trajectory · no event proposal admitted</dt>
                   <dd>
                     {trajectory.neutral.points.map((point) =>
                       `${point.evidence_id}${formatTrajectoryState(point.state)}`,

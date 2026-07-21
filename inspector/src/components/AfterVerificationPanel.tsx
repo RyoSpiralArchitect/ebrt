@@ -1,6 +1,29 @@
 import type { ApplyRevisionView } from "../applyRevisionTypes";
 import { Icon } from "./Icon";
 
+function readableDecision(
+  answer: string,
+  targets: ApplyRevisionView["after"]["target_values"],
+) {
+  const naturalize = (value: string) => value
+    .replaceAll("_", " ")
+    .toLowerCase()
+    .replace(/\bui\b/g, "UI")
+    .replace(/\bend to end\b/g, "end-to-end");
+  const facts = new Map(
+    targets
+      .filter((target) => target.target_type === "fact")
+      .map((target) => [target.slot, naturalize(target.value)]),
+  );
+  const priority = facts.get("final_priority");
+  const centerpiece = facts.get("demo_centerpiece");
+  if (priority && centerpiece) {
+    const centerpiecePhrase = centerpiece.endsWith("s") ? centerpiece : `a ${centerpiece}`;
+    return `${answer} — Prioritize ${priority}; center the demo on ${centerpiecePhrase}.`;
+  }
+  return `${answer} — ${[...facts].map(([slot, value]) => `${slot.replaceAll("_", " ")}: ${value}`).join("; ")}.`;
+}
+
 export function AfterVerificationPanel({
   active,
   replayStep,
@@ -42,6 +65,14 @@ export function AfterVerificationPanel({
         <Icon name="arrow" size={36} />
         <b>{snapshot.after.answer}</b>
       </div>
+
+      {!recordedReference ? (
+        <div className="ar-language-diff">
+          <span>Natural-language output diff · deterministic public-field projection</span>
+          <p className="removed">− Bound prior output · R1–R5: {readableDecision(snapshot.before.answer, snapshot.before.target_values)}</p>
+          <p className="added">+ Regenerated After · R1–R6 + public operation: {readableDecision(snapshot.after.answer, snapshot.after.target_values)}</p>
+        </div>
+      ) : null}
 
       {recordedReference ? (
         <div className="ar-live-output-pending" role="status">

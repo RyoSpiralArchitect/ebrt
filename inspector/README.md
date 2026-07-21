@@ -5,7 +5,7 @@ This interface runs the sealed public Live demo and replays the sealed
 
 ```text
 Before + late event
-  -> neutral public trajectory
+  -> zero-control public trajectory (exact proposal no-op)
   -> one time-local public surrogate backward()
   -> revised public trajectory
   -> public control map
@@ -28,7 +28,7 @@ prior public state, closure graphs, fingerprints, or provider configuration.
 There is no automatic retry. Stopping the browser wait aborts only the browser
 request; the server operation may still complete.
 
-The adjacent **Editor** opens a complete Protocol `v0.6.2.4` request document.
+The adjacent **Editor** opens a complete Protocol `v0.6.2.5` request document.
 It starts blank and loads the known sample only after an explicit user action.
 Developers can edit ordered evidence, the emitted Before state, the typed late
 event, and supplied closure candidates without a hidden natural-language-to-
@@ -45,25 +45,32 @@ boundary on the primary demo surface; full trajectories, matched controls,
 allocation rows, and execution receipts remain available under
 **Inspect trajectory receipts**.
 
-Live protocol `v0.6.2.4` exposes Runtime Preview 3's public temporal revision
+Live protocol `v0.6.2.5` exposes Runtime Preview 4's public temporal revision
 path. The backend starts from the compiled public Before vector, executes a
-chronological neutral trajectory, performs one real local `float64` backward
+chronological zero-control trajectory that follows the frozen forward
+recurrence while admitting no event proposal, performs one real local `float64` backward
 over eligible time sites, and replays the same public recurrence with bounded
-time-local controls. The Inspector shows both neutral and revised trajectories,
-the matched temporal sham objective, temporal credit, optimized public
+time-local controls. The Inspector shows both zero-control and revised trajectories,
+the matched temporal sham diagnostic, temporal credit, optimized public
 inspection shares, the full-admission support reference used by the
 preterminal path objective, deterministic abstract budget units, compiled
 program, and executed state trace. The three trajectory coordinates are a
 hand-built public surrogate; they are not private model states or a transcript
 of private model reasoning. Inspection fields are external review directives—not provider
-attention probabilities or token budgets. Provider uptake remains
+attention probabilities or token budgets. The backward pass allocates
+reinspection magnitude; typed-event compilation defines suppress and preserve.
+The sham matches eligible-time value geometry, L2, control cost, and
+smoothness, but its `POSITIVE / NON_POSITIVE / UNAVAILABLE_DEGENERATE /
+INVALID_GEOMETRY` outcome is a local
+research diagnostic rather than a product hard gate. Provider uptake remains
 `NOT_ASSESSED`.
 
 The live parser requires the public trajectory to bind to the actual Before
 state, and requires its fingerprint to propagate exactly through the compiled
-actuator, inspection plan, revision program, and execution receipt. Neutral,
-revised, matched-sham, chronology, locality, stable-axis identity, path-loss,
-and gradient-boundary checks are exact hard gates. The recorded `v0.6.2.1`
+actuator, inspection plan, revision program, and execution receipt. Zero-control
+identity, revised replay, chronology, locality, stable-axis identity, path-loss,
+and gradient-boundary checks are exact hard gates. The matched-sham receipt is
+rederived for integrity, but its superiority outcome is not a product gate. The recorded `v0.6.2.1`
 artifact has no temporal trajectory and remains a supported fallback; its
 existing signed-credit view is rendered unchanged and makes no live request.
 

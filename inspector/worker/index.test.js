@@ -103,7 +103,7 @@ test("GET proxy strips browser credentials and derives an opaque client key", as
 test("POST proxy preserves request and response bytes plus idempotency", async () => {
   const originalFetch = globalThis.fetch;
   const requestBody =
-    '{"schema_version":"ebrt-live-apply-revision-request-v0.6.2.4","request_id":"request-1","case_id":"sealed-case","number":1.00}\n';
+    '{"schema_version":"ebrt-live-apply-revision-request-v0.6.2.5","request_id":"request-1","case_id":"sealed-case","number":1.00}\n';
   const upstreamBody = textEncoder.encode('{"status":"OK","number":1.00}\n');
   const upstreamHash = await digest(upstreamBody);
   let observed;
@@ -113,7 +113,7 @@ test("POST proxy preserves request and response bytes plus idempotency", async (
     if (new URL(input).pathname === "/api/demo-request") {
       return sealedResponse({
         request: {
-          schema_version: "ebrt-live-apply-revision-request-v0.6.2.4",
+          schema_version: "ebrt-live-apply-revision-request-v0.6.2.5",
           request_id: "template-request",
           case_id: "sealed-case",
           number: 1,
@@ -201,7 +201,7 @@ test("public POST rejects any request that differs from the fresh sealed demo", 
     assert.equal(new URL(input).pathname, "/api/demo-request");
     return sealedResponse({
       request: {
-        schema_version: "ebrt-live-apply-revision-request-v0.6.2.4",
+        schema_version: "ebrt-live-apply-revision-request-v0.6.2.5",
         request_id: "template-id",
         case_id: "sealed-case",
         evidence: [{ evidence_id: "R1", text: "sealed" }],
@@ -218,7 +218,7 @@ test("public POST rejects any request that differs from the fresh sealed demo", 
           "Idempotency-Key": "attacker-id",
         },
         body: JSON.stringify({
-          schema_version: "ebrt-live-apply-revision-request-v0.6.2.4",
+          schema_version: "ebrt-live-apply-revision-request-v0.6.2.5",
           request_id: "attacker-id",
           case_id: "sealed-case",
           evidence: [{ evidence_id: "R1", text: "modified" }],

@@ -305,7 +305,7 @@ export function liveApplyRevisionView(response: LiveApplyRevisionResponse): Appl
     mode: "LIVE_AFTER_REGENERATION",
     case: {
       case_id: response.case_id,
-      version: "Runtime Preview 3 · protocol v0.6.2.4",
+      version: "Runtime Preview 4 · protocol v0.6.2.5",
       question: context.question,
       model: context.model,
     },
