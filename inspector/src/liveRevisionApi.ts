@@ -17,13 +17,13 @@ import type {
   TargetValue,
 } from "./applyRevisionTypes";
 
-const DEMO_REQUEST_SCHEMA = "ebrt-live-demo-request-v0.6.2.4";
-const LIVE_REQUEST_SCHEMA = "ebrt-live-apply-revision-request-v0.6.2.4";
-const LIVE_RESPONSE_SCHEMA = "ebrt-live-apply-revision-response-v0.6.2.4";
-const PUBLIC_TRAJECTORY_SCHEMA = "ebrt-live-public-revision-trajectory-v0.6.2.4";
-const INSPECTION_PLAN_SCHEMA = "ebrt-live-continuous-inspection-plan-v0.6.2.4";
-const REVISION_PROGRAM_SCHEMA = "ebrt-live-public-revision-program-v0.6.2.4";
-const DEPENDENCY_AUDIT_SCHEMA = "ebrt-live-public-dependency-audit-v0.6.2.4";
+const DEMO_REQUEST_SCHEMA = "ebrt-live-demo-request-v0.6.2.5";
+const LIVE_REQUEST_SCHEMA = "ebrt-live-apply-revision-request-v0.6.2.5";
+const LIVE_RESPONSE_SCHEMA = "ebrt-live-apply-revision-response-v0.6.2.5";
+const PUBLIC_TRAJECTORY_SCHEMA = "ebrt-live-public-revision-trajectory-v0.6.2.5";
+const INSPECTION_PLAN_SCHEMA = "ebrt-live-continuous-inspection-plan-v0.6.2.5";
+const REVISION_PROGRAM_SCHEMA = "ebrt-live-public-revision-program-v0.6.2.5";
+const DEPENDENCY_AUDIT_SCHEMA = "ebrt-live-public-dependency-audit-v0.6.2.5";
 const TRAJECTORY_AXES = [
   "event_consistent_support",
   "invalidated_support_clearance",
@@ -48,7 +48,7 @@ const OPERATIONAL_ROW_LABELS: Record<string, string> = {
 };
 const SEMANTIC_ROW_DETAIL = "Reserved gold fields are rejected; caller semantic content is unverified";
 const EFFECT_ROW_DETAIL = "One regeneration is not a causal contrast";
-const CONTROL_CHECK_KEYS = [
+const CONTROL_PRODUCT_CHECK_KEYS = [
   "actual_before_state_bound_to_controller",
   "local_backward_executed",
   "finite_continuous_allocation",
@@ -62,7 +62,6 @@ const CONTROL_CHECK_KEYS = [
   "pre_event_temporal_credit_nonzero",
   "trajectory_path_loss_decreased",
   "stable_axis_exact_identity",
-  "exact_temporal_placement_beats_matched_sham",
   "finite_difference_agreement",
   "gradient_stops_before_provider",
   "reserved_gold_fields_absent",
@@ -90,9 +89,10 @@ const EXECUTION_CHECK_KEYS = [
   "abstract_inspection_budget_exact",
   "provider_operation_gold_free",
 ] as const;
-const TRAJECTORY_CHECK_KEYS = [
+const TRAJECTORY_PRODUCT_CHECK_KEYS = [
   "source_actual_before_state_bound",
   "chronological_forward_exact",
+  "zero_control_is_exact_unmodified_forward",
   "single_backward_executed",
   "pre_event_temporal_credit_nonzero",
   "correction_site_credit_nonzero",
@@ -101,8 +101,6 @@ const TRAJECTORY_CHECK_KEYS = [
   "revised_forward_replay_exact",
   "stable_axis_exact_identity",
   "bounded_time_local_control",
-  "matched_sham_control_geometry",
-  "exact_temporal_placement_beats_matched_sham",
   "gradient_stops_before_json",
 ] as const;
 const DEPENDENCY_CHECK_KEYS = [
@@ -115,6 +113,7 @@ const DEPENDENCY_CHECK_KEYS = [
   "unblocked_recomputation_exact",
 ] as const;
 const ALLOCATION_TOLERANCE = 1e-9;
+const STATE_DECAY = 0.82;
 
 export class LiveRevisionApiError extends Error {
   readonly code: string;
@@ -567,11 +566,45 @@ function publicTrajectory(value: unknown): PublicRevisionTrajectory {
   const neutral = trajectoryRun(candidate.neutral, `${label}.neutral`);
   const revised = trajectoryRun(candidate.revised, `${label}.revised`);
   const sham = record(candidate.matched_temporal_sham, `${label}.matched_temporal_sham`);
+  const shamLoss = record(sham.loss_components, `${label}.matched_temporal_sham.loss_components`);
+  const controlGate = record(candidate.control_gate, `${label}.control_gate`);
+  const research = record(candidate.research_diagnostics, `${label}.research_diagnostics`);
+  const temporalDiagnostic = record(research.temporal_sham, `${label}.research_diagnostics.temporal_sham`);
+  const diagnosticChecks = booleanRecord(
+    temporalDiagnostic.checks,
+    `${label}.research_diagnostics.temporal_sham.checks`,
+  );
+  const diagnosticCheckKeys = [
+    "signed_value_multiset_matched",
+    "control_l2_matched",
+    "control_regularization_matched",
+    "eligible_temporal_smoothness_matched",
+    "sham_is_distinct",
+  ];
+  if (!sameCanonical(Object.keys(diagnosticChecks).sort(), [...diagnosticCheckKeys].sort())) {
+    return fail(`${label}.research_diagnostics.temporal_sham.checks keys`);
+  }
+  const diagnosticStatus = string(
+    temporalDiagnostic.status,
+    `${label}.research_diagnostics.temporal_sham.status`,
+  );
+  if (!["POSITIVE", "NON_POSITIVE", "UNAVAILABLE_DEGENERATE", "INVALID_GEOMETRY"].includes(diagnosticStatus)) {
+    return fail(`${label}.research_diagnostics.temporal_sham.status`);
+  }
   const boundary = record(candidate.gradient_boundary, `${label}.gradient_boundary`);
   if (
     sham.construction !== "REVERSE_ACCEPTED_CONTROL_VALUES_OVER_ELIGIBLE_TIME_SITES" ||
-    sham.claim_scope !== "PUBLIC_RECURRENCE_TEMPORAL_PLACEMENT_ONLY" ||
+    sham.claim_scope !== "LOCAL_PUBLIC_SURROGATE_ONLY" ||
     sham.provider_calls !== 0 ||
+    candidate.smoothness_domain !== "ADJACENT_ELIGIBLE_TEMPORAL_CONTROL_SITES" ||
+    controlGate.transform !== "BOUNDED_SIGNED_RESIDUAL_GATE" ||
+    controlGate.zero_control_semantics !== "EXACT_NO_EVENT_PROPOSAL_ADMISSION" ||
+    temporalDiagnostic.schema_version !== "ebrt-live-temporal-sham-diagnostic-v0.6.2.5" ||
+    temporalDiagnostic.construction !== "REVERSE_ACCEPTED_CONTROL_VALUES_OVER_ELIGIBLE_TIME_SITES" ||
+    temporalDiagnostic.smoothness_domain !== "ADJACENT_ELIGIBLE_TEMPORAL_CONTROL_SITES" ||
+    temporalDiagnostic.provider_calls !== 0 ||
+    temporalDiagnostic.product_gate_participation !== false ||
+    temporalDiagnostic.claim_scope !== "LOCAL_PUBLIC_SURROGATE_ONLY" ||
     boundary.hosted_model_differentiated !== false ||
     boundary.private_reasoning_observed !== false
   ) {
@@ -594,11 +627,27 @@ function publicTrajectory(value: unknown): PublicRevisionTrajectory {
       `${label}.source_credit_basis_fingerprint_sha256`,
     ),
     correction_step_index: integer(candidate.correction_step_index, `${label}.correction_step_index`),
+    control_gate: {
+      transform: "BOUNDED_SIGNED_RESIDUAL_GATE",
+      zero_control_semantics: "EXACT_NO_EVENT_PROPOSAL_ADMISSION",
+      maximum_absolute_coordinate: finiteNumber(
+        controlGate.maximum_absolute_coordinate,
+        `${label}.control_gate.maximum_absolute_coordinate`,
+        true,
+      ),
+    },
+    smoothness_domain: "ADJACENT_ELIGIBLE_TEMPORAL_CONTROL_SITES",
     neutral,
     revised,
     matched_temporal_sham: {
       construction: "REVERSE_ACCEPTED_CONTROL_VALUES_OVER_ELIGIBLE_TIME_SITES",
       objective: finiteNumber(sham.objective, `${label}.matched_temporal_sham.objective`, true),
+      loss_components: {
+        terminal: finiteNumber(shamLoss.terminal, `${label}.matched_temporal_sham.loss_components.terminal`, true),
+        path: finiteNumber(shamLoss.path, `${label}.matched_temporal_sham.loss_components.path`, true),
+        control: finiteNumber(shamLoss.control, `${label}.matched_temporal_sham.loss_components.control`, true),
+        smoothness: finiteNumber(shamLoss.smoothness, `${label}.matched_temporal_sham.loss_components.smoothness`, true),
+      },
       terminal_state: finiteNumbers(
         sham.terminal_state,
         `${label}.matched_temporal_sham.terminal_state`,
@@ -606,7 +655,51 @@ function publicTrajectory(value: unknown): PublicRevisionTrajectory {
       ),
       control_l2: finiteNumber(sham.control_l2, `${label}.matched_temporal_sham.control_l2`, true),
       provider_calls: 0,
-      claim_scope: "PUBLIC_RECURRENCE_TEMPORAL_PLACEMENT_ONLY",
+      claim_scope: "LOCAL_PUBLIC_SURROGATE_ONLY",
+    },
+    research_diagnostics: {
+      temporal_sham: {
+        fingerprint_sha256: sha256(
+          temporalDiagnostic.fingerprint_sha256,
+          `${label}.research_diagnostics.temporal_sham.fingerprint_sha256`,
+        ),
+        schema_version: "ebrt-live-temporal-sham-diagnostic-v0.6.2.5",
+        status: diagnosticStatus as PublicRevisionTrajectory["research_diagnostics"]["temporal_sham"]["status"],
+        construction: "REVERSE_ACCEPTED_CONTROL_VALUES_OVER_ELIGIBLE_TIME_SITES",
+        smoothness_domain: "ADJACENT_ELIGIBLE_TEMPORAL_CONTROL_SITES",
+        exact_objective: finiteNumber(
+          temporalDiagnostic.exact_objective,
+          `${label}.research_diagnostics.temporal_sham.exact_objective`,
+          true,
+        ),
+        sham_objective: finiteNumber(
+          temporalDiagnostic.sham_objective,
+          `${label}.research_diagnostics.temporal_sham.sham_objective`,
+          true,
+        ),
+        objective_margin_sham_minus_exact: finiteNumber(
+          temporalDiagnostic.objective_margin_sham_minus_exact,
+          `${label}.research_diagnostics.temporal_sham.objective_margin_sham_minus_exact`,
+        ),
+        exact_temporal_placement_beats_matched_sham: boolean(
+          temporalDiagnostic.exact_temporal_placement_beats_matched_sham,
+          `${label}.research_diagnostics.temporal_sham.exact_temporal_placement_beats_matched_sham`,
+        ),
+        exact_control_l2: finiteNumber(
+          temporalDiagnostic.exact_control_l2,
+          `${label}.research_diagnostics.temporal_sham.exact_control_l2`,
+          true,
+        ),
+        sham_control_l2: finiteNumber(
+          temporalDiagnostic.sham_control_l2,
+          `${label}.research_diagnostics.temporal_sham.sham_control_l2`,
+          true,
+        ),
+        checks: diagnosticChecks,
+        provider_calls: 0,
+        product_gate_participation: false,
+        claim_scope: "LOCAL_PUBLIC_SURROGATE_ONLY",
+      },
     },
     gradient_boundary: {
       starts_at: string(boundary.starts_at, `${label}.gradient_boundary.starts_at`),
@@ -614,7 +707,7 @@ function publicTrajectory(value: unknown): PublicRevisionTrajectory {
       hosted_model_differentiated: false,
       private_reasoning_observed: false,
     },
-    checks: exactTrueChecks(candidate.checks, TRAJECTORY_CHECK_KEYS, `${label}.checks`),
+    checks: exactTrueChecks(candidate.checks, TRAJECTORY_PRODUCT_CHECK_KEYS, `${label}.checks`),
   };
   return parsed;
 }
@@ -732,7 +825,7 @@ function parseResponse(
   const mechanismStatus = binaryStatus(mechanism.status, "response.mechanism.status");
   const controlChecks = exactTrueChecks(
     control.checks,
-    CONTROL_CHECK_KEYS,
+    CONTROL_PRODUCT_CHECK_KEYS,
     "response.mechanism.public_control_map.checks",
   );
   const actuatorChecks = exactTrueChecks(
@@ -888,6 +981,41 @@ function parseResponse(
   const neutralPoints = trajectory.neutral.points;
   const revisedPoints = trajectory.revised.points;
   const revisedControlL2 = Math.hypot(...revisedPoints.map((row) => row.control_value));
+  const temporalDiagnostic = trajectory.research_diagnostics.temporal_sham;
+  const observedDiagnosticL2Match = approximatelyEqual(
+    revisedControlL2,
+    trajectory.matched_temporal_sham.control_l2,
+  );
+  const observedDiagnosticControlCostMatch = approximatelyEqual(
+    trajectory.revised.loss_components.control,
+    trajectory.matched_temporal_sham.loss_components.control,
+  );
+  const observedDiagnosticSmoothnessMatch = approximatelyEqual(
+    trajectory.revised.loss_components.smoothness,
+    trajectory.matched_temporal_sham.loss_components.smoothness,
+  );
+  const diagnosticGeometryValid =
+    temporalDiagnostic.checks.signed_value_multiset_matched === true &&
+    temporalDiagnostic.checks.control_l2_matched === true &&
+    temporalDiagnostic.checks.control_regularization_matched === true &&
+    temporalDiagnostic.checks.eligible_temporal_smoothness_matched === true;
+  const diagnosticExactBeats = trajectory.revised.objective + 1e-12 < trajectory.matched_temporal_sham.objective;
+  const expectedDiagnosticStatus = !diagnosticGeometryValid
+    ? "INVALID_GEOMETRY"
+    : temporalDiagnostic.checks.sham_is_distinct !== true
+      ? "UNAVAILABLE_DEGENERATE"
+      : diagnosticExactBeats
+        ? "POSITIVE"
+        : "NON_POSITIVE";
+  let unmodifiedForwardState = [...actualBeforeInitialVector];
+  const neutralIsExactUnmodifiedForward = neutralPoints.every((row) => {
+    unmodifiedForwardState = [
+      STATE_DECAY * unmodifiedForwardState[0],
+      STATE_DECAY * unmodifiedForwardState[1],
+      unmodifiedForwardState[2],
+    ];
+    return sameCanonical(row.state, unmodifiedForwardState);
+  });
   const decisionMean = (values: number[]) => (values[0] + values[1]) / 2;
   if (
     correctionStepIndex < 0 ||
@@ -895,12 +1023,24 @@ function parseResponse(
     neutralPoints.length !== evidenceIds.length ||
     revisedPoints.length !== evidenceIds.length ||
     trajectory.revised.objective >= trajectory.neutral.objective ||
-    trajectory.revised.objective >= trajectory.matched_temporal_sham.objective ||
+    !neutralIsExactUnmodifiedForward ||
     !approximatelyEqual(trajectory.neutral.objective, surrogateObjectiveBefore) ||
     !approximatelyEqual(trajectory.revised.objective, surrogateObjectiveAfter) ||
     !approximatelyEqual(decisionMean(trajectory.neutral.terminal_state), surrogateTerminalBefore) ||
     !approximatelyEqual(decisionMean(trajectory.revised.terminal_state), surrogateTerminalAfter) ||
-    !approximatelyEqual(revisedControlL2, trajectory.matched_temporal_sham.control_l2) ||
+    temporalDiagnostic.checks.control_l2_matched !== observedDiagnosticL2Match ||
+    temporalDiagnostic.checks.control_regularization_matched !== observedDiagnosticControlCostMatch ||
+    temporalDiagnostic.checks.eligible_temporal_smoothness_matched !== observedDiagnosticSmoothnessMatch ||
+    !approximatelyEqual(temporalDiagnostic.exact_objective, trajectory.revised.objective) ||
+    !approximatelyEqual(temporalDiagnostic.sham_objective, trajectory.matched_temporal_sham.objective) ||
+    !approximatelyEqual(
+      temporalDiagnostic.objective_margin_sham_minus_exact,
+      trajectory.matched_temporal_sham.objective - trajectory.revised.objective,
+    ) ||
+    temporalDiagnostic.exact_temporal_placement_beats_matched_sham !== diagnosticExactBeats ||
+    temporalDiagnostic.status !== expectedDiagnosticStatus ||
+    !approximatelyEqual(temporalDiagnostic.exact_control_l2, revisedControlL2) ||
+    !approximatelyEqual(temporalDiagnostic.sham_control_l2, trajectory.matched_temporal_sham.control_l2) ||
     !sameCanonical(trajectory.neutral.terminal_state, neutralPoints.at(-1)?.state) ||
     !sameCanonical(trajectory.revised.terminal_state, revisedPoints.at(-1)?.state) ||
     neutralPoints.some((row, index) => {
@@ -973,7 +1113,10 @@ function parseResponse(
     !sameCanonical(
       allocationDomainEvidenceIds,
       creditRows.filter((row) => row.eligible_for_reinspection).map((row) => row.evidence_id),
-    )
+    ) ||
+    control.provider_visible_allocation_transform !== "SOFTMAX_ABSOLUTE_CONTROL_MAGNITUDE" ||
+    control.semantic_operation_source !== "TYPED_EVENT_COMPILER" ||
+    !approximatelyEqual(trajectory.control_gate.maximum_absolute_coordinate, maxControlL2)
   ) {
     return fail("response.mechanism.public_control_map allocation domain");
   }
@@ -1390,6 +1533,8 @@ function parseResponse(
         max_control_l2: maxControlL2,
         credit_rows: creditRows,
         allocation_domain_evidence_ids: allocationDomainEvidenceIds,
+        provider_visible_allocation_transform: "SOFTMAX_ABSOLUTE_CONTROL_MAGNITUDE",
+        semantic_operation_source: "TYPED_EVENT_COMPILER",
         checks: controlChecks,
       },
       compiled_actuator: {

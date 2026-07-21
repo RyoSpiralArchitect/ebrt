@@ -113,6 +113,14 @@ code { font-family: var(--ar-mono); }
 .ar-block-label { color: var(--ar-muted); font-family: var(--ar-mono); font-size: 8px; font-weight: 650; letter-spacing: .075em; text-transform: uppercase; }
 .ar-reference-note { margin: -2px 0 10px; border-left: 3px solid var(--ar-yellow); padding: 4px 8px; color: var(--ar-muted); font-family: var(--ar-mono); font-size: 8px; }
 
+.ar-user-prompt { margin: 2px 0 8px; border: 1px solid var(--ar-line); background: rgba(255,255,255,.38); padding: 9px 11px; }
+.ar-user-prompt span, .ar-language-diff > span { color: var(--ar-muted); font-family: var(--ar-mono); font-size: 8px; text-transform: uppercase; }
+.ar-user-prompt p { margin: 5px 0 0; font-size: 11px; line-height: 1.4; }
+.ar-language-diff { margin: 10px 0; border: 1px solid var(--ar-line); background: rgba(255,255,255,.38); padding: 9px 11px; }
+.ar-language-diff p { margin: 6px 0 0; font-family: var(--ar-mono); font-size: 9px; line-height: 1.45; }
+.ar-language-diff .removed { color: var(--ar-red); }
+.ar-language-diff .added { color: var(--ar-blue); }
+
 .ar-before-answer { display: flex; flex-direction: column; gap: 15px; border-bottom: 1px solid var(--ar-line); padding: 14px 0 23px; }
 .ar-before-answer > strong { font-family: var(--ar-mono); font-size: clamp(38px, 4vw, 56px); font-weight: 620; letter-spacing: .1em; line-height: .95; }
 .ar-before-answer > span { font-family: var(--ar-mono); font-size: 11px; }

@@ -2,7 +2,7 @@
 
 **Event-driven Backward Reasoning for Test-Time Inference**
 
-## Current product — Apply Revision Runtime Preview 3
+## Current product — Apply Revision Runtime Preview 4
 
 **Try the sealed public Live demo:**
 [ebrt-apply-revision.ryospiralreality.chatgpt.site](https://ebrt-apply-revision.ryospiralreality.chatgpt.site/)
@@ -80,11 +80,21 @@ Open `http://127.0.0.1:5173`, switch to **Live**, then choose
 `OPENAI_API_KEY` only in the backend environment and replace `scripted` with
 `openai`; credentials never enter the browser or public response.
 
-Choose **Editor** to paste or edit any complete `v0.6.2.4` public revision
+Choose **Editor** to paste or edit any complete `v0.6.2.5` public revision
 request. The Editor starts empty, only loads the contaminated sample on an
 explicit click, retains caller text in memory only, and submits through the
 same fail-closed backend validator. Caller-supplied semantics and causal effect
 remain `NOT_ASSESSED`.
+
+Protocol `v0.6.2.5` makes zero temporal control a literal no-op over typed
+event proposals: the uncontrolled path follows only the frozen forward
+recurrence. Its reversed eligible-time sham now matches the signed control
+multiset, L2 norm, control cost, and eligible-domain smoothness. That local
+comparison is sealed as a `POSITIVE / NON_POSITIVE / UNAVAILABLE_DEGENERATE /
+INVALID_GEOMETRY` research
+diagnostic and never gates product execution. The backward pass allocates
+where and how much to reinspect; typed-event compilation supplies the
+allowlisted suppress/preserve semantics.
 
 ### Public Live bridge setup
 
@@ -314,7 +324,7 @@ passing public outputs. Raw arm A returned the correct `PROVE` answer but
 omitted R4 from `final_priority`. This is a real bridge and a useful control-
 channel null result, not evidence that gradient placement improves GPT.
 
-### EBRT Runtime Preview 3 — revisable public trajectory
+### EBRT Runtime Preview 4 — zero-centered revisable public trajectory
 
 The current live product monolith is [`ebrt_live.py`](ebrt_live.py). It accepts
 a typed public invalidation-revision request containing the case and ordered
@@ -381,7 +391,7 @@ LRU cache plus compact fingerprints for up to 65,536 spent identities. An
 identity whose full result has been evicted returns `410` and is never executed
 again; the service safely rejects new identities if the compact ledger fills.
 Provider credentials, raw receipts, reserved gold fields, and private reasoning
-never enter the public response. Neutral and revised public trajectories,
+never enter the public response. Zero-control and revised public trajectories,
 trajectory-wide objectives, time-local controls, central finite-difference
 diagnostics, and continuous allocations are intentionally returned as Inspector
 data. The nonterminal path term uses a role-blind, graph-incidence-derived
@@ -392,14 +402,17 @@ input. Inspection units are not provider tokens or attention weights, and
 provider uptake remains `NOT_ASSESSED`.
 
 The network-zero contract rederives the finite differences, projected update,
-backtracking decision, neutral/revised replay, matched temporal sham, and exact
+backtracking decision, zero-control/revised replay, matched temporal sham, and exact
 trajectory-to-actuator binding from the public request. It also requires an
-active nonterminal path loss, exact no-event identity, and rejection of both
+active nonterminal path loss, exact typed-event zero-control no-op, exact
+no-event identity, and rejection of both
 ordinary and coherently resealed scientific-receipt tampering before any
 provider call. See
-[`RND_TEMPORAL_PUBLIC_TRAJECTORY_V0_6_2_4.md`](docs/RND_TEMPORAL_PUBLIC_TRAJECTORY_V0_6_2_4.md).
+[`RND_TEMPORAL_PUBLIC_TRAJECTORY_V0_6_2_5.md`](docs/RND_TEMPORAL_PUBLIC_TRAJECTORY_V0_6_2_5.md).
 
-Runtime Preview 3 has no new hosted-effect result. The historical Preview 2
+Runtime Preview 4 has no new hosted-effect result. Its product gate is
+independent of whether the local smoothness-matched sham diagnostic is
+`POSITIVE`, `NON_POSITIVE`, or unavailable. The historical Preview 2
 delivery canary exercised the v0.6.2.3 payload after its network-zero and
 Inspector gates passed. It completed one explicit no-retry GPT-5.6 API attempt
 in 6.32 seconds with 2,820 input and 150 output tokens, returned
@@ -829,7 +842,7 @@ policy_lock_hosted_bundle_v0_6.json frozen source, runtime, order, endpoint, and
 fixtures/hosted_bundle_projection_v0_6.json contaminated projection and matched-control fixture
 fixtures/hosted_bundle_lineage_gold_v0_6.json post-call-only exact lineage gold
 ebrt.py                       immutable v0.6.2.1 two-call acceptance runner and artifact validator
-ebrt_live.py                  current Runtime Preview 3 temporal public-trajectory monolith and loopback API
+ebrt_live.py                  current Runtime Preview 4 zero-centered temporal public-trajectory monolith and loopback API
 actuator_uptake_canary_v0_6_3_1.py discrete closure-choice uptake preflight monolith
 verify_actuator_uptake_canary_v0_6_3_1_portable.py pure-stdlib exact-byte and tamper verifier
 policy_lock_actuator_uptake_canary_v0_6_3_1.json zero-call source, runtime, order, and claim lock
@@ -1797,6 +1810,8 @@ retrospectively relabeling failures. See the
 | Runtime Preview 2 proves provider uptake, attention control, token-budget control, or a counterfactual output effect | No; those axes remain `NOT_ASSESSED`. Its block/restore probe establishes only structural dependency inside the selected caller-supplied public graph |
 | Runtime Preview 3 implements a revisable chronological public trajectory | Yes, operationally and network-zero: a three-axis public recurrence runs forward, one real local backward assigns time-local credit, a bounded update is replayed forward, and its magnitudes compile exactly into the existing executable actuator |
 | Runtime Preview 3 is equivalent to hidden-state optimization or proves a hosted control effect | No; its trajectory is a hand-built public surrogate, the gradient stops before JSON/provider execution, and no new hosted contrast was run. Provider uptake, semantic quality, causal effect, and general reasoning improvement remain `NOT_ASSESSED` |
+| Runtime Preview 4 makes zero control a true event-bearing no-op | Yes, network-zero: `u=0` follows only the frozen forward recurrence and admits none of the typed event proposals; independent replay and finite-difference checks pass |
+| Runtime Preview 4 requires exact placement to beat its matched sham before executing | No; the eligible-time sham matches value geometry, L2, control cost, and smoothness, but its outcome is a sealed research diagnostic excluded from product acceptance |
 | v0.6.3-live-r01 establishes a null provider actuator | No; it stopped after one completed call on `EXACT_ONE_CLOSURE_FAILED`, with 15 calls unattempted and all X/Z and D/C effects not assessed |
 | v0.6.3.1-live-r01 observed a non-zero public endpoint difference | Yes, narrowly: one authorized `C -> X -> D -> Z` block completed 4/4 calls; X and D selected the aligned closure while C selected the alternative and Z the mixed closure, yielding `CHANNEL_OPEN_DIRECTIONAL` and `GRADIENT_PLACEMENT_DIRECTIONAL` |
 | The v0.6.3.1-live-r01 result establishes evidence-order causality or quality improvement | No; evidence order was the sole intentionally varying semantic payload field, but the one fixed serial block cannot separate treatment from temporal/provider drift, and all arms returned the same public answer `VIOLET` |
@@ -1944,7 +1959,7 @@ category determination.
   a deterministic allowlist projection connects Evidence, Event, the neutral
   and revised public trajectories, time-local credit, the compiled Apply
   Revision program, and Final Output Diff. Recorded v0.6.2.1 playback remains
-  available, while Runtime Preview 3 adds the generic loopback live operation.
+  available, while Runtime Preview 4 adds the zero-centered generic loopback live operation.
   The first frontend remains replaceable; hosting and a general product claim
   remain pending.
 - **Milestone 4 — submission evidence:** document the Codex development record,
@@ -2038,7 +2053,7 @@ schedules, and the sealed 17-gate decision promotes v0.5.5. The completed
 v0.5.5 successor then composes its three sealed lanes with exact block credit,
 one-lane equivalence, disconnected Constraint isolation, and byte invariance
 across all six input orders. The later product line now adds the loopback
-`Apply Revision` API, Runtime Preview 3's revisable public trajectory, and a
+`Apply Revision` API, Runtime Preview 4's zero-centered revisable public trajectory, and a
 Reasoning IDE with local and sealed public Live modes. One sealed GPT-5.6
 acceptance artifact and one later manual runtime smoke establish that the
 full-context provider boundary can complete, while effect attribution remains

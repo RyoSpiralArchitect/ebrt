@@ -77,7 +77,7 @@ deployment has actually been validated.
 - Inspector: Node.js `^20.19.0` or `>=22.12.0`, pnpm, and a modern browser.
 - Responsive Inspector layouts are provided for desktop, tablet, and mobile.
 - Windows, multi-process idempotency, production hosting, and uptime are not
-  validated in Runtime Preview 3. The public Quick Tunnel is a temporary demo
+  validated in Runtime Preview 4. The public Quick Tunnel is a temporary demo
   bridge to the loopback monolith.
 
 ## GPT-5.6 and Codex usage
@@ -106,10 +106,10 @@ sealed provider result.
 | --- | --- | --- |
 | 0:00–0:20 | Title, then the stale Before card (`POLISH`). | “Hosted models can regenerate text, but they do not expose an editable reasoning state. When late evidence invalidates an earlier premise, developers need a revision operation they can inspect—not another invisible retry.” |
 | 0:20–0:42 | Show R1–R5, then introduce late event R6 superseding R3. | “This answer was valid under its original evidence horizon. R6 changes the judging rule and invalidates R3, so the emitted public state is now stale.” |
-| 0:42–1:08 | Center the neutral trajectory, loss, and `backward()` animation. | “EBRT rolls a typed public trajectory forward, evaluates a public surrogate loss, and executes one real local float64 backward pass. Credit is assigned only to eligible public time sites.” |
+| 0:42–1:08 | Center the zero-control trajectory, loss, and `backward()` animation. | “Zero control is now a literal no-op over event proposals. EBRT starts from that unchanged forward trajectory, evaluates a public surrogate loss, and executes one real local float64 backward pass over eligible public time sites.” |
 | 1:08–1:30 | Show bounded controls and compiled `Reinspect / Suppress / Preserve`. Keep the gradient-boundary notice visible. | “The update is projected, replayed through the same recurrence, and compiled into a bounded revision program: reinspect R6, suppress invalidated R3, and preserve stable R5. The gradient stops at this public control map; GPT-5.6 is not backpropagated through.” |
 | 1:30–1:58 | Click **Apply Revision → Regenerate** in Live mode; show the one provider attempt. | “Now I apply that revision. GPT-5.6 receives the full context and the compiled public operation, then performs one structured regeneration. Provider credentials remain server-side, and the runtime does not retry.” |
-| 1:58–2:20 | Reveal `POLISH → PROVE`, lineage checks, invalidation, and stable-fact preservation. | “The public output changes from POLISH to PROVE. The IDE separately verifies the diff, removes R3 from active support, binds the late correction into the selected lineage, and confirms that the three-minute constraint stayed unchanged.” |
+| 1:58–2:20 | Reveal the user prompt, readable `POLISH → PROVE` decision diff, lineage checks, invalidation, and stable-fact preservation. | “For the concrete prompt—how should we use the final hours to maximize our chance of winning—the public output changes from additional UI polish to an end-to-end proof with a live reasoning diff. The IDE separately verifies lineage, invalidation, and the stable video constraint.” |
 | 2:20–2:35 | Briefly show self-tests, receipts, and repository history. | “Codex helped turn the initial research sketch into this monolith, build adversarial tests, validate artifacts, repair review findings, and create the Reasoning IDE. The repository keeps each negative and null result instead of rewriting the evidence.” |
 | 2:35–2:45 | Closing product diagram and repository/demo links. | “EBRT does not claim to read hidden thoughts. It gives developers an external revision layer they can execute, observe, and verify.” |
 
