@@ -193,10 +193,36 @@ python3 ebrt.py preflight
 
 The sealed contract, post-call-only gold, and UI concept are documented in
 [`RND_APPLY_REVISION_ACCEPTANCE_V0_6_2_1.md`](docs/RND_APPLY_REVISION_ACCEPTANCE_V0_6_2_1.md).
-Live execution remains a separate one-shot step requiring the committed policy
-lock and the exact annotated authorization tag. A structurally valid but
-semantically unexpected Before still receives exactly one After attempt; a
-failure is preserved without retry, resume, backfill, or a third call.
+The separately authorized live r01 then completed its exact two calls without
+retry. The actual Before passed R1-R5, became stale under R1-R6, and the
+compiled `R6 -> R4 -> R2 / suppress R3 / preserve R5` operation preceded one
+full-context regeneration. The public answer changed `POLISH -> PROVE`; the
+After answer, invalidation, stable fact, and every fact-local lineage check all
+passed. The immutable result is `ACCEPT_APPLY_REVISION_PATH` with fingerprint
+`1ba3cfe9565124d92fa8db8222c4d44bc62a81e1da7c6fad07e24e9a8e7ad245`.
+See the
+[`live r01 result note`](docs/RND_APPLY_REVISION_ACCEPTANCE_V0_6_2_1_LIVE_R01.md)
+and
+[`canonical artifact`](artifacts/apply_revision_acceptance_v0_6_2_1_live_r01/).
+This is product acceptance only: `effect_attribution_status` remains
+`NOT_ASSESSED`, and the run does not show that the control caused the changed
+answer.
+
+Revalidate the immutable publication without importing EBRT, Torch, Pydantic,
+or the OpenAI SDK:
+
+```bash
+python3 -I -S verify_apply_revision_acceptance_v0_6_2_1_live_r01.py \
+  artifacts/apply_revision_acceptance_v0_6_2_1_live_r01
+python3 -I -S verify_apply_revision_acceptance_v0_6_2_1_live_r01.py \
+  --self-test artifacts/apply_revision_acceptance_v0_6_2_1_live_r01
+```
+
+The [`recorded Reasoning IDE`](inspector/README.md) consumes a separate,
+allowlisted projection pinned to that exact publication. Its three panels keep
+Before + late event, the local revision engine, and After + verification in one
+view. `Replay recorded Apply Revision` animates stored public state only and
+makes no new model call.
 
 ### v0.6.3 network-zero actuator preflight
 
@@ -1499,6 +1525,9 @@ retrospectively relabeling failures. See the
 | The v0.6.1 overall gate promoted | No; P answered `POLISH` correctly but failed exact pre-event lineage because R2 was unexpectedly inherited into `demo_centerpiece`, so the preregistered gate is held |
 | The v0.6.1 canonical artifact requires the current host or current v0.5.5 tree to validate | No; the post-run pure-stdlib verifier checks the pinned recorded snapshot without importing project/provider packages, reading current v0.5.5 sources, or gating on host runtime. It does not rederive the historical mechanism or authenticate the provider. |
 | A raw full-context restart failed to revise the answer | No; A answered `PROVE`, invalidated R3, and preserved R5, but failed the stricter lineage endpoint because R4 was absent from `final_priority` |
+| v0.6.2.1 makes `Apply Revision -> Regenerate` executable and verifiable | Yes, for one contaminated product-acceptance path: exactly two calls completed, the actual Before fed one local backward pass, the compiled public actuator preceded full-context regeneration, and the After answer, invalidation, stable fact, and fact-local lineage all passed |
+| The v0.6.2.1 `POLISH -> PROVE` diff proves that EBRT control improved or caused the answer | No; this is not a matched effect experiment, the controller target is case-specific, and `effect_attribution_status` remains `NOT_ASSESSED` |
+| The v0.6.2.1 Reasoning IDE performs a new model call when replayed | No; it verifies and animates an exact hash-pinned public projection of the recorded artifact, and the replay CTA issues zero provider requests |
 | v0.6.3-live-r01 establishes a null provider actuator | No; it stopped after one completed call on `EXACT_ONE_CLOSURE_FAILED`, with 15 calls unattempted and all X/Z and D/C effects not assessed |
 | v0.6.3.1-live-r01 observed a non-zero public endpoint difference | Yes, narrowly: one authorized `C -> X -> D -> Z` block completed 4/4 calls; X and D selected the aligned closure while C selected the alternative and Z the mixed closure, yielding `CHANNEL_OPEN_DIRECTIONAL` and `GRADIENT_PLACEMENT_DIRECTIONAL` |
 | The v0.6.3.1-live-r01 result establishes evidence-order causality or quality improvement | No; evidence order was the sole intentionally varying semantic payload field, but the one fixed serial block cannot separate treatment from temporal/provider drift, and all arms returned the same public answer `VIOLET` |
@@ -1508,7 +1537,7 @@ retrospectively relabeling failures. See the
 | Selective replay should be optimized before state sufficiency | Not supported by current evidence; it is paused as a quality direction and remains an unranked future efficiency ablation |
 | EBRT edits hidden states inside a trained Transformer or GPT model | Not implemented |
 | EBRT improves real-world LLM reasoning accuracy | Not established |
-| GPT-5.6 is meaningfully integrated | Yes at the public observer/replay boundary in a complete DEV canary; not yet promotion evidence |
+| GPT-5.6 is meaningfully integrated | Yes at the public full-context regeneration boundary in the sealed v0.6.2.1 product-acceptance path; this is integration evidence, not causal or population-level quality evidence |
 
 This project uses the term *reasoning state* only for the harness's explicit
 structured state and v0.4's public Reasoning Cards. It does not claim access to

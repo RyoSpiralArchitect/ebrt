@@ -1,0 +1,188 @@
+{
+  "actual_before_compiled_fingerprint_sha256": "108f2da7e391cdaed8911a3cbc5f4493c281c1fe45d7d50900e9e20d1d601582",
+  "compiled_actuator": {
+    "correction_evidence_id": "R6",
+    "event_id": "EV_JUDGING_GUIDANCE_CORRECTION_R6",
+    "fingerprint_sha256": "21eb4312bb7e87af4272ad4ae352becdbd1ada1bc1c961476f1efe34360723b4",
+    "gradient_stops_here": true,
+    "preserve_evidence_ids": [
+      "R5"
+    ],
+    "reinspect_evidence_ids": [
+      "R6",
+      "R4",
+      "R2"
+    ],
+    "schema_version": "ebrt-apply-revision-compiled-actuator-v0.6.2.1",
+    "source_before_compiled_fingerprint_sha256": "108f2da7e391cdaed8911a3cbc5f4493c281c1fe45d7d50900e9e20d1d601582",
+    "source_control_map_fingerprint_sha256": "7336d8f9f8b3e5d21875eb1ba4bbde71a9f3be88874b57f291ccbd39f69bc8aa",
+    "suppress_evidence_ids": [
+      "R3"
+    ]
+  },
+  "control_map": {
+    "actual_before_state": {
+      "active_support_evidence_ids": [
+        "R2",
+        "R3",
+        "R5"
+      ],
+      "components": [
+        {
+          "axis": "current_answer",
+          "coordinate": -1.0,
+          "value": "POLISH"
+        },
+        {
+          "axis": "fact:demo_centerpiece",
+          "coordinate": -1.0,
+          "value": "POLISHED_SCREENS"
+        },
+        {
+          "axis": "fact:final_priority",
+          "coordinate": -1.0,
+          "value": "ADDITIONAL_UI_POLISH"
+        }
+      ],
+      "fingerprint_sha256": "e4f1deae9ac6623b59334f55dafdf6ceca509c2175e79ee74f82a5b04eee89dd",
+      "initial_scalar": -1.0,
+      "schema_version": "ebrt-apply-revision-actual-before-state-v0.6.2.1",
+      "source_compiled_fingerprint_sha256": "108f2da7e391cdaed8911a3cbc5f4493c281c1fe45d7d50900e9e20d1d601582",
+      "source_selected_closure_id": "K_c9dc959be3"
+    },
+    "backward_calls": 1,
+    "checks": {
+      "actual_before_state_bound_to_controller": true,
+      "control_budget_respected": true,
+      "finite_difference_agreement": true,
+      "finite_public_credit": true,
+      "gradient_stops_before_provider": true,
+      "local_backward_executed": true,
+      "non_neutral_control_map": true,
+      "surrogate_objective_decreased": true
+    },
+    "control_l2": 0.09653888431525784,
+    "credit_rows": [
+      {
+        "active_before": false,
+        "evidence_id": "R1",
+        "finite_difference_gradient": 0.0,
+        "gradient": 0.0,
+        "signed_public_credit": -0.0,
+        "source_effect": 0.0
+      },
+      {
+        "active_before": true,
+        "evidence_id": "R2",
+        "finite_difference_gradient": -0.09653752652827308,
+        "gradient": -0.09653752659881551,
+        "signed_public_credit": 0.004826876329940776,
+        "source_effect": 0.22505899968816734
+      },
+      {
+        "active_before": true,
+        "evidence_id": "R3",
+        "finite_difference_gradient": -0.15691330557121574,
+        "gradient": -0.15691330563162764,
+        "signed_public_credit": 0.007845665281581383,
+        "source_effect": 0.22401802994209757
+      },
+      {
+        "active_before": false,
+        "evidence_id": "R4",
+        "finite_difference_gradient": -0.44948375654829675,
+        "gradient": -0.44948375646866573,
+        "signed_public_credit": 0.022474187823433286,
+        "source_effect": 0.4458835480196419
+      },
+      {
+        "active_before": true,
+        "evidence_id": "R5",
+        "finite_difference_gradient": -0.605663572406101,
+        "gradient": -0.6056635724566952,
+        "signed_public_credit": 0.030283178622834764,
+        "source_effect": 0.4453715338126686
+      },
+      {
+        "active_before": false,
+        "evidence_id": "R6",
+        "finite_difference_gradient": -1.7677944404437262,
+        "gradient": -1.767794440560792,
+        "signed_public_credit": 0.0883897220280396,
+        "source_effect": 1.0
+      }
+    ],
+    "dtype": "torch.float64",
+    "fingerprint_sha256": "7336d8f9f8b3e5d21875eb1ba4bbde71a9f3be88874b57f291ccbd39f69bc8aa",
+    "finite_difference_tolerance": 1e-08,
+    "gradient_boundary": {
+      "actual_provider_output_participated_in_surrogate": true,
+      "after_provider_output_participated_in_surrogate": false,
+      "crosses_json": false,
+      "crosses_provider": false,
+      "ends_at": "public control map",
+      "hosted_model_differentiated": false,
+      "starts_at": "actual normalized public Before state plus public temporal credit basis"
+    },
+    "max_control_l2": 0.25,
+    "maximum_finite_difference_error": 1.1706569047476023e-10,
+    "objective_after": 0.6693646353309954,
+    "objective_before": 0.8485741563539103,
+    "schema_version": "ebrt-apply-revision-public-control-map-v0.6.2.1",
+    "source_credit_basis": {
+      "absolute_credit_by_evidence_id": {
+        "R1": 0.0,
+        "R2": 0.00014298188952434026,
+        "R3": 0.0001423205526240743,
+        "R4": 0.000283273596221432,
+        "R5": 0.00028294830925722355,
+        "R6": 0.0006353084734334116
+      },
+      "fingerprint_sha256": "37986d512b0cde274f0407f894c414b471e11703dc6d174e8c6546b2b3af9f77",
+      "normalized_effect_by_evidence_id": {
+        "R1": 0.0,
+        "R2": 0.22505899968816734,
+        "R3": 0.22401802994209757,
+        "R4": 0.4458835480196419,
+        "R5": 0.4453715338126686,
+        "R6": 1.0
+      },
+      "schema_version": "ebrt-apply-revision-v054-credit-basis-v0.6.2.1",
+      "signed_credit_by_evidence_id": {
+        "R1": 0.0,
+        "R2": 0.00014298188952434026,
+        "R3": 0.0001423205526240743,
+        "R4": 0.000283273596221432,
+        "R5": 0.00028294830925722355,
+        "R6": 0.0006353084734334116
+      },
+      "source_adjoint_fingerprint_sha256": "0a64495dd1bc0abe8f1c659d1d029dcd61c640f7a8d42b0a2f1bc376e7845406",
+      "source_backward_calls": 1,
+      "source_exact_control_fingerprint_sha256": "3aebb5d68438dcdfb4eb351425c235a170d803017100ae32022988363ab453ad",
+      "source_lane_fingerprint_sha256": "f7256b7866099f6a682ac7bd733acb26f278eac5000a030ef34932151492077a",
+      "source_program_fingerprint_sha256": "686ae870d0694fbecc387836911b13265c04f8cc1b9bc4430369479470b32cfb"
+    },
+    "state_trace_after": [
+      -0.6750698748386078,
+      -0.5023698578061783,
+      -0.3886303556329931,
+      -0.29921393584330874,
+      -0.2278003215011299,
+      -0.09809011592192406
+    ],
+    "state_trace_before": [
+      -0.6750698748386078,
+      -0.5031815829111277,
+      -0.3906856189361433,
+      -0.3098343945128973,
+      -0.24873525399646607,
+      -0.20118084888577142
+    ],
+    "status": "PASS",
+    "terminal_target": 0.72
+  },
+  "effect_attribution_status": "NOT_ASSESSED",
+  "fingerprint_sha256": "9ecad537a43a51f44e672c9ffb8c1544ff2fe430c2302f43f108c30e76094d14",
+  "gradient_boundary": "local public surrogate to public control map only",
+  "schema_version": "ebrt-apply-revision-trace-v0.6.2.1-r01"
+}

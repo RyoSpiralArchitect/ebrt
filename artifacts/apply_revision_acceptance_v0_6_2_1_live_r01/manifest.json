@@ -1,0 +1,43 @@
+{
+  "artifacts": {
+    "apply_revision_trace.json": {
+      "bytes": 6758,
+      "sha256": "ad16fa97303e98f09e88aea5ef28a93e8a50035f6461baca427d49d1c1aac55f"
+    },
+    "attempt_journal.jsonl": {
+      "bytes": 3108,
+      "sha256": "b6b9c03e064f36aa67d9a5c5c997c97d70e7b964b2cb9ca3765be12464e29a84"
+    },
+    "calls.jsonl": {
+      "bytes": 4462,
+      "sha256": "fc7eb0f75914c951012e568c4a653461e2043959e327a5ee8981360c7308709f"
+    },
+    "provider_inputs.json": {
+      "bytes": 19159,
+      "sha256": "d57b33860db84a0378ffd6b6e18ef67ae64d66eb75bd1959c1a1c7424ea90a3f"
+    },
+    "report.md": {
+      "bytes": 1481,
+      "sha256": "ac7e2f48506c5924c624e2d3fcc619a6a9f6edbd5fc457b088d005c67078faf6"
+    },
+    "result.json": {
+      "bytes": 30531,
+      "sha256": "fa8f44d6c721ab6338173edd7ce25b36c683902e75fc7a0427b45c3550b4585a"
+    }
+  },
+  "claim_boundary": [
+    "This is one contaminated synthetic product-acceptance path, not a fresh benchmark, causal comparison, or population estimate.",
+    "The controller target is an explicit case-specific oracle and the candidate catalog is supplied public structure, not autonomous semantic discovery.",
+    "The actual structurally valid Before output is normalized into the local controller; no free-text claim or private reasoning is reused.",
+    "The v0.6.2.1 scalar recurrence is a new actual-Before-conditioned surrogate initialized from a recomputed v0.5.4-derived effect basis; it is not an exact replay of the v0.5.4 temporal mechanism.",
+    "A real local backward pass stops at the public control map. GPT-5.6, JSON projection, provider parsing, generation, and grading are not differentiated.",
+    "A passing result establishes one executable and verifiable Apply Revision path; effect attribution remains NOT_ASSESSED.",
+    "No result supports hidden-state editing, attention or KV-cache control, causal superiority, quality improvement, or general reasoning improvement."
+  ],
+  "effect_attribution_status": "NOT_ASSESSED",
+  "fingerprint_sha256": "7f2b64794add0fa3bc9b8a0a4b3bd617cd8a1ac8cd862844899374886e0aa357",
+  "policy_lock_fingerprint_sha256": "31b27497b6ff05369e9f33110f6faa1c3765a2e4caae710a2aa7d7661c4f111e",
+  "result_fingerprint_sha256": "1ba3cfe9565124d92fa8db8222c4d44bc62a81e1da7c6fad07e24e9a8e7ad245",
+  "schema_version": "ebrt-apply-revision-manifest-v0.6.2.1-r01",
+  "status": "SEALED_APPLY_REVISION_RESULT"
+}
