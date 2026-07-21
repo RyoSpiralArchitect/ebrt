@@ -383,16 +383,23 @@ export type ApplyRevisionView = Omit<
   };
 };
 
-export type LiveDemoRequestEnvelope = {
+export type LiveApplyRevisionRequest = Record<string, unknown> & {
+  schema_version: "ebrt-live-apply-revision-request-v0.6.2.4";
+  request_id: string;
+};
+
+export type LiveRequestBinding = {
+  provenance: "CALLER_SUPPLIED_UNVERIFIED" | "CONTAMINATED_REGRESSION_FIXTURE";
+  source_artifact_fingerprint_sha256: string | null;
+  request_fingerprint_sha256: string;
+  request: LiveApplyRevisionRequest;
+};
+
+export type LiveDemoRequestEnvelope = LiveRequestBinding & {
   schema_version: "ebrt-live-demo-request-v0.6.2.4";
   provenance: "CONTAMINATED_REGRESSION_FIXTURE";
   source_artifact_fingerprint_sha256: string;
-  request_fingerprint_sha256: string;
   fingerprint_sha256: string;
-  request: Record<string, unknown> & {
-    schema_version: "ebrt-live-apply-revision-request-v0.6.2.4";
-    request_id: string;
-  };
 };
 
 export type LiveApplyRevisionResponse = {

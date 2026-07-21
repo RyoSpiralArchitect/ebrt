@@ -59,6 +59,12 @@ Open `http://127.0.0.1:5173`, switch to **Live**, then choose
 `OPENAI_API_KEY` only in the backend environment and replace `scripted` with
 `openai`; credentials never enter the browser or public response.
 
+Choose **Editor** to paste or edit any complete `v0.6.2.4` public revision
+request. The Editor starts empty, only loads the contaminated sample on an
+explicit click, retains caller text in memory only, and submits through the
+same fail-closed backend validator. Caller-supplied semantics and causal effect
+remain `NOT_ASSESSED`.
+
 ### Runtime, model, and claim boundary
 
 - **Supported local runtime:** CPython 3.11+, PyTorch 2.x, and a CPU. The
@@ -77,7 +83,8 @@ Open `http://127.0.0.1:5173`, switch to **Live**, then choose
   attention, KV cache, or private chain-of-thought; send gradients through GPT
   or JSON; or establish provider uptake, causal superiority, semantic quality,
   general reasoning improvement, or a public hosted service. Those effect and
-  quality axes remain `NOT_ASSESSED`.
+  quality axes remain `NOT_ASSESSED`. The public web demo is recorded-only;
+  the credential-bearing Live runtime remains loopback-local.
 
 Submission copy and the final video checklist live in
 [`SUBMISSION.md`](SUBMISSION.md). The complete, immutable research history

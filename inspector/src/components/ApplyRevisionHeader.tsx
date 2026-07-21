@@ -7,11 +7,15 @@ export function ApplyRevisionHeader({
   busy,
   mode,
   onModeChange,
+  onOpenEditor,
+  recordedOnly,
   snapshot,
 }: {
   busy: boolean;
   mode: InspectorMode;
   onModeChange: (mode: InspectorMode) => void;
+  onOpenEditor: () => void;
+  recordedOnly: boolean;
   snapshot: ApplyRevisionView;
 }) {
   const liveResult = snapshot.mode === "LIVE_AFTER_REGENERATION";
@@ -31,7 +35,7 @@ export function ApplyRevisionHeader({
         <b className={livePending ? "ar-pending" : "ar-blue"}>{snapshot.after.answer}</b>
       </div>
       <div className="ar-mode-area">
-        <div aria-label="Inspector mode" className="ar-mode-switch" role="group">
+        {!recordedOnly ? <div aria-label="Inspector mode" className="ar-mode-switch" role="group">
           <button
             aria-pressed={mode === "recorded"}
             disabled={busy}
@@ -48,12 +52,17 @@ export function ApplyRevisionHeader({
           >
             Live
           </button>
-        </div>
+          <button aria-pressed="false" disabled={busy} onClick={onOpenEditor} type="button">
+            Editor
+          </button>
+        </div> : null}
         <div className={`ar-mode-status ${mode === "live" ? "live" : "recorded"}`}>
           <Icon name={mode === "live" ? "runs" : "lock"} size={16} />
           <span>
             {mode === "recorded"
-              ? "RECORDED ACCEPTANCE · NO NEW MODEL CALL"
+              ? recordedOnly
+                ? "PUBLIC RECORDED DEMO · NO API OR MODEL CALL"
+                : "RECORDED ACCEPTANCE · NO NEW MODEL CALL"
               : liveResult
                 ? "LIVE AFTER REGENERATION · 1 PROVIDER ATTEMPT"
                 : "LIVE READY · APPLY TO REGENERATE"}

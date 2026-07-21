@@ -5,7 +5,9 @@ import type {
   EvidenceRecord,
   InspectionPlanStep,
   LiveApplyRevisionResponse,
+  LiveApplyRevisionRequest,
   LiveDemoRequestEnvelope,
+  LiveRequestBinding,
   ProviderPublicOutput,
   PublicDependencyAudit,
   PublicRevisionTrajectory,
@@ -619,7 +621,7 @@ function publicTrajectory(value: unknown): PublicRevisionTrajectory {
 
 function parseResponse(
   value: unknown,
-  expectedEnvelope: LiveDemoRequestEnvelope,
+  expectedEnvelope: LiveRequestBinding,
   expectedInputFingerprint: string,
   transportBodySha256: string,
 ): LiveApplyRevisionResponse {
@@ -647,14 +649,23 @@ function parseResponse(
   if (!["CALLER_SUPPLIED_UNVERIFIED", "CONTAMINATED_REGRESSION_FIXTURE"].includes(inputProvenance)) {
     return fail("response.context.input_provenance");
   }
-  if (inputProvenance !== expectedEnvelope.provenance) {
-    return fail("response.context.input_provenance correlation");
-  }
-  if (
-    context.source_artifact_fingerprint_sha256 !==
-    expectedEnvelope.source_artifact_fingerprint_sha256
+  if (expectedEnvelope.provenance === "CONTAMINATED_REGRESSION_FIXTURE") {
+    if (inputProvenance !== expectedEnvelope.provenance) {
+      return fail("response.context.input_provenance correlation");
+    }
+    if (
+      context.source_artifact_fingerprint_sha256 !==
+      expectedEnvelope.source_artifact_fingerprint_sha256
+    ) {
+      return fail("response.context.source_artifact_fingerprint_sha256 correlation");
+    }
+  } else if (
+    (inputProvenance === "CALLER_SUPPLIED_UNVERIFIED" &&
+      context.source_artifact_fingerprint_sha256 !== null) ||
+    (inputProvenance === "CONTAMINATED_REGRESSION_FIXTURE" &&
+      !SHA256.test(String(context.source_artifact_fingerprint_sha256)))
   ) {
-    return fail("response.context.source_artifact_fingerprint_sha256 correlation");
+    return fail("response.context server-derived provenance");
   }
   if (context.question !== expectedRequest.question) return fail("response.context.question correlation");
   if (!sameCanonical(context.before_horizon_evidence_ids, expectedRequest.before_horizon_evidence_ids)) {
@@ -1640,7 +1651,7 @@ export async function loadLiveDemoRequest(signal: AbortSignal): Promise<LiveDemo
 }
 
 export async function applyLiveRevision(
-  envelope: LiveDemoRequestEnvelope,
+  envelope: LiveRequestBinding,
   signal: AbortSignal,
 ): Promise<LiveApplyRevisionResponse> {
   const request = envelope.request;
@@ -1674,4 +1685,17 @@ export async function applyLiveRevision(
     return fail("response.fingerprint_sha256 integrity");
   }
   return parseResponse(value, envelope, expectedInputFingerprint, bodySha256);
+}
+
+export async function bindCallerRequest(value: unknown): Promise<LiveRequestBinding> {
+  const request = record(value, "caller request");
+  if (request.schema_version !== LIVE_REQUEST_SCHEMA) return fail("caller request.schema_version");
+  string(request.request_id, "caller request.request_id");
+  const typedRequest = request as LiveApplyRevisionRequest;
+  return {
+    provenance: "CALLER_SUPPLIED_UNVERIFIED",
+    source_artifact_fingerprint_sha256: null,
+    request_fingerprint_sha256: await digestSha256(canonicalJson(typedRequest)),
+    request: typedRequest,
+  };
 }

@@ -28,6 +28,14 @@ prior public state, closure graphs, fingerprints, or provider configuration.
 There is no automatic retry. Stopping the browser wait aborts only the browser
 request; the server operation may still complete.
 
+The adjacent **Editor** opens a complete Protocol `v0.6.2.4` request document.
+It starts blank and loads the known sample only after an explicit user action.
+Developers can edit ordered evidence, the emitted Before state, the typed late
+event, and supplied closure candidates without a hidden natural-language-to-
+graph adapter. The exact document is submitted to the same strict backend
+validator; no raw evidence is written to browser storage, and caller semantics
+remain `CALLER_SUPPLIED_UNVERIFIED` / `NOT_ASSESSED`.
+
 Before that operation completes, Live mode deliberately withholds the sealed
 recorded After output and displays `POLISH → PENDING`. The live After card,
 public diff, and verification rows are revealed only from the returned live
@@ -132,8 +140,10 @@ pnpm dev
 ```
 
 Vite proxies same-origin `/api/**` requests to `127.0.0.1:8765` in both dev and
-preview mode. A deployed build should provide the same reverse-proxy contract;
-arbitrary cross-origin deployment is outside the loopback server contract.
+preview mode. `pnpm build:recorded` produces the public zero-call build: it
+removes Live and Editor controls, stages only the current sealed projection,
+and exposes no provider endpoint. Arbitrary cross-origin Live deployment is
+outside the loopback server contract.
 
 The desktop layout shows three simultaneous lanes. Recorded is always the
 initial mode and performs no `/api/**` request. Tablet and mobile layouts

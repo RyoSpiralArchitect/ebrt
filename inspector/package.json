@@ -8,6 +8,7 @@
     "artifact:validate": "python3 build_apply_revision_snapshot_v0_6_2_1.py validate",
     "dev": "vite --host 127.0.0.1",
     "build": "tsc -b && vite build",
+    "build:recorded": "VITE_EBRT_RECORDED_ONLY=true tsc -b && VITE_EBRT_RECORDED_ONLY=true vite build && node scripts/stage-sites-build.mjs",
     "preview": "vite preview --host 127.0.0.1"
   },
   "dependencies": {

@@ -54,6 +54,10 @@ has actually been validated.
   actuator, After diff, evidence lineage, preserved facts, and verification.
 - A network-zero scripted path for judges and a loopback API that keeps
   provider credentials server-side.
+- A local Protocol Editor for arbitrary complete public-state requests, with no
+  hidden semantic adapter and the same fail-closed runtime validator.
+- A public recorded-only replay that exposes neither Live controls nor a
+  credential-bearing backend.
 - Recorded artifacts, fingerprints, matched temporal sham diagnostics, and an
   explicit `NOT_ASSESSED` boundary for semantic quality and causal effect.
 
