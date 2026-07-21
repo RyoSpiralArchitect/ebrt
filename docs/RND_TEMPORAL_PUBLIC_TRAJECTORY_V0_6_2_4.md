@@ -266,7 +266,8 @@ Before state. The validator:
 5. reconstructs the reversed eligible-time matched sham and requires its
    objective, terminal state, norm, zero-call scope, and every trajectory hard
    gate to match; and
-6. recomputes neutral and revised masked allocations and the complete ordered
+6. recomputes neutral and revised masked allocations, each row's
+   `allocation * source_effect` contribution, and the complete ordered
    control-check receipt.
 
 This validation occurs before the trajectory can be compiled into an
@@ -284,6 +285,10 @@ gradients and finite-difference values, updating the trajectory-point gradient
 copies, and resealing every affected object is rejected with
 `PUBLIC_TRAJECTORY_GRADIENT_RECEIPT_INVALID` because finite differences are
 recomputed from the recurrence rather than trusted from the artifact.
+Redistributing the published before/after contribution values between rows
+while preserving their totals and resealing the control map is rejected with
+`PUBLIC_TRAJECTORY_CONTROL_DERIVATION_INVALID`; the validator rederives each
+row independently instead of accepting a fingerprint or aggregate sum.
 
 ## Current offline evidence
 
@@ -293,12 +298,12 @@ Run on the current working tree:
 python3 ebrt_live.py self-test
 ```
 
-The current implementation returns **41/41 checks PASS**. The exact current
+The current implementation returns **42/42 checks PASS**. The exact current
 receipt is:
 
 ```text
 self-test schema       ebrt-live-self-test-v0.6.2.4
-self-test fingerprint  98b1176f79660b01914de1ed7f8729f9d592e325bbb77c9064aecd60a70e82af
+self-test fingerprint  f1bd88a6a2ccb0f962a923c85ce48cf12ba8d7a1b45ca61a58162c2491afb688
 demo result fingerprint
                        bc3f740e9b4ecaa662c65078db6bbb482ec9fbdbbd76c21a2e5cb47df5c249e8
 generic result fingerprint
@@ -319,6 +324,7 @@ stable_axis_is_exactly_preserved
 trajectory_patch_compiles_exactly_to_continuous_actuator
 resealed_trajectory_tamper_rejected_before_provider
 scientific_receipt_reseal_tamper_rejected_before_provider
+surrogate_contribution_reseal_tamper_rejected_before_provider
 ```
 
 A fresh local scripted invocation was also run:

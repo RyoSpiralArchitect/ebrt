@@ -2006,6 +2006,14 @@ def _validate_public_trajectory_derivation(
             == float(
                 expected_allocation[index] - baseline_allocation[index]
             )
+            and float(row["surrogate_contribution_before"])
+            == float(
+                (baseline_allocation[index] * effects[index]).detach()
+            )
+            and float(row["surrogate_contribution_after"])
+            == float(
+                (expected_allocation[index] * effects[index]).detach()
+            )
             and row["state_before"]
             == [float(value) for value in neutral_states[index].detach()]
             and row["state_after"]
@@ -5131,6 +5139,33 @@ def self_test() -> JsonObject:
         == "PUBLIC_TRAJECTORY_RECEIPT_DERIVATION_INVALID"
         and gradient_tamper_rejection
         == "PUBLIC_TRAJECTORY_GRADIENT_RECEIPT_INVALID"
+    )
+    contribution_tampered_control = _clone(generic_control)
+    contribution_rows = contribution_tampered_control["credit_rows"]
+    contribution_delta = 0.125
+    for field in (
+        "surrogate_contribution_before",
+        "surrogate_contribution_after",
+    ):
+        contribution_rows[0][field] += contribution_delta
+        contribution_rows[1][field] -= contribution_delta
+    contribution_tampered_control = _seal(
+        _without_fingerprint(contribution_tampered_control)
+    )
+    contribution_tamper_rejection = ""
+    try:
+        _compile_actuator(
+            generic_request,
+            generic_before,
+            contribution_tampered_control,
+        )
+    except LiveRevisionError as error:
+        contribution_tamper_rejection = error.reason_code
+    checks[
+        "surrogate_contribution_reseal_tamper_rejected_before_provider"
+    ] = (
+        contribution_tamper_rejection
+        == "PUBLIC_TRAJECTORY_CONTROL_DERIVATION_INVALID"
     )
     generic_prior_payload = _build_prior_public_state(
         generic_request, generic_before
