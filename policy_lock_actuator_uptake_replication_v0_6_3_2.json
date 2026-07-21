@@ -1,0 +1,305 @@
+{
+  "artifact": {
+    "directory": "artifacts/actuator_uptake_replication_v0_6_3_2_preflight",
+    "files": [
+      "controller_audit.json",
+      "manifest.json",
+      "projection_bundle.json",
+      "self_test.json"
+    ],
+    "network_calls": 0,
+    "provider_calls": 0
+  },
+  "canonicalization": {
+    "allow_nan": false,
+    "encoding": "utf-8",
+    "ensure_ascii": false,
+    "separators": [
+      ",",
+      ":"
+    ],
+    "sort_keys": true,
+    "trailing_newline": true
+  },
+  "claim_boundary": [
+    "This lock authorizes deterministic network-zero construction only.",
+    "The local float64 backward ends before JSON; no gradient crosses the hosted boundary.",
+    "The synthetic closure coordinates are parser and decision conformance cases, not hosted effects.",
+    "A future exact eight-call execution requires a separate merged authorization lock and exact-commit tag.",
+    "Only two directional blocks may open a separately reviewed v0.6.4 network-zero preflight; no live v0.6.4 call is authorized here.",
+    "No result here supports hidden-state editing, attention/KV claims, quality improvement, or general reasoning improvement."
+  ],
+  "fingerprint_sha256": "d5c6e7c14978ce9c962d4b2add8f2a605fb25b9f6a3021e144166c9c7d0b4c5f",
+  "predecessor_eligibility_anchor": {
+    "direct_v0_6_4_promotion_allowed": false,
+    "fingerprint_sha256": "ce9d27ecdc13f8ec22f01693330c53e41ef2080604893683f5fa1e8da91ea618",
+    "manifest_file": {
+      "bytes": 3826,
+      "fingerprint_sha256": "cc90cb304ee150d07dcece9e8c8b37a015783ecd9e9ee61b8c803995c9dfe743",
+      "sha256": "23304291a8b8be4f4d93e30e6e461bfd3fe6981976886816170bf90d5006932c"
+    },
+    "result_commit": "3f65cce03057e7ccfbd39fc168a7fb9e82e591b2",
+    "result_file": {
+      "bytes": 33159,
+      "fingerprint_sha256": "131d64dfe74b99912d5e39b0fdd13d17c69eca0d1361b27a48e75887ec25b8e2",
+      "sha256": "0ffa875e76f325ee7b3508915a5a52b05b4cbffab07f50efcd9263142da0ec7b"
+    },
+    "result_tag_object": "821c8cd96488e843bc6157ecd0fb4349166131d2",
+    "schema_version": "ebrt-actuator-uptake-replication-predecessor-anchor-v0.6.3.2",
+    "terminal_decision": "PROMOTE_TO_FRESH_REPLICATION"
+  },
+  "protocol": {
+    "arms": [
+      "Z",
+      "C",
+      "D",
+      "X"
+    ],
+    "block_schedules": {
+      "A": [
+        "C",
+        "Z",
+        "D",
+        "X"
+      ],
+      "B": [
+        "D",
+        "X",
+        "C",
+        "Z"
+      ]
+    },
+    "case_id": "orbital_manifest_revision_f",
+    "execution_order": [
+      "C",
+      "Z",
+      "D",
+      "X",
+      "D",
+      "X",
+      "C",
+      "Z"
+    ],
+    "execution_schedule": [
+      {
+        "blinded_attempt_id": "A_39276f79d4d0b99f",
+        "blinded_request_id": "Q_9c19934ca3e89315",
+        "block_id": "A",
+        "payload_fingerprint_sha256": "cd79b48764fcf316a794dd43d854308cfbfb45895adccd405ba64340e6a35b05",
+        "sequence_index": 1,
+        "treatment_id": "C",
+        "within_block_index": 1
+      },
+      {
+        "blinded_attempt_id": "A_21009567d2b053a7",
+        "blinded_request_id": "Q_164a956eb63d7d9f",
+        "block_id": "A",
+        "payload_fingerprint_sha256": "ffa986deea3af1c9e63d5633e407c86e81b70b0a29b7eb2401be91f08197995a",
+        "sequence_index": 2,
+        "treatment_id": "Z",
+        "within_block_index": 2
+      },
+      {
+        "blinded_attempt_id": "A_2e4f7eee0d24f793",
+        "blinded_request_id": "Q_d5e1d40fbdddf363",
+        "block_id": "A",
+        "payload_fingerprint_sha256": "1c3eb3971d4c6e5f418b6e3ff40c9d02177812d2307a140367d82c581c66279a",
+        "sequence_index": 3,
+        "treatment_id": "D",
+        "within_block_index": 3
+      },
+      {
+        "blinded_attempt_id": "A_a6b410a44c449443",
+        "blinded_request_id": "Q_d01c5582258746a7",
+        "block_id": "A",
+        "payload_fingerprint_sha256": "1e1a3bb4a16ac2592a8fe8e72ee6d943f2257f87e4cfc8dfbac4534315e94fef",
+        "sequence_index": 4,
+        "treatment_id": "X",
+        "within_block_index": 4
+      },
+      {
+        "blinded_attempt_id": "A_4c5f5a302b77395a",
+        "blinded_request_id": "Q_d5e1d40fbdddf363",
+        "block_id": "B",
+        "payload_fingerprint_sha256": "1c3eb3971d4c6e5f418b6e3ff40c9d02177812d2307a140367d82c581c66279a",
+        "sequence_index": 5,
+        "treatment_id": "D",
+        "within_block_index": 1
+      },
+      {
+        "blinded_attempt_id": "A_8c46e16cbc877b13",
+        "blinded_request_id": "Q_d01c5582258746a7",
+        "block_id": "B",
+        "payload_fingerprint_sha256": "1e1a3bb4a16ac2592a8fe8e72ee6d943f2257f87e4cfc8dfbac4534315e94fef",
+        "sequence_index": 6,
+        "treatment_id": "X",
+        "within_block_index": 2
+      },
+      {
+        "blinded_attempt_id": "A_256e156a33fa6895",
+        "blinded_request_id": "Q_9c19934ca3e89315",
+        "block_id": "B",
+        "payload_fingerprint_sha256": "cd79b48764fcf316a794dd43d854308cfbfb45895adccd405ba64340e6a35b05",
+        "sequence_index": 7,
+        "treatment_id": "C",
+        "within_block_index": 3
+      },
+      {
+        "blinded_attempt_id": "A_fbb3e5ecef6097ca",
+        "blinded_request_id": "Q_164a956eb63d7d9f",
+        "block_id": "B",
+        "payload_fingerprint_sha256": "ffa986deea3af1c9e63d5633e407c86e81b70b0a29b7eb2401be91f08197995a",
+        "sequence_index": 8,
+        "treatment_id": "Z",
+        "within_block_index": 4
+      }
+    ],
+    "future_live_provider_instructions_sha256": "9f3eacea0d23d502ee22bac3317a41707b634d3a83c724845f6fc38f8d4d5ae2",
+    "gold_load_count_after_release": 1,
+    "gold_release_condition": "AFTER_EIGHT_STRUCTURALLY_VALID_TERMINALS",
+    "hard_gate_ids": [
+      "strict_fixture_contract",
+      "opaque_candidate_ids",
+      "equal_candidate_cardinality",
+      "real_float64_backward",
+      "finite_difference_agreement",
+      "gradient_path_preference_nonzero",
+      "exact_z_x_c_d_permutations",
+      "matched_d_c_geometry",
+      "d_alignment_exceeds_c",
+      "immutable_chunk_multiset",
+      "only_evidence_order_differs",
+      "provider_payloads_leak_free",
+      "four_payloads_presealed",
+      "fresh_case_rotated_from_predecessor",
+      "predecessor_eligibility_anchored",
+      "exact_mirrored_eight_call_schedule",
+      "payload_bytes_reused_across_blocks",
+      "pairwise_serial_positions_counterbalanced",
+      "all_known_closures_roundtrip",
+      "semantic_failures_are_endpoints",
+      "unknown_closure_rejected",
+      "per_block_classifier_total",
+      "aggregate_strict_and_total",
+      "deterministic_double_projection",
+      "canonical_artifact_directory_exact",
+      "network_calls_zero"
+    ],
+    "operator": "evidence_permutation",
+    "orders": {
+      "C": [
+        "N3",
+        "N4",
+        "N6",
+        "N1",
+        "N2",
+        "N5",
+        "N7"
+      ],
+      "D": [
+        "N1",
+        "N2",
+        "N6",
+        "N3",
+        "N4",
+        "N5",
+        "N7"
+      ],
+      "X": [
+        "N6",
+        "N5",
+        "N1",
+        "N2",
+        "N3",
+        "N4",
+        "N7"
+      ],
+      "Z": [
+        "N1",
+        "N3",
+        "N6",
+        "N4",
+        "N2",
+        "N5",
+        "N7"
+      ]
+    },
+    "positive_result": "REPLICATION_DIRECTIONAL_COUNTERBALANCED",
+    "primary_action_field": "selected_closure_id",
+    "provider_payload_count": 4,
+    "retry_resume_backfill_tiebreak_ninth_call_allowed": false,
+    "scheduled_call_count": 8,
+    "semantic_failures_are_endpoints": true,
+    "structural_invalid_reasons": [
+      "provider_transport_or_timeout",
+      "malformed_or_duplicate_key_json",
+      "provider_output_schema_invalid",
+      "unknown_closure_id"
+    ],
+    "v0_6_4_live_execution_authorized": false,
+    "v0_6_4_network_zero_preflight_may_open_only_after_aggregate_success": true
+  },
+  "runtime_contract": {
+    "machine": "arm64",
+    "max_output_tokens": 1024,
+    "model": "gpt-5.6-sol",
+    "previous_response_id": false,
+    "provider_calls_authorized": 0,
+    "pydantic": "2.12.5",
+    "python": "3.13.13",
+    "reasoning_effort": "low",
+    "sdk_retries": 0,
+    "store": false,
+    "timeout_seconds": 60,
+    "torch": "2.11.0"
+  },
+  "schema_version": "ebrt-actuator-uptake-policy-lock-v0.6.3.2",
+  "sources": {
+    "core": {
+      "bytes": 109640,
+      "path": "actuator_uptake_replication_v0_6_3_2.py",
+      "sha256": "8bb31f3efe169c92acef69ce6e85ccdc02df058654950834641199517bcfabf7"
+    },
+    "fixture": {
+      "bytes": 4352,
+      "path": "fixtures/actuator_uptake_replication_v0_6_3_2.json",
+      "sha256": "af5f7ce2ec987bea4b7cb64a32d9549d390bf688438ecdcbdcb6c529391f9e24"
+    },
+    "post_call_gold": {
+      "bytes": 1107,
+      "path": "fixtures/actuator_uptake_replication_gold_v0_6_3_2.json",
+      "sha256": "90b83aa6d073474ed4b71f3c0b36a4235db13354bb00747f47b0824fc84f0e4e"
+    },
+    "predecessor_fixture": {
+      "bytes": 3997,
+      "path": "fixtures/actuator_uptake_canary_v0_6_3_1.json",
+      "sha256": "45103d622540e5c212d8a680de85455544633b76df00b4d37d407c634d25e256"
+    },
+    "predecessor_gold": {
+      "bytes": 1058,
+      "path": "fixtures/actuator_uptake_canary_gold_v0_6_3_1.json",
+      "sha256": "f3bca9c84f35077b6217653094074f83dd4cc8d4c8d8510da97efc8dff65c6d0"
+    },
+    "predecessor_manifest": {
+      "bytes": 3826,
+      "path": "artifacts/actuator_uptake_canary_v0_6_3_1_live_r01/manifest.json",
+      "sha256": "23304291a8b8be4f4d93e30e6e461bfd3fe6981976886816170bf90d5006932c"
+    },
+    "predecessor_result": {
+      "bytes": 33159,
+      "path": "artifacts/actuator_uptake_canary_v0_6_3_1_live_r01/result.json",
+      "sha256": "0ffa875e76f325ee7b3508915a5a52b05b4cbffab07f50efcd9263142da0ec7b"
+    },
+    "protocol_note": {
+      "bytes": 9102,
+      "path": "docs/RND_ACTUATOR_UPTAKE_REPLICATION_V0_6_3_2.md",
+      "sha256": "0e085d06da9cdb4da4ba038bc27db85bcb53071f19d135f0980587ec37361e92"
+    },
+    "requirements": {
+      "bytes": 28,
+      "path": "requirements.txt",
+      "sha256": "024ff69128d68a1c08bba956e318301500b7aebb7c917b19ff913a9bf5e373d7"
+    }
+  },
+  "status": "LOCKED_NETWORK_ZERO_PREFLIGHT_NO_LIVE_AUTHORIZATION"
+}

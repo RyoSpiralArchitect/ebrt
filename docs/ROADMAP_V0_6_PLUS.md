@@ -1,6 +1,6 @@
 # EBRT v0.6+ — Execution, Evaluation, and Orchestration Roadmap
 
-Status: **v0.6.0 PREFLIGHT PASS; v0.6.1 FIVE-CALL BLOCK COMPLETE, GATE HELD; v0.6.3 LIVE R01 EXECUTED ONCE, STOP_OUTPUT_CONTRACT; v0.6.3.1 LIVE R01 COMPLETE, PROMOTE TO FRESH REPLICATION; v0.6.4 BLOCKED**
+Status: **v0.6.0 PREFLIGHT PASS; v0.6.1 FIVE-CALL BLOCK COMPLETE, GATE HELD; v0.6.3 LIVE R01 EXECUTED ONCE, STOP_OUTPUT_CONTRACT; v0.6.3.1 LIVE R01 COMPLETE, PROMOTE TO FRESH REPLICATION; v0.6.3.2 NETWORK-ZERO PREFLIGHT READY, LIVE NOT AUTHORIZED; v0.6.4 BLOCKED**
 
 The one allowed v0.6.1 block ran on 2026-07-20 in the preregistered order
 `P -> A -> B -> D -> C`. All five calls completed and the committed artifact
@@ -87,7 +87,8 @@ v0.6.3    preserve the consumed r01 output-contract stop
 v0.6.3.1  repair the uptake measurement with one discrete public action
 live-r01   execute exactly C -> X -> D -> Z under a separate merged lock/tag
            ↓ a favorable four-call canary opens only fresh replication
-replication confirm the same actuator on a new sealed case
+v0.6.3.2  confirm the same actuator on one new sealed case in mirrored blocks
+           A: C -> Z -> D -> X; B: D -> X -> C -> Z
 v0.6.4    measure whether scaffold aperture suppresses the replicated actuator
            ↓ only after a non-null, directionally attributable replicated result
 converge the promoted runtime into one readable monolith
@@ -537,6 +538,51 @@ with its
 and
 [`portable verifier`](../verify_actuator_uptake_canary_v0_6_3_1_live_r01.py).
 
+## v0.6.3.2 — Mirrored Fresh Actuator Replication
+
+The network-zero preflight now freezes one synthetic case that is fresh
+relative to the frozen v0.6.3.1 predecessor, not an independently sampled
+population case, and exactly four provider payload byte strings. Those same
+bytes are referenced in two pairwise serial-position-counterbalanced blocks:
+
+```text
+Block A: C -> Z -> D -> X
+Block B: D -> X -> C -> Z
+```
+
+C and D each occupy positions `{1, 3}` with reversed order; Z and X each
+occupy `{2, 4}` with reversed order. Block, attempt, arm, gradient, gold, and
+expected-result metadata remain outside the provider payload. The only primary
+public action is the opaque `selected_closure_id`. The mandated first-three
+`reviewed_evidence_ids` echo is secondary and excluded from endpoint grading
+and every promotion decision.
+
+Each block must independently satisfy both frozen directional contrasts:
+
+```text
+X = aligned and Z != aligned
+D = aligned and C != aligned
+```
+
+Only two directional blocks yield
+`REPLICATION_DIRECTIONAL_COUNTERBALANCED`. One directional block yields
+`STOP_REPLICATION_MIXED`; any structural-invalid attempt yields
+`INCOMPLETE_NOT_ASSESSED`. There is no pooling, retry, backfill, tie-break,
+third block, alternate case, or ninth call.
+
+The producer and a pure-stdlib verifier freeze 26 hard gates, all 256 per-block
+closure combinations, all 65,536 two-block closure combinations, the exact
+four-payload/eight-attempt reuse geometry, the predecessor promotion receipt,
+and zero provider/network calls. A separate reviewed live runner and exact
+authorization tag are still required.
+
+Even a positive live result would support only that one public evidence-order
+contrast repeated on one fresh sealed case under pairwise serial-position
+counterbalancing. It would not establish evidence-order causality, quality
+improvement, population reliability, hidden-state/attention/KV editing, or a
+v0.6.4 live launch. This is the final actuator-replication block before the
+project returns to the Reasoning IDE and submission surface.
+
 ## v0.6.4 — Scaffold Aperture
 
 Proceed only if a separately sealed fresh replication confirms the observed
@@ -697,6 +743,7 @@ control. Novelty is not allowed to rescue a failed v0.6-v0.8 endpoint.
 | v0.6.2 | a judge-readable, reproducible Reasoning IDE workflow | a final frontend or a population-level algorithm claim |
 | v0.6.3 | the hosted provider observably consumes one bounded public actuator and gradient placement differs directionally from its matched anti-placement construct control | that the changed output is better or that placement generalizes |
 | v0.6.3.1 | in a separately authorized four-call canary, public selected-closure endpoints differ across the position-only payloads and gradient placement differs directionally from matched anti-placement | quality improvement, causality, population reliability, or direct promotion to v0.6.4; success opens only fresh replication |
+| v0.6.3.2 | on one fresh sealed case, the preregistered X/Z and D/C closure pattern repeats in both pairwise serial-position-counterbalanced blocks | causality, quality improvement, population reliability, a second independent fresh case, or permission for v0.6.4 live execution |
 | v0.6.4 | scaffold density moderates that fixed actuator under a matched aperture experiment | that partial scaffolds or the actuator generalize |
 | v0.7 | a paired effect on one fresh frozen hosted suite | provider- or task-general superiority |
 | v0.8 | independently executed same-model public lanes can be sealed before outcome and composed into one regeneration | autonomous agents, heterogeneous superiority, or optimal routing |

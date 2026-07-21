@@ -1,0 +1,57 @@
+{
+  "backward_calls": 1,
+  "baseline_loss": 0.81,
+  "baseline_states": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "case_id": "orbital_manifest_revision_f",
+  "displacement_by_evidence_id": {
+    "N1": 0.017380872088704005,
+    "N2": 0.024735586464000005,
+    "N3": -0.034576626240000005,
+    "N4": -0.04718894400000001,
+    "N5": -0.06227280000000001,
+    "N6": 0.25668,
+    "N7": -0.0
+  },
+  "dtype": "torch.float64",
+  "fingerprint_sha256": "a0c78c5659869c8519a4d96f7246e234ffce61e1ab18b09d31e4a0523fc00f75",
+  "finite_difference_by_evidence_id": {
+    "N1": -0.0869043604856401,
+    "N2": -0.12367793228440505,
+    "N3": 0.17288313125529697,
+    "N4": 0.23594471992849364,
+    "N5": 0.311363999971892,
+    "N6": -1.283400000051671,
+    "N7": 0.0
+  },
+  "finite_difference_tolerance": 5e-08,
+  "gradient_boundary": {
+    "ends_before": "JSON provider payload",
+    "hosted_model_differentiated": false,
+    "starts_at": "local recurrent public-state surrogate"
+  },
+  "gradient_by_evidence_id": {
+    "N1": -0.08690436044352001,
+    "N2": -0.12367793232000002,
+    "N3": 0.1728831312,
+    "N4": 0.23594472000000005,
+    "N5": 0.31136400000000003,
+    "N6": -1.2834,
+    "N7": 0.0
+  },
+  "maximum_finite_difference_error": 7.150641190278861e-11,
+  "opposed_path_id": "P1",
+  "path_scores": {
+    "P0": 0.04211645855270401,
+    "P1": -0.08176557024000002
+  },
+  "preferred_path_id": "P0",
+  "schema_version": "ebrt-actuator-uptake-controller-audit-v0.6.3.2"
+}
