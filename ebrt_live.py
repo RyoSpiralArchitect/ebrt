@@ -960,10 +960,10 @@ def _public_incidence_effects(request: LiveRevisionRequest) -> tuple[dict[str, f
         {
             "schema_version": "ebrt-live-public-incidence-basis-v0.6.2.2",
             "source_kind": "CANDIDATE_GRAPH_INCIDENCE_PLUS_TYPED_EVENT",
-            "candidate_graph_fingerprints_sha256": [
-                _fingerprint(candidate.graph.model_dump(mode="json"))
+            "candidate_graph_fingerprints_sha256": sorted(
+                _fingerprint(_canonical_graph_value(candidate.graph))
                 for candidate in request.candidate_closures
-            ],
+            ),
             "event_fingerprint_sha256": _fingerprint(request.event.model_dump(mode="json")),
             "direct_target_incidence_by_evidence_id": {
                 evidence_id: direct_hits[evidence_id] for evidence_id in evidence_ids
@@ -1201,6 +1201,7 @@ def _provider_candidate_rows(request: LiveRevisionRequest) -> list[JsonObject]:
         len({row["closure_id"] for row in rows}) == len(rows),
         "OPAQUE_CLOSURE_ID_COLLISION",
     )
+    rows.sort(key=lambda row: row["closure_id"])
     return rows
 
 
@@ -2915,7 +2916,23 @@ def self_test() -> JsonObject:
         for target in graph["targets"]:
             target["direct_support_ids"].reverse()
             target["depends_on_target_ids"].reverse()
+    permuted_provider_value["candidate_closures"].reverse()
     permuted_provider_request = validate_request_mapping(permuted_provider_value)
+    permuted_provider_before = _compile_output(
+        permuted_provider_request,
+        permuted_provider_request.prior_public_state.model_dump(mode="json"),
+        permuted_provider_request.prior_closure,
+        phase_id="before_event",
+        evidence_order=permuted_provider_request.before_horizon_evidence_ids,
+        allowed_closure_ids={
+            permuted_provider_request.prior_public_state.selected_closure_id
+        },
+        require_live_schema=False,
+    )
+    permuted_provider_control = _derive_control_map(
+        permuted_provider_request,
+        permuted_provider_before,
+    )
     canonical_probe = ClosureGraph.model_validate(
         {
             "support_nodes": [
@@ -2980,6 +2997,7 @@ def self_test() -> JsonObject:
         )
         and provider_payload["candidate_closures"]
         == _provider_candidate_rows(permuted_provider_request)
+        and generic_control == permuted_provider_control
         and _canonical_graph_value(canonical_probe)
         == _canonical_graph_value(permuted_canonical_probe)
         and _opaque_closure_id("K", canonical_probe)
