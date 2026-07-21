@@ -168,16 +168,18 @@ passing public outputs. Raw arm A returned the correct `PROVE` answer but
 omitted R4 from `final_priority`. This is a real bridge and a useful control-
 channel null result, not evidence that gradient placement improves GPT.
 
-### EBRT Runtime Preview 2 — continuous Apply Revision program
+### EBRT Runtime Preview 3 — revisable public trajectory
 
 The current live product monolith is [`ebrt_live.py`](ebrt_live.py). It accepts
 a typed public invalidation-revision request containing the case and ordered
 evidence, an already emitted Before state and its selected closure graph, a typed late event,
 and at least two structurally distinct After closure candidates. It validates
 that public surface as a single-late-event horizon (the declared correction
-must be the final visible evidence), then runs one projected float64
-`backward()` step over a continuous public inspection allocation. That
-allocation is compiled into a fixed abstract review budget, ordered
+must be the final visible evidence), then rolls a three-axis public revision
+trajectory forward over the ordered evidence. One projected float64
+`backward()` step assigns credit to bounded time-local controls, after which
+the declared transition is rolled forward again. Control magnitude is decoded
+into a fixed abstract review budget and ordered
 `Reinspect` steps, and typed-event `Suppress / Preserve` steps. A deterministic
 state machine executes and seals the complete public revision program before
 candidate IDs are remapped to server-generated opaque hashes and exactly one
@@ -232,25 +234,33 @@ retries are disabled. The session keeps 128 complete terminal responses in an
 LRU cache plus compact fingerprints for up to 65,536 spent identities. An
 identity whose full result has been evicted returns `410` and is never executed
 again; the service safely rejects new identities if the compact ledger fills.
-Provider credentials, raw
-receipts, reserved gold fields, and private reasoning never enter the public
-response. Local public-surrogate objectives, gradients, finite-difference
+Provider credentials, raw receipts, reserved gold fields, and private reasoning
+never enter the public response. Neutral and revised public trajectories,
+trajectory-wide objectives, time-local controls, central finite-difference
 diagnostics, and continuous allocations are intentionally returned as Inspector
-data. Only the compiled public review allocation—not gradients, losses, or
-source effects—enters provider input. Inspection units are not provider tokens
-or attention weights, and provider uptake remains `NOT_ASSESSED`. A zero-call
-block/restore probe additionally checks dependency only on the selected public
-graph; hosted counterfactual effects remain `NOT_ASSESSED`.
-See
-[`RND_CONTINUOUS_REVISION_PROGRAM_V0_6_2_3.md`](docs/RND_CONTINUOUS_REVISION_PROGRAM_V0_6_2_3.md).
+data. The nonterminal path term uses a role-blind, graph-incidence-derived
+full-admission support envelope; it does not contain an answer, target value,
+accepted closure ID, or semantic gold. Only the compiled public review
+allocation—not states, gradients, losses, or source effects—enters provider
+input. Inspection units are not provider tokens or attention weights, and
+provider uptake remains `NOT_ASSESSED`.
 
-After the full network-zero and Inspector gates passed, one explicit no-retry
-GPT-5.6 delivery canary exercised the v0.6.2.3 payload. It completed one API
-attempt in 6.32 seconds with 2,820 input and 150 output tokens, returned
+The network-zero contract rederives the finite differences, projected update,
+backtracking decision, neutral/revised replay, matched temporal sham, and exact
+trajectory-to-actuator binding from the public request. It also requires an
+active nonterminal path loss, exact no-event identity, and rejection of both
+ordinary and coherently resealed scientific-receipt tampering before any
+provider call. See
+[`RND_TEMPORAL_PUBLIC_TRAJECTORY_V0_6_2_4.md`](docs/RND_TEMPORAL_PUBLIC_TRAJECTORY_V0_6_2_4.md).
+
+Runtime Preview 3 has no new hosted-effect result. The historical Preview 2
+delivery canary exercised the v0.6.2.3 payload after its network-zero and
+Inspector gates passed. It completed one explicit no-retry GPT-5.6 API attempt
+in 6.32 seconds with 2,820 input and 150 output tokens, returned
 `POLISH -> PROVE`, and passed actuator execution, provider delivery, public
-structural dependency, and operational acceptance. The fixture is contaminated
-and the run is not a matched contrast: provider uptake, semantic quality, and
-effect attribution remain `NOT_ASSESSED`.
+structural dependency, and operational acceptance. That contaminated,
+unmatched run remains contract-compatibility evidence only: provider uptake,
+semantic quality, and effect attribution are `NOT_ASSESSED`.
 
 ### v0.6.2.1 immutable Apply Revision acceptance
 
@@ -673,7 +683,7 @@ policy_lock_hosted_bundle_v0_6.json frozen source, runtime, order, endpoint, and
 fixtures/hosted_bundle_projection_v0_6.json contaminated projection and matched-control fixture
 fixtures/hosted_bundle_lineage_gold_v0_6.json post-call-only exact lineage gold
 ebrt.py                       immutable v0.6.2.1 two-call acceptance runner and artifact validator
-ebrt_live.py                  current Runtime Preview 2 continuous revision-program monolith and loopback API
+ebrt_live.py                  current Runtime Preview 3 temporal public-trajectory monolith and loopback API
 actuator_uptake_canary_v0_6_3_1.py discrete closure-choice uptake preflight monolith
 verify_actuator_uptake_canary_v0_6_3_1_portable.py pure-stdlib exact-byte and tamper verifier
 policy_lock_actuator_uptake_canary_v0_6_3_1.json zero-call source, runtime, order, and claim lock
@@ -713,6 +723,7 @@ docs/RND_TEMPORAL_ADJOINT_LINEAGE_V0_5_4.md matched temporal result, derivative 
 docs/RND_LANE_COMPOSABLE_TRAJECTORIES_V0_5_5.md completed composition mechanism, audits, and nonclaims
 docs/RND_HOSTED_BUNDLE_V0_6_1.md completed hosted block, null placement effect, and next bottleneck
 docs/RND_LIVE_APPLY_REVISION_RUNTIME_V0_6_2_2.md typed live invalidation operation, API, security, and claim boundary
+docs/RND_TEMPORAL_PUBLIC_TRAJECTORY_V0_6_2_4.md chronological public recurrence, temporal backward, replay, receipts, and nonclaims
 docs/RND_ACTUATOR_UPTAKE_CANARY_V0_6_3_1.md zero-call discrete uptake measurement repair
 docs/RND_ACTUATOR_UPTAKE_CANARY_V0_6_3_1_LIVE_R01.md sealed four-call execution and authorization boundary
 docs/RND_ACTUATOR_UPTAKE_REPLICATION_V0_6_3_2.md mirrored fresh-replication protocol and stop rule
@@ -1638,6 +1649,8 @@ retrospectively relabeling failures. See the
 | A v0.6.2.2 operational `PASS` establishes semantic correctness or control efficacy | No; live verification covers request, mechanism, lineage, provider, and accounting contracts only. Semantic quality and effect attribution are both `NOT_ASSESSED` |
 | Runtime Preview 2 makes the public control continuous and executable | Yes, operationally: one projected allocation step changes provider-visible review shares and abstract budget units, then a validated state machine emits the exact one-call revision operation |
 | Runtime Preview 2 proves provider uptake, attention control, token-budget control, or a counterfactual output effect | No; those axes remain `NOT_ASSESSED`. Its block/restore probe establishes only structural dependency inside the selected caller-supplied public graph |
+| Runtime Preview 3 implements a revisable chronological public trajectory | Yes, operationally and network-zero: a three-axis public recurrence runs forward, one real local backward assigns time-local credit, a bounded update is replayed forward, and its magnitudes compile exactly into the existing executable actuator |
+| Runtime Preview 3 is equivalent to hidden-state optimization or proves a hosted control effect | No; its trajectory is a hand-built public surrogate, the gradient stops before JSON/provider execution, and no new hosted contrast was run. Provider uptake, semantic quality, causal effect, and general reasoning improvement remain `NOT_ASSESSED` |
 | v0.6.3-live-r01 establishes a null provider actuator | No; it stopped after one completed call on `EXACT_ONE_CLOSURE_FAILED`, with 15 calls unattempted and all X/Z and D/C effects not assessed |
 | v0.6.3.1-live-r01 observed a non-zero public endpoint difference | Yes, narrowly: one authorized `C -> X -> D -> Z` block completed 4/4 calls; X and D selected the aligned closure while C selected the alternative and Z the mixed closure, yielding `CHANNEL_OPEN_DIRECTIONAL` and `GRADIENT_PLACEMENT_DIRECTIONAL` |
 | The v0.6.3.1-live-r01 result establishes evidence-order causality or quality improvement | No; evidence order was the sole intentionally varying semantic payload field, but the one fixed serial block cannot separate treatment from temporal/provider drift, and all arms returned the same public answer `VIOLET` |
@@ -1781,13 +1794,13 @@ category determination.
   keeps the overall gate at `HOLD_V0_6_HOSTED_BUNDLE_GATE`. See the
   [v0.6.1 R&D note](docs/RND_HOSTED_BUNDLE_V0_6_1.md) and
   [evidence-led v0.6+ roadmap](docs/ROADMAP_V0_6_PLUS.md).
-- **Milestone 3 — coherent evaluator experience (provisional Workbench):** a
-  deterministic allowlist projection and local read-only Workbench now connect
-  Evidence, Event, Revision, every recorded Replay lane, and Final Output Diff.
-  A separate Failure Atlas keeps runtime diagnostics out of the reasoning
-  episode. v0.6.2.2 adds the generic loopback live Apply operation while keeping
-  the first Workbench replaceable; editing, hosting, and the eventual product
-  interaction remain pending.
+- **Milestone 3 — coherent evaluator experience (provisional Reasoning IDE):**
+  a deterministic allowlist projection connects Evidence, Event, the neutral
+  and revised public trajectories, time-local credit, the compiled Apply
+  Revision program, and Final Output Diff. Recorded v0.6.2.1 playback remains
+  available, while Runtime Preview 3 adds the generic loopback live operation.
+  The first frontend remains replaceable; hosting and a general product claim
+  remain pending.
 - **Milestone 4 — submission evidence:** document the Codex development record,
   provide an English demo under the event rules, include the required Codex
   feedback session, and audit every public claim against committed artifacts.

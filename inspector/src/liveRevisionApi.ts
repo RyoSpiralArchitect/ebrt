@@ -8,16 +8,25 @@ import type {
   LiveDemoRequestEnvelope,
   ProviderPublicOutput,
   PublicDependencyAudit,
+  PublicRevisionTrajectory,
+  PublicTrajectoryAxis,
+  PublicTrajectoryPoint,
   RevisionProgramStep,
   TargetValue,
 } from "./applyRevisionTypes";
 
-const DEMO_REQUEST_SCHEMA = "ebrt-live-demo-request-v0.6.2.3";
-const LIVE_REQUEST_SCHEMA = "ebrt-live-apply-revision-request-v0.6.2.3";
-const LIVE_RESPONSE_SCHEMA = "ebrt-live-apply-revision-response-v0.6.2.3";
-const INSPECTION_PLAN_SCHEMA = "ebrt-live-continuous-inspection-plan-v0.6.2.3";
-const REVISION_PROGRAM_SCHEMA = "ebrt-live-public-revision-program-v0.6.2.3";
-const DEPENDENCY_AUDIT_SCHEMA = "ebrt-live-public-dependency-audit-v0.6.2.3";
+const DEMO_REQUEST_SCHEMA = "ebrt-live-demo-request-v0.6.2.4";
+const LIVE_REQUEST_SCHEMA = "ebrt-live-apply-revision-request-v0.6.2.4";
+const LIVE_RESPONSE_SCHEMA = "ebrt-live-apply-revision-response-v0.6.2.4";
+const PUBLIC_TRAJECTORY_SCHEMA = "ebrt-live-public-revision-trajectory-v0.6.2.4";
+const INSPECTION_PLAN_SCHEMA = "ebrt-live-continuous-inspection-plan-v0.6.2.4";
+const REVISION_PROGRAM_SCHEMA = "ebrt-live-public-revision-program-v0.6.2.4";
+const DEPENDENCY_AUDIT_SCHEMA = "ebrt-live-public-dependency-audit-v0.6.2.4";
+const TRAJECTORY_AXES = [
+  "event_consistent_support",
+  "invalidated_support_clearance",
+  "stable_support_retention",
+] as const satisfies readonly PublicTrajectoryAxis[];
 const SHA256 = /^[0-9a-f]{64}$/;
 const BODY_SHA256_HEADER = "X-EBRT-Body-SHA256";
 const OPERATIONAL_ROW_LABELS: Record<string, string> = {
@@ -47,12 +56,18 @@ const CONTROL_CHECK_KEYS = [
   "allocation_simplex_respected",
   "ineligible_allocation_zero",
   "surrogate_terminal_state_increased",
+  "public_trajectory_bound",
+  "pre_event_temporal_credit_nonzero",
+  "trajectory_path_loss_decreased",
+  "stable_axis_exact_identity",
+  "exact_temporal_placement_beats_matched_sham",
   "finite_difference_agreement",
   "gradient_stops_before_provider",
   "reserved_gold_fields_absent",
 ] as const;
 const ACTUATOR_CHECK_KEYS = [
   "source_control_map_bound",
+  "source_public_trajectory_bound",
   "selected_count_exact",
   "continuous_allocation_finite",
   "selected_allocation_simplex_respected",
@@ -65,12 +80,28 @@ const ACTUATOR_CHECK_KEYS = [
 const EXECUTION_CHECK_KEYS = [
   "source_actuator_bound",
   "source_control_map_bound",
+  "source_public_trajectory_bound",
   "program_state_machine_complete",
   "execution_trace_exact",
   "program_summaries_exact",
   "emitted_operation_sealed",
   "abstract_inspection_budget_exact",
   "provider_operation_gold_free",
+] as const;
+const TRAJECTORY_CHECK_KEYS = [
+  "source_actual_before_state_bound",
+  "chronological_forward_exact",
+  "single_backward_executed",
+  "pre_event_temporal_credit_nonzero",
+  "correction_site_credit_nonzero",
+  "trajectory_objective_decreased",
+  "trajectory_path_loss_decreased",
+  "revised_forward_replay_exact",
+  "stable_axis_exact_identity",
+  "bounded_time_local_control",
+  "matched_sham_control_geometry",
+  "exact_temporal_placement_beats_matched_sham",
+  "gradient_stops_before_json",
 ] as const;
 const DEPENDENCY_CHECK_KEYS = [
   "changed_fact_targets_exist",
@@ -218,6 +249,14 @@ function finiteNumber(value: unknown, label: string, nonnegative = false): numbe
   return value;
 }
 
+function finiteNumbers(value: unknown, label: string, expectedLength?: number): number[] {
+  const observed = array(value, label).map((item, index) =>
+    finiteNumber(item, `${label}[${index}]`),
+  );
+  if (expectedLength !== undefined && observed.length !== expectedLength) return fail(`${label} length`);
+  return observed;
+}
+
 function integer(value: unknown, label: string, minimum = 0): number {
   const observed = finiteNumber(value, label, true);
   if (!Number.isInteger(observed) || observed < minimum) return fail(label);
@@ -300,6 +339,9 @@ type LiveCreditRow = CreditRow & Required<
     | "allocation_delta"
     | "surrogate_contribution_before"
     | "surrogate_contribution_after"
+    | "temporal_step_index"
+    | "state_before"
+    | "state_after"
   >
 >;
 
@@ -332,7 +374,32 @@ function creditRow(value: unknown, label: string): LiveCreditRow {
       candidate.surrogate_contribution_after,
       `${label}.surrogate_contribution_after`,
     ),
+    temporal_step_index: integer(candidate.temporal_step_index, `${label}.temporal_step_index`),
+    state_before: finiteNumbers(candidate.state_before, `${label}.state_before`, TRAJECTORY_AXES.length),
+    state_after: finiteNumbers(candidate.state_after, `${label}.state_after`, TRAJECTORY_AXES.length),
     source_effect: finiteNumber(candidate.source_effect, `${label}.source_effect`),
+  };
+}
+
+function trajectoryPoint(value: unknown, label: string): PublicTrajectoryPoint {
+  const candidate = record(value, label);
+  return {
+    fingerprint_sha256: sha256(candidate.fingerprint_sha256, `${label}.fingerprint_sha256`),
+    step_index: integer(candidate.step_index, `${label}.step_index`),
+    evidence_id: string(candidate.evidence_id, `${label}.evidence_id`),
+    is_correction_event: boolean(candidate.is_correction_event, `${label}.is_correction_event`),
+    eligible_for_temporal_control: boolean(
+      candidate.eligible_for_temporal_control,
+      `${label}.eligible_for_temporal_control`,
+    ),
+    state: finiteNumbers(candidate.state, `${label}.state`, TRAJECTORY_AXES.length),
+    full_admission_support_reference: finiteNumber(
+      candidate.full_admission_support_reference,
+      `${label}.full_admission_support_reference`,
+      true,
+    ),
+    control_value: finiteNumber(candidate.control_value, `${label}.control_value`),
+    temporal_gradient: finiteNumber(candidate.temporal_gradient, `${label}.temporal_gradient`),
   };
 }
 
@@ -457,6 +524,99 @@ function invalidationEdge(value: unknown, label: string) {
   };
 }
 
+function trajectoryRun(value: unknown, label: string) {
+  const candidate = record(value, label);
+  const loss = record(candidate.loss_components, `${label}.loss_components`);
+  const lossKeys = ["terminal", "path", "control", "smoothness"];
+  if (!sameCanonical(Object.keys(loss).sort(), [...lossKeys].sort())) return fail(`${label}.loss_components keys`);
+  const points = array(candidate.points, `${label}.points`).map((row, index) =>
+    trajectoryPoint(row, `${label}.points[${index}]`),
+  );
+  if (points.length === 0) return fail(`${label}.points empty`);
+  return {
+    fingerprint_sha256: sha256(candidate.fingerprint_sha256, `${label}.fingerprint_sha256`),
+    objective: finiteNumber(candidate.objective, `${label}.objective`, true),
+    loss_components: {
+      terminal: finiteNumber(loss.terminal, `${label}.loss_components.terminal`, true),
+      path: finiteNumber(loss.path, `${label}.loss_components.path`, true),
+      control: finiteNumber(loss.control, `${label}.loss_components.control`, true),
+      smoothness: finiteNumber(loss.smoothness, `${label}.loss_components.smoothness`, true),
+    },
+    terminal_state: finiteNumbers(candidate.terminal_state, `${label}.terminal_state`, TRAJECTORY_AXES.length),
+    points,
+  };
+}
+
+function publicTrajectory(value: unknown): PublicRevisionTrajectory {
+  const label = "response.mechanism.public_trajectory";
+  const candidate = record(value, label);
+  if (
+    candidate.schema_version !== PUBLIC_TRAJECTORY_SCHEMA ||
+    candidate.state_kind !== "PUBLIC_HAND_BUILT_REVISION_SURROGATE"
+  ) {
+    return fail(`${label} schema`);
+  }
+  const axes = strings(candidate.axis_order, `${label}.axis_order`);
+  if (!sameCanonical(axes, TRAJECTORY_AXES)) return fail(`${label}.axis_order`);
+  const semantics = record(candidate.axis_semantics, `${label}.axis_semantics`);
+  if (!sameCanonical(Object.keys(semantics).sort(), [...TRAJECTORY_AXES].sort())) {
+    return fail(`${label}.axis_semantics keys`);
+  }
+  const neutral = trajectoryRun(candidate.neutral, `${label}.neutral`);
+  const revised = trajectoryRun(candidate.revised, `${label}.revised`);
+  const sham = record(candidate.matched_temporal_sham, `${label}.matched_temporal_sham`);
+  const boundary = record(candidate.gradient_boundary, `${label}.gradient_boundary`);
+  if (
+    sham.construction !== "REVERSE_ACCEPTED_CONTROL_VALUES_OVER_ELIGIBLE_TIME_SITES" ||
+    sham.claim_scope !== "PUBLIC_RECURRENCE_TEMPORAL_PLACEMENT_ONLY" ||
+    sham.provider_calls !== 0 ||
+    boundary.hosted_model_differentiated !== false ||
+    boundary.private_reasoning_observed !== false
+  ) {
+    return fail(`${label} boundary`);
+  }
+  const parsed: PublicRevisionTrajectory = {
+    fingerprint_sha256: sha256(candidate.fingerprint_sha256, `${label}.fingerprint_sha256`),
+    state_kind: "PUBLIC_HAND_BUILT_REVISION_SURROGATE",
+    axis_order: axes as PublicTrajectoryAxis[],
+    axis_semantics: Object.fromEntries(
+      TRAJECTORY_AXES.map((axis) => [axis, string(semantics[axis], `${label}.axis_semantics.${axis}`)]),
+    ) as Record<PublicTrajectoryAxis, string>,
+    terminal_target: finiteNumbers(candidate.terminal_target, `${label}.terminal_target`, TRAJECTORY_AXES.length),
+    source_actual_before_state_fingerprint_sha256: sha256(
+      candidate.source_actual_before_state_fingerprint_sha256,
+      `${label}.source_actual_before_state_fingerprint_sha256`,
+    ),
+    source_credit_basis_fingerprint_sha256: sha256(
+      candidate.source_credit_basis_fingerprint_sha256,
+      `${label}.source_credit_basis_fingerprint_sha256`,
+    ),
+    correction_step_index: integer(candidate.correction_step_index, `${label}.correction_step_index`),
+    neutral,
+    revised,
+    matched_temporal_sham: {
+      construction: "REVERSE_ACCEPTED_CONTROL_VALUES_OVER_ELIGIBLE_TIME_SITES",
+      objective: finiteNumber(sham.objective, `${label}.matched_temporal_sham.objective`, true),
+      terminal_state: finiteNumbers(
+        sham.terminal_state,
+        `${label}.matched_temporal_sham.terminal_state`,
+        TRAJECTORY_AXES.length,
+      ),
+      control_l2: finiteNumber(sham.control_l2, `${label}.matched_temporal_sham.control_l2`, true),
+      provider_calls: 0,
+      claim_scope: "PUBLIC_RECURRENCE_TEMPORAL_PLACEMENT_ONLY",
+    },
+    gradient_boundary: {
+      starts_at: string(boundary.starts_at, `${label}.gradient_boundary.starts_at`),
+      ends_at: string(boundary.ends_at, `${label}.gradient_boundary.ends_at`),
+      hosted_model_differentiated: false,
+      private_reasoning_observed: false,
+    },
+    checks: exactTrueChecks(candidate.checks, TRAJECTORY_CHECK_KEYS, `${label}.checks`),
+  };
+  return parsed;
+}
+
 function parseResponse(
   value: unknown,
   expectedEnvelope: LiveDemoRequestEnvelope,
@@ -530,6 +690,7 @@ function parseResponse(
   const mechanism = record(candidate.mechanism, "response.mechanism");
   const actualBefore = record(mechanism.actual_before_state, "response.mechanism.actual_before_state");
   const surrogate = record(mechanism.surrogate, "response.mechanism.surrogate");
+  const trajectory = publicTrajectory(mechanism.public_trajectory);
   const control = record(mechanism.public_control_map, "response.mechanism.public_control_map");
   const actuator = record(mechanism.compiled_actuator, "response.mechanism.compiled_actuator");
   const actuatorExecution = record(mechanism.actuator_execution, "response.mechanism.actuator_execution");
@@ -579,6 +740,28 @@ function parseResponse(
     "response.public_dependency_audit.checks",
   );
   if (mechanismStatus !== "PASS") return fail("response.mechanism.status hard gate");
+
+  const actualBeforeFingerprint = sha256(
+    actualBefore.fingerprint_sha256,
+    "response.mechanism.actual_before_state.fingerprint_sha256",
+  );
+  const actualBeforeAxisOrder = strings(
+    actualBefore.axis_order,
+    "response.mechanism.actual_before_state.axis_order",
+  );
+  const actualBeforeInitialVector = finiteNumbers(
+    actualBefore.initial_vector,
+    "response.mechanism.actual_before_state.initial_vector",
+    TRAJECTORY_AXES.length,
+  );
+  if (
+    !sameCanonical(actualBeforeAxisOrder, TRAJECTORY_AXES) ||
+    trajectory.source_actual_before_state_fingerprint_sha256 !== actualBeforeFingerprint ||
+    !sameCanonical(trajectory.axis_order, actualBeforeAxisOrder) ||
+    !approximatelyEqual(trajectory.terminal_target[2], actualBeforeInitialVector[2])
+  ) {
+    return fail("response.mechanism public trajectory initial-state binding");
+  }
 
   const verificationRows = array(verification.rows, "response.verification.rows").map((row, index) => {
     const item = record(row, `response.verification.rows[${index}]`);
@@ -671,19 +854,97 @@ function parseResponse(
     return fail("response.verification.operational_acceptance_status consistency");
   }
 
+  const surrogateObjectiveBefore = finiteNumber(
+    surrogate.objective_before,
+    "response.mechanism.surrogate.objective_before",
+    true,
+  );
+  const surrogateObjectiveAfter = finiteNumber(
+    surrogate.objective_after,
+    "response.mechanism.surrogate.objective_after",
+    true,
+  );
+  const surrogateTerminalBefore = finiteNumber(
+    surrogate.surrogate_terminal_state_before,
+    "response.mechanism.surrogate.surrogate_terminal_state_before",
+  );
+  const surrogateTerminalAfter = finiteNumber(
+    surrogate.surrogate_terminal_state_after,
+    "response.mechanism.surrogate.surrogate_terminal_state_after",
+  );
+  const correctionEvidenceId = string(lateEvent.evidence_id, "response.context.late_event.evidence_id");
+  const correctionStepIndex = evidenceIds.indexOf(correctionEvidenceId);
+  const neutralPoints = trajectory.neutral.points;
+  const revisedPoints = trajectory.revised.points;
+  const revisedControlL2 = Math.hypot(...revisedPoints.map((row) => row.control_value));
+  const decisionMean = (values: number[]) => (values[0] + values[1]) / 2;
+  if (
+    correctionStepIndex < 0 ||
+    trajectory.correction_step_index !== correctionStepIndex ||
+    neutralPoints.length !== evidenceIds.length ||
+    revisedPoints.length !== evidenceIds.length ||
+    trajectory.revised.objective >= trajectory.neutral.objective ||
+    trajectory.revised.objective >= trajectory.matched_temporal_sham.objective ||
+    !approximatelyEqual(trajectory.neutral.objective, surrogateObjectiveBefore) ||
+    !approximatelyEqual(trajectory.revised.objective, surrogateObjectiveAfter) ||
+    !approximatelyEqual(decisionMean(trajectory.neutral.terminal_state), surrogateTerminalBefore) ||
+    !approximatelyEqual(decisionMean(trajectory.revised.terminal_state), surrogateTerminalAfter) ||
+    !approximatelyEqual(revisedControlL2, trajectory.matched_temporal_sham.control_l2) ||
+    !sameCanonical(trajectory.neutral.terminal_state, neutralPoints.at(-1)?.state) ||
+    !sameCanonical(trajectory.revised.terminal_state, revisedPoints.at(-1)?.state) ||
+    neutralPoints.some((row, index) => {
+      const revised = revisedPoints[index];
+      return (
+        row.step_index !== index ||
+        revised.step_index !== index ||
+        row.evidence_id !== evidenceIds[index] ||
+        revised.evidence_id !== evidenceIds[index] ||
+        row.is_correction_event !== (index === correctionStepIndex) ||
+        revised.is_correction_event !== row.is_correction_event ||
+        revised.eligible_for_temporal_control !== row.eligible_for_temporal_control ||
+        row.full_admission_support_reference > 1 + ALLOCATION_TOLERANCE ||
+        !approximatelyEqual(
+          revised.full_admission_support_reference,
+          row.full_admission_support_reference,
+        ) ||
+        !approximatelyEqual(row.control_value, 0) ||
+        (!revised.eligible_for_temporal_control && !approximatelyEqual(revised.control_value, 0)) ||
+        !approximatelyEqual(row.temporal_gradient, revised.temporal_gradient) ||
+        !approximatelyEqual(row.state[2], actualBeforeInitialVector[2]) ||
+        !approximatelyEqual(revised.state[2], actualBeforeInitialVector[2])
+      );
+    })
+  ) {
+    return fail("response.mechanism.public_trajectory cross-binding");
+  }
+
   const creditRows = array(control.credit_rows, "response.mechanism.public_control_map.credit_rows").map(
     (row, index) => creditRow(row, `response.mechanism.public_control_map.credit_rows[${index}]`),
   );
   if (!sameCanonical(creditRows.map((row) => row.evidence_id), evidenceIds)) {
     return fail("response.mechanism.public_control_map.credit_rows evidence order");
   }
+  const controlL2 = finiteNumber(control.control_l2, "response.mechanism.public_control_map.control_l2", true);
+  const maxControlL2 = finiteNumber(
+    control.max_control_l2,
+    "response.mechanism.public_control_map.max_control_l2",
+    true,
+  );
   if (
+    !approximatelyEqual(controlL2, revisedControlL2) ||
+    controlL2 > maxControlL2 + ALLOCATION_TOLERANCE ||
     !approximatelyEqual(
       creditRows.reduce((sum, row) => sum + row.optimized_allocation_fraction, 0),
       1,
     ) ||
     creditRows.some(
       (row) =>
+        row.temporal_step_index !== evidenceIds.indexOf(row.evidence_id) ||
+        !sameCanonical(row.state_before, neutralPoints[row.temporal_step_index]?.state) ||
+        !sameCanonical(row.state_after, revisedPoints[row.temporal_step_index]?.state) ||
+        !approximatelyEqual(row.control_value, revisedPoints[row.temporal_step_index]?.control_value ?? Number.NaN) ||
+        !approximatelyEqual(row.gradient, revisedPoints[row.temporal_step_index]?.temporal_gradient ?? Number.NaN) ||
+        row.eligible_for_reinspection !== revisedPoints[row.temporal_step_index]?.eligible_for_temporal_control ||
         !approximatelyEqual(
           row.optimized_allocation_fraction - row.baseline_allocation_fraction,
           row.allocation_delta,
@@ -718,6 +979,10 @@ function parseResponse(
   const inspectionPlanFingerprint = sha256(
     inspectionPlan.fingerprint_sha256,
     "response.mechanism.compiled_actuator.inspection_plan.fingerprint_sha256",
+  );
+  const inspectionPlanSourceTrajectoryFingerprint = sha256(
+    inspectionPlan.source_public_trajectory_fingerprint_sha256,
+    "response.mechanism.compiled_actuator.inspection_plan.source_public_trajectory_fingerprint_sha256",
   );
   const totalBudgetUnits = integer(
     inspectionPlan.total_budget_units,
@@ -792,7 +1057,21 @@ function parseResponse(
     revisionProgram.source_control_map_fingerprint_sha256,
     "response.mechanism.compiled_actuator.program.source_control_map_fingerprint_sha256",
   );
-  if (actuatorSourceControlFingerprint !== controlFingerprint || programSourceControlFingerprint !== controlFingerprint) {
+  const actuatorSourceTrajectoryFingerprint = sha256(
+    actuator.source_public_trajectory_fingerprint_sha256,
+    "response.mechanism.compiled_actuator.source_public_trajectory_fingerprint_sha256",
+  );
+  const programSourceTrajectoryFingerprint = sha256(
+    revisionProgram.source_public_trajectory_fingerprint_sha256,
+    "response.mechanism.compiled_actuator.program.source_public_trajectory_fingerprint_sha256",
+  );
+  if (
+    actuatorSourceControlFingerprint !== controlFingerprint ||
+    programSourceControlFingerprint !== controlFingerprint ||
+    actuatorSourceTrajectoryFingerprint !== trajectory.fingerprint_sha256 ||
+    programSourceTrajectoryFingerprint !== trajectory.fingerprint_sha256 ||
+    inspectionPlanSourceTrajectoryFingerprint !== trajectory.fingerprint_sha256
+  ) {
     return fail("response.mechanism.compiled_actuator source control binding");
   }
   const programSteps = array(
@@ -849,7 +1128,15 @@ function parseResponse(
     actuatorExecution.source_program_fingerprint_sha256,
     "response.mechanism.actuator_execution.source_program_fingerprint_sha256",
   );
-  if (executionSourceActuatorFingerprint !== actuatorFingerprint || executionSourceProgramFingerprint !== programFingerprint) {
+  const executionSourceTrajectoryFingerprint = sha256(
+    actuatorExecution.source_public_trajectory_fingerprint_sha256,
+    "response.mechanism.actuator_execution.source_public_trajectory_fingerprint_sha256",
+  );
+  if (
+    executionSourceActuatorFingerprint !== actuatorFingerprint ||
+    executionSourceProgramFingerprint !== programFingerprint ||
+    executionSourceTrajectoryFingerprint !== trajectory.fingerprint_sha256
+  ) {
     return fail("response.mechanism.actuator_execution source binding");
   }
   const executionTrace = array(
@@ -1053,20 +1340,22 @@ function parseResponse(
     mechanism: {
       status: mechanismStatus,
       actual_before_state: {
-        fingerprint_sha256: sha256(actualBefore.fingerprint_sha256, "response.mechanism.actual_before_state.fingerprint_sha256"),
+        fingerprint_sha256: actualBeforeFingerprint,
         source_selected_closure_id: string(
           actualBefore.source_selected_closure_id,
           "response.mechanism.actual_before_state.source_selected_closure_id",
         ),
         initial_scalar: finiteNumber(actualBefore.initial_scalar, "response.mechanism.actual_before_state.initial_scalar"),
+        initial_vector: actualBeforeInitialVector,
+        axis_order: actualBeforeAxisOrder as PublicTrajectoryAxis[],
         active_support_evidence_ids: strings(
           actualBefore.active_support_evidence_ids,
           "response.mechanism.actual_before_state.active_support_evidence_ids",
         ),
       },
       surrogate: {
-        objective_before: finiteNumber(surrogate.objective_before, "response.mechanism.surrogate.objective_before"),
-        objective_after: finiteNumber(surrogate.objective_after, "response.mechanism.surrogate.objective_after"),
+        objective_before: surrogateObjectiveBefore,
+        objective_after: surrogateObjectiveAfter,
         terminal_target: finiteNumber(surrogate.terminal_target, "response.mechanism.surrogate.terminal_target"),
         dtype: string(surrogate.dtype, "response.mechanism.surrogate.dtype"),
         backward_calls: finiteNumber(surrogate.backward_calls, "response.mechanism.surrogate.backward_calls", true),
@@ -1080,19 +1369,14 @@ function parseResponse(
           "response.mechanism.surrogate.inspection_temperature",
           true,
         ),
-        surrogate_terminal_state_before: finiteNumber(
-          surrogate.surrogate_terminal_state_before,
-          "response.mechanism.surrogate.surrogate_terminal_state_before",
-        ),
-        surrogate_terminal_state_after: finiteNumber(
-          surrogate.surrogate_terminal_state_after,
-          "response.mechanism.surrogate.surrogate_terminal_state_after",
-        ),
+        surrogate_terminal_state_before: surrogateTerminalBefore,
+        surrogate_terminal_state_after: surrogateTerminalAfter,
       },
+      public_trajectory: trajectory,
       public_control_map: {
         fingerprint_sha256: controlFingerprint,
-        control_l2: finiteNumber(control.control_l2, "response.mechanism.public_control_map.control_l2", true),
-        max_control_l2: finiteNumber(control.max_control_l2, "response.mechanism.public_control_map.max_control_l2", true),
+        control_l2: controlL2,
+        max_control_l2: maxControlL2,
         credit_rows: creditRows,
         allocation_domain_evidence_ids: allocationDomainEvidenceIds,
         checks: controlChecks,
@@ -1119,17 +1403,20 @@ function parseResponse(
           "response.mechanism.compiled_actuator.correction_evidence_id",
         ),
         source_control_map_fingerprint_sha256: actuatorSourceControlFingerprint,
+        source_public_trajectory_fingerprint_sha256: actuatorSourceTrajectoryFingerprint,
         inspection_plan: {
           fingerprint_sha256: inspectionPlanFingerprint,
           allocation_scope: "SELECTED_PUBLIC_REINSPECTION_STEPS",
           total_budget_units: totalBudgetUnits,
           budget_unit_semantics: "ABSTRACT_PUBLIC_REVIEW_ALLOCATION_NOT_PROVIDER_TOKENS",
+          source_public_trajectory_fingerprint_sha256: inspectionPlanSourceTrajectoryFingerprint,
           steps: inspectionSteps,
         },
         program: {
           fingerprint_sha256: programFingerprint,
           state: "COMPILED",
           source_control_map_fingerprint_sha256: programSourceControlFingerprint,
+          source_public_trajectory_fingerprint_sha256: programSourceTrajectoryFingerprint,
           steps: programSteps,
         },
         checks: actuatorChecks,
@@ -1143,6 +1430,7 @@ function parseResponse(
         status: "COMPLETED",
         source_actuator_fingerprint_sha256: executionSourceActuatorFingerprint,
         source_program_fingerprint_sha256: executionSourceProgramFingerprint,
+        source_public_trajectory_fingerprint_sha256: executionSourceTrajectoryFingerprint,
         final_state: "READY_FOR_PROVIDER",
         trace: executionTrace,
         emitted_provider_operation_fingerprint_sha256: emittedProviderOperationFingerprint,
@@ -1272,7 +1560,9 @@ function parseResponse(
 }
 
 function endpoint(path: string): string {
-  const configured = import.meta.env.VITE_EBRT_API_BASE_URL?.trim() || "/api/";
+  const configured =
+    (import.meta as ImportMeta & { env?: { VITE_EBRT_API_BASE_URL?: string } }).env?.VITE_EBRT_API_BASE_URL?.trim() ||
+    "/api/";
   const base = new URL(configured, window.location.origin);
   if (base.protocol !== "http:" && base.protocol !== "https:") {
     throw new LiveRevisionApiError("Live API URL must use HTTP or HTTPS", "INVALID_API_BASE");

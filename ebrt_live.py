@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
-"""EBRT Runtime Preview 2 live Apply Revision product monolith.
+"""EBRT Runtime Preview 3 live Apply Revision product monolith.
 
 This is the current, generic, one-call product path.  The sealed ``ebrt.py``
 v0.6.2.1 acceptance runtime is historical evidence and is intentionally not
 imported or modified here.
 
 The live path accepts an already-emitted public Before state and a typed late
-event, optimizes one bounded continuous public inspection allocation with one
-local float64 backward pass, executes a deterministic public actuator program,
-then makes at most one fresh After regeneration call. Reserved gold fields,
-graders, provider hidden state, and provider gradients are outside this runtime;
-caller semantic content is not certified as gold-free.
+event, rolls one typed public revision trajectory forward, optimizes bounded
+time-local controls with one float64 backward pass, rolls the declared public
+program forward again, executes a deterministic public actuator program, then
+makes at most one fresh After regeneration call. Reserved gold fields, graders,
+provider hidden state, and provider gradients are outside this runtime; caller
+semantic content is not certified as gold-free.
 """
 
 from __future__ import annotations
@@ -56,20 +57,21 @@ PINNED_DEMO_MANIFEST_SHA256 = "532dd593ef4464d87dd02fd2eeaa712855f47e5de799c6698
 PINNED_DEMO_PROVIDER_INPUTS_SHA256 = "d57b33860db84a0378ffd6b6e18ef67ae64d66eb75bd1959c1a1c7424ea90a3f"
 PINNED_DEMO_PROVIDER_INPUTS_FINGERPRINT = "a2aa446099b7cf498e307cf2bdb261c6c8aa705db034935bc88bbf040c9936a1"
 
-REQUEST_SCHEMA = "ebrt-live-apply-revision-request-v0.6.2.3"
-PROVIDER_INPUT_SCHEMA = "ebrt-live-provider-input-v0.6.2.3"
-PROVIDER_OUTPUT_SCHEMA = "ebrt-live-provider-output-v0.6.2.3"
-COMPILED_SCHEMA = "ebrt-live-compiled-closure-v0.6.2.3"
-ACTUAL_STATE_SCHEMA = "ebrt-live-actual-before-state-v0.6.2.3"
-CONTROL_SCHEMA = "ebrt-live-public-control-map-v0.6.2.3"
-ACTUATOR_SCHEMA = "ebrt-live-compiled-actuator-v0.6.2.3"
-ACTUATOR_EXECUTION_SCHEMA = "ebrt-live-actuator-execution-v0.6.2.3"
-REVISION_OPERATION_SCHEMA = "ebrt-live-apply-revision-operation-v0.6.2.3"
-DEPENDENCY_AUDIT_SCHEMA = "ebrt-live-public-dependency-audit-v0.6.2.3"
-DIFF_SCHEMA = "ebrt-live-public-diff-v0.6.2.3"
-RESPONSE_SCHEMA = "ebrt-live-apply-revision-response-v0.6.2.3"
-DEMO_REQUEST_SCHEMA = "ebrt-live-demo-request-v0.6.2.3"
-ERROR_SCHEMA = "ebrt-live-error-v0.6.2.3"
+REQUEST_SCHEMA = "ebrt-live-apply-revision-request-v0.6.2.4"
+PROVIDER_INPUT_SCHEMA = "ebrt-live-provider-input-v0.6.2.4"
+PROVIDER_OUTPUT_SCHEMA = "ebrt-live-provider-output-v0.6.2.4"
+COMPILED_SCHEMA = "ebrt-live-compiled-closure-v0.6.2.4"
+ACTUAL_STATE_SCHEMA = "ebrt-live-actual-before-state-v0.6.2.4"
+TRAJECTORY_SCHEMA = "ebrt-live-public-revision-trajectory-v0.6.2.4"
+CONTROL_SCHEMA = "ebrt-live-public-control-map-v0.6.2.4"
+ACTUATOR_SCHEMA = "ebrt-live-compiled-actuator-v0.6.2.4"
+ACTUATOR_EXECUTION_SCHEMA = "ebrt-live-actuator-execution-v0.6.2.4"
+REVISION_OPERATION_SCHEMA = "ebrt-live-apply-revision-operation-v0.6.2.4"
+DEPENDENCY_AUDIT_SCHEMA = "ebrt-live-public-dependency-audit-v0.6.2.4"
+DIFF_SCHEMA = "ebrt-live-public-diff-v0.6.2.4"
+RESPONSE_SCHEMA = "ebrt-live-apply-revision-response-v0.6.2.4"
+DEMO_REQUEST_SCHEMA = "ebrt-live-demo-request-v0.6.2.4"
+ERROR_SCHEMA = "ebrt-live-error-v0.6.2.4"
 
 MODEL = "gpt-5.6-sol"
 REASONING_EFFORT = "low"
@@ -80,6 +82,8 @@ FLOAT_DTYPE = torch.float64
 STATE_DECAY = 0.82
 STEP_SIZE = 0.05
 CONTROL_REGULARIZATION = 0.01
+TEMPORAL_SMOOTHNESS_REGULARIZATION = 0.005
+TRAJECTORY_PATH_REGULARIZATION = 0.1
 TERMINAL_TARGET = 1.0
 INSPECTION_TEMPERATURE = 1.0
 INSPECTION_BUDGET_UNITS = 100
@@ -88,6 +92,45 @@ FINITE_DIFFERENCE_EPSILON = 1.0e-6
 FINITE_DIFFERENCE_TOLERANCE = 1.0e-8
 MAX_CONTROL_L2 = 0.25
 MAX_BACKTRACKS = 12
+TRAJECTORY_AXES = (
+    "event_consistent_support",
+    "invalidated_support_clearance",
+    "stable_support_retention",
+)
+TRAJECTORY_CHECK_KEYS = (
+    "source_actual_before_state_bound",
+    "chronological_forward_exact",
+    "single_backward_executed",
+    "pre_event_temporal_credit_nonzero",
+    "correction_site_credit_nonzero",
+    "trajectory_objective_decreased",
+    "trajectory_path_loss_decreased",
+    "revised_forward_replay_exact",
+    "stable_axis_exact_identity",
+    "bounded_time_local_control",
+    "matched_sham_control_geometry",
+    "exact_temporal_placement_beats_matched_sham",
+    "gradient_stops_before_json",
+)
+CONTROL_CHECK_KEYS = (
+    "actual_before_state_bound_to_controller",
+    "local_backward_executed",
+    "finite_continuous_allocation",
+    "surrogate_objective_decreased",
+    "non_neutral_control_map",
+    "control_budget_respected",
+    "allocation_simplex_respected",
+    "ineligible_allocation_zero",
+    "surrogate_terminal_state_increased",
+    "finite_difference_agreement",
+    "public_trajectory_bound",
+    "pre_event_temporal_credit_nonzero",
+    "trajectory_path_loss_decreased",
+    "stable_axis_exact_identity",
+    "exact_temporal_placement_beats_matched_sham",
+    "gradient_stops_before_provider",
+    "reserved_gold_fields_absent",
+)
 
 MAX_HTTP_BYTES = 256 * 1024
 MAX_EVIDENCE = 64
@@ -146,8 +189,9 @@ PROVIDER_FORBIDDEN_KEYS = FORBIDDEN_REQUEST_KEYS | frozenset(
 
 CLAIM_BOUNDARY = (
     "This invalidation-revision path applies one bounded public revision operation to caller-supplied public structure; it is not a semantic correctness oracle.",
-    "The local float64 surrogate performs one projected optimization step over a continuous public inspection allocation constructed from the compiled public Before support state, role-blind graph incidence, and the typed event.",
-    "Inspection allocation fractions and units are external public review directives; they are not provider attention probabilities, reasoning-token budgets, or measurements of provider uptake.",
+    "The local float64 surrogate performs one projected temporal-control step over a three-axis public revision trajectory constructed from the compiled public Before support state, role-blind graph incidence, and the typed event.",
+    "The revised public trajectory is re-executed through its declared transition before inspection shares are decoded; it is not a transcript of private model reasoning.",
+    "Inspection allocation fractions and units decoded from temporal-control magnitude are external public review directives; they are not provider attention probabilities, reasoning-token budgets, or measurements of provider uptake.",
     "Suppress and preserve operations are typed-event compiler outputs, not signs inferred from the backward pass.",
     "The gradient stops at the public control map; JSON, provider parsing, generation, and verification are not differentiated.",
     "The block/restore dependency probe concerns only the selected caller-supplied public graph; it does not regenerate a counterfactual hosted output or establish hosted-model causality.",
@@ -160,7 +204,7 @@ PROVIDER_INSTRUCTIONS = (
     "Candidate closure IDs are opaque public alternatives. Select exactly one supplied closure, derive the current answer "
     "and every target value from the visible raw evidence, and execute the supplied Apply Revision program in its listed "
     "order: load the event, suppress invalidated active evidence, reinspect evidence according to its relative public "
-    "inspection allocation, preserve stable evidence, then regenerate from the full context. Inspection shares, abstract "
+    "inspection allocation decoded from the public revision trajectory, preserve stable evidence, then regenerate from the full context. Inspection shares, abstract "
     "budget units, depth labels, and emphasis weights are review directives, not new evidence, provider token budgets, "
     "attention probabilities, or semantic authority. The operation is "
     "not new evidence, semantic gold, or an expected answer. Do not return private reasoning, prose, invented evidence, "
@@ -959,6 +1003,11 @@ def _actual_before_state(
         },
     ]
     scalar = (correction_present + invalidated_absent_fraction) / 2.0
+    initial_vector = [
+        correction_present,
+        invalidated_absent_fraction,
+        stable_present_fraction,
+    ]
     state = _seal(
         {
             "schema_version": ACTUAL_STATE_SCHEMA,
@@ -967,6 +1016,8 @@ def _actual_before_state(
             "active_support_evidence_ids": list(compiled_before["active_support_evidence_ids"]),
             "components": components,
             "initial_scalar": scalar,
+            "initial_vector": initial_vector,
+            "axis_order": list(TRAJECTORY_AXES),
             "coordinate_semantics": "STRUCTURAL_REVISION_READINESS_ENUM_ORDER_INVARIANT",
         }
     )
@@ -975,7 +1026,6 @@ def _actual_before_state(
 
 def _public_incidence_effects(request: LiveRevisionRequest) -> tuple[dict[str, float], JsonObject]:
     evidence_ids = [row.evidence_id for row in request.all_raw_evidence]
-    scores: defaultdict[str, float] = defaultdict(float)
     direct_hits: defaultdict[str, int] = defaultdict(int)
     inherited_hits: defaultdict[str, int] = defaultdict(int)
     for candidate in request.candidate_closures:
@@ -983,27 +1033,28 @@ def _public_incidence_effects(request: LiveRevisionRequest) -> tuple[dict[str, f
         for lineage in closure["targets"].values():
             for evidence_id in lineage["direct_active_evidence_ids"]:
                 direct_hits[evidence_id] += 1
-                scores[evidence_id] += 2.0
             for evidence_id in lineage["inherited_active_evidence_ids"]:
                 inherited_hits[evidence_id] += 1
-                scores[evidence_id] += 1.0
-    target_count = len(request.decision_slots)
-    event = request.event
-    scores[event.correction_evidence_id] += 4.0 * (target_count + 1)
-    for evidence_id in event.invalidated_evidence_ids:
-        scores[evidence_id] += float(target_count + 1)
-    for evidence_id in event.stable_evidence_ids:
-        scores[evidence_id] += 0.5 * float(target_count + 1)
-    maximum = max((scores[evidence_id] for evidence_id in evidence_ids), default=0.0)
+    scores = {
+        evidence_id: float(
+            2 * direct_hits[evidence_id] + inherited_hits[evidence_id]
+        )
+        for evidence_id in evidence_ids
+    }
+    maximum = max(scores.values(), default=0.0)
     _require(maximum > 0.0 and math.isfinite(maximum), "INCIDENCE_EFFECT_BASIS_ZERO")
     effects = {
-        evidence_id: float(scores[evidence_id] / maximum)
+        evidence_id: (
+            1.0
+            if evidence_id == request.event.correction_evidence_id
+            else float(scores[evidence_id] / maximum)
+        )
         for evidence_id in evidence_ids
     }
     receipt = _seal(
         {
-            "schema_version": "ebrt-live-public-incidence-basis-v0.6.2.3",
-            "source_kind": "CANDIDATE_GRAPH_INCIDENCE_PLUS_TYPED_EVENT",
+            "schema_version": "ebrt-live-public-incidence-basis-v0.6.2.4",
+            "source_kind": "ROLE_BLIND_GRAPH_INCIDENCE_PLUS_EXPLICIT_TYPED_CORRECTION",
             "candidate_graph_fingerprints_sha256": sorted(
                 _fingerprint(_canonical_graph_value(candidate.graph))
                 for candidate in request.candidate_closures
@@ -1015,10 +1066,13 @@ def _public_incidence_effects(request: LiveRevisionRequest) -> tuple[dict[str, f
             "inherited_target_incidence_by_evidence_id": {
                 evidence_id: inherited_hits[evidence_id] for evidence_id in evidence_ids
             },
-            "raw_score_by_evidence_id": {
-                evidence_id: float(scores[evidence_id]) for evidence_id in evidence_ids
-            },
+            "raw_score_by_evidence_id": scores,
             "normalized_effect_by_evidence_id": effects,
+            "correction_override": {
+                "evidence_id": request.event.correction_evidence_id,
+                "normalized_effect": 1.0,
+                "semantic_role": "TYPED_EVENT_BOUNDARY_NOT_GOLD",
+            },
             "reserved_gold_fields_participated": False,
             "caller_semantic_content_verified": False,
         }
@@ -1026,45 +1080,155 @@ def _public_incidence_effects(request: LiveRevisionRequest) -> tuple[dict[str, f
     return effects, receipt
 
 
+def _full_admission_support_envelope(
+    effects: torch.Tensor,
+    eligibility: torch.Tensor,
+    *,
+    initial_support: torch.Tensor,
+) -> torch.Tensor:
+    state = initial_support
+    rows: list[torch.Tensor] = []
+    for index, effect in enumerate(effects):
+        decayed = STATE_DECAY * state
+        support_effect = torch.where(
+            eligibility[index], effect, torch.zeros_like(effect)
+        )
+        state = 1.0 - (1.0 - decayed) * (1.0 - support_effect)
+        rows.append(state)
+    return torch.stack(rows)
+
+
 def _controller_loss(
     controls: torch.Tensor,
     effects: torch.Tensor,
     eligibility: torch.Tensor,
     *,
-    initial_state: float,
-) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+    initial_state: torch.Tensor,
+    correction_index: int,
+) -> tuple[torch.Tensor, torch.Tensor, dict[str, torch.Tensor]]:
     _require(bool(torch.any(eligibility)), "CONTINUOUS_ALLOCATION_DOMAIN_EMPTY")
-    masked_logits = (controls / INSPECTION_TEMPERATURE).masked_fill(
+    _require(
+        controls.ndim == effects.ndim == eligibility.ndim == 1
+        and controls.shape == effects.shape == eligibility.shape
+        and len(controls) > 1
+        and initial_state.shape == (len(TRAJECTORY_AXES),)
+        and 0 <= correction_index < len(controls),
+        "PUBLIC_TRAJECTORY_SHAPE_INVALID",
+    )
+    admitted_controls = controls * eligibility.to(dtype=controls.dtype)
+    state = initial_state
+    states: list[torch.Tensor] = []
+    for index, effect in enumerate(effects):
+        decayed = torch.stack(
+            (
+                STATE_DECAY * state[0],
+                STATE_DECAY * state[1],
+                state[2],
+            )
+        )
+        support_effect = torch.where(
+            eligibility[index], effect, torch.zeros_like(effect)
+        )
+        support_proposal = 1.0 - (1.0 - decayed[0]) * (
+            1.0 - support_effect
+        )
+        invalidation_proposal = torch.where(
+            torch.tensor(index == correction_index, dtype=torch.bool),
+            torch.ones((), dtype=controls.dtype, device=controls.device),
+            decayed[1],
+        )
+        proposal = torch.stack(
+            (support_proposal, invalidation_proposal, initial_state[2])
+        )
+        interpolation = torch.sigmoid(admitted_controls[index])
+        state = decayed + interpolation * (proposal - decayed)
+        states.append(state)
+    trajectory = torch.stack(states)
+    target = torch.stack(
+        (
+            torch.ones((), dtype=controls.dtype, device=controls.device),
+            torch.ones((), dtype=controls.dtype, device=controls.device),
+            initial_state[2],
+        )
+    )
+    terminal_loss = 0.5 * (trajectory[-1] - target).square().sum()
+    support_envelope = _full_admission_support_envelope(
+        effects,
+        eligibility,
+        initial_support=initial_state[0],
+    )
+    path_loss = (
+        trajectory[:-1, 0] - support_envelope[:-1]
+    ).square().mean()
+    control_loss = CONTROL_REGULARIZATION * admitted_controls.square().sum()
+    smoothness_loss = TEMPORAL_SMOOTHNESS_REGULARIZATION * (
+        admitted_controls[1:] - admitted_controls[:-1]
+    ).square().sum()
+    loss = (
+        terminal_loss
+        + TRAJECTORY_PATH_REGULARIZATION * path_loss
+        + control_loss
+        + smoothness_loss
+    )
+    return loss, trajectory, {
+        "terminal": terminal_loss,
+        "path": path_loss,
+        "control": control_loss,
+        "smoothness": smoothness_loss,
+    }
+
+
+def _masked_allocation(
+    controls: torch.Tensor, eligibility: torch.Tensor
+) -> torch.Tensor:
+    logits = (controls.abs() / INSPECTION_TEMPERATURE).masked_fill(
         ~eligibility, -torch.inf
     )
-    allocation = torch.softmax(masked_logits, dim=0)
-    state = torch.tensor(initial_state, dtype=FLOAT_DTYPE)
-    states: list[torch.Tensor] = []
-    for allocation_fraction, effect in zip(allocation, effects, strict=True):
-        state = torch.tanh(
-            STATE_DECAY * state + allocation_fraction * effect
+    return torch.softmax(logits, dim=0)
+
+
+def _trajectory_points(
+    *,
+    evidence_ids: Sequence[str],
+    states: torch.Tensor,
+    controls: torch.Tensor,
+    gradients: torch.Tensor,
+    eligibility: torch.Tensor,
+    correction_index: int,
+    support_envelope: torch.Tensor,
+) -> list[JsonObject]:
+    return [
+        _seal(
+            {
+                "step_index": index,
+                "evidence_id": evidence_id,
+                "is_correction_event": index == correction_index,
+                "eligible_for_temporal_control": bool(eligibility[index]),
+                "state": [float(value) for value in states[index].detach()],
+                "full_admission_support_reference": float(
+                    support_envelope[index].detach()
+                ),
+                "control_value": float(controls[index]),
+                "temporal_gradient": float(gradients[index]),
+            }
         )
-        states.append(state)
-    eligible_allocation = allocation[eligibility]
-    uniform = torch.full_like(
-        eligible_allocation, 1.0 / int(eligibility.sum().item())
-    )
-    allocation_regularization = (
-        eligible_allocation
-        * (torch.log(eligible_allocation) - torch.log(uniform))
-    ).sum()
-    loss = (
-        (state - TERMINAL_TARGET).square()
-        + CONTROL_REGULARIZATION * allocation_regularization
-    )
-    return loss, torch.stack(states), allocation
+        for index, evidence_id in enumerate(evidence_ids)
+    ]
+
+
+def _loss_components_value(
+    components: Mapping[str, torch.Tensor],
+) -> JsonObject:
+    return {
+        key: float(value.detach()) for key, value in components.items()
+    }
 
 
 def _derive_control_map(
     request: LiveRevisionRequest, compiled_before: Mapping[str, Any]
 ) -> JsonObject:
     evidence_ids = [row.evidence_id for row in request.all_raw_evidence]
-    initial_scalar, actual_state = _actual_before_state(request, compiled_before)
+    _, actual_state = _actual_before_state(request, compiled_before)
     effect_by_id, source_receipt = _public_incidence_effects(request)
     effects = torch.tensor([effect_by_id[item] for item in evidence_ids], dtype=FLOAT_DTYPE)
     eligible_ids = set(_eligible_reinspection_evidence_ids(request))
@@ -1076,9 +1240,17 @@ def _derive_control_map(
         int(eligibility.sum().item()) >= max(request.reinspection_count, 2),
         "CONTINUOUS_ALLOCATION_DOMAIN_TOO_SMALL",
     )
+    correction_index = evidence_ids.index(request.event.correction_evidence_id)
+    initial_state = torch.tensor(
+        actual_state["initial_vector"], dtype=FLOAT_DTYPE
+    )
     controls = torch.zeros(len(evidence_ids), dtype=FLOAT_DTYPE, requires_grad=True)
-    loss_before, states_before, allocation_before = _controller_loss(
-        controls, effects, eligibility, initial_state=initial_scalar
+    loss_before, states_before, components_before = _controller_loss(
+        controls,
+        effects,
+        eligibility,
+        initial_state=initial_state,
+        correction_index=correction_index,
     )
     loss_before.backward()
     _require(controls.grad is not None, "BACKWARD_GRADIENT_MISSING")
@@ -1093,26 +1265,35 @@ def _derive_control_map(
     accepted: torch.Tensor | None = None
     accepted_states: torch.Tensor | None = None
     accepted_loss: torch.Tensor | None = None
-    accepted_allocation: torch.Tensor | None = None
+    accepted_components: dict[str, torch.Tensor] | None = None
     accepted_backtrack = -1
     for backtrack in range(MAX_BACKTRACKS + 1):
         candidate = bounded * (0.5**backtrack)
-        candidate_loss, candidate_states, candidate_allocation = _controller_loss(
-            candidate, effects, eligibility, initial_state=initial_scalar
+        candidate_loss, candidate_states, candidate_components = _controller_loss(
+            candidate,
+            effects,
+            eligibility,
+            initial_state=initial_state,
+            correction_index=correction_index,
         )
         if float(candidate_loss.detach()) < float(loss_before.detach()):
             accepted = candidate
             accepted_states = candidate_states
             accepted_loss = candidate_loss
-            accepted_allocation = candidate_allocation
+            accepted_components = candidate_components
             accepted_backtrack = backtrack
             break
     _require(accepted is not None, "SURROGATE_NO_DESCENT")
     assert (
         accepted_states is not None
         and accepted_loss is not None
-        and accepted_allocation is not None
+        and accepted_components is not None
     )
+
+    allocation_before = _masked_allocation(
+        torch.zeros_like(controls), eligibility
+    )
+    accepted_allocation = _masked_allocation(accepted, eligibility)
 
     epsilon = FINITE_DIFFERENCE_EPSILON
     finite_difference: list[float] = []
@@ -1122,10 +1303,18 @@ def _derive_control_map(
         positive[index] = epsilon
         negative[index] = -epsilon
         plus, _, _ = _controller_loss(
-            positive, effects, eligibility, initial_state=initial_scalar
+            positive,
+            effects,
+            eligibility,
+            initial_state=initial_state,
+            correction_index=correction_index,
         )
         minus, _, _ = _controller_loss(
-            negative, effects, eligibility, initial_state=initial_scalar
+            negative,
+            effects,
+            eligibility,
+            initial_state=initial_state,
+            correction_index=correction_index,
         )
         finite_difference.append(float((plus - minus) / (2.0 * epsilon)))
     errors = [
@@ -1133,7 +1322,29 @@ def _derive_control_map(
         for index in range(len(evidence_ids))
     ]
     norm = float(torch.linalg.vector_norm(accepted))
+    eligible_indices = torch.nonzero(eligibility).flatten()
+    sham = accepted.clone()
+    sham[eligible_indices] = torch.flip(accepted[eligible_indices], dims=(0,))
+    sham_loss, sham_states, _ = _controller_loss(
+        sham,
+        effects,
+        eligibility,
+        initial_state=initial_state,
+        correction_index=correction_index,
+    )
+    replay_loss, replay_states, _ = _controller_loss(
+        accepted,
+        effects,
+        eligibility,
+        initial_state=initial_state,
+        correction_index=correction_index,
+    )
     active_before = set(compiled_before["active_support_evidence_ids"])
+    support_envelope = _full_admission_support_envelope(
+        effects,
+        eligibility,
+        initial_support=initial_state[0],
+    )
     rows = [
         {
             "evidence_id": evidence_id,
@@ -1142,6 +1353,13 @@ def _derive_control_map(
             "finite_difference_gradient": finite_difference[index],
             "control_value": float(accepted[index]),
             "reinspection_salience": abs(float(accepted[index])),
+            "temporal_step_index": index,
+            "state_before": [
+                float(value) for value in states_before[index].detach()
+            ],
+            "state_after": [
+                float(value) for value in accepted_states[index].detach()
+            ],
             "eligible_for_reinspection": evidence_id in eligible_ids,
             "baseline_allocation_fraction": float(
                 allocation_before[index].detach()
@@ -1162,6 +1380,145 @@ def _derive_control_map(
         }
         for index, evidence_id in enumerate(evidence_ids)
     ]
+    neutral_points = _trajectory_points(
+        evidence_ids=evidence_ids,
+        states=states_before,
+        controls=torch.zeros_like(controls),
+        gradients=gradient,
+        eligibility=eligibility,
+        correction_index=correction_index,
+        support_envelope=support_envelope,
+    )
+    revised_points = _trajectory_points(
+        evidence_ids=evidence_ids,
+        states=accepted_states,
+        controls=accepted,
+        gradients=gradient,
+        eligibility=eligibility,
+        correction_index=correction_index,
+        support_envelope=support_envelope,
+    )
+    trajectory_checks = {
+        "source_actual_before_state_bound": actual_state[
+            "fingerprint_sha256"
+        ]
+        == _fingerprint(_without_fingerprint(actual_state)),
+        "chronological_forward_exact": [
+            row["evidence_id"] for row in revised_points
+        ]
+        == evidence_ids,
+        "single_backward_executed": controls.grad is not None,
+        "pre_event_temporal_credit_nonzero": any(
+            bool(eligibility[index])
+            and index < correction_index
+            and abs(float(gradient[index])) > ALLOCATION_TOLERANCE
+            for index in range(len(evidence_ids))
+        ),
+        "correction_site_credit_nonzero": abs(
+            float(gradient[correction_index])
+        )
+        > ALLOCATION_TOLERANCE,
+        "trajectory_objective_decreased": float(accepted_loss.detach())
+        < float(loss_before.detach()),
+        "trajectory_path_loss_decreased": float(
+            accepted_components["path"].detach()
+        )
+        < float(components_before["path"].detach()),
+        "revised_forward_replay_exact": torch.equal(
+            accepted_states, replay_states
+        )
+        and float(accepted_loss.detach()) == float(replay_loss.detach()),
+        "stable_axis_exact_identity": torch.equal(
+            states_before[:, 2], accepted_states[:, 2]
+        )
+        and bool(
+            torch.all(
+                accepted_states[:, 2]
+                == initial_state[2]
+            )
+        ),
+        "bounded_time_local_control": norm <= MAX_CONTROL_L2 + 1.0e-15,
+        "matched_sham_control_geometry": sorted(
+            float(abs(value)) for value in sham[eligibility]
+        )
+        == sorted(float(abs(value)) for value in accepted[eligibility])
+        and abs(float(torch.linalg.vector_norm(sham)) - norm) <= 1.0e-15,
+        "exact_temporal_placement_beats_matched_sham": float(
+            accepted_loss.detach()
+        )
+        + 1.0e-12
+        < float(sham_loss.detach()),
+        "gradient_stops_before_json": True,
+    }
+    _require(
+        tuple(trajectory_checks) == TRAJECTORY_CHECK_KEYS
+        and all(trajectory_checks.values()),
+        "PUBLIC_TRAJECTORY_HARD_GATE_FAILED",
+        ",".join(
+            key for key, passed in trajectory_checks.items() if not passed
+        ),
+    )
+    public_trajectory = _seal(
+        {
+            "schema_version": TRAJECTORY_SCHEMA,
+            "state_kind": "PUBLIC_HAND_BUILT_REVISION_SURROGATE",
+            "axis_order": list(TRAJECTORY_AXES),
+            "axis_semantics": {
+                "event_consistent_support": "higher means more admitted public support has been revisited",
+                "invalidated_support_clearance": "higher means the typed invalidation event has been integrated",
+                "stable_support_retention": "exactly preserves the compiled public Before coordinate",
+            },
+            "terminal_target": [1.0, 1.0, float(initial_state[2])],
+            "source_actual_before_state_fingerprint_sha256": actual_state[
+                "fingerprint_sha256"
+            ],
+            "source_credit_basis_fingerprint_sha256": source_receipt[
+                "fingerprint_sha256"
+            ],
+            "correction_step_index": correction_index,
+            "neutral": _seal(
+                {
+                    "objective": float(loss_before.detach()),
+                    "loss_components": _loss_components_value(
+                        components_before
+                    ),
+                    "terminal_state": [
+                        float(value) for value in states_before[-1].detach()
+                    ],
+                    "points": neutral_points,
+                }
+            ),
+            "revised": _seal(
+                {
+                    "objective": float(accepted_loss.detach()),
+                    "loss_components": _loss_components_value(
+                        accepted_components
+                    ),
+                    "terminal_state": [
+                        float(value) for value in accepted_states[-1].detach()
+                    ],
+                    "points": revised_points,
+                }
+            ),
+            "matched_temporal_sham": {
+                "construction": "REVERSE_ACCEPTED_CONTROL_VALUES_OVER_ELIGIBLE_TIME_SITES",
+                "objective": float(sham_loss.detach()),
+                "terminal_state": [
+                    float(value) for value in sham_states[-1].detach()
+                ],
+                "control_l2": float(torch.linalg.vector_norm(sham)),
+                "provider_calls": 0,
+                "claim_scope": "PUBLIC_RECURRENCE_TEMPORAL_PLACEMENT_ONLY",
+            },
+            "checks": trajectory_checks,
+            "gradient_boundary": {
+                "starts_at": "compiled public Before state plus typed public evidence program",
+                "ends_at": "bounded time-local public trajectory controls",
+                "hosted_model_differentiated": False,
+                "private_reasoning_observed": False,
+            },
+        }
+    )
     checks = {
         "actual_before_state_bound_to_controller": (
             actual_state["source_compiled_fingerprint_sha256"]
@@ -1192,16 +1549,37 @@ def _derive_control_map(
             <= ALLOCATION_TOLERANCE
             for row in rows
         ),
-        "surrogate_terminal_state_increased": float(accepted_states[-1].detach())
-        > float(states_before[-1].detach()),
+        "surrogate_terminal_state_increased": float(
+            accepted_states[-1, :2].mean().detach()
+        )
+        > float(states_before[-1, :2].mean().detach()),
         "finite_difference_agreement": max(errors) <= FINITE_DIFFERENCE_TOLERANCE,
+        "public_trajectory_bound": public_trajectory[
+            "source_actual_before_state_fingerprint_sha256"
+        ]
+        == actual_state["fingerprint_sha256"],
+        "pre_event_temporal_credit_nonzero": trajectory_checks[
+            "pre_event_temporal_credit_nonzero"
+        ],
+        "trajectory_path_loss_decreased": trajectory_checks[
+            "trajectory_path_loss_decreased"
+        ],
+        "stable_axis_exact_identity": trajectory_checks[
+            "stable_axis_exact_identity"
+        ],
+        "exact_temporal_placement_beats_matched_sham": trajectory_checks[
+            "exact_temporal_placement_beats_matched_sham"
+        ],
         "gradient_stops_before_provider": True,
         "reserved_gold_fields_absent": not bool(
             _recursive_keys(request.model_dump(mode="json"))
             & FORBIDDEN_REQUEST_KEYS
         ),
     }
-    _require(all(checks.values()), "CONTROLLER_HARD_GATE_FAILED")
+    _require(
+        tuple(checks) == CONTROL_CHECK_KEYS and all(checks.values()),
+        "CONTROLLER_HARD_GATE_FAILED",
+    )
     return _seal(
         {
             "schema_version": CONTROL_SCHEMA,
@@ -1218,13 +1596,19 @@ def _derive_control_map(
                 evidence_id for evidence_id in evidence_ids if evidence_id in eligible_ids
             ],
             "surrogate_terminal_state_before": float(
-                states_before[-1].detach()
+                states_before[-1, :2].mean().detach()
             ),
             "surrogate_terminal_state_after": float(
-                accepted_states[-1].detach()
+                accepted_states[-1, :2].mean().detach()
             ),
-            "state_trace_before": [float(value) for value in states_before.detach()],
-            "state_trace_after": [float(value) for value in accepted_states.detach()],
+            "state_trace_before": [
+                [float(value) for value in row] for row in states_before.detach()
+            ],
+            "state_trace_after": [
+                [float(value) for value in row]
+                for row in accepted_states.detach()
+            ],
+            "public_trajectory": public_trajectory,
             "unprojected_control_l2": raw_norm,
             "budget_projection_scale": budget_scale,
             "backtracking_steps": accepted_backtrack,
@@ -1242,6 +1626,458 @@ def _derive_control_map(
                 "hosted_model_differentiated": False,
                 "reserved_gold_fields_participated": False,
                 "caller_semantic_content_verified": False,
+            },
+        }
+    )
+
+
+def _validate_public_trajectory_derivation(
+    request: LiveRevisionRequest,
+    compiled_before: Mapping[str, Any],
+    control_map: Mapping[str, Any],
+) -> None:
+    _require(
+        control_map.get("schema_version") == CONTROL_SCHEMA
+        and control_map.get("fingerprint_sha256")
+        == _fingerprint(_without_fingerprint(control_map)),
+        "PUBLIC_TRAJECTORY_CONTROL_FINGERPRINT_INVALID",
+    )
+    _, expected_actual = _actual_before_state(request, compiled_before)
+    expected_effects_by_id, expected_receipt = _public_incidence_effects(
+        request
+    )
+    _require(
+        control_map.get("actual_before_state") == expected_actual
+        and control_map.get("source_credit_basis") == expected_receipt,
+        "PUBLIC_TRAJECTORY_SOURCE_DERIVATION_INVALID",
+    )
+    evidence_ids = [row.evidence_id for row in request.all_raw_evidence]
+    rows = control_map.get("credit_rows")
+    _require(
+        isinstance(rows, list)
+        and len(rows) == len(evidence_ids)
+        and [row.get("evidence_id") for row in rows] == evidence_ids,
+        "PUBLIC_TRAJECTORY_CONTROL_ROWS_INVALID",
+    )
+    eligible_ids = set(_eligible_reinspection_evidence_ids(request))
+    eligibility = torch.tensor(
+        [evidence_id in eligible_ids for evidence_id in evidence_ids],
+        dtype=torch.bool,
+    )
+    controls = torch.tensor(
+        [float(row["control_value"]) for row in rows], dtype=FLOAT_DTYPE
+    )
+    gradients = torch.tensor(
+        [float(row["gradient"]) for row in rows], dtype=FLOAT_DTYPE
+    )
+    effects = torch.tensor(
+        [expected_effects_by_id[evidence_id] for evidence_id in evidence_ids],
+        dtype=FLOAT_DTYPE,
+    )
+    initial_state = torch.tensor(
+        expected_actual["initial_vector"], dtype=FLOAT_DTYPE
+    )
+    correction_index = evidence_ids.index(
+        request.event.correction_evidence_id
+    )
+    zero = torch.zeros_like(controls)
+    neutral_loss, neutral_states, neutral_components = _controller_loss(
+        zero,
+        effects,
+        eligibility,
+        initial_state=initial_state,
+        correction_index=correction_index,
+    )
+    finite_difference: list[float] = []
+    for index in range(len(evidence_ids)):
+        positive = torch.zeros_like(controls)
+        negative = torch.zeros_like(controls)
+        positive[index] = FINITE_DIFFERENCE_EPSILON
+        negative[index] = -FINITE_DIFFERENCE_EPSILON
+        plus, _, _ = _controller_loss(
+            positive,
+            effects,
+            eligibility,
+            initial_state=initial_state,
+            correction_index=correction_index,
+        )
+        minus, _, _ = _controller_loss(
+            negative,
+            effects,
+            eligibility,
+            initial_state=initial_state,
+            correction_index=correction_index,
+        )
+        finite_difference.append(
+            float(
+                (plus - minus)
+                / (2.0 * FINITE_DIFFERENCE_EPSILON)
+            )
+        )
+    errors = [
+        abs(float(gradients[index]) - finite_difference[index])
+        for index in range(len(evidence_ids))
+    ]
+    _require(
+        all(
+            abs(
+                float(row["finite_difference_gradient"])
+                - finite_difference[index]
+            )
+            <= 1.0e-15
+            and errors[index] <= FINITE_DIFFERENCE_TOLERANCE
+            for index, row in enumerate(rows)
+        ),
+        "PUBLIC_TRAJECTORY_GRADIENT_RECEIPT_INVALID",
+    )
+    raw_displacement = -STEP_SIZE * gradients
+    raw_norm = float(torch.linalg.vector_norm(raw_displacement))
+    _require(
+        math.isfinite(raw_norm) and raw_norm > 0.0,
+        "PUBLIC_TRAJECTORY_CONTROL_UPDATE_INVALID",
+    )
+    budget_scale = min(1.0, MAX_CONTROL_L2 / raw_norm)
+    bounded = raw_displacement * budget_scale
+    expected_controls: torch.Tensor | None = None
+    expected_backtrack = -1
+    for backtrack in range(MAX_BACKTRACKS + 1):
+        candidate = bounded * (0.5**backtrack)
+        candidate_loss, _, _ = _controller_loss(
+            candidate,
+            effects,
+            eligibility,
+            initial_state=initial_state,
+            correction_index=correction_index,
+        )
+        if float(candidate_loss.detach()) < float(neutral_loss.detach()):
+            expected_controls = candidate
+            expected_backtrack = backtrack
+            break
+    _require(
+        expected_controls is not None
+        and torch.equal(controls, expected_controls)
+        and control_map.get("unprojected_control_l2") == raw_norm
+        and control_map.get("budget_projection_scale") == budget_scale
+        and control_map.get("backtracking_steps") == expected_backtrack,
+        "PUBLIC_TRAJECTORY_DETERMINISTIC_UPDATE_INVALID",
+    )
+    revised_loss, revised_states, revised_components = _controller_loss(
+        controls,
+        effects,
+        eligibility,
+        initial_state=initial_state,
+        correction_index=correction_index,
+    )
+    neutral_points = _trajectory_points(
+        evidence_ids=evidence_ids,
+        states=neutral_states,
+        controls=zero,
+        gradients=gradients,
+        eligibility=eligibility,
+        correction_index=correction_index,
+        support_envelope=_full_admission_support_envelope(
+            effects,
+            eligibility,
+            initial_support=initial_state[0],
+        ),
+    )
+    revised_points = _trajectory_points(
+        evidence_ids=evidence_ids,
+        states=revised_states,
+        controls=controls,
+        gradients=gradients,
+        eligibility=eligibility,
+        correction_index=correction_index,
+        support_envelope=_full_admission_support_envelope(
+            effects,
+            eligibility,
+            initial_support=initial_state[0],
+        ),
+    )
+    trajectory = control_map.get("public_trajectory")
+    _require(
+        isinstance(trajectory, Mapping)
+        and trajectory.get("schema_version") == TRAJECTORY_SCHEMA
+        and trajectory.get("fingerprint_sha256")
+        == _fingerprint(_without_fingerprint(trajectory)),
+        "PUBLIC_TRAJECTORY_FINGERPRINT_INVALID",
+    )
+    neutral = trajectory.get("neutral")
+    revised = trajectory.get("revised")
+    _require(
+        isinstance(neutral, Mapping)
+        and isinstance(revised, Mapping)
+        and neutral.get("fingerprint_sha256")
+        == _fingerprint(_without_fingerprint(neutral))
+        and revised.get("fingerprint_sha256")
+        == _fingerprint(_without_fingerprint(revised))
+        and neutral.get("objective") == float(neutral_loss.detach())
+        and revised.get("objective") == float(revised_loss.detach())
+        and neutral.get("loss_components")
+        == _loss_components_value(neutral_components)
+        and revised.get("loss_components")
+        == _loss_components_value(revised_components)
+        and neutral.get("terminal_state")
+        == [float(value) for value in neutral_states[-1].detach()]
+        and revised.get("terminal_state")
+        == [float(value) for value in revised_states[-1].detach()]
+        and neutral.get("points") == neutral_points
+        and revised.get("points") == revised_points,
+        "PUBLIC_TRAJECTORY_FORWARD_REPLAY_MISMATCH",
+    )
+    eligible_indices = torch.nonzero(eligibility).flatten()
+    sham = controls.clone()
+    sham[eligible_indices] = torch.flip(controls[eligible_indices], dims=(0,))
+    sham_loss, sham_states, _ = _controller_loss(
+        sham,
+        effects,
+        eligibility,
+        initial_state=initial_state,
+        correction_index=correction_index,
+    )
+    control_norm = float(torch.linalg.vector_norm(controls))
+    expected_trajectory_checks = {
+        "source_actual_before_state_bound": expected_actual[
+            "fingerprint_sha256"
+        ]
+        == _fingerprint(_without_fingerprint(expected_actual)),
+        "chronological_forward_exact": [
+            row["evidence_id"] for row in revised_points
+        ]
+        == evidence_ids,
+        "single_backward_executed": control_map.get("backward_calls") == 1,
+        "pre_event_temporal_credit_nonzero": any(
+            bool(eligibility[index])
+            and index < correction_index
+            and abs(float(gradients[index])) > ALLOCATION_TOLERANCE
+            for index in range(len(evidence_ids))
+        ),
+        "correction_site_credit_nonzero": abs(
+            float(gradients[correction_index])
+        )
+        > ALLOCATION_TOLERANCE,
+        "trajectory_objective_decreased": float(revised_loss.detach())
+        < float(neutral_loss.detach()),
+        "trajectory_path_loss_decreased": float(
+            revised_components["path"].detach()
+        )
+        < float(neutral_components["path"].detach()),
+        "revised_forward_replay_exact": True,
+        "stable_axis_exact_identity": torch.equal(
+            neutral_states[:, 2], revised_states[:, 2]
+        )
+        and bool(torch.all(revised_states[:, 2] == initial_state[2])),
+        "bounded_time_local_control": control_norm
+        <= MAX_CONTROL_L2 + 1.0e-15,
+        "matched_sham_control_geometry": sorted(
+            float(abs(value)) for value in sham[eligibility]
+        )
+        == sorted(float(abs(value)) for value in controls[eligibility])
+        and abs(float(torch.linalg.vector_norm(sham)) - control_norm)
+        <= 1.0e-15,
+        "exact_temporal_placement_beats_matched_sham": float(
+            revised_loss.detach()
+        )
+        + 1.0e-12
+        < float(sham_loss.detach()),
+        "gradient_stops_before_json": True,
+    }
+    expected_matched_sham = {
+        "construction": "REVERSE_ACCEPTED_CONTROL_VALUES_OVER_ELIGIBLE_TIME_SITES",
+        "objective": float(sham_loss.detach()),
+        "terminal_state": [
+            float(value) for value in sham_states[-1].detach()
+        ],
+        "control_l2": float(torch.linalg.vector_norm(sham)),
+        "provider_calls": 0,
+        "claim_scope": "PUBLIC_RECURRENCE_TEMPORAL_PLACEMENT_ONLY",
+    }
+    _require(
+        tuple(expected_trajectory_checks) == TRAJECTORY_CHECK_KEYS
+        and all(expected_trajectory_checks.values())
+        and trajectory.get("checks") == expected_trajectory_checks
+        and trajectory.get("matched_temporal_sham")
+        == expected_matched_sham
+        and trajectory.get("axis_order") == list(TRAJECTORY_AXES)
+        and trajectory.get("terminal_target")
+        == [1.0, 1.0, float(initial_state[2])]
+        and trajectory.get("source_actual_before_state_fingerprint_sha256")
+        == expected_actual["fingerprint_sha256"]
+        and trajectory.get("source_credit_basis_fingerprint_sha256")
+        == expected_receipt["fingerprint_sha256"]
+        and trajectory.get("correction_step_index") == correction_index,
+        "PUBLIC_TRAJECTORY_RECEIPT_DERIVATION_INVALID",
+    )
+    expected_allocation = _masked_allocation(controls, eligibility)
+    baseline_allocation = _masked_allocation(zero, eligibility)
+    expected_control_checks = {
+        "actual_before_state_bound_to_controller": expected_actual[
+            "source_compiled_fingerprint_sha256"
+        ]
+        == compiled_before["fingerprint_sha256"],
+        "local_backward_executed": control_map.get("backward_calls") == 1,
+        "finite_continuous_allocation": all(
+            math.isfinite(float(row["control_value"]))
+            and math.isfinite(
+                float(row["optimized_allocation_fraction"])
+            )
+            for row in rows
+        ),
+        "surrogate_objective_decreased": float(revised_loss.detach())
+        < float(neutral_loss.detach()),
+        "non_neutral_control_map": any(
+            abs(
+                float(expected_allocation[index])
+                - float(baseline_allocation[index])
+            )
+            > ALLOCATION_TOLERANCE
+            for index in range(len(evidence_ids))
+        ),
+        "control_budget_respected": control_norm
+        <= MAX_CONTROL_L2 + 1.0e-15,
+        "allocation_simplex_respected": abs(
+            float(expected_allocation.sum()) - 1.0
+        )
+        <= ALLOCATION_TOLERANCE,
+        "ineligible_allocation_zero": all(
+            bool(eligibility[index])
+            or abs(float(expected_allocation[index]))
+            <= ALLOCATION_TOLERANCE
+            for index in range(len(evidence_ids))
+        ),
+        "surrogate_terminal_state_increased": float(
+            revised_states[-1, :2].mean().detach()
+        )
+        > float(neutral_states[-1, :2].mean().detach()),
+        "finite_difference_agreement": max(errors)
+        <= FINITE_DIFFERENCE_TOLERANCE,
+        "public_trajectory_bound": trajectory[
+            "source_actual_before_state_fingerprint_sha256"
+        ]
+        == expected_actual["fingerprint_sha256"],
+        "pre_event_temporal_credit_nonzero": expected_trajectory_checks[
+            "pre_event_temporal_credit_nonzero"
+        ],
+        "trajectory_path_loss_decreased": expected_trajectory_checks[
+            "trajectory_path_loss_decreased"
+        ],
+        "stable_axis_exact_identity": expected_trajectory_checks[
+            "stable_axis_exact_identity"
+        ],
+        "exact_temporal_placement_beats_matched_sham": expected_trajectory_checks[
+            "exact_temporal_placement_beats_matched_sham"
+        ],
+        "gradient_stops_before_provider": True,
+        "reserved_gold_fields_absent": not bool(
+            _recursive_keys(request.model_dump(mode="json"))
+            & FORBIDDEN_REQUEST_KEYS
+        ),
+    }
+    _require(
+        control_map.get("objective_before") == float(neutral_loss.detach())
+        and control_map.get("objective_after") == float(revised_loss.detach())
+        and control_map.get("state_trace_before")
+        == [
+            [float(value) for value in row]
+            for row in neutral_states.detach()
+        ]
+        and control_map.get("state_trace_after")
+        == [
+            [float(value) for value in row]
+            for row in revised_states.detach()
+        ]
+        and all(
+            float(row["source_effect"])
+            == float(effects[index])
+            and float(row["gradient"]) == float(gradients[index])
+            and float(row["finite_difference_gradient"])
+            == finite_difference[index]
+            and float(row["control_value"]) == float(controls[index])
+            and float(row["reinspection_salience"])
+            == abs(float(controls[index]))
+            and row["temporal_step_index"] == index
+            and bool(row["eligible_for_reinspection"])
+            is bool(eligibility[index])
+            and float(row["baseline_allocation_fraction"])
+            == float(baseline_allocation[index])
+            and float(row["optimized_allocation_fraction"])
+            == float(expected_allocation[index])
+            and float(row["allocation_delta"])
+            == float(
+                expected_allocation[index] - baseline_allocation[index]
+            )
+            and row["state_before"]
+            == [float(value) for value in neutral_states[index].detach()]
+            and row["state_after"]
+            == [float(value) for value in revised_states[index].detach()]
+            for index, row in enumerate(rows)
+        )
+        and control_map.get("control_l2") == control_norm
+        and control_map.get("max_control_l2") == MAX_CONTROL_L2
+        and control_map.get("maximum_finite_difference_error")
+        == max(errors)
+        and control_map.get("finite_difference_tolerance")
+        == FINITE_DIFFERENCE_TOLERANCE
+        and control_map.get("checks") == expected_control_checks
+        and tuple(expected_control_checks) == CONTROL_CHECK_KEYS
+        and all(expected_control_checks.values()),
+        "PUBLIC_TRAJECTORY_CONTROL_DERIVATION_INVALID",
+    )
+
+
+def _derive_no_event_identity_trajectory(
+    request: LiveRevisionRequest,
+    compiled_before: Mapping[str, Any],
+) -> JsonObject:
+    """Private zero-call sentinel; the public API still requires a typed event."""
+
+    _, actual_state = _actual_before_state(request, compiled_before)
+    initial = [float(value) for value in actual_state["initial_vector"]]
+    points = [
+        _seal(
+            {
+                "step_index": index,
+                "evidence_id": row.evidence_id,
+                "is_correction_event": False,
+                "eligible_for_temporal_control": False,
+                "state": initial,
+                "control_value": 0.0,
+                "temporal_gradient": 0.0,
+            }
+        )
+        for index, row in enumerate(request.all_raw_evidence)
+    ]
+    trace = _seal(
+        {
+            "objective": 0.0,
+            "loss_components": {
+                "terminal": 0.0,
+                "path": 0.0,
+                "control": 0.0,
+                "smoothness": 0.0,
+            },
+            "terminal_state": initial,
+            "points": points,
+        }
+    )
+    return _seal(
+        {
+            "schema_version": TRAJECTORY_SCHEMA,
+            "status": "IDENTITY_NO_EVENT",
+            "state_kind": "PUBLIC_HAND_BUILT_REVISION_SURROGATE",
+            "axis_order": list(TRAJECTORY_AXES),
+            "source_actual_before_state_fingerprint_sha256": actual_state[
+                "fingerprint_sha256"
+            ],
+            "neutral": trace,
+            "revised": _clone(trace),
+            "backward_calls": 0,
+            "provider_calls": 0,
+            "checks": {
+                "exact_identity": True,
+                "zero_control": True,
+                "zero_backward": True,
+                "zero_provider_calls": True,
             },
         }
     )
@@ -1330,6 +2166,7 @@ def _validate_inspection_plan_and_program(
     *,
     allowed_evidence_ids: set[str],
     correction_evidence_id: str,
+    source_public_trajectory_fingerprint_sha256: str,
     suppress_evidence_ids: Sequence[str],
     reinspect_evidence_ids: Sequence[str],
     preserve_evidence_ids: Sequence[str],
@@ -1338,7 +2175,7 @@ def _validate_inspection_plan_and_program(
 ) -> None:
     _require(
         inspection_plan.get("schema_version")
-        == "ebrt-live-continuous-inspection-plan-v0.6.2.3"
+        == "ebrt-live-continuous-inspection-plan-v0.6.2.4"
         and inspection_plan.get("fingerprint_sha256")
         == _fingerprint(_without_fingerprint(inspection_plan)),
         "ACTUATOR_INSPECTION_PLAN_FINGERPRINT_INVALID",
@@ -1351,6 +2188,11 @@ def _validate_inspection_plan_and_program(
         and inspection_plan.get("budget_unit_semantics")
         == "ABSTRACT_PUBLIC_REVIEW_ALLOCATION_NOT_PROVIDER_TOKENS",
         "ACTUATOR_INSPECTION_PLAN_CONTRACT_INVALID",
+    )
+    _require(
+        inspection_plan.get("source_public_trajectory_fingerprint_sha256")
+        == source_public_trajectory_fingerprint_sha256,
+        "ACTUATOR_INSPECTION_PLAN_TRAJECTORY_BINDING_INVALID",
     )
     rows = inspection_plan.get("steps")
     _require(
@@ -1444,8 +2286,10 @@ def _validate_inspection_plan_and_program(
     _require(rows == expected_order, "ACTUATOR_INSPECTION_ORDER_INVALID")
     _require(
         program.get("schema_version")
-        == "ebrt-live-public-revision-program-v0.6.2.3"
+        == "ebrt-live-public-revision-program-v0.6.2.4"
         and program.get("state") == "COMPILED"
+        and program.get("source_public_trajectory_fingerprint_sha256")
+        == source_public_trajectory_fingerprint_sha256
         and program.get("fingerprint_sha256")
         == _fingerprint(_without_fingerprint(program)),
         "ACTUATOR_PROGRAM_FINGERPRINT_INVALID",
@@ -1467,6 +2311,20 @@ def _compile_actuator(
     compiled_before: Mapping[str, Any],
     control_map: Mapping[str, Any],
 ) -> JsonObject:
+    _validate_public_trajectory_derivation(
+        request, compiled_before, control_map
+    )
+    public_trajectory = control_map.get("public_trajectory")
+    _require(
+        isinstance(public_trajectory, Mapping)
+        and public_trajectory.get("schema_version") == TRAJECTORY_SCHEMA
+        and public_trajectory.get("fingerprint_sha256")
+        == _fingerprint(_without_fingerprint(public_trajectory))
+        and isinstance(public_trajectory.get("checks"), Mapping)
+        and all(public_trajectory["checks"].values()),
+        "ACTUATOR_PUBLIC_TRAJECTORY_INVALID",
+    )
+    trajectory_fingerprint = str(public_trajectory["fingerprint_sha256"])
     invalidated = set(request.event.invalidated_evidence_ids)
     stable = set(request.event.stable_evidence_ids)
     eligible = [
@@ -1533,8 +2391,9 @@ def _compile_actuator(
     )
     inspection_plan = _seal(
         {
-            "schema_version": "ebrt-live-continuous-inspection-plan-v0.6.2.3",
+            "schema_version": "ebrt-live-continuous-inspection-plan-v0.6.2.4",
             "allocation_scope": "SELECTED_PUBLIC_REINSPECTION_STEPS",
+            "source_public_trajectory_fingerprint_sha256": trajectory_fingerprint,
             "total_budget_units": INSPECTION_BUDGET_UNITS,
             "budget_unit_semantics": "ABSTRACT_PUBLIC_REVIEW_ALLOCATION_NOT_PROVIDER_TOKENS",
             "steps": plan_rows,
@@ -1548,17 +2407,19 @@ def _compile_actuator(
     )
     program = _seal(
         {
-            "schema_version": "ebrt-live-public-revision-program-v0.6.2.3",
+            "schema_version": "ebrt-live-public-revision-program-v0.6.2.4",
             "state": "COMPILED",
             "source_control_map_fingerprint_sha256": control_map[
                 "fingerprint_sha256"
             ],
+            "source_public_trajectory_fingerprint_sha256": trajectory_fingerprint,
             "steps": program_steps,
         }
     )
     _validate_inspection_plan_and_program(
         allowed_evidence_ids={row.evidence_id for row in request.all_raw_evidence},
         correction_evidence_id=request.event.correction_evidence_id,
+        source_public_trajectory_fingerprint_sha256=trajectory_fingerprint,
         suppress_evidence_ids=suppress,
         reinspect_evidence_ids=reinspect,
         preserve_evidence_ids=preserve,
@@ -1568,6 +2429,9 @@ def _compile_actuator(
     checks = {
         "source_control_map_bound": control_map["fingerprint_sha256"]
         == program["source_control_map_fingerprint_sha256"],
+        "source_public_trajectory_bound": trajectory_fingerprint
+        == program["source_public_trajectory_fingerprint_sha256"]
+        == inspection_plan["source_public_trajectory_fingerprint_sha256"],
         "selected_count_exact": len(plan_rows) == request.reinspection_count,
         "continuous_allocation_finite": all(
             math.isfinite(float(row["inspection_share"]))
@@ -1607,10 +2471,11 @@ def _compile_actuator(
             "schema_version": ACTUATOR_SCHEMA,
             "source_before_compiled_fingerprint_sha256": compiled_before["fingerprint_sha256"],
             "source_control_map_fingerprint_sha256": control_map["fingerprint_sha256"],
+            "source_public_trajectory_fingerprint_sha256": trajectory_fingerprint,
             "event_id": request.event.event_id,
             "correction_evidence_id": request.event.correction_evidence_id,
             "reinspect_evidence_ids": reinspect,
-            "reinspect_source": "DIFFERENTIABLE_CONTINUOUS_INSPECTION_ALLOCATION",
+            "reinspect_source": "PUBLIC_TRAJECTORY_ADJOINT_PROJECTION",
             "suppress_evidence_ids": suppress,
             "suppress_source": "TYPED_EVENT_INVALIDATION",
             "preserve_evidence_ids": preserve,
@@ -1710,6 +2575,19 @@ def _execute_actuator_program(
         == source_control_map_fingerprint_sha256,
         "ACTUATOR_CONTROL_MAP_BINDING_INVALID",
     )
+    _require(
+        isinstance(
+            actuator.get("source_public_trajectory_fingerprint_sha256"), str
+        )
+        and actuator["source_public_trajectory_fingerprint_sha256"]
+        == actuator["program"][
+            "source_public_trajectory_fingerprint_sha256"
+        ]
+        == actuator["inspection_plan"][
+            "source_public_trajectory_fingerprint_sha256"
+        ],
+        "ACTUATOR_TRAJECTORY_BINDING_INVALID",
+    )
     evidence_ids = {row.evidence_id for row in request.all_raw_evidence}
     _require(
         set(actuator["reinspect_evidence_ids"]) <= evidence_ids
@@ -1723,6 +2601,9 @@ def _execute_actuator_program(
     _validate_inspection_plan_and_program(
         allowed_evidence_ids=evidence_ids,
         correction_evidence_id=request.event.correction_evidence_id,
+        source_public_trajectory_fingerprint_sha256=actuator[
+            "source_public_trajectory_fingerprint_sha256"
+        ],
         suppress_evidence_ids=actuator["suppress_evidence_ids"],
         reinspect_evidence_ids=actuator["reinspect_evidence_ids"],
         preserve_evidence_ids=actuator["preserve_evidence_ids"],
@@ -1788,6 +2669,9 @@ def _execute_actuator_program(
             "preserve_evidence_ids": list(actuator["preserve_evidence_ids"]),
             "source_prior_state_fingerprint_sha256": source_prior_state_fingerprint_sha256,
             "source_actuator_fingerprint_sha256": actuator["fingerprint_sha256"],
+            "source_public_trajectory_fingerprint_sha256": actuator[
+                "source_public_trajectory_fingerprint_sha256"
+            ],
             "semantic_authority": "ordered raw evidence only",
             "gradient_boundary": "gradient stopped before this JSON operation and hosted generation",
         }
@@ -1801,6 +2685,10 @@ def _execute_actuator_program(
             "source_control_map_fingerprint_sha256"
         ]
         == source_control_map_fingerprint_sha256,
+        "source_public_trajectory_bound": provider_operation[
+            "source_public_trajectory_fingerprint_sha256"
+        ]
+        == actuator["source_public_trajectory_fingerprint_sha256"],
         "program_state_machine_complete": state == "READY_FOR_PROVIDER",
         "execution_trace_exact": len(trace) == len(steps)
         and all(
@@ -1826,6 +2714,9 @@ def _execute_actuator_program(
             "status": "COMPLETED",
             "source_actuator_fingerprint_sha256": actuator["fingerprint_sha256"],
             "source_program_fingerprint_sha256": program["fingerprint_sha256"],
+            "source_public_trajectory_fingerprint_sha256": actuator[
+                "source_public_trajectory_fingerprint_sha256"
+            ],
             "final_state": state,
             "trace": trace,
             "emitted_provider_operation": provider_operation,
@@ -1862,7 +2753,7 @@ def _build_prior_public_state(
     compiled_before: Mapping[str, Any],
 ) -> JsonObject:
     return {
-        "schema_version": "ebrt-live-prior-state-v0.6.2.3",
+        "schema_version": "ebrt-live-prior-state-v0.6.2.4",
         "checkpoint_id": compiled_before["checkpoint_id"],
         "current_answer": compiled_before["current_answer"],
         "selected_closure_id": _opaque_closure_id("P", request.prior_closure),
@@ -1893,6 +2784,7 @@ def _validate_provider_operation(
         "preserve_evidence_ids",
         "source_prior_state_fingerprint_sha256",
         "source_actuator_fingerprint_sha256",
+        "source_public_trajectory_fingerprint_sha256",
         "semantic_authority",
         "gradient_boundary",
         "fingerprint_sha256",
@@ -1932,6 +2824,9 @@ def _validate_provider_operation(
     _validate_inspection_plan_and_program(
         allowed_evidence_ids=allowed_evidence_ids,
         correction_evidence_id=event.correction_evidence_id,
+        source_public_trajectory_fingerprint_sha256=str(
+            operation.get("source_public_trajectory_fingerprint_sha256")
+        ),
         suppress_evidence_ids=suppress,
         reinspect_evidence_ids=reinspect,
         preserve_evidence_ids=preserve,
@@ -1943,6 +2838,12 @@ def _validate_provider_operation(
         and set(preserve) == set(event.stable_evidence_ids)
         and not (set(reinspect) & (set(suppress) | set(preserve))),
         "PROVIDER_OPERATION_EVENT_SUMMARY_MISMATCH",
+    )
+    _require(
+        operation.get("source_public_trajectory_fingerprint_sha256")
+        == plan.get("source_public_trajectory_fingerprint_sha256")
+        == program.get("source_public_trajectory_fingerprint_sha256"),
+        "PROVIDER_OPERATION_TRAJECTORY_BINDING_INVALID",
     )
     _require(
         not (_recursive_keys(operation) & PROVIDER_FORBIDDEN_KEYS),
@@ -1993,6 +2894,17 @@ def _build_provider_payload(
         ]
         == provider_operation["fingerprint_sha256"],
         "PROVIDER_ACTUATOR_EXECUTION_BINDING_INVALID",
+    )
+    _require(
+        actuator["source_public_trajectory_fingerprint_sha256"]
+        == control_map["public_trajectory"]["fingerprint_sha256"]
+        == actuator_execution[
+            "source_public_trajectory_fingerprint_sha256"
+        ]
+        == provider_operation[
+            "source_public_trajectory_fingerprint_sha256"
+        ],
+        "PROVIDER_TRAJECTORY_PATCH_BINDING_INVALID",
     )
     _require(
         actuator_execution["trace"]
@@ -2720,6 +3632,12 @@ class EBRTRevisionEngine:
                     "initial_scalar": control_map["actual_before_state"][
                         "initial_scalar"
                     ],
+                    "initial_vector": control_map["actual_before_state"][
+                        "initial_vector"
+                    ],
+                    "axis_order": control_map["actual_before_state"][
+                        "axis_order"
+                    ],
                     "active_support_evidence_ids": control_map[
                         "actual_before_state"
                     ]["active_support_evidence_ids"],
@@ -2743,6 +3661,7 @@ class EBRTRevisionEngine:
                         "surrogate_terminal_state_after"
                     ],
                 },
+                "public_trajectory": control_map["public_trajectory"],
                 "public_control_map": {
                     "fingerprint_sha256": control_map["fingerprint_sha256"],
                     "control_l2": control_map["control_l2"],
@@ -2773,6 +3692,9 @@ class EBRTRevisionEngine:
                     "source_control_map_fingerprint_sha256": actuator[
                         "source_control_map_fingerprint_sha256"
                     ],
+                    "source_public_trajectory_fingerprint_sha256": actuator[
+                        "source_public_trajectory_fingerprint_sha256"
+                    ],
                     "inspection_plan": actuator["inspection_plan"],
                     "program": actuator["program"],
                     "checks": actuator["checks"],
@@ -2789,6 +3711,9 @@ class EBRTRevisionEngine:
                     "source_program_fingerprint_sha256": actuator_execution[
                         "source_program_fingerprint_sha256"
                     ],
+                    "source_public_trajectory_fingerprint_sha256": actuator_execution[
+                        "source_public_trajectory_fingerprint_sha256"
+                    ],
                     "final_state": actuator_execution["final_state"],
                     "trace": actuator_execution["trace"],
                     "emitted_provider_operation_fingerprint_sha256": actuator_execution[
@@ -2799,8 +3724,9 @@ class EBRTRevisionEngine:
                     "checks": actuator_execution["checks"],
                 },
                 "boundary": (
-                    "Gradient stops at the public control map. GPT-5.6, JSON "
-                    "projection, generation, and verification are not backpropagated through."
+                    "Gradient stops at bounded time-local controls in the public "
+                    "revision trajectory. JSON projection, GPT-5.6 generation, and "
+                    "verification are not backpropagated through."
                 ),
             },
             "output": {
@@ -3157,9 +4083,9 @@ def demo_request_envelope() -> JsonObject:
 
 def capabilities_value(*, provider_mode: str) -> JsonObject:
     return {
-        "schema_version": "ebrt-live-capabilities-v0.6.2.3",
+        "schema_version": "ebrt-live-capabilities-v0.6.2.4",
         "status": "READY",
-        "runtime_label": "EBRT Runtime Preview 2",
+        "runtime_label": "EBRT Runtime Preview 3",
         "provider_mode": provider_mode,
         "model": MODEL if provider_mode == "openai" else "SCRIPTED_TEST_ONLY",
         "request_schema_version": REQUEST_SCHEMA,
@@ -3180,9 +4106,9 @@ def capabilities_value(*, provider_mode: str) -> JsonObject:
             "evicted_identity_reexecution": False,
         },
         "operation_scope": "TYPED_INVALIDATION_REVISION",
-        "control_surface": "CONTINUOUS_PUBLIC_INSPECTION_ALLOCATION",
-        "actuator_model": "ONE_HORIZON_EXECUTABLE_PUBLIC_REVISION_PROGRAM",
-        "gradient_boundary": "public control map",
+        "control_surface": "TEMPORAL_PUBLIC_TRAJECTORY_ADJOINT_CONTROL",
+        "actuator_model": "REVISED_PUBLIC_TRAJECTORY_TO_EXECUTABLE_REVISION_PROGRAM",
+        "gradient_boundary": "bounded controls in the public revision trajectory",
         "provider_uptake_status": "NOT_ASSESSED",
         "semantic_correctness_status": "NOT_ASSESSED",
         "effect_attribution_status": "NOT_ASSESSED",
@@ -3236,7 +4162,7 @@ class RevisionService:
             terminal_results_cached = len(self._terminal)
             spent_identities = len(self._spent)
         return {
-            "schema_version": "ebrt-live-health-v0.6.2.3",
+            "schema_version": "ebrt-live-health-v0.6.2.4",
             "status": "READY" if self.provider_configured else "PROVIDER_UNCONFIGURED",
             "provider_mode": self.provider_mode,
             "provider_configured": self.provider_configured,
@@ -3376,7 +4302,7 @@ def _error_value(error: LiveRevisionError) -> JsonObject:
 
 def _handler_type(service: RevisionService) -> type[http.server.BaseHTTPRequestHandler]:
     class LiveRevisionHandler(http.server.BaseHTTPRequestHandler):
-        server_version = "EBRTLive/0.6.2.3-RuntimePreview2"
+        server_version = "EBRTLive/0.6.2.4-RuntimePreview3"
         sys_version = ""
 
         def log_message(self, _format: str, *_args: Any) -> None:
@@ -3605,7 +4531,7 @@ def serve(
     print(
         _pretty(
             {
-                "schema_version": "ebrt-live-server-start-v0.6.2.3",
+                "schema_version": "ebrt-live-server-start-v0.6.2.4",
                 "status": "READY",
                 "url": f"http://{observed_host}:{observed_port}",
                 "provider_mode": provider_mode,
@@ -3797,7 +4723,7 @@ def self_test() -> JsonObject:
         return False
 
     old_protocol = _clone(generic)
-    old_protocol["schema_version"] = "ebrt-live-apply-revision-request-v0.6.2.2"
+    old_protocol["schema_version"] = "ebrt-live-apply-revision-request-v0.6.2.3"
     checks["old_live_protocol_rejected_before_provider"] = rejected_with(
         old_protocol, "REQUEST_SCHEMA_INVALID"
     )
@@ -3966,8 +4892,245 @@ def self_test() -> JsonObject:
         ]
     )
 
+    repeat_control = _derive_control_map(generic_request, generic_before)
+    trajectory = generic_control["public_trajectory"]
+    evidence_order = [
+        row.evidence_id for row in generic_request.all_raw_evidence
+    ]
+    checks["public_trajectory_forward_is_chronological_and_deterministic"] = (
+        trajectory == repeat_control["public_trajectory"]
+        and [
+            row["evidence_id"]
+            for row in trajectory["neutral"]["points"]
+        ]
+        == evidence_order
+        and [
+            row["step_index"]
+            for row in trajectory["revised"]["points"]
+        ]
+        == list(range(len(evidence_order)))
+    )
+    correction_index = trajectory["correction_step_index"]
+    checks["late_event_assigns_nonzero_pre_event_temporal_credit"] = (
+        correction_index == len(evidence_order) - 1
+        and any(
+            row["eligible_for_reinspection"]
+            and row["temporal_step_index"] < correction_index
+            and abs(row["gradient"]) > ALLOCATION_TOLERANCE
+            and abs(row["control_value"]) > ALLOCATION_TOLERANCE
+            for row in generic_control["credit_rows"]
+        )
+        and trajectory["checks"]["pre_event_temporal_credit_nonzero"]
+    )
+    with mock.patch(
+        f"{__name__}._controller_loss",
+        side_effect=AssertionError("no-event identity called trajectory loss"),
+    ) as no_event_backward_guard:
+        identity_trajectory = _derive_no_event_identity_trajectory(
+            generic_request, generic_before
+        )
+    checks["no_event_is_exact_identity_and_skips_backward"] = (
+        no_event_backward_guard.call_count == 0
+        and identity_trajectory["status"] == "IDENTITY_NO_EVENT"
+        and identity_trajectory["neutral"]
+        == identity_trajectory["revised"]
+        and identity_trajectory["backward_calls"] == 0
+        and identity_trajectory["provider_calls"] == 0
+        and all(identity_trajectory["checks"].values())
+    )
+    checks["trajectory_adjoint_matches_central_finite_difference"] = (
+        generic_control["maximum_finite_difference_error"]
+        <= FINITE_DIFFERENCE_TOLERANCE
+        and all(
+            abs(
+                row["gradient"] - row["finite_difference_gradient"]
+            )
+            <= FINITE_DIFFERENCE_TOLERANCE
+            for row in generic_control["credit_rows"]
+        )
+    )
+    checks["trajectory_update_is_bounded_and_descends"] = (
+        trajectory["revised"]["objective"]
+        < trajectory["neutral"]["objective"]
+        and generic_control["control_l2"] <= MAX_CONTROL_L2
+        and trajectory["revised"]["terminal_state"][0]
+        > trajectory["neutral"]["terminal_state"][0]
+        and trajectory["revised"]["terminal_state"][1]
+        > trajectory["neutral"]["terminal_state"][1]
+    )
+    neutral_preterminal_points = trajectory["neutral"]["points"][:-1]
+    revised_preterminal_points = trajectory["revised"]["points"][:-1]
+    neutral_preterminal_path_receipt = sum(
+        (
+            row["state"][0]
+            - row["full_admission_support_reference"]
+        )
+        ** 2
+        for row in neutral_preterminal_points
+    ) / len(neutral_preterminal_points)
+    revised_preterminal_path_receipt = sum(
+        (
+            row["state"][0]
+            - row["full_admission_support_reference"]
+        )
+        ** 2
+        for row in revised_preterminal_points
+    ) / len(revised_preterminal_points)
+    checks["trajectory_nonterminal_path_loss_is_active"] = (
+        bool(neutral_preterminal_points)
+        and len(neutral_preterminal_points)
+        == len(revised_preterminal_points)
+        and math.isclose(
+            trajectory["neutral"]["loss_components"]["path"],
+            neutral_preterminal_path_receipt,
+            rel_tol=0.0,
+            abs_tol=1.0e-15,
+        )
+        and math.isclose(
+            trajectory["revised"]["loss_components"]["path"],
+            revised_preterminal_path_receipt,
+            rel_tol=0.0,
+            abs_tol=1.0e-15,
+        )
+        and trajectory["neutral"]["loss_components"]["path"] > 0.0
+        and trajectory["revised"]["loss_components"]["path"]
+        < trajectory["neutral"]["loss_components"]["path"]
+        and trajectory["checks"]["trajectory_path_loss_decreased"]
+    )
+    checks["matched_time_permutation_is_geometry_matched_and_worse"] = (
+        trajectory["checks"]["matched_sham_control_geometry"]
+        and trajectory["checks"][
+            "exact_temporal_placement_beats_matched_sham"
+        ]
+        and trajectory["matched_temporal_sham"]["control_l2"]
+        == generic_control["control_l2"]
+        and trajectory["matched_temporal_sham"]["provider_calls"] == 0
+    )
+    stable_index = list(TRAJECTORY_AXES).index(
+        "stable_support_retention"
+    )
+    checks["stable_axis_is_exactly_preserved"] = (
+        trajectory["checks"]["stable_axis_exact_identity"]
+        and all(
+            neutral["state"][stable_index]
+            == revised["state"][stable_index]
+            == generic_control["actual_before_state"]["initial_vector"][
+                stable_index
+            ]
+            for neutral, revised in zip(
+                trajectory["neutral"]["points"],
+                trajectory["revised"]["points"],
+                strict=True,
+            )
+        )
+    )
+
     generic_actuator = _compile_actuator(
         generic_request, generic_before, generic_control
+    )
+    checks["trajectory_patch_compiles_exactly_to_continuous_actuator"] = (
+        generic_actuator[
+            "source_public_trajectory_fingerprint_sha256"
+        ]
+        == trajectory["fingerprint_sha256"]
+        == generic_actuator["inspection_plan"][
+            "source_public_trajectory_fingerprint_sha256"
+        ]
+        == generic_actuator["program"][
+            "source_public_trajectory_fingerprint_sha256"
+        ]
+        and generic_actuator["reinspect_source"]
+        == "PUBLIC_TRAJECTORY_ADJOINT_PROJECTION"
+        and sum(
+            row["inspection_budget_units"]
+            for row in generic_actuator["inspection_plan"]["steps"]
+        )
+        == INSPECTION_BUDGET_UNITS
+    )
+    tampered_control = _clone(generic_control)
+    tampered_trajectory = _without_fingerprint(
+        tampered_control["public_trajectory"]
+    )
+    tampered_revised = _without_fingerprint(
+        tampered_trajectory["revised"]
+    )
+    tampered_point = _without_fingerprint(tampered_revised["points"][0])
+    tampered_point["state"][stable_index] += 0.001
+    tampered_revised["points"][0] = _seal(tampered_point)
+    tampered_trajectory["revised"] = _seal(tampered_revised)
+    tampered_control["public_trajectory"] = _seal(tampered_trajectory)
+    tampered_control = _seal(_without_fingerprint(tampered_control))
+    trajectory_tamper_rejection = ""
+    try:
+        _compile_actuator(
+            generic_request, generic_before, tampered_control
+        )
+    except LiveRevisionError as error:
+        trajectory_tamper_rejection = error.reason_code
+    checks["resealed_trajectory_tamper_rejected_before_provider"] = (
+        trajectory_tamper_rejection
+        == "PUBLIC_TRAJECTORY_FORWARD_REPLAY_MISMATCH"
+    )
+    sham_tampered_control = _clone(generic_control)
+    sham_tampered_trajectory = _without_fingerprint(
+        sham_tampered_control["public_trajectory"]
+    )
+    sham_tampered_trajectory["matched_temporal_sham"][
+        "objective"
+    ] = -999.0
+    sham_tampered_control["public_trajectory"] = _seal(
+        sham_tampered_trajectory
+    )
+    sham_tampered_control = _seal(
+        _without_fingerprint(sham_tampered_control)
+    )
+    sham_tamper_rejection = ""
+    try:
+        _compile_actuator(
+            generic_request, generic_before, sham_tampered_control
+        )
+    except LiveRevisionError as error:
+        sham_tamper_rejection = error.reason_code
+    gradient_tampered_control = _clone(generic_control)
+    for row in gradient_tampered_control["credit_rows"]:
+        row["gradient"] += 123.0
+        row["finite_difference_gradient"] += 123.0
+    gradient_tampered_trajectory = _without_fingerprint(
+        gradient_tampered_control["public_trajectory"]
+    )
+    for trace_name in ("neutral", "revised"):
+        trace_value = _without_fingerprint(
+            gradient_tampered_trajectory[trace_name]
+        )
+        trace_value["points"] = [
+            _seal(
+                {
+                    **_without_fingerprint(point),
+                    "temporal_gradient": point["temporal_gradient"]
+                    + 123.0,
+                }
+            )
+            for point in trace_value["points"]
+        ]
+        gradient_tampered_trajectory[trace_name] = _seal(trace_value)
+    gradient_tampered_control["public_trajectory"] = _seal(
+        gradient_tampered_trajectory
+    )
+    gradient_tampered_control = _seal(
+        _without_fingerprint(gradient_tampered_control)
+    )
+    gradient_tamper_rejection = ""
+    try:
+        _compile_actuator(
+            generic_request, generic_before, gradient_tampered_control
+        )
+    except LiveRevisionError as error:
+        gradient_tamper_rejection = error.reason_code
+    checks["scientific_receipt_reseal_tamper_rejected_before_provider"] = (
+        sham_tamper_rejection
+        == "PUBLIC_TRAJECTORY_RECEIPT_DERIVATION_INVALID"
+        and gradient_tamper_rejection
+        == "PUBLIC_TRAJECTORY_GRADIENT_RECEIPT_INVALID"
     )
     generic_prior_payload = _build_prior_public_state(
         generic_request, generic_before
@@ -4037,11 +5200,14 @@ def self_test() -> JsonObject:
     resealed_plan = _seal(resealed_plan_value)
     resealed_program = _seal(
         {
-            "schema_version": "ebrt-live-public-revision-program-v0.6.2.3",
+            "schema_version": "ebrt-live-public-revision-program-v0.6.2.4",
             "state": "COMPILED",
             "source_control_map_fingerprint_sha256": generic_control[
                 "fingerprint_sha256"
             ],
+            "source_public_trajectory_fingerprint_sha256": generic_control[
+                "public_trajectory"
+            ]["fingerprint_sha256"],
             "steps": _expected_program_steps(
                 correction_evidence_id=generic_request.event.correction_evidence_id,
                 suppress_evidence_ids=resealed_actuator[
@@ -4086,27 +5252,27 @@ def self_test() -> JsonObject:
         magnitude_control = _derive_control_map(
             generic_request, generic_before
         )
-    magnitude_actuator = _compile_actuator(
-        generic_request, generic_before, magnitude_control
-    )
-    magnitude_execution = _execute_actuator_program(
-        generic_request,
-        magnitude_actuator,
-        source_control_map_fingerprint_sha256=magnitude_control[
-            "fingerprint_sha256"
-        ],
-        source_prior_state_fingerprint_sha256=_fingerprint(
-            generic_prior_payload
-        ),
-    )
-    magnitude_payload = _build_provider_payload(
-        generic_request,
-        generic_before,
-        generic_prior_payload,
-        magnitude_control,
-        magnitude_actuator,
-        magnitude_execution,
-    )
+        magnitude_actuator = _compile_actuator(
+            generic_request, generic_before, magnitude_control
+        )
+        magnitude_execution = _execute_actuator_program(
+            generic_request,
+            magnitude_actuator,
+            source_control_map_fingerprint_sha256=magnitude_control[
+                "fingerprint_sha256"
+            ],
+            source_prior_state_fingerprint_sha256=_fingerprint(
+                generic_prior_payload
+            ),
+        )
+        magnitude_payload = _build_provider_payload(
+            generic_request,
+            generic_before,
+            generic_prior_payload,
+            magnitude_control,
+            magnitude_actuator,
+            magnitude_execution,
+        )
     checks["continuous_magnitude_changes_provider_visible_allocation"] = (
         magnitude_actuator["reinspect_evidence_ids"]
         == generic_actuator["reinspect_evidence_ids"]
@@ -4483,7 +5649,7 @@ def self_test() -> JsonObject:
     )
     return _seal(
         {
-            "schema_version": "ebrt-live-self-test-v0.6.2.3",
+            "schema_version": "ebrt-live-self-test-v0.6.2.4",
             "status": "PASS",
             "checks": checks,
             "demo_result_fingerprint_sha256": demo_result["fingerprint_sha256"],

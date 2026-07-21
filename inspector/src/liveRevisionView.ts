@@ -111,6 +111,8 @@ export function liveApplyRevisionView(response: LiveApplyRevisionResponse): Appl
     ...mechanism.compiled_actuator.suppress_evidence_ids,
     ...mechanism.compiled_actuator.preserve_evidence_ids,
     ...mechanism.compiled_actuator.inspection_plan.steps.map((row) => row.evidence_id),
+    ...mechanism.public_trajectory.neutral.points.map((row) => row.evidence_id),
+    ...mechanism.public_trajectory.revised.points.map((row) => row.evidence_id),
     ...mechanism.actuator_execution.trace.flatMap((row) => row.evidence_id === null ? [] : [row.evidence_id]),
     ...output.before.active_support_evidence_ids,
     ...output.after.active_support_evidence_ids,
@@ -156,6 +158,19 @@ export function liveApplyRevisionView(response: LiveApplyRevisionResponse): Appl
       mechanism.compiled_actuator.program.source_control_map_fingerprint_sha256 ===
         mechanism.public_control_map.fingerprint_sha256,
     "continuous actuator is not control-map-bound",
+  );
+  requireView(
+    mechanism.public_trajectory.source_actual_before_state_fingerprint_sha256 ===
+      mechanism.actual_before_state.fingerprint_sha256 &&
+      mechanism.compiled_actuator.source_public_trajectory_fingerprint_sha256 ===
+        mechanism.public_trajectory.fingerprint_sha256 &&
+      mechanism.compiled_actuator.inspection_plan.source_public_trajectory_fingerprint_sha256 ===
+        mechanism.public_trajectory.fingerprint_sha256 &&
+      mechanism.compiled_actuator.program.source_public_trajectory_fingerprint_sha256 ===
+        mechanism.public_trajectory.fingerprint_sha256 &&
+      mechanism.actuator_execution.source_public_trajectory_fingerprint_sha256 ===
+        mechanism.public_trajectory.fingerprint_sha256,
+    "public trajectory is not bound through actuator execution",
   );
   requireView(
     sameValues(
@@ -269,7 +284,7 @@ export function liveApplyRevisionView(response: LiveApplyRevisionResponse): Appl
     mode: "LIVE_AFTER_REGENERATION",
     case: {
       case_id: response.case_id,
-      version: "Runtime Preview 2 · protocol v0.6.2.3",
+      version: "Runtime Preview 3 · protocol v0.6.2.4",
       question: context.question,
       model: context.model,
     },
@@ -299,6 +314,7 @@ export function liveApplyRevisionView(response: LiveApplyRevisionResponse): Appl
     revision_engine: {
       actual_before_state: mechanism.actual_before_state,
       surrogate: mechanism.surrogate,
+      public_trajectory: mechanism.public_trajectory,
       public_control_map: mechanism.public_control_map,
       compiled_actuator: mechanism.compiled_actuator,
       actuator_execution: mechanism.actuator_execution,

@@ -7,6 +7,10 @@ function formatObjective(value: number) {
   return value.toFixed(4);
 }
 
+function formatTrajectoryState(values: number[]) {
+  return `[${values.map((value) => value.toFixed(3)).join(" / ")}]`;
+}
+
 export function RevisionEnginePanel({
   active,
   liveError,
@@ -30,7 +34,7 @@ export function RevisionEnginePanel({
   replayStep: number;
   snapshot: ApplyRevisionView;
 }) {
-  const { compiled_actuator: actuator, public_control_map: control, surrogate } = snapshot.revision_engine;
+  const { compiled_actuator: actuator, public_control_map: control, public_trajectory: trajectory, surrogate } = snapshot.revision_engine;
   const inspectionPlan = actuator.inspection_plan;
   const execution = snapshot.revision_engine.actuator_execution;
   const actuatorEvidence = new Set([
@@ -41,7 +45,9 @@ export function RevisionEnginePanel({
   ]);
   const liveAllocation = snapshot.mode === "LIVE_AFTER_REGENERATION" && Boolean(inspectionPlan);
   const controlMetric = (row: (typeof control.credit_rows)[number]) =>
-    liveAllocation
+    trajectory
+      ? Math.abs(row.gradient)
+      : liveAllocation
       ? (row.optimized_allocation_fraction ?? 0)
       : snapshot.mode === "LIVE_AFTER_REGENERATION"
         ? (row.reinspection_salience ?? 0)
@@ -87,7 +93,7 @@ export function RevisionEnginePanel({
         <div className="ar-event-node">Late evidence {snapshot.late_event.evidence_id}</div>
         <Icon name="arrow" size={18} />
         <div className="ar-objective-row">
-          <span>Revision objective</span>
+          <span>{trajectory ? "Trajectory loss" : "Revision objective"}</span>
           <strong>{formatObjective(surrogate.objective_before)}</strong>
           <Icon name="arrow" size={16} />
           <strong>{formatObjective(surrogate.objective_after)}</strong>
@@ -96,6 +102,44 @@ export function RevisionEnginePanel({
           <span>backward()</span>
           <strong>EXECUTED LOCALLY · {surrogate.dtype}</strong>
         </div>
+        {trajectory ? (
+          <>
+            <div className="ar-objective-row">
+              <span>Matched temporal sham</span>
+              <strong>{formatObjective(trajectory.matched_temporal_sham.objective)}</strong>
+              <span>0 provider calls</span>
+            </div>
+            <dl aria-label="Neutral and revised public trajectories">
+              <div>
+                <dt>Neutral trajectory</dt>
+                <dd>
+                  {trajectory.neutral.points.map((point) =>
+                    `${point.evidence_id}${formatTrajectoryState(point.state)}`,
+                  ).join(" → ")}
+                </dd>
+              </div>
+              <div>
+                <dt>Revised trajectory</dt>
+                <dd className="ar-blue">
+                  {trajectory.revised.points.map((point) =>
+                    `${point.evidence_id}${formatTrajectoryState(point.state)}`,
+                  ).join(" → ")}
+                </dd>
+              </div>
+              <div>
+                <dt>Full-admission support reference</dt>
+                <dd>
+                  {trajectory.neutral.points.map((point) =>
+                    `${point.evidence_id}[${point.full_admission_support_reference.toFixed(3)}]`,
+                  ).join(" → ")}
+                </dd>
+              </div>
+            </dl>
+            <p className="ar-reference-note">
+              Axis order · {trajectory.axis_order.join(" / ")} · public surrogate only
+            </p>
+          </>
+        ) : null}
         {surrogate.surrogate_terminal_state_before !== undefined &&
         surrogate.surrogate_terminal_state_after !== undefined ? (
           <div className="ar-objective-row">
@@ -110,13 +154,13 @@ export function RevisionEnginePanel({
       <div className={`ar-engine-step ar-control-block ${replayStep >= 1 ? "is-replaying" : ""}`}>
         <div className="ar-block-heading">
           <span className="ar-block-label">
-            {liveAllocation ? "Optimized inspection allocation" : "Signed public credit"}
+            {trajectory ? "Temporal credit · |∂L/∂uₜ|" : liveAllocation ? "Optimized inspection allocation" : "Signed public credit"}
           </span>
           <code>L2 {control.control_l2.toFixed(4)} / {control.max_control_l2.toFixed(2)}</code>
         </div>
         <div
           className="ar-credit-map"
-          aria-label={liveAllocation ? "Optimized public inspection allocation by evidence" : "Signed public credit by evidence"}
+          aria-label={trajectory ? "Temporal credit by public trajectory step" : liveAllocation ? "Optimized public inspection allocation by evidence" : "Signed public credit by evidence"}
         >
           {visibleCredits.map((row) => (
             <div className={actuator.suppress_evidence_ids.includes(row.evidence_id) ? "suppressed" : ""} key={row.evidence_id}>
@@ -128,7 +172,10 @@ export function RevisionEnginePanel({
                   }}
                 />
               </span>
-              <code>{controlMetric(row).toFixed(4)}</code>
+              <code>
+                {controlMetric(row).toFixed(4)}
+                {trajectory && row.control_value !== undefined ? ` · u ${row.control_value.toFixed(4)}` : ""}
+              </code>
             </div>
           ))}
         </div>

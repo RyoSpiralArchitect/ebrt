@@ -369,25 +369,32 @@ This milestone closes the product-monolith convergence item. It does not open
 v0.6.4, answer the fresh matched-quality question reserved for v0.7, or convert
 the historical demo into independent evidence.
 
-### Runtime Preview 2 — Continuous Revision Program
+### Runtime Preview 3 — Temporal Public Trajectory Control
 
-The live monolith now preserves the continuous controller output through the
-provider boundary instead of reducing it to a rank-only map. One projected
-float64 optimization step produces a simplex allocation, which is compiled
-into deterministic abstract inspection units, relative emphasis, review depth,
-and execution order. A local state machine validates and executes
-`LOAD_EVENT -> SUPPRESS* -> REINSPECT* -> PRESERVE* -> PREPARE`, then seals the
-single provider-visible operation.
+The live monolith now makes the public revision state itself chronological and
+revisable. It rolls a three-axis public trajectory forward across the ordered
+evidence, evaluates a terminal-plus-nonterminal public objective, executes one
+real float64 backward over scalar time-local controls, projects the update to a
+global L2 budget, and rolls the same declared recurrence forward again. The
+accepted control magnitudes are then decoded into the existing deterministic
+inspection allocation, review depth, execution order, and
+`LOAD_EVENT -> SUPPRESS* -> REINSPECT* -> PRESERVE* -> PREPARE` state machine.
 
-The selected public graph also receives a zero-call correction-mask probe. It
-can establish that changed fact lineage structurally depends on the correction
-inside that caller-supplied graph and that removing the mask reconstructs the
-baseline. It cannot establish a hosted counterfactual output effect.
+The nonterminal path objective compares the support trajectory with a
+role-blind, graph-incidence-derived full-admission reference. It contains no
+answer, accepted closure ID, target value, or semantic gold. A matched temporal
+sham preserves the eligible control-value multiset and norm while permuting
+placement; a no-event sentinel is an exact zero-backward identity. The runtime
+rederives finite differences, the deterministic projected/backtracked update,
+neutral and revised replay, the matched sham, and the trajectory fingerprint
+chain before provider execution, so coherently resealed telemetry cannot stand
+in for the scientific computation.
 
-This is deliberately one-horizon control, not MPC. Provider uptake, semantic
-correctness, attention/token control, causal superiority, and output effect
-attribution remain `NOT_ASSESSED`. v0.6.4 remains blocked by its independent
-research gate.
+This remains a hand-built, one-horizon public surrogate—not MPC, hidden-state
+editing, attention/token control, or differentiation through GPT. Preview 3
+adds no new hosted contrast. Provider uptake, semantic correctness, causal
+superiority, general reasoning improvement, and output effect attribution
+remain `NOT_ASSESSED`; v0.6.4 remains blocked by its independent research gate.
 
 ## v0.6.3 — Provider Actuator Calibration Canary
 

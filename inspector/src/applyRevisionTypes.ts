@@ -31,7 +31,68 @@ export type CreditRow = {
   allocation_delta?: number;
   surrogate_contribution_before?: number;
   surrogate_contribution_after?: number;
+  temporal_step_index?: number;
+  state_before?: number[];
+  state_after?: number[];
   source_effect: number;
+};
+
+export type PublicTrajectoryAxis =
+  | "event_consistent_support"
+  | "invalidated_support_clearance"
+  | "stable_support_retention";
+
+export type PublicTrajectoryPoint = {
+  fingerprint_sha256: string;
+  step_index: number;
+  evidence_id: string;
+  is_correction_event: boolean;
+  eligible_for_temporal_control: boolean;
+  state: number[];
+  full_admission_support_reference: number;
+  control_value: number;
+  temporal_gradient: number;
+};
+
+export type PublicTrajectoryRun = {
+  fingerprint_sha256: string;
+  objective: number;
+  loss_components: {
+    terminal: number;
+    path: number;
+    control: number;
+    smoothness: number;
+  };
+  terminal_state: number[];
+  points: PublicTrajectoryPoint[];
+};
+
+export type PublicRevisionTrajectory = {
+  fingerprint_sha256: string;
+  state_kind: "PUBLIC_HAND_BUILT_REVISION_SURROGATE";
+  axis_order: PublicTrajectoryAxis[];
+  axis_semantics: Record<PublicTrajectoryAxis, string>;
+  terminal_target: number[];
+  source_actual_before_state_fingerprint_sha256: string;
+  source_credit_basis_fingerprint_sha256: string;
+  correction_step_index: number;
+  neutral: PublicTrajectoryRun;
+  revised: PublicTrajectoryRun;
+  matched_temporal_sham: {
+    construction: "REVERSE_ACCEPTED_CONTROL_VALUES_OVER_ELIGIBLE_TIME_SITES";
+    objective: number;
+    terminal_state: number[];
+    control_l2: number;
+    provider_calls: 0;
+    claim_scope: "PUBLIC_RECURRENCE_TEMPORAL_PLACEMENT_ONLY";
+  };
+  gradient_boundary: {
+    starts_at: string;
+    ends_at: string;
+    hosted_model_differentiated: false;
+    private_reasoning_observed: false;
+  };
+  checks: Record<string, boolean>;
 };
 
 export type InspectionPlanStep = {
@@ -147,6 +208,8 @@ export type ApplyRevisionSnapshot = {
       fingerprint_sha256: string;
       source_selected_closure_id: string;
       initial_scalar: number;
+      initial_vector?: number[];
+      axis_order?: PublicTrajectoryAxis[];
       active_support_evidence_ids: string[];
     };
     surrogate: {
@@ -168,6 +231,7 @@ export type ApplyRevisionSnapshot = {
       allocation_domain_evidence_ids?: string[];
       checks: Record<string, boolean>;
     };
+    public_trajectory?: PublicRevisionTrajectory;
     compiled_actuator: {
       fingerprint_sha256: string;
       reinspect_evidence_ids: string[];
@@ -178,17 +242,20 @@ export type ApplyRevisionSnapshot = {
       preserve_source?: string;
       correction_evidence_id: string;
       source_control_map_fingerprint_sha256?: string;
+      source_public_trajectory_fingerprint_sha256?: string;
       inspection_plan?: {
         fingerprint_sha256: string;
         allocation_scope: "SELECTED_PUBLIC_REINSPECTION_STEPS";
         total_budget_units: number;
         budget_unit_semantics: "ABSTRACT_PUBLIC_REVIEW_ALLOCATION_NOT_PROVIDER_TOKENS";
+        source_public_trajectory_fingerprint_sha256?: string;
         steps: InspectionPlanStep[];
       };
       program?: {
         fingerprint_sha256: string;
         state: "COMPILED";
         source_control_map_fingerprint_sha256: string;
+        source_public_trajectory_fingerprint_sha256?: string;
         steps: RevisionProgramStep[];
       };
       checks?: Record<string, boolean>;
@@ -199,6 +266,7 @@ export type ApplyRevisionSnapshot = {
       status: "COMPLETED";
       source_actuator_fingerprint_sha256: string;
       source_program_fingerprint_sha256: string;
+      source_public_trajectory_fingerprint_sha256?: string;
       final_state: "READY_FOR_PROVIDER";
       trace: ActuatorExecutionTraceStep[];
       emitted_provider_operation_fingerprint_sha256: string;
@@ -316,19 +384,19 @@ export type ApplyRevisionView = Omit<
 };
 
 export type LiveDemoRequestEnvelope = {
-  schema_version: "ebrt-live-demo-request-v0.6.2.3";
+  schema_version: "ebrt-live-demo-request-v0.6.2.4";
   provenance: "CONTAMINATED_REGRESSION_FIXTURE";
   source_artifact_fingerprint_sha256: string;
   request_fingerprint_sha256: string;
   fingerprint_sha256: string;
   request: Record<string, unknown> & {
-    schema_version: "ebrt-live-apply-revision-request-v0.6.2.3";
+    schema_version: "ebrt-live-apply-revision-request-v0.6.2.4";
     request_id: string;
   };
 };
 
 export type LiveApplyRevisionResponse = {
-  schema_version: "ebrt-live-apply-revision-response-v0.6.2.3";
+  schema_version: "ebrt-live-apply-revision-response-v0.6.2.4";
   transport_body_sha256: string;
   request_id: string;
   status: "COMPLETE";
@@ -352,22 +420,27 @@ export type LiveApplyRevisionResponse = {
   };
   mechanism: {
     status: "PASS" | "FAIL";
-    actual_before_state: ApplyRevisionSnapshot["revision_engine"]["actual_before_state"];
+    actual_before_state: ApplyRevisionSnapshot["revision_engine"]["actual_before_state"] & {
+      initial_vector: number[];
+      axis_order: PublicTrajectoryAxis[];
+    };
     surrogate: ApplyRevisionSnapshot["revision_engine"]["surrogate"];
+    public_trajectory: PublicRevisionTrajectory;
     public_control_map: ApplyRevisionSnapshot["revision_engine"]["public_control_map"];
     compiled_actuator: ApplyRevisionSnapshot["revision_engine"]["compiled_actuator"] & {
       source_control_map_fingerprint_sha256: string;
+      source_public_trajectory_fingerprint_sha256: string;
       inspection_plan: NonNullable<
         ApplyRevisionSnapshot["revision_engine"]["compiled_actuator"]["inspection_plan"]
-      >;
+      > & { source_public_trajectory_fingerprint_sha256: string };
       program: NonNullable<
         ApplyRevisionSnapshot["revision_engine"]["compiled_actuator"]["program"]
-      >;
+      > & { source_public_trajectory_fingerprint_sha256: string };
       checks: Record<string, boolean>;
     };
     actuator_execution: NonNullable<
       ApplyRevisionSnapshot["revision_engine"]["actuator_execution"]
-    >;
+    > & { source_public_trajectory_fingerprint_sha256: string };
     boundary: string;
   };
   output: {
