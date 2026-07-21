@@ -4,6 +4,9 @@
 
 ## Current product — Apply Revision Runtime Preview 3
 
+**Try the sealed public Live demo:**
+[ebrt-apply-revision.ryospiralreality.chatgpt.site](https://ebrt-apply-revision.ryospiralreality.chatgpt.site/)
+
 EBRT gives developers an external, inspectable revision layer for hosted
 models whose internal reasoning state is not editable. It rolls a typed public
 reasoning trajectory forward, computes one bounded local backward-credit step,

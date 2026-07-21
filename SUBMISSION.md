@@ -33,12 +33,13 @@ operations executable, observable, and auditable.
 ## Judge links
 
 - Public repository: `https://github.com/RyoSpiralArchitect/ebrt`
-- Public runnable demo: `TODO_PUBLIC_DEMO_URL`
+- Public runnable demo:
+  `https://ebrt-apply-revision.ryospiralreality.chatgpt.site/`
 - Public YouTube video: `TODO_PUBLIC_YOUTUBE_URL`
 - Codex feedback/session ID: `019f70e8-b94c-7002-bc14-512338e2c5fd`
 - Devpost project: `TODO_DEVPOST_PROJECT_URL`
 
-These placeholders must be replaced before submission. Do not replace the
+The remaining placeholders must be replaced before submission. Do not replace the
 local runtime wording with a hosted-service claim unless a public deployment
 has actually been validated.
 
