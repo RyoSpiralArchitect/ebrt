@@ -1,0 +1,21 @@
+{
+  "schema_version": "ebrt-actuator-uptake-replication-gold-v0.6.3.2",
+  "status": "LOCKED_POST_EIGHT_TERMINALS_GRADING_ONLY",
+  "case_id": "orbital_manifest_revision_f",
+  "answer": "JADE",
+  "record_format": "ATTESTED_CBOR",
+  "positive_control_target_closure_id": "K_265e97f857",
+  "gradient_target_closure_id": "K_265e97f857",
+  "quality_valid_closure_ids": ["K_265e97f857", "K_8027291974"],
+  "closure_roles": {
+    "K_16b90151c4": "STALE_INVALIDATED_SUPPORT",
+    "K_265e97f857": "ALIGNED_EVENT_CONSISTENT",
+    "K_8027291974": "ALTERNATIVE_EVENT_CONSISTENT",
+    "K_fff6ffe598": "MIXED_INSUFFICIENT_SUPPORT"
+  },
+  "claim_boundary": [
+    "This file is excluded from provider-payload construction and may be loaded by a future live runner exactly once only after all eight structurally valid terminals exist.",
+    "The aligned closure is the preregistered construct target; aligned and alternative event-consistent closures are independently quality-valid.",
+    "A strict two-block directional result opens only a separately reviewed v0.6.4 network-zero preflight and never live execution."
+  ]
+}

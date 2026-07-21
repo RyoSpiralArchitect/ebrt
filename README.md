@@ -292,6 +292,44 @@ the
 and the
 [`portable verifier`](verify_actuator_uptake_canary_v0_6_3_1_live_r01.py).
 
+### v0.6.3.2 mirrored fresh-replication preflight
+
+EBRT v0.6.3.2 now freezes the last actuator-replication question before
+returning to product convergence. One synthetic case that is fresh relative to
+the frozen v0.6.3.1 predecessor reuses exactly four sealed Z/C/D/X payload byte
+strings across two mirrored blocks:
+
+```text
+Block A: C -> Z -> D -> X
+Block B: D -> X -> C -> Z
+```
+
+C and D therefore exchange positions 1 and 3, while Z and X exchange positions
+2 and 4. The primary public action remains only `selected_closure_id`;
+`reviewed_evidence_ids` is an explicitly secondary inspection receipt and
+cannot affect the replication decision. The strict aggregate succeeds only if
+both blocks independently reproduce the preregistered X-versus-Z and
+D-versus-C directional pattern. There is no pooling, majority vote, retry,
+third block, or ninth call.
+
+The committed preflight authorizes zero provider calls. Reproduce it with:
+
+```bash
+python3 actuator_uptake_replication_v0_6_3_2.py self-test
+python3 actuator_uptake_replication_v0_6_3_2.py validate-artifact
+python3 -I -S verify_actuator_uptake_replication_v0_6_3_2_portable.py self-test
+```
+
+The producer records `PASS_NETWORK_ZERO`; the independent verifier checks all
+four payloads, eight scheduled attempts, 26 hard gates, exact artifact bytes,
+and tamper probes under `python3 -I -S`. A live block still requires a separate
+reviewed runner, merged authorization lock, and exact annotated tag. Even a
+positive result would narrow only one serial-position explanation on one fresh
+case; it would not establish causality, quality improvement, population
+reliability, hidden-state editing, or permission for a v0.6.4 live run. See the
+[`v0.6.3.2 protocol`](docs/RND_ACTUATOR_UPTAKE_REPLICATION_V0_6_3_2.md) and
+[`network-zero artifact`](artifacts/actuator_uptake_replication_v0_6_3_2_preflight/).
+
 > [!IMPORTANT]
 > v0.1-v0.3.1 are **not** a Transformer implementation, a GPT latent-state
 > editor, or evidence of improved language-model accuracy. v0.4 meaningfully
@@ -347,6 +385,10 @@ and the
 > the fixed serial one-case block cannot separate treatment from temporal or
 > provider drift. It establishes no quality improvement, causal effect,
 > population reliability, hidden-state editing, or general reasoning result.
+> v0.6.3.2 is a fresh-case, pairwise-position-counterbalanced replication
+> preflight with zero provider calls. Its deterministic conformance outputs are
+> not hosted effects, and its two serial blocks cannot eliminate all time drift
+> or support quality, causal, population, attention, KV, or hidden-state claims.
 
 ## Why EBRT?
 
@@ -459,6 +501,12 @@ policy_lock_actuator_uptake_canary_v0_6_3_1_live_r01.json exact preflight, sourc
 fixtures/actuator_uptake_canary_v0_6_3_1.json one-case position-only actuator fixture
 fixtures/actuator_uptake_canary_gold_v0_6_3_1.json provider-excluded closure roles and grading gold
 artifacts/actuator_uptake_canary_v0_6_3_1_preflight/ canonical four-payload network-zero bundle
+actuator_uptake_replication_v0_6_3_2.py fresh-case mirrored replication preflight monolith
+verify_actuator_uptake_replication_v0_6_3_2_portable.py independent exact-byte and tamper verifier
+policy_lock_actuator_uptake_replication_v0_6_3_2.json zero-call mirrored schedule and claim lock
+fixtures/actuator_uptake_replication_v0_6_3_2.json fresh N1-N7 public actuator fixture
+fixtures/actuator_uptake_replication_gold_v0_6_3_2.json delayed provider-excluded closure roles and gold
+artifacts/actuator_uptake_replication_v0_6_3_2_preflight/ canonical four-payload/eight-attempt bundle
 docs/RND_BENCHMARK_V0_1.md    protocol, results, limits, and claim ledger
 docs/RND_INSTRUMENTATION_V0_2.md measurement contract and algorithm findings
 docs/RND_DUAL_ROUTE_V0_3.md   terminal invariant result and v0.3.1 direction
@@ -481,6 +529,7 @@ docs/RND_LANE_COMPOSABLE_TRAJECTORIES_V0_5_5.md completed composition mechanism,
 docs/RND_HOSTED_BUNDLE_V0_6_1.md completed hosted block, null placement effect, and next bottleneck
 docs/RND_ACTUATOR_UPTAKE_CANARY_V0_6_3_1.md zero-call discrete uptake measurement repair
 docs/RND_ACTUATOR_UPTAKE_CANARY_V0_6_3_1_LIVE_R01.md sealed four-call execution and authorization boundary
+docs/RND_ACTUATOR_UPTAKE_REPLICATION_V0_6_3_2.md mirrored fresh-replication protocol and stop rule
 docs/ROADMAP_V0_5_3_TO_V0_5_5.md Space/Time/Multiplicity gates through v0.6 execution design
 docs/ROADMAP_V0_6_PLUS.md      sealed bundle-to-output, fresh utility, runtime lanes, and latent return
 artifacts/benchmark_v0_1/     committed machine-readable benchmark evidence
@@ -1399,6 +1448,7 @@ retrospectively relabeling failures. See the
 | v0.6.3.1-live-r01 observed a non-zero public endpoint difference | Yes, narrowly: one authorized `C -> X -> D -> Z` block completed 4/4 calls; X and D selected the aligned closure while C selected the alternative and Z the mixed closure, yielding `CHANNEL_OPEN_DIRECTIONAL` and `GRADIENT_PLACEMENT_DIRECTIONAL` |
 | The v0.6.3.1-live-r01 result establishes evidence-order causality or quality improvement | No; evidence order was the sole intentionally varying semantic payload field, but the one fixed serial block cannot separate treatment from temporal/provider drift, and all arms returned the same public answer `VIOLET` |
 | The favorable v0.6.3.1 four-call canary opens v0.6.4 | No; its terminal decision is only `PROMOTE_TO_FRESH_REPLICATION`. v0.6.4 remains blocked until a new sealed case replicates the directional result |
+| v0.6.3.2 has already replicated the hosted actuator result | No; only its fresh fixture, four reusable payloads, mirrored eight-attempt schedule, classifiers, artifact, and independent zero-call verifier are frozen. Live execution is separately gated and has not occurred |
 | Selective replay should be optimized before state sufficiency | Not supported by current evidence; it is paused as a quality direction and remains an unranked future efficiency ablation |
 | EBRT edits hidden states inside a trained Transformer or GPT model | Not implemented |
 | EBRT improves real-world LLM reasoning accuracy | Not established |

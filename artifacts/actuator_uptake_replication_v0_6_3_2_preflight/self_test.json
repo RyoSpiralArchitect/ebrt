@@ -1,0 +1,123 @@
+{
+  "aggregate_closure_block_pairs_exercised": 65536,
+  "aggregate_status_pairs_exercised": 49,
+  "claim_boundary": [
+    "Synthetic outputs exercise parser, endpoint, and decision branches only.",
+    "They do not instantiate or predict hosted-model uptake."
+  ],
+  "classifier_combinations_exercised": 256,
+  "controller_fingerprint_sha256": "a0c78c5659869c8519a4d96f7246e234ffce61e1ab18b09d31e4a0523fc00f75",
+  "fingerprint_sha256": "33a8a501db78d3bc5ffbb74284ac691ffd5fece50e98436da652370712ca883d",
+  "hard_gates": [
+    {
+      "gate_id": "strict_fixture_contract",
+      "passed": true
+    },
+    {
+      "gate_id": "opaque_candidate_ids",
+      "passed": true
+    },
+    {
+      "gate_id": "equal_candidate_cardinality",
+      "passed": true
+    },
+    {
+      "gate_id": "real_float64_backward",
+      "passed": true
+    },
+    {
+      "gate_id": "finite_difference_agreement",
+      "passed": true
+    },
+    {
+      "gate_id": "gradient_path_preference_nonzero",
+      "passed": true
+    },
+    {
+      "gate_id": "exact_z_x_c_d_permutations",
+      "passed": true
+    },
+    {
+      "gate_id": "matched_d_c_geometry",
+      "passed": true
+    },
+    {
+      "gate_id": "d_alignment_exceeds_c",
+      "passed": true
+    },
+    {
+      "gate_id": "immutable_chunk_multiset",
+      "passed": true
+    },
+    {
+      "gate_id": "only_evidence_order_differs",
+      "passed": true
+    },
+    {
+      "gate_id": "provider_payloads_leak_free",
+      "passed": true
+    },
+    {
+      "gate_id": "four_payloads_presealed",
+      "passed": true
+    },
+    {
+      "gate_id": "fresh_case_rotated_from_predecessor",
+      "passed": true
+    },
+    {
+      "gate_id": "predecessor_eligibility_anchored",
+      "passed": true
+    },
+    {
+      "gate_id": "exact_mirrored_eight_call_schedule",
+      "passed": true
+    },
+    {
+      "gate_id": "payload_bytes_reused_across_blocks",
+      "passed": true
+    },
+    {
+      "gate_id": "pairwise_serial_positions_counterbalanced",
+      "passed": true
+    },
+    {
+      "gate_id": "all_known_closures_roundtrip",
+      "passed": true
+    },
+    {
+      "gate_id": "semantic_failures_are_endpoints",
+      "passed": true
+    },
+    {
+      "gate_id": "unknown_closure_rejected",
+      "passed": true
+    },
+    {
+      "gate_id": "per_block_classifier_total",
+      "passed": true
+    },
+    {
+      "gate_id": "aggregate_strict_and_total",
+      "passed": true
+    },
+    {
+      "gate_id": "deterministic_double_projection",
+      "passed": true
+    },
+    {
+      "gate_id": "canonical_artifact_directory_exact",
+      "passed": true
+    },
+    {
+      "gate_id": "network_calls_zero",
+      "passed": true
+    }
+  ],
+  "network_calls": 0,
+  "predecessor_anchor_fingerprint_sha256": "ce9d27ecdc13f8ec22f01693330c53e41ef2080604893683f5fa1e8da91ea618",
+  "projection_fingerprint_sha256": "6b9125b40dbb2d00c84bf7609deca4389c04ab33d262b0fc6000c2c939ffecd4",
+  "provider_calls": 0,
+  "schema_version": "ebrt-actuator-uptake-self-test-v0.6.3.2",
+  "status": "PASS_NETWORK_ZERO"
+}

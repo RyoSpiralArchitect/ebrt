@@ -1,0 +1,113 @@
+{
+  "schema_version": "ebrt-actuator-uptake-replication-fixture-v0.6.3.2",
+  "status": "LOCKED_NETWORK_ZERO_PREFLIGHT_INPUT",
+  "operator": "evidence_permutation",
+  "arms": ["Z", "C", "D", "X"],
+  "case": {
+    "case_id": "orbital_manifest_revision_f",
+    "checkpoint_id": "orbital_manifest_revision_f:post_event",
+    "question": "Which dispatch corridor is active for shipment M after applying the latest valid evidence? Answer SILVER or JADE.",
+    "answer_choices": ["SILVER", "JADE"],
+    "record_format_choices": ["ATTESTED_CBOR"],
+    "raw_evidence": [
+      {
+        "evidence_id": "N1",
+        "text": "Certified dispatch rule: one complete current manifest chain is sufficient to establish the active corridor for shipment M."
+      },
+      {
+        "evidence_id": "N2",
+        "text": "Current manifest channel A records corridor JADE for shipment M and is valid for this dispatch epoch."
+      },
+      {
+        "evidence_id": "N3",
+        "text": "Independent port clearance PC-31 records corridor JADE for shipment M when paired with its attestation receipt."
+      },
+      {
+        "evidence_id": "N4",
+        "text": "Attestation receipt AR-31 authenticates port clearance PC-31 for the current dispatch epoch."
+      },
+      {
+        "evidence_id": "N5",
+        "text": "Legacy routing bulletin RB-8 records corridor SILVER and remains usable unless a later cancellation names it."
+      },
+      {
+        "evidence_id": "N6",
+        "text": "Latest cancellation: legacy routing bulletin RB-8 is withdrawn. Use one complete currently authorized chain; N5 is invalidated."
+      },
+      {
+        "evidence_id": "N7",
+        "text": "The final machine-readable dispatch record must remain ATTESTED_CBOR regardless of the selected corridor."
+      }
+    ],
+    "candidate_closures": [
+      {
+        "closure_id": "K_fff6ffe598",
+        "selected_evidence_ids": ["N1", "N3", "N6", "N7"]
+      },
+      {
+        "closure_id": "K_265e97f857",
+        "selected_evidence_ids": ["N1", "N2", "N6", "N7"]
+      },
+      {
+        "closure_id": "K_16b90151c4",
+        "selected_evidence_ids": ["N1", "N2", "N5", "N7"]
+      },
+      {
+        "closure_id": "K_8027291974",
+        "selected_evidence_ids": ["N3", "N4", "N6", "N7"]
+      }
+    ],
+    "public_event_contract": {
+      "late_event_evidence_id": "N6",
+      "invalidated_evidence_id": "N5",
+      "stable_evidence_id": "N7"
+    },
+    "local_controller": {
+      "path_blocks": {
+        "P0": ["N1", "N2"],
+        "P1": ["N3", "N4"]
+      },
+      "state_decay": 0.62,
+      "terminal_target": 0.9,
+      "step_size": 0.2,
+      "control_regularization": 0.01,
+      "effect_by_evidence_id": {
+        "N1": 0.85,
+        "N2": 0.75,
+        "N3": -0.65,
+        "N4": -0.55,
+        "N5": -0.45,
+        "N6": 1.15,
+        "N7": 0.0
+      },
+      "finite_difference_epsilon": 0.000001,
+      "finite_difference_tolerance": 0.00000005
+    }
+  },
+  "protocol": {
+    "review_budget": 3,
+    "neutral_order": ["N1", "N3", "N6", "N4", "N2", "N5", "N7"],
+    "positive_control_order": ["N6", "N5", "N1", "N2", "N3", "N4", "N7"],
+    "matched_anti_rule": "swap_preferred_and_opposed_path_blocks",
+    "block_schedules": {
+      "A": ["C", "Z", "D", "X"],
+      "B": ["D", "X", "C", "Z"]
+    },
+    "payload_blinding_seed": "ebrt-v0632-payload-blinding-20260721",
+    "attempt_blinding_seed": "ebrt-v0632-attempt-blinding-20260721",
+    "candidate_id_salt": "ebrt-v0.6.3.2-fresh-mirror",
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "low",
+    "max_output_tokens": 1024,
+    "timeout_seconds": 60,
+    "sdk_retries": 0,
+    "store": false
+  },
+  "claim_boundary": [
+    "This fresh fixture tests whether one public evidence-order contrast repeats under pairwise serial-position counterbalancing.",
+    "All eight scheduled attempts reuse exactly four sealed payload byte strings; only evidence sequence position differs between arm payloads.",
+    "The hosted model is not differentiated and no claim is made about hidden states, attention, KV cache, or private reasoning.",
+    "selected_closure_id is the primary public action; reviewed_evidence_ids remains a secondary inspection receipt.",
+    "Only a strict directional result in both complete blocks can open a v0.6.4 network-zero preflight; this namespace never authorizes live execution."
+  ]
+}
