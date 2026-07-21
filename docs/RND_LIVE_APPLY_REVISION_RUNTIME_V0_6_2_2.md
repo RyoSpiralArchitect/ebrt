@@ -149,8 +149,8 @@ comparison, accuracy result, or population estimate.
 ## Adversarial contract checks
 
 The network-zero self-test covers enum-order invariance of the salience map,
-exact single-late-event horizon binding, duplicate candidate rejection, exact
-invalidation transitions, inherited invalidation preservation, fact-local
+exact single-late-event horizon binding, order-normalized duplicate candidate
+rejection, exact invalidation transitions, inherited invalidation preservation, fact-local
 correction binding, server-opaque provider IDs, one-call failure tombstones,
 terminal-result LRU eviction without identity reexecution,
 concurrent same-ID suppression, the publication-pinned demo source, sealed demo

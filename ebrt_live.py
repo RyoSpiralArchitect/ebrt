@@ -533,6 +533,40 @@ def _structural_closure(
     }
 
 
+def _canonical_graph_value(graph: ClosureGraph) -> JsonObject:
+    """Normalize every graph collection whose order has no contract meaning."""
+    support_nodes = [
+        {
+            "support_id": row.support_id,
+            "evidence_ids": sorted(row.evidence_ids),
+        }
+        for row in graph.support_nodes
+    ]
+    support_nodes.sort(
+        key=lambda row: (row["support_id"], tuple(row["evidence_ids"]))
+    )
+    targets = [
+        {
+            "target_id": row.target_id,
+            "target_type": row.target_type,
+            "slot": row.slot,
+            "direct_support_ids": sorted(row.direct_support_ids),
+            "depends_on_target_ids": sorted(row.depends_on_target_ids),
+        }
+        for row in graph.targets
+    ]
+    targets.sort(key=lambda row: row["target_id"])
+    invalidation_edges = sorted(
+        (row.model_dump(mode="json") for row in graph.invalidation_edges),
+        key=lambda row: (row["source_evidence_id"], row["target_evidence_id"]),
+    )
+    return {
+        "support_nodes": support_nodes,
+        "targets": targets,
+        "invalidation_edges": invalidation_edges,
+    }
+
+
 def _validate_request_cross_fields(request: LiveRevisionRequest) -> None:
     answers = _unique_nonempty(request.answer_choices, label="answer_choices")
     _require(
@@ -636,7 +670,7 @@ def _validate_request_cross_fields(request: LiveRevisionRequest) -> None:
     candidate_ids = [row.closure_id for row in request.candidate_closures]
     _unique_nonempty(candidate_ids, label="candidate_closures")
     candidate_graph_fingerprints = [
-        _fingerprint(row.graph.model_dump(mode="json"))
+        _fingerprint(_canonical_graph_value(row.graph))
         for row in request.candidate_closures
     ]
     _require(
@@ -1152,14 +1186,14 @@ def _compile_actuator(
 
 
 def _opaque_closure_id(prefix: str, graph: ClosureGraph) -> str:
-    return f"{prefix}_{_fingerprint(graph.model_dump(mode='json'))[:16]}"
+    return f"{prefix}_{_fingerprint(_canonical_graph_value(graph))[:16]}"
 
 
 def _provider_candidate_rows(request: LiveRevisionRequest) -> list[JsonObject]:
     rows = [
         {
             "closure_id": _opaque_closure_id("K", candidate.graph),
-            "graph": candidate.graph.model_dump(mode="json"),
+            "graph": _canonical_graph_value(candidate.graph),
         }
         for candidate in request.candidate_closures
     ]
@@ -2733,6 +2767,19 @@ def self_test() -> JsonObject:
     duplicate_catalog["candidate_closures"][1]["graph"] = _clone(
         duplicate_catalog["candidate_closures"][0]["graph"]
     )
+    permuted_duplicate_catalog = _clone(generic)
+    permuted_graph = _clone(
+        permuted_duplicate_catalog["candidate_closures"][0]["graph"]
+    )
+    permuted_graph["support_nodes"].reverse()
+    permuted_graph["targets"].reverse()
+    permuted_graph["invalidation_edges"].reverse()
+    for support in permuted_graph["support_nodes"]:
+        support["evidence_ids"].reverse()
+    for target in permuted_graph["targets"]:
+        target["direct_support_ids"].reverse()
+        target["depends_on_target_ids"].reverse()
+    permuted_duplicate_catalog["candidate_closures"][1]["graph"] = permuted_graph
     future_evidence = _clone(generic)
     future_evidence["all_raw_evidence"].append(
         {
@@ -2746,6 +2793,10 @@ def self_test() -> JsonObject:
             "BEFORE_HORIZON_MUST_BE_EXACT_PRE_EVENT_PREFIX",
         )
         and rejected_with(duplicate_catalog, "CANDIDATE_GRAPH_DUPLICATE")
+        and rejected_with(
+            permuted_duplicate_catalog,
+            "CANDIDATE_GRAPH_DUPLICATE",
+        )
         and rejected_with(
             future_evidence,
             "CORRECTION_MUST_TERMINATE_VISIBLE_HORIZON",
@@ -2853,6 +2904,65 @@ def self_test() -> JsonObject:
         generic_before,
         _compile_actuator(generic_request, generic_before, generic_control),
     )
+    permuted_provider_value = _clone(generic)
+    for candidate in permuted_provider_value["candidate_closures"]:
+        graph = candidate["graph"]
+        graph["support_nodes"].reverse()
+        graph["targets"].reverse()
+        graph["invalidation_edges"].reverse()
+        for support in graph["support_nodes"]:
+            support["evidence_ids"].reverse()
+        for target in graph["targets"]:
+            target["direct_support_ids"].reverse()
+            target["depends_on_target_ids"].reverse()
+    permuted_provider_request = validate_request_mapping(permuted_provider_value)
+    canonical_probe = ClosureGraph.model_validate(
+        {
+            "support_nodes": [
+                {"support_id": "S-b", "evidence_ids": ["E-2", "E-1"]},
+                {"support_id": "S-a", "evidence_ids": ["E-4", "E-3"]},
+            ],
+            "targets": [
+                {
+                    "target_id": "fact:c",
+                    "target_type": "fact",
+                    "slot": "c",
+                    "direct_support_ids": ["S-b", "S-a"],
+                    "depends_on_target_ids": ["fact:b", "fact:a"],
+                },
+                {
+                    "target_id": "fact:b",
+                    "target_type": "fact",
+                    "slot": "b",
+                    "direct_support_ids": ["S-b", "S-a"],
+                    "depends_on_target_ids": ["fact:a"],
+                },
+                {
+                    "target_id": "fact:a",
+                    "target_type": "fact",
+                    "slot": "a",
+                    "direct_support_ids": ["S-b", "S-a"],
+                    "depends_on_target_ids": [],
+                },
+            ],
+            "invalidation_edges": [
+                {"source_evidence_id": "E-4", "target_evidence_id": "E-1"},
+                {"source_evidence_id": "E-3", "target_evidence_id": "E-2"},
+            ],
+        }
+    )
+    canonical_probe_permutation = canonical_probe.model_dump(mode="json")
+    canonical_probe_permutation["support_nodes"].reverse()
+    canonical_probe_permutation["targets"].reverse()
+    canonical_probe_permutation["invalidation_edges"].reverse()
+    for support in canonical_probe_permutation["support_nodes"]:
+        support["evidence_ids"].reverse()
+    for target in canonical_probe_permutation["targets"]:
+        target["direct_support_ids"].reverse()
+        target["depends_on_target_ids"].reverse()
+    permuted_canonical_probe = ClosureGraph.model_validate(
+        canonical_probe_permutation
+    )
     opaque_ids = [row["closure_id"] for row in provider_payload["candidate_closures"]]
     checks["provider_closure_ids_are_server_opaque"] = (
         all(
@@ -2867,6 +2977,20 @@ def self_test() -> JsonObject:
         and not (
             set(opaque_ids)
             & {row["closure_id"] for row in generic["candidate_closures"]}
+        )
+        and provider_payload["candidate_closures"]
+        == _provider_candidate_rows(permuted_provider_request)
+        and _canonical_graph_value(canonical_probe)
+        == _canonical_graph_value(permuted_canonical_probe)
+        and _opaque_closure_id("K", canonical_probe)
+        == _opaque_closure_id("K", permuted_canonical_probe)
+        and all(
+            row["graph"] == _canonical_graph_value(candidate.graph)
+            for row, candidate in zip(
+                provider_payload["candidate_closures"],
+                generic_request.candidate_closures,
+                strict=True,
+            )
         )
     )
 
