@@ -101,6 +101,67 @@ async function digestSha256(value: string): Promise<string> {
   return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, "0")).join("");
 }
 
+function compactJsonPreservingNumberLexemes(raw: string): string {
+  let compact = "";
+  let inString = false;
+  let escaped = false;
+  for (const character of raw) {
+    if (inString) {
+      compact += character;
+      if (escaped) escaped = false;
+      else if (character === "\\") escaped = true;
+      else if (character === '"') inString = false;
+    } else if (character === '"') {
+      inString = true;
+      compact += character;
+    } else if (!/\s/u.test(character)) {
+      compact += character;
+    }
+  }
+  if (inString || escaped) return fail("response canonical JSON string termination");
+  return compact;
+}
+
+function canonicalResponseWithoutSelfSeal(raw: string): string {
+  const compact = compactJsonPreservingNumberLexemes(raw);
+  if (!compact.startsWith("{") || !compact.endsWith("}")) {
+    return fail("response canonical JSON object");
+  }
+  const body = compact.slice(1, -1);
+  const members: string[] = [];
+  let start = 0;
+  let depth = 0;
+  let inString = false;
+  let escaped = false;
+  for (let index = 0; index < body.length; index += 1) {
+    const character = body[index];
+    if (inString) {
+      if (escaped) escaped = false;
+      else if (character === "\\") escaped = true;
+      else if (character === '"') inString = false;
+      continue;
+    }
+    if (character === '"') inString = true;
+    else if (character === "{" || character === "[") depth += 1;
+    else if (character === "}" || character === "]") {
+      depth -= 1;
+      if (depth < 0) return fail("response canonical JSON nesting");
+    } else if (character === "," && depth === 0) {
+      members.push(body.slice(start, index));
+      start = index + 1;
+    }
+  }
+  if (inString || escaped || depth !== 0) return fail("response canonical JSON structure");
+  members.push(body.slice(start));
+  const sealPrefix = '"fingerprint_sha256":';
+  const sealMembers = members.filter((member) => member.startsWith(sealPrefix));
+  if (sealMembers.length !== 1) return fail("response fingerprint_sha256 cardinality");
+  if (!/^"fingerprint_sha256":"[0-9a-f]{64}"$/u.test(sealMembers[0])) {
+    return fail("response fingerprint_sha256 canonical member");
+  }
+  return `{${members.filter((member) => !member.startsWith(sealPrefix)).join(",")}}`;
+}
+
 function sameCanonical(left: unknown, right: unknown): boolean {
   return canonicalJson(left) === canonicalJson(right);
 }
@@ -626,7 +687,7 @@ function endpoint(path: string): string {
 async function verifiedJson(
   response: Response,
   label: string,
-): Promise<{ value: unknown; bodySha256: string }> {
+): Promise<{ value: unknown; bodySha256: string; raw: string }> {
   const expectedBodySha256 = response.headers.get(BODY_SHA256_HEADER);
   if (!expectedBodySha256 || !SHA256.test(expectedBodySha256)) {
     throw new LiveRevisionApiError(
@@ -645,7 +706,7 @@ async function verifiedJson(
     );
   }
   try {
-    return { value: JSON.parse(raw) as unknown, bodySha256 };
+    return { value: JSON.parse(raw) as unknown, bodySha256, raw };
   } catch {
     throw new LiveRevisionApiError(`${label} did not return JSON`, "INVALID_JSON", response.status);
   }
@@ -712,6 +773,15 @@ export async function applyLiveRevision(
     signal,
   });
   if (!response.ok) throw await responseError(response, "Live Apply Revision");
-  const { value, bodySha256 } = await verifiedJson(response, "Live Apply Revision");
+  const { value, bodySha256, raw } = await verifiedJson(response, "Live Apply Revision");
+  const responseRecord = record(value, "response");
+  const observedFingerprint = sha256(
+    responseRecord.fingerprint_sha256,
+    "response.fingerprint_sha256",
+  );
+  const recomputedFingerprint = await digestSha256(canonicalResponseWithoutSelfSeal(raw));
+  if (recomputedFingerprint !== observedFingerprint) {
+    return fail("response.fingerprint_sha256 integrity");
+  }
   return parseResponse(value, envelope, expectedInputFingerprint, bodySha256);
 }

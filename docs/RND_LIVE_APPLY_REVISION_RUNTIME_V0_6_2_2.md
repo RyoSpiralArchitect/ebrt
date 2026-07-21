@@ -77,8 +77,9 @@ v0.6.2.1 manifest and `provider_inputs.json`; all other requests are
 `CALLER_SUPPLIED_UNVERIFIED`. The demo envelope seals both the request and the
 envelope. The Inspector recomputes those seals, correlates provenance and source
 identity through the submitted request, verifies `X-EBRT-Body-SHA256` over the
-received API bytes, and rejects any inconsistent operational/reserved status
-graph before rendering. These SHA-256 values are deterministic integrity and
+received API bytes, recomputes the live response self-seal without losing JSON
+number lexemes, and rejects any inconsistent operational/reserved status graph
+before rendering. These SHA-256 values are deterministic integrity and
 correlation checks within the trusted loopback deployment, not authentication
 of an untrusted remote server. v0.6.2.2 therefore establishes
 an executable and auditable product operation, not semantic correctness,
@@ -159,6 +160,9 @@ the recorded Inspector projection are checked independently. A headless-browser
 negative test intercepted an otherwise valid scripted response, changed the
 `Semantic correctness` row to `PASS`, recomputed the body SHA-256, and confirmed
 that the Inspector rejected the coherent mutation before rendering a terminal.
+A second interception changed only the top-level response self-seal, recomputed
+the transport-body header, and was rejected specifically at
+`response.fingerprint_sha256 integrity`.
 
 ## Manual real-provider smoke
 

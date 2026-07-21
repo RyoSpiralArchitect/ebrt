@@ -219,7 +219,8 @@ plumbing, not a benchmark, and that provenance is derived server-side from the
 published manifest bytes and provider-input bytes, not merely from a
 self-consistent embedded hash. Its envelope seals the exact request. Before the
 Live UI renders a result, it recomputes that request fingerprint, binds response
-provenance back to the envelope, verifies the API response-body SHA-256, and
+provenance back to the envelope, verifies the API response-body SHA-256,
+recomputes the live response self-seal without normalizing away numeric lexemes, and
 enforces the pinned 12-row operational status graph plus two exact
 `NOT_ASSESSED` rows. These hashes are integrity/correlation checks inside the
 trusted loopback deployment, not signatures or remote-server authentication.
