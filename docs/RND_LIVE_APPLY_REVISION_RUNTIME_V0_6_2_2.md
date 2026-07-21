@@ -89,6 +89,7 @@ SDK and application retries are zero, and new provider execution is serialized.
 Run the offline contract and contaminated demo adapter:
 
 ```bash
+python3 -m pip install -r requirements-live.txt
 python3 ebrt_live.py self-test
 python3 ebrt_live.py demo-request
 python3 ebrt_live.py apply-demo --provider scripted

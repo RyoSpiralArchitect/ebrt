@@ -191,6 +191,7 @@ and effect attribution remain `NOT_ASSESSED`.
 Run the offline contract and contaminated demo adapter without a provider:
 
 ```bash
+python3 -m pip install -r requirements-live.txt
 python3 ebrt_live.py self-test
 python3 ebrt_live.py demo-request
 python3 ebrt_live.py apply-demo --provider scripted
@@ -715,7 +716,7 @@ artifacts/benchmark_controlled_raw_restart_v0_5_1_live_canary/ preserved four-re
 artifacts/benchmark_controlled_raw_restart_v0_5_1_quota_recovery_r01/ complete null-diff recovery block
 artifacts/demo_hackathon_strategy_walkthrough_v0_5_2_live_r01/ complete two-call near-pass and output diff
 requirements.txt              runtime dependency declaration
-requirements-live.txt         separately pinned OpenAI/Pydantic live dependencies
+requirements-live.txt         complete live runtime set (base + pinned OpenAI SDK)
 LICENSE                       Apache License 2.0
 ```
 
