@@ -1,13 +1,21 @@
-import { useEffect, useState, type KeyboardEvent } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { AcceptanceStrip } from "./components/AcceptanceStrip";
 import { AfterVerificationPanel } from "./components/AfterVerificationPanel";
 import { ApplyRevisionHeader } from "./components/ApplyRevisionHeader";
 import { BeforeLateEventPanel } from "./components/BeforeLateEventPanel";
 import { RevisionEnginePanel } from "./components/RevisionEnginePanel";
+import type { LiveRevisionPhase } from "./components/RevisionEnginePanel";
 import { loadApplyRevisionSnapshot } from "./applyRevisionSnapshot";
-import type { ApplyRevisionSnapshot } from "./applyRevisionTypes";
+import type { ApplyRevisionSnapshot, ApplyRevisionView } from "./applyRevisionTypes";
+import { applyLiveRevision, loadLiveDemoRequest } from "./liveRevisionApi";
+import {
+  liveApplyRevisionView,
+  liveRecordedReferenceView,
+  recordedApplyRevisionView,
+} from "./liveRevisionView";
 
 type Stage = "before" | "engine" | "after";
+type InspectorMode = "recorded" | "live";
 
 const STAGES: Array<{ id: Stage; label: string }> = [
   { id: "before", label: "Before + Event" },
@@ -50,17 +58,32 @@ function MobileStageNav({ active, onSelect }: { active: Stage; onSelect: (stage:
 }
 
 export default function App() {
-  const [snapshot, setSnapshot] = useState<ApplyRevisionSnapshot | null>(null);
+  const [recordedSnapshot, setRecordedSnapshot] = useState<ApplyRevisionSnapshot | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [mode, setMode] = useState<InspectorMode>("recorded");
+  const [liveView, setLiveView] = useState<ApplyRevisionView | null>(null);
+  const [livePhase, setLivePhase] = useState<LiveRevisionPhase>("idle");
+  const [liveError, setLiveError] = useState<string | null>(null);
   const [activeStage, setActiveStage] = useState<Stage>("before");
   const [replayStep, setReplayStep] = useState(0);
   const [playing, setPlaying] = useState(false);
+  const liveAbort = useRef<AbortController | null>(null);
+  const liveInFlight = useRef(false);
+  const liveSequence = useRef(0);
 
   useEffect(() => {
-    loadApplyRevisionSnapshot().then(setSnapshot).catch((cause: unknown) => {
+    loadApplyRevisionSnapshot().then(setRecordedSnapshot).catch((cause: unknown) => {
       setError(cause instanceof Error ? cause.message : "Recorded artifact projection failed to load");
     });
   }, []);
+
+  useEffect(
+    () => () => {
+      liveSequence.current += 1;
+      liveAbort.current?.abort();
+    },
+    [],
+  );
 
   useEffect(() => {
     if (!playing) return undefined;
@@ -86,9 +109,71 @@ export default function App() {
   }, [playing]);
 
   function replayRecordedRevision() {
+    if (mode !== "recorded") return;
     setReplayStep(1);
     setActiveStage("engine");
     setPlaying(true);
+  }
+
+  function selectMode(nextMode: InspectorMode) {
+    if (liveInFlight.current) return;
+    setMode(nextMode);
+    setPlaying(false);
+    setLiveError(null);
+    if (nextMode === "recorded") {
+      setReplayStep(0);
+      setActiveStage("before");
+    } else {
+      setReplayStep(liveView ? 3 : 0);
+      setActiveStage(liveView ? "after" : "engine");
+    }
+  }
+
+  async function applyLiveRevisionFromFreshTemplate() {
+    if (mode !== "live" || liveInFlight.current) return;
+    const controller = new AbortController();
+    const sequence = ++liveSequence.current;
+    liveAbort.current = controller;
+    liveInFlight.current = true;
+    setLiveView(null);
+    setLiveError(null);
+    setLivePhase("loading-template");
+    setReplayStep(1);
+    setActiveStage("engine");
+
+    try {
+      const template = await loadLiveDemoRequest(controller.signal);
+      if (sequence !== liveSequence.current || controller.signal.aborted) return;
+      setLivePhase("regenerating");
+      setReplayStep(2);
+      const response = await applyLiveRevision(template, controller.signal);
+      if (sequence !== liveSequence.current || controller.signal.aborted) return;
+      const nextView = liveApplyRevisionView(response);
+      setLiveView(nextView);
+      setLivePhase("complete");
+      setReplayStep(3);
+      setActiveStage("after");
+    } catch (cause: unknown) {
+      if (sequence !== liveSequence.current) return;
+      if (controller.signal.aborted || (cause instanceof DOMException && cause.name === "AbortError")) {
+        setLivePhase("aborted");
+        setLiveError(null);
+      } else {
+        setLivePhase("error");
+        setLiveError(cause instanceof Error ? cause.message : "Live Apply Revision failed");
+      }
+      setReplayStep(0);
+      setActiveStage("engine");
+    } finally {
+      if (sequence === liveSequence.current) {
+        liveInFlight.current = false;
+        liveAbort.current = null;
+      }
+    }
+  }
+
+  function abortLiveRevision() {
+    liveAbort.current?.abort();
   }
 
   if (error) {
@@ -101,19 +186,28 @@ export default function App() {
     );
   }
 
-  if (!snapshot) {
+  if (!recordedSnapshot) {
     return <main className="ar-load-state">Loading sealed Apply Revision artifact…</main>;
   }
 
+  const recordedView = recordedApplyRevisionView(recordedSnapshot);
+  const snapshot = mode === "live" ? liveView ?? liveRecordedReferenceView(recordedSnapshot) : recordedView;
+  const liveBusy = livePhase === "loading-template" || livePhase === "regenerating";
+
   return (
     <div className={`ar-shell replay-step-${replayStep}`}>
-      <ApplyRevisionHeader snapshot={snapshot} />
+      <ApplyRevisionHeader busy={liveBusy} mode={mode} onModeChange={selectMode} snapshot={snapshot} />
       <MobileStageNav active={activeStage} onSelect={setActiveStage} />
 
       <main className="ar-workspace">
         <BeforeLateEventPanel active={activeStage === "before"} snapshot={snapshot} />
         <RevisionEnginePanel
           active={activeStage === "engine"}
+          liveError={liveError}
+          livePhase={livePhase}
+          mode={mode}
+          onAbort={abortLiveRevision}
+          onLiveApply={applyLiveRevisionFromFreshTemplate}
           onReplay={replayRecordedRevision}
           playing={playing}
           replayStep={replayStep}
@@ -123,13 +217,25 @@ export default function App() {
       </main>
 
       <p className="ar-replay-announcer" aria-live="polite">
-        {replayStep === 0
-          ? "Recorded Apply Revision is ready to replay."
-          : replayStep === 1
-            ? "Replaying the recorded local backward pass."
-            : replayStep === 2
-              ? "Replaying the recorded public actuator compilation."
-              : "Recorded Apply Revision replay complete. No new model call was made."}
+        {mode === "live"
+          ? livePhase === "loading-template"
+            ? "Loading a fresh server-owned Apply Revision request."
+            : livePhase === "regenerating"
+              ? "Live regeneration is in progress."
+              : livePhase === "complete"
+                ? "Live regeneration complete. Semantic correctness and effect attribution were not assessed."
+                : livePhase === "aborted"
+                  ? "Stopped waiting. The server run may still complete."
+                  : livePhase === "error"
+                    ? "Live Apply Revision failed. The recorded reference remains available."
+                    : "Live mode is ready. No request is made until Apply is pressed."
+          : replayStep === 0
+            ? "Recorded Apply Revision is ready to replay."
+            : replayStep === 1
+              ? "Replaying the recorded local backward pass."
+              : replayStep === 2
+                ? "Replaying the recorded public actuator compilation."
+                : "Recorded Apply Revision replay complete. No new model call was made."}
       </p>
       <AcceptanceStrip snapshot={snapshot} />
     </div>

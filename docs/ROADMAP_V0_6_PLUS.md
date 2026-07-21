@@ -1,6 +1,6 @@
 # EBRT v0.6+ — Execution, Evaluation, and Orchestration Roadmap
 
-Status: **v0.6.0 PREFLIGHT PASS; v0.6.1 FIVE-CALL BLOCK COMPLETE, GATE HELD; v0.6.2.1 APPLY-REVISION LIVE R01 PRODUCT ACCEPTANCE PASS, EFFECT NOT ASSESSED; v0.6.3 LIVE R01 EXECUTED ONCE, STOP_OUTPUT_CONTRACT; v0.6.3.1 LIVE R01 COMPLETE, PROMOTE TO FRESH REPLICATION; v0.6.3.2 LIVE R01 COMPLETE, D/C REPEATED, X/Z CEILING STOP; v0.6.4 BLOCKED; REASONING IDE CONVERGENCE IN PROGRESS**
+Status: **v0.6.0 PREFLIGHT PASS; v0.6.1 FIVE-CALL BLOCK COMPLETE, GATE HELD; v0.6.2.1 APPLY-REVISION LIVE R01 PRODUCT ACCEPTANCE PASS, EFFECT NOT ASSESSED; v0.6.2.2 CURRENT TYPED INVALIDATION-REVISION MONOLITH, SEMANTIC QUALITY AND EFFECT NOT ASSESSED; v0.6.3 LIVE R01 EXECUTED ONCE, STOP_OUTPUT_CONTRACT; v0.6.3.1 LIVE R01 COMPLETE, PROMOTE TO FRESH REPLICATION; v0.6.3.2 LIVE R01 COMPLETE, D/C REPEATED, X/Z CEILING STOP; v0.6.4 BLOCKED; REASONING IDE CONVERGENCE IN PROGRESS**
 
 The one allowed v0.6.1 block ran on 2026-07-20 in the preregistered order
 `P -> A -> B -> D -> C`. All five calls completed and the committed artifact
@@ -91,8 +91,9 @@ v0.6.3.2  test the same actuator on one new sealed case in mirrored blocks
            A: C -> Z -> D -> X; B: D -> X -> C -> Z
            ↓ D/C repeated, but required X/Z contrast hit ceiling; gate stopped
 v0.6.4    remains future research; no current preflight or live path is opened
-converge the promoted runtime into one readable monolith
-         ↓
+product   preserve immutable v0.6.2.1 acceptance; expose the promoted operation
+lane      as the separate typed v0.6.2.2 live monolith
+           ↓
 v0.7    ask the first fresh matched quality question
 ```
 
@@ -327,6 +328,46 @@ invalidation, stable-fact, and fact-local lineage PASS. The terminal is
 `NOT_ASSESSED`. The result is frozen under
 `artifacts/apply_revision_acceptance_v0_6_2_1_live_r01/` and documented in
 `RND_APPLY_REVISION_ACCEPTANCE_V0_6_2_1_LIVE_R01.md`.
+
+### v0.6.2.2 — Typed Live Apply Revision Runtime
+
+The current product runtime is the separate monolith `ebrt_live.py`. It leaves
+root `ebrt.py`, the v0.6.2.1 policy surface, and the canonical acceptance
+artifact immutable. Instead of rerunning the sealed two-call block, it accepts
+one typed public invalidation-revision operation: full case and evidence, an
+already emitted Before output with its selected closure graph, a typed late event, and at least
+two structurally distinct After closure candidates.
+
+For each new request identity the runtime validates those public structures,
+runs one local float64 backward pass to rank reinspection salience, and combines
+that ranking with typed-event `Suppress / Preserve` operations. Candidate IDs
+are server-remapped to opaque graph hashes before exactly one After provider
+attempt. The provider never receives gradient values, losses, salience values,
+credentials, reserved gold fields, or caller candidate labels. SDK and
+application retries remain disabled; request identity terminally binds both
+successful and failed attempts rather than allowing a second provider call.
+
+The live response keeps three axes distinct:
+
+```text
+mechanism     local backward, control-map, and actuator contract
+output        actual typed Before, After, and public diff
+verification  operational and lineage checks only
+```
+
+An operational `PASS` does not grade semantic answer quality and does not
+attribute an output change to EBRT. Both `semantic_correctness_status` and
+`effect_attribution_status` remain `NOT_ASSESSED`. The scripted provider is an
+offline plumbing mode; the server-owned demo request adapts the contaminated
+v0.6.2.1 case, is fingerprint-classified server-side, and is not a benchmark.
+Reserved gold fields are rejected, but caller semantic content remains
+unverified. The initial HTTP surface is loopback-only:
+`GET /api/health`, `GET /api/capabilities`, `GET /api/demo-request`, and
+`POST /api/apply-revision`. Provider credentials stay in the server environment.
+
+This milestone closes the product-monolith convergence item. It does not open
+v0.6.4, answer the fresh matched-quality question reserved for v0.7, or convert
+the historical demo into independent evidence.
 
 ## v0.6.3 — Provider Actuator Calibration Canary
 

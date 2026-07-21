@@ -168,7 +168,76 @@ passing public outputs. Raw arm A returned the correct `PROVE` answer but
 omitted R4 from `final_priority`. This is a real bridge and a useful control-
 channel null result, not evidence that gradient placement improves GPT.
 
-### v0.6.2.1 Apply Revision acceptance
+### v0.6.2.2 live Apply Revision runtime
+
+The current live product monolith is [`ebrt_live.py`](ebrt_live.py). It accepts
+a typed public invalidation-revision request containing the case and ordered
+evidence, an already emitted Before state and its selected closure graph, a typed late event,
+and at least two structurally distinct After closure candidates. It validates
+that public surface as a single-late-event horizon (the declared correction
+must be the final visible evidence), runs one local float64 `backward()` to rank reinspection
+salience, then combines that ranking with typed-event `Suppress / Preserve`
+operations. Candidate IDs are remapped to server-generated opaque hashes before
+exactly one After provider attempt for each new request identity.
+
+This is a new operational runtime, not a mutable continuation of the sealed
+acceptance runner. Root [`ebrt.py`](ebrt.py), its v0.6.2.1 policy surface, and
+the canonical v0.6.2.1 artifact remain immutable. The live runtime does not
+load a separate semantic-gold or grader artifact and does not grade general
+answer quality. Reserved gold fields are rejected, while arbitrary caller text
+remains semantically unverified. Its response
+keeps mechanism, public output, and verification separate; semantic quality
+and effect attribution remain `NOT_ASSESSED`.
+
+Run the offline contract and contaminated demo adapter without a provider:
+
+```bash
+python3 -m pip install -r requirements-product.txt
+python3 ebrt_live.py self-test
+python3 ebrt_live.py demo-request
+python3 ebrt_live.py apply-demo --provider scripted
+```
+
+With `OPENAI_API_KEY` supplied only through the server environment, exercise
+the same public operation through the live provider boundary:
+
+```bash
+python3 ebrt_live.py apply-demo --provider openai
+python3 ebrt_live.py serve --provider openai --host 127.0.0.1 --port 8765
+```
+
+The loopback server also supports a fully offline scripted mode:
+
+```bash
+python3 ebrt_live.py serve --provider scripted --host 127.0.0.1 --port 8765
+```
+
+Its bounded API surface is `GET /api/health`, `GET /api/capabilities`,
+`GET /api/demo-request`, and `POST /api/apply-revision`. The demo request is a
+server-owned adapter over the known v0.6.2.1 case; it is contaminated product
+plumbing, not a benchmark, and that provenance is derived server-side from the
+published manifest bytes and provider-input bytes, not merely from a
+self-consistent embedded hash. Its envelope seals the exact request. Before the
+Live UI renders a result, it recomputes that request fingerprint, binds response
+provenance back to the envelope, verifies the API response-body SHA-256,
+recomputes the live response self-seal without normalizing away numeric lexemes, and
+enforces the pinned 12-row operational status graph plus two exact
+`NOT_ASSESSED` rows. These hashes are integrity/correlation checks inside the
+trusted loopback deployment, not signatures or remote-server authentication.
+Request IDs terminally bind both successful and failed attempts; provider
+retries are disabled. The session keeps 128 complete terminal responses in an
+LRU cache plus compact fingerprints for up to 65,536 spent identities. An
+identity whose full result has been evicted returns `410` and is never executed
+again; the service safely rejects new identities if the compact ledger fills.
+Provider credentials, raw
+receipts, reserved gold fields, and private reasoning never enter the public
+response. Local public-surrogate objectives, gradients, finite-difference
+diagnostics, and salience values are intentionally returned as Inspector data;
+they are not provider-private gradients or losses and never enter provider input.
+See
+[`RND_LIVE_APPLY_REVISION_RUNTIME_V0_6_2_2.md`](docs/RND_LIVE_APPLY_REVISION_RUNTIME_V0_6_2_2.md).
+
+### v0.6.2.1 immutable Apply Revision acceptance
 
 EBRT now converges the product path into one executable,
 [`ebrt.py`](ebrt.py). It takes an actual typed Before output, runs one local
@@ -588,6 +657,8 @@ verify_hosted_bundle_v0_6_1_portable.py host-independent canonical snapshot veri
 policy_lock_hosted_bundle_v0_6.json frozen source, runtime, order, endpoint, and claim contract
 fixtures/hosted_bundle_projection_v0_6.json contaminated projection and matched-control fixture
 fixtures/hosted_bundle_lineage_gold_v0_6.json post-call-only exact lineage gold
+ebrt.py                       immutable v0.6.2.1 two-call acceptance runner and artifact validator
+ebrt_live.py                  current v0.6.2.2 typed invalidation-revision monolith and loopback API
 actuator_uptake_canary_v0_6_3_1.py discrete closure-choice uptake preflight monolith
 verify_actuator_uptake_canary_v0_6_3_1_portable.py pure-stdlib exact-byte and tamper verifier
 policy_lock_actuator_uptake_canary_v0_6_3_1.json zero-call source, runtime, order, and claim lock
@@ -626,6 +697,7 @@ docs/RND_FACTORIZED_LINEAGE_V0_5_3.md network-zero lineage result and contaminat
 docs/RND_TEMPORAL_ADJOINT_LINEAGE_V0_5_4.md matched temporal result, derivative audits, and claim boundary
 docs/RND_LANE_COMPOSABLE_TRAJECTORIES_V0_5_5.md completed composition mechanism, audits, and nonclaims
 docs/RND_HOSTED_BUNDLE_V0_6_1.md completed hosted block, null placement effect, and next bottleneck
+docs/RND_LIVE_APPLY_REVISION_RUNTIME_V0_6_2_2.md typed live invalidation operation, API, security, and claim boundary
 docs/RND_ACTUATOR_UPTAKE_CANARY_V0_6_3_1.md zero-call discrete uptake measurement repair
 docs/RND_ACTUATOR_UPTAKE_CANARY_V0_6_3_1_LIVE_R01.md sealed four-call execution and authorization boundary
 docs/RND_ACTUATOR_UPTAKE_REPLICATION_V0_6_3_2.md mirrored fresh-replication protocol and stop rule
@@ -657,7 +729,8 @@ artifacts/benchmark_controlled_raw_restart_v0_5_1_live_canary/ preserved four-re
 artifacts/benchmark_controlled_raw_restart_v0_5_1_quota_recovery_r01/ complete null-diff recovery block
 artifacts/demo_hackathon_strategy_walkthrough_v0_5_2_live_r01/ complete two-call near-pass and output diff
 requirements.txt              runtime dependency declaration
-requirements-live.txt         separately pinned OpenAI/Pydantic live dependencies
+requirements-live.txt         sealed OpenAI/Pydantic dependency receipt
+requirements-product.txt      complete current product runtime set
 LICENSE                       Apache License 2.0
 ```
 
@@ -1546,6 +1619,8 @@ retrospectively relabeling failures. See the
 | v0.6.2.1 makes `Apply Revision -> Regenerate` executable and verifiable | Yes, for one contaminated product-acceptance path: exactly two calls completed, the actual Before fed one local backward pass, the compiled public actuator preceded full-context regeneration, and the After answer, invalidation, stable fact, and fact-local lineage all passed |
 | The v0.6.2.1 `POLISH -> PROVE` diff proves that EBRT control improved or caused the answer | No; this is not a matched effect experiment, the controller target is case-specific, and `effect_attribution_status` remains `NOT_ASSESSED` |
 | The v0.6.2.1 Reasoning IDE performs a new model call when replayed | No; it verifies and animates an exact hash-pinned public projection of the recorded artifact, and the replay CTA issues zero provider requests |
+| v0.6.2.2 exposes Apply Revision as a live reusable product operation | Yes, operationally within typed invalidation revisions: `ebrt_live.py` validates a strict public request, uses one local float64 backward pass to rank reinspection salience, compiles typed-event suppression/preservation, server-remaps closure IDs, and terminally binds at most one no-retry After attempt to each request identity |
+| A v0.6.2.2 operational `PASS` establishes semantic correctness or control efficacy | No; live verification covers request, mechanism, lineage, provider, and accounting contracts only. Semantic quality and effect attribution are both `NOT_ASSESSED` |
 | v0.6.3-live-r01 establishes a null provider actuator | No; it stopped after one completed call on `EXACT_ONE_CLOSURE_FAILED`, with 15 calls unattempted and all X/Z and D/C effects not assessed |
 | v0.6.3.1-live-r01 observed a non-zero public endpoint difference | Yes, narrowly: one authorized `C -> X -> D -> Z` block completed 4/4 calls; X and D selected the aligned closure while C selected the alternative and Z the mixed closure, yielding `CHANNEL_OPEN_DIRECTIONAL` and `GRADIENT_PLACEMENT_DIRECTIONAL` |
 | The v0.6.3.1-live-r01 result establishes evidence-order causality or quality improvement | No; evidence order was the sole intentionally varying semantic payload field, but the one fixed serial block cannot separate treatment from temporal/provider drift, and all arms returned the same public answer `VIOLET` |
@@ -1693,8 +1768,9 @@ category determination.
   deterministic allowlist projection and local read-only Workbench now connect
   Evidence, Event, Revision, every recorded Replay lane, and Final Output Diff.
   A separate Failure Atlas keeps runtime diagnostics out of the reasoning
-  episode. The first Workbench is deliberately replaceable; live Apply,
-  editing, hosting, and the eventual product interaction remain pending.
+  episode. v0.6.2.2 adds the generic loopback live Apply operation while keeping
+  the first Workbench replaceable; editing, hosting, and the eventual product
+  interaction remain pending.
 - **Milestone 4 — submission evidence:** document the Codex development record,
   provide an English demo under the event rules, include the required Codex
   feedback session, and audit every public claim against committed artifacts.

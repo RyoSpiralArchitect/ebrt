@@ -1,4 +1,4 @@
-import type { ApplyRevisionSnapshot } from "../applyRevisionTypes";
+import type { ApplyRevisionView } from "../applyRevisionTypes";
 import { Icon } from "./Icon";
 
 export function AfterVerificationPanel({
@@ -8,9 +8,13 @@ export function AfterVerificationPanel({
 }: {
   active: boolean;
   replayStep: number;
-  snapshot: ApplyRevisionSnapshot;
+  snapshot: ApplyRevisionView;
 }) {
-  const accepted = snapshot.decision.product_acceptance_status === "PASS";
+  const accepted = snapshot.assessment.acceptance_status === "PASS";
+  const assessed = snapshot.assessment.acceptance_status !== "NOT_ASSESSED";
+  const answerChanged = snapshot.before.answer !== snapshot.after.answer;
+  const recorded = snapshot.mode === "RECORDED_ARTIFACT_PLAYBACK";
+  const recordedReference = snapshot.mode === "LIVE_RECORDED_REFERENCE";
   return (
     <section
       aria-labelledby="after-title"
@@ -22,8 +26,16 @@ export function AfterVerificationPanel({
         <span>03</span>
         <h1 id="after-title">After + Verification</h1>
       </header>
+      {recordedReference ? <p className="ar-reference-note">Recorded reference · no live output</p> : null}
 
-      <div className="ar-answer-diff" aria-label={`${snapshot.before.answer} changed to ${snapshot.after.answer}`}>
+      <div
+        className={`ar-answer-diff ${answerChanged ? "changed" : "unchanged"}`}
+        aria-label={
+          answerChanged
+            ? `${snapshot.before.answer} changed to ${snapshot.after.answer}`
+            : `${snapshot.before.answer} remained unchanged`
+        }
+      >
         <strong>{snapshot.before.answer}</strong>
         <Icon name="arrow" size={36} />
         <b>{snapshot.after.answer}</b>
@@ -47,7 +59,13 @@ export function AfterVerificationPanel({
 
       <div className="ar-provider-output ar-provider-after">
         <div>
-          <span>Actual provider output · Call 2</span>
+          <span>
+            {recorded
+              ? "Actual recorded provider output · Call 2"
+              : recordedReference
+                ? "Recorded reference output · no live result"
+                : "Live regenerated public output"}
+          </span>
           <code>{snapshot.after.selected_closure_id}</code>
         </div>
         <div className="ar-output-answer">
@@ -64,22 +82,22 @@ export function AfterVerificationPanel({
         </dl>
       </div>
 
-      <div className="ar-verification-list" aria-label="Strict verification">
-        <span className="ar-block-label">Strict verification</span>
+      <div className="ar-verification-list" aria-label={recorded ? "Strict verification" : "Operational verification"}>
+        <span className="ar-block-label">{recorded ? "Strict verification" : "Operational verification"}</span>
         {snapshot.verification.map((row) => (
-          <div key={row.label}>
+          <div className={row.status === "NOT_ASSESSED" ? "not-assessed" : ""} key={row.label}>
             <span>{row.label}</span>
             <code>{row.detail}</code>
             <strong>
-              <Icon name={row.status === "PASS" ? "check" : "close"} size={16} />
+              <Icon name={row.status === "PASS" ? "check" : row.status === "FAIL" ? "close" : "minus"} size={16} />
               {row.status}
             </strong>
           </div>
         ))}
       </div>
 
-      <strong className={accepted ? "ar-accepted" : "ar-rejected"}>
-        {accepted ? "APPLY REVISION ACCEPTED" : "APPLY REVISION NOT ACCEPTED"}
+      <strong className={!assessed ? "ar-terminal-not-assessed" : accepted ? "ar-accepted" : "ar-rejected"}>
+        {snapshot.assessment.terminal_label}
       </strong>
     </section>
   );
