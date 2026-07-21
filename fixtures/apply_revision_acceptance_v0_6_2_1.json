@@ -1,0 +1,572 @@
+{
+  "schema_version": "ebrt-apply-revision-acceptance-fixture-v0.6.2.1",
+  "status": "LOCKED_PUBLIC_PRODUCT_ACCEPTANCE_INPUT",
+  "fixture_id": "hackathon_strategy_apply_revision_acceptance_v0_6_2_1",
+  "source_case": {
+    "path": "fixtures/hackathon_strategy_walkthrough_v0_5_2.json",
+    "file_sha256": "ef0b1d44ece10e7412460d9abac4791fe3f3a0172e398bca7a0d8957094f56d2",
+    "fixture_fingerprint_sha256": "6fd092005a849b493fa0c812a83e5ba604e84e0870cc72337bb408bdbaccb2ad"
+  },
+  "case": {
+    "case_id": "hackathon_strategy_walkthrough",
+    "question": "Which single final-build priority should Team Spiral choose to maximize its chance of winning? Follow the latest valid judging guidance. Answer POLISH or PROVE.",
+    "answer_choices": [
+      "POLISH",
+      "PROVE"
+    ],
+    "decision_slots": [
+      {
+        "slot_id": "final_priority",
+        "description": "Team Spiral's single final-build priority",
+        "allowed_values": [
+          "ADDITIONAL_UI_POLISH",
+          "END_TO_END_PROOF"
+        ]
+      },
+      {
+        "slot_id": "demo_centerpiece",
+        "description": "the centerpiece shown to hackathon judges",
+        "allowed_values": [
+          "POLISHED_SCREENS",
+          "LIVE_REASONING_DIFF"
+        ]
+      },
+      {
+        "slot_id": "video_constraint",
+        "description": "the stable submission-video format constraint",
+        "allowed_values": [
+          "THREE_MINUTE_NARRATED"
+        ]
+      }
+    ],
+    "initial_evidence": [
+      {
+        "evidence_id": "R1",
+        "text": "Team Spiral must choose exactly one final-build priority for its hackathon submission."
+      },
+      {
+        "evidence_id": "R2",
+        "text": "Decision rule: follow the latest valid judging weights. If one criterion is dominant, optimize for that criterion; if Technological Implementation, Design, Potential Impact, and Quality of the Idea are equally weighted, prioritize an end-to-end proof that demonstrates all four in one flow."
+      },
+      {
+        "evidence_id": "R3",
+        "text": "Current internal brief: Design is the dominant judging criterion, so spend the remaining build time on additional UI polish and make polished screens the demo centerpiece. This brief remains operative unless a later correction explicitly supersedes it."
+      },
+      {
+        "evidence_id": "R4",
+        "text": "The screens are already judge-readable; a live before-to-after reasoning diff is the missing element needed for an end-to-end proof."
+      },
+      {
+        "evidence_id": "R5",
+        "text": "The submission video must remain a narrated three-minute demo regardless of which final-build priority is chosen."
+      }
+    ],
+    "late_evidence": {
+      "evidence_id": "R6",
+      "text": "Latest judging correction: Technological Implementation, Design, Potential Impact, and Quality of the Idea are equally weighted. This guidance explicitly supersedes evidence R3; use the existing readable UI and prioritize an end-to-end proof with a live reasoning diff."
+    }
+  },
+  "closure_catalogs": {
+    "before_event": [
+      {
+        "closure_id": "K_4f9d103c2b",
+        "graph": {
+          "support_nodes": [
+            {
+              "support_id": "support:judging_basis",
+              "evidence_ids": [
+                "R2"
+              ]
+            },
+            {
+              "support_id": "support:demo_readiness",
+              "evidence_ids": [
+                "R4"
+              ]
+            },
+            {
+              "support_id": "support:video_constraint",
+              "evidence_ids": [
+                "R5"
+              ]
+            }
+          ],
+          "targets": [
+            {
+              "target_id": "constraint:video_constraint",
+              "target_type": "constraint",
+              "slot": "video_constraint",
+              "direct_support_ids": [
+                "support:video_constraint"
+              ],
+              "depends_on_target_ids": []
+            },
+            {
+              "target_id": "fact:demo_centerpiece",
+              "target_type": "fact",
+              "slot": "demo_centerpiece",
+              "direct_support_ids": [
+                "support:demo_readiness"
+              ],
+              "depends_on_target_ids": [
+                "fact:final_priority"
+              ]
+            },
+            {
+              "target_id": "fact:final_priority",
+              "target_type": "fact",
+              "slot": "final_priority",
+              "direct_support_ids": [
+                "support:judging_basis",
+                "support:demo_readiness"
+              ],
+              "depends_on_target_ids": []
+            }
+          ],
+          "invalidation_edges": []
+        }
+      },
+      {
+        "closure_id": "K_c9dc959be3",
+        "graph": {
+          "support_nodes": [
+            {
+              "support_id": "support:judging_basis",
+              "evidence_ids": [
+                "R2"
+              ]
+            },
+            {
+              "support_id": "support:legacy_guidance",
+              "evidence_ids": [
+                "R3"
+              ]
+            },
+            {
+              "support_id": "support:video_constraint",
+              "evidence_ids": [
+                "R5"
+              ]
+            }
+          ],
+          "targets": [
+            {
+              "target_id": "constraint:video_constraint",
+              "target_type": "constraint",
+              "slot": "video_constraint",
+              "direct_support_ids": [
+                "support:video_constraint"
+              ],
+              "depends_on_target_ids": []
+            },
+            {
+              "target_id": "fact:demo_centerpiece",
+              "target_type": "fact",
+              "slot": "demo_centerpiece",
+              "direct_support_ids": [
+                "support:legacy_guidance"
+              ],
+              "depends_on_target_ids": []
+            },
+            {
+              "target_id": "fact:final_priority",
+              "target_type": "fact",
+              "slot": "final_priority",
+              "direct_support_ids": [
+                "support:judging_basis",
+                "support:legacy_guidance"
+              ],
+              "depends_on_target_ids": []
+            }
+          ],
+          "invalidation_edges": []
+        }
+      }
+    ],
+    "after_event": [
+      {
+        "closure_id": "K_87b5857bbb",
+        "graph": {
+          "support_nodes": [
+            {
+              "support_id": "support:judging_basis",
+              "evidence_ids": [
+                "R2"
+              ]
+            },
+            {
+              "support_id": "support:demo_readiness",
+              "evidence_ids": [
+                "R4"
+              ]
+            },
+            {
+              "support_id": "support:superseding_guidance",
+              "evidence_ids": [
+                "R6"
+              ]
+            },
+            {
+              "support_id": "support:video_constraint",
+              "evidence_ids": [
+                "R5"
+              ]
+            }
+          ],
+          "targets": [
+            {
+              "target_id": "constraint:video_constraint",
+              "target_type": "constraint",
+              "slot": "video_constraint",
+              "direct_support_ids": [
+                "support:video_constraint"
+              ],
+              "depends_on_target_ids": []
+            },
+            {
+              "target_id": "fact:demo_centerpiece",
+              "target_type": "fact",
+              "slot": "demo_centerpiece",
+              "direct_support_ids": [
+                "support:demo_readiness",
+                "support:superseding_guidance"
+              ],
+              "depends_on_target_ids": []
+            },
+            {
+              "target_id": "fact:final_priority",
+              "target_type": "fact",
+              "slot": "final_priority",
+              "direct_support_ids": [
+                "support:judging_basis",
+                "support:superseding_guidance"
+              ],
+              "depends_on_target_ids": []
+            }
+          ],
+          "invalidation_edges": [
+            {
+              "source_evidence_id": "R6",
+              "target_evidence_id": "R3"
+            }
+          ]
+        }
+      },
+      {
+        "closure_id": "K_4486fd43a1",
+        "graph": {
+          "support_nodes": [
+            {
+              "support_id": "support:judging_basis",
+              "evidence_ids": [
+                "R2"
+              ]
+            },
+            {
+              "support_id": "support:legacy_guidance",
+              "evidence_ids": [
+                "R3"
+              ]
+            },
+            {
+              "support_id": "support:superseding_guidance",
+              "evidence_ids": [
+                "R6"
+              ]
+            },
+            {
+              "support_id": "support:video_constraint",
+              "evidence_ids": [
+                "R5"
+              ]
+            }
+          ],
+          "targets": [
+            {
+              "target_id": "constraint:video_constraint",
+              "target_type": "constraint",
+              "slot": "video_constraint",
+              "direct_support_ids": [
+                "support:video_constraint"
+              ],
+              "depends_on_target_ids": []
+            },
+            {
+              "target_id": "fact:demo_centerpiece",
+              "target_type": "fact",
+              "slot": "demo_centerpiece",
+              "direct_support_ids": [
+                "support:legacy_guidance",
+                "support:superseding_guidance"
+              ],
+              "depends_on_target_ids": []
+            },
+            {
+              "target_id": "fact:final_priority",
+              "target_type": "fact",
+              "slot": "final_priority",
+              "direct_support_ids": [
+                "support:judging_basis",
+                "support:legacy_guidance",
+                "support:superseding_guidance"
+              ],
+              "depends_on_target_ids": []
+            }
+          ],
+          "invalidation_edges": []
+        }
+      },
+      {
+        "closure_id": "K_d59ad14817",
+        "graph": {
+          "support_nodes": [
+            {
+              "support_id": "support:judging_basis",
+              "evidence_ids": [
+                "R2"
+              ]
+            },
+            {
+              "support_id": "support:demo_readiness",
+              "evidence_ids": [
+                "R4"
+              ]
+            },
+            {
+              "support_id": "support:superseding_guidance",
+              "evidence_ids": [
+                "R6"
+              ]
+            },
+            {
+              "support_id": "support:video_constraint",
+              "evidence_ids": [
+                "R5"
+              ]
+            }
+          ],
+          "targets": [
+            {
+              "target_id": "constraint:video_constraint",
+              "target_type": "constraint",
+              "slot": "video_constraint",
+              "direct_support_ids": [
+                "support:video_constraint"
+              ],
+              "depends_on_target_ids": []
+            },
+            {
+              "target_id": "fact:demo_centerpiece",
+              "target_type": "fact",
+              "slot": "demo_centerpiece",
+              "direct_support_ids": [
+                "support:demo_readiness",
+                "support:superseding_guidance"
+              ],
+              "depends_on_target_ids": [
+                "fact:final_priority"
+              ]
+            },
+            {
+              "target_id": "fact:final_priority",
+              "target_type": "fact",
+              "slot": "final_priority",
+              "direct_support_ids": [
+                "support:judging_basis",
+                "support:demo_readiness",
+                "support:superseding_guidance"
+              ],
+              "depends_on_target_ids": []
+            }
+          ],
+          "invalidation_edges": [
+            {
+              "source_evidence_id": "R6",
+              "target_evidence_id": "R3"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "public_revision_contract": {
+    "event_id": "EV_JUDGING_GUIDANCE_CORRECTION_R6",
+    "correction_evidence_id": "R6",
+    "invalidated_evidence_ids": [
+      "R3"
+    ],
+    "stable_evidence_id": "R5",
+    "stable_target_id": "constraint:video_constraint",
+    "normalized_prior_state_fields": [
+      "schema_version",
+      "checkpoint_id",
+      "current_answer",
+      "selected_closure_id",
+      "target_values",
+      "compiled_closure_fingerprint_sha256",
+      "fingerprint_sha256"
+    ],
+    "compiled_actuator_fields": [
+      "reinspect_evidence_ids",
+      "suppress_evidence_ids",
+      "preserve_evidence_ids"
+    ]
+  },
+  "controller_contract": {
+    "controller_kind": "single_temporal_adjoint_public_trajectory",
+    "source_version": "v0.5.4",
+    "schedule_policy_id": "correction_late",
+    "historical_exact_source_arm": "C",
+    "actual_before_state_required": true,
+    "runtime_provenance": "NEW_V0_6_2_1_ACTUAL_BEFORE_CONDITIONED_SCALAR_RECURRENCE_WITH_V0_5_4_CORRECTION_LATE_EXACT_ARM_C_EFFECT_BASIS",
+    "target_provenance": "CONTAMINATED_CASE_SPECIFIC_EXPLICIT_ORACLE",
+    "terminal_decision_target": 0.72,
+    "state_decay": 0.82,
+    "step_size": 0.05,
+    "control_regularization": 0.01,
+    "finite_difference_epsilon": 0.000001,
+    "finite_difference_tolerance": 0.00000001,
+    "max_control_l2": 0.25,
+    "actual_before_aggregation": {
+      "component_order": [
+        "current_answer",
+        "fact:demo_centerpiece",
+        "fact:final_priority"
+      ],
+      "constraint_targets_excluded": true,
+      "choice_coordinate": "singleton_is_zero_else_negative_one_plus_two_times_zero_based_ordinal_over_choice_count_minus_one",
+      "aggregation": "exact_three_component_arithmetic_mean_using_fsum"
+    },
+    "evidence_effect_aggregation": {
+      "source_lane": "v0.5.4 correction_late exact arm C",
+      "source_value": "normalized_u",
+      "evidence_order": [
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "R6"
+      ],
+      "absolute_credit": "sum_absolute_normalized_u_by_evidence_id",
+      "signed_credit": "sum_normalized_u_by_evidence_id_audit_only",
+      "effect_normalization": "absolute_credit_divided_by_global_maximum_absolute_credit"
+    },
+    "scalar_recurrence": {
+      "initial_controls": "exact_zero",
+      "state_update": "tanh(state_decay_times_previous_state_plus_control_i_times_effect_i)",
+      "loss": "squared_terminal_error_plus_control_regularization_times_sum_squared_controls",
+      "backward_calls": 1,
+      "control_update": "negative_step_size_times_gradient",
+      "after_provider_output_participates": false
+    },
+    "gradient_boundary": "public differentiable trajectory only; JSON, provider, generation, and grading are stop-gradient boundaries",
+    "compilation_policy": {
+      "reinspection_count": 3,
+      "exclude_invalidated_evidence_from_reinspection": true,
+      "exclude_stable_evidence_from_reinspection": true,
+      "exclude_zero_credit_evidence_from_reinspection": true,
+      "rank_by": "descending_absolute_signed_public_credit_then_evidence_id",
+      "suppress_from": "event_invalidated_ids_intersect_actual_before_active_support",
+      "preserve_from": "stable_evidence_id_present_in_actual_before_active_support"
+    }
+  },
+  "provider_contract": {
+    "input_schema_version": "ebrt-apply-revision-provider-input-v0.6.2.1",
+    "output_schema_version": "ebrt-apply-revision-provider-output-v0.6.2.1",
+    "input_root_allowlist": [
+      "schema_version",
+      "case_id",
+      "checkpoint_id",
+      "question",
+      "answer_choices",
+      "decision_slots",
+      "all_raw_evidence",
+      "allowed_evidence_ids",
+      "candidate_closures",
+      "prior_public_state",
+      "apply_revision"
+    ],
+    "output_root_allowlist": [
+      "schema_version",
+      "checkpoint_id",
+      "current_answer",
+      "selected_closure_id",
+      "target_values"
+    ],
+    "target_value_allowlist": [
+      "target_id",
+      "target_type",
+      "slot",
+      "value"
+    ],
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "low",
+    "max_output_tokens": 1024,
+    "timeout_seconds": 60,
+    "sdk_retries": 0,
+    "store": false,
+    "previous_response_id": false,
+    "truncation": "disabled"
+  },
+  "execution_contract": {
+    "phase_order": [
+      "before_event",
+      "after_event"
+    ],
+    "checkpoint_ids": {
+      "before_event": "hackathon_strategy_walkthrough:pre_event",
+      "after_event": "hackathon_strategy_walkthrough:apply_revision_final"
+    },
+    "evidence_horizons": {
+      "before_event": [
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5"
+      ],
+      "after_event": [
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "R6"
+      ]
+    },
+    "closure_catalog_ordering": {
+      "algorithm": "ascending_sha256_of_canonical_json",
+      "salt": "ebrt-v0.6.2.1-role-blind-catalog-order",
+      "canonical_key_fields": [
+        "salt",
+        "phase_id",
+        "closure_id"
+      ],
+      "canonicalization": "utf8_sorted_keys_no_whitespace",
+      "role_blind": true,
+      "array_order_must_equal_key_order": true
+    },
+    "exact_provider_attempts": 2,
+    "one_attempt_per_phase": true,
+    "retry_count": 0,
+    "no_resume": true,
+    "no_backfill": true,
+    "no_third_call": true,
+    "after_payload_materialized_only_after_before_terminal": true,
+    "structurally_valid_before_always_continues": true,
+    "post_call_gold_loaded_only_after_two_structurally_valid_terminals": true,
+    "effect_attribution_status": "NOT_ASSESSED"
+  },
+  "claim_boundary": [
+    "This is one contaminated synthetic product-acceptance case, not a fresh benchmark, causal comparison, or population estimate.",
+    "The R1-R6 semantics and case-specific target are inherited from prior development; the public controller target is an explicit oracle rather than a discovered objective.",
+    "The runtime controller is a new v0.6.2.1 actual-Before-conditioned scalar recurrence; v0.5.4 correction_late exact arm C supplies only the recomputed evidence-effect basis, not an exact runtime replay.",
+    "Opaque closure candidates expose bounded public action choices but no provider-visible candidate role, accepted closure, expected answer, quality label, or semantic gold.",
+    "The actual structurally valid Before output is normalized into the local controller; no free-text claim or private reasoning is reused.",
+    "A real local backward pass stops at the public control map. GPT-5.6, JSON projection, provider parsing, generation, and grading are not differentiated.",
+    "A passing path establishes that Apply Revision can be executed and verified for this sealed case only; effect attribution remains NOT_ASSESSED.",
+    "No result supports hidden-state editing, attention or KV-cache control, causal superiority, quality improvement, or general reasoning improvement."
+  ],
+  "fingerprint_sha256": "a10f903ee492b0741de3f2e0be8742311ae80bc09eb6b097a3b2c2de6ec1e484"
+}

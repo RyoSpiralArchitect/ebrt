@@ -1,0 +1,243 @@
+{
+  "schema_version": "ebrt-apply-revision-acceptance-gold-v0.6.2.1",
+  "status": "LOCKED_POST_TWO_CALL_GRADING_ONLY",
+  "case_id": "hackathon_strategy_walkthrough",
+  "source_fixture": {
+    "path": "fixtures/apply_revision_acceptance_v0_6_2_1.json",
+    "fingerprint_sha256": "a10f903ee492b0741de3f2e0be8742311ae80bc09eb6b097a3b2c2de6ec1e484"
+  },
+  "closure_roles": {
+    "K_c9dc959be3": "PRE_EVENT_EXPECTED",
+    "K_4f9d103c2b": "PRE_EVENT_PREMATURE_PROOF",
+    "K_d59ad14817": "POST_EVENT_REPAIRED_STRICT",
+    "K_87b5857bbb": "POST_EVENT_FROZEN_NEAR_PASS",
+    "K_4486fd43a1": "POST_EVENT_STALE_MIXED"
+  },
+  "before_event": {
+    "checkpoint_id": "hackathon_strategy_walkthrough:pre_event",
+    "answer": "POLISH",
+    "selected_closure_id": "K_c9dc959be3",
+    "invalidation_edges": [],
+    "targets": [
+      {
+        "target_id": "constraint:video_constraint",
+        "target_type": "constraint",
+        "slot": "video_constraint",
+        "value": "THREE_MINUTE_NARRATED",
+        "direct_active_evidence_ids": [
+          "R5"
+        ],
+        "inherited_active_evidence_ids": [],
+        "all_active_evidence_ids": [
+          "R5"
+        ]
+      },
+      {
+        "target_id": "fact:demo_centerpiece",
+        "target_type": "fact",
+        "slot": "demo_centerpiece",
+        "value": "POLISHED_SCREENS",
+        "direct_active_evidence_ids": [
+          "R3"
+        ],
+        "inherited_active_evidence_ids": [],
+        "all_active_evidence_ids": [
+          "R3"
+        ]
+      },
+      {
+        "target_id": "fact:final_priority",
+        "target_type": "fact",
+        "slot": "final_priority",
+        "value": "ADDITIONAL_UI_POLISH",
+        "direct_active_evidence_ids": [
+          "R2",
+          "R3"
+        ],
+        "inherited_active_evidence_ids": [],
+        "all_active_evidence_ids": [
+          "R2",
+          "R3"
+        ]
+      }
+    ]
+  },
+  "after_event": {
+    "checkpoint_id": "hackathon_strategy_walkthrough:apply_revision_final",
+    "answer": "PROVE",
+    "selected_closure_id": "K_d59ad14817",
+    "invalidation_edges": [
+      {
+        "source_evidence_id": "R6",
+        "target_evidence_id": "R3"
+      }
+    ],
+    "targets": [
+      {
+        "target_id": "constraint:video_constraint",
+        "target_type": "constraint",
+        "slot": "video_constraint",
+        "value": "THREE_MINUTE_NARRATED",
+        "direct_active_evidence_ids": [
+          "R5"
+        ],
+        "inherited_active_evidence_ids": [],
+        "all_active_evidence_ids": [
+          "R5"
+        ]
+      },
+      {
+        "target_id": "fact:demo_centerpiece",
+        "target_type": "fact",
+        "slot": "demo_centerpiece",
+        "value": "LIVE_REASONING_DIFF",
+        "direct_active_evidence_ids": [
+          "R4",
+          "R6"
+        ],
+        "inherited_active_evidence_ids": [
+          "R2"
+        ],
+        "all_active_evidence_ids": [
+          "R2",
+          "R4",
+          "R6"
+        ]
+      },
+      {
+        "target_id": "fact:final_priority",
+        "target_type": "fact",
+        "slot": "final_priority",
+        "value": "END_TO_END_PROOF",
+        "direct_active_evidence_ids": [
+          "R2",
+          "R4",
+          "R6"
+        ],
+        "inherited_active_evidence_ids": [],
+        "all_active_evidence_ids": [
+          "R2",
+          "R4",
+          "R6"
+        ]
+      }
+    ]
+  },
+  "stale_expectation": {
+    "same_before_compiled_bytes_required": true,
+    "post_event_status": "FAIL",
+    "failed_axes": [
+      "answer_status",
+      "fact_local_lineage_status",
+      "invalidation_status"
+    ],
+    "stable_axis": "stable_fact_status",
+    "stable_axis_status": "PASS"
+  },
+  "expected_public_diff": {
+    "answer": {
+      "before": "POLISH",
+      "after": "PROVE"
+    },
+    "selected_closure_id": {
+      "before": "K_c9dc959be3",
+      "after": "K_d59ad14817"
+    },
+    "target_values": [
+      {
+        "target_id": "constraint:video_constraint",
+        "slot": "video_constraint",
+        "before": "THREE_MINUTE_NARRATED",
+        "after": "THREE_MINUTE_NARRATED",
+        "changed": false
+      },
+      {
+        "target_id": "fact:demo_centerpiece",
+        "slot": "demo_centerpiece",
+        "before": "POLISHED_SCREENS",
+        "after": "LIVE_REASONING_DIFF",
+        "changed": true
+      },
+      {
+        "target_id": "fact:final_priority",
+        "slot": "final_priority",
+        "before": "ADDITIONAL_UI_POLISH",
+        "after": "END_TO_END_PROOF",
+        "changed": true
+      }
+    ],
+    "support_added_evidence_ids": [
+      "R4",
+      "R6"
+    ],
+    "support_dropped_evidence_ids": [
+      "R3"
+    ],
+    "invalidation_added_edges": [
+      {
+        "source_evidence_id": "R6",
+        "target_evidence_id": "R3"
+      }
+    ],
+    "stable_target_ids": [
+      "constraint:video_constraint"
+    ]
+  },
+  "acceptance_contract": {
+    "catalog_order_contract": {
+      "algorithm_source": "fixture.execution_contract.closure_catalog_ordering",
+      "selected_ordinals_zero_based": {
+        "before_event": 1,
+        "after_event": 2
+      },
+      "must_be_distinct": true
+    },
+    "required_mechanism_checks": [
+      "actual_before_state_bound_to_controller",
+      "local_backward_executed",
+      "finite_public_credit",
+      "surrogate_objective_decreased",
+      "non_neutral_control_map",
+      "control_budget_respected",
+      "actuator_compiled_deterministically",
+      "after_payload_sealed_after_before_terminal",
+      "gradient_stops_before_provider"
+    ],
+    "required_product_checks": [
+      "exactly_two_structurally_valid_terminals",
+      "before_own_horizon_strict_pass",
+      "same_before_post_event_stale_signature_exact",
+      "after_post_event_strict_pass",
+      "expected_public_diff_exact",
+      "invalidated_support_absent",
+      "stable_target_preserved",
+      "surrogate_control_output_grade_separated"
+    ],
+    "pass_terminal_decision": "ACCEPT_APPLY_REVISION_PATH",
+    "fail_terminal_decision": "HOLD_APPLY_REVISION_PATH",
+    "incomplete_terminal_decision": "INCOMPLETE_NOT_ASSESSED",
+    "effect_attribution_status": "NOT_ASSESSED"
+  },
+  "target_provenance": {
+    "status": "CONTAMINATED_CASE_SPECIFIC_PRODUCT_ACCEPTANCE_TARGET",
+    "source_versions": [
+      "v0.5.2",
+      "v0.5.3",
+      "v0.5.4"
+    ],
+    "fresh_reasoning_evidence": false,
+    "causal_comparison": false,
+    "general_quality_claim": false
+  },
+  "claim_boundary": [
+    "This semantic target is a contaminated post-call product-acceptance oracle over the known synthetic hackathon-strategy case.",
+    "The gold file is never provider input, controller input, closure-catalog construction input, or a pre-call semantic branch condition.",
+    "Candidate role names exist only in this post-call file; provider-visible closure IDs remain opaque and unlabelled.",
+    "The provider-visible catalog order is a role-blind keyed permutation, while this post-call gold requires its selected Before and After closures to occupy distinct ordinals.",
+    "A structurally valid but semantically unexpected Before output still proceeds through the locked controller and one After call before grading.",
+    "Exact direct, inherited, and total closure reject missing support, unexpected support, classification drift, active invalidated evidence, and stable-fact drift.",
+    "A passing result establishes one executable and verifiable Apply Revision path; effect attribution remains NOT_ASSESSED.",
+    "No result supports hidden-state editing, gradient flow through GPT, causal superiority, quality improvement, or general reasoning improvement."
+  ],
+  "fingerprint_sha256": "1a6fee91d2c676c249436f652bacdd50fdcfd8e7fe8b30e4eefd919723b9b872"
+}

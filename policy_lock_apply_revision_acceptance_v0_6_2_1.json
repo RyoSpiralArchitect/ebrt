@@ -1,0 +1,136 @@
+{
+  "artifact": {
+    "default_directory": "artifacts/apply_revision_acceptance_v0_6_2_1_live_r01",
+    "files": [
+      "result.json",
+      "calls.jsonl",
+      "attempt_journal.jsonl",
+      "provider_inputs.json",
+      "apply_revision_trace.json",
+      "report.md",
+      "manifest.json"
+    ]
+  },
+  "claim_boundary": [
+    "This is one contaminated synthetic product-acceptance path, not a fresh benchmark, causal comparison, or population estimate.",
+    "The controller target is an explicit case-specific oracle and the candidate catalog is supplied public structure, not autonomous semantic discovery.",
+    "The actual structurally valid Before output is normalized into the local controller; no free-text claim or private reasoning is reused.",
+    "The v0.6.2.1 scalar recurrence is a new actual-Before-conditioned surrogate initialized from a recomputed v0.5.4-derived effect basis; it is not an exact replay of the v0.5.4 temporal mechanism.",
+    "A real local backward pass stops at the public control map. GPT-5.6, JSON projection, provider parsing, generation, and grading are not differentiated.",
+    "A passing result establishes one executable and verifiable Apply Revision path; effect attribution remains NOT_ASSESSED.",
+    "No result supports hidden-state editing, attention or KV-cache control, causal superiority, quality improvement, or general reasoning improvement."
+  ],
+  "execution": {
+    "after_payload_materialized_only_after_before_terminal": true,
+    "authorization_tag": "v0.6.2.1-apply-revision-live-r01-authorized",
+    "effect_attribution_status": "NOT_ASSESSED",
+    "exact_provider_attempts": 2,
+    "no_backfill": true,
+    "no_resume": true,
+    "no_retry": true,
+    "no_third_call": true,
+    "one_attempt_per_phase": true,
+    "phase_order": [
+      "before_event",
+      "after_event"
+    ],
+    "semantic_gold_loaded_only_after_two_structurally_valid_terminals": true,
+    "structurally_valid_before_always_continues": true
+  },
+  "fingerprint_sha256": "8cc290a71ba88fa2b2b131d72b8b315492a76324a22527886f2c132c68154f99",
+  "fixture_fingerprint_sha256": "a10f903ee492b0741de3f2e0be8742311ae80bc09eb6b097a3b2c2de6ec1e484",
+  "provider": {
+    "after_payload_fingerprint_sha256": null,
+    "after_payload_is_dynamic": true,
+    "before_payload_fingerprint_sha256": "088efd8ad4ab606169878045f780e4c3e93fbfe70efcd18f6e42850132b2b8e3",
+    "instructions_fingerprint_sha256": "ceab35907fb950cb4d71ad9042bd0a3ac7781f18740c4b92283171692b45cc48",
+    "response_schema_fingerprint_sha256": "5df1a346cd4262a56c0b8fad58e74304e14dce652b307334da652dd4f42d6096"
+  },
+  "runtime": {
+    "api": "responses.with_raw_response.parse+raw.parse",
+    "machine": "arm64",
+    "max_output_tokens": 1024,
+    "model": "gpt-5.6-sol",
+    "openai": "2.45.0",
+    "previous_response_id": false,
+    "provider": "openai_responses",
+    "pydantic": "2.12.5",
+    "python": "3.13.13",
+    "reasoning_effort": "low",
+    "sdk_retries": 0,
+    "store": false,
+    "timeout_seconds": 60,
+    "torch": "2.11.0",
+    "truncation": "disabled"
+  },
+  "schema_version": "ebrt-apply-revision-policy-lock-v0.6.2.1-r01",
+  "semantic_gold_bytes_sha256": "a4565a4452804e2017a71d060373f759f18dbd02baccc89f8ffbf6d93a49d925",
+  "sources": {
+    "factorized_lineage": {
+      "bytes": 100732,
+      "path": "factorized_lineage_v0_5_3.py",
+      "sha256": "d7ad2344a0c37b502feac663e17bb918be1fe50b4d9c94898e18ee757c4cb35b"
+    },
+    "factorized_regression": {
+      "bytes": 43579,
+      "path": "artifacts/factorized_lineage_v0_5_3/factorized_lineage_regression.json",
+      "sha256": "85094e65b9181b893b80bf42c3db859b66a66320a080defefc514ce75fbe910f"
+    },
+    "post_call_semantic_gold": {
+      "bytes": 7698,
+      "path": "fixtures/apply_revision_acceptance_gold_v0_6_2_1.json",
+      "sha256": "a4565a4452804e2017a71d060373f759f18dbd02baccc89f8ffbf6d93a49d925"
+    },
+    "product_runtime": {
+      "bytes": 142658,
+      "path": "ebrt.py",
+      "sha256": "498873e4c327811ac89ae30d61215fca8ff1b50cecfe79d4b3cfe262428c3c22"
+    },
+    "provider_boundary": {
+      "bytes": 54590,
+      "path": "openai_response_boundary_v0_4_3.py",
+      "sha256": "7f78fce94cb141a4355d3c040010e11e049ff67a3a8c603099d0548a47b7cf03"
+    },
+    "provider_types": {
+      "bytes": 49804,
+      "path": "language_replay_bridge_v0_4.py",
+      "sha256": "5fd765ec5ca55562e7b712ec48adc6f54588080c276cbfa58aabcb72492666c2"
+    },
+    "public_fixture": {
+      "bytes": 19177,
+      "path": "fixtures/apply_revision_acceptance_v0_6_2_1.json",
+      "sha256": "dcfaace313e9b1318998d10a344a30282b798f3d51aa5ef201d7e47ea10a73da"
+    },
+    "requirements": {
+      "bytes": 28,
+      "path": "requirements.txt",
+      "sha256": "024ff69128d68a1c08bba956e318301500b7aebb7c917b19ff913a9bf5e373d7"
+    },
+    "requirements_live": {
+      "bytes": 32,
+      "path": "requirements-live.txt",
+      "sha256": "73a8bd6fd5d0a6aa2ec01c216b1ddc50f2c5f32746bcf907ec7ca3ab793e7c83"
+    },
+    "source_case": {
+      "bytes": 6994,
+      "path": "fixtures/hackathon_strategy_walkthrough_v0_5_2.json",
+      "sha256": "ef0b1d44ece10e7412460d9abac4791fe3f3a0172e398bca7a0d8957094f56d2"
+    },
+    "temporal_controller": {
+      "bytes": 96418,
+      "path": "temporal_adjoint_lineage_v0_5_4.py",
+      "sha256": "c92acd3a51b16caada00c58bcf40ef11b1031a7161e1afd6e282266924c8461b"
+    },
+    "temporal_fixture": {
+      "bytes": 1050,
+      "path": "fixtures/temporal_adjoint_lineage_v0_5_4_dev.json",
+      "sha256": "a1d4b2d55d403c13e89548dbe54ba4ebc80401a1e70b1972541039afeb1b7749"
+    },
+    "temporal_lane": {
+      "bytes": 69447,
+      "path": "artifacts/temporal_adjoint_lineage_v0_5_4/correction_late_sealed_lane.json",
+      "sha256": "54c806a29fdf80f9677b5a008e140734e28a201e719a98ce8d312bf34298afc8"
+    }
+  },
+  "status": "PREREGISTERED_DYNAMIC_EXACT_TWO_CALL_PRODUCT_ACCEPTANCE"
+}
