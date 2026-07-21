@@ -1,4 +1,4 @@
-import type { ApplyRevisionSnapshot, EvidenceRecord } from "../applyRevisionTypes";
+import type { ApplyRevisionView, EvidenceRecord } from "../applyRevisionTypes";
 
 function EvidenceRow({ evidence, annotation }: { evidence: EvidenceRecord; annotation: string }) {
   return (
@@ -17,10 +17,16 @@ export function BeforeLateEventPanel({
   snapshot,
 }: {
   active: boolean;
-  snapshot: ApplyRevisionSnapshot;
+  snapshot: ApplyRevisionView;
 }) {
-  const r3 = snapshot.evidence.find((row) => row.evidence_id === "R3")!;
-  const r5 = snapshot.evidence.find((row) => row.evidence_id === "R5")!;
+  const invalidated = snapshot.late_event.invalidated_evidence_ids
+    .map((evidenceId) => snapshot.evidence.find((row) => row.evidence_id === evidenceId))
+    .filter((row): row is EvidenceRecord => Boolean(row));
+  const stable = snapshot.late_event.stable_evidence_ids
+    .map((evidenceId) => snapshot.evidence.find((row) => row.evidence_id === evidenceId))
+    .filter((row): row is EvidenceRecord => Boolean(row));
+  const recorded = snapshot.mode === "RECORDED_ARTIFACT_PLAYBACK";
+  const recordedReference = snapshot.mode === "LIVE_RECORDED_REFERENCE";
 
   return (
     <section
@@ -33,15 +39,27 @@ export function BeforeLateEventPanel({
         <span>01</span>
         <h1 id="before-title">Before + Late Event</h1>
       </header>
+      {recordedReference ? <p className="ar-reference-note">Recorded reference · no live result</p> : null}
+      {snapshot.source.input_provenance === "CONTAMINATED_REGRESSION_FIXTURE" ? (
+        <p className="ar-reference-note">Contaminated regression fixture · operational demo only</p>
+      ) : null}
 
       <div className="ar-before-answer">
         <strong>{snapshot.before.answer}</strong>
-        <span><b>PASS</b> · {snapshot.before.horizon_evidence_ids[0]}–{snapshot.before.horizon_evidence_ids.at(-1)} OWN HORIZON</span>
+        <span>
+          <b>{snapshot.before.own_horizon_status.replaceAll("_", " ")}</b> · {snapshot.before.horizon_evidence_ids.join(" · ")} {recorded ? "OWN HORIZON" : recordedReference ? "RECORDED REFERENCE HORIZON" : "SOURCE HORIZON"}
+        </span>
       </div>
 
       <div className="ar-provider-output ar-provider-before">
         <div>
-          <span>Actual provider output · Call 1</span>
+          <span>
+            {recorded
+              ? "Actual recorded provider output · Call 1"
+              : recordedReference
+                ? "Recorded reference provider output · no live result"
+                : "Bound source public output"}
+          </span>
           <code>{snapshot.before.selected_closure_id}</code>
         </div>
         <dl>
@@ -63,12 +81,30 @@ export function BeforeLateEventPanel({
       </article>
 
       <div className="ar-stale-heading">
-        <strong>STALE POST-EVENT</strong>
-        <span>{snapshot.before.post_event_failed_axes.length} strict axes fail</span>
+        <strong>
+          {recorded
+            ? "STALE POST-EVENT"
+            : recordedReference
+              ? "RECORDED REFERENCE · LIVE NOT ASSESSED"
+              : "SEMANTIC STATUS NOT ASSESSED"}
+        </strong>
+        <span>
+          {recorded
+            ? `${snapshot.before.post_event_failed_axes.length} strict axes fail`
+            : "reserved gold fields blocked · semantics unverified"}
+        </span>
       </div>
       <ul className="ar-evidence-audit">
-        <EvidenceRow evidence={r3} annotation="invalidated · conflicts with R6" />
-        <EvidenceRow evidence={r5} annotation="stable · unchanged" />
+        {invalidated.map((row) => (
+          <EvidenceRow
+            annotation={`invalidated · conflicts with ${snapshot.late_event.evidence_id}`}
+            evidence={row}
+            key={row.evidence_id}
+          />
+        ))}
+        {stable.map((row) => (
+          <EvidenceRow annotation="stable · unchanged" evidence={row} key={row.evidence_id} />
+        ))}
       </ul>
     </section>
   );

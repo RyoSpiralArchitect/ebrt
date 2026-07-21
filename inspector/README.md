@@ -1,4 +1,4 @@
-# EBRT Apply Revision · recorded Reasoning IDE
+# EBRT Apply Revision · recorded and live Reasoning IDE
 
 This interface replays the sealed `v0.6.2.1` Apply Revision acceptance
 artifact. It presents one public product path:
@@ -17,6 +17,27 @@ It makes no provider request, does not regenerate output, and does not edit the
 sealed artifact. The UI keeps the local surrogate, control map, compiled
 actuator, actual provider output, semantic grade, product acceptance, and
 effect-attribution boundary visibly separate.
+
+The optional Live mode performs one explicit `Apply Revision → Regenerate`
+operation. Each button press first fetches a fresh, server-owned complete
+request from `GET /api/demo-request`, then posts that request unchanged to
+`POST /api/apply-revision`. The browser does not construct or edit evidence,
+prior public state, closure graphs, fingerprints, or provider configuration.
+There is no automatic retry. Stopping the browser wait aborts only the browser
+request; the server operation may still complete.
+
+The API defaults to same-origin `/api/`. Dev and preview are deliberately fixed
+to loopback ports `5173` and `4173`; startup fails instead of silently moving to
+an Origin the backend has not allowlisted. A direct loopback API base may be
+selected for those exact dev Origins without exposing provider credentials:
+
+```bash
+VITE_EBRT_API_BASE_URL=http://127.0.0.1:8765/api/ pnpm dev
+```
+
+Provider credentials remain server-side. Live results report operational path
+status only. Semantic correctness and effect attribution remain
+`NOT_ASSESSED`.
 
 ## Deterministic public projection
 
@@ -43,6 +64,15 @@ inspector/public/data/ebrt-apply-revision-acceptance-v0.6.2.1.json
 
 ## Run locally
 
+Start the loopback backend from the repository root (use `openai` for the real
+provider or `scripted` for network-zero UI work):
+
+```bash
+python3 ebrt_live.py serve --provider scripted --host 127.0.0.1 --port 8765
+```
+
+Then start the Inspector in a second terminal:
+
 ```bash
 cd inspector
 pnpm install
@@ -50,7 +80,12 @@ pnpm build
 pnpm dev
 ```
 
-The desktop layout shows three simultaneous lanes. Tablet and mobile layouts
+Vite proxies same-origin `/api/**` requests to `127.0.0.1:8765` in both dev and
+preview mode. A deployed build should provide the same reverse-proxy contract;
+arbitrary cross-origin deployment is outside the loopback server contract.
+
+The desktop layout shows three simultaneous lanes. Recorded is always the
+initial mode and performs no `/api/**` request. Tablet and mobile layouts
 use an accessible three-step tab surface with ArrowLeft/ArrowRight navigation.
 Motion respects `prefers-reduced-motion`.
 
