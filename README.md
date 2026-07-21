@@ -2,6 +2,152 @@
 
 **Event-driven Backward Reasoning for Test-Time Inference**
 
+## Current product — Apply Revision Runtime Preview 3
+
+**Try the sealed public Live demo:**
+[ebrt-apply-revision.ryospiralreality.chatgpt.site](https://ebrt-apply-revision.ryospiralreality.chatgpt.site/)
+
+EBRT gives developers an external, inspectable revision layer for hosted
+models whose internal reasoning state is not editable. It rolls a typed public
+reasoning trajectory forward, computes one bounded local backward-credit step,
+replays the revised public trajectory, compiles the result into an executable
+`Reinspect / Suppress / Preserve` operation, regenerates once from full
+context, and verifies the public output diff and evidence lineage.
+
+```text
+Before public state + late event
+  -> chronological public trajectory
+  -> public surrogate loss
+  -> one local float64 backward()
+  -> bounded controls + forward replay
+  -> compiled Apply Revision actuator
+  -> one full-context regeneration
+  -> After diff + structural verification
+```
+
+### 30-second judge path (network-zero)
+
+After installing the product dependencies, this scripted path exercises the
+same request validation, trajectory controller, actuator, output projection,
+and verification surfaces without an API key or network call:
+
+```bash
+python3 -m pip install -r requirements-product.txt
+python3 ebrt_live.py self-test
+python3 ebrt_live.py apply-demo --provider scripted
+```
+
+The built-in example is an explicitly contaminated product fixture. Its
+`POLISH -> PROVE` diff demonstrates operational plumbing, not model quality or
+causal control.
+
+### Public interactive Reasoning IDE
+
+The public Sites build exposes both **Live** and **Recorded** modes. Live keeps
+the browser on a same-origin `/api/` surface: a small Sites Worker validates
+that the POST matches the fresh, server-owned sealed demo request, derives an
+opaque anonymous client key, and relays the bytes to the existing loopback
+Python monolith through an authenticated HTTPS Quick Tunnel. The monolith then
+executes the real `torch.float64` backward pass and exactly one no-retry
+`gpt-5.6-sol` full-context regeneration. Provider credentials never enter the
+browser, Worker response, or repository.
+
+The public Apply POST accepts only the sealed demo case; the arbitrary-input
+Protocol Editor remains local. Its configured provider-attempt budgets are 32
+globally and 2 per anonymous client for the lifetime of the backend process.
+Recorded mode remains a zero-call fallback over the committed acceptance
+artifact. The Quick Tunnel is a temporary demo bridge with no uptime or
+production-service guarantee.
+
+### Full local Reasoning IDE
+
+Terminal 1:
+
+```bash
+python3 ebrt_live.py serve --provider scripted --host 127.0.0.1 --port 8765
+```
+
+Terminal 2:
+
+```bash
+cd inspector
+pnpm install --frozen-lockfile
+pnpm dev
+```
+
+Open `http://127.0.0.1:5173`, switch to **Live**, then choose
+**Apply Revision -> Regenerate**. To use the real provider boundary, set
+`OPENAI_API_KEY` only in the backend environment and replace `scripted` with
+`openai`; credentials never enter the browser or public response.
+
+Choose **Editor** to paste or edit any complete `v0.6.2.4` public revision
+request. The Editor starts empty, only loads the contaminated sample on an
+explicit click, retains caller text in memory only, and submits through the
+same fail-closed backend validator. Caller-supplied semantics and causal effect
+remain `NOT_ASSESSED`.
+
+### Public Live bridge setup
+
+Set these names only in the backend process environment:
+
+- `OPENAI_API_KEY`
+- `EBRT_RELAY_TOKEN`
+- `EBRT_RELAY_MAX_PROVIDER_ATTEMPTS_TOTAL`
+- `EBRT_RELAY_MAX_PROVIDER_ATTEMPTS_PER_CLIENT`
+
+Start the loopback monolith and expose that loopback port through a temporary
+HTTPS Quick Tunnel:
+
+```bash
+python3 ebrt_live.py serve --provider openai --host 127.0.0.1 --port 8765
+cloudflared tunnel --url http://127.0.0.1:8765
+```
+
+Configure the Sites Worker with these environment names (the relay-token value
+must match the backend):
+
+- `EBRT_BACKEND_URL`
+- `EBRT_CLIENT_KEY_SECRET`
+- `EBRT_RELAY_TOKEN`
+
+Then verify and stage the public build:
+
+```bash
+cd inspector
+pnpm test:worker
+pnpm build:public-live
+```
+
+`EBRT_BACKEND_URL` is the HTTPS Quick Tunnel origin. Do not commit any value.
+The public deployment is deliberately a sealed-case, rate-bounded demo bridge,
+not a general remote execution API.
+
+### Runtime, model, and claim boundary
+
+- **Supported local runtime:** CPython 3.11+, PyTorch 2.x, and a CPU. The
+  committed runs were produced on macOS arm64; POSIX Linux is an intended
+  local target but cross-platform byte identity is not claimed. The Inspector
+  uses Node.js `^20.19.0` or `>=22.12.0` and pnpm. Windows and remote,
+  multi-process hosting are not validated in this preview.
+- **GPT-5.6 role:** `gpt-5.6-sol` performs the one structured, full-context
+  After regeneration at a non-differentiable provider boundary. It is not
+  trained, differentiated, or used as the local trajectory state.
+- **Codex role:** Codex collaborated on implementation, adversarial tests,
+  artifact validation, review repair, documentation, and the Reasoning IDE.
+  Codex is not a runtime dependency and does not decide semantic correctness.
+- **Exact claim:** EBRT implements an executable, observable, and verifiable
+  external public revision operation. It does **not** edit GPT hidden states,
+  attention, KV cache, or private chain-of-thought; send gradients through GPT
+  or JSON; or establish provider uptake, causal superiority, semantic quality,
+  or general reasoning improvement. Those effect and quality axes remain
+  `NOT_ASSESSED`. The public web demo remotely invokes the same loopback
+  monolith only through the sealed, authenticated, budgeted Quick Tunnel
+  bridge; this establishes neither production readiness nor an uptime claim.
+
+Submission copy and the final video checklist live in
+[`SUBMISSION.md`](SUBMISSION.md). The complete, immutable research history
+continues below.
+
 EBRT v0.1 is an executable mechanism proof for a simple question: can a
 reasoning process detect a structured change, route a bounded revision to an
 earlier state, replay only the affected suffix, and leave an audit trail?
@@ -1891,11 +2037,15 @@ pass, C beats its matched node-tied and timing-placement controls in both
 schedules, and the sealed 17-gate decision promotes v0.5.5. The completed
 v0.5.5 successor then composes its three sealed lanes with exact block credit,
 one-lane equivalence, disconnected Constraint isolation, and byte invariance
-across all six input orders. The next work is therefore a separately locked
-hosted execution bridge, not another substrate repair.
-A promotion suite, matched hard-suite comparison, live
-revision application, and any hosted judge sandbox remain pending; there is no
-hosted service in this release.
+across all six input orders. The later product line now adds the loopback
+`Apply Revision` API, Runtime Preview 3's revisable public trajectory, and a
+Reasoning IDE with local and sealed public Live modes. One sealed GPT-5.6
+acceptance artifact and one later manual runtime smoke establish that the
+full-context provider boundary can complete, while effect attribution remains
+`NOT_ASSESSED`. A matched hard-suite
+promotion result remains pending. The public judge demo reaches that loopback
+runtime through a budgeted Sites Worker and temporary Quick Tunnel; it is not a
+production service and carries no uptime guarantee.
 
 Issues and pull requests that add reproducible tests, adversarial fixtures, or
 better controls are especially welcome. Please avoid expanding claims without

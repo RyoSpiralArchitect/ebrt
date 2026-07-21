@@ -7,14 +7,21 @@ export function ApplyRevisionHeader({
   busy,
   mode,
   onModeChange,
+  onOpenEditor,
+  publicLive,
+  recordedOnly,
   snapshot,
 }: {
   busy: boolean;
   mode: InspectorMode;
   onModeChange: (mode: InspectorMode) => void;
+  onOpenEditor: () => void;
+  publicLive: boolean;
+  recordedOnly: boolean;
   snapshot: ApplyRevisionView;
 }) {
   const liveResult = snapshot.mode === "LIVE_AFTER_REGENERATION";
+  const livePending = snapshot.mode === "LIVE_RECORDED_REFERENCE";
   return (
     <header className="ar-header">
       <div className="ar-brand">
@@ -27,10 +34,10 @@ export function ApplyRevisionHeader({
         <i aria-hidden="true">·</i>
         <b>{snapshot.before.answer}</b>
         <Icon name="arrow" size={18} />
-        <b className="ar-blue">{snapshot.after.answer}</b>
+        <b className={livePending ? "ar-pending" : "ar-blue"}>{snapshot.after.answer}</b>
       </div>
       <div className="ar-mode-area">
-        <div aria-label="Inspector mode" className="ar-mode-switch" role="group">
+        {!recordedOnly ? <div aria-label="Inspector mode" className="ar-mode-switch" role="group">
           <button
             aria-pressed={mode === "recorded"}
             disabled={busy}
@@ -47,15 +54,26 @@ export function ApplyRevisionHeader({
           >
             Live
           </button>
-        </div>
+          {!publicLive ? (
+            <button aria-pressed="false" disabled={busy} onClick={onOpenEditor} type="button">
+              Editor
+            </button>
+          ) : null}
+        </div> : null}
         <div className={`ar-mode-status ${mode === "live" ? "live" : "recorded"}`}>
           <Icon name={mode === "live" ? "runs" : "lock"} size={16} />
           <span>
             {mode === "recorded"
-              ? "RECORDED ACCEPTANCE · NO NEW MODEL CALL"
+              ? recordedOnly
+                ? "PUBLIC RECORDED DEMO · NO API OR MODEL CALL"
+                : "RECORDED ACCEPTANCE · NO NEW MODEL CALL"
               : liveResult
-                ? "LIVE AFTER REGENERATION · 1 PROVIDER ATTEMPT"
-                : "LIVE READY · RECORDED REFERENCE DISPLAYED"}
+                ? publicLive
+                  ? "PUBLIC LIVE RESULT · SEALED CASE · 1 PROVIDER ATTEMPT"
+                  : "LIVE AFTER REGENERATION · 1 PROVIDER ATTEMPT"
+                : publicLive
+                  ? "PUBLIC LIVE READY · SEALED CASE · APPLY TO REGENERATE"
+                  : "LIVE READY · APPLY TO REGENERATE"}
           </span>
         </div>
       </div>

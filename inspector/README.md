@@ -1,7 +1,7 @@
 # EBRT Apply Revision · recorded and live Reasoning IDE
 
-This interface replays the sealed `v0.6.2.1` Apply Revision acceptance
-artifact. It presents one public product path:
+This interface runs the sealed public Live demo and replays the sealed
+`v0.6.2.1` Apply Revision acceptance artifact. Both present one product path:
 
 ```text
 Before + late event
@@ -10,7 +10,7 @@ Before + late event
   -> revised public trajectory
   -> public control map
   -> compiled provider-visible actuator
-  -> recorded GPT-5.6 full-context output
+  -> GPT-5.6 full-context output
   -> strict verification
 ```
 
@@ -20,13 +20,30 @@ sealed artifact. The UI keeps the local surrogate, control map, compiled
 actuator, actual provider output, semantic grade, product acceptance, and
 effect-attribution boundary visibly separate.
 
-The optional Live mode performs one explicit `Apply Revision → Regenerate`
+Live mode performs one explicit `Apply Revision → Regenerate`
 operation. Each button press first fetches a fresh, server-owned complete
 request from `GET /api/demo-request`, then posts that request unchanged to
 `POST /api/apply-revision`. The browser does not construct or edit evidence,
 prior public state, closure graphs, fingerprints, or provider configuration.
 There is no automatic retry. Stopping the browser wait aborts only the browser
 request; the server operation may still complete.
+
+The adjacent **Editor** opens a complete Protocol `v0.6.2.4` request document.
+It starts blank and loads the known sample only after an explicit user action.
+Developers can edit ordered evidence, the emitted Before state, the typed late
+event, and supplied closure candidates without a hidden natural-language-to-
+graph adapter. The exact document is submitted to the same strict backend
+validator; no raw evidence is written to browser storage, and caller semantics
+remain `CALLER_SUPPLIED_UNVERIFIED` / `NOT_ASSESSED`.
+
+Before that operation completes, Live mode deliberately withholds the sealed
+recorded After output and displays `POLISH → PENDING`. The live After card,
+public diff, and verification rows are revealed only from the returned live
+response. The center panel keeps the late event, objective change, local
+`backward()`, top three public credits, compiled actuator, and gradient
+boundary on the primary demo surface; full trajectories, matched controls,
+allocation rows, and execution receipts remain available under
+**Inspect trajectory receipts**.
 
 Live protocol `v0.6.2.4` exposes Runtime Preview 3's public temporal revision
 path. The backend starts from the compiled public Before vector, executes a
@@ -60,7 +77,8 @@ verified transport digest. The parser also requires the exact operational
 rows, two exact `NOT_ASSESSED` rows, the trajectory/controller/actuator/execution
 hard gates, and their aggregate status
 relationships before the UI can render a terminal. These unkeyed hashes are
-loopback integrity checks, not signatures or remote-backend authentication.
+transport-consistency checks, not signatures. Public worker-to-backend access
+is separately authenticated with `EBRT_RELAY_TOKEN`.
 
 The API defaults to same-origin `/api/`. Dev and preview are deliberately fixed
 to loopback ports `5173` and `4173`; startup fails instead of silently moving to
@@ -79,6 +97,51 @@ temporal placement comparison is local to the declared public recurrence and
 does not establish hosted-model causality, hidden-state editing, attention
 control, KV-cache control, quality improvement, or general reasoning
 improvement.
+
+## Public Live demo bridge
+
+The public build uses the same-origin `/api/` surface. On POST, a Sites Worker
+accepts only the fresh sealed demo request, strips browser credentials, derives
+an opaque HMAC client key, and proxies the exact request and response bytes over
+HTTPS to the existing loopback Python monolith through a Quick Tunnel. The
+monolith performs one real `torch.float64` backward pass and one no-retry
+`gpt-5.6-sol` full-context regeneration. The public UI does not expose the
+arbitrary-input Editor.
+
+The deployed backend is configured for at most 32 provider attempts globally
+and 2 per anonymous client for the lifetime of that process. Request identity
+is also idempotent, concurrent provider execution is serialized, and terminal
+errors consume the attempt. Recorded mode remains available as a zero-call
+fallback. A Quick Tunnel is an ephemeral demo bridge; availability and
+production uptime are not promised.
+
+Backend environment names (values stay server-side):
+
+- `OPENAI_API_KEY`
+- `EBRT_RELAY_TOKEN`
+- `EBRT_RELAY_MAX_PROVIDER_ATTEMPTS_TOTAL`
+- `EBRT_RELAY_MAX_PROVIDER_ATTEMPTS_PER_CLIENT`
+
+Sites Worker environment names:
+
+- `EBRT_BACKEND_URL`
+- `EBRT_CLIENT_KEY_SECRET`
+- `EBRT_RELAY_TOKEN`
+
+Run the bridge and verify the public Worker/build with:
+
+```bash
+python3 ebrt_live.py serve --provider openai --host 127.0.0.1 --port 8765
+cloudflared tunnel --url http://127.0.0.1:8765
+
+cd inspector
+pnpm test:worker
+pnpm build:public-live
+```
+
+Set `EBRT_BACKEND_URL` to the generated HTTPS tunnel origin. Do not commit any
+environment value. `pnpm build:recorded` remains the static, no-API fallback
+build.
 
 ## Deterministic public projection
 
@@ -123,18 +186,24 @@ pnpm dev
 ```
 
 Vite proxies same-origin `/api/**` requests to `127.0.0.1:8765` in both dev and
-preview mode. A deployed build should provide the same reverse-proxy contract;
-arbitrary cross-origin deployment is outside the loopback server contract.
+preview mode. `pnpm build:recorded` produces the public zero-call build: it
+removes Live and Editor controls, stages only the current sealed projection,
+and exposes no provider endpoint. `pnpm build:public-live` stages the public
+Live/Recorded UI and the fail-closed same-origin relay Worker; it still omits
+the local arbitrary-input Editor.
 
-The desktop layout shows three simultaneous lanes. Recorded is always the
-initial mode and performs no `/api/**` request. Tablet and mobile layouts
-use an accessible three-step tab surface with ArrowLeft/ArrowRight navigation.
-Motion respects `prefers-reduced-motion`.
+The desktop layout shows three simultaneous lanes. The public Live build opens
+in Live mode but makes no request until Apply is pressed; Recorded mode never
+calls `/api/**`. The local build starts in Recorded mode and also exposes the
+Editor. Tablet and mobile layouts use an accessible three-step tab surface
+with ArrowLeft/ArrowRight navigation. Motion respects
+`prefers-reduced-motion`.
 
 ## Interpretation boundary
 
-The recorded path establishes that Apply Revision was executable, observable,
-and strictly verifiable in one contaminated synthetic product-acceptance case.
-It does not establish causal control, hidden-state editing, quality
+The recorded acceptance and public sealed Live path establish only that Apply
+Revision is executable, observable, and structurally verifiable in one known,
+contaminated synthetic product case. They do not establish causal control,
+provider uptake, hidden-state editing, semantic correctness, quality
 improvement, or general reasoning improvement. Effect attribution remains
 `NOT_ASSESSED`.
