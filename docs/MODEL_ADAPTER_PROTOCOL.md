@@ -53,6 +53,11 @@ class ModelAdapter(Protocol):
 IDs, raw public text, the descriptor, a request fingerprint, latency, and a
 logical-call count.
 
+The engine recomputes the expected invocation before generation and requires
+the returned request fingerprint and adapter descriptor to match that binding.
+An adapter cannot substitute another request or model identity while retaining
+structural `PASS`.
+
 ## Model-visible information
 
 The invocation compiler may provide:
@@ -83,12 +88,14 @@ A conforming adapter must:
 1. preserve the supplied `ActuatorProgram` bytes semantically;
 2. perform exactly one logical generation per invocation unless a separately
    declared protocol says otherwise;
-3. return a declared answer choice;
-4. return only known evidence IDs as active support;
-5. exclude evidence compiled as invalidated support;
-6. retain the correction as active support for this revision protocol;
-7. report the public model and adapter identities; and
-8. keep `differentiable_through_model=false` at a non-latent boundary.
+3. return exactly the declared two-line schema, with no surrounding prose;
+4. return a declared answer choice, including a declared multi-word choice;
+5. return only known evidence IDs as active support;
+6. exclude evidence compiled as invalidated support;
+7. retain the correction as active support for this revision protocol;
+8. report the public model and adapter identities;
+9. return the exact request fingerprint compiled by the engine; and
+10. keep `differentiable_through_model=false` at a non-latent boundary.
 
 Transport retry policy, provider receipts, cost, and rate limiting belong to a
 concrete adapter and must remain distinguishable from EBRT mechanism status.

@@ -83,8 +83,8 @@ Status: **IMPLEMENTED + VERIFIED**
 - Enforce per-lane and global control budgets.
 - Add a fixed shared-axis consensus term.
 - Compile one actuator per lane.
-- Merge public outputs through a deterministic weighted-answer consensus and
-  support union minus invalidated evidence.
+- Merge public outputs through deterministic weighted-answer consensus and the
+  winning-answer lanes' support union minus invalidated evidence.
 - Verify lane-order permutation invariance.
 - Execute two real local generations through one shared Mistral runtime.
 

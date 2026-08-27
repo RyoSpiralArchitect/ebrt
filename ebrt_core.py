@@ -22,7 +22,7 @@ import socket
 import time
 from collections import Counter
 from contextlib import contextmanager
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Any, Callable, Literal, Mapping, Protocol, Sequence
 from unittest import mock
@@ -35,6 +35,9 @@ JOINT_PROTOCOL_VERSION = "ebrt-joint-trajectory-v0.8.0"
 RESULT_SCHEMA_VERSION = "ebrt-model-interface-result-v0.8.0"
 SELF_TEST_SCHEMA_VERSION = "ebrt-model-interface-self-test-v0.8.0"
 AXES = ("revision", "invalidation", "stability")
+EVIDENCE_ROLES = frozenset(
+    {"context", "required_support", "invalidated_prior", "correction", "stable"}
+)
 DTYPE = torch.float64
 FD_EPSILON = 1.0e-6
 FD_TOLERANCE = 2.0e-7
@@ -240,6 +243,10 @@ def validate_task(task: RevisionTask) -> None:
     for row in task.evidence:
         _safe_id(row.evidence_id, "EVIDENCE_ID")
         _require(bool(row.text.strip()), "EVIDENCE_TEXT_EMPTY")
+        _require(
+            isinstance(row.role, str) and row.role in EVIDENCE_ROLES,
+            "EVIDENCE_ROLE_INVALID",
+        )
         for label, vector in (
             ("NEUTRAL_EFFECT", row.neutral_effect),
             ("CONTROL_BASIS", row.control_basis),
@@ -253,6 +260,25 @@ def validate_task(task: RevisionTask) -> None:
         )
     id_set = set(ids)
     _safe_id(task.event.event_id, "EVENT_ID")
+    for label, values in (
+        ("INVALIDATED_EVIDENCE", task.event.invalidated_evidence_ids),
+        ("STABLE_EVIDENCE", task.event.stable_evidence_ids),
+        ("BEFORE_HORIZON", task.before_horizon_evidence_ids),
+        ("PRIOR_SUPPORT", task.prior_state.active_support_ids),
+    ):
+        _require(len(values) == len(set(values)), f"{label}_DUPLICATE")
+    _require(
+        all(
+            isinstance(key, str)
+            and isinstance(value, str)
+            and bool(key.strip())
+            and bool(value.strip())
+            for key, value in task.prior_state.stable_values
+        ),
+        "STABLE_VALUE_INVALID",
+    )
+    stable_keys = [key for key, _value in task.prior_state.stable_values]
+    _require(len(stable_keys) == len(set(stable_keys)), "STABLE_VALUE_KEY_DUPLICATE")
     _require(
         task.event.correction_evidence_id in id_set,
         "CORRECTION_EVIDENCE_UNKNOWN",
@@ -276,11 +302,27 @@ def validate_task(task: RevisionTask) -> None:
         | set(task.event.stable_evidence_ids),
         "CORRECTION_ROLE_OVERLAP",
     )
+    role_ids = {
+        role: {row.evidence_id for row in task.evidence if row.role == role}
+        for role in EVIDENCE_ROLES
+    }
     _require(
-        set(task.before_horizon_evidence_ids).issubset(id_set)
-        and task.event.correction_evidence_id
-        not in set(task.before_horizon_evidence_ids),
-        "BEFORE_HORIZON_INVALID",
+        role_ids["correction"] == {task.event.correction_evidence_id},
+        "CORRECTION_ROLE_MISMATCH",
+    )
+    _require(
+        role_ids["invalidated_prior"] == set(task.event.invalidated_evidence_ids),
+        "INVALIDATED_ROLE_MISMATCH",
+    )
+    _require(
+        role_ids["stable"] == set(task.event.stable_evidence_ids),
+        "STABLE_ROLE_MISMATCH",
+    )
+    correction_index = ids.index(task.event.correction_evidence_id)
+    _require(correction_index > 0, "CORRECTION_MUST_FOLLOW_PRIOR_EVIDENCE")
+    _require(
+        task.before_horizon_evidence_ids == tuple(ids[:correction_index]),
+        "BEFORE_HORIZON_NOT_CHRONOLOGICAL_PREFIX",
     )
     _require(
         set(task.prior_state.active_support_ids).issubset(
@@ -313,6 +355,12 @@ def validate_contract(task: RevisionTask, contract: PostRunContract) -> None:
     _require(
         not set(contract.required_support_ids) & set(contract.forbidden_support_ids),
         "CONTRACT_SUPPORT_OVERLAP",
+    )
+    _require(
+        set(contract.required_compiled_preserve_ids).issubset(
+            set(task.event.stable_evidence_ids)
+        ),
+        "CONTRACT_PRESERVE_NOT_STABLE",
     )
 
 
@@ -856,17 +904,37 @@ def _parse_model_text(
     *,
     task: RevisionTask,
 ) -> tuple[str, tuple[str, ...]]:
-    answer_match = re.search(r"(?im)^\s*ANSWER\s*=\s*([^\s]+)\s*$", raw_text)
-    support_match = re.search(r"(?im)^\s*SUPPORT\s*=\s*([^\n]*)$", raw_text)
-    _require(answer_match is not None, "MODEL_ANSWER_LINE_MISSING")
-    _require(support_match is not None, "MODEL_SUPPORT_LINE_MISSING")
+    _require(isinstance(raw_text, str) and bool(raw_text), "MODEL_TEXT_INVALID")
+    normalized = raw_text.replace("\r\n", "\n")
+    if normalized.endswith("\n"):
+        normalized = normalized[:-1]
+    lines = normalized.split("\n")
+    _require(len(lines) == 2, "MODEL_RESPONSE_LINE_COUNT_INVALID")
+    answer_match = re.fullmatch(
+        r"[ \t]*ANSWER[ \t]*=[ \t]*(.*?)[ \t]*",
+        lines[0],
+        flags=re.IGNORECASE,
+    )
+    support_match = re.fullmatch(
+        r"[ \t]*SUPPORT[ \t]*=[ \t]*(.*?)[ \t]*",
+        lines[1],
+        flags=re.IGNORECASE,
+    )
+    _require(answer_match is not None, "MODEL_ANSWER_LINE_INVALID")
+    _require(support_match is not None, "MODEL_SUPPORT_LINE_INVALID")
     answer = answer_match.group(1).strip().strip("<>")
+    _require(bool(answer), "MODEL_ANSWER_EMPTY")
     _require(answer in task.answer_choices, "MODEL_ANSWER_OUTSIDE_CHOICES")
-    support = tuple(
+    support_tokens = tuple(
         row.strip()
         for row in support_match.group(1).strip().strip("<>").split(",")
-        if row.strip() and row.strip().upper() != "NONE"
+        if row.strip()
     )
+    if any(row.upper() == "NONE" for row in support_tokens):
+        _require(support_tokens == ("NONE",), "MODEL_SUPPORT_NONE_MIXED")
+        support: tuple[str, ...] = ()
+    else:
+        support = support_tokens
     known = {row.evidence_id for row in task.evidence}
     _require(len(support) == len(set(support)), "MODEL_SUPPORT_DUPLICATE")
     _require(set(support).issubset(known), "MODEL_SUPPORT_UNKNOWN")
@@ -1000,6 +1068,9 @@ def _structural_model_checks(
     task: RevisionTask,
     program: ActuatorProgram,
     result: ModelResult,
+    *,
+    expected_descriptor: AdapterDescriptor,
+    expected_request_fingerprint_sha256: str,
 ) -> JsonObject:
     known = {row.evidence_id for row in task.evidence}
     return {
@@ -1014,7 +1085,15 @@ def _structural_model_checks(
         "typed_preservation_compiled": set(program.preserve)
         == set(task.event.stable_evidence_ids),
         "one_model_invocation": result.logical_calls == 1,
-        "gradient_did_not_cross_model_boundary": not result.descriptor.differentiable_through_model,
+        "request_fingerprint_matches_invocation": result.request_fingerprint_sha256
+        == expected_request_fingerprint_sha256,
+        "adapter_descriptor_matches_binding": result.descriptor == expected_descriptor,
+        "latency_is_finite_and_nonnegative": math.isfinite(result.latency_ms)
+        and result.latency_ms >= 0.0,
+        "gradient_did_not_cross_model_boundary": (
+            not expected_descriptor.differentiable_through_model
+            and not result.descriptor.differentiable_through_model
+        ),
     }
 
 
@@ -1079,8 +1158,25 @@ class RevisionEngine:
         envelope = self.state_adapter.build(task, lane_id=lane_id)
         optimized = self.core.optimize(envelope)
         program = self.actuator_adapter.compile(task, optimized, lane_id=lane_id)
+        expected_descriptor = model_adapter.descriptor
+        _require(
+            isinstance(expected_descriptor, AdapterDescriptor),
+            "MODEL_ADAPTER_DESCRIPTOR_INVALID",
+        )
+        expected_invocation = build_model_invocation(
+            task, program, prompt_policy=prompt_policy
+        )
         result = model_adapter.generate(task, program, prompt_policy=prompt_policy)
-        structural = _structural_model_checks(task, program, result)
+        _require(isinstance(result, ModelResult), "MODEL_RESULT_TYPE_INVALID")
+        structural = _structural_model_checks(
+            task,
+            program,
+            result,
+            expected_descriptor=expected_descriptor,
+            expected_request_fingerprint_sha256=str(
+                expected_invocation["fingerprint_sha256"]
+            ),
+        )
         _require(all(structural.values()), "MODEL_RESULT_STRUCTURAL_FAILURE")
         contract_grade = (
             _grade_contract(result, program, post_run_contract)
@@ -1405,7 +1501,7 @@ def _merge_model_results(
                 lane_id: result.answer
                 for lane_id, result in sorted(lane_results.items())
             },
-            "operator": "weighted_answer_consensus_support_union_minus_invalidated",
+            "operator": "weighted_answer_consensus_winner_lane_support_union_minus_invalidated",
         }
     )
 
@@ -1450,10 +1546,27 @@ class JointRevisionEngine:
             program = self.actuator_adapter.compile(
                 task, optimized, lane_id=lane.lane_id
             )
+            expected_descriptor = lane.model_adapter.descriptor
+            _require(
+                isinstance(expected_descriptor, AdapterDescriptor),
+                "JOINT_MODEL_ADAPTER_DESCRIPTOR_INVALID",
+            )
+            expected_invocation = build_model_invocation(
+                task, program, prompt_policy=lane.prompt_policy
+            )
             result = lane.model_adapter.generate(
                 task, program, prompt_policy=lane.prompt_policy
             )
-            checks = _structural_model_checks(task, program, result)
+            _require(isinstance(result, ModelResult), "JOINT_MODEL_RESULT_TYPE_INVALID")
+            checks = _structural_model_checks(
+                task,
+                program,
+                result,
+                expected_descriptor=expected_descriptor,
+                expected_request_fingerprint_sha256=str(
+                    expected_invocation["fingerprint_sha256"]
+                ),
+            )
             _require(all(checks.values()), "JOINT_MODEL_RESULT_STRUCTURAL_FAILURE")
             programs[lane.lane_id] = program
             results[lane.lane_id] = result
@@ -1646,9 +1759,53 @@ def _network_denied() -> Any:
         yield calls
 
 
+def _raises_ebrt_reason(callback: Callable[[], Any], reason: str) -> bool:
+    try:
+        callback()
+    except EBRTError as error:
+        return str(error) == reason
+    except Exception:
+        return False
+    return False
+
+
 def self_test() -> JsonObject:
     task = build_demo_task()
     contract = build_demo_contract()
+    multiword_task = replace(task, answer_choices=("POLISH", "NOT ENOUGH INFORMATION"))
+    multiword_answer, multiword_support = _parse_model_text(
+        "ANSWER=NOT ENOUGH INFORMATION\nSUPPORT=R6",
+        task=multiword_task,
+    )
+    parser_rejects_extra_lines = _raises_ebrt_reason(
+        lambda: _parse_model_text(
+            "ANSWER=PROVE\nSUPPORT=R6,R4,R2\nANSWER=POLISH",
+            task=task,
+        ),
+        "MODEL_RESPONSE_LINE_COUNT_INVALID",
+    )
+    duplicate_event_task = replace(
+        task,
+        event=replace(
+            task.event,
+            invalidated_evidence_ids=("R3", "R3"),
+        ),
+    )
+    duplicate_event_rejected = _raises_ebrt_reason(
+        lambda: validate_task(duplicate_event_task),
+        "INVALIDATED_EVIDENCE_DUPLICATE",
+    )
+    invalid_role_task = replace(
+        task,
+        evidence=tuple(
+            replace(row, role="not_a_role") if row.evidence_id == "R1" else row
+            for row in task.evidence
+        ),
+    )
+    invalid_role_rejected = _raises_ebrt_reason(
+        lambda: validate_task(invalid_role_task),
+        "EVIDENCE_ROLE_INVALID",
+    )
     adapter = _conformance_adapter(
         adapter_id="local-conformance-a", model_id="transparent-local-double-a"
     )
@@ -1672,6 +1829,31 @@ def self_test() -> JsonObject:
         validate_contract(task, contract)
         invocation_after = build_model_invocation(
             task, program, prompt_policy="credit_first"
+        )
+        valid_result = adapter.generate(task, program, prompt_policy="credit_first")
+        request_tamper_checks = _structural_model_checks(
+            task,
+            program,
+            replace(valid_result, request_fingerprint_sha256="0" * 64),
+            expected_descriptor=adapter.descriptor,
+            expected_request_fingerprint_sha256=str(
+                invocation_before["fingerprint_sha256"]
+            ),
+        )
+        descriptor_tamper_checks = _structural_model_checks(
+            task,
+            program,
+            replace(
+                valid_result,
+                descriptor=replace(
+                    valid_result.descriptor,
+                    adapter_id="tampered-adapter",
+                ),
+            ),
+            expected_descriptor=adapter.descriptor,
+            expected_request_fingerprint_sha256=str(
+                invocation_before["fingerprint_sha256"]
+            ),
         )
 
         lane_a = JointLaneSpec(
@@ -1714,6 +1896,17 @@ def self_test() -> JsonObject:
 
     checks = {
         "network_zero": network["count"] == 0,
+        "parser_accepts_multiword_answer": multiword_answer == "NOT ENOUGH INFORMATION"
+        and multiword_support == ("R6",),
+        "parser_enforces_exact_two_lines": parser_rejects_extra_lines,
+        "duplicate_event_ids_are_rejected": duplicate_event_rejected,
+        "invalid_runtime_role_is_rejected": invalid_role_rejected,
+        "request_fingerprint_tamper_is_detected": not request_tamper_checks[
+            "request_fingerprint_matches_invocation"
+        ],
+        "adapter_descriptor_tamper_is_detected": not descriptor_tamper_checks[
+            "adapter_descriptor_matches_binding"
+        ],
         "single_lane_v0_7_1_pass": single["status"] == "PASS",
         "single_lane_contract_pass": single["post_run_contract"]["status"] == "PASS",
         "single_lane_real_backward": single["trajectory"]["checks"][
