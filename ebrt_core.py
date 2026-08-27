@@ -1218,7 +1218,21 @@ class CallableModelAdapter:
         )
 
 
-def _local_model_id(path: Path) -> str:
+def _local_model_id(path: Path, *, explicit: str | None = None) -> str:
+    if explicit is not None:
+        _require(
+            isinstance(explicit, str)
+            and bool(explicit.strip())
+            and len(explicit) <= 512
+            and all(character.isprintable() for character in explicit),
+            "LOCAL_MODEL_ID_INVALID",
+        )
+        identity, separator, revision = explicit.rpartition("@")
+        _require(
+            separator == "@" and bool(identity) and bool(revision),
+            "LOCAL_MODEL_ID_REVISION_REQUIRED",
+        )
+        return explicit
     for candidate in (path, *path.parents):
         if candidate.name.startswith("models--"):
             repository = candidate.name.removeprefix("models--").replace("--", "/")
@@ -1226,10 +1240,8 @@ def _local_model_id(path: Path) -> str:
                 relative_parts = path.relative_to(candidate).parts
                 if len(relative_parts) >= 2 and relative_parts[0] == "snapshots":
                     return f"{repository}@{relative_parts[1]}"
-                path_hash = hashlib.sha256(str(path).encode("utf-8")).hexdigest()[:12]
-                return f"{repository}@cache-{path_hash}"
-    path_hash = hashlib.sha256(str(path).encode("utf-8")).hexdigest()[:12]
-    return f"local-model/{path.name}@{path_hash}"
+                raise EBRTError("LOCAL_MODEL_ID_REVISION_REQUIRED")
+    raise EBRTError("LOCAL_MODEL_ID_REVISION_REQUIRED")
 
 
 class SharedMLXRuntime:
@@ -1251,7 +1263,7 @@ class SharedMLXRuntime:
             "LOCAL_MODEL_WEIGHTS_NOT_FOUND",
         )
         self.model_path = path
-        self._model_id = model_id or _local_model_id(path)
+        self._model_id = _local_model_id(path, explicit=model_id)
         _require(
             isinstance(self._model_id, str)
             and bool(self._model_id.strip())
@@ -2367,6 +2379,20 @@ def self_test() -> JsonObject:
     cached_snapshot_b = _local_model_id(
         Path("/tmp/hub/models--example--model/snapshots/revision-b")
     )
+    noncache_identity_requires_revision = _raises_ebrt_reason(
+        lambda: _local_model_id(Path("/tmp/replaceable-local-model")),
+        "LOCAL_MODEL_ID_REVISION_REQUIRED",
+    ) and _raises_ebrt_reason(
+        lambda: _local_model_id(
+            Path("/tmp/replaceable-local-model"),
+            explicit="example/model",
+        ),
+        "LOCAL_MODEL_ID_REVISION_REQUIRED",
+    )
+    explicit_revision_identity = _local_model_id(
+        Path("/tmp/replaceable-local-model"),
+        explicit="example/model@weights-sha256-deadbeef",
+    )
     adapter = _conformance_adapter(
         adapter_id="local-conformance-a", model_id="transparent-local-double-a"
     )
@@ -2658,6 +2684,8 @@ def self_test() -> JsonObject:
         == "example/model@revision-a"
         and cached_snapshot_b == "example/model@revision-b"
         and cached_snapshot_a != cached_snapshot_b,
+        "noncache_model_identity_requires_explicit_revision": noncache_identity_requires_revision
+        and explicit_revision_identity == "example/model@weights-sha256-deadbeef",
         "credit_map_requires_exact_coverage": incomplete_credit_rejected,
         "compiled_actuator_is_bound_to_backward_receipt": tampered_actuator_rejected,
         "actuator_cannot_mutate_sealed_core_receipt": mutating_actuator_rejected_single
@@ -2913,7 +2941,7 @@ def build_parser() -> argparse.ArgumentParser:
     local.add_argument("--model", help="path to a complete local MLX model snapshot")
     local.add_argument(
         "--model-id",
-        help="public model identity when the local path is not a Hugging Face snapshot",
+        help="revision-bearing identity (provider/model@revision) required outside a Hugging Face snapshot",
     )
     joint = commands.add_parser(
         "joint-local-e2e",
@@ -2922,7 +2950,7 @@ def build_parser() -> argparse.ArgumentParser:
     joint.add_argument("--model", help="path to a complete local MLX model snapshot")
     joint.add_argument(
         "--model-id",
-        help="public model identity when the local path is not a Hugging Face snapshot",
+        help="revision-bearing identity (provider/model@revision) required outside a Hugging Face snapshot",
     )
     return parser
 

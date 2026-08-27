@@ -62,8 +62,9 @@ discovers it automatically and the environment variable can be omitted.
 Cache-derived model identities include the snapshot revision so different
 weight snapshots cannot collapse into one receipt identity.
 For a model stored outside that cache layout, pass a public receipt identity
-explicitly with `--model-id provider/model-name`; otherwise EBRT emits an
-opaque local-path identity rather than guessing a repository name.
+explicitly with `--model-id provider/model@revision`. EBRT fails closed without
+that revision-bearing identity rather than grouping replaceable weights by
+their filesystem path.
 
 The committed interface was verified locally with
 `mlx-community/Mistral-7B-Instruct-v0.3-4bit`. The v0.7.1 integration fixture

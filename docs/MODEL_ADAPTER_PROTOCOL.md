@@ -95,6 +95,11 @@ class ModelAdapter(Protocol):
 IDs, raw public text, the descriptor, a request fingerprint, latency, and a
 logical-call count.
 
+The reference MLX runtime derives `model_id` from a standard Hugging Face cache
+snapshot as `repository@revision`. A model outside that layout must supply an
+explicit revision-bearing identity; a filesystem path alone is not accepted as
+weight identity because its contents can be replaced in place.
+
 The engine recomputes the expected invocation before generation and requires
 the returned request fingerprint and adapter descriptor to match that binding.
 An adapter cannot substitute another request or model identity while retaining
