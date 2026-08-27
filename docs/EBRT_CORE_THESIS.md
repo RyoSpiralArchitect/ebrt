@@ -145,11 +145,42 @@ contracts:
 | Full-context execution backend | public control map projected into one full-context regeneration | Implemented as a non-differentiable bridge in v0.5.1 and exercised in v0.5.2 |
 | Revisable public trajectory runtime | chronological three-axis public recurrence, trajectory-wide loss, time-local controls, replay, and compiled actuator | Implemented network-zero in Runtime Preview 3 (`v0.6.2.4`); no new hosted-effect result |
 | Reasoning IDE | recorded or live evidence, event, neutral/revised trajectories, controls, output diff, and strict diagnostics | Provisional Inspector/Workbench surface; not a final product claim |
+| Model-interface core | provider-neutral state, actuator, and generation boundaries around one backward-revision mechanism | Implemented in v0.7.1 and exercised end-to-end with a local open-weight model |
+| Joint trajectory block | namespaced public trajectories, one joint backward pass, per-lane actuators, and deterministic public merge | Implemented in v0.8.0; verified with two lanes around one shared local model, not yet with heterogeneous model IDs |
 
 The public representation is neither a transcript of private chain-of-thought
 nor a claim that it is isomorphic to model internals. It is an intentionally
 small, typed program through which revision hypotheses can be audited and
 falsified.
+
+## Current model-interface formulation
+
+From v0.7.1 onward, the generator sits outside the definition of the core. For
+model interface \(m\), the active prototype factors one revision into
+
+\[
+\tau_m=S_m(x,e),
+\qquad
+c_m=\operatorname{EBRT}(\tau_m,\mathcal L,B),
+\]
+
+\[
+a_m=A_m(c_m),
+\qquad
+y'_m=M_m(x,a_m).
+\]
+
+`StateAdapter` supplies the admitted differentiable trajectory,
+`ActuatorAdapter` compiles bounded credit into a public revision operation, and
+`ModelAdapter` performs generation beyond the stop-gradient boundary. The same
+core can therefore surround a hosted API, an open-weight runtime, or a future
+model-native latent actuator without pretending those interfaces expose the
+same internal state.
+
+v0.8.0 extends this factorization to several namespaced trajectory lanes and
+one joint control block. Its current real execution has multiple lanes but one
+shared local model ID. Heterogeneous multi-model behavior remains a separately
+locked experiment.
 
 ## Gradient and information boundaries
 
