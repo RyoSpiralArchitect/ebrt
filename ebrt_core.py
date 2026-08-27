@@ -223,7 +223,13 @@ def validate_task(task: RevisionTask) -> None:
     _require(len(task.answer_choices) >= 2, "ANSWER_CHOICES_TOO_SMALL")
     _require(
         len(set(task.answer_choices)) == len(task.answer_choices)
-        and all(bool(row.strip()) for row in task.answer_choices),
+        and all(
+            isinstance(row, str)
+            and bool(row)
+            and row == row.strip()
+            and row.isprintable()
+            for row in task.answer_choices
+        ),
         "ANSWER_CHOICES_INVALID",
     )
     _require(task.prior_state.answer in task.answer_choices, "PRIOR_ANSWER_INVALID")
@@ -1987,6 +1993,10 @@ def self_test() -> JsonObject:
         ),
         "MODEL_RESPONSE_LINE_COUNT_INVALID",
     )
+    unpreservable_answer_choice_rejected = _raises_ebrt_reason(
+        lambda: validate_task(replace(task, answer_choices=("POLISH", " PROVE "))),
+        "ANSWER_CHOICES_INVALID",
+    )
     duplicate_event_task = replace(
         task,
         event=replace(
@@ -2206,6 +2216,7 @@ def self_test() -> JsonObject:
         "parser_preserves_declared_delimiters": delimited_answer == "<UNKNOWN>"
         and delimited_support == ("R6",),
         "parser_enforces_exact_two_lines": parser_rejects_extra_lines,
+        "unpreservable_answer_choices_are_rejected": unpreservable_answer_choice_rejected,
         "duplicate_event_ids_are_rejected": duplicate_event_rejected,
         "invalid_runtime_role_is_rejected": invalid_role_rejected,
         "stability_basis_requires_exact_zero": near_zero_stability_rejected,
