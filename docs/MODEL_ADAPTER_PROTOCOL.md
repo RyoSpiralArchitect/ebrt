@@ -39,7 +39,10 @@ The current actuator protocol is intentionally closed: after any
 `ActuatorAdapter` returns, the engine recompiles the canonical public program
 from the sealed backward receipt and requires exact equality. Alternate
 actuator semantics require a new protocol version rather than silently changing
-the operation behind a structural `PASS`.
+the operation behind a structural `PASS`. The core first takes a canonical deep
+snapshot of its sealed receipt and gives the adapter only a separate clone;
+single and joint compilation therefore cannot rewrite the receipt that is
+validated or emitted.
 
 ## Python contract
 

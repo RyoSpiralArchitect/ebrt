@@ -88,6 +88,20 @@ def _without_fingerprint(value: Mapping[str, Any]) -> JsonObject:
     return output
 
 
+def _sealed_snapshot(value: Any, label: str) -> JsonObject:
+    _require(isinstance(value, Mapping), f"{label}_TYPE_INVALID")
+    try:
+        snapshot = _clone(value)
+    except (TypeError, ValueError, OverflowError) as exc:
+        raise EBRTError(f"{label}_NOT_CANONICAL_JSON") from exc
+    _require(
+        snapshot.get("fingerprint_sha256")
+        == _fingerprint(_without_fingerprint(snapshot)),
+        f"{label}_FINGERPRINT_INVALID",
+    )
+    return snapshot
+
+
 def _require(condition: bool, reason: str) -> None:
     if not condition:
         raise EBRTError(reason)
@@ -1435,8 +1449,15 @@ class RevisionEngine:
             lane_id=lane_id,
             label="STATE_ADAPTER",
         )
-        optimized = self.core.optimize(envelope)
-        program = self.actuator_adapter.compile(task, optimized, lane_id=lane_id)
+        optimized = _sealed_snapshot(
+            self.core.optimize(envelope),
+            "CORE_RECEIPT",
+        )
+        program = self.actuator_adapter.compile(
+            task,
+            _clone(optimized),
+            lane_id=lane_id,
+        )
         _validate_compiled_program(
             task,
             optimized,
@@ -1846,8 +1867,12 @@ class JointRevisionEngine:
                 label="JOINT_STATE_ADAPTER",
             )
             envelopes.append(envelope)
-        joint = self.core.optimize(
-            envelopes, weights=[row.weight for row in ordered_lanes]
+        joint = _sealed_snapshot(
+            self.core.optimize(
+                envelopes,
+                weights=[row.weight for row in ordered_lanes],
+            ),
+            "JOINT_CORE_RECEIPT",
         )
         programs: dict[str, ActuatorProgram] = {}
         results: dict[str, ModelResult] = {}
@@ -1855,7 +1880,9 @@ class JointRevisionEngine:
         for lane in ordered_lanes:
             optimized = joint["lanes"][lane.lane_id]
             program = self.actuator_adapter.compile(
-                task, optimized, lane_id=lane.lane_id
+                task,
+                _clone(optimized),
+                lane_id=lane.lane_id,
             )
             _validate_compiled_program(
                 task,
@@ -2153,6 +2180,33 @@ class _TamperedActuatorAdapter:
         return replace(valid, steps=(*valid.steps[:-1], "SKIP_REGENERATION"))
 
 
+@dataclass(frozen=True)
+class _MutatingActuatorAdapter:
+    adapter_id: str = "mutating-actuator-test"
+
+    def compile(
+        self,
+        task: RevisionTask,
+        optimized: Mapping[str, Any],
+        *,
+        lane_id: str,
+    ) -> ActuatorProgram:
+        _require(isinstance(optimized, dict), "TEST_MUTATION_INPUT_NOT_DICT")
+        material = _without_fingerprint(optimized)
+        for row in material["credit_map"]:
+            if row["eligible"]:
+                row["gradient"] = float(row["gradient"]) + 0.25
+                break
+        tampered = _seal(material)
+        optimized.clear()
+        optimized.update(tampered)
+        return PublicRevisionActuator().compile(
+            task,
+            optimized,
+            lane_id=lane_id,
+        )
+
+
 @contextmanager
 def _network_denied() -> Any:
     calls = {"count": 0}
@@ -2325,6 +2379,14 @@ def self_test() -> JsonObject:
         )
         tampered_actuator_rejected = _raises_ebrt_reason(
             lambda: RevisionEngine(actuator_adapter=_TamperedActuatorAdapter()).run(
+                task,
+                adapter,
+                post_run_contract=contract,
+            ),
+            "ACTUATOR_PROGRAM_BINDING_MISMATCH",
+        )
+        mutating_actuator_rejected_single = _raises_ebrt_reason(
+            lambda: RevisionEngine(actuator_adapter=_MutatingActuatorAdapter()).run(
                 task,
                 adapter,
                 post_run_contract=contract,
@@ -2534,6 +2596,16 @@ def self_test() -> JsonObject:
             ),
             "JOINT_STATE_ADAPTER_ID_MISMATCH",
         )
+        mutating_actuator_rejected_joint = _raises_ebrt_reason(
+            lambda: JointRevisionEngine(
+                actuator_adapter=_MutatingActuatorAdapter()
+            ).run(
+                task,
+                (lane_a, lane_b),
+                post_run_contract=contract,
+            ),
+            "ACTUATOR_PROGRAM_BINDING_MISMATCH",
+        )
         joint = JointRevisionEngine().run(
             task, (lane_b, lane_a), post_run_contract=contract
         )
@@ -2588,6 +2660,8 @@ def self_test() -> JsonObject:
         and cached_snapshot_a != cached_snapshot_b,
         "credit_map_requires_exact_coverage": incomplete_credit_rejected,
         "compiled_actuator_is_bound_to_backward_receipt": tampered_actuator_rejected,
+        "actuator_cannot_mutate_sealed_core_receipt": mutating_actuator_rejected_single
+        and mutating_actuator_rejected_joint,
         "credit_first_order_is_compiled": invocation_before["evidence_ids"][
             : len(program.reinspect)
         ]
