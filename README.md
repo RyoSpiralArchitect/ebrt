@@ -70,6 +70,8 @@ SUPPORT=R6,R4,R2
 
 with a strict post-run contract `PASS`. This is an end-to-end mechanism check
 over a known synthetic fixture, not a claim of general reasoning improvement.
+The committed sanitized receipt is
+[`artifacts/model_interface_core_v0_7_1/local_mistral_e2e_r01.json`](artifacts/model_interface_core_v0_7_1/local_mistral_e2e_r01.json).
 
 ## What the core owns
 
@@ -220,6 +222,7 @@ are separate measurements. A `PASS` in one category does not silently imply a
 | [`docs/EBRT_CORE_THESIS.md`](docs/EBRT_CORE_THESIS.md) | mathematical and conceptual anchor |
 | [`docs/MODEL_ADAPTER_PROTOCOL.md`](docs/MODEL_ADAPTER_PROTOCOL.md) | provider-neutral binding contract |
 | [`docs/ROADMAP_MODEL_INTERFACE_CORE.md`](docs/ROADMAP_MODEL_INTERFACE_CORE.md) | evidence-labelled path beyond v0.8 |
+| [`artifacts/model_interface_core_v0_7_1/local_mistral_e2e_r01.json`](artifacts/model_interface_core_v0_7_1/local_mistral_e2e_r01.json) | sanitized real local E2E receipt |
 
 ### Frozen research history
 

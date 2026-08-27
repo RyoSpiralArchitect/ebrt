@@ -1,0 +1,80 @@
+{
+  "schema_version": "ebrt-local-open-weight-receipt-v0.7.1",
+  "status": "PASS",
+  "artifact_kind": "CONTAMINATED_INTEGRATION_RECEIPT",
+  "recorded_at_utc": "2026-08-27T20:20:00Z",
+  "command": "python3 ebrt_core.py local-e2e",
+  "source": {
+    "commit": "668a94ab3317b2e7a18744cc7fe3f88f726b29ad",
+    "ebrt_core_sha256": "5f3b9b37d6aecf223ee6adf9f11e2f94d4243b14195bb2d78b875bc053e7009b"
+  },
+  "runtime": {
+    "platform": "macOS-26.2-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "python": "3.13.13",
+    "torch": "2.11.0",
+    "mlx_lm": "0.31.2"
+  },
+  "model": {
+    "model_id": "mlx-community/Mistral-7B-Instruct-v0.3-4bit",
+    "model_revision": "a4b8f870474b0eb527f466a03fbc187830d271f5",
+    "adapter_id": "mlx-local-primary",
+    "interface_kind": "local_open_weight",
+    "state_visibility": "public_only",
+    "differentiable_through_model": false
+  },
+  "public_output": {
+    "raw_text": "ANSWER=PROVE\nSUPPORT=R6,R4,R2",
+    "answer": "PROVE",
+    "support_ids": [
+      "R6",
+      "R4",
+      "R2"
+    ],
+    "logical_calls": 1,
+    "latency_ms": 7020.107124990318,
+    "request_fingerprint_sha256": "e549c7107beabda5a87ee9be74a29fb141b41373607c25026b26955ab310d79c",
+    "model_result_fingerprint_sha256": "efd53389bbb5602e137d2950f9c219e58cb618817fae7d28817b290451365c9b"
+  },
+  "trajectory_checks": {
+    "central_finite_difference_agreement": true,
+    "control_budget_respected": true,
+    "control_is_non_neutral": true,
+    "ineligible_sites_are_zero": true,
+    "objective_decreased": true,
+    "pre_event_backward_credit_nonzero": true,
+    "real_backward_executed_once": true,
+    "stable_axis_exact_identity": true,
+    "zero_control_exact_noop": true
+  },
+  "structural_checks": {
+    "adapter_descriptor_matches_binding": true,
+    "answer_is_allowed": true,
+    "correction_is_active_support": true,
+    "gradient_did_not_cross_model_boundary": true,
+    "invalidated_support_absent": true,
+    "latency_is_finite_and_nonnegative": true,
+    "one_model_invocation": true,
+    "request_fingerprint_matches_invocation": true,
+    "support_ids_are_known": true,
+    "typed_preservation_compiled": true,
+    "typed_suppression_compiled": true
+  },
+  "post_run_contract": {
+    "status": "PASS",
+    "checks": {
+      "expected_answer": true,
+      "forbidden_support_absent": true,
+      "required_compiled_preserve_present": true,
+      "required_support_present": true
+    }
+  },
+  "result_fingerprint_sha256": "0f0818b727067d0555756d7454f8966b960312ccda19e4801dc3e25c16851cd9",
+  "effect_attribution_status": "NOT_ASSESSED",
+  "claim_boundary": [
+    "This receipt records one real local open-weight integration run over a known synthetic fixture.",
+    "It does not establish causal superiority, fresh benchmark performance, or general reasoning improvement.",
+    "The gradient stops at the adapter-supplied public trajectory and does not cross the model boundary."
+  ],
+  "fingerprint_sha256": "d2a28d2f2622ba617395e8ea911b2ebf465105a03c63e530a71d4d348d214667"
+}
