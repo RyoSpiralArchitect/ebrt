@@ -2,11 +2,11 @@
   "schema_version": "ebrt-local-open-weight-receipt-v0.7.1",
   "status": "PASS",
   "artifact_kind": "CONTAMINATED_INTEGRATION_RECEIPT",
-  "recorded_at_utc": "2026-08-27T21:11:03Z",
+  "recorded_at_utc": "2026-08-27T21:25:14Z",
   "command": "python3 ebrt_core.py local-e2e",
   "source": {
-    "commit": "5dfec64d4527640e19ce2b262ffe6eb18c3648de",
-    "ebrt_core_sha256": "9e84c278f96c3370472b5bbe4ba8f91be6e938f9e7c53b2908de3b6602836434"
+    "commit": "889d9629d6f8b2f2846d13ada3d01c5daa3a52b4",
+    "ebrt_core_sha256": "94827871d6556c2ad74bf277c8bee804c3f9ec446713154fb82ca1f6f39db4f6"
   },
   "runtime": {
     "platform": "macOS-26.2-arm64-arm-64bit-Mach-O",
@@ -32,9 +32,9 @@
       "R2"
     ],
     "logical_calls": 1,
-    "latency_ms": 5027.551124978345,
-    "request_fingerprint_sha256": "e549c7107beabda5a87ee9be74a29fb141b41373607c25026b26955ab310d79c",
-    "model_result_fingerprint_sha256": "fae881ec033b92a642dc16d6723cebb84ac1d9e9e9024eb554e6851f06b67dee"
+    "latency_ms": 5150.665790948551,
+    "request_fingerprint_sha256": "71e536523a943c1cc11385c40a4522c76ca3a116dde5f5acc8b105d1615c9245",
+    "model_result_fingerprint_sha256": "e5d0870a6fda080bd692705fc68d92822003b8c8e39813a4d5b6a52a8042f55a"
   },
   "trajectory_checks": {
     "central_finite_difference_agreement": true,
@@ -71,12 +71,12 @@
       "required_support_present": true
     }
   },
-  "result_fingerprint_sha256": "c4d6da8be3e790745c795718e886a63955df5540c4c4d65121e1ba0980ed3de4",
+  "result_fingerprint_sha256": "cf136d4da3f16ba4d9f8342015a1b3345d3a1ba3fe1c7f1a06bc8ea85a573678",
   "effect_attribution_status": "NOT_ASSESSED",
   "claim_boundary": [
     "This receipt records one real local open-weight integration run over a known synthetic fixture.",
     "It does not establish causal superiority, fresh benchmark performance, or general reasoning improvement.",
-    "The gradient stops at the adapter-supplied public trajectory and does not cross the model boundary."
+    "The state-adapter tensors are detached into a core-owned public trajectory, and the gradient does not cross either adapter boundary."
   ],
-  "fingerprint_sha256": "39eeb3064e1ea8b0c3ed3bd6d18ed42f7aa8296802dbb579c4eed811abd50d0c"
+  "fingerprint_sha256": "3da13ab2f42a3d10f25cee87d6cc9561e521c4b7bdf676774e4a2d138ee474de"
 }
