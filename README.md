@@ -147,7 +147,7 @@ language semantics. Responsibilities remain separate:
 | --- | --- |
 | Backward pass | assign where and how much to reinspect |
 | Typed event compiler | provide allowlisted `SUPPRESS` and `PRESERVE` semantics |
-| Model adapter | regenerate from complete public context and the actuator |
+| Model adapter | regenerate from complete public context and the full quantitative actuator |
 | Observer | check public structure and, when supplied, a post-run contract |
 
 The post-run contract never enters the model request. It is computed only after

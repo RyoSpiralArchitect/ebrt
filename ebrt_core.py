@@ -873,11 +873,7 @@ class PublicRevisionActuator:
             _require(
                 isinstance(row.get("eligible"), bool), "CREDIT_MAP_ELIGIBLE_INVALID"
             )
-            expected_eligible = any(value != 0.0 for value in source.control_basis)
-            _require(
-                row["eligible"] is expected_eligible,
-                "CREDIT_MAP_ELIGIBLE_MISMATCH",
-            )
+            admitted_eligible = row["eligible"]
             gradient = _finite(row.get("gradient"), "CREDIT_MAP_GRADIENT")
             control = _finite(row.get("control"), "CREDIT_MAP_CONTROL")
             magnitude = _finite(row.get("absolute_control"), "CREDIT_MAP_MAGNITUDE")
@@ -891,7 +887,7 @@ class PublicRevisionActuator:
                 ),
                 "CREDIT_MAP_MAGNITUDE_MISMATCH",
             )
-            if not expected_eligible:
+            if not admitted_eligible:
                 _require(
                     control == 0.0 and gradient == 0.0, "INELIGIBLE_CREDIT_NONZERO"
                 )
@@ -1073,7 +1069,14 @@ def build_model_invocation(
     prompt_policy: Literal["chronological", "credit_first"],
 ) -> JsonObject:
     ordered = _evidence_order(task, program, prompt_policy)
-    reinspect = ",".join(row[0] for row in program.reinspect)
+    public_program = program.to_dict()
+    reinspect = json.dumps(
+        public_program["reinspect"],
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+        allow_nan=False,
+    )
     suppress = ",".join(program.suppress) or "NONE"
     preserve = ",".join(program.preserve) or "NONE"
     prompt = "\n".join(
@@ -1090,7 +1093,7 @@ def build_model_invocation(
             "Evidence:",
             *[f"{row.evidence_id}: {row.text}" for row in ordered],
             "Revision program:",
-            f"REINSPECT {reinspect}",
+            f"REINSPECT_JSON {reinspect}",
             f"SUPPRESS {suppress}",
             f"PRESERVE {preserve}",
             "Do not cite suppressed evidence as active support.",
@@ -1104,7 +1107,8 @@ def build_model_invocation(
             "prompt_policy": prompt_policy,
             "answer_choices": list(task.answer_choices),
             "evidence_ids": [row.evidence_id for row in ordered],
-            "program_fingerprint_sha256": program.to_dict()["fingerprint_sha256"],
+            "actuator_program": public_program,
+            "program_fingerprint_sha256": public_program["fingerprint_sha256"],
             "prompt": prompt,
         }
     )
@@ -2084,6 +2088,26 @@ class _GraphBackedStateAdapter:
 
 
 @dataclass(frozen=True)
+class _EligibilityTransformingStateAdapter:
+    zero_evidence_id: str
+    adapter_id: str = "eligibility-transforming-state-adapter-test"
+
+    def build(self, task: RevisionTask, *, lane_id: str) -> TrajectoryEnvelope:
+        envelope = TypedPublicStateAdapter(adapter_id=self.adapter_id).build(
+            task,
+            lane_id=lane_id,
+        )
+        index = envelope.evidence_ids.index(self.zero_evidence_id)
+        basis = envelope.control_basis.clone()
+        basis[index] = 0.0
+        return replace(
+            envelope,
+            control_basis=basis,
+            eligible_mask=torch.linalg.vector_norm(basis, dim=1) > 0.0,
+        )
+
+
+@dataclass(frozen=True)
 class _TaskParameterTamperingStateAdapter:
     field_name: str
     adapter_id: str = "task-parameter-tampering-state-adapter-test"
@@ -2307,6 +2331,13 @@ def self_test() -> JsonObject:
             adapter,
             post_run_contract=contract,
         )
+        eligibility_transformed_run = RevisionEngine(
+            state_adapter=_EligibilityTransformingStateAdapter("R2")
+        ).run(
+            task,
+            adapter,
+            post_run_contract=contract,
+        )
         task_parameter_tampering_rejected = all(
             _raises_ebrt_reason(
                 lambda field_name=field_name: RevisionEngine(
@@ -2346,6 +2377,20 @@ def self_test() -> JsonObject:
         )
         invocation_before = build_model_invocation(
             task, program, prompt_policy="credit_first"
+        )
+        first_reinspect = program.reinspect[0]
+        _require(first_reinspect[2] != 0.0, "SELF_TEST_CONTROL_UNEXPECTEDLY_ZERO")
+        quantitative_variant = replace(
+            program,
+            reinspect=(
+                (first_reinspect[0], first_reinspect[1], -first_reinspect[2]),
+                *program.reinspect[1:],
+            ),
+        )
+        quantitative_invocation = build_model_invocation(
+            task,
+            quantitative_variant,
+            prompt_policy="credit_first",
         )
         validate_contract(task, contract)
         invocation_after = build_model_invocation(
@@ -2519,6 +2564,17 @@ def self_test() -> JsonObject:
         ]
         == "PASS"
         and graph_backed_state_adapter.source.grad is None,
+        "state_adapter_eligibility_is_authoritative": next(
+            row
+            for row in eligibility_transformed_run["trajectory"]["credit_map"]
+            if row["evidence_id"] == "R2"
+        )["eligible"]
+        is False
+        and "R2"
+        not in {
+            row["evidence_id"]
+            for row in eligibility_transformed_run["actuator"]["reinspect"]
+        },
         "task_owned_trajectory_parameters_are_bound": task_parameter_tampering_rejected,
         "single_lane_v0_7_1_pass": single["status"] == "PASS",
         "single_lane_contract_pass": single["post_run_contract"]["status"] == "PASS",
@@ -2538,6 +2594,15 @@ def self_test() -> JsonObject:
             "stable_axis_exact_identity"
         ],
         "contract_never_enters_invocation": invocation_before == invocation_after,
+        "quantitative_actuator_is_model_visible": invocation_before["actuator_program"]
+        == program.to_dict()
+        and quantitative_invocation["actuator_program"]
+        == quantitative_variant.to_dict()
+        and invocation_before["prompt"] != quantitative_invocation["prompt"]
+        and invocation_before["fingerprint_sha256"]
+        != quantitative_invocation["fingerprint_sha256"]
+        and "allocation_units" in invocation_before["prompt"]
+        and "signed_control" in invocation_before["prompt"],
         "model_adapter_protocol_is_provider_neutral": (
             adapter.descriptor.interface_kind == "deterministic_conformance"
             and lane_b.model_adapter.descriptor.interface_kind == "hosted_api"

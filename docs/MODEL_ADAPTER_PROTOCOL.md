@@ -58,7 +58,10 @@ class StateAdapter(Protocol):
 The adapter may construct public trajectory values, but it may not redefine
 task-owned optimization parameters. `event_index`, `target`, `decay`,
 `control_budget`, and `learning_rate` must exactly match `RevisionTask`.
-Incoming tensors are copied and detached after conformance validation.
+Incoming tensors are copied and detached after conformance validation. The
+admitted `control_basis` and its exactly matching `eligible_mask` remain the
+authority for where the core can assign control; actuator compilation does not
+silently restore eligibility from the pre-adapter task basis.
 
 ```python
 class ModelAdapter(Protocol):
@@ -99,7 +102,8 @@ The invocation compiler may provide:
 
 - the question and declared answer choices;
 - complete public evidence;
-- the compiled reinspection allocation;
+- the complete sealed actuator program, including reinspection allocation and
+  signed control values;
 - typed invalidated evidence to suppress;
 - typed stable evidence to preserve; and
 - an output schema.
