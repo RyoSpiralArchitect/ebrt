@@ -44,7 +44,7 @@ FD_TOLERANCE = 2.0e-7
 FLOAT_TOLERANCE = 1.0e-12
 
 CLAIM_BOUNDARY = (
-    "EBRT differentiates only through an explicit adapter-supplied trajectory.",
+    "EBRT differentiates only through a detached, core-owned copy of an explicit adapter-supplied trajectory.",
     "A ModelAdapter may wrap a hosted API or an open-weight runtime; the core does not differentiate through generation.",
     "A passing conformance run establishes protocol execution, not semantic superiority or general reasoning improvement.",
     "The bundled public trajectory is an inspectable surrogate, not a transcript of private model reasoning.",
@@ -199,6 +199,7 @@ class RevisionTask:
             "event": self.event.to_dict(),
             "trajectory_contract": {
                 "axes": list(AXES),
+                "terminal_target": list(self.terminal_target),
                 "decay": self.decay,
                 "control_budget": self.control_budget,
                 "learning_rate": self.learning_rate,
@@ -1196,7 +1197,11 @@ def _local_model_id(path: Path) -> str:
         if candidate.name.startswith("models--"):
             repository = candidate.name.removeprefix("models--").replace("--", "/")
             if repository:
-                return repository
+                relative_parts = path.relative_to(candidate).parts
+                if len(relative_parts) >= 2 and relative_parts[0] == "snapshots":
+                    return f"{repository}@{relative_parts[1]}"
+                path_hash = hashlib.sha256(str(path).encode("utf-8")).hexdigest()[:12]
+                return f"{repository}@cache-{path_hash}"
     path_hash = hashlib.sha256(str(path).encode("utf-8")).hexdigest()[:12]
     return f"local-model/{path.name}@{path_hash}"
 
@@ -1271,7 +1276,7 @@ class SharedMLXRuntime:
                 max_tokens=self.max_tokens,
                 sampler=make_sampler(temp=0.0),
                 verbose=False,
-            ).strip()
+            )
         except Exception as exc:  # pragma: no cover - model/runtime dependent
             raise EBRTError("MLX_GENERATION_FAILED") from exc
 
@@ -2150,6 +2155,13 @@ def _raises_ebrt_reason(callback: Callable[[], Any], reason: str) -> bool:
 def self_test() -> JsonObject:
     task = build_demo_task()
     contract = build_demo_contract()
+    changed_target_task = replace(
+        task,
+        terminal_target=(task.terminal_target[0] + 0.01, *task.terminal_target[1:]),
+    )
+    target_changes_task_fingerprint = _fingerprint(
+        task.to_public_dict()
+    ) != _fingerprint(changed_target_task.to_public_dict())
     multiword_task = replace(task, answer_choices=("POLISH", "NOT ENOUGH INFORMATION"))
     multiword_answer, multiword_support = _parse_model_text(
         "ANSWER=NOT ENOUGH INFORMATION\nSUPPORT=R6",
@@ -2163,6 +2175,20 @@ def self_test() -> JsonObject:
     parser_rejects_extra_lines = _raises_ebrt_reason(
         lambda: _parse_model_text(
             "ANSWER=PROVE\nSUPPORT=R6,R4,R2\nANSWER=POLISH",
+            task=task,
+        ),
+        "MODEL_RESPONSE_LINE_COUNT_INVALID",
+    )
+    parser_rejects_leading_blank_line = _raises_ebrt_reason(
+        lambda: _parse_model_text(
+            "\nANSWER=PROVE\nSUPPORT=R6,R4,R2",
+            task=task,
+        ),
+        "MODEL_RESPONSE_LINE_COUNT_INVALID",
+    )
+    parser_rejects_multiple_terminal_newlines = _raises_ebrt_reason(
+        lambda: _parse_model_text(
+            "ANSWER=PROVE\nSUPPORT=R6,R4,R2\n\n",
             task=task,
         ),
         "MODEL_RESPONSE_LINE_COUNT_INVALID",
@@ -2238,6 +2264,12 @@ def self_test() -> JsonObject:
             "MODEL_ADAPTER",
         ),
         "MODEL_ADAPTER_ADAPTER_ID_INVALID",
+    )
+    cached_snapshot_a = _local_model_id(
+        Path("/tmp/hub/models--example--model/snapshots/revision-a")
+    )
+    cached_snapshot_b = _local_model_id(
+        Path("/tmp/hub/models--example--model/snapshots/revision-b")
     )
     adapter = _conformance_adapter(
         adapter_id="local-conformance-a", model_id="transparent-local-double-a"
@@ -2438,11 +2470,14 @@ def self_test() -> JsonObject:
 
     checks = {
         "network_zero": network["count"] == 0,
+        "task_fingerprint_binds_terminal_target": target_changes_task_fingerprint,
         "parser_accepts_multiword_answer": multiword_answer == "NOT ENOUGH INFORMATION"
         and multiword_support == ("R6",),
         "parser_preserves_declared_delimiters": delimited_answer == "<UNKNOWN>"
         and delimited_support == ("R6",),
         "parser_enforces_exact_two_lines": parser_rejects_extra_lines,
+        "parser_rejects_native_completion_padding": parser_rejects_leading_blank_line
+        and parser_rejects_multiple_terminal_newlines,
         "unpreservable_answer_choices_are_rejected": unpreservable_answer_choice_rejected,
         "duplicate_event_ids_are_rejected": duplicate_event_rejected,
         "invalid_runtime_role_is_rejected": invalid_role_rejected,
@@ -2450,6 +2485,10 @@ def self_test() -> JsonObject:
         "parser_sentinel_cannot_be_evidence_id": reserved_evidence_id_rejected,
         "state_adapter_scales_are_positive": invalid_scale_rejected,
         "adapter_descriptor_is_runtime_validated": invalid_descriptor_rejected,
+        "cached_snapshot_identity_binds_revision": cached_snapshot_a
+        == "example/model@revision-a"
+        and cached_snapshot_b == "example/model@revision-b"
+        and cached_snapshot_a != cached_snapshot_b,
         "credit_map_requires_exact_coverage": incomplete_credit_rejected,
         "compiled_actuator_is_bound_to_backward_receipt": tampered_actuator_rejected,
         "credit_first_order_is_compiled": invocation_before["evidence_ids"][

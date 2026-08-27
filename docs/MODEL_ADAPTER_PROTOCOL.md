@@ -78,7 +78,7 @@ class ModelAdapter(Protocol):
 | Field | Meaning |
 | --- | --- |
 | `adapter_id` | Unique implementation/configuration identity |
-| `model_id` | Public model identity for receipt grouping |
+| `model_id` | Public model-and-weight identity for receipt grouping; cache-derived IDs include the snapshot revision |
 | `interface_kind` | `deterministic_conformance`, `local_open_weight`, or `hosted_api` |
 | `state_visibility` | `public_only` or an explicitly admitted `native_latent` surface |
 | `differentiable_through_model` | Must be `false` for the current public/hosted protocol |
@@ -115,6 +115,8 @@ It must not provide:
 
 The known fixture's `PostRunContract` is validated locally and withheld from
 `build_model_invocation`. The network-zero self-test checks this separation.
+The separately sealed task fingerprint includes the controller's terminal
+target and every other task-owned trajectory parameter.
 
 ## Adapter obligations
 
@@ -123,7 +125,8 @@ A conforming adapter must:
 1. preserve the supplied `ActuatorProgram` bytes semantically;
 2. perform exactly one logical generation per invocation unless a separately
    declared protocol says otherwise;
-3. return exactly the declared two-line schema, with no surrounding prose;
+3. preserve the native completion text and require exactly the declared
+   two-line schema, with no surrounding prose or normalization that hides it;
 4. return a declared answer choice, including a declared multi-word choice;
 5. return only known evidence IDs as active support;
 6. exclude evidence compiled as invalidated support;

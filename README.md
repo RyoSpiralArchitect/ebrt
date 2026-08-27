@@ -59,6 +59,8 @@ python3 ebrt_core.py joint-local-e2e
 
 If the Mistral snapshot is already in the standard Hugging Face cache, EBRT
 discovers it automatically and the environment variable can be omitted.
+Cache-derived model identities include the snapshot revision so different
+weight snapshots cannot collapse into one receipt identity.
 For a model stored outside that cache layout, pass a public receipt identity
 explicitly with `--model-id provider/model-name`; otherwise EBRT emits an
 opaque local-path identity rather than guessing a repository name.
