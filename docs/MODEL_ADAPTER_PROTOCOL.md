@@ -24,6 +24,12 @@ The model adapter never receives a tensor from the autograd graph. The core
 never assumes that a model exposes hidden states, logits, attention, KV cache,
 or private chain-of-thought.
 
+The current actuator protocol is intentionally closed: after any
+`ActuatorAdapter` returns, the engine recompiles the canonical public program
+from the sealed backward receipt and requires exact equality. Alternate
+actuator semantics require a new protocol version rather than silently changing
+the operation behind a structural `PASS`.
+
 ## Python contract
 
 ```python

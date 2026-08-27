@@ -820,6 +820,22 @@ class PublicRevisionActuator:
         )
 
 
+def _validate_compiled_program(
+    task: RevisionTask,
+    optimized: Mapping[str, Any],
+    program: ActuatorProgram,
+    *,
+    lane_id: str,
+) -> None:
+    _require(isinstance(program, ActuatorProgram), "ACTUATOR_PROGRAM_TYPE_INVALID")
+    expected = PublicRevisionActuator().compile(
+        task,
+        optimized,
+        lane_id=lane_id,
+    )
+    _require(program == expected, "ACTUATOR_PROGRAM_BINDING_MISMATCH")
+
+
 @dataclass(frozen=True)
 class AdapterDescriptor:
     adapter_id: str
@@ -989,13 +1005,23 @@ def _parse_model_text(
     )
     _require(answer_match is not None, "MODEL_ANSWER_LINE_INVALID")
     _require(support_match is not None, "MODEL_SUPPORT_LINE_INVALID")
-    answer = answer_match.group(1).strip().strip("<>")
-    _require(bool(answer), "MODEL_ANSWER_EMPTY")
-    _require(answer in task.answer_choices, "MODEL_ANSWER_OUTSIDE_CHOICES")
+    answer_value = answer_match.group(1).strip()
+    _require(bool(answer_value), "MODEL_ANSWER_EMPTY")
+    if answer_value in task.answer_choices:
+        answer = answer_value
+    elif (
+        answer_value.startswith("<")
+        and answer_value.endswith(">")
+        and answer_value[1:-1] in task.answer_choices
+    ):
+        answer = answer_value[1:-1]
+    else:
+        raise EBRTError("MODEL_ANSWER_OUTSIDE_CHOICES")
+    support_value = support_match.group(1).strip()
+    if support_value.startswith("<") and support_value.endswith(">"):
+        support_value = support_value[1:-1]
     support_tokens = tuple(
-        row.strip()
-        for row in support_match.group(1).strip().strip("<>").split(",")
-        if row.strip()
+        row.strip() for row in support_value.split(",") if row.strip()
     )
     if any(row.upper() == "NONE" for row in support_tokens):
         _require(support_tokens == ("NONE",), "MODEL_SUPPORT_NONE_MIXED")
@@ -1261,6 +1287,12 @@ class RevisionEngine:
         envelope = self.state_adapter.build(task, lane_id=lane_id)
         optimized = self.core.optimize(envelope)
         program = self.actuator_adapter.compile(task, optimized, lane_id=lane_id)
+        _validate_compiled_program(
+            task,
+            optimized,
+            program,
+            lane_id=lane_id,
+        )
         expected_descriptor = model_adapter.descriptor
         _require(
             isinstance(expected_descriptor, AdapterDescriptor),
@@ -1673,6 +1705,12 @@ class JointRevisionEngine:
             program = self.actuator_adapter.compile(
                 task, optimized, lane_id=lane.lane_id
             )
+            _validate_compiled_program(
+                task,
+                optimized,
+                program,
+                lane_id=lane.lane_id,
+            )
             expected_descriptor = lane.model_adapter.descriptor
             _require(
                 isinstance(expected_descriptor, AdapterDescriptor),
@@ -1885,6 +1923,25 @@ class _MisboundStateAdapter:
         )
 
 
+@dataclass(frozen=True)
+class _TamperedActuatorAdapter:
+    adapter_id: str = "tampered-actuator-test"
+
+    def compile(
+        self,
+        task: RevisionTask,
+        optimized: Mapping[str, Any],
+        *,
+        lane_id: str,
+    ) -> ActuatorProgram:
+        valid = PublicRevisionActuator().compile(
+            task,
+            optimized,
+            lane_id=lane_id,
+        )
+        return replace(valid, steps=(*valid.steps[:-1], "SKIP_REGENERATION"))
+
+
 @contextmanager
 def _network_denied() -> Any:
     calls = {"count": 0}
@@ -1917,6 +1974,11 @@ def self_test() -> JsonObject:
     multiword_answer, multiword_support = _parse_model_text(
         "ANSWER=NOT ENOUGH INFORMATION\nSUPPORT=R6",
         task=multiword_task,
+    )
+    delimited_task = replace(task, answer_choices=("POLISH", "<UNKNOWN>"))
+    delimited_answer, delimited_support = _parse_model_text(
+        "ANSWER=<UNKNOWN>\nSUPPORT=<R6>",
+        task=delimited_task,
     )
     parser_rejects_extra_lines = _raises_ebrt_reason(
         lambda: _parse_model_text(
@@ -2002,6 +2064,14 @@ def self_test() -> JsonObject:
             task,
             adapter,
             post_run_contract=contract,
+        )
+        tampered_actuator_rejected = _raises_ebrt_reason(
+            lambda: RevisionEngine(actuator_adapter=_TamperedActuatorAdapter()).run(
+                task,
+                adapter,
+                post_run_contract=contract,
+            ),
+            "ACTUATOR_PROGRAM_BINDING_MISMATCH",
         )
         optimized = BackwardRevisionCore().optimize(
             TypedPublicStateAdapter().build(task, lane_id="contract-check")
@@ -2133,6 +2203,8 @@ def self_test() -> JsonObject:
         "network_zero": network["count"] == 0,
         "parser_accepts_multiword_answer": multiword_answer == "NOT ENOUGH INFORMATION"
         and multiword_support == ("R6",),
+        "parser_preserves_declared_delimiters": delimited_answer == "<UNKNOWN>"
+        and delimited_support == ("R6",),
         "parser_enforces_exact_two_lines": parser_rejects_extra_lines,
         "duplicate_event_ids_are_rejected": duplicate_event_rejected,
         "invalid_runtime_role_is_rejected": invalid_role_rejected,
@@ -2141,6 +2213,7 @@ def self_test() -> JsonObject:
         "state_adapter_scales_are_positive": invalid_scale_rejected,
         "adapter_descriptor_is_runtime_validated": invalid_descriptor_rejected,
         "credit_map_requires_exact_coverage": incomplete_credit_rejected,
+        "compiled_actuator_is_bound_to_backward_receipt": tampered_actuator_rejected,
         "credit_first_order_is_compiled": invocation_before["evidence_ids"][
             : len(program.reinspect)
         ]
