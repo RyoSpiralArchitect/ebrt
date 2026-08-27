@@ -63,6 +63,8 @@ discovers it automatically and the environment variable can be omitted.
 Automatic discovery follows the repository's `refs/main` revision. If that
 reference is absent while multiple complete snapshots exist, EBRT rejects the
 ambiguous cache and requires `EBRT_LOCAL_MODEL` or `--model` explicitly.
+For an indexed snapshot, every shard named by every weight map must exist and
+be non-empty before the snapshot is considered complete.
 Cache-derived model identities include the snapshot revision so different
 weight snapshots cannot collapse into one receipt identity.
 For a model stored outside that cache layout, pass a public receipt identity
@@ -127,6 +129,10 @@ records the exact typed state-adapter scales in the core receipt and severs any
 incoming autograd history before optimization. A future admitted latent
 trajectory needs an explicit protocol version rather than silently crossing
 this boundary.
+
+The engine attributes `real_backward_executed_once` only to the exact bundled
+core implementation. An injected core receipt is still structurally validated,
+but cannot promote a replayed receipt into a claim about the current run.
 
 ## v0.7.1 — single-trajectory revision
 

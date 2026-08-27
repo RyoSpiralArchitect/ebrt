@@ -122,13 +122,20 @@ Automatic Hugging Face cache discovery follows the repository's `refs/main`
 revision. When that reference is absent, exactly one complete snapshot is
 required; multiple complete snapshots are rejected as ambiguous rather than
 selecting one by directory-name order. An explicit `EBRT_LOCAL_MODEL` or
-`--model` remains available when the caller intends a different snapshot.
+`--model` remains available when the caller intends a different snapshot. A
+sharded snapshot is complete only when its index is valid and every referenced
+`.safetensors` shard exists and is non-empty.
 
 The engine recomputes the expected invocation before generation and requires
 the returned request fingerprint and adapter descriptor to match that binding.
 An adapter cannot substitute another request or model identity while retaining
 structural `PASS`. Descriptor values are runtime-validated, and the current
 protocol rejects any descriptor that claims a gradient crosses generation.
+
+Core receipt replay validation is not an execution attestation by itself. The
+current engine reports a backward execution only when the exact bundled single
+or joint core method ran in that call; an injected core can be validated for
+conformance but cannot yield engine `PASS` from a previously captured receipt.
 
 ## Model-visible information
 

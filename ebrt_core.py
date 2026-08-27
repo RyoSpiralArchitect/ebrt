@@ -1778,6 +1778,16 @@ def _grade_contract(
     }
 
 
+def _is_trusted_builtin_core(core: Any, expected_type: type[Any]) -> bool:
+    """Only the exact built-in implementation can attest this run's backward."""
+
+    optimize = getattr(core, "optimize", None)
+    return (
+        type(core) is expected_type
+        and getattr(optimize, "__func__", None) is expected_type.optimize
+    )
+
+
 class RevisionEngine:
     """v0.7.1 single-lane composition of the five public interfaces."""
 
@@ -1814,6 +1824,10 @@ class RevisionEngine:
         optimized = _validate_single_core_receipt(
             envelope,
             self.core.optimize(_clone_envelope(envelope)),
+        )
+        _require(
+            _is_trusted_builtin_core(self.core, BackwardRevisionCore),
+            "CORE_EXECUTION_UNVERIFIED",
         )
         program = self.actuator_adapter.compile(
             task,
@@ -2490,6 +2504,10 @@ class JointRevisionEngine:
                 weights=[row.weight for row in ordered_lanes],
             ),
         )
+        _require(
+            _is_trusted_builtin_core(self.core, JointBackwardRevisionCore),
+            "JOINT_CORE_EXECUTION_UNVERIFIED",
+        )
         programs: dict[str, ActuatorProgram] = {}
         results: dict[str, ModelResult] = {}
         structural: JsonObject = {}
@@ -2883,6 +2901,14 @@ class _AlternateDescendingControlCore:
         return _seal(material)
 
 
+@dataclass(frozen=True)
+class _ReplayingSingleCore:
+    receipt: Mapping[str, Any]
+
+    def optimize(self, _envelope: TrajectoryEnvelope) -> JsonObject:
+        return _clone(self.receipt)
+
+
 class _TamperedJointCore:
     def optimize(
         self,
@@ -2906,6 +2932,20 @@ class _MutatingJointCore:
     ) -> JsonObject:
         envelopes[0].neutral_effects[0, 0] += 0.01
         return JointBackwardRevisionCore().optimize(envelopes, weights=weights)
+
+
+@dataclass(frozen=True)
+class _ReplayingJointCore:
+    receipt: Mapping[str, Any]
+
+    def optimize(
+        self,
+        _envelopes: Sequence[TrajectoryEnvelope],
+        *,
+        weights: Sequence[float],
+    ) -> JsonObject:
+        _require(bool(weights), "TEST_REPLAY_WEIGHTS_MISSING")
+        return _clone(self.receipt)
 
 
 class _MisreportingContract(PostRunContract):
@@ -3094,6 +3134,35 @@ def self_test() -> JsonObject:
         ),
         "LOCAL_MODEL_SNAPSHOT_AMBIGUOUS",
     )
+    indexed_weight_manifest_complete = _indexed_weight_files_are_complete(
+        (
+            {
+                "weight_map": {
+                    "layer.0": "model-00001-of-00002.safetensors",
+                    "layer.1": "model-00002-of-00002.safetensors",
+                }
+            },
+        ),
+        frozenset(
+            {
+                "model-00001-of-00002.safetensors",
+                "model-00002-of-00002.safetensors",
+            }
+        ),
+    )
+    indexed_weight_manifest_rejects_missing_shard = (
+        not _indexed_weight_files_are_complete(
+            (
+                {
+                    "weight_map": {
+                        "layer.0": "model-00001-of-00002.safetensors",
+                        "layer.1": "model-00002-of-00002.safetensors",
+                    }
+                },
+            ),
+            frozenset({"model-00001-of-00002.safetensors"}),
+        )
+    )
     noncache_identity_requires_revision = _raises_ebrt_reason(
         lambda: _local_model_id(Path("/tmp/replaceable-local-model")),
         "LOCAL_MODEL_ID_REVISION_REQUIRED",
@@ -3135,6 +3204,14 @@ def self_test() -> JsonObject:
             task,
             adapter,
             post_run_contract=contract,
+        )
+        replayed_single_core_rejected = _raises_ebrt_reason(
+            lambda: RevisionEngine(core=_ReplayingSingleCore(single["trajectory"])).run(
+                task,
+                adapter,
+                post_run_contract=contract,
+            ),
+            "CORE_EXECUTION_UNVERIFIED",
         )
         tampered_single_core_rejected = _raises_ebrt_reason(
             lambda: RevisionEngine(core=_TamperedSingleCore()).run(
@@ -3442,6 +3519,16 @@ def self_test() -> JsonObject:
         joint = JointRevisionEngine().run(
             task, (lane_b, lane_a), post_run_contract=contract
         )
+        replayed_joint_core_rejected = _raises_ebrt_reason(
+            lambda: JointRevisionEngine(
+                core=_ReplayingJointCore(joint["joint_trajectory"])
+            ).run(
+                task,
+                (lane_b, lane_a),
+                post_run_contract=contract,
+            ),
+            "JOINT_CORE_EXECUTION_UNVERIFIED",
+        )
         joint_reversed = JointRevisionEngine().run(
             task, (lane_a, lane_b), post_run_contract=contract
         )
@@ -3494,6 +3581,8 @@ def self_test() -> JsonObject:
         "cached_model_selection_uses_active_ref_and_rejects_ambiguity": active_cache_selection
         == cached_path_a
         and ambiguous_cache_selection_rejected,
+        "cached_snapshot_requires_every_indexed_weight_shard": indexed_weight_manifest_complete
+        and indexed_weight_manifest_rejects_missing_shard,
         "noncache_model_identity_requires_explicit_revision": noncache_identity_requires_revision
         and explicit_revision_identity == "example/model@weights-sha256-deadbeef",
         "mlx_decoding_configuration_is_receipt_bound": mlx_config_a != mlx_config_b
@@ -3517,6 +3606,8 @@ def self_test() -> JsonObject:
         and tampered_joint_core_rejected
         and mutating_single_core_rejected
         and mutating_joint_core_rejected,
+        "replayed_injected_core_cannot_claim_current_backward_execution": replayed_single_core_rejected
+        and replayed_joint_core_rejected,
         "core_receipts_bind_the_declared_update_law": alternate_control_law_rejected,
         "credit_first_order_is_compiled": invocation_before["evidence_ids"][
             : len(program.reinspect)
@@ -3658,6 +3749,64 @@ def self_test() -> JsonObject:
     )
 
 
+def _indexed_weight_files_are_complete(
+    index_payloads: Sequence[Any],
+    available_files: frozenset[str],
+) -> bool:
+    if not index_payloads:
+        return False
+    referenced: set[str] = set()
+    for payload in index_payloads:
+        if not isinstance(payload, Mapping):
+            return False
+        weight_map = payload.get("weight_map")
+        if not isinstance(weight_map, Mapping) or not weight_map:
+            return False
+        for parameter_name, filename in weight_map.items():
+            if (
+                not isinstance(parameter_name, str)
+                or not parameter_name
+                or not isinstance(filename, str)
+                or not filename
+            ):
+                return False
+            shard = Path(filename)
+            if shard.name != filename or shard.suffix != ".safetensors":
+                return False
+            referenced.add(filename)
+    return bool(referenced) and referenced.issubset(available_files)
+
+
+def _snapshot_has_complete_weights(path: Path) -> bool:
+    try:
+        weight_paths = tuple(path.glob("*.safetensors"))
+        index_paths = tuple(sorted(path.glob("*.safetensors.index.json")))
+    except OSError:
+        return False
+    available: set[str] = set()
+    for weight_path in weight_paths:
+        try:
+            if weight_path.is_file() and weight_path.stat().st_size > 0:
+                available.add(weight_path.name)
+        except OSError:
+            return False
+    if index_paths:
+        payloads: list[Any] = []
+        for index_path in index_paths:
+            try:
+                payloads.append(json.loads(index_path.read_text(encoding="utf-8")))
+            except (OSError, UnicodeError, json.JSONDecodeError):
+                return False
+        return _indexed_weight_files_are_complete(
+            payloads,
+            frozenset(available),
+        )
+    if len(available) != 1:
+        return False
+    only_weight = next(iter(available))
+    return re.search(r"-\d{5}-of-\d{5}\.safetensors$", only_weight) is None
+
+
 def _select_cached_snapshot(
     complete: Sequence[Path],
     *,
@@ -3696,11 +3845,7 @@ def _default_mlx_model_path() -> str | None:
             complete = tuple(
                 path
                 for path in snapshots.iterdir()
-                if path.is_dir()
-                and (
-                    any(path.glob("*.safetensors"))
-                    or any(path.glob("*.safetensors.index.json"))
-                )
+                if path.is_dir() and _snapshot_has_complete_weights(path)
             )
             active_revision: str | None = None
             active_ref = candidate / "refs" / "main"
