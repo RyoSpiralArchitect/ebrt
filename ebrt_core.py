@@ -392,6 +392,26 @@ class StateAdapter(Protocol):
     def build(self, task: RevisionTask, *, lane_id: str) -> TrajectoryEnvelope: ...
 
 
+def _validate_state_envelope_binding(
+    state_adapter: StateAdapter,
+    envelope: TrajectoryEnvelope,
+    *,
+    lane_id: str,
+    label: str,
+) -> None:
+    _require(
+        isinstance(envelope, TrajectoryEnvelope),
+        f"{label}_ENVELOPE_TYPE_INVALID",
+    )
+    _require(envelope.lane_id == lane_id, f"{label}_LANE_MISMATCH")
+    adapter_id = getattr(state_adapter, "adapter_id", None)
+    _safe_id(adapter_id, f"{label}_ID")
+    _require(
+        envelope.state_adapter_id == adapter_id,
+        f"{label}_ID_MISMATCH",
+    )
+
+
 @dataclass(frozen=True)
 class TypedPublicStateAdapter:
     """Maps typed public effects into a differentiable trajectory envelope."""
@@ -1291,6 +1311,12 @@ class RevisionEngine:
         if post_run_contract is not None:
             validate_contract(task, post_run_contract)
         envelope = self.state_adapter.build(task, lane_id=lane_id)
+        _validate_state_envelope_binding(
+            self.state_adapter,
+            envelope,
+            lane_id=lane_id,
+            label="STATE_ADAPTER",
+        )
         optimized = self.core.optimize(envelope)
         program = self.actuator_adapter.compile(task, optimized, lane_id=lane_id)
         _validate_compiled_program(
@@ -1695,9 +1721,11 @@ class JointRevisionEngine:
         envelopes: list[TrajectoryEnvelope] = []
         for lane in ordered_lanes:
             envelope = lane.state_adapter.build(task, lane_id=lane.lane_id)
-            _require(
-                envelope.lane_id == lane.lane_id,
-                "JOINT_STATE_ADAPTER_LANE_MISMATCH",
+            _validate_state_envelope_binding(
+                lane.state_adapter,
+                envelope,
+                lane_id=lane.lane_id,
+                label="JOINT_STATE_ADAPTER",
             )
             envelopes.append(envelope)
         joint = self.core.optimize(
@@ -2083,6 +2111,16 @@ def self_test() -> JsonObject:
             ),
             "ACTUATOR_PROGRAM_BINDING_MISMATCH",
         )
+        single_state_identity_rejected = _raises_ebrt_reason(
+            lambda: RevisionEngine(
+                state_adapter=_MisboundStateAdapter(returned_lane_id="primary")
+            ).run(
+                task,
+                adapter,
+                post_run_contract=contract,
+            ),
+            "STATE_ADAPTER_ID_MISMATCH",
+        )
         optimized = BackwardRevisionCore().optimize(
             TypedPublicStateAdapter().build(task, lane_id="contract-check")
         )
@@ -2202,6 +2240,22 @@ def self_test() -> JsonObject:
             ),
             "JOINT_STATE_ADAPTER_LANE_MISMATCH",
         )
+        joint_state_identity_rejected = _raises_ebrt_reason(
+            lambda: JointRevisionEngine().run(
+                task,
+                (
+                    replace(
+                        lane_a,
+                        state_adapter=_MisboundStateAdapter(
+                            returned_lane_id=lane_a.lane_id
+                        ),
+                    ),
+                    lane_b,
+                ),
+                post_run_contract=contract,
+            ),
+            "JOINT_STATE_ADAPTER_ID_MISMATCH",
+        )
         joint = JointRevisionEngine().run(
             task, (lane_b, lane_a), post_run_contract=contract
         )
@@ -2246,6 +2300,8 @@ def self_test() -> JsonObject:
         ]
         and not raw_text_tamper_checks["raw_text_matches_returned_fields"],
         "joint_state_lane_binding_is_exact": misbound_lane_rejected,
+        "state_adapter_identity_is_bound_single_and_joint": single_state_identity_rejected
+        and joint_state_identity_rejected,
         "single_lane_v0_7_1_pass": single["status"] == "PASS",
         "single_lane_contract_pass": single["post_run_contract"]["status"] == "PASS",
         "single_lane_real_backward": single["trajectory"]["checks"][
