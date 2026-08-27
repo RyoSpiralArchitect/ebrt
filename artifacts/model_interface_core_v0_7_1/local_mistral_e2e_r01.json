@@ -2,11 +2,11 @@
   "schema_version": "ebrt-local-open-weight-receipt-v0.7.1",
   "status": "PASS",
   "artifact_kind": "CONTAMINATED_INTEGRATION_RECEIPT",
-  "recorded_at_utc": "2026-08-27T22:52:00Z",
+  "recorded_at_utc": "2026-08-27T23:02:57Z",
   "command": "python3 ebrt_core.py local-e2e",
   "source": {
-    "commit": "9869d468215bcccad131e2695b0a4ad35ffc2812",
-    "ebrt_core_sha256": "5248dfb5f0cac52a083dfcbb1fd9198da399c941575cc00927818510b3959883"
+    "commit": "3c4689a2d0f6eabc3270b07886fa4ef345862de5",
+    "ebrt_core_sha256": "a93d4a8047e0d1e220570c311f91b327bbe6197d26e18b85a46dfe604fd9192e"
   },
   "runtime": {
     "platform": "macOS-26.2-arm64-arm-64bit-Mach-O",
@@ -30,6 +30,14 @@
     },
     "generation_config_fingerprint_sha256": "1a240ca0a60f2096e35d779b9e12b4310ccf6e6d827f80c5dd2e09bdc5224db4"
   },
+  "state_adapter": {
+    "adapter_id": "typed-public-state-v0.7.1",
+    "configuration": {
+      "correction_scale": 1.0,
+      "invalidation_scale": 1.0,
+      "support_scale": 1.0
+    }
+  },
   "public_output": {
     "raw_text": "ANSWER=PROVE\nSUPPORT=R6, R4, R2",
     "answer": "PROVE",
@@ -39,11 +47,11 @@
       "R2"
     ],
     "logical_calls": 1,
-    "latency_ms": 5232.109249976929,
-    "request_fingerprint_sha256": "aae7c7b3ee45522da820199329c13c7341cd21026f2c517eafff54ce4024acbe",
-    "model_result_fingerprint_sha256": "25900bff63808c70b4b5883347644be7732fc357603e334589607e523e7aed05"
+    "latency_ms": 5324.459250026848,
+    "request_fingerprint_sha256": "97415cba997c7c80bae24e5b1b3883573c15a43b5cb0659591f8c0e9022ba56f",
+    "model_result_fingerprint_sha256": "3a5387fc9cf2a9bac9e4d61e5536b9a5bdfcb5b8072cfcef644b0e85e08b5a75"
   },
-  "trajectory_fingerprint_sha256": "82c2af464c8d6155ef97d5501326ce518c8c6baa99c2abba0192d27f40d37b4d",
+  "trajectory_fingerprint_sha256": "39197bfbe8807a360bdca7bf0a5592a61f46e01ddc66c9838983560a99b3c7d1",
   "trajectory_checks": {
     "central_finite_difference_agreement": true,
     "control_budget_respected": true,
@@ -95,12 +103,12 @@
     },
     "status": "PASS"
   },
-  "result_fingerprint_sha256": "2ad840518fee7900f067e8b9ad4736d82cd424e4f86cf229cb248f540371ced0",
+  "result_fingerprint_sha256": "b574387a1ea7108e8a155ef3027dcc22d16abbe2051e9162f65905604e423837",
   "effect_attribution_status": "NOT_ASSESSED",
   "claim_boundary": [
     "This receipt records one real local open-weight integration run over a known synthetic fixture.",
     "It does not establish causal superiority, fresh benchmark performance, or general reasoning improvement.",
     "The state-adapter tensors are detached into a core-owned public trajectory, and the gradient does not cross either adapter boundary."
   ],
-  "fingerprint_sha256": "9deef3bb251b803be30e070e59c1b953ef0617ec463c874eb2ea758520eb84e8"
+  "fingerprint_sha256": "65b7ac303e31e4915568181a70a960e176c4bb001ec96d67c23c94db440cd012"
 }
