@@ -849,6 +849,9 @@ class BackwardRevisionCore:
         )
 
 
+_ORIGINAL_SINGLE_CORE_OPTIMIZE = BackwardRevisionCore.optimize
+
+
 def _core_lane_material(
     envelope: TrajectoryEnvelope,
     receipt: Mapping[str, Any],
@@ -1778,13 +1781,17 @@ def _grade_contract(
     }
 
 
-def _is_trusted_builtin_core(core: Any, expected_type: type[Any]) -> bool:
+def _is_trusted_builtin_core(
+    core: Any,
+    expected_type: type[Any],
+    original_optimize: Callable[..., JsonObject],
+) -> bool:
     """Only the exact built-in implementation can attest this run's backward."""
 
     optimize = getattr(core, "optimize", None)
     return (
         type(core) is expected_type
-        and getattr(optimize, "__func__", None) is expected_type.optimize
+        and getattr(optimize, "__func__", None) is original_optimize
     )
 
 
@@ -1821,12 +1828,22 @@ class RevisionEngine:
             lane_id=lane_id,
             label="STATE_ADAPTER",
         )
+        core_execution_trusted = _is_trusted_builtin_core(
+            self.core,
+            BackwardRevisionCore,
+            _ORIGINAL_SINGLE_CORE_OPTIMIZE,
+        )
         optimized = _validate_single_core_receipt(
             envelope,
             self.core.optimize(_clone_envelope(envelope)),
         )
         _require(
-            _is_trusted_builtin_core(self.core, BackwardRevisionCore),
+            core_execution_trusted
+            and _is_trusted_builtin_core(
+                self.core,
+                BackwardRevisionCore,
+                _ORIGINAL_SINGLE_CORE_OPTIMIZE,
+            ),
             "CORE_EXECUTION_UNVERIFIED",
         )
         program = self.actuator_adapter.compile(
@@ -2146,6 +2163,9 @@ class JointBackwardRevisionCore:
                 "gradient_boundary": "joint_adapter_supplied_public_trajectories",
             }
         )
+
+
+_ORIGINAL_JOINT_CORE_OPTIMIZE = JointBackwardRevisionCore.optimize
 
 
 def _validate_joint_core_receipt(
@@ -2496,6 +2516,11 @@ class JointRevisionEngine:
             )
             envelopes.append(envelope)
         core_envelopes = [_clone_envelope(envelope) for envelope in envelopes]
+        core_execution_trusted = _is_trusted_builtin_core(
+            self.core,
+            JointBackwardRevisionCore,
+            _ORIGINAL_JOINT_CORE_OPTIMIZE,
+        )
         joint = _validate_joint_core_receipt(
             envelopes,
             [row.weight for row in ordered_lanes],
@@ -2505,7 +2530,12 @@ class JointRevisionEngine:
             ),
         )
         _require(
-            _is_trusted_builtin_core(self.core, JointBackwardRevisionCore),
+            core_execution_trusted
+            and _is_trusted_builtin_core(
+                self.core,
+                JointBackwardRevisionCore,
+                _ORIGINAL_JOINT_CORE_OPTIMIZE,
+            ),
             "JOINT_CORE_EXECUTION_UNVERIFIED",
         )
         programs: dict[str, ActuatorProgram] = {}
@@ -3213,6 +3243,23 @@ def self_test() -> JsonObject:
             ),
             "CORE_EXECUTION_UNVERIFIED",
         )
+
+        def replay_with_patched_single_core() -> JsonObject:
+            with mock.patch.object(
+                BackwardRevisionCore,
+                "optimize",
+                return_value=_clone(single["trajectory"]),
+            ):
+                return RevisionEngine().run(
+                    task,
+                    adapter,
+                    post_run_contract=contract,
+                )
+
+        patched_single_core_replay_rejected = _raises_ebrt_reason(
+            replay_with_patched_single_core,
+            "CORE_EXECUTION_UNVERIFIED",
+        )
         tampered_single_core_rejected = _raises_ebrt_reason(
             lambda: RevisionEngine(core=_TamperedSingleCore()).run(
                 task,
@@ -3529,6 +3576,23 @@ def self_test() -> JsonObject:
             ),
             "JOINT_CORE_EXECUTION_UNVERIFIED",
         )
+
+        def replay_with_patched_joint_core() -> JsonObject:
+            with mock.patch.object(
+                JointBackwardRevisionCore,
+                "optimize",
+                return_value=_clone(joint["joint_trajectory"]),
+            ):
+                return JointRevisionEngine().run(
+                    task,
+                    (lane_b, lane_a),
+                    post_run_contract=contract,
+                )
+
+        patched_joint_core_replay_rejected = _raises_ebrt_reason(
+            replay_with_patched_joint_core,
+            "JOINT_CORE_EXECUTION_UNVERIFIED",
+        )
         joint_reversed = JointRevisionEngine().run(
             task, (lane_a, lane_b), post_run_contract=contract
         )
@@ -3608,6 +3672,8 @@ def self_test() -> JsonObject:
         and mutating_joint_core_rejected,
         "replayed_injected_core_cannot_claim_current_backward_execution": replayed_single_core_rejected
         and replayed_joint_core_rejected,
+        "class_level_core_replacement_cannot_claim_backward_execution": patched_single_core_replay_rejected
+        and patched_joint_core_replay_rejected,
         "core_receipts_bind_the_declared_update_law": alternate_control_law_rejected,
         "credit_first_order_is_compiled": invocation_before["evidence_ids"][
             : len(program.reinspect)

@@ -134,7 +134,8 @@ protocol rejects any descriptor that claims a gradient crosses generation.
 
 Core receipt replay validation is not an execution attestation by itself. The
 current engine reports a backward execution only when the exact bundled single
-or joint core method ran in that call; an injected core can be validated for
+or joint core and its module-load original method remain identical before and
+after that call. An injected or class-replaced core can be validated for
 conformance but cannot yield engine `PASS` from a previously captured receipt.
 
 ## Model-visible information

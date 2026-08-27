@@ -131,8 +131,10 @@ trajectory needs an explicit protocol version rather than silently crossing
 this boundary.
 
 The engine attributes `real_backward_executed_once` only to the exact bundled
-core implementation. An injected core receipt is still structurally validated,
-but cannot promote a replayed receipt into a claim about the current run.
+core implementation and its module-load original method, checked before and
+after execution. An injected or class-replaced core receipt is still
+structurally validated, but cannot promote a replay into a claim about the
+current run.
 
 ## v0.7.1 — single-trajectory revision
 
