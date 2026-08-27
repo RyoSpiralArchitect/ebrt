@@ -2,11 +2,11 @@
   "schema_version": "ebrt-local-open-weight-receipt-v0.7.1",
   "status": "PASS",
   "artifact_kind": "CONTAMINATED_INTEGRATION_RECEIPT",
-  "recorded_at_utc": "2026-08-27T23:24:25Z",
+  "recorded_at_utc": "2026-08-27T23:35:05Z",
   "command": "python3 ebrt_core.py local-e2e",
   "source": {
-    "commit": "4f033d3cc0ae2b37142171a85faff44350f96393",
-    "ebrt_core_sha256": "5c5fa20b25f6abee43e98c949075912caefb53cc72c96d48ed0be369fe777772"
+    "commit": "58a6c7ad993882cd5b614460760c0582cc4493e4",
+    "ebrt_core_sha256": "06eedc43c5dcfe5e1d5557e245db91a2a76858f76ee1531157da9959e9ed9a41"
   },
   "runtime": {
     "platform": "macOS-26.2-arm64-arm-64bit-Mach-O",
@@ -47,9 +47,9 @@
       "R2"
     ],
     "logical_calls": 1,
-    "latency_ms": 5122.928750002757,
+    "latency_ms": 5979.770334030036,
     "request_fingerprint_sha256": "97415cba997c7c80bae24e5b1b3883573c15a43b5cb0659591f8c0e9022ba56f",
-    "model_result_fingerprint_sha256": "9f8c2a7c900f6dc7d05dc1315a3cba0ba2cc836487a0d6f162fc7da74c59e6e6"
+    "model_result_fingerprint_sha256": "f42eca49af2d9745cf3b1bbfb72f2a6f14872f855495048a7ec49a261685a9df"
   },
   "trajectory_fingerprint_sha256": "39197bfbe8807a360bdca7bf0a5592a61f46e01ddc66c9838983560a99b3c7d1",
   "trajectory_checks": {
@@ -103,12 +103,12 @@
     },
     "status": "PASS"
   },
-  "result_fingerprint_sha256": "4f3819f48fe3fd1354d67cde76ee2c86ca2daa3a31e9c7e15ae9d5b54a8ac8f1",
+  "result_fingerprint_sha256": "472b04abbc7dfa968c2aa29088a574e92eb90030ef7b623974e2d9a092441dd0",
   "effect_attribution_status": "NOT_ASSESSED",
   "claim_boundary": [
     "This receipt records one real local open-weight integration run over a known synthetic fixture.",
     "It does not establish causal superiority, fresh benchmark performance, or general reasoning improvement.",
     "The state-adapter tensors are detached into a core-owned public trajectory, and the gradient does not cross either adapter boundary."
   ],
-  "fingerprint_sha256": "70fb26d13908ae73398b40f9591653b9d5d1cf5234465de36f1a48164da2ab7b"
+  "fingerprint_sha256": "6affbcec45681fd7467169d7da981d9b957b42473b3fd90e229af77b387327c5"
 }
