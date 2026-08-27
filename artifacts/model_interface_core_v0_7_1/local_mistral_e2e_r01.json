@@ -2,11 +2,11 @@
   "schema_version": "ebrt-local-open-weight-receipt-v0.7.1",
   "status": "PASS",
   "artifact_kind": "CONTAMINATED_INTEGRATION_RECEIPT",
-  "recorded_at_utc": "2026-08-27T20:44:12Z",
+  "recorded_at_utc": "2026-08-27T20:46:59Z",
   "command": "python3 ebrt_core.py local-e2e",
   "source": {
-    "commit": "939c4d1938aad20a1b14153ce1945e42392fcf7b",
-    "ebrt_core_sha256": "bd35a52705c4ccdd29e52bb7b7bde2365b60211a47d6a0653f8650de5d192bc4"
+    "commit": "028743dacc6d070986563d4ea6526b3cd9fb246c",
+    "ebrt_core_sha256": "565d689056f4e226bd83a65fb568f38aabf4425361bcad438815067f1a1da908"
   },
   "runtime": {
     "platform": "macOS-26.2-arm64-arm-64bit-Mach-O",
@@ -32,9 +32,9 @@
       "R2"
     ],
     "logical_calls": 1,
-    "latency_ms": 6074.339333979879,
+    "latency_ms": 5089.7982500027865,
     "request_fingerprint_sha256": "e549c7107beabda5a87ee9be74a29fb141b41373607c25026b26955ab310d79c",
-    "model_result_fingerprint_sha256": "c8127f35a78688493eda7fa4ced66099fc0da44385650cad223c31682c4e88e9"
+    "model_result_fingerprint_sha256": "ba4b03021997a796eba3a9680f7c779246217c6ac2aa183c9fc78a9a1fb39824"
   },
   "trajectory_checks": {
     "central_finite_difference_agreement": true,
@@ -55,6 +55,8 @@
     "invalidated_support_absent": true,
     "latency_is_finite_and_nonnegative": true,
     "one_model_invocation": true,
+    "raw_text_conforms_to_schema": true,
+    "raw_text_matches_returned_fields": true,
     "request_fingerprint_matches_invocation": true,
     "support_ids_are_known": true,
     "typed_preservation_compiled": true,
@@ -69,12 +71,12 @@
       "required_support_present": true
     }
   },
-  "result_fingerprint_sha256": "df73aae776e6ddc1cbd75470137366d9e4a457eed4379d96776315b2bbd76b53",
+  "result_fingerprint_sha256": "c005417ce0ffadc4ba19f50939208f8aa70fd099a5d63710a579ef108c65581c",
   "effect_attribution_status": "NOT_ASSESSED",
   "claim_boundary": [
     "This receipt records one real local open-weight integration run over a known synthetic fixture.",
     "It does not establish causal superiority, fresh benchmark performance, or general reasoning improvement.",
     "The gradient stops at the adapter-supplied public trajectory and does not cross the model boundary."
   ],
-  "fingerprint_sha256": "13c6fd830a55e471134820e8d0074a890e3ceef0ad6ec26b2851ab8e4081f4b0"
+  "fingerprint_sha256": "6bb1d20bb14399b62780f009927d23ab20e094b7da238cad9f4dbcae51b6b10e"
 }
