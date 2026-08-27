@@ -252,8 +252,13 @@ class PostRunContract:
 
 
 def validate_task(task: RevisionTask) -> None:
+    _require(type(task) is RevisionTask, "TASK_TYPE_INVALID")
     _safe_id(task.task_id, "TASK_ID")
-    _require(bool(task.question.strip()), "QUESTION_EMPTY")
+    _require(
+        type(task.question) is str and bool(task.question.strip()),
+        "QUESTION_INVALID",
+    )
+    _require(type(task.answer_choices) is tuple, "ANSWER_CHOICES_TYPE_INVALID")
     _require(len(task.answer_choices) >= 2, "ANSWER_CHOICES_TOO_SMALL")
     _require(
         len(set(task.answer_choices)) == len(task.answer_choices)
@@ -266,8 +271,53 @@ def validate_task(task: RevisionTask) -> None:
         ),
         "ANSWER_CHOICES_INVALID",
     )
-    _require(task.prior_state.answer in task.answer_choices, "PRIOR_ANSWER_INVALID")
+    _require(type(task.prior_state) is PriorPublicState, "PRIOR_STATE_TYPE_INVALID")
+    _require(type(task.event) is RevisionEvent, "EVENT_TYPE_INVALID")
+    _require(type(task.evidence) is tuple, "EVIDENCE_TYPE_INVALID")
+    _require(
+        type(task.before_horizon_evidence_ids) is tuple
+        and all(type(row) is str for row in task.before_horizon_evidence_ids),
+        "BEFORE_HORIZON_TYPE_INVALID",
+    )
+    _require(type(task.terminal_target) is tuple, "TARGET_TYPE_INVALID")
+    _require(
+        type(task.prior_state.answer) is str
+        and task.prior_state.answer in task.answer_choices,
+        "PRIOR_ANSWER_INVALID",
+    )
+    _require(
+        type(task.prior_state.active_support_ids) is tuple
+        and all(type(row) is str for row in task.prior_state.active_support_ids),
+        "PRIOR_SUPPORT_TYPE_INVALID",
+    )
+    _require(
+        type(task.prior_state.stable_values) is tuple
+        and all(
+            type(row) is tuple
+            and len(row) == 2
+            and type(row[0]) is str
+            and type(row[1]) is str
+            for row in task.prior_state.stable_values
+        ),
+        "STABLE_VALUE_TYPE_INVALID",
+    )
+    _require(
+        type(task.event.invalidated_evidence_ids) is tuple
+        and all(type(row) is str for row in task.event.invalidated_evidence_ids),
+        "INVALIDATED_EVIDENCE_TYPE_INVALID",
+    )
+    _require(
+        type(task.event.stable_evidence_ids) is tuple
+        and all(type(row) is str for row in task.event.stable_evidence_ids),
+        "STABLE_EVIDENCE_TYPE_INVALID",
+    )
+    _safe_id(task.event.event_id, "EVENT_ID")
+    _safe_id(task.event.correction_evidence_id, "CORRECTION_EVIDENCE_ID")
     _require(len(task.evidence) >= 2, "EVIDENCE_TOO_SMALL")
+    _require(
+        all(type(row) is Evidence for row in task.evidence),
+        "EVIDENCE_ROW_TYPE_INVALID",
+    )
     ids = [row.evidence_id for row in task.evidence]
     _require(len(ids) == len(set(ids)), "EVIDENCE_ID_DUPLICATE")
     _require(
@@ -282,7 +332,10 @@ def validate_task(task: RevisionTask) -> None:
     for row in task.evidence:
         _safe_id(row.evidence_id, "EVIDENCE_ID")
         _require(row.evidence_id.upper() != "NONE", "EVIDENCE_ID_RESERVED")
-        _require(bool(row.text.strip()), "EVIDENCE_TEXT_EMPTY")
+        _require(
+            type(row.text) is str and bool(row.text.strip()),
+            "EVIDENCE_TEXT_INVALID",
+        )
         _require(
             isinstance(row.role, str) and row.role in EVIDENCE_ROLES,
             "EVIDENCE_ROLE_INVALID",
@@ -291,6 +344,7 @@ def validate_task(task: RevisionTask) -> None:
             ("NEUTRAL_EFFECT", row.neutral_effect),
             ("CONTROL_BASIS", row.control_basis),
         ):
+            _require(type(vector) is tuple, f"{label}_TYPE_INVALID")
             _require(len(vector) == len(AXES), f"{label}_DIMENSION_INVALID")
             for value in vector:
                 _finite(value, label)
@@ -299,7 +353,6 @@ def validate_task(task: RevisionTask) -> None:
             "STABILITY_AXIS_MUST_BE_EXACT_ZERO",
         )
     id_set = set(ids)
-    _safe_id(task.event.event_id, "EVENT_ID")
     for label, values in (
         ("INVALIDATED_EVIDENCE", task.event.invalidated_evidence_ids),
         ("STABLE_EVIDENCE", task.event.stable_evidence_ids),
@@ -390,12 +443,20 @@ def validate_task(task: RevisionTask) -> None:
 def validate_contract(task: RevisionTask, contract: PostRunContract) -> None:
     _require(type(contract) is PostRunContract, "CONTRACT_TYPE_INVALID")
     ids = {row.evidence_id for row in task.evidence}
-    _require(contract.expected_answer in task.answer_choices, "CONTRACT_ANSWER_INVALID")
+    _require(
+        type(contract.expected_answer) is str
+        and contract.expected_answer in task.answer_choices,
+        "CONTRACT_ANSWER_INVALID",
+    )
     for label, values in (
         ("REQUIRED_SUPPORT", contract.required_support_ids),
         ("FORBIDDEN_SUPPORT", contract.forbidden_support_ids),
         ("REQUIRED_COMPILED_PRESERVE", contract.required_compiled_preserve_ids),
     ):
+        _require(
+            type(values) is tuple and all(type(row) is str for row in values),
+            f"{label}_TYPE_INVALID",
+        )
         _require(len(values) == len(set(values)), f"{label}_DUPLICATE")
         _require(set(values).issubset(ids), f"{label}_UNKNOWN")
     _require(
@@ -1304,6 +1365,7 @@ class AdapterDescriptor:
 
 
 def _validate_adapter_descriptor(descriptor: AdapterDescriptor, label: str) -> None:
+    _require(type(descriptor) is AdapterDescriptor, f"{label}_TYPE_INVALID")
     _safe_id(descriptor.adapter_id, f"{label}_ADAPTER_ID")
     _require(
         isinstance(descriptor.model_id, str)
@@ -1313,12 +1375,14 @@ def _validate_adapter_descriptor(descriptor: AdapterDescriptor, label: str) -> N
         f"{label}_MODEL_ID_INVALID",
     )
     _require(
-        descriptor.interface_kind
+        type(descriptor.interface_kind) is str
+        and descriptor.interface_kind
         in {"deterministic_conformance", "local_open_weight", "hosted_api"},
         f"{label}_INTERFACE_KIND_INVALID",
     )
     _require(
-        descriptor.state_visibility in {"public_only", "native_latent"},
+        type(descriptor.state_visibility) is str
+        and descriptor.state_visibility in {"public_only", "native_latent"},
         f"{label}_STATE_VISIBILITY_INVALID",
     )
     _require(
@@ -1491,7 +1555,7 @@ def _parse_model_text(
     )
     _require(answer_match is not None, "MODEL_ANSWER_LINE_INVALID")
     _require(support_match is not None, "MODEL_SUPPORT_LINE_INVALID")
-    answer_value = answer_match.group(1).strip()
+    answer_value = answer_match.group(1)
     _require(bool(answer_value), "MODEL_ANSWER_EMPTY")
     if answer_value in task.answer_choices:
         answer = answer_value
@@ -1503,12 +1567,15 @@ def _parse_model_text(
         answer = answer_value[1:-1]
     else:
         raise EBRTError("MODEL_ANSWER_OUTSIDE_CHOICES")
-    support_value = support_match.group(1).strip()
+    support_value = support_match.group(1)
     if support_value.startswith("<") and support_value.endswith(">"):
         support_value = support_value[1:-1]
-    support_tokens = tuple(
-        row.strip() for row in support_value.split(",") if row.strip()
+    raw_support_tokens = support_value.split(",")
+    _require(
+        all(bool(row.strip(" \t")) for row in raw_support_tokens),
+        "MODEL_SUPPORT_TOKEN_EMPTY",
     )
+    support_tokens = tuple(row.strip(" \t") for row in raw_support_tokens)
     if any(row.upper() == "NONE" for row in support_tokens):
         _require(support_tokens == ("NONE",), "MODEL_SUPPORT_NONE_MIXED")
         support: tuple[str, ...] = ()
@@ -1551,9 +1618,19 @@ class CallableModelAdapter:
 
 
 def _local_model_id(path: Path, *, explicit: str | None = None) -> str:
+    derived: str | None = None
+    for candidate in (path, *path.parents):
+        if candidate.name.startswith("models--"):
+            repository = candidate.name.removeprefix("models--").replace("--", "/")
+            if repository:
+                relative_parts = path.relative_to(candidate).parts
+                if len(relative_parts) >= 2 and relative_parts[0] == "snapshots":
+                    derived = f"{repository}@{relative_parts[1]}"
+                    break
+                raise EBRTError("LOCAL_MODEL_ID_REVISION_REQUIRED")
     if explicit is not None:
         _require(
-            isinstance(explicit, str)
+            type(explicit) is str
             and bool(explicit.strip())
             and len(explicit) <= 512
             and all(character.isprintable() for character in explicit),
@@ -1564,15 +1641,11 @@ def _local_model_id(path: Path, *, explicit: str | None = None) -> str:
             separator == "@" and bool(identity) and bool(revision),
             "LOCAL_MODEL_ID_REVISION_REQUIRED",
         )
+        if derived is not None:
+            _require(explicit == derived, "LOCAL_MODEL_ID_CACHE_MISMATCH")
         return explicit
-    for candidate in (path, *path.parents):
-        if candidate.name.startswith("models--"):
-            repository = candidate.name.removeprefix("models--").replace("--", "/")
-            if repository:
-                relative_parts = path.relative_to(candidate).parts
-                if len(relative_parts) >= 2 and relative_parts[0] == "snapshots":
-                    return f"{repository}@{relative_parts[1]}"
-                raise EBRTError("LOCAL_MODEL_ID_REVISION_REQUIRED")
+    if derived is not None:
+        return derived
     raise EBRTError("LOCAL_MODEL_ID_REVISION_REQUIRED")
 
 
@@ -1715,32 +1788,61 @@ def _structural_model_checks(
     expected_request_fingerprint_sha256: str,
 ) -> JsonObject:
     known = {row.evidence_id for row in task.evidence}
-    try:
-        parsed_raw = _parse_model_text(result.raw_text, task=task)
-    except EBRTError:
-        parsed_raw = None
+    answer_typed = type(result.answer) is str
+    support_ids_typed = type(result.support_ids) is tuple and all(
+        type(row) is str for row in result.support_ids
+    )
+    raw_text_typed = type(result.raw_text) is str
+    descriptor_typed = type(result.descriptor) is AdapterDescriptor
+    request_fingerprint_typed = type(result.request_fingerprint_sha256) is str
+    latency_typed = type(result.latency_ms) in {int, float}
+    logical_calls_typed = type(result.logical_calls) is int
+    fields_typed = (
+        answer_typed
+        and support_ids_typed
+        and raw_text_typed
+        and descriptor_typed
+        and request_fingerprint_typed
+        and latency_typed
+        and logical_calls_typed
+    )
+    parsed_raw: tuple[str, tuple[str, ...]] | None = None
+    if raw_text_typed:
+        try:
+            parsed_raw = _parse_model_text(result.raw_text, task=task)
+        except EBRTError:
+            pass
+    support_set = set(result.support_ids) if support_ids_typed else set()
+    latency_valid = False
+    if latency_typed:
+        try:
+            latency_valid = _finite(result.latency_ms, "LATENCY_MS") >= 0.0
+        except EBRTError:
+            pass
     return {
+        "model_result_fields_typed": fields_typed,
         "raw_text_conforms_to_schema": parsed_raw is not None,
-        "raw_text_matches_returned_fields": parsed_raw
-        == (result.answer, result.support_ids),
-        "answer_is_allowed": result.answer in task.answer_choices,
-        "support_ids_are_known": set(result.support_ids).issubset(known),
-        "invalidated_support_absent": not set(result.support_ids)
-        & set(task.event.invalidated_evidence_ids),
+        "raw_text_matches_returned_fields": fields_typed
+        and parsed_raw == (result.answer, result.support_ids),
+        "answer_is_allowed": answer_typed and result.answer in task.answer_choices,
+        "support_ids_are_known": support_ids_typed and support_set.issubset(known),
+        "invalidated_support_absent": support_ids_typed
+        and not support_set & set(task.event.invalidated_evidence_ids),
         "correction_is_active_support": task.event.correction_evidence_id
-        in set(result.support_ids),
+        in support_set,
         "typed_suppression_compiled": set(program.suppress)
         == set(task.event.invalidated_evidence_ids),
         "typed_preservation_compiled": set(program.preserve)
         == set(task.event.stable_evidence_ids),
-        "one_model_invocation": result.logical_calls == 1,
-        "request_fingerprint_matches_invocation": result.request_fingerprint_sha256
-        == expected_request_fingerprint_sha256,
-        "adapter_descriptor_matches_binding": result.descriptor == expected_descriptor,
-        "latency_is_finite_and_nonnegative": math.isfinite(result.latency_ms)
-        and result.latency_ms >= 0.0,
+        "one_model_invocation": logical_calls_typed and result.logical_calls == 1,
+        "request_fingerprint_matches_invocation": request_fingerprint_typed
+        and result.request_fingerprint_sha256 == expected_request_fingerprint_sha256,
+        "adapter_descriptor_matches_binding": descriptor_typed
+        and result.descriptor == expected_descriptor,
+        "latency_is_finite_and_nonnegative": latency_valid,
         "gradient_did_not_cross_model_boundary": (
-            not expected_descriptor.differentiable_through_model
+            descriptor_typed
+            and not expected_descriptor.differentiable_through_model
             and not result.descriptor.differentiable_through_model
         ),
     }
@@ -1797,10 +1899,10 @@ def _is_trusted_builtin_core(
 ) -> bool:
     """Only the exact built-in implementation can attest this run's backward."""
 
-    optimize = getattr(core, "optimize", None)
     return (
         type(core) is expected_type
-        and getattr(optimize, "__func__", None) is original_optimize
+        and "optimize" not in vars(core)
+        and expected_type.__dict__.get("optimize") is original_optimize
     )
 
 
@@ -1842,9 +1944,17 @@ class RevisionEngine:
             BackwardRevisionCore,
             _ORIGINAL_SINGLE_CORE_OPTIMIZE,
         )
+        raw_core_receipt = (
+            _ORIGINAL_SINGLE_CORE_OPTIMIZE(
+                self.core,
+                _clone_envelope(envelope),
+            )
+            if core_execution_trusted
+            else self.core.optimize(_clone_envelope(envelope))
+        )
         optimized = _validate_single_core_receipt(
             envelope,
-            self.core.optimize(_clone_envelope(envelope)),
+            raw_core_receipt,
         )
         _require(
             core_execution_trusted
@@ -1868,7 +1978,7 @@ class RevisionEngine:
         )
         expected_descriptor = model_adapter.descriptor
         _require(
-            isinstance(expected_descriptor, AdapterDescriptor),
+            type(expected_descriptor) is AdapterDescriptor,
             "MODEL_ADAPTER_DESCRIPTOR_INVALID",
         )
         _validate_adapter_descriptor(expected_descriptor, "MODEL_ADAPTER")
@@ -1876,7 +1986,7 @@ class RevisionEngine:
             task, program, prompt_policy=prompt_policy
         )
         result = model_adapter.generate(task, program, prompt_policy=prompt_policy)
-        _require(isinstance(result, ModelResult), "MODEL_RESULT_TYPE_INVALID")
+        _require(type(result) is ModelResult, "MODEL_RESULT_TYPE_INVALID")
         structural = _structural_model_checks(
             task,
             program,
@@ -2530,13 +2640,22 @@ class JointRevisionEngine:
             JointBackwardRevisionCore,
             _ORIGINAL_JOINT_CORE_OPTIMIZE,
         )
+        raw_joint_receipt = (
+            _ORIGINAL_JOINT_CORE_OPTIMIZE(
+                self.core,
+                core_envelopes,
+                weights=[row.weight for row in ordered_lanes],
+            )
+            if core_execution_trusted
+            else self.core.optimize(
+                core_envelopes,
+                weights=[row.weight for row in ordered_lanes],
+            )
+        )
         joint = _validate_joint_core_receipt(
             envelopes,
             [row.weight for row in ordered_lanes],
-            self.core.optimize(
-                core_envelopes,
-                weights=[row.weight for row in ordered_lanes],
-            ),
+            raw_joint_receipt,
         )
         _require(
             core_execution_trusted
@@ -2565,7 +2684,7 @@ class JointRevisionEngine:
             )
             expected_descriptor = lane.model_adapter.descriptor
             _require(
-                isinstance(expected_descriptor, AdapterDescriptor),
+                type(expected_descriptor) is AdapterDescriptor,
                 "JOINT_MODEL_ADAPTER_DESCRIPTOR_INVALID",
             )
             _validate_adapter_descriptor(expected_descriptor, "JOINT_MODEL_ADAPTER")
@@ -2575,7 +2694,7 @@ class JointRevisionEngine:
             result = lane.model_adapter.generate(
                 task, program, prompt_policy=lane.prompt_policy
             )
-            _require(isinstance(result, ModelResult), "JOINT_MODEL_RESULT_TYPE_INVALID")
+            _require(type(result) is ModelResult, "JOINT_MODEL_RESULT_TYPE_INVALID")
             checks = _structural_model_checks(
                 task,
                 program,
@@ -2948,6 +3067,21 @@ class _ReplayingSingleCore:
         return _clone(self.receipt)
 
 
+class _SpoofedReplayCallable:
+    """Instance shadow that falsely presents the pinned method identity."""
+
+    def __init__(
+        self,
+        receipt: Mapping[str, Any],
+        claimed_function: Callable[..., JsonObject],
+    ) -> None:
+        self.receipt = receipt
+        self.__func__ = claimed_function
+
+    def __call__(self, *_args: Any, **_kwargs: Any) -> JsonObject:
+        return _clone(self.receipt)
+
+
 class _TamperedJointCore:
     def optimize(
         self,
@@ -3066,6 +3200,27 @@ def self_test() -> JsonObject:
         ),
         "MODEL_RESPONSE_LINE_COUNT_INVALID",
     )
+    parser_rejects_bare_carriage_return = _raises_ebrt_reason(
+        lambda: _parse_model_text(
+            "ANSWER=PROVE\nSUPPORT=R6\r",
+            task=task,
+        ),
+        "MODEL_SUPPORT_UNKNOWN",
+    )
+    parser_rejects_unicode_padding = _raises_ebrt_reason(
+        lambda: _parse_model_text(
+            "ANSWER=PROVE\nSUPPORT=R6\N{NO-BREAK SPACE}",
+            task=task,
+        ),
+        "MODEL_SUPPORT_UNKNOWN",
+    )
+    parser_rejects_empty_support_token = _raises_ebrt_reason(
+        lambda: _parse_model_text(
+            "ANSWER=PROVE\nSUPPORT=R6,",
+            task=task,
+        ),
+        "MODEL_SUPPORT_TOKEN_EMPTY",
+    )
     unpreservable_answer_choice_rejected = _raises_ebrt_reason(
         lambda: validate_task(replace(task, answer_choices=("POLISH", " PROVE "))),
         "ANSWER_CHOICES_INVALID",
@@ -3151,6 +3306,36 @@ def self_test() -> JsonObject:
             "REINSPECTION_COUNT_INVALID",
         )
     )
+    malformed_public_task_fields_rejected = (
+        _raises_ebrt_reason(
+            lambda: validate_task(replace(task, question=None)),
+            "QUESTION_INVALID",
+        )
+        and _raises_ebrt_reason(
+            lambda: validate_task(
+                replace(
+                    task,
+                    event=replace(
+                        task.event,
+                        invalidated_evidence_ids=["R3"],
+                    ),
+                )
+            ),
+            "INVALIDATED_EVIDENCE_TYPE_INVALID",
+        )
+        and _raises_ebrt_reason(
+            lambda: validate_task(
+                replace(
+                    task,
+                    evidence=(
+                        replace(task.evidence[0], text=None),
+                        *task.evidence[1:],
+                    ),
+                )
+            ),
+            "EVIDENCE_TEXT_INVALID",
+        )
+    )
     zero_correction_task = replace(
         task,
         evidence=tuple(
@@ -3185,6 +3370,17 @@ def self_test() -> JsonObject:
     cached_snapshot_b = _local_model_id(
         Path("/tmp/hub/models--example--model/snapshots/revision-b")
     )
+    cached_explicit_identity = _local_model_id(
+        Path("/tmp/hub/models--example--model/snapshots/revision-a"),
+        explicit="example/model@revision-a",
+    )
+    cached_explicit_relabel_rejected = _raises_ebrt_reason(
+        lambda: _local_model_id(
+            Path("/tmp/hub/models--example--model/snapshots/revision-a"),
+            explicit="example/model@revision-b",
+        ),
+        "LOCAL_MODEL_ID_CACHE_MISMATCH",
+    )
     cached_path_a = Path("/tmp/hub/models--example--model/snapshots/" + "a" * 40)
     cached_path_b = Path("/tmp/hub/models--example--model/snapshots/" + "b" * 40)
     active_cache_selection = _select_cached_snapshot(
@@ -3198,6 +3394,19 @@ def self_test() -> JsonObject:
         ),
         "LOCAL_MODEL_SNAPSHOT_AMBIGUOUS",
     )
+    with mock.patch.object(Path, "iterdir", side_effect=OSError("denied")):
+        cache_enumeration_error_is_stable = _raises_ebrt_reason(
+            lambda: _complete_cached_snapshots(Path("/tmp/unreadable-snapshots")),
+            "LOCAL_MODEL_CACHE_ENUMERATION_FAILED",
+        )
+    with (
+        mock.patch.object(Path, "exists", return_value=True),
+        mock.patch.object(Path, "read_text", side_effect=UnicodeError("invalid utf8")),
+    ):
+        active_ref_unicode_error_is_stable = _raises_ebrt_reason(
+            lambda: _read_active_cache_revision(Path("/tmp/refs/main")),
+            "LOCAL_MODEL_ACTIVE_REF_UNREADABLE",
+        )
     indexed_weight_manifest_complete = _indexed_weight_files_are_complete(
         (
             {
@@ -3290,6 +3499,23 @@ def self_test() -> JsonObject:
                 adapter,
                 post_run_contract=contract,
             ),
+            "CORE_EXECUTION_UNVERIFIED",
+        )
+
+        def replay_with_shadowed_single_core() -> JsonObject:
+            core = BackwardRevisionCore()
+            core.optimize = _SpoofedReplayCallable(
+                single["trajectory"],
+                _ORIGINAL_SINGLE_CORE_OPTIMIZE,
+            )
+            return RevisionEngine(core=core).run(
+                task,
+                adapter,
+                post_run_contract=contract,
+            )
+
+        shadowed_single_core_replay_rejected = _raises_ebrt_reason(
+            replay_with_shadowed_single_core,
             "CORE_EXECUTION_UNVERIFIED",
         )
 
@@ -3513,6 +3739,42 @@ def self_test() -> JsonObject:
                 invocation_before["fingerprint_sha256"]
             ),
         )
+        logical_call_bool_checks = _structural_model_checks(
+            task,
+            program,
+            replace(valid_result, logical_calls=True),
+            expected_descriptor=adapter.descriptor,
+            expected_request_fingerprint_sha256=str(
+                invocation_before["fingerprint_sha256"]
+            ),
+        )
+        logical_call_float_checks = _structural_model_checks(
+            task,
+            program,
+            replace(valid_result, logical_calls=1.0),
+            expected_descriptor=adapter.descriptor,
+            expected_request_fingerprint_sha256=str(
+                invocation_before["fingerprint_sha256"]
+            ),
+        )
+        string_latency_checks = _structural_model_checks(
+            task,
+            program,
+            replace(valid_result, latency_ms="0.0"),
+            expected_descriptor=adapter.descriptor,
+            expected_request_fingerprint_sha256=str(
+                invocation_before["fingerprint_sha256"]
+            ),
+        )
+        list_support_checks = _structural_model_checks(
+            task,
+            program,
+            replace(valid_result, support_ids=["R6", "R4", "R2"]),
+            expected_descriptor=adapter.descriptor,
+            expected_request_fingerprint_sha256=str(
+                invocation_before["fingerprint_sha256"]
+            ),
+        )
         tie_merge = _merge_model_results(
             task,
             {
@@ -3626,6 +3888,23 @@ def self_test() -> JsonObject:
             "JOINT_CORE_EXECUTION_UNVERIFIED",
         )
 
+        def replay_with_shadowed_joint_core() -> JsonObject:
+            core = JointBackwardRevisionCore()
+            core.optimize = _SpoofedReplayCallable(
+                joint["joint_trajectory"],
+                _ORIGINAL_JOINT_CORE_OPTIMIZE,
+            )
+            return JointRevisionEngine(core=core).run(
+                task,
+                (lane_b, lane_a),
+                post_run_contract=contract,
+            )
+
+        shadowed_joint_core_replay_rejected = _raises_ebrt_reason(
+            replay_with_shadowed_joint_core,
+            "JOINT_CORE_EXECUTION_UNVERIFIED",
+        )
+
         def replay_with_patched_joint_core() -> JsonObject:
             with mock.patch.object(
                 JointBackwardRevisionCore,
@@ -3677,7 +3956,10 @@ def self_test() -> JsonObject:
         and delimited_support == ("R6",),
         "parser_enforces_exact_two_lines": parser_rejects_extra_lines,
         "parser_rejects_native_completion_padding": parser_rejects_leading_blank_line
-        and parser_rejects_multiple_terminal_newlines,
+        and parser_rejects_multiple_terminal_newlines
+        and parser_rejects_bare_carriage_return
+        and parser_rejects_unicode_padding
+        and parser_rejects_empty_support_token,
         "unpreservable_answer_choices_are_rejected": unpreservable_answer_choice_rejected,
         "duplicate_event_ids_are_rejected": duplicate_event_rejected,
         "invalid_runtime_role_is_rejected": invalid_role_rejected,
@@ -3685,16 +3967,21 @@ def self_test() -> JsonObject:
         "parser_sentinel_cannot_be_evidence_id": reserved_evidence_id_rejected,
         "state_adapter_scales_are_positive": invalid_scale_rejected,
         "task_numeric_fields_reject_string_coercion": numeric_string_task_fields_rejected,
+        "malformed_public_task_fields_fail_closed": malformed_public_task_fields_rejected,
         "correction_must_be_an_admitted_control_site": typed_zero_correction_rejected
         and transformed_zero_correction_rejected,
         "adapter_descriptor_is_runtime_validated": invalid_descriptor_rejected,
         "cached_snapshot_identity_binds_revision": cached_snapshot_a
         == "example/model@revision-a"
         and cached_snapshot_b == "example/model@revision-b"
-        and cached_snapshot_a != cached_snapshot_b,
+        and cached_snapshot_a != cached_snapshot_b
+        and cached_explicit_identity == cached_snapshot_a
+        and cached_explicit_relabel_rejected,
         "cached_model_selection_uses_active_ref_and_rejects_ambiguity": active_cache_selection
         == cached_path_a
         and ambiguous_cache_selection_rejected,
+        "cached_model_io_errors_are_stable": cache_enumeration_error_is_stable
+        and active_ref_unicode_error_is_stable,
         "cached_snapshot_requires_every_indexed_weight_shard": indexed_weight_manifest_complete
         and indexed_weight_manifest_rejects_missing_shard,
         "cached_snapshot_requires_loader_metadata": loader_metadata_complete
@@ -3725,6 +4012,8 @@ def self_test() -> JsonObject:
         and mutating_joint_core_rejected,
         "replayed_injected_core_cannot_claim_current_backward_execution": replayed_single_core_rejected
         and replayed_joint_core_rejected,
+        "instance_shadowed_core_cannot_claim_backward_execution": shadowed_single_core_replay_rejected
+        and shadowed_joint_core_replay_rejected,
         "class_level_core_replacement_cannot_claim_backward_execution": patched_single_core_replay_rejected
         and patched_joint_core_replay_rejected,
         "core_receipts_bind_the_declared_update_law": alternate_control_law_rejected,
@@ -3748,6 +4037,12 @@ def self_test() -> JsonObject:
             "raw_text_conforms_to_schema"
         ]
         and not raw_text_tamper_checks["raw_text_matches_returned_fields"],
+        "model_result_fields_require_exact_public_types": not logical_call_bool_checks[
+            "one_model_invocation"
+        ]
+        and not logical_call_float_checks["one_model_invocation"]
+        and not string_latency_checks["latency_is_finite_and_nonnegative"]
+        and not list_support_checks["model_result_fields_typed"],
         "joint_state_lane_binding_is_exact": misbound_lane_rejected,
         "state_adapter_identity_is_bound_single_and_joint": single_state_identity_rejected
         and joint_state_identity_rejected,
@@ -4000,6 +4295,29 @@ def _select_cached_snapshot(
     return candidates[0]
 
 
+def _complete_cached_snapshots(snapshots: Path) -> tuple[Path, ...]:
+    try:
+        entries = tuple(snapshots.iterdir())
+        return tuple(
+            path
+            for path in entries
+            if path.is_dir()
+            and _snapshot_has_complete_weights(path)
+            and _snapshot_has_complete_loader_metadata(path)
+        )
+    except (OSError, UnicodeError) as exc:
+        raise EBRTError("LOCAL_MODEL_CACHE_ENUMERATION_FAILED") from exc
+
+
+def _read_active_cache_revision(active_ref: Path) -> str | None:
+    try:
+        if not active_ref.exists():
+            return None
+        return active_ref.read_text(encoding="utf-8").strip()
+    except (OSError, UnicodeError) as exc:
+        raise EBRTError("LOCAL_MODEL_ACTIVE_REF_UNREADABLE") from exc
+
+
 def _default_mlx_model_path() -> str | None:
     explicit = os.environ.get("EBRT_LOCAL_MODEL")
     if explicit:
@@ -4012,20 +4330,8 @@ def _default_mlx_model_path() -> str | None:
     for candidate in candidates:
         snapshots = candidate / "snapshots"
         if snapshots.is_dir():
-            complete = tuple(
-                path
-                for path in snapshots.iterdir()
-                if path.is_dir()
-                and _snapshot_has_complete_weights(path)
-                and _snapshot_has_complete_loader_metadata(path)
-            )
-            active_revision: str | None = None
-            active_ref = candidate / "refs" / "main"
-            if active_ref.exists():
-                try:
-                    active_revision = active_ref.read_text(encoding="utf-8").strip()
-                except OSError as exc:
-                    raise EBRTError("LOCAL_MODEL_ACTIVE_REF_UNREADABLE") from exc
+            complete = _complete_cached_snapshots(snapshots)
+            active_revision = _read_active_cache_revision(candidate / "refs" / "main")
             selected = _select_cached_snapshot(
                 complete,
                 active_revision=active_revision,

@@ -68,7 +68,9 @@ be non-empty before the snapshot is considered complete. Automatic discovery
 also requires non-empty, parseable model/tokenizer configuration and a local
 tokenizer asset before handing a snapshot to MLX.
 Cache-derived model identities include the snapshot revision so different
-weight snapshots cannot collapse into one receipt identity.
+weight snapshots cannot collapse into one receipt identity. An explicit
+`--model-id` cannot relabel a cache-derived snapshot: when both are present,
+they must match exactly.
 For a model stored outside that cache layout, pass a public receipt identity
 explicitly with `--model-id provider/model@revision`. EBRT fails closed without
 that revision-bearing identity rather than grouping replaceable weights by
@@ -136,9 +138,10 @@ booleans are rejected rather than coerced.
 
 The engine attributes `real_backward_executed_once` only to the exact bundled
 core implementation and its module-load original method, checked before and
-after execution. An injected or class-replaced core receipt is still
-structurally validated, but cannot promote a replay into a claim about the
-current run.
+after execution. The engine invokes that pinned method directly and rejects
+both class replacement and instance-level method shadowing. An injected core
+receipt is still structurally validated, but cannot promote a replay into a
+claim about the current run.
 
 ## v0.7.1 — single-trajectory revision
 

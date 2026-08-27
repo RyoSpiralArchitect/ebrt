@@ -107,7 +107,10 @@ class ModelAdapter(Protocol):
 
 `ModelResult` contains one allowed answer, zero or more known public support
 IDs, raw public text, the descriptor, a request fingerprint, latency, and a
-logical-call count.
+logical-call count. The runtime requires the exact public container and scalar
+types: in particular, `logical_calls` is a non-boolean integer and latency is a
+finite, non-boolean JSON number. Malformed adapter output fails structurally
+without leaking a native type exception.
 
 The reference MLX runtime derives `model_id` from a standard Hugging Face cache
 snapshot as `repository@revision`. A model outside that layout must supply an
@@ -116,7 +119,8 @@ weight identity because its contents can be replaced in place. Its descriptor
 separately records and fingerprints `max_tokens`, seed, sampler temperature,
 and chat-template generation mode, so two executions with the same weights and
 adapter name but different decoding settings cannot share a configuration
-receipt.
+receipt. An explicit identity cannot override a derivable cache identity; if
+both are supplied, exact equality is required.
 
 Automatic Hugging Face cache discovery follows the repository's `refs/main`
 revision. When that reference is absent, exactly one complete snapshot is
@@ -137,8 +141,10 @@ protocol rejects any descriptor that claims a gradient crosses generation.
 Core receipt replay validation is not an execution attestation by itself. The
 current engine reports a backward execution only when the exact bundled single
 or joint core and its module-load original method remain identical before and
-after that call. An injected or class-replaced core can be validated for
-conformance but cannot yield engine `PASS` from a previously captured receipt.
+after that call. The pinned original is invoked directly, and instance-level
+method shadowing is rejected alongside injected and class-replaced cores. Such
+cores can be validated for conformance but cannot yield engine `PASS` from a
+previously captured receipt.
 
 ## Model-visible information
 
