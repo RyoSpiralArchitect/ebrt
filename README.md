@@ -41,8 +41,9 @@ python3 ebrt_core.py capabilities
 `self-test` performs no network call. It checks the single-trajectory and joint
 contracts, real reverse-mode autodiff, finite differences, control budgets,
 zero-control identity, deterministic merge, lane-order invariance, task-owned
-trajectory binding, immutable actuator inputs, and both state-adapter and
-model-adapter stop-gradient boundaries.
+trajectory binding, admitted-core receipt replay, nonzero model-visible credit,
+immutable actuator inputs, exact post-run contract receipts, and both
+state-adapter and model-adapter stop-gradient boundaries.
 
 ### 2. Real local model
 
@@ -152,7 +153,9 @@ language semantics. Responsibilities remain separate:
 | Observer | check public structure and, when supplied, a post-run contract |
 
 The post-run contract never enters the model request. It is computed only after
-generation.
+generation, then its exact validated fields and fingerprint are sealed beside
+the resulting grade so an archived semantic `PASS` remains independently
+auditable.
 
 ## v0.8.0 — joint trajectories
 

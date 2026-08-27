@@ -44,6 +44,12 @@ snapshot of its sealed receipt and gives the adapter only a separate clone;
 single and joint compilation therefore cannot rewrite the receipt that is
 validated or emitted.
 
+An injected optimization core is also a checked boundary. Before actuation, the
+engine binds its sealed receipt to the admitted schema, lane, state-adapter,
+axes, event index, budget, evidence rows, replayed trajectories, losses,
+finite-difference diagnostics, and required checks. A resealed but inconsistent
+custom-core receipt cannot be promoted to engine `PASS`.
+
 ## Python contract
 
 ```python
@@ -128,9 +134,11 @@ It must not provide:
 - credentials and private provider metadata.
 
 The known fixture's `PostRunContract` is validated locally and withheld from
-`build_model_invocation`. The network-zero self-test checks this separation.
-The separately sealed task fingerprint includes the controller's terminal
-target and every other task-owned trajectory parameter.
+`build_model_invocation`. After generation, the exact contract is sealed into
+the grade receipt; two passing grades under different contracts therefore have
+different fingerprints. The network-zero self-test checks both separation and
+receipt binding. The separately sealed task fingerprint includes the
+controller's terminal target and every other task-owned trajectory parameter.
 
 ## Adapter obligations
 
