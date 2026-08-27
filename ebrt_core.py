@@ -506,6 +506,10 @@ def _prepare_state_envelope(
         torch.equal(detached.eligible_mask, expected_eligible),
         f"{label}_ELIGIBLE_MASK_MISMATCH",
     )
+    _require(
+        bool(detached.eligible_mask[detached.event_index]),
+        f"{label}_CORRECTION_INELIGIBLE",
+    )
     stability_index = AXES.index("stability")
     _require(
         bool(torch.all(detached.control_basis[:, stability_index] == 0.0)),
@@ -560,6 +564,10 @@ class TypedPublicStateAdapter:
         _require(
             bool(torch.any(eligible[:correction_index])),
             "NO_PRE_EVENT_CONTROL_SITE",
+        )
+        _require(
+            bool(eligible[correction_index]),
+            "CORRECTION_CONTROL_INELIGIBLE",
         )
         return TrajectoryEnvelope(
             lane_id=lane_id,
@@ -1903,15 +1911,9 @@ class JointRevisionEngine:
         )
         model_ids = {result.descriptor.model_id for result in results.values()}
         adapter_ids = {result.descriptor.adapter_id for result in results.values()}
-        interface_kinds = {
-            result.descriptor.interface_kind for result in results.values()
-        }
-        if len(model_ids) > 1 and interface_kinds == {"local_open_weight"}:
-            heterogeneous_status = "OBSERVED"
-        elif len(model_ids) > 1:
-            heterogeneous_status = "CONFORMANCE_ONLY"
-        else:
-            heterogeneous_status = "NOT_ASSESSED"
+        heterogeneous_status = (
+            "CONFORMANCE_ONLY" if len(model_ids) > 1 else "NOT_ASSESSED"
+        )
         return _seal(
             {
                 "schema_version": RESULT_SCHEMA_VERSION,
@@ -2277,6 +2279,22 @@ def self_test() -> JsonObject:
         ),
         "STATE_SCALE_INVALID",
     )
+    zero_correction_task = replace(
+        task,
+        evidence=tuple(
+            replace(row, control_basis=(0.0, 0.0, 0.0))
+            if row.evidence_id == task.event.correction_evidence_id
+            else row
+            for row in task.evidence
+        ),
+    )
+    typed_zero_correction_rejected = _raises_ebrt_reason(
+        lambda: TypedPublicStateAdapter().build(
+            zero_correction_task,
+            lane_id="zero-correction-check",
+        ),
+        "CORRECTION_CONTROL_INELIGIBLE",
+    )
     invalid_descriptor_rejected = _raises_ebrt_reason(
         lambda: _validate_adapter_descriptor(
             AdapterDescriptor(
@@ -2337,6 +2355,16 @@ def self_test() -> JsonObject:
             task,
             adapter,
             post_run_contract=contract,
+        )
+        transformed_zero_correction_rejected = _raises_ebrt_reason(
+            lambda: RevisionEngine(
+                state_adapter=_EligibilityTransformingStateAdapter("R6")
+            ).run(
+                task,
+                adapter,
+                post_run_contract=contract,
+            ),
+            "STATE_ADAPTER_CORRECTION_INELIGIBLE",
         )
         task_parameter_tampering_rejected = all(
             _raises_ebrt_reason(
@@ -2512,6 +2540,28 @@ def self_test() -> JsonObject:
         joint_reversed = JointRevisionEngine().run(
             task, (lane_a, lane_b), post_run_contract=contract
         )
+        declared_local_double_joint = JointRevisionEngine().run(
+            task,
+            (
+                replace(
+                    lane_a,
+                    model_adapter=_conformance_adapter(
+                        adapter_id="declared-local-double-a",
+                        model_id="declared/local-a",
+                        interface_kind="local_open_weight",
+                    ),
+                ),
+                replace(
+                    lane_b,
+                    model_adapter=_conformance_adapter(
+                        adapter_id="declared-local-double-b",
+                        model_id="declared/local-b",
+                        interface_kind="local_open_weight",
+                    ),
+                ),
+            ),
+            post_run_contract=contract,
+        )
 
     checks = {
         "network_zero": network["count"] == 0,
@@ -2529,6 +2579,8 @@ def self_test() -> JsonObject:
         "stability_basis_requires_exact_zero": near_zero_stability_rejected,
         "parser_sentinel_cannot_be_evidence_id": reserved_evidence_id_rejected,
         "state_adapter_scales_are_positive": invalid_scale_rejected,
+        "correction_must_be_an_admitted_control_site": typed_zero_correction_rejected
+        and transformed_zero_correction_rejected,
         "adapter_descriptor_is_runtime_validated": invalid_descriptor_rejected,
         "cached_snapshot_identity_binds_revision": cached_snapshot_a
         == "example/model@revision-a"
@@ -2633,6 +2685,8 @@ def self_test() -> JsonObject:
         "heterogeneous_execution_not_overclaimed": joint[
             "heterogeneous_model_execution_status"
         ]
+        == "CONFORMANCE_ONLY"
+        and declared_local_double_joint["heterogeneous_model_execution_status"]
         == "CONFORMANCE_ONLY"
         and joint["effect_attribution_status"] == "NOT_ASSESSED",
         "legacy_boundary_is_explicit": len(single["claim_boundary"])

@@ -61,7 +61,9 @@ task-owned optimization parameters. `event_index`, `target`, `decay`,
 Incoming tensors are copied and detached after conformance validation. The
 admitted `control_basis` and its exactly matching `eligible_mask` remain the
 authority for where the core can assign control; actuator compilation does not
-silently restore eligibility from the pre-adapter task basis.
+silently restore eligibility from the pre-adapter task basis. The typed
+correction is a required revision site in this protocol and must remain
+eligible at admission; alternate correction semantics require a new version.
 
 ```python
 class ModelAdapter(Protocol):
@@ -180,9 +182,10 @@ adapter, and merges only public results.
 Receipt interpretation is strict:
 
 - multiple lanes around one model ID: joint multi-lane execution;
-- distinct IDs represented only by conformance doubles: `CONFORMANCE_ONLY`;
-- distinct real local model IDs: `OBSERVED` protocol execution, still not a
-  quality or causal-effect result;
+- distinct model IDs under the current adapter-declared interface:
+  `CONFORMANCE_ONLY`, even when adapters self-declare `local_open_weight`;
+- `OBSERVED` heterogeneous execution requires a separately verifiable backend
+  execution receipt and is not emitted by this protocol;
 - any generator effect: `NOT_ASSESSED` until a locked matched evaluation.
 
 ## Current coverage
