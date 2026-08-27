@@ -1169,7 +1169,14 @@ def _structural_model_checks(
     expected_request_fingerprint_sha256: str,
 ) -> JsonObject:
     known = {row.evidence_id for row in task.evidence}
+    try:
+        parsed_raw = _parse_model_text(result.raw_text, task=task)
+    except EBRTError:
+        parsed_raw = None
     return {
+        "raw_text_conforms_to_schema": parsed_raw is not None,
+        "raw_text_matches_returned_fields": parsed_raw
+        == (result.answer, result.support_ids),
         "answer_is_allowed": result.answer in task.answer_choices,
         "support_ids_are_known": set(result.support_ids).issubset(known),
         "invalidated_support_absent": not set(result.support_ids)
@@ -1647,9 +1654,14 @@ class JointRevisionEngine:
         ordered_lanes = tuple(sorted(lanes, key=lambda row: row.lane_id))
         lane_ids = [row.lane_id for row in ordered_lanes]
         _require(len(lane_ids) == len(set(lane_ids)), "JOINT_ENGINE_LANE_DUPLICATE")
-        envelopes = [
-            row.state_adapter.build(task, lane_id=row.lane_id) for row in ordered_lanes
-        ]
+        envelopes: list[TrajectoryEnvelope] = []
+        for lane in ordered_lanes:
+            envelope = lane.state_adapter.build(task, lane_id=lane.lane_id)
+            _require(
+                envelope.lane_id == lane.lane_id,
+                "JOINT_STATE_ADAPTER_LANE_MISMATCH",
+            )
+            envelopes.append(envelope)
         joint = self.core.optimize(
             envelopes, weights=[row.weight for row in ordered_lanes]
         )
@@ -1860,6 +1872,19 @@ def _conformance_adapter(
     )
 
 
+@dataclass(frozen=True)
+class _MisboundStateAdapter:
+    returned_lane_id: str
+    adapter_id: str = "misbound-state-adapter-test"
+
+    def build(self, task: RevisionTask, *, lane_id: str) -> TrajectoryEnvelope:
+        del lane_id
+        return TypedPublicStateAdapter().build(
+            task,
+            lane_id=self.returned_lane_id,
+        )
+
+
 @contextmanager
 def _network_denied() -> Any:
     calls = {"count": 0}
@@ -2028,6 +2053,18 @@ def self_test() -> JsonObject:
                 invocation_before["fingerprint_sha256"]
             ),
         )
+        raw_text_tamper_checks = _structural_model_checks(
+            task,
+            program,
+            replace(
+                valid_result,
+                raw_text="ANSWER=POLISH\nSUPPORT=R6,R4,R2",
+            ),
+            expected_descriptor=adapter.descriptor,
+            expected_request_fingerprint_sha256=str(
+                invocation_before["fingerprint_sha256"]
+            ),
+        )
         tie_merge = _merge_model_results(
             task,
             {
@@ -2069,6 +2106,22 @@ def self_test() -> JsonObject:
             prompt_policy="credit_first",
             weight=1.0,
         )
+        misbound_lane_rejected = _raises_ebrt_reason(
+            lambda: JointRevisionEngine().run(
+                task,
+                (
+                    replace(
+                        lane_a,
+                        state_adapter=_MisboundStateAdapter(
+                            returned_lane_id=lane_b.lane_id
+                        ),
+                    ),
+                    lane_b,
+                ),
+                post_run_contract=contract,
+            ),
+            "JOINT_STATE_ADAPTER_LANE_MISMATCH",
+        )
         joint = JointRevisionEngine().run(
             task, (lane_b, lane_a), post_run_contract=contract
         )
@@ -2104,6 +2157,11 @@ def self_test() -> JsonObject:
         "adapter_descriptor_tamper_is_detected": not descriptor_tamper_checks[
             "adapter_descriptor_matches_binding"
         ],
+        "raw_text_field_tamper_is_detected": raw_text_tamper_checks[
+            "raw_text_conforms_to_schema"
+        ]
+        and not raw_text_tamper_checks["raw_text_matches_returned_fields"],
+        "joint_state_lane_binding_is_exact": misbound_lane_rejected,
         "single_lane_v0_7_1_pass": single["status"] == "PASS",
         "single_lane_contract_pass": single["post_run_contract"]["status"] == "PASS",
         "single_lane_real_backward": single["trajectory"]["checks"][
