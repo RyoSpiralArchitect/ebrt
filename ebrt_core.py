@@ -1246,14 +1246,18 @@ class AdapterDescriptor:
     ]
     state_visibility: Literal["public_only", "native_latent"]
     differentiable_through_model: bool = False
+    generation_config: tuple[tuple[str, str | int | float | bool], ...] = ()
 
     def to_dict(self) -> JsonObject:
+        configuration = dict(self.generation_config)
         return {
             "adapter_id": self.adapter_id,
             "model_id": self.model_id,
             "interface_kind": self.interface_kind,
             "state_visibility": self.state_visibility,
             "differentiable_through_model": self.differentiable_through_model,
+            "generation_config": configuration,
+            "generation_config_fingerprint_sha256": _fingerprint(configuration),
         }
 
 
@@ -1278,6 +1282,37 @@ def _validate_adapter_descriptor(descriptor: AdapterDescriptor, label: str) -> N
     _require(
         descriptor.differentiable_through_model is False,
         f"{label}_GRADIENT_BOUNDARY_INVALID",
+    )
+    _require(
+        isinstance(descriptor.generation_config, tuple),
+        f"{label}_GENERATION_CONFIG_INVALID",
+    )
+    configuration_keys: list[str] = []
+    for row in descriptor.generation_config:
+        _require(
+            isinstance(row, tuple) and len(row) == 2,
+            f"{label}_GENERATION_CONFIG_ROW_INVALID",
+        )
+        key, value = row
+        _safe_id(key, f"{label}_GENERATION_CONFIG_KEY")
+        _require(
+            isinstance(value, (str, int, float, bool)),
+            f"{label}_GENERATION_CONFIG_VALUE_INVALID",
+        )
+        if isinstance(value, str):
+            _require(
+                bool(value)
+                and len(value) <= 512
+                and all(character.isprintable() for character in value),
+                f"{label}_GENERATION_CONFIG_VALUE_INVALID",
+            )
+        elif isinstance(value, float):
+            _finite(value, f"{label}_GENERATION_CONFIG_VALUE")
+        configuration_keys.append(key)
+    _require(
+        configuration_keys == sorted(configuration_keys)
+        and len(configuration_keys) == len(set(configuration_keys)),
+        f"{label}_GENERATION_CONFIG_KEYS_INVALID",
     )
 
 
@@ -1526,6 +1561,18 @@ class SharedMLXRuntime:
             and all(character.isprintable() for character in self._model_id),
             "LOCAL_MODEL_ID_INVALID",
         )
+        _require(
+            isinstance(max_tokens, int)
+            and not isinstance(max_tokens, bool)
+            and 1 <= max_tokens <= 4096,
+            "MLX_MAX_TOKENS_INVALID",
+        )
+        _require(
+            isinstance(seed, int)
+            and not isinstance(seed, bool)
+            and 0 <= seed <= 2**63 - 1,
+            "MLX_SEED_INVALID",
+        )
         self.max_tokens = max_tokens
         self.seed = seed
         self._model: Any = None
@@ -1587,6 +1634,12 @@ class MLXLocalAdapter:
             interface_kind="local_open_weight",
             state_visibility="public_only",
             differentiable_through_model=False,
+            generation_config=(
+                ("add_generation_prompt", True),
+                ("max_tokens", self.runtime.max_tokens),
+                ("sampler_temperature", 0.0),
+                ("seed", self.runtime.seed),
+            ),
         )
 
     def generate(
@@ -2616,6 +2669,13 @@ def _conformance_adapter(
 
 
 @dataclass(frozen=True)
+class _DescriptorOnlyMLXRuntime:
+    model_id: str
+    max_tokens: int
+    seed: int
+
+
+@dataclass(frozen=True)
 class _MisboundStateAdapter:
     returned_lane_id: str
     adapter_id: str = "misbound-state-adapter-test"
@@ -3004,6 +3064,24 @@ def self_test() -> JsonObject:
         Path("/tmp/replaceable-local-model"),
         explicit="example/model@weights-sha256-deadbeef",
     )
+    mlx_config_a = MLXLocalAdapter(
+        runtime=_DescriptorOnlyMLXRuntime(
+            model_id="example/model@revision",
+            max_tokens=32,
+            seed=0,
+        ),
+        adapter_id="mlx-config-binding-test",
+    ).descriptor
+    mlx_config_b = MLXLocalAdapter(
+        runtime=_DescriptorOnlyMLXRuntime(
+            model_id="example/model@revision",
+            max_tokens=64,
+            seed=1,
+        ),
+        adapter_id="mlx-config-binding-test",
+    ).descriptor
+    _validate_adapter_descriptor(mlx_config_a, "MLX_CONFIG_TEST_A")
+    _validate_adapter_descriptor(mlx_config_b, "MLX_CONFIG_TEST_B")
     adapter = _conformance_adapter(
         adapter_id="local-conformance-a", model_id="transparent-local-double-a"
     )
@@ -3371,6 +3449,18 @@ def self_test() -> JsonObject:
         and cached_snapshot_a != cached_snapshot_b,
         "noncache_model_identity_requires_explicit_revision": noncache_identity_requires_revision
         and explicit_revision_identity == "example/model@weights-sha256-deadbeef",
+        "mlx_decoding_configuration_is_receipt_bound": mlx_config_a != mlx_config_b
+        and mlx_config_a.adapter_id == mlx_config_b.adapter_id
+        and mlx_config_a.model_id == mlx_config_b.model_id
+        and mlx_config_a.to_dict()["generation_config_fingerprint_sha256"]
+        != mlx_config_b.to_dict()["generation_config_fingerprint_sha256"]
+        and mlx_config_a.to_dict()["generation_config"]
+        == {
+            "add_generation_prompt": True,
+            "max_tokens": 32,
+            "sampler_temperature": 0.0,
+            "seed": 0,
+        },
         "credit_map_requires_exact_coverage": incomplete_credit_rejected,
         "model_visible_allocation_requires_realized_credit": unrealized_reinspection_rejected,
         "compiled_actuator_is_bound_to_backward_receipt": tampered_actuator_rejected,

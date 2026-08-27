@@ -98,6 +98,8 @@ class ModelAdapter(Protocol):
 | `interface_kind` | `deterministic_conformance`, `local_open_weight`, or `hosted_api` |
 | `state_visibility` | `public_only` or an explicitly admitted `native_latent` surface |
 | `differentiable_through_model` | Must be `false` for the current public/hosted protocol |
+| `generation_config` | Canonically ordered public decoding settings |
+| `generation_config_fingerprint_sha256` | Derived receipt identity for those settings |
 
 `ModelResult` contains one allowed answer, zero or more known public support
 IDs, raw public text, the descriptor, a request fingerprint, latency, and a
@@ -106,7 +108,11 @@ logical-call count.
 The reference MLX runtime derives `model_id` from a standard Hugging Face cache
 snapshot as `repository@revision`. A model outside that layout must supply an
 explicit revision-bearing identity; a filesystem path alone is not accepted as
-weight identity because its contents can be replaced in place.
+weight identity because its contents can be replaced in place. Its descriptor
+separately records and fingerprints `max_tokens`, seed, sampler temperature,
+and chat-template generation mode, so two executions with the same weights and
+adapter name but different decoding settings cannot share a configuration
+receipt.
 
 The engine recomputes the expected invocation before generation and requires
 the returned request fingerprint and adapter descriptor to match that binding.
