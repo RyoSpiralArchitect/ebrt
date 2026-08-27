@@ -58,6 +58,9 @@ python3 ebrt_core.py joint-local-e2e
 
 If the Mistral snapshot is already in the standard Hugging Face cache, EBRT
 discovers it automatically and the environment variable can be omitted.
+For a model stored outside that cache layout, pass a public receipt identity
+explicitly with `--model-id provider/model-name`; otherwise EBRT emits an
+opaque local-path identity rather than guessing a repository name.
 
 The committed interface was verified locally with
 `mlx-community/Mistral-7B-Instruct-v0.3-4bit`. The v0.7.1 integration fixture

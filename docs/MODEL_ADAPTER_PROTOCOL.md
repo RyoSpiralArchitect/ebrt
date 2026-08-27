@@ -56,7 +56,8 @@ logical-call count.
 The engine recomputes the expected invocation before generation and requires
 the returned request fingerprint and adapter descriptor to match that binding.
 An adapter cannot substitute another request or model identity while retaining
-structural `PASS`.
+structural `PASS`. Descriptor values are runtime-validated, and the current
+protocol rejects any descriptor that claims a gradient crosses generation.
 
 ## Model-visible information
 

@@ -93,19 +93,14 @@ def _require(condition: bool, reason: str) -> None:
         raise EBRTError(reason)
 
 
-def _finite(value: float, label: str) -> float:
-    number = float(value)
+def _finite(value: Any, label: str) -> float:
+    _require(not isinstance(value, bool), f"{label}_NONNUMERIC")
+    try:
+        number = float(value)
+    except (TypeError, ValueError, OverflowError) as exc:
+        raise EBRTError(f"{label}_NONNUMERIC") from exc
     _require(math.isfinite(number), f"{label}_NONFINITE")
     return 0.0 if number == 0.0 else number
-
-
-def _tensor_values(value: torch.Tensor) -> Any:
-    def normalize(item: Any) -> Any:
-        if isinstance(item, list):
-            return [normalize(child) for child in item]
-        return _finite(float(item), "TENSOR_VALUE")
-
-    return normalize(value.detach().cpu().tolist())
 
 
 def _safe_id(value: str, label: str) -> str:
@@ -242,6 +237,7 @@ def validate_task(task: RevisionTask) -> None:
     )
     for row in task.evidence:
         _safe_id(row.evidence_id, "EVIDENCE_ID")
+        _require(row.evidence_id.upper() != "NONE", "EVIDENCE_ID_RESERVED")
         _require(bool(row.text.strip()), "EVIDENCE_TEXT_EMPTY")
         _require(
             isinstance(row.role, str) and row.role in EVIDENCE_ROLES,
@@ -255,8 +251,8 @@ def validate_task(task: RevisionTask) -> None:
             for value in vector:
                 _finite(value, label)
         _require(
-            abs(row.control_basis[AXES.index("stability")]) <= FLOAT_TOLERANCE,
-            "STABILITY_AXIS_MUST_BE_UNCONTROLLED",
+            row.control_basis[AXES.index("stability")] == 0.0,
+            "STABILITY_AXIS_MUST_BE_EXACT_ZERO",
         )
     id_set = set(ids)
     _safe_id(task.event.event_id, "EVENT_ID")
@@ -333,9 +329,12 @@ def validate_task(task: RevisionTask) -> None:
     _require(len(task.terminal_target) == len(AXES), "TARGET_DIMENSION_INVALID")
     for value in task.terminal_target:
         _finite(value, "TARGET")
-    _require(0.0 < task.decay <= 1.0, "DECAY_INVALID")
-    _require(task.control_budget > 0.0, "CONTROL_BUDGET_INVALID")
-    _require(task.learning_rate > 0.0, "LEARNING_RATE_INVALID")
+    decay = _finite(task.decay, "DECAY")
+    control_budget = _finite(task.control_budget, "CONTROL_BUDGET")
+    learning_rate = _finite(task.learning_rate, "LEARNING_RATE")
+    _require(0.0 < decay <= 1.0, "DECAY_INVALID")
+    _require(control_budget > 0.0, "CONTROL_BUDGET_INVALID")
+    _require(learning_rate > 0.0, "LEARNING_RATE_INVALID")
     _require(
         1 <= task.reinspection_count <= len(task.evidence),
         "REINSPECTION_COUNT_INVALID",
@@ -399,11 +398,18 @@ class TypedPublicStateAdapter:
     def build(self, task: RevisionTask, *, lane_id: str) -> TrajectoryEnvelope:
         validate_task(task)
         _safe_id(lane_id, "LANE_ID")
+        _safe_id(self.adapter_id, "STATE_ADAPTER_ID")
+        scales = {
+            "support": _finite(self.support_scale, "SUPPORT_SCALE"),
+            "invalidation": _finite(self.invalidation_scale, "INVALIDATION_SCALE"),
+            "correction": _finite(self.correction_scale, "CORRECTION_SCALE"),
+        }
+        _require(all(value > 0.0 for value in scales.values()), "STATE_SCALE_INVALID")
         scale_by_role = {
             "context": 1.0,
-            "required_support": self.support_scale,
-            "invalidated_prior": self.invalidation_scale,
-            "correction": self.correction_scale,
+            "required_support": scales["support"],
+            "invalidated_prior": scales["invalidation"],
+            "correction": scales["correction"],
             "stable": 1.0,
         }
         neutral = torch.tensor(
@@ -723,9 +729,46 @@ class PublicRevisionActuator:
         )
         credit = optimized.get("credit_map")
         _require(isinstance(credit, list), "CREDIT_MAP_INVALID")
-        rows = {
-            str(row["evidence_id"]): row for row in credit if isinstance(row, Mapping)
-        }
+        known_rows = {row.evidence_id: row for row in task.evidence}
+        rows: dict[str, Mapping[str, Any]] = {}
+        for row in credit:
+            _require(isinstance(row, Mapping), "CREDIT_MAP_ROW_INVALID")
+            evidence_id = row.get("evidence_id")
+            _require(
+                isinstance(evidence_id, str) and evidence_id in known_rows,
+                "CREDIT_MAP_EVIDENCE_UNKNOWN",
+            )
+            _require(evidence_id not in rows, "CREDIT_MAP_EVIDENCE_DUPLICATE")
+            source = known_rows[evidence_id]
+            _require(row.get("step") == source.ordinal, "CREDIT_MAP_STEP_MISMATCH")
+            _require(row.get("role") == source.role, "CREDIT_MAP_ROLE_MISMATCH")
+            _require(
+                isinstance(row.get("eligible"), bool), "CREDIT_MAP_ELIGIBLE_INVALID"
+            )
+            expected_eligible = any(value != 0.0 for value in source.control_basis)
+            _require(
+                row["eligible"] is expected_eligible,
+                "CREDIT_MAP_ELIGIBLE_MISMATCH",
+            )
+            gradient = _finite(row.get("gradient"), "CREDIT_MAP_GRADIENT")
+            control = _finite(row.get("control"), "CREDIT_MAP_CONTROL")
+            magnitude = _finite(row.get("absolute_control"), "CREDIT_MAP_MAGNITUDE")
+            _require(magnitude >= 0.0, "CREDIT_MAP_MAGNITUDE_NEGATIVE")
+            _require(
+                math.isclose(
+                    magnitude,
+                    abs(control),
+                    rel_tol=1.0e-12,
+                    abs_tol=FLOAT_TOLERANCE,
+                ),
+                "CREDIT_MAP_MAGNITUDE_MISMATCH",
+            )
+            if not expected_eligible:
+                _require(
+                    control == 0.0 and gradient == 0.0, "INELIGIBLE_CREDIT_NONZERO"
+                )
+            rows[evidence_id] = row
+        _require(set(rows) == set(known_rows), "CREDIT_MAP_COVERAGE_MISMATCH")
         invalidated = set(task.event.invalidated_evidence_ids)
         stable = set(task.event.stable_evidence_ids)
         correction = task.event.correction_evidence_id
@@ -795,6 +838,30 @@ class AdapterDescriptor:
             "state_visibility": self.state_visibility,
             "differentiable_through_model": self.differentiable_through_model,
         }
+
+
+def _validate_adapter_descriptor(descriptor: AdapterDescriptor, label: str) -> None:
+    _safe_id(descriptor.adapter_id, f"{label}_ADAPTER_ID")
+    _require(
+        isinstance(descriptor.model_id, str)
+        and bool(descriptor.model_id.strip())
+        and len(descriptor.model_id) <= 512
+        and all(character.isprintable() for character in descriptor.model_id),
+        f"{label}_MODEL_ID_INVALID",
+    )
+    _require(
+        descriptor.interface_kind
+        in {"deterministic_conformance", "local_open_weight", "hosted_api"},
+        f"{label}_INTERFACE_KIND_INVALID",
+    )
+    _require(
+        descriptor.state_visibility in {"public_only", "native_latent"},
+        f"{label}_STATE_VISIBILITY_INVALID",
+    )
+    _require(
+        descriptor.differentiable_through_model is False,
+        f"{label}_GRADIENT_BOUNDARY_INVALID",
+    )
 
 
 @dataclass(frozen=True)
@@ -971,10 +1038,27 @@ class CallableModelAdapter:
         )
 
 
+def _local_model_id(path: Path) -> str:
+    for candidate in (path, *path.parents):
+        if candidate.name.startswith("models--"):
+            repository = candidate.name.removeprefix("models--").replace("--", "/")
+            if repository:
+                return repository
+    path_hash = hashlib.sha256(str(path).encode("utf-8")).hexdigest()[:12]
+    return f"local-model/{path.name}@{path_hash}"
+
+
 class SharedMLXRuntime:
     """Lazy one-process MLX runtime shared by one or more v0.8 lanes."""
 
-    def __init__(self, model_path: str, *, max_tokens: int = 48, seed: int = 0):
+    def __init__(
+        self,
+        model_path: str,
+        *,
+        model_id: str | None = None,
+        max_tokens: int = 48,
+        seed: int = 0,
+    ):
         path = Path(model_path).expanduser().resolve()
         _require(path.is_dir(), "LOCAL_MODEL_PATH_NOT_FOUND")
         _require(
@@ -983,6 +1067,14 @@ class SharedMLXRuntime:
             "LOCAL_MODEL_WEIGHTS_NOT_FOUND",
         )
         self.model_path = path
+        self._model_id = model_id or _local_model_id(path)
+        _require(
+            isinstance(self._model_id, str)
+            and bool(self._model_id.strip())
+            and len(self._model_id) <= 512
+            and all(character.isprintable() for character in self._model_id),
+            "LOCAL_MODEL_ID_INVALID",
+        )
         self.max_tokens = max_tokens
         self.seed = seed
         self._model: Any = None
@@ -990,9 +1082,7 @@ class SharedMLXRuntime:
 
     @property
     def model_id(self) -> str:
-        return self.model_path.parent.parent.name.replace("models--", "").replace(
-            "--", "/"
-        )
+        return self._model_id
 
     def _load(self) -> None:
         if self._model is not None:
@@ -1001,7 +1091,10 @@ class SharedMLXRuntime:
             from mlx_lm import load
         except ImportError as exc:  # pragma: no cover - environment dependent
             raise EBRTError("MLX_LM_NOT_INSTALLED") from exc
-        self._model, self._tokenizer = load(str(self.model_path))
+        try:
+            self._model, self._tokenizer = load(str(self.model_path))
+        except Exception as exc:  # pragma: no cover - model/runtime dependent
+            raise EBRTError("MLX_MODEL_LOAD_FAILED") from exc
 
     def generate(self, prompt: str) -> str:
         self._load()
@@ -1011,20 +1104,23 @@ class SharedMLXRuntime:
             from mlx_lm.sample_utils import make_sampler
         except ImportError as exc:  # pragma: no cover - environment dependent
             raise EBRTError("MLX_LM_NOT_INSTALLED") from exc
-        mx.random.seed(self.seed)
-        rendered = self._tokenizer.apply_chat_template(
-            [{"role": "user", "content": prompt}],
-            tokenize=False,
-            add_generation_prompt=True,
-        )
-        return generate(
-            self._model,
-            self._tokenizer,
-            prompt=rendered,
-            max_tokens=self.max_tokens,
-            sampler=make_sampler(temp=0.0),
-            verbose=False,
-        ).strip()
+        try:
+            mx.random.seed(self.seed)
+            rendered = self._tokenizer.apply_chat_template(
+                [{"role": "user", "content": prompt}],
+                tokenize=False,
+                add_generation_prompt=True,
+            )
+            return generate(
+                self._model,
+                self._tokenizer,
+                prompt=rendered,
+                max_tokens=self.max_tokens,
+                sampler=make_sampler(temp=0.0),
+                verbose=False,
+            ).strip()
+        except Exception as exc:  # pragma: no cover - model/runtime dependent
+            raise EBRTError("MLX_GENERATION_FAILED") from exc
 
 
 @dataclass
@@ -1163,6 +1259,7 @@ class RevisionEngine:
             isinstance(expected_descriptor, AdapterDescriptor),
             "MODEL_ADAPTER_DESCRIPTOR_INVALID",
         )
+        _validate_adapter_descriptor(expected_descriptor, "MODEL_ADAPTER")
         expected_invocation = build_model_invocation(
             task, program, prompt_policy=prompt_policy
         )
@@ -1277,7 +1374,7 @@ class JointBackwardRevisionCore:
             zip(envelopes, weights, strict=True), key=lambda row: row[0].lane_id
         )
         ordered = tuple(row[0] for row in paired)
-        ordered_weights = tuple(float(row[1]) for row in paired)
+        ordered_weights = tuple(_finite(row[1], "JOINT_WEIGHT") for row in paired)
         _require(all(row > 0.0 for row in ordered_weights), "JOINT_WEIGHT_INVALID")
         lane_ids = [row.lane_id for row in ordered]
         _require(len(lane_ids) == len(set(lane_ids)), "JOINT_LANE_ID_DUPLICATE")
@@ -1469,16 +1566,34 @@ def _merge_model_results(
     lane_results: Mapping[str, ModelResult],
     lane_weights: Mapping[str, float],
 ) -> JsonObject:
+    _require(bool(lane_results), "MERGE_LANE_RESULTS_EMPTY")
+    _require(
+        set(lane_results) == set(lane_weights),
+        "MERGE_LANE_WEIGHT_KEYS_MISMATCH",
+    )
     vote_weight: Counter[str] = Counter()
     for lane_id, result in lane_results.items():
-        vote_weight[result.answer] += float(lane_weights[lane_id])
+        weight = _finite(lane_weights[lane_id], "MERGE_LANE_WEIGHT")
+        _require(weight > 0.0, "MERGE_LANE_WEIGHT_INVALID")
+        vote_weight[result.answer] += weight
     best_weight = max(vote_weight.values())
-    tied = {answer for answer, weight in vote_weight.items() if weight == best_weight}
+    tied = {
+        answer
+        for answer, weight in vote_weight.items()
+        if math.isclose(
+            weight,
+            best_weight,
+            rel_tol=1.0e-12,
+            abs_tol=FLOAT_TOLERANCE,
+        )
+    }
     if len(tied) == 1:
         answer = next(iter(tied))
         tie_break = "NONE"
     else:
-        canonical_lane = sorted(lane_results)[0]
+        canonical_lane = min(
+            lane_id for lane_id, result in lane_results.items() if result.answer in tied
+        )
         answer = lane_results[canonical_lane].answer
         tie_break = f"CANONICAL_LANE:{canonical_lane}"
     support_union = {
@@ -1551,6 +1666,7 @@ class JointRevisionEngine:
                 isinstance(expected_descriptor, AdapterDescriptor),
                 "JOINT_MODEL_ADAPTER_DESCRIPTOR_INVALID",
             )
+            _validate_adapter_descriptor(expected_descriptor, "JOINT_MODEL_ADAPTER")
             expected_invocation = build_model_invocation(
                 task, program, prompt_policy=lane.prompt_policy
             )
@@ -1806,6 +1922,52 @@ def self_test() -> JsonObject:
         lambda: validate_task(invalid_role_task),
         "EVIDENCE_ROLE_INVALID",
     )
+    near_zero_stability_task = replace(
+        task,
+        evidence=tuple(
+            replace(
+                row,
+                control_basis=(
+                    row.control_basis[0],
+                    row.control_basis[1],
+                    1.0e-13,
+                ),
+            )
+            if row.evidence_id == "R1"
+            else row
+            for row in task.evidence
+        ),
+    )
+    near_zero_stability_rejected = _raises_ebrt_reason(
+        lambda: validate_task(near_zero_stability_task),
+        "STABILITY_AXIS_MUST_BE_EXACT_ZERO",
+    )
+    reserved_evidence_id_task = replace(
+        task,
+        evidence=(replace(task.evidence[0], evidence_id="NONE"), *task.evidence[1:]),
+    )
+    reserved_evidence_id_rejected = _raises_ebrt_reason(
+        lambda: validate_task(reserved_evidence_id_task),
+        "EVIDENCE_ID_RESERVED",
+    )
+    invalid_scale_rejected = _raises_ebrt_reason(
+        lambda: TypedPublicStateAdapter(support_scale=0.0).build(
+            task, lane_id="scale-check"
+        ),
+        "STATE_SCALE_INVALID",
+    )
+    invalid_descriptor_rejected = _raises_ebrt_reason(
+        lambda: _validate_adapter_descriptor(
+            AdapterDescriptor(
+                adapter_id="invalid adapter",
+                model_id="model",
+                interface_kind="local_open_weight",
+                state_visibility="public_only",
+            ),
+            "MODEL_ADAPTER",
+        ),
+        "MODEL_ADAPTER_ADAPTER_ID_INVALID",
+    )
     adapter = _conformance_adapter(
         adapter_id="local-conformance-a", model_id="transparent-local-double-a"
     )
@@ -1816,12 +1978,23 @@ def self_test() -> JsonObject:
             adapter,
             post_run_contract=contract,
         )
+        optimized = BackwardRevisionCore().optimize(
+            TypedPublicStateAdapter().build(task, lane_id="contract-check")
+        )
         program = PublicRevisionActuator().compile(
             task,
-            BackwardRevisionCore().optimize(
-                TypedPublicStateAdapter().build(task, lane_id="contract-check")
-            ),
+            optimized,
             lane_id="contract-check",
+        )
+        incomplete_credit = _without_fingerprint(optimized)
+        incomplete_credit["credit_map"] = incomplete_credit["credit_map"][:-1]
+        incomplete_credit_rejected = _raises_ebrt_reason(
+            lambda: PublicRevisionActuator().compile(
+                task,
+                _seal(incomplete_credit),
+                lane_id="contract-check",
+            ),
+            "CREDIT_MAP_COVERAGE_MISMATCH",
         )
         invocation_before = build_model_invocation(
             task, program, prompt_policy="credit_first"
@@ -1854,6 +2027,15 @@ def self_test() -> JsonObject:
             expected_request_fingerprint_sha256=str(
                 invocation_before["fingerprint_sha256"]
             ),
+        )
+        tie_merge = _merge_model_results(
+            task,
+            {
+                "lane-a": replace(valid_result, answer="PROVE"),
+                "lane-b": replace(valid_result, answer="PROVE"),
+                "lane-c": replace(valid_result, answer="POLISH"),
+            },
+            {"lane-a": 0.1, "lane-b": 0.2, "lane-c": 0.3},
         )
 
         lane_a = JointLaneSpec(
@@ -1901,6 +2083,21 @@ def self_test() -> JsonObject:
         "parser_enforces_exact_two_lines": parser_rejects_extra_lines,
         "duplicate_event_ids_are_rejected": duplicate_event_rejected,
         "invalid_runtime_role_is_rejected": invalid_role_rejected,
+        "stability_basis_requires_exact_zero": near_zero_stability_rejected,
+        "parser_sentinel_cannot_be_evidence_id": reserved_evidence_id_rejected,
+        "state_adapter_scales_are_positive": invalid_scale_rejected,
+        "adapter_descriptor_is_runtime_validated": invalid_descriptor_rejected,
+        "credit_map_requires_exact_coverage": incomplete_credit_rejected,
+        "credit_first_order_is_compiled": invocation_before["evidence_ids"][
+            : len(program.reinspect)
+        ]
+        == [row[0] for row in program.reinspect],
+        "largest_remainder_allocation_is_deterministic": _largest_remainder_units(
+            [1.0, 1.0, 1.0]
+        )
+        == [34, 33, 33],
+        "floating_vote_tie_uses_canonical_tied_lane": tie_merge["answer"] == "PROVE"
+        and tie_merge["tie_break"] == "CANONICAL_LANE:lane-a",
         "request_fingerprint_tamper_is_detected": not request_tamper_checks[
             "request_fingerprint_matches_invocation"
         ],
@@ -2007,9 +2204,9 @@ def _resolved_model_path(value: str | None) -> str:
     return str(Path(selected).expanduser().resolve())
 
 
-def run_local_e2e(model_path: str | None) -> JsonObject:
+def run_local_e2e(model_path: str | None, model_id: str | None = None) -> JsonObject:
     task = build_demo_task()
-    runtime = SharedMLXRuntime(_resolved_model_path(model_path))
+    runtime = SharedMLXRuntime(_resolved_model_path(model_path), model_id=model_id)
     adapter = MLXLocalAdapter(runtime, adapter_id="mlx-local-primary")
     result = RevisionEngine().run(
         task,
@@ -2020,9 +2217,11 @@ def run_local_e2e(model_path: str | None) -> JsonObject:
     return result
 
 
-def run_joint_local_e2e(model_path: str | None) -> JsonObject:
+def run_joint_local_e2e(
+    model_path: str | None, model_id: str | None = None
+) -> JsonObject:
     task = build_demo_task()
-    runtime = SharedMLXRuntime(_resolved_model_path(model_path))
+    runtime = SharedMLXRuntime(_resolved_model_path(model_path), model_id=model_id)
     lanes = (
         JointLaneSpec(
             lane_id="invalidation",
@@ -2103,11 +2302,19 @@ def build_parser() -> argparse.ArgumentParser:
         "local-e2e", help="run v0.7.1 through a real local MLX model"
     )
     local.add_argument("--model", help="path to a complete local MLX model snapshot")
+    local.add_argument(
+        "--model-id",
+        help="public model identity when the local path is not a Hugging Face snapshot",
+    )
     joint = commands.add_parser(
         "joint-local-e2e",
         help="run v0.8 two-lane joint credit through one shared local MLX model",
     )
     joint.add_argument("--model", help="path to a complete local MLX model snapshot")
+    joint.add_argument(
+        "--model-id",
+        help="public model identity when the local path is not a Hugging Face snapshot",
+    )
     return parser
 
 
@@ -2121,9 +2328,9 @@ def main(argv: Sequence[str] | None = None) -> int:
         elif args.command == "demo-task":
             value = build_demo_task().to_public_dict()
         elif args.command == "local-e2e":
-            value = run_local_e2e(args.model)
+            value = run_local_e2e(args.model, args.model_id)
         elif args.command == "joint-local-e2e":
-            value = run_joint_local_e2e(args.model)
+            value = run_joint_local_e2e(args.model, args.model_id)
         else:  # pragma: no cover
             raise EBRTError("UNKNOWN_COMMAND")
         print(_pretty(value), end="")
