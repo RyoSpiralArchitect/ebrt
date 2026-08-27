@@ -2,11 +2,11 @@
   "schema_version": "ebrt-local-open-weight-receipt-v0.7.1",
   "status": "PASS",
   "artifact_kind": "CONTAMINATED_INTEGRATION_RECEIPT",
-  "recorded_at_utc": "2026-08-27T20:20:00Z",
+  "recorded_at_utc": "2026-08-27T20:44:12Z",
   "command": "python3 ebrt_core.py local-e2e",
   "source": {
-    "commit": "668a94ab3317b2e7a18744cc7fe3f88f726b29ad",
-    "ebrt_core_sha256": "5f3b9b37d6aecf223ee6adf9f11e2f94d4243b14195bb2d78b875bc053e7009b"
+    "commit": "939c4d1938aad20a1b14153ce1945e42392fcf7b",
+    "ebrt_core_sha256": "bd35a52705c4ccdd29e52bb7b7bde2365b60211a47d6a0653f8650de5d192bc4"
   },
   "runtime": {
     "platform": "macOS-26.2-arm64-arm-64bit-Mach-O",
@@ -32,9 +32,9 @@
       "R2"
     ],
     "logical_calls": 1,
-    "latency_ms": 7020.107124990318,
+    "latency_ms": 6074.339333979879,
     "request_fingerprint_sha256": "e549c7107beabda5a87ee9be74a29fb141b41373607c25026b26955ab310d79c",
-    "model_result_fingerprint_sha256": "efd53389bbb5602e137d2950f9c219e58cb618817fae7d28817b290451365c9b"
+    "model_result_fingerprint_sha256": "c8127f35a78688493eda7fa4ced66099fc0da44385650cad223c31682c4e88e9"
   },
   "trajectory_checks": {
     "central_finite_difference_agreement": true,
@@ -69,12 +69,12 @@
       "required_support_present": true
     }
   },
-  "result_fingerprint_sha256": "0f0818b727067d0555756d7454f8966b960312ccda19e4801dc3e25c16851cd9",
+  "result_fingerprint_sha256": "df73aae776e6ddc1cbd75470137366d9e4a457eed4379d96776315b2bbd76b53",
   "effect_attribution_status": "NOT_ASSESSED",
   "claim_boundary": [
     "This receipt records one real local open-weight integration run over a known synthetic fixture.",
     "It does not establish causal superiority, fresh benchmark performance, or general reasoning improvement.",
     "The gradient stops at the adapter-supplied public trajectory and does not cross the model boundary."
   ],
-  "fingerprint_sha256": "d2a28d2f2622ba617395e8ea911b2ebf465105a03c63e530a71d4d348d214667"
+  "fingerprint_sha256": "13c6fd830a55e471134820e8d0074a890e3ceef0ad6ec26b2851ab8e4081f4b0"
 }
