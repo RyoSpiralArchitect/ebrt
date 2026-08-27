@@ -379,6 +379,7 @@ def validate_task(task: RevisionTask) -> None:
 
 
 def validate_contract(task: RevisionTask, contract: PostRunContract) -> None:
+    _require(type(contract) is PostRunContract, "CONTRACT_TYPE_INVALID")
     ids = {row.evidence_id for row in task.evidence}
     _require(contract.expected_answer in task.answer_choices, "CONTRACT_ANSWER_INVALID")
     for label, values in (
@@ -421,6 +422,18 @@ class StateAdapter(Protocol):
     adapter_id: str
 
     def build(self, task: RevisionTask, *, lane_id: str) -> TrajectoryEnvelope: ...
+
+
+def _clone_envelope(envelope: TrajectoryEnvelope) -> TrajectoryEnvelope:
+    """Clone all mutable tensors while retaining immutable public metadata."""
+
+    return replace(
+        envelope,
+        neutral_effects=envelope.neutral_effects.detach().clone(),
+        control_basis=envelope.control_basis.detach().clone(),
+        target=envelope.target.detach().clone(),
+        eligible_mask=envelope.eligible_mask.detach().clone(),
+    )
 
 
 def _prepare_state_envelope(
@@ -499,13 +512,7 @@ def _prepare_state_envelope(
         and envelope.eligible_mask.dtype == torch.bool,
         f"{label}_ELIGIBLE_MASK_CONTRACT_INVALID",
     )
-    detached = replace(
-        envelope,
-        neutral_effects=envelope.neutral_effects.detach().clone(),
-        control_basis=envelope.control_basis.detach().clone(),
-        target=envelope.target.detach().clone(),
-        eligible_mask=envelope.eligible_mask.detach().clone(),
-    )
+    detached = _clone_envelope(envelope)
     _require(
         all(
             not tensor.requires_grad and tensor.grad_fn is None
@@ -978,6 +985,41 @@ def _validate_single_core_receipt(
         ),
         "CORE_RECEIPT_FD_ERROR_MISMATCH",
     )
+    backtracking_steps = snapshot.get("backtracking_steps")
+    _require(
+        isinstance(backtracking_steps, int)
+        and not isinstance(backtracking_steps, bool)
+        and 0 <= backtracking_steps <= 20,
+        "CORE_RECEIPT_BACKTRACKING_STEPS_INVALID",
+    )
+    expected_controls = _project_controls(
+        -envelope.learning_rate * gradients,
+        envelope.eligible_mask,
+        envelope.control_budget,
+    )
+    neutral_loss, _ = _loss(envelope, zero, neutral)
+    accepted = False
+    expected_backtracking_steps = 0
+    for expected_backtracking_steps in range(21):
+        candidate_trajectory = _forward(envelope, expected_controls)
+        candidate_loss, _ = _loss(
+            envelope,
+            expected_controls,
+            candidate_trajectory,
+        )
+        if float(candidate_loss) < float(neutral_loss) - 1.0e-12:
+            accepted = True
+            break
+        expected_controls = 0.5 * expected_controls
+    _require(accepted, "CORE_RECEIPT_UPDATE_HAS_NO_DESCENT")
+    _require(
+        torch.equal(controls, expected_controls),
+        "CORE_RECEIPT_CONTROL_UPDATE_MISMATCH",
+    )
+    _require(
+        backtracking_steps == expected_backtracking_steps,
+        "CORE_RECEIPT_BACKTRACKING_STEPS_MISMATCH",
+    )
     stability_index = envelope.axis_ids.index("stability")
     expected_checks = {
         "real_backward_executed_once": True,
@@ -1005,13 +1047,6 @@ def _validate_single_core_receipt(
     _require(
         snapshot.get("checks") == expected_checks and all(expected_checks.values()),
         "CORE_RECEIPT_CHECKS_INVALID",
-    )
-    backtracking_steps = snapshot.get("backtracking_steps")
-    _require(
-        isinstance(backtracking_steps, int)
-        and not isinstance(backtracking_steps, bool)
-        and 0 <= backtracking_steps <= 20,
-        "CORE_RECEIPT_BACKTRACKING_STEPS_INVALID",
     )
     return snapshot
 
@@ -1642,9 +1677,20 @@ def _grade_contract(
             contract.required_compiled_preserve_ids
         ).issubset(preserve),
     }
+    contract_receipt = _seal(
+        {
+            "schema_version": POST_RUN_CONTRACT_VERSION,
+            "expected_answer": contract.expected_answer,
+            "required_support_ids": list(contract.required_support_ids),
+            "forbidden_support_ids": list(contract.forbidden_support_ids),
+            "required_compiled_preserve_ids": list(
+                contract.required_compiled_preserve_ids
+            ),
+        }
+    )
     return {
         "status": "PASS" if all(checks.values()) else "FAIL",
-        "contract": contract.to_dict(),
+        "contract": contract_receipt,
         "checks": checks,
     }
 
@@ -1684,7 +1730,7 @@ class RevisionEngine:
         )
         optimized = _validate_single_core_receipt(
             envelope,
-            self.core.optimize(envelope),
+            self.core.optimize(_clone_envelope(envelope)),
         )
         program = self.actuator_adapter.compile(
             task,
@@ -2077,6 +2123,48 @@ def _validate_joint_core_receipt(
         slices,
         zero,
     )
+    backtracking_steps = snapshot.get("backtracking_steps")
+    _require(
+        isinstance(backtracking_steps, int)
+        and not isinstance(backtracking_steps, bool)
+        and 0 <= backtracking_steps <= 20,
+        "JOINT_CORE_RECEIPT_BACKTRACKING_STEPS_INVALID",
+    )
+    expected_lane_controls = [
+        _project_controls(
+            -envelope.learning_rate * gradients[lane_slice],
+            envelope.eligible_mask,
+            envelope.control_budget,
+        )
+        for envelope, lane_slice in zip(ordered, slices, strict=True)
+    ]
+    expected_controls = torch.cat(expected_lane_controls)
+    global_budget = math.sqrt(sum(row.control_budget**2 for row in ordered))
+    expected_global_norm = torch.linalg.vector_norm(expected_controls)
+    if float(expected_global_norm) > global_budget:
+        expected_controls = expected_controls * (global_budget / expected_global_norm)
+    accepted = False
+    expected_backtracking_steps = 0
+    for expected_backtracking_steps in range(21):
+        candidate_loss, _, _ = _joint_loss(
+            ordered,
+            ordered_weights,
+            slices,
+            expected_controls,
+        )
+        if float(candidate_loss) < float(expected_neutral_loss["total"]) - 1.0e-12:
+            accepted = True
+            break
+        expected_controls = 0.5 * expected_controls
+    _require(accepted, "JOINT_CORE_RECEIPT_UPDATE_HAS_NO_DESCENT")
+    _require(
+        torch.equal(controls, expected_controls),
+        "JOINT_CORE_RECEIPT_CONTROL_UPDATE_MISMATCH",
+    )
+    _require(
+        backtracking_steps == expected_backtracking_steps,
+        "JOINT_CORE_RECEIPT_BACKTRACKING_STEPS_MISMATCH",
+    )
     _, expected_revised_loss, revised_trajectories = _joint_loss(
         ordered,
         ordered_weights,
@@ -2166,7 +2254,6 @@ def _validate_joint_core_receipt(
             "JOINT_CORE_RECEIPT_LANE_CHECKS_INVALID",
         )
 
-    global_budget = math.sqrt(sum(row.control_budget**2 for row in ordered))
     global_l2 = _finite(
         float(torch.linalg.vector_norm(controls)),
         "JOINT_CORE_RECEIPT_EXPECTED_GLOBAL_L2",
@@ -2210,13 +2297,6 @@ def _validate_joint_core_receipt(
     _require(
         snapshot.get("checks") == expected_checks and all(expected_checks.values()),
         "JOINT_CORE_RECEIPT_CHECKS_INVALID",
-    )
-    backtracking_steps = snapshot.get("backtracking_steps")
-    _require(
-        isinstance(backtracking_steps, int)
-        and not isinstance(backtracking_steps, bool)
-        and 0 <= backtracking_steps <= 20,
-        "JOINT_CORE_RECEIPT_BACKTRACKING_STEPS_INVALID",
     )
     return snapshot
 
@@ -2317,11 +2397,12 @@ class JointRevisionEngine:
                 label="JOINT_STATE_ADAPTER",
             )
             envelopes.append(envelope)
+        core_envelopes = [_clone_envelope(envelope) for envelope in envelopes]
         joint = _validate_joint_core_receipt(
             envelopes,
             [row.weight for row in ordered_lanes],
             self.core.optimize(
-                envelopes,
+                core_envelopes,
                 weights=[row.weight for row in ordered_lanes],
             ),
         )
@@ -2665,6 +2746,52 @@ class _TamperedSingleCore:
         return _seal(material)
 
 
+class _MutatingSingleCore:
+    def optimize(self, envelope: TrajectoryEnvelope) -> JsonObject:
+        envelope.neutral_effects[0, 0] += 100.0
+        return BackwardRevisionCore().optimize(envelope)
+
+
+class _AlternateDescendingControlCore:
+    def optimize(self, envelope: TrajectoryEnvelope) -> JsonObject:
+        material = _without_fingerprint(BackwardRevisionCore().optimize(envelope))
+        controls = (
+            torch.tensor(
+                [row["control"] for row in material["credit_map"]],
+                dtype=DTYPE,
+            )
+            * 0.5
+        )
+        for index, row in enumerate(material["credit_map"]):
+            row["control"] = _finite(
+                float(controls[index]),
+                "TEST_ALTERNATE_CONTROL",
+            )
+            row["absolute_control"] = abs(row["control"])
+        revised = _forward(envelope, controls)
+        _, revised_loss = _loss(envelope, controls, revised)
+        material["revised"] = {
+            "loss": revised_loss,
+            "trajectory": _trajectory_rows(envelope, revised),
+        }
+        material["control_l2"] = _finite(
+            float(torch.linalg.vector_norm(controls)),
+            "TEST_ALTERNATE_CONTROL_L2",
+        )
+        material["backtracking_steps"] = 1
+        material["checks"]["objective_decreased"] = (
+            revised_loss["total"] < material["neutral"]["loss"]["total"]
+        )
+        material["checks"]["control_is_non_neutral"] = bool(
+            torch.any(torch.abs(controls) > 0.0)
+        )
+        material["checks"]["control_budget_respected"] = (
+            float(torch.linalg.vector_norm(controls))
+            <= envelope.control_budget + FLOAT_TOLERANCE
+        )
+        return _seal(material)
+
+
 class _TamperedJointCore:
     def optimize(
         self,
@@ -2677,6 +2804,30 @@ class _TamperedJointCore:
         )
         material["checks"]["joint_objective_decreased"] = False
         return _seal(material)
+
+
+class _MutatingJointCore:
+    def optimize(
+        self,
+        envelopes: Sequence[TrajectoryEnvelope],
+        *,
+        weights: Sequence[float],
+    ) -> JsonObject:
+        envelopes[0].neutral_effects[0, 0] += 0.01
+        return JointBackwardRevisionCore().optimize(envelopes, weights=weights)
+
+
+class _MisreportingContract(PostRunContract):
+    def to_dict(self) -> JsonObject:
+        return _seal(
+            {
+                "schema_version": POST_RUN_CONTRACT_VERSION,
+                "expected_answer": "POLISH",
+                "required_support_ids": [],
+                "forbidden_support_ids": [],
+                "required_compiled_preserve_ids": [],
+            }
+        )
 
 
 @contextmanager
@@ -2870,6 +3021,35 @@ def self_test() -> JsonObject:
                 post_run_contract=contract,
             ),
             "CORE_RECEIPT_STATE_ADAPTER_MISMATCH",
+        )
+        mutating_single_core_rejected = _raises_ebrt_reason(
+            lambda: RevisionEngine(core=_MutatingSingleCore()).run(
+                task,
+                adapter,
+                post_run_contract=contract,
+            ),
+            "CORE_RECEIPT_NEUTRAL_REPLAY_MISMATCH",
+        )
+        alternate_control_law_rejected = _raises_ebrt_reason(
+            lambda: RevisionEngine(core=_AlternateDescendingControlCore()).run(
+                task,
+                adapter,
+                post_run_contract=contract,
+            ),
+            "CORE_RECEIPT_CONTROL_UPDATE_MISMATCH",
+        )
+        misreporting_contract_rejected = _raises_ebrt_reason(
+            lambda: engine.run(
+                task,
+                adapter,
+                post_run_contract=_MisreportingContract(
+                    contract.expected_answer,
+                    contract.required_support_ids,
+                    contract.forbidden_support_ids,
+                    contract.required_compiled_preserve_ids,
+                ),
+            ),
+            "CONTRACT_TYPE_INVALID",
         )
         tampered_actuator_rejected = _raises_ebrt_reason(
             lambda: RevisionEngine(actuator_adapter=_TamperedActuatorAdapter()).run(
@@ -3129,6 +3309,14 @@ def self_test() -> JsonObject:
             ),
             "JOINT_CORE_RECEIPT_CHECKS_INVALID",
         )
+        mutating_joint_core_rejected = _raises_ebrt_reason(
+            lambda: JointRevisionEngine(core=_MutatingJointCore()).run(
+                task,
+                (lane_a, lane_b),
+                post_run_contract=contract,
+            ),
+            "JOINT_CORE_LANE_RECEIPT_NEUTRAL_REPLAY_MISMATCH",
+        )
         joint = JointRevisionEngine().run(
             task, (lane_b, lane_a), post_run_contract=contract
         )
@@ -3189,7 +3377,10 @@ def self_test() -> JsonObject:
         "actuator_cannot_mutate_sealed_core_receipt": mutating_actuator_rejected_single
         and mutating_actuator_rejected_joint,
         "core_receipts_are_validated_before_actuation": tampered_single_core_rejected
-        and tampered_joint_core_rejected,
+        and tampered_joint_core_rejected
+        and mutating_single_core_rejected
+        and mutating_joint_core_rejected,
+        "core_receipts_bind_the_declared_update_law": alternate_control_law_rejected,
         "credit_first_order_is_compiled": invocation_before["evidence_ids"][
             : len(program.reinspect)
         ]
@@ -3254,6 +3445,7 @@ def self_test() -> JsonObject:
         and primary_contract_grade["contract"]["fingerprint_sha256"]
         != alternate_contract_grade["contract"]["fingerprint_sha256"]
         and single["post_run_contract"]["contract"] == contract.to_dict(),
+        "post_run_contract_rejects_subclass_serialization": misreporting_contract_rejected,
         "quantitative_actuator_is_model_visible": invocation_before["actuator_program"]
         == program.to_dict()
         and quantitative_invocation["actuator_program"]

@@ -45,10 +45,12 @@ single and joint compilation therefore cannot rewrite the receipt that is
 validated or emitted.
 
 An injected optimization core is also a checked boundary. Before actuation, the
-engine binds its sealed receipt to the admitted schema, lane, state-adapter,
-axes, event index, budget, evidence rows, replayed trajectories, losses,
-finite-difference diagnostics, and required checks. A resealed but inconsistent
-custom-core receipt cannot be promoted to engine `PASS`.
+engine retains an immutable admitted envelope and passes the core a separate
+working clone. It then binds the sealed receipt to the admitted schema, lane,
+state-adapter, axes, event index, budget, evidence rows, replayed trajectories,
+losses, finite-difference diagnostics, the projected/backtracked update law,
+and required checks. A core cannot mutate the validator's reference envelope,
+and a resealed but inconsistent receipt cannot be promoted to engine `PASS`.
 
 ## Python contract
 
