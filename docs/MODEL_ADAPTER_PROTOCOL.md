@@ -69,6 +69,10 @@ class StateAdapter(Protocol):
 The adapter may construct public trajectory values, but it may not redefine
 task-owned optimization parameters. `event_index`, `target`, `decay`,
 `control_budget`, and `learning_rate` must exactly match `RevisionTask`.
+The admitted envelope also carries a canonical public state-adapter
+configuration. The core receipt binds those exact typed transformation scales,
+so two adapters with the same implementation ID but different trajectory
+geometry cannot share an optimization identity.
 Incoming tensors are copied and detached after conformance validation. The
 admitted `control_basis` and its exactly matching `eligible_mask` remain the
 authority for where the core can assign control; actuator compilation does not
@@ -113,6 +117,12 @@ separately records and fingerprints `max_tokens`, seed, sampler temperature,
 and chat-template generation mode, so two executions with the same weights and
 adapter name but different decoding settings cannot share a configuration
 receipt.
+
+Automatic Hugging Face cache discovery follows the repository's `refs/main`
+revision. When that reference is absent, exactly one complete snapshot is
+required; multiple complete snapshots are rejected as ambiguous rather than
+selecting one by directory-name order. An explicit `EBRT_LOCAL_MODEL` or
+`--model` remains available when the caller intends a different snapshot.
 
 The engine recomputes the expected invocation before generation and requires
 the returned request fingerprint and adapter descriptor to match that binding.

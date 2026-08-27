@@ -405,6 +405,7 @@ def validate_contract(task: RevisionTask, contract: PostRunContract) -> None:
 class TrajectoryEnvelope:
     lane_id: str
     state_adapter_id: str
+    state_adapter_config: tuple[tuple[str, float], ...]
     axis_ids: tuple[str, ...]
     evidence_ids: tuple[str, ...]
     roles: tuple[str, ...]
@@ -454,6 +455,25 @@ def _prepare_state_envelope(
     _require(
         envelope.state_adapter_id == adapter_id,
         f"{label}_ID_MISMATCH",
+    )
+    _require(
+        isinstance(envelope.state_adapter_config, tuple),
+        f"{label}_CONFIG_INVALID",
+    )
+    config_keys: list[str] = []
+    for row in envelope.state_adapter_config:
+        _require(
+            isinstance(row, tuple) and len(row) == 2,
+            f"{label}_CONFIG_ROW_INVALID",
+        )
+        key, value = row
+        _safe_id(key, f"{label}_CONFIG_KEY")
+        _finite(value, f"{label}_CONFIG_VALUE")
+        config_keys.append(key)
+    _require(
+        config_keys == sorted(config_keys)
+        and len(config_keys) == len(set(config_keys)),
+        f"{label}_CONFIG_KEYS_INVALID",
     )
     _require(envelope.axis_ids == AXES, f"{label}_AXIS_MISMATCH")
     _require(
@@ -609,6 +629,11 @@ class TypedPublicStateAdapter:
         return TrajectoryEnvelope(
             lane_id=lane_id,
             state_adapter_id=self.adapter_id,
+            state_adapter_config=(
+                ("correction_scale", scales["correction"]),
+                ("invalidation_scale", scales["invalidation"]),
+                ("support_scale", scales["support"]),
+            ),
             axis_ids=AXES,
             evidence_ids=tuple(row.evidence_id for row in task.evidence),
             roles=tuple(row.role for row in task.evidence),
@@ -798,6 +823,7 @@ class BackwardRevisionCore:
                 "schema_version": CORE_PROTOCOL_VERSION,
                 "lane_id": envelope.lane_id,
                 "state_adapter_id": envelope.state_adapter_id,
+                "state_adapter_config": dict(envelope.state_adapter_config),
                 "axis_ids": list(envelope.axis_ids),
                 "event_index": envelope.event_index,
                 "neutral": {
@@ -840,6 +866,10 @@ def _core_lane_material(
     _require(
         snapshot.get("state_adapter_id") == envelope.state_adapter_id,
         f"{label}_STATE_ADAPTER_MISMATCH",
+    )
+    _require(
+        snapshot.get("state_adapter_config") == dict(envelope.state_adapter_config),
+        f"{label}_STATE_ADAPTER_CONFIG_MISMATCH",
     )
     _require(
         snapshot.get("axis_ids") == list(envelope.axis_ids),
@@ -2024,6 +2054,7 @@ class JointBackwardRevisionCore:
                     "schema_version": CORE_PROTOCOL_VERSION,
                     "lane_id": envelope.lane_id,
                     "state_adapter_id": envelope.state_adapter_id,
+                    "state_adapter_config": dict(envelope.state_adapter_config),
                     "axis_ids": list(envelope.axis_ids),
                     "event_index": envelope.event_index,
                     "neutral": {
@@ -3050,6 +3081,19 @@ def self_test() -> JsonObject:
     cached_snapshot_b = _local_model_id(
         Path("/tmp/hub/models--example--model/snapshots/revision-b")
     )
+    cached_path_a = Path("/tmp/hub/models--example--model/snapshots/" + "a" * 40)
+    cached_path_b = Path("/tmp/hub/models--example--model/snapshots/" + "b" * 40)
+    active_cache_selection = _select_cached_snapshot(
+        (cached_path_b, cached_path_a),
+        active_revision="a" * 40,
+    )
+    ambiguous_cache_selection_rejected = _raises_ebrt_reason(
+        lambda: _select_cached_snapshot(
+            (cached_path_a, cached_path_b),
+            active_revision=None,
+        ),
+        "LOCAL_MODEL_SNAPSHOT_AMBIGUOUS",
+    )
     noncache_identity_requires_revision = _raises_ebrt_reason(
         lambda: _local_model_id(Path("/tmp/replaceable-local-model")),
         "LOCAL_MODEL_ID_REVISION_REQUIRED",
@@ -3447,6 +3491,9 @@ def self_test() -> JsonObject:
         == "example/model@revision-a"
         and cached_snapshot_b == "example/model@revision-b"
         and cached_snapshot_a != cached_snapshot_b,
+        "cached_model_selection_uses_active_ref_and_rejects_ambiguity": active_cache_selection
+        == cached_path_a
+        and ambiguous_cache_selection_rejected,
         "noncache_model_identity_requires_explicit_revision": noncache_identity_requires_revision
         and explicit_revision_identity == "example/model@weights-sha256-deadbeef",
         "mlx_decoding_configuration_is_receipt_bound": mlx_config_a != mlx_config_b
@@ -3509,6 +3556,20 @@ def self_test() -> JsonObject:
         not in {
             row["evidence_id"]
             for row in eligibility_transformed_run["actuator"]["reinspect"]
+        },
+        "typed_state_adapter_scales_are_receipt_bound": single["trajectory"][
+            "state_adapter_config"
+        ]
+        == {
+            "correction_scale": 1.0,
+            "invalidation_scale": 1.0,
+            "support_scale": 1.0,
+        }
+        and joint["joint_trajectory"]["lanes"]["support"]["state_adapter_config"]
+        == {
+            "correction_scale": 1.0,
+            "invalidation_scale": 0.75,
+            "support_scale": 1.25,
         },
         "task_owned_trajectory_parameters_are_bound": task_parameter_tampering_rejected,
         "single_lane_v0_7_1_pass": single["status"] == "PASS",
@@ -3597,6 +3658,29 @@ def self_test() -> JsonObject:
     )
 
 
+def _select_cached_snapshot(
+    complete: Sequence[Path],
+    *,
+    active_revision: str | None,
+) -> Path | None:
+    candidates = tuple(complete)
+    if active_revision is not None:
+        _require(
+            bool(re.fullmatch(r"[0-9A-Fa-f]{7,64}", active_revision)),
+            "LOCAL_MODEL_ACTIVE_REF_INVALID",
+        )
+        selected = [path for path in candidates if path.name == active_revision]
+        _require(
+            len(selected) == 1,
+            "LOCAL_MODEL_ACTIVE_SNAPSHOT_INCOMPLETE",
+        )
+        return selected[0]
+    if not candidates:
+        return None
+    _require(len(candidates) == 1, "LOCAL_MODEL_SNAPSHOT_AMBIGUOUS")
+    return candidates[0]
+
+
 def _default_mlx_model_path() -> str | None:
     explicit = os.environ.get("EBRT_LOCAL_MODEL")
     if explicit:
@@ -3609,7 +3693,7 @@ def _default_mlx_model_path() -> str | None:
     for candidate in candidates:
         snapshots = candidate / "snapshots"
         if snapshots.is_dir():
-            complete = sorted(
+            complete = tuple(
                 path
                 for path in snapshots.iterdir()
                 if path.is_dir()
@@ -3618,8 +3702,19 @@ def _default_mlx_model_path() -> str | None:
                     or any(path.glob("*.safetensors.index.json"))
                 )
             )
-            if complete:
-                return str(complete[-1])
+            active_revision: str | None = None
+            active_ref = candidate / "refs" / "main"
+            if active_ref.exists():
+                try:
+                    active_revision = active_ref.read_text(encoding="utf-8").strip()
+                except OSError as exc:
+                    raise EBRTError("LOCAL_MODEL_ACTIVE_REF_UNREADABLE") from exc
+            selected = _select_cached_snapshot(
+                complete,
+                active_revision=active_revision,
+            )
+            if selected is not None:
+                return str(selected)
     return None
 
 

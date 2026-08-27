@@ -60,6 +60,9 @@ python3 ebrt_core.py joint-local-e2e
 
 If the Mistral snapshot is already in the standard Hugging Face cache, EBRT
 discovers it automatically and the environment variable can be omitted.
+Automatic discovery follows the repository's `refs/main` revision. If that
+reference is absent while multiple complete snapshots exist, EBRT rejects the
+ambiguous cache and requires `EBRT_LOCAL_MODEL` or `--model` explicitly.
 Cache-derived model identities include the snapshot revision so different
 weight snapshots cannot collapse into one receipt identity.
 For a model stored outside that cache layout, pass a public receipt identity
@@ -120,9 +123,10 @@ EBRT differentiates through a detached, core-owned copy of \(\tau_m\), not
 through the state adapter that produced it or through \(M_m\). The current
 public protocol validates the adapter output as CPU `torch.float64`, binds the
 task-owned target, event index, decay, learning rate, and control budget, then
-severs any incoming autograd history before optimization. A future admitted
-latent trajectory needs an explicit protocol version rather than silently
-crossing this boundary.
+records the exact typed state-adapter scales in the core receipt and severs any
+incoming autograd history before optimization. A future admitted latent
+trajectory needs an explicit protocol version rather than silently crossing
+this boundary.
 
 ## v0.7.1 — single-trajectory revision
 
