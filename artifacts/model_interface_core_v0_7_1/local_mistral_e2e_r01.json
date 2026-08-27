@@ -2,11 +2,11 @@
   "schema_version": "ebrt-local-open-weight-receipt-v0.7.1",
   "status": "PASS",
   "artifact_kind": "CONTAMINATED_INTEGRATION_RECEIPT",
-  "recorded_at_utc": "2026-08-27T22:03:30Z",
+  "recorded_at_utc": "2026-08-27T22:12:03Z",
   "command": "python3 ebrt_core.py local-e2e",
   "source": {
-    "commit": "b994363cb4813e1444e8598e6a7db29965cefde5",
-    "ebrt_core_sha256": "ae183e841cdc08455b4ddb5cb21caf35fca18e71aef98a0da2b866f858c9b83b"
+    "commit": "64352cd88afa8f9be53b7895528e5200256de735",
+    "ebrt_core_sha256": "82d05eee53bd1ba7e51cd108a1006f27058d22b91bfe158870b2e849b86e7a92"
   },
   "runtime": {
     "platform": "macOS-26.2-arm64-arm-64bit-Mach-O",
@@ -32,9 +32,9 @@
       "R2"
     ],
     "logical_calls": 1,
-    "latency_ms": 5133.948000031523,
+    "latency_ms": 5111.480041989125,
     "request_fingerprint_sha256": "aae7c7b3ee45522da820199329c13c7341cd21026f2c517eafff54ce4024acbe",
-    "model_result_fingerprint_sha256": "64592cd4ce2fc42c8e069f523b436d96e211810a15545a3c427934adc4f2f958"
+    "model_result_fingerprint_sha256": "e167f945f0ba10474f178cac23823cb97a010779b78afeee2998d9b6fc26d51a"
   },
   "trajectory_checks": {
     "central_finite_difference_agreement": true,
@@ -71,12 +71,12 @@
       "required_support_present": true
     }
   },
-  "result_fingerprint_sha256": "3a838798d9fa09055646a947ddc28e809b287dd67c55e649d0693ffb1b58a06b",
+  "result_fingerprint_sha256": "47420e9d0cc3f866ee17a40ad098420eeb323867792f87e6449a8e0f07e371f6",
   "effect_attribution_status": "NOT_ASSESSED",
   "claim_boundary": [
     "This receipt records one real local open-weight integration run over a known synthetic fixture.",
     "It does not establish causal superiority, fresh benchmark performance, or general reasoning improvement.",
     "The state-adapter tensors are detached into a core-owned public trajectory, and the gradient does not cross either adapter boundary."
   ],
-  "fingerprint_sha256": "31bb71cae47ab3412337560bfeaca38536452eb2192fc350755674026a7e265a"
+  "fingerprint_sha256": "4a061fb212d2711e961654195872dcfb4806d23dc489784f93c600c6494edbe9"
 }
