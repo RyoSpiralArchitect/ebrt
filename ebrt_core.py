@@ -109,7 +109,10 @@ def _require(condition: bool, reason: str) -> None:
 
 
 def _finite(value: Any, label: str) -> float:
-    _require(not isinstance(value, bool), f"{label}_NONNUMERIC")
+    _require(
+        isinstance(value, (int, float)) and not isinstance(value, bool),
+        f"{label}_NONNUMERIC",
+    )
     try:
         number = float(value)
     except (TypeError, ValueError, OverflowError) as exc:
@@ -268,7 +271,11 @@ def validate_task(task: RevisionTask) -> None:
     ids = [row.evidence_id for row in task.evidence]
     _require(len(ids) == len(set(ids)), "EVIDENCE_ID_DUPLICATE")
     _require(
-        [row.ordinal for row in task.evidence]
+        all(
+            isinstance(row.ordinal, int) and not isinstance(row.ordinal, bool)
+            for row in task.evidence
+        )
+        and [row.ordinal for row in task.evidence]
         == list(range(1, len(task.evidence) + 1)),
         "EVIDENCE_ORDINAL_INVALID",
     )
@@ -373,7 +380,9 @@ def validate_task(task: RevisionTask) -> None:
     _require(control_budget > 0.0, "CONTROL_BUDGET_INVALID")
     _require(learning_rate > 0.0, "LEARNING_RATE_INVALID")
     _require(
-        1 <= task.reinspection_count <= len(task.evidence),
+        isinstance(task.reinspection_count, int)
+        and not isinstance(task.reinspection_count, bool)
+        and 1 <= task.reinspection_count <= len(task.evidence),
         "REINSPECTION_COUNT_INVALID",
     )
 
@@ -3117,6 +3126,31 @@ def self_test() -> JsonObject:
         ),
         "STATE_SCALE_INVALID",
     )
+    numeric_string_task_fields_rejected = (
+        _raises_ebrt_reason(
+            lambda: validate_task(replace(task, decay="0.85")),
+            "DECAY_NONNUMERIC",
+        )
+        and _raises_ebrt_reason(
+            lambda: validate_task(
+                replace(
+                    task,
+                    evidence=(
+                        replace(
+                            task.evidence[0],
+                            neutral_effect=("-0.4", 0.0, 0.0),
+                        ),
+                        *task.evidence[1:],
+                    ),
+                )
+            ),
+            "NEUTRAL_EFFECT_NONNUMERIC",
+        )
+        and _raises_ebrt_reason(
+            lambda: validate_task(replace(task, reinspection_count="3")),
+            "REINSPECTION_COUNT_INVALID",
+        )
+    )
     zero_correction_task = replace(
         task,
         evidence=tuple(
@@ -3192,6 +3226,21 @@ def self_test() -> JsonObject:
             ),
             frozenset({"model-00001-of-00002.safetensors"}),
         )
+    )
+    loader_metadata_complete = _loader_metadata_is_complete(
+        {"model_type": "mistral"},
+        {},
+        frozenset({"tokenizer.json"}),
+    )
+    loader_metadata_rejects_missing_config = not _loader_metadata_is_complete(
+        None,
+        {},
+        frozenset({"tokenizer.json"}),
+    )
+    loader_metadata_rejects_missing_tokenizer = not _loader_metadata_is_complete(
+        {"model_type": "mistral"},
+        {},
+        frozenset(),
     )
     noncache_identity_requires_revision = _raises_ebrt_reason(
         lambda: _local_model_id(Path("/tmp/replaceable-local-model")),
@@ -3635,6 +3684,7 @@ def self_test() -> JsonObject:
         "stability_basis_requires_exact_zero": near_zero_stability_rejected,
         "parser_sentinel_cannot_be_evidence_id": reserved_evidence_id_rejected,
         "state_adapter_scales_are_positive": invalid_scale_rejected,
+        "task_numeric_fields_reject_string_coercion": numeric_string_task_fields_rejected,
         "correction_must_be_an_admitted_control_site": typed_zero_correction_rejected
         and transformed_zero_correction_rejected,
         "adapter_descriptor_is_runtime_validated": invalid_descriptor_rejected,
@@ -3647,6 +3697,9 @@ def self_test() -> JsonObject:
         and ambiguous_cache_selection_rejected,
         "cached_snapshot_requires_every_indexed_weight_shard": indexed_weight_manifest_complete
         and indexed_weight_manifest_rejects_missing_shard,
+        "cached_snapshot_requires_loader_metadata": loader_metadata_complete
+        and loader_metadata_rejects_missing_config
+        and loader_metadata_rejects_missing_tokenizer,
         "noncache_model_identity_requires_explicit_revision": noncache_identity_requires_revision
         and explicit_revision_identity == "example/model@weights-sha256-deadbeef",
         "mlx_decoding_configuration_is_receipt_bound": mlx_config_a != mlx_config_b
@@ -3843,6 +3896,57 @@ def _indexed_weight_files_are_complete(
     return bool(referenced) and referenced.issubset(available_files)
 
 
+def _loader_metadata_is_complete(
+    config_payload: Any,
+    tokenizer_config_payload: Any,
+    available_files: frozenset[str],
+) -> bool:
+    if not isinstance(config_payload, Mapping) or not isinstance(
+        tokenizer_config_payload, Mapping
+    ):
+        return False
+    model_type = config_payload.get("model_type")
+    if not isinstance(model_type, str) or not model_type.strip():
+        return False
+    return bool(
+        {"tokenizer.json", "tokenizer.model", "tokenizer.tiktoken", "tiktoken.model"}
+        & available_files
+    )
+
+
+def _read_nonempty_json_mapping(path: Path) -> Mapping[str, Any] | None:
+    try:
+        if not path.is_file() or path.stat().st_size <= 0:
+            return None
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeError, json.JSONDecodeError):
+        return None
+    return payload if isinstance(payload, Mapping) else None
+
+
+def _snapshot_has_complete_loader_metadata(path: Path) -> bool:
+    config = _read_nonempty_json_mapping(path / "config.json")
+    tokenizer_config = _read_nonempty_json_mapping(path / "tokenizer_config.json")
+    tokenizer_assets: set[str] = set()
+    for filename in (
+        "tokenizer.json",
+        "tokenizer.model",
+        "tokenizer.tiktoken",
+        "tiktoken.model",
+    ):
+        candidate = path / filename
+        try:
+            if candidate.is_file() and candidate.stat().st_size > 0:
+                tokenizer_assets.add(filename)
+        except OSError:
+            return False
+    return _loader_metadata_is_complete(
+        config,
+        tokenizer_config,
+        frozenset(tokenizer_assets),
+    )
+
+
 def _snapshot_has_complete_weights(path: Path) -> bool:
     try:
         weight_paths = tuple(path.glob("*.safetensors"))
@@ -3911,7 +4015,9 @@ def _default_mlx_model_path() -> str | None:
             complete = tuple(
                 path
                 for path in snapshots.iterdir()
-                if path.is_dir() and _snapshot_has_complete_weights(path)
+                if path.is_dir()
+                and _snapshot_has_complete_weights(path)
+                and _snapshot_has_complete_loader_metadata(path)
             )
             active_revision: str | None = None
             active_ref = candidate / "refs" / "main"

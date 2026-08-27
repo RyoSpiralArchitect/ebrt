@@ -64,7 +64,9 @@ Automatic discovery follows the repository's `refs/main` revision. If that
 reference is absent while multiple complete snapshots exist, EBRT rejects the
 ambiguous cache and requires `EBRT_LOCAL_MODEL` or `--model` explicitly.
 For an indexed snapshot, every shard named by every weight map must exist and
-be non-empty before the snapshot is considered complete.
+be non-empty before the snapshot is considered complete. Automatic discovery
+also requires non-empty, parseable model/tokenizer configuration and a local
+tokenizer asset before handing a snapshot to MLX.
 Cache-derived model identities include the snapshot revision so different
 weight snapshots cannot collapse into one receipt identity.
 For a model stored outside that cache layout, pass a public receipt identity
@@ -129,6 +131,8 @@ records the exact typed state-adapter scales in the core receipt and severs any
 incoming autograd history before optimization. A future admitted latent
 trajectory needs an explicit protocol version rather than silently crossing
 this boundary.
+All public numeric task and receipt fields are actual JSON numbers; strings and
+booleans are rejected rather than coerced.
 
 The engine attributes `real_backward_executed_once` only to the exact bundled
 core implementation and its module-load original method, checked before and

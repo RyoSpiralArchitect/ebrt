@@ -124,7 +124,9 @@ required; multiple complete snapshots are rejected as ambiguous rather than
 selecting one by directory-name order. An explicit `EBRT_LOCAL_MODEL` or
 `--model` remains available when the caller intends a different snapshot. A
 sharded snapshot is complete only when its index is valid and every referenced
-`.safetensors` shard exists and is non-empty.
+`.safetensors` shard exists and is non-empty. Automatic discovery additionally
+requires parseable `config.json` and `tokenizer_config.json`, a declared model
+type, and at least one non-empty local tokenizer asset.
 
 The engine recomputes the expected invocation before generation and requires
 the returned request fingerprint and adapter descriptor to match that binding.
