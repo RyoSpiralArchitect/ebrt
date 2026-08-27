@@ -2,11 +2,11 @@
   "schema_version": "ebrt-local-open-weight-receipt-v0.7.1",
   "status": "PASS",
   "artifact_kind": "CONTAMINATED_INTEGRATION_RECEIPT",
-  "recorded_at_utc": "2026-08-27T23:35:05Z",
+  "recorded_at_utc": "2026-08-27T23:54:19Z",
   "command": "python3 ebrt_core.py local-e2e",
   "source": {
-    "commit": "58a6c7ad993882cd5b614460760c0582cc4493e4",
-    "ebrt_core_sha256": "06eedc43c5dcfe5e1d5557e245db91a2a76858f76ee1531157da9959e9ed9a41"
+    "commit": "08fc922fb50cb63ddb8812c45c98fa2bf46a0070",
+    "ebrt_core_sha256": "a46740217c2d7f1fe875762d02a260441b79967ad3a8ff581b243a369d29cffe"
   },
   "runtime": {
     "platform": "macOS-26.2-arm64-arm-64bit-Mach-O",
@@ -47,9 +47,9 @@
       "R2"
     ],
     "logical_calls": 1,
-    "latency_ms": 5979.770334030036,
+    "latency_ms": 9504.155957954936,
     "request_fingerprint_sha256": "97415cba997c7c80bae24e5b1b3883573c15a43b5cb0659591f8c0e9022ba56f",
-    "model_result_fingerprint_sha256": "f42eca49af2d9745cf3b1bbfb72f2a6f14872f855495048a7ec49a261685a9df"
+    "model_result_fingerprint_sha256": "731cbf26349df637f9afba1f56cbdbe61bb656502e4aa6849a2b019bc4151dba"
   },
   "trajectory_fingerprint_sha256": "39197bfbe8807a360bdca7bf0a5592a61f46e01ddc66c9838983560a99b3c7d1",
   "trajectory_checks": {
@@ -70,6 +70,7 @@
     "gradient_did_not_cross_model_boundary": true,
     "invalidated_support_absent": true,
     "latency_is_finite_and_nonnegative": true,
+    "model_result_fields_typed": true,
     "one_model_invocation": true,
     "raw_text_conforms_to_schema": true,
     "raw_text_matches_returned_fields": true,
@@ -103,12 +104,12 @@
     },
     "status": "PASS"
   },
-  "result_fingerprint_sha256": "472b04abbc7dfa968c2aa29088a574e92eb90030ef7b623974e2d9a092441dd0",
+  "result_fingerprint_sha256": "76413833ac9e6717c13256769914bf4b10ca8d42a44f8b5e10a214ab588fc1a5",
   "effect_attribution_status": "NOT_ASSESSED",
   "claim_boundary": [
     "This receipt records one real local open-weight integration run over a known synthetic fixture.",
     "It does not establish causal superiority, fresh benchmark performance, or general reasoning improvement.",
     "The state-adapter tensors are detached into a core-owned public trajectory, and the gradient does not cross either adapter boundary."
   ],
-  "fingerprint_sha256": "6affbcec45681fd7467169d7da981d9b957b42473b3fd90e229af77b387327c5"
+  "fingerprint_sha256": "b76f757ad9d1fd6c60dac0c6f84f8308c92b615b91bd17c6fdcc2063fe7970e5"
 }
