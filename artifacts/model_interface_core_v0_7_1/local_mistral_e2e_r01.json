@@ -2,11 +2,11 @@
   "schema_version": "ebrt-local-open-weight-receipt-v0.7.1",
   "status": "PASS",
   "artifact_kind": "CONTAMINATED_INTEGRATION_RECEIPT",
-  "recorded_at_utc": "2026-08-27T21:25:14Z",
+  "recorded_at_utc": "2026-08-27T21:36:36Z",
   "command": "python3 ebrt_core.py local-e2e",
   "source": {
-    "commit": "889d9629d6f8b2f2846d13ada3d01c5daa3a52b4",
-    "ebrt_core_sha256": "94827871d6556c2ad74bf277c8bee804c3f9ec446713154fb82ca1f6f39db4f6"
+    "commit": "f8f73151a5fb57f35a675bd29a4da81258a243ee",
+    "ebrt_core_sha256": "38c8b86219420b07aa6e1396c783f35195f536f127de6be13397ccff9ee35bc6"
   },
   "runtime": {
     "platform": "macOS-26.2-arm64-arm-64bit-Mach-O",
@@ -16,7 +16,7 @@
     "mlx_lm": "0.31.2"
   },
   "model": {
-    "model_id": "mlx-community/Mistral-7B-Instruct-v0.3-4bit",
+    "model_id": "mlx-community/Mistral-7B-Instruct-v0.3-4bit@a4b8f870474b0eb527f466a03fbc187830d271f5",
     "model_revision": "a4b8f870474b0eb527f466a03fbc187830d271f5",
     "adapter_id": "mlx-local-primary",
     "interface_kind": "local_open_weight",
@@ -32,9 +32,9 @@
       "R2"
     ],
     "logical_calls": 1,
-    "latency_ms": 5150.665790948551,
+    "latency_ms": 4842.681166017428,
     "request_fingerprint_sha256": "71e536523a943c1cc11385c40a4522c76ca3a116dde5f5acc8b105d1615c9245",
-    "model_result_fingerprint_sha256": "e5d0870a6fda080bd692705fc68d92822003b8c8e39813a4d5b6a52a8042f55a"
+    "model_result_fingerprint_sha256": "5821854ec674916d2622a58535fde97d69cbbf03fabad4c895a591c50d0eb3d5"
   },
   "trajectory_checks": {
     "central_finite_difference_agreement": true,
@@ -71,12 +71,12 @@
       "required_support_present": true
     }
   },
-  "result_fingerprint_sha256": "cf136d4da3f16ba4d9f8342015a1b3345d3a1ba3fe1c7f1a06bc8ea85a573678",
+  "result_fingerprint_sha256": "52180b2e91143ed99164ede92335c786ab3dd34e7d5671cad254d8c6035641ee",
   "effect_attribution_status": "NOT_ASSESSED",
   "claim_boundary": [
     "This receipt records one real local open-weight integration run over a known synthetic fixture.",
     "It does not establish causal superiority, fresh benchmark performance, or general reasoning improvement.",
     "The state-adapter tensors are detached into a core-owned public trajectory, and the gradient does not cross either adapter boundary."
   ],
-  "fingerprint_sha256": "3da13ab2f42a3d10f25cee87d6cc9561e521c4b7bdf676774e4a2d138ee474de"
+  "fingerprint_sha256": "230bd131eb07cf81429cba98f27b5e67eb63d4b1adb90452e4a6887c36bb386b"
 }
