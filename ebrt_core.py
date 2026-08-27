@@ -392,13 +392,14 @@ class StateAdapter(Protocol):
     def build(self, task: RevisionTask, *, lane_id: str) -> TrajectoryEnvelope: ...
 
 
-def _validate_state_envelope_binding(
+def _prepare_state_envelope(
+    task: RevisionTask,
     state_adapter: StateAdapter,
     envelope: TrajectoryEnvelope,
     *,
     lane_id: str,
     label: str,
-) -> None:
+) -> TrajectoryEnvelope:
     _require(
         isinstance(envelope, TrajectoryEnvelope),
         f"{label}_ENVELOPE_TYPE_INVALID",
@@ -410,6 +411,106 @@ def _validate_state_envelope_binding(
         envelope.state_adapter_id == adapter_id,
         f"{label}_ID_MISMATCH",
     )
+    _require(envelope.axis_ids == AXES, f"{label}_AXIS_MISMATCH")
+    _require(
+        envelope.evidence_ids == tuple(row.evidence_id for row in task.evidence),
+        f"{label}_EVIDENCE_MISMATCH",
+    )
+    _require(
+        envelope.roles == tuple(row.role for row in task.evidence),
+        f"{label}_ROLE_MISMATCH",
+    )
+    expected_event_index = next(
+        index
+        for index, row in enumerate(task.evidence)
+        if row.evidence_id == task.event.correction_evidence_id
+    )
+    _require(
+        envelope.event_index == expected_event_index,
+        f"{label}_EVENT_INDEX_MISMATCH",
+    )
+    for field_name, observed, expected in (
+        ("DECAY", envelope.decay, task.decay),
+        ("CONTROL_BUDGET", envelope.control_budget, task.control_budget),
+        ("LEARNING_RATE", envelope.learning_rate, task.learning_rate),
+    ):
+        _require(
+            _finite(observed, f"{label}_{field_name}")
+            == _finite(expected, f"TASK_{field_name}"),
+            f"{label}_{field_name}_MISMATCH",
+        )
+    count = len(task.evidence)
+    tensors = {
+        "NEUTRAL_EFFECTS": envelope.neutral_effects,
+        "CONTROL_BASIS": envelope.control_basis,
+        "TARGET": envelope.target,
+        "ELIGIBLE_MASK": envelope.eligible_mask,
+    }
+    for field_name, tensor in tensors.items():
+        _require(isinstance(tensor, torch.Tensor), f"{label}_{field_name}_TYPE_INVALID")
+        _require(tensor.device.type == "cpu", f"{label}_{field_name}_DEVICE_INVALID")
+    _require(
+        envelope.neutral_effects.shape == (count, len(AXES))
+        and envelope.neutral_effects.dtype == DTYPE,
+        f"{label}_NEUTRAL_EFFECTS_CONTRACT_INVALID",
+    )
+    _require(
+        envelope.control_basis.shape == (count, len(AXES))
+        and envelope.control_basis.dtype == DTYPE,
+        f"{label}_CONTROL_BASIS_CONTRACT_INVALID",
+    )
+    _require(
+        envelope.target.shape == (len(AXES),) and envelope.target.dtype == DTYPE,
+        f"{label}_TARGET_CONTRACT_INVALID",
+    )
+    _require(
+        envelope.eligible_mask.shape == (count,)
+        and envelope.eligible_mask.dtype == torch.bool,
+        f"{label}_ELIGIBLE_MASK_CONTRACT_INVALID",
+    )
+    detached = replace(
+        envelope,
+        neutral_effects=envelope.neutral_effects.detach().clone(),
+        control_basis=envelope.control_basis.detach().clone(),
+        target=envelope.target.detach().clone(),
+        eligible_mask=envelope.eligible_mask.detach().clone(),
+    )
+    _require(
+        all(
+            not tensor.requires_grad and tensor.grad_fn is None
+            for tensor in (
+                detached.neutral_effects,
+                detached.control_basis,
+                detached.target,
+                detached.eligible_mask,
+            )
+        ),
+        f"{label}_STOP_GRADIENT_FAILED",
+    )
+    _require(
+        bool(torch.all(torch.isfinite(detached.neutral_effects)))
+        and bool(torch.all(torch.isfinite(detached.control_basis)))
+        and bool(torch.all(torch.isfinite(detached.target))),
+        f"{label}_TENSOR_NONFINITE",
+    )
+    _require(
+        torch.equal(
+            detached.target,
+            torch.tensor(task.terminal_target, dtype=DTYPE),
+        ),
+        f"{label}_TARGET_MISMATCH",
+    )
+    expected_eligible = torch.linalg.vector_norm(detached.control_basis, dim=1) > 0.0
+    _require(
+        torch.equal(detached.eligible_mask, expected_eligible),
+        f"{label}_ELIGIBLE_MASK_MISMATCH",
+    )
+    stability_index = AXES.index("stability")
+    _require(
+        bool(torch.all(detached.control_basis[:, stability_index] == 0.0)),
+        f"{label}_STABILITY_BASIS_NONZERO",
+    )
+    return detached
 
 
 @dataclass(frozen=True)
@@ -671,7 +772,7 @@ class BackwardRevisionCore:
                     max_fd_error, "FD_MAX_ERROR"
                 ),
                 "checks": checks,
-                "gradient_boundary": "adapter_supplied_differentiable_trajectory",
+                "gradient_boundary": "detached_public_trajectory_after_state_adapter",
             }
         )
 
@@ -1310,10 +1411,10 @@ class RevisionEngine:
         validate_task(task)
         if post_run_contract is not None:
             validate_contract(task, post_run_contract)
-        envelope = self.state_adapter.build(task, lane_id=lane_id)
-        _validate_state_envelope_binding(
+        envelope = _prepare_state_envelope(
+            task,
             self.state_adapter,
-            envelope,
+            self.state_adapter.build(task, lane_id=lane_id),
             lane_id=lane_id,
             label="STATE_ADAPTER",
         )
@@ -1588,7 +1689,7 @@ class JointBackwardRevisionCore:
                     ),
                     "control_budget": envelope.control_budget,
                     "checks": lane_checks,
-                    "gradient_boundary": "adapter_supplied_differentiable_trajectory",
+                    "gradient_boundary": "detached_public_trajectory_after_state_adapter",
                 }
             )
 
@@ -1720,10 +1821,10 @@ class JointRevisionEngine:
         _require(len(lane_ids) == len(set(lane_ids)), "JOINT_ENGINE_LANE_DUPLICATE")
         envelopes: list[TrajectoryEnvelope] = []
         for lane in ordered_lanes:
-            envelope = lane.state_adapter.build(task, lane_id=lane.lane_id)
-            _validate_state_envelope_binding(
+            envelope = _prepare_state_envelope(
+                task,
                 lane.state_adapter,
-                envelope,
+                lane.state_adapter.build(task, lane_id=lane.lane_id),
                 lane_id=lane.lane_id,
                 label="JOINT_STATE_ADAPTER",
             )
@@ -1957,6 +2058,51 @@ class _MisboundStateAdapter:
         )
 
 
+class _GraphBackedStateAdapter:
+    adapter_id = "graph-backed-state-adapter-test"
+
+    def __init__(self) -> None:
+        self.source = torch.tensor(0.25, dtype=DTYPE, requires_grad=True)
+
+    def build(self, task: RevisionTask, *, lane_id: str) -> TrajectoryEnvelope:
+        envelope = TypedPublicStateAdapter(adapter_id=self.adapter_id).build(
+            task,
+            lane_id=lane_id,
+        )
+        bridge = self.source - self.source.detach()
+        return replace(
+            envelope,
+            neutral_effects=envelope.neutral_effects + bridge,
+            control_basis=envelope.control_basis + bridge,
+            target=envelope.target + bridge,
+        )
+
+
+@dataclass(frozen=True)
+class _TaskParameterTamperingStateAdapter:
+    field_name: str
+    adapter_id: str = "task-parameter-tampering-state-adapter-test"
+
+    def build(self, task: RevisionTask, *, lane_id: str) -> TrajectoryEnvelope:
+        envelope = TypedPublicStateAdapter(adapter_id=self.adapter_id).build(
+            task,
+            lane_id=lane_id,
+        )
+        if self.field_name == "decay":
+            return replace(envelope, decay=envelope.decay + 0.01)
+        if self.field_name == "control_budget":
+            return replace(envelope, control_budget=envelope.control_budget + 0.01)
+        if self.field_name == "learning_rate":
+            return replace(envelope, learning_rate=envelope.learning_rate + 0.01)
+        if self.field_name == "target":
+            target = envelope.target.clone()
+            target[0] += 0.01
+            return replace(envelope, target=target)
+        if self.field_name == "event_index":
+            return replace(envelope, event_index=envelope.event_index + 1)
+        raise AssertionError("unknown test field")
+
+
 @dataclass(frozen=True)
 class _TamperedActuatorAdapter:
     adapter_id: str = "tampered-actuator-test"
@@ -2120,6 +2266,33 @@ def self_test() -> JsonObject:
                 post_run_contract=contract,
             ),
             "STATE_ADAPTER_ID_MISMATCH",
+        )
+        graph_backed_state_adapter = _GraphBackedStateAdapter()
+        graph_backed_state_run = RevisionEngine(
+            state_adapter=graph_backed_state_adapter
+        ).run(
+            task,
+            adapter,
+            post_run_contract=contract,
+        )
+        task_parameter_tampering_rejected = all(
+            _raises_ebrt_reason(
+                lambda field_name=field_name: RevisionEngine(
+                    state_adapter=_TaskParameterTamperingStateAdapter(field_name)
+                ).run(
+                    task,
+                    adapter,
+                    post_run_contract=contract,
+                ),
+                reason,
+            )
+            for field_name, reason in (
+                ("decay", "STATE_ADAPTER_DECAY_MISMATCH"),
+                ("control_budget", "STATE_ADAPTER_CONTROL_BUDGET_MISMATCH"),
+                ("learning_rate", "STATE_ADAPTER_LEARNING_RATE_MISMATCH"),
+                ("target", "STATE_ADAPTER_TARGET_MISMATCH"),
+                ("event_index", "STATE_ADAPTER_EVENT_INDEX_MISMATCH"),
+            )
         )
         optimized = BackwardRevisionCore().optimize(
             TypedPublicStateAdapter().build(task, lane_id="contract-check")
@@ -2302,6 +2475,12 @@ def self_test() -> JsonObject:
         "joint_state_lane_binding_is_exact": misbound_lane_rejected,
         "state_adapter_identity_is_bound_single_and_joint": single_state_identity_rejected
         and joint_state_identity_rejected,
+        "state_adapter_autograd_history_stops_at_boundary": graph_backed_state_run[
+            "status"
+        ]
+        == "PASS"
+        and graph_backed_state_adapter.source.grad is None,
+        "task_owned_trajectory_parameters_are_bound": task_parameter_tampering_rejected,
         "single_lane_v0_7_1_pass": single["status"] == "PASS",
         "single_lane_contract_pass": single["post_run_contract"]["status"] == "PASS",
         "single_lane_real_backward": single["trajectory"]["checks"][

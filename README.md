@@ -40,8 +40,9 @@ python3 ebrt_core.py capabilities
 
 `self-test` performs no network call. It checks the single-trajectory and joint
 contracts, real reverse-mode autodiff, finite differences, control budgets,
-zero-control identity, deterministic merge, lane-order invariance, and the
-stop-gradient model boundary.
+zero-control identity, deterministic merge, lane-order invariance, task-owned
+trajectory binding, and both state-adapter and model-adapter stop-gradient
+boundaries.
 
 ### 2. Real local model
 
@@ -109,9 +110,13 @@ a_m = A_m(c_m), \qquad
 y'_m = M_m(x,a_m).
 \]
 
-EBRT differentiates through \(\tau_m\), not through \(M_m\). A state adapter
-may expose a public semantic trajectory today or an admitted latent trajectory
-for a future open-weight backend. The core contract stays the same.
+EBRT differentiates through a detached, core-owned copy of \(\tau_m\), not
+through the state adapter that produced it or through \(M_m\). The current
+public protocol validates the adapter output as CPU `torch.float64`, binds the
+task-owned target, event index, decay, learning rate, and control budget, then
+severs any incoming autograd history before optimization. A future admitted
+latent trajectory needs an explicit protocol version rather than silently
+crossing this boundary.
 
 ## v0.7.1 — single-trajectory revision
 

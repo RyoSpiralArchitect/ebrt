@@ -9,7 +9,9 @@ a generator. It is intentionally smaller than any provider SDK.
 ## Boundary
 
 ```text
-explicit trajectory
+StateAdapter output
+  -> validate task-owned trajectory fields
+  -> detach and clone into core-owned CPU float64 state
   -> EBRT backward credit
   -> bounded public control
   -> ActuatorProgram
@@ -20,9 +22,18 @@ explicit trajectory
   -> optional post-run contract
 ```
 
-The model adapter never receives a tensor from the autograd graph. The core
-never assumes that a model exposes hidden states, logits, attention, KV cache,
-or private chain-of-thought.
+The state-adapter boundary and model-adapter boundary are both stop-gradient
+boundaries. The engine validates lane, adapter, axes, evidence, roles, event
+index, target, decay, learning rate, control budget, tensor shape, dtype, and
+device before optimization. It then detaches and clones all admitted tensors;
+adapter-owned autograd history cannot receive gradients from the EBRT backward
+pass. The model adapter never receives a tensor from the new core-owned graph.
+The core never assumes that a model exposes hidden states, logits, attention,
+KV cache, or private chain-of-thought.
+
+The current protocol admits only detached CPU `torch.float64` public
+trajectories. A model-native latent/device boundary is a research target and
+requires a new protocol version with an explicit gradient policy.
 
 The current actuator protocol is intentionally closed: after any
 `ActuatorAdapter` returns, the engine recompiles the canonical public program
@@ -31,6 +42,23 @@ actuator semantics require a new protocol version rather than silently changing
 the operation behind a structural `PASS`.
 
 ## Python contract
+
+```python
+class StateAdapter(Protocol):
+    adapter_id: str
+
+    def build(
+        self,
+        task: RevisionTask,
+        *,
+        lane_id: str,
+    ) -> TrajectoryEnvelope: ...
+```
+
+The adapter may construct public trajectory values, but it may not redefine
+task-owned optimization parameters. `event_index`, `target`, `decay`,
+`control_budget`, and `learning_rate` must exactly match `RevisionTask`.
+Incoming tensors are copied and detached after conformance validation.
 
 ```python
 class ModelAdapter(Protocol):

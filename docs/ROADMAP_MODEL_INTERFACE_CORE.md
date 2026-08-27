@@ -40,6 +40,8 @@ a model adapter performs generation beyond a stop-gradient boundary.
 Status: **IMPLEMENTED + VERIFIED** as part of `ebrt_core.py`
 
 - Separate `StateAdapter`, `ActuatorAdapter`, and `ModelAdapter` contracts.
+- Bind task-owned trajectory parameters and detach adapter-owned tensor history
+  before the EBRT core creates its differentiable control graph.
 - Keep model generation outside the autograd graph.
 - Keep post-run semantic contracts outside model-visible requests.
 - Emit canonical fingerprints and independent mechanism, structural, and
