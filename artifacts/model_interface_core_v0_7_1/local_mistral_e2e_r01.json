@@ -2,11 +2,11 @@
   "schema_version": "ebrt-local-open-weight-receipt-v0.7.1",
   "status": "PASS",
   "artifact_kind": "CONTAMINATED_INTEGRATION_RECEIPT",
-  "recorded_at_utc": "2026-08-27T20:46:59Z",
+  "recorded_at_utc": "2026-08-27T20:57:55Z",
   "command": "python3 ebrt_core.py local-e2e",
   "source": {
-    "commit": "028743dacc6d070986563d4ea6526b3cd9fb246c",
-    "ebrt_core_sha256": "565d689056f4e226bd83a65fb568f38aabf4425361bcad438815067f1a1da908"
+    "commit": "e6e96e6448b4afe39945d5fc407c75e4d156624b",
+    "ebrt_core_sha256": "5daebd6bc4b6ccd864e68097c6c10e87d22cc9c383ca230139ada031be40ac55"
   },
   "runtime": {
     "platform": "macOS-26.2-arm64-arm-64bit-Mach-O",
@@ -32,9 +32,9 @@
       "R2"
     ],
     "logical_calls": 1,
-    "latency_ms": 5089.7982500027865,
+    "latency_ms": 10102.032458002213,
     "request_fingerprint_sha256": "e549c7107beabda5a87ee9be74a29fb141b41373607c25026b26955ab310d79c",
-    "model_result_fingerprint_sha256": "ba4b03021997a796eba3a9680f7c779246217c6ac2aa183c9fc78a9a1fb39824"
+    "model_result_fingerprint_sha256": "23da29b7fb7917cf74aec39dd1937c8b049b91dae76c75be0a7927a5c3e3fa80"
   },
   "trajectory_checks": {
     "central_finite_difference_agreement": true,
@@ -71,12 +71,12 @@
       "required_support_present": true
     }
   },
-  "result_fingerprint_sha256": "c005417ce0ffadc4ba19f50939208f8aa70fd099a5d63710a579ef108c65581c",
+  "result_fingerprint_sha256": "3d963cdf3ff3f70895ea643ed293999972655f4089b76d1bd17e003f30bbe926",
   "effect_attribution_status": "NOT_ASSESSED",
   "claim_boundary": [
     "This receipt records one real local open-weight integration run over a known synthetic fixture.",
     "It does not establish causal superiority, fresh benchmark performance, or general reasoning improvement.",
     "The gradient stops at the adapter-supplied public trajectory and does not cross the model boundary."
   ],
-  "fingerprint_sha256": "6bb1d20bb14399b62780f009927d23ab20e094b7da238cad9f4dbcae51b6b10e"
+  "fingerprint_sha256": "5ab2395a7dbc30e2a99fe98f54d506b08c23cb476532d39e6688bdaa1bc16327"
 }
