@@ -76,8 +76,8 @@ they must match exactly.
 Cache identity is derived only for an exact snapshot root beneath a configured
 Hugging Face hub, with a 40-hex revision, complete loader material, and the
 standard symlink-to-blob layout. Each linked blob is streamed and checked
-against its SHA-256 or Git-blob SHA-1 address before identity derivation. A
-directory that merely imitates
+recursively across nested repository directories against its SHA-256 or
+Git-blob SHA-1 address before identity derivation. A directory that merely imitates
 `models--.../snapshots/...` is treated as an ordinary local directory and must
 supply `--model-id` explicitly.
 The runtime exposes its bound model path as read-only and repeats cache identity
@@ -193,6 +193,10 @@ language semantics. Responsibilities remain separate:
 | Typed event compiler | provide allowlisted `SUPPRESS` and `PRESERVE` semantics |
 | Model adapter | regenerate from complete public context and the full quantitative actuator |
 | Observer | check public structure and, when supplied, a post-run contract |
+
+Only non-correction rows with positive realized control can enter the
+credit-first reinspection list. The typed correction remains mandatory; a
+zero-credit padding row cannot change provider-visible evidence order.
 
 The post-run contract never enters the model request. It is computed only after
 generation, then its exact validated fields and fingerprint are sealed beside

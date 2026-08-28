@@ -125,8 +125,9 @@ both are supplied, exact equality is required.
 Derivation requires the exact snapshot root to sit beneath a configured
 Hugging Face hub, a 40-hex snapshot revision, complete loader material, and the
 standard symlink-to-blob layout. Every linked blob is streamed and verified
-against its SHA-256 or Git-blob SHA-1 address before the cache identity is
-derived. Merely naming an arbitrary directory
+recursively across nested repository directories against its SHA-256 or
+Git-blob SHA-1 address before the cache identity is derived. Merely naming an
+arbitrary directory
 `models--.../snapshots/...` does not create a cache identity; that directory
 must carry an explicit revision-bearing identity instead.
 
@@ -183,6 +184,11 @@ The invocation compiler may provide:
 - typed invalidated evidence to suppress;
 - typed stable evidence to preserve; and
 - an output schema.
+
+The reinspection compiler always retains the typed correction. Every other row
+must have positive realized control before it can enter the credit-first list;
+eligible zero-control rows cannot be added merely to fill `reinspection_count`
+and therefore cannot reorder provider-visible evidence.
 
 It must not provide:
 

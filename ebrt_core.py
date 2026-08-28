@@ -1278,7 +1278,12 @@ class PublicRevisionActuator:
             and bool(rows[row.evidence_id]["eligible"])
         ]
         ranked = sorted(
-            eligible,
+            [
+                evidence_id
+                for evidence_id in eligible
+                if evidence_id == correction
+                or float(rows[evidence_id]["absolute_control"]) > 0.0
+            ],
             key=lambda evidence_id: (
                 -float(rows[evidence_id]["absolute_control"]),
                 next(
@@ -1625,11 +1630,9 @@ def _configured_hf_hub_roots() -> tuple[Path, ...]:
     if hf_home:
         roots.append(Path(hf_home) / "hub")
     cache_home = os.environ.get("XDG_CACHE_HOME")
-    roots.append(
-        (Path(cache_home) if cache_home else Path.home() / ".cache")
-        / "huggingface"
-        / "hub"
-    )
+    if cache_home:
+        roots.append(Path(cache_home) / "huggingface" / "hub")
+    roots.append(Path.home() / ".cache" / "huggingface" / "hub")
     resolved: list[Path] = []
     for root in roots:
         try:
@@ -1675,10 +1678,13 @@ def _snapshot_uses_hf_blob_link_layout(path: Path, repository: Path) -> bool:
         blobs_root = blobs.resolve(strict=True)
         if not blobs_root.is_dir():
             return False
-        entries = tuple(path.iterdir())
+        entries = tuple(path.rglob("*"))
         if not entries:
             return False
+        linked_file_count = 0
         for entry in entries:
+            if entry.is_dir() and not entry.is_symlink():
+                continue
             if not entry.is_symlink():
                 return False
             target = entry.resolve(strict=True)
@@ -1690,9 +1696,10 @@ def _snapshot_uses_hf_blob_link_layout(path: Path, repository: Path) -> bool:
                 or not _blob_content_matches_address(target)
             ):
                 return False
+            linked_file_count += 1
     except (OSError, RuntimeError):
         return False
-    return True
+    return linked_file_count > 0
 
 
 def _validated_cache_model_id(path: Path) -> str | None:
@@ -3649,7 +3656,12 @@ def self_test() -> JsonObject:
         cache_blobs.mkdir(parents=True)
         cache_snapshots.mkdir()
 
-        def build_cache_snapshot(revision: str, *, blob_links: bool = True) -> Path:
+        def build_cache_snapshot(
+            revision: str,
+            *,
+            blob_links: bool = True,
+            nested_blob_link: bool = False,
+        ) -> Path:
             snapshot = cache_snapshots / revision
             snapshot.mkdir()
             files = {
@@ -3666,10 +3678,19 @@ def self_test() -> JsonObject:
                     (snapshot / filename).symlink_to(Path("../../blobs") / digest)
                 else:
                     (snapshot / filename).write_bytes(payload)
+            if nested_blob_link:
+                nested_payload = f"nested-tokenizer-{revision}".encode()
+                nested_digest = hashlib.sha256(nested_payload).hexdigest()
+                (cache_blobs / nested_digest).write_bytes(nested_payload)
+                nested_directory = snapshot / "assets"
+                nested_directory.mkdir()
+                (nested_directory / "merges.txt").symlink_to(
+                    Path("../../../blobs") / nested_digest
+                )
             return snapshot
 
         cached_path_a = build_cache_snapshot("a" * 40)
-        cached_path_b = build_cache_snapshot("b" * 40)
+        cached_path_b = build_cache_snapshot("b" * 40, nested_blob_link=True)
         malformed_cache_path = build_cache_snapshot("revision-a")
         copied_cache_path = build_cache_snapshot("c" * 40, blob_links=False)
         cache_refs = cache_repository / "refs"
@@ -3730,6 +3751,20 @@ def self_test() -> JsonObject:
             lambda: _local_model_id(cached_path_b),
             "LOCAL_MODEL_ID_REVISION_REQUIRED",
         )
+        with mock.patch.dict(
+            os.environ,
+            {
+                "HF_HUB_CACHE": "",
+                "HF_HOME": "",
+                "XDG_CACHE_HOME": str(Path(cache_directory) / "xdg"),
+            },
+        ):
+            xdg_roots = _configured_hf_hub_roots()
+            xdg_and_default_cache_roots_are_retained = (
+                Path(cache_directory) / "xdg" / "huggingface" / "hub"
+            ).resolve() in xdg_roots and (
+                Path.home() / ".cache" / "huggingface" / "hub"
+            ).resolve() in xdg_roots
     cached_path_a = Path("/tmp/hub/models--example--model/snapshots/" + "a" * 40)
     cached_path_b = Path("/tmp/hub/models--example--model/snapshots/" + "b" * 40)
     active_cache_selection = _select_cached_snapshot(
@@ -4138,6 +4173,21 @@ def self_test() -> JsonObject:
                 lane_id="contract-check",
             ),
             "NO_REALIZED_REINSPECTION_CONTROL",
+        )
+        sparse_realized_credit = _without_fingerprint(optimized)
+        for row in sparse_realized_credit["credit_map"]:
+            if row["evidence_id"] in {"R1", "R4"}:
+                row["control"] = 0.0
+                row["absolute_control"] = 0.0
+        sparse_realized_program = PublicRevisionActuator().compile(
+            task,
+            _seal(sparse_realized_credit),
+            lane_id="contract-check",
+        )
+        zero_control_rows_are_not_reinspected = {
+            row[0] for row in sparse_realized_program.reinspect
+        } == {"R2", "R6"} and all(
+            row[2] != 0.0 for row in sparse_realized_program.reinspect
         )
         invocation_before = build_model_invocation(
             task, program, prompt_policy="credit_first"
@@ -4582,7 +4632,8 @@ def self_test() -> JsonObject:
         "cached_model_selection_uses_active_ref_and_rejects_ambiguity": active_cache_selection
         == cached_path_a
         and ambiguous_cache_selection_rejected
-        and configured_cache_is_discovered,
+        and configured_cache_is_discovered
+        and xdg_and_default_cache_roots_are_retained,
         "cached_model_io_errors_are_stable": cache_enumeration_error_is_stable
         and active_ref_unicode_error_is_stable,
         "cached_snapshot_requires_every_indexed_weight_shard": indexed_weight_manifest_complete
@@ -4606,6 +4657,7 @@ def self_test() -> JsonObject:
         },
         "credit_map_requires_exact_coverage": incomplete_credit_rejected,
         "model_visible_allocation_requires_realized_credit": unrealized_reinspection_rejected,
+        "zero_control_rows_do_not_affect_credit_first_order": zero_control_rows_are_not_reinspected,
         "compiled_actuator_is_bound_to_backward_receipt": tampered_actuator_rejected,
         "actuator_cannot_mutate_sealed_core_receipt": mutating_actuator_rejected_single
         and mutating_actuator_rejected_joint,
