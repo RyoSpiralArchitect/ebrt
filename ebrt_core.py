@@ -2110,20 +2110,42 @@ def _sampled_transition(left: Sequence[float], right: Sequence[float]) -> JsonOb
 class _MLXNativeCollector:
     """Keeps scalar summaries and sampled channels, never full activations."""
 
-    def __init__(self, policy: OscilloscopePolicy) -> None:
+    def __init__(
+        self,
+        policy: OscilloscopePolicy,
+        *,
+        prompt_token_count: int,
+    ) -> None:
         _validate_oscilloscope_policy(policy)
+        _require(
+            type(prompt_token_count) is int and prompt_token_count >= 1,
+            "NATIVE_PROMPT_TOKEN_COUNT_INVALID",
+        )
         self.policy = policy
+        self.prompt_token_count = prompt_token_count
         self._captures: dict[int, dict[str, JsonObject]] = {
             index: {} for index in policy.native_layer_indices
         }
         self._call_counts = {index: 0 for index in policy.native_layer_indices}
+        self._prefill_call_counts = {index: 0 for index in policy.native_layer_indices}
+        self._decode_call_counts = {index: 0 for index in policy.native_layer_indices}
 
-    def record(self, layer_index: int, output: Any) -> None:
+    def record(
+        self,
+        layer_index: int,
+        output: Any,
+        *,
+        cache_offset_before: int,
+    ) -> None:
         try:
             import mlx.core as mx
         except ImportError as exc:  # pragma: no cover - environment dependent
             raise EBRTError("MLX_LM_NOT_INSTALLED") from exc
         _require(layer_index in self._captures, "NATIVE_LAYER_NOT_SELECTED")
+        _require(
+            type(cache_offset_before) is int and cache_offset_before >= 0,
+            "NATIVE_CACHE_OFFSET_INVALID",
+        )
         shape = tuple(int(value) for value in output.shape)
         _require(len(shape) == 3 and shape[0] == 1, "NATIVE_STATE_SHAPE_INVALID")
         hidden_size = shape[2]
@@ -2152,6 +2174,7 @@ class _MLXNativeCollector:
         )
         summary: JsonObject = {
             "sequence_length": shape[1],
+            "cache_offset_before": cache_offset_before,
             "hidden_size": hidden_size,
             "mean": _finite(float(mean.item()), "NATIVE_STATE_MEAN"),
             "rms": _finite(float(rms.item()), "NATIVE_STATE_RMS"),
@@ -2160,12 +2183,18 @@ class _MLXNativeCollector:
             "sampled_channel_indices": list(channel_indices),
             "sampled_channel_values": list(sampled_values),
         }
-        call_index = self._call_counts[layer_index]
-        self._call_counts[layer_index] = call_index + 1
+        self._call_counts[layer_index] += 1
         captures = self._captures[layer_index]
-        if call_index == 0:
+        if cache_offset_before < self.prompt_token_count:
+            _require(
+                cache_offset_before + shape[1] <= self.prompt_token_count,
+                "NATIVE_PREFILL_CROSSES_PROMPT_BOUNDARY",
+            )
+            self._prefill_call_counts[layer_index] += 1
             captures["prefill"] = summary
         else:
+            _require(shape[1] == 1, "NATIVE_DECODE_SEQUENCE_LENGTH_INVALID")
+            self._decode_call_counts[layer_index] += 1
             captures.setdefault("decode_first", summary)
             captures["decode_last"] = summary
 
@@ -2180,7 +2209,10 @@ class _MLXNativeCollector:
         layers: list[JsonObject] = []
         for layer_index in self.policy.native_layer_indices:
             captures = self._captures[layer_index]
-            _require("prefill" in captures, "NATIVE_PREFILL_NOT_CAPTURED")
+            _require(
+                set(captures) == {"prefill", "decode_first", "decode_last"},
+                "NATIVE_REQUIRED_PHASE_NOT_CAPTURED",
+            )
             transitions: JsonObject = {}
             for left_name, right_name, label in (
                 ("prefill", "decode_first", "prefill_to_decode_first"),
@@ -2195,6 +2227,8 @@ class _MLXNativeCollector:
                 {
                     "layer_index": layer_index,
                     "forward_call_count": self._call_counts[layer_index],
+                    "prefill_call_count": self._prefill_call_counts[layer_index],
+                    "decode_call_count": self._decode_call_counts[layer_index],
                     "captures": _clone(captures),
                     "transitions": transitions,
                 }
@@ -2204,6 +2238,17 @@ class _MLXNativeCollector:
             == len(self.policy.native_layer_indices),
             "prefill_captured_for_every_layer": all(
                 "prefill" in row["captures"] for row in layers
+            ),
+            "decode_first_and_last_captured_for_every_layer": all(
+                {"decode_first", "decode_last"}.issubset(row["captures"])
+                for row in layers
+            ),
+            "phase_counts_are_exact": all(
+                row["forward_call_count"]
+                == row["prefill_call_count"] + row["decode_call_count"]
+                and row["prefill_call_count"] >= 1
+                and row["decode_call_count"] >= 1
+                for row in layers
             ),
             "full_activations_not_retained": True,
             "forward_value_passthrough": True,
@@ -2219,6 +2264,8 @@ class _MLXNativeCollector:
                 "model_id": model_id,
                 "adapter_id": adapter_id,
                 "request_fingerprint_sha256": request_fingerprint_sha256,
+                "prompt_token_count": self.prompt_token_count,
+                "phase_binding": "cache_offset_before_vs_prompt_token_count_v1",
                 "policy": self.policy.to_dict(),
                 "layers": layers,
                 "checks": checks,
@@ -2233,6 +2280,8 @@ class _MLXNativeCollector:
 def _observe_mlx_native_layers(
     model: Any,
     policy: OscilloscopePolicy,
+    *,
+    prompt_token_count: int,
 ) -> Any:
     _validate_oscilloscope_policy(policy)
     try:
@@ -2246,7 +2295,10 @@ def _observe_mlx_native_layers(
         all(index < len(layers) for index in policy.native_layer_indices),
         "NATIVE_LAYER_INDEX_OUT_OF_RANGE",
     )
-    collector = _MLXNativeCollector(policy)
+    collector = _MLXNativeCollector(
+        policy,
+        prompt_token_count=prompt_token_count,
+    )
     originals = {index: layers[index] for index in policy.native_layer_indices}
 
     class _ObservedBlock(nn.Module):
@@ -2257,8 +2309,20 @@ def _observe_mlx_native_layers(
             self.use_sliding = getattr(inner, "use_sliding", False)
 
         def __call__(self, *args: Any, **kwargs: Any) -> Any:
+            cache = kwargs.get("cache")
+            if cache is None and len(args) >= 3:
+                cache = args[2]
+            offset = getattr(cache, "offset", None)
+            _require(
+                type(offset) is int and offset >= 0,
+                "NATIVE_CACHE_OFFSET_UNAVAILABLE",
+            )
             output = self.inner(*args, **kwargs)
-            collector.record(self.layer_index, output)
+            collector.record(
+                self.layer_index,
+                output,
+                cache_offset_before=offset,
+            )
             return output
 
     for index, original in originals.items():
@@ -2392,9 +2456,21 @@ class SharedMLXRuntime:
                 is not None,
                 "OSCILLOSCOPE_REQUEST_FINGERPRINT_INVALID",
             )
+            bos_token = getattr(self._tokenizer, "bos_token", None)
+            add_special_tokens = bos_token is None or not rendered.startswith(bos_token)
+            prompt_tokens = self._tokenizer.encode(
+                rendered,
+                add_special_tokens=add_special_tokens,
+            )
+            prompt_token_count = len(prompt_tokens)
+            _require(
+                prompt_token_count >= 1,
+                "NATIVE_PROMPT_TOKEN_COUNT_INVALID",
+            )
             with _observe_mlx_native_layers(
                 self._model,
                 oscilloscope_policy,
+                prompt_token_count=prompt_token_count,
             ) as collector:
                 raw = generate(
                     self._model,
@@ -2513,6 +2589,164 @@ class MLXLocalAdapter:
         )
 
 
+def _policy_from_observation(value: Any) -> OscilloscopePolicy | None:
+    try:
+        snapshot = _sealed_snapshot(value, "NATIVE_STATE_OBSERVATION_POLICY")
+        layer_indices = snapshot.get("native_layer_indices")
+        policy = OscilloscopePolicy(
+            event_window_radius=snapshot.get("event_window_radius"),
+            native_layer_indices=(
+                tuple(layer_indices) if isinstance(layer_indices, list) else ()
+            ),
+            sampled_channels=snapshot.get("sampled_channels"),
+        )
+        _validate_oscilloscope_policy(policy)
+        _require(
+            _canonical_bytes(snapshot) == _canonical_bytes(policy.to_dict()),
+            "NATIVE_STATE_OBSERVATION_POLICY_MISMATCH",
+        )
+        return policy
+    except (EBRTError, TypeError, ValueError, OverflowError):
+        return None
+
+
+def _native_summary_is_valid(
+    value: Any,
+    *,
+    phase: str,
+    prompt_token_count: int,
+    sampled_channels: int,
+) -> bool:
+    if not isinstance(value, Mapping) or set(value) != {
+        "sequence_length",
+        "cache_offset_before",
+        "hidden_size",
+        "mean",
+        "rms",
+        "max_abs",
+        "l2",
+        "sampled_channel_indices",
+        "sampled_channel_values",
+    }:
+        return False
+    sequence_length = value.get("sequence_length")
+    cache_offset = value.get("cache_offset_before")
+    hidden_size = value.get("hidden_size")
+    indices = value.get("sampled_channel_indices")
+    samples = value.get("sampled_channel_values")
+    metrics = tuple(value.get(key) for key in ("mean", "rms", "max_abs", "l2"))
+    if not (
+        type(sequence_length) is int
+        and sequence_length >= 1
+        and type(cache_offset) is int
+        and cache_offset >= 0
+        and type(hidden_size) is int
+        and hidden_size >= sampled_channels
+        and isinstance(indices, list)
+        and len(indices) == sampled_channels
+        and all(type(index) is int for index in indices)
+        and isinstance(samples, list)
+        and len(samples) == sampled_channels
+        and all(type(sample) is float and math.isfinite(sample) for sample in samples)
+        and all(type(metric) is float and math.isfinite(metric) for metric in metrics)
+        and all(metric >= 0.0 for metric in metrics[1:])
+    ):
+        return False
+    expected_indices = [
+        round(position * (hidden_size - 1) / (sampled_channels - 1))
+        for position in range(sampled_channels)
+    ]
+    if indices != expected_indices:
+        return False
+    if phase == "prefill":
+        return (
+            cache_offset < prompt_token_count
+            and cache_offset + sequence_length == prompt_token_count
+        )
+    if phase == "decode_first":
+        return cache_offset == prompt_token_count and sequence_length == 1
+    if phase == "decode_last":
+        return cache_offset >= prompt_token_count and sequence_length == 1
+    return False
+
+
+def _native_layer_rows_are_valid(
+    value: Any,
+    *,
+    policy: OscilloscopePolicy,
+    prompt_token_count: int,
+) -> bool:
+    if not isinstance(value, list) or len(value) != len(policy.native_layer_indices):
+        return False
+    expected_row_keys = {
+        "layer_index",
+        "forward_call_count",
+        "prefill_call_count",
+        "decode_call_count",
+        "captures",
+        "transitions",
+    }
+    count_signature: tuple[int, int, int] | None = None
+    for expected_index, row in zip(policy.native_layer_indices, value, strict=True):
+        if not isinstance(row, Mapping) or set(row) != expected_row_keys:
+            return False
+        forward_count = row.get("forward_call_count")
+        prefill_count = row.get("prefill_call_count")
+        decode_count = row.get("decode_call_count")
+        captures = row.get("captures")
+        transitions = row.get("transitions")
+        if not (
+            type(row.get("layer_index")) is int
+            and row.get("layer_index") == expected_index
+            and type(forward_count) is int
+            and type(prefill_count) is int
+            and type(decode_count) is int
+            and prefill_count >= 1
+            and decode_count >= 1
+            and forward_count == prefill_count + decode_count
+            and isinstance(captures, Mapping)
+            and set(captures) == {"prefill", "decode_first", "decode_last"}
+            and isinstance(transitions, Mapping)
+            and set(transitions)
+            == {"prefill_to_decode_first", "decode_first_to_decode_last"}
+        ):
+            return False
+        signature = (forward_count, prefill_count, decode_count)
+        if count_signature is None:
+            count_signature = signature
+        elif signature != count_signature:
+            return False
+        for phase in ("prefill", "decode_first", "decode_last"):
+            if not _native_summary_is_valid(
+                captures[phase],
+                phase=phase,
+                prompt_token_count=prompt_token_count,
+                sampled_channels=policy.sampled_channels,
+            ):
+                return False
+        indices = captures["prefill"]["sampled_channel_indices"]
+        hidden_size = captures["prefill"]["hidden_size"]
+        if any(
+            captures[phase]["sampled_channel_indices"] != indices
+            or captures[phase]["hidden_size"] != hidden_size
+            for phase in ("decode_first", "decode_last")
+        ):
+            return False
+        expected_transitions = {
+            "prefill_to_decode_first": _sampled_transition(
+                captures["prefill"]["sampled_channel_values"],
+                captures["decode_first"]["sampled_channel_values"],
+            ),
+            "decode_first_to_decode_last": _sampled_transition(
+                captures["decode_first"]["sampled_channel_values"],
+                captures["decode_last"]["sampled_channel_values"],
+            ),
+        }
+        if _canonical_bytes(transitions) != _canonical_bytes(expected_transitions):
+            return False
+    return True
+
+
 def _native_observation_matches_binding(
     observation: Mapping[str, Any] | None,
     *,
@@ -2520,42 +2754,80 @@ def _native_observation_matches_binding(
     request_fingerprint_sha256: str,
 ) -> bool:
     configuration = dict(descriptor.generation_config)
-    if descriptor.state_visibility == "public_only":
-        return (
-            observation is None
-            and "oscilloscope_policy_fingerprint" not in configuration
-        )
-    if observation is None:
+    declared_policy_fingerprint = configuration.get("oscilloscope_policy_fingerprint")
+    if declared_policy_fingerprint is None:
+        return observation is None
+    if (
+        descriptor.state_visibility != "native_latent"
+        or type(declared_policy_fingerprint) is not str
+        or re.fullmatch(r"[0-9a-f]{64}", declared_policy_fingerprint) is None
+        or observation is None
+    ):
         return False
     try:
         snapshot = _sealed_snapshot(observation, "NATIVE_STATE_OBSERVATION")
-        policy = _sealed_snapshot(
-            snapshot.get("policy"),
-            "NATIVE_STATE_OBSERVATION_POLICY",
+        policy = _policy_from_observation(snapshot.get("policy"))
+        prompt_token_count = snapshot.get("prompt_token_count")
+        layers_valid = (
+            policy is not None
+            and type(prompt_token_count) is int
+            and prompt_token_count >= 1
+            and _native_layer_rows_are_valid(
+                snapshot.get("layers"),
+                policy=policy,
+                prompt_token_count=prompt_token_count,
+            )
         )
-    except EBRTError:
+    except (EBRTError, TypeError, ValueError, OverflowError):
         return False
+    expected_keys = {
+        "schema_version",
+        "status",
+        "scope",
+        "model_id",
+        "adapter_id",
+        "request_fingerprint_sha256",
+        "prompt_token_count",
+        "phase_binding",
+        "policy",
+        "layers",
+        "checks",
+        "feeds_controller",
+        "artifact_sensitivity_status",
+        "claim_status",
+        "fingerprint_sha256",
+    }
     checks = snapshot.get("checks")
-    layers = snapshot.get("layers")
-    selected = policy.get("native_layer_indices")
+    expected_check_keys = {
+        "selected_layers_captured",
+        "prefill_captured_for_every_layer",
+        "decode_first_and_last_captured_for_every_layer",
+        "phase_counts_are_exact",
+        "full_activations_not_retained",
+        "forward_value_passthrough",
+        "model_layers_restored_exactly",
+        "observation_not_used_by_controller",
+    }
     return bool(
-        snapshot.get("schema_version") == NATIVE_OBSERVATION_SCHEMA_VERSION
+        set(snapshot) == expected_keys
+        and snapshot.get("schema_version") == NATIVE_OBSERVATION_SCHEMA_VERSION
         and snapshot.get("status") == "CAPTURED"
+        and snapshot.get("scope") == "selected_native_residual_stream_summaries"
         and snapshot.get("model_id") == descriptor.model_id
         and snapshot.get("adapter_id") == descriptor.adapter_id
         and snapshot.get("request_fingerprint_sha256") == request_fingerprint_sha256
+        and snapshot.get("phase_binding")
+        == "cache_offset_before_vs_prompt_token_count_v1"
         and snapshot.get("feeds_controller") is False
         and snapshot.get("artifact_sensitivity_status")
         == "DERIVED_MODEL_DATA_REVIEW_BEFORE_EXPORT"
         and snapshot.get("claim_status") == "LOCAL_DEVELOPMENT_DIAGNOSTIC_ONLY"
         and isinstance(checks, Mapping)
-        and bool(checks)
+        and set(checks) == expected_check_keys
         and all(value is True for value in checks.values())
-        and isinstance(layers, list)
-        and isinstance(selected, list)
-        and [row.get("layer_index") for row in layers] == selected
-        and configuration.get("oscilloscope_policy_fingerprint")
-        == policy.get("fingerprint_sha256")
+        and layers_valid
+        and policy is not None
+        and declared_policy_fingerprint == policy.to_dict()["fingerprint_sha256"]
     )
 
 
@@ -5337,6 +5609,195 @@ def self_test() -> JsonObject:
             task, program, prompt_policy="credit_first"
         )
         valid_result = adapter.generate(task, program, prompt_policy="credit_first")
+        synthetic_policy = OscilloscopePolicy(
+            event_window_radius=1,
+            native_layer_indices=(0, 2),
+            sampled_channels=4,
+        )
+        synthetic_policy_receipt = synthetic_policy.to_dict()
+        synthetic_prompt_tokens = 10
+
+        def synthetic_capture(
+            *,
+            sequence_length: int,
+            cache_offset_before: int,
+            base: float,
+        ) -> JsonObject:
+            return {
+                "sequence_length": sequence_length,
+                "cache_offset_before": cache_offset_before,
+                "hidden_size": 8,
+                "mean": base,
+                "rms": abs(base) + 0.1,
+                "max_abs": abs(base) + 0.2,
+                "l2": abs(base) + 0.3,
+                "sampled_channel_indices": [0, 2, 5, 7],
+                "sampled_channel_values": [
+                    base,
+                    base + 0.1,
+                    base + 0.2,
+                    base + 0.3,
+                ],
+            }
+
+        synthetic_layers: list[JsonObject] = []
+        for layer_index in synthetic_policy.native_layer_indices:
+            base = float(layer_index + 1)
+            captures = {
+                "prefill": synthetic_capture(
+                    sequence_length=synthetic_prompt_tokens,
+                    cache_offset_before=0,
+                    base=base,
+                ),
+                "decode_first": synthetic_capture(
+                    sequence_length=1,
+                    cache_offset_before=synthetic_prompt_tokens,
+                    base=base + 0.4,
+                ),
+                "decode_last": synthetic_capture(
+                    sequence_length=1,
+                    cache_offset_before=synthetic_prompt_tokens + 1,
+                    base=base + 0.8,
+                ),
+            }
+            synthetic_layers.append(
+                {
+                    "layer_index": layer_index,
+                    "forward_call_count": 3,
+                    "prefill_call_count": 1,
+                    "decode_call_count": 2,
+                    "captures": captures,
+                    "transitions": {
+                        "prefill_to_decode_first": _sampled_transition(
+                            captures["prefill"]["sampled_channel_values"],
+                            captures["decode_first"]["sampled_channel_values"],
+                        ),
+                        "decode_first_to_decode_last": _sampled_transition(
+                            captures["decode_first"]["sampled_channel_values"],
+                            captures["decode_last"]["sampled_channel_values"],
+                        ),
+                    },
+                }
+            )
+        synthetic_observation = _seal(
+            {
+                "schema_version": NATIVE_OBSERVATION_SCHEMA_VERSION,
+                "status": "CAPTURED",
+                "scope": "selected_native_residual_stream_summaries",
+                "model_id": "synthetic/native@revision",
+                "adapter_id": "synthetic-native-observer",
+                "request_fingerprint_sha256": invocation_before["fingerprint_sha256"],
+                "prompt_token_count": synthetic_prompt_tokens,
+                "phase_binding": "cache_offset_before_vs_prompt_token_count_v1",
+                "policy": synthetic_policy_receipt,
+                "layers": synthetic_layers,
+                "checks": {
+                    "selected_layers_captured": True,
+                    "prefill_captured_for_every_layer": True,
+                    "decode_first_and_last_captured_for_every_layer": True,
+                    "phase_counts_are_exact": True,
+                    "full_activations_not_retained": True,
+                    "forward_value_passthrough": True,
+                    "model_layers_restored_exactly": True,
+                    "observation_not_used_by_controller": True,
+                },
+                "feeds_controller": False,
+                "artifact_sensitivity_status": "DERIVED_MODEL_DATA_REVIEW_BEFORE_EXPORT",
+                "claim_status": "LOCAL_DEVELOPMENT_DIAGNOSTIC_ONLY",
+            }
+        )
+        synthetic_native_descriptor = AdapterDescriptor(
+            adapter_id="synthetic-native-observer",
+            model_id="synthetic/native@revision",
+            interface_kind="local_open_weight",
+            state_visibility="native_latent",
+            differentiable_through_model=False,
+            generation_config=(
+                (
+                    "oscilloscope_policy_fingerprint",
+                    synthetic_policy_receipt["fingerprint_sha256"],
+                ),
+            ),
+        )
+        synthetic_native_result = replace(
+            valid_result,
+            descriptor=synthetic_native_descriptor,
+            native_state_observation=synthetic_observation,
+        )
+        synthetic_native_checks = _structural_model_checks(
+            task,
+            program,
+            synthetic_native_result,
+            expected_descriptor=synthetic_native_descriptor,
+            expected_request_fingerprint_sha256=str(
+                invocation_before["fingerprint_sha256"]
+            ),
+        )
+        compatible_native_descriptor = replace(
+            synthetic_native_descriptor,
+            adapter_id="compatible-native-without-oscilloscope",
+            generation_config=(),
+        )
+        compatible_native_checks = _structural_model_checks(
+            task,
+            program,
+            replace(
+                valid_result,
+                descriptor=compatible_native_descriptor,
+                native_state_observation=None,
+            ),
+            expected_descriptor=compatible_native_descriptor,
+            expected_request_fingerprint_sha256=str(
+                invocation_before["fingerprint_sha256"]
+            ),
+        )
+        malformed_observation_material = _without_fingerprint(synthetic_observation)
+        malformed_observation_material["layers"][0] = {}
+        malformed_native_checks = _structural_model_checks(
+            task,
+            program,
+            replace(
+                synthetic_native_result,
+                native_state_observation=_seal(malformed_observation_material),
+            ),
+            expected_descriptor=synthetic_native_descriptor,
+            expected_request_fingerprint_sha256=str(
+                invocation_before["fingerprint_sha256"]
+            ),
+        )
+        missing_decode_material = _without_fingerprint(synthetic_observation)
+        missing_decode_material["layers"][0]["captures"].pop("decode_last")
+        missing_decode_checks = _structural_model_checks(
+            task,
+            program,
+            replace(
+                synthetic_native_result,
+                native_state_observation=_seal(missing_decode_material),
+            ),
+            expected_descriptor=synthetic_native_descriptor,
+            expected_request_fingerprint_sha256=str(
+                invocation_before["fingerprint_sha256"]
+            ),
+        )
+        chunked_prefill_is_not_decode = _native_summary_is_valid(
+            synthetic_capture(
+                sequence_length=2,
+                cache_offset_before=8,
+                base=1.0,
+            ),
+            phase="prefill",
+            prompt_token_count=10,
+            sampled_channels=4,
+        ) and not _native_summary_is_valid(
+            synthetic_capture(
+                sequence_length=2,
+                cache_offset_before=8,
+                base=1.0,
+            ),
+            phase="decode_first",
+            prompt_token_count=10,
+            sampled_channels=4,
+        )
         alternate_contract = replace(contract, required_support_ids=("R6",))
         validate_contract(task, alternate_contract)
         primary_contract_grade = _grade_contract(valid_result, program, contract)
@@ -5824,6 +6285,19 @@ def self_test() -> JsonObject:
             "sampler_temperature": 0.0,
             "seed": 0,
         },
+        "native_oscilloscope_rows_are_recomputed_structurally": synthetic_native_checks[
+            "native_state_observation_matches_declared_visibility"
+        ]
+        and not malformed_native_checks[
+            "native_state_observation_matches_declared_visibility"
+        ],
+        "native_oscilloscope_requires_advertised_decode_phases": not missing_decode_checks[
+            "native_state_observation_matches_declared_visibility"
+        ],
+        "chunked_prefill_is_not_labeled_as_decode": chunked_prefill_is_not_decode,
+        "native_latent_without_oscilloscope_remains_compatible": compatible_native_checks[
+            "native_state_observation_matches_declared_visibility"
+        ],
         "credit_map_requires_exact_coverage": incomplete_credit_rejected,
         "model_visible_allocation_requires_realized_credit": unrealized_reinspection_rejected,
         "zero_control_rows_do_not_affect_credit_first_order": zero_control_rows_are_not_reinspected,
