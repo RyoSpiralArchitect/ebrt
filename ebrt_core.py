@@ -784,7 +784,7 @@ def _central_difference(
     minus[index] -= FD_EPSILON
     plus_loss, _ = _loss(envelope, plus)
     minus_loss, _ = _loss(envelope, minus)
-    return float((plus_loss - minus_loss) / (2.0 * FD_EPSILON))
+    return float(((plus_loss - minus_loss) / (2.0 * FD_EPSILON)).detach())
 
 
 def _trajectory_rows(
@@ -1934,6 +1934,39 @@ def _make_core_executor(
     return execute
 
 
+class _BackwardExecutionProbe:
+    """Run-local autograd witness, independent of the serialized receipt."""
+
+    def __init__(self) -> None:
+        self.tensor = torch.zeros((), dtype=DTYPE, requires_grad=True)
+        self.hook_count = 0
+        self.gradient: torch.Tensor | None = None
+        self._handle = self.tensor.register_hook(self._record)
+
+    def _record(self, gradient: torch.Tensor) -> torch.Tensor:
+        self.hook_count += 1
+        self.gradient = gradient.detach().clone()
+        return gradient
+
+    def instrument(self, envelope: TrajectoryEnvelope) -> TrajectoryEnvelope:
+        cloned = _clone_envelope(envelope)
+        return replace(
+            cloned,
+            target=cloned.target + (0.0 * self.tensor),
+        )
+
+    def close(self) -> None:
+        self._handle.remove()
+
+    def executed_once(self) -> bool:
+        return (
+            self.hook_count == 1
+            and self.gradient is not None
+            and self.gradient.shape == torch.Size([])
+            and bool(torch.isfinite(self.gradient))
+        )
+
+
 def _bind_single_core_execution(
     method: Callable[..., JsonObject],
 ) -> Callable[..., JsonObject]:
@@ -2002,15 +2035,22 @@ class RevisionEngine:
             lane_id=lane_id,
             label="STATE_ADAPTER",
         )
-        core_execution_trusted, raw_core_receipt = _execute_core(
-            self.core,
-            _clone_envelope(envelope),
-        )
+        backward_probe = _BackwardExecutionProbe()
+        try:
+            core_execution_trusted, raw_core_receipt = _execute_core(
+                self.core,
+                backward_probe.instrument(envelope),
+            )
+        finally:
+            backward_probe.close()
         optimized = _validate_single_core_receipt(
             envelope,
             raw_core_receipt,
         )
-        _require(core_execution_trusted, "CORE_EXECUTION_UNVERIFIED")
+        _require(
+            core_execution_trusted and backward_probe.executed_once(),
+            "CORE_EXECUTION_UNVERIFIED",
+        )
         program = self.actuator_adapter.compile(
             task,
             _clone(optimized),
@@ -2181,7 +2221,7 @@ class JointBackwardRevisionCore:
             minus[index] -= FD_EPSILON
             plus_loss, _, _ = _joint_loss(ordered, ordered_weights, slices, plus)
             minus_loss, _, _ = _joint_loss(ordered, ordered_weights, slices, minus)
-            fd = float((plus_loss - minus_loss) / (2.0 * FD_EPSILON))
+            fd = float(((plus_loss - minus_loss) / (2.0 * FD_EPSILON)).detach())
             fd_errors.append(abs(fd - float(gradient[index])))
         max_fd_error = max(fd_errors, default=0.0)
 
@@ -2708,18 +2748,26 @@ class JointRevisionEngine:
                 label="JOINT_STATE_ADAPTER",
             )
             envelopes.append(envelope)
-        core_envelopes = [_clone_envelope(envelope) for envelope in envelopes]
-        core_execution_trusted, raw_joint_receipt = _execute_core(
-            self.core,
-            core_envelopes,
-            weights=[row.weight for row in ordered_lanes],
-        )
+        backward_probe = _BackwardExecutionProbe()
+        core_envelopes = [backward_probe.instrument(envelopes[0])]
+        core_envelopes.extend(_clone_envelope(envelope) for envelope in envelopes[1:])
+        try:
+            core_execution_trusted, raw_joint_receipt = _execute_core(
+                self.core,
+                core_envelopes,
+                weights=[row.weight for row in ordered_lanes],
+            )
+        finally:
+            backward_probe.close()
         joint = _validate_joint_core_receipt(
             envelopes,
             [row.weight for row in ordered_lanes],
             raw_joint_receipt,
         )
-        _require(core_execution_trusted, "JOINT_CORE_EXECUTION_UNVERIFIED")
+        _require(
+            core_execution_trusted and backward_probe.executed_once(),
+            "JOINT_CORE_EXECUTION_UNVERIFIED",
+        )
         programs: dict[str, ActuatorProgram] = {}
         results: dict[str, ModelResult] = {}
         structural: JsonObject = {}
@@ -3641,6 +3689,38 @@ def self_test() -> JsonObject:
             replay_with_mutated_single_code,
             "CORE_EXECUTION_UNVERIFIED",
         )
+
+        def replay_with_mutated_single_executor_closure() -> JsonObject:
+            cells = dict(
+                zip(
+                    RevisionEngine.run.__code__.co_freevars,
+                    RevisionEngine.run.__closure__ or (),
+                    strict=True,
+                )
+            )
+            execute_cell = cells["execute_core"]
+            original_executor = execute_cell.cell_contents
+
+            def replay(
+                _core: BackwardRevisionCore,
+                _envelope: TrajectoryEnvelope,
+            ) -> tuple[bool, JsonObject]:
+                return True, _clone(single["trajectory"])
+
+            try:
+                execute_cell.cell_contents = replay
+                return RevisionEngine().run(
+                    task,
+                    adapter,
+                    post_run_contract=contract,
+                )
+            finally:
+                execute_cell.cell_contents = original_executor
+
+        mutated_single_executor_closure_rejected = _raises_ebrt_reason(
+            replay_with_mutated_single_executor_closure,
+            "CORE_EXECUTION_UNVERIFIED",
+        )
         tampered_single_core_rejected = _raises_ebrt_reason(
             lambda: RevisionEngine(core=_TamperedSingleCore()).run(
                 task,
@@ -4085,6 +4165,41 @@ def self_test() -> JsonObject:
             replay_with_mutated_joint_code,
             "JOINT_CORE_EXECUTION_UNVERIFIED",
         )
+
+        def replay_with_mutated_joint_executor_closure() -> JsonObject:
+            cells = dict(
+                zip(
+                    JointRevisionEngine.run.__code__.co_freevars,
+                    JointRevisionEngine.run.__closure__ or (),
+                    strict=True,
+                )
+            )
+            execute_cell = cells["execute_core"]
+            original_executor = execute_cell.cell_contents
+
+            def replay(
+                _core: JointBackwardRevisionCore,
+                _envelopes: Sequence[TrajectoryEnvelope],
+                *,
+                weights: Sequence[float],
+            ) -> tuple[bool, JsonObject]:
+                _require(bool(weights), "TEST_REPLAY_WEIGHTS_MISSING")
+                return True, _clone(joint["joint_trajectory"])
+
+            try:
+                execute_cell.cell_contents = replay
+                return JointRevisionEngine().run(
+                    task,
+                    (lane_b, lane_a),
+                    post_run_contract=contract,
+                )
+            finally:
+                execute_cell.cell_contents = original_executor
+
+        mutated_joint_executor_closure_rejected = _raises_ebrt_reason(
+            replay_with_mutated_joint_executor_closure,
+            "JOINT_CORE_EXECUTION_UNVERIFIED",
+        )
         joint_reversed = JointRevisionEngine().run(
             task, (lane_a, lane_b), post_run_contract=contract
         )
@@ -4184,6 +4299,8 @@ def self_test() -> JsonObject:
         and rebound_joint_symbols_replay_rejected,
         "core_code_mutation_cannot_claim_backward_execution": mutated_single_code_replay_rejected
         and mutated_joint_code_replay_rejected,
+        "executor_closure_mutation_cannot_claim_backward_execution": mutated_single_executor_closure_rejected
+        and mutated_joint_executor_closure_rejected,
         "core_receipts_bind_the_declared_update_law": alternate_control_law_rejected,
         "credit_first_order_is_compiled": invocation_before["evidence_ids"][
             : len(program.reinspect)

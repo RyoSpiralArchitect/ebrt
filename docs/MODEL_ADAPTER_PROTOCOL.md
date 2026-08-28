@@ -147,7 +147,10 @@ immutable code object and invokes a private function copy. Instance-level
 shadowing, function-code mutation, or simultaneous class/module-symbol
 replacement is rejected alongside injected cores. Such cores can be validated
 for conformance but cannot yield engine `PASS` from a previously captured
-receipt.
+receipt. A separate run-local autograd probe is connected to the public target
+with an exact zero-valued edge and must fire exactly once. This direct witness
+is outside the serialized receipt and prevents executor-closure replay from
+claiming a backward operation that did not run.
 
 ## Model-visible information
 

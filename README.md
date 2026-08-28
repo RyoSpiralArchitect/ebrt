@@ -144,7 +144,10 @@ captured separately and executed through a private function copy. The engine
 rejects class replacement, instance-level method shadowing, function-code
 mutation, and simultaneous rebinding of lookalike module symbols. An injected
 core receipt is still structurally validated, but cannot promote a replay into
-a claim about the current run.
+a claim about the current run. Independently, every engine call attaches a
+run-local zero-valued autograd probe to the public target and requires that the
+actual backward pass fire it exactly once; replacing the executor closure with
+a trusted receipt replay therefore still fails execution attestation.
 
 ## v0.7.1 — single-trajectory revision
 
