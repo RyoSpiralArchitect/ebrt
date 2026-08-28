@@ -1190,24 +1190,26 @@ class ActuatorProgram:
     source_credit_fingerprint_sha256: str
 
     def to_dict(self) -> JsonObject:
-        return _seal(
+        return _seal(_actuator_program_material(self))
+
+
+def _actuator_program_material(program: ActuatorProgram) -> JsonObject:
+    return {
+        "schema_version": "ebrt-actuator-program-v0.7.1",
+        "lane_id": program.lane_id,
+        "reinspect": [
             {
-                "schema_version": "ebrt-actuator-program-v0.7.1",
-                "lane_id": self.lane_id,
-                "reinspect": [
-                    {
-                        "evidence_id": evidence_id,
-                        "allocation_units": units,
-                        "signed_control": control,
-                    }
-                    for evidence_id, units, control in self.reinspect
-                ],
-                "suppress_evidence_ids": list(self.suppress),
-                "preserve_evidence_ids": list(self.preserve),
-                "steps": list(self.steps),
-                "source_credit_fingerprint_sha256": self.source_credit_fingerprint_sha256,
+                "evidence_id": evidence_id,
+                "allocation_units": units,
+                "signed_control": control,
             }
-        )
+            for evidence_id, units, control in program.reinspect
+        ],
+        "suppress_evidence_ids": list(program.suppress),
+        "preserve_evidence_ids": list(program.preserve),
+        "steps": list(program.steps),
+        "source_credit_fingerprint_sha256": program.source_credit_fingerprint_sha256,
+    }
 
 
 class ActuatorAdapter(Protocol):
@@ -1362,13 +1364,37 @@ def _validate_compiled_program(
     *,
     lane_id: str,
 ) -> None:
-    _require(isinstance(program, ActuatorProgram), "ACTUATOR_PROGRAM_TYPE_INVALID")
+    _require(type(program) is ActuatorProgram, "ACTUATOR_PROGRAM_TYPE_INVALID")
+    _require(
+        type(program.lane_id) is str
+        and type(program.reinspect) is tuple
+        and all(
+            type(row) is tuple
+            and len(row) == 3
+            and type(row[0]) is str
+            and type(row[1]) is int
+            and type(row[2]) is float
+            for row in program.reinspect
+        )
+        and type(program.suppress) is tuple
+        and all(type(row) is str for row in program.suppress)
+        and type(program.preserve) is tuple
+        and all(type(row) is str for row in program.preserve)
+        and type(program.steps) is tuple
+        and all(type(row) is str for row in program.steps)
+        and type(program.source_credit_fingerprint_sha256) is str,
+        "ACTUATOR_PROGRAM_FIELD_TYPE_INVALID",
+    )
     expected = PublicRevisionActuator().compile(
         task,
         optimized,
         lane_id=lane_id,
     )
-    _require(program == expected, "ACTUATOR_PROGRAM_BINDING_MISMATCH")
+    _require(
+        _canonical_bytes(_actuator_program_material(program))
+        == _canonical_bytes(_actuator_program_material(expected)),
+        "ACTUATOR_PROGRAM_BINDING_MISMATCH",
+    )
 
 
 @dataclass(frozen=True)
@@ -3338,6 +3364,65 @@ class _TamperedActuatorAdapter:
         return replace(valid, steps=(*valid.steps[:-1], "SKIP_REGENERATION"))
 
 
+class _SpoofedActuatorProgram(ActuatorProgram):
+    def __eq__(self, _other: object) -> bool:
+        return True
+
+    def to_dict(self) -> JsonObject:
+        material = _actuator_program_material(self)
+        material["steps"] = ["LOAD_FULL_CONTEXT", "BYPASS_REVISION"]
+        return _seal(material)
+
+
+@dataclass(frozen=True)
+class _SubclassSpoofActuatorAdapter:
+    adapter_id: str = "subclass-spoof-actuator-test"
+
+    def compile(
+        self,
+        task: RevisionTask,
+        optimized: Mapping[str, Any],
+        *,
+        lane_id: str,
+    ) -> ActuatorProgram:
+        valid = PublicRevisionActuator().compile(
+            task,
+            optimized,
+            lane_id=lane_id,
+        )
+        return _SpoofedActuatorProgram(
+            lane_id=valid.lane_id,
+            reinspect=valid.reinspect,
+            suppress=valid.suppress,
+            preserve=valid.preserve,
+            steps=valid.steps,
+            source_credit_fingerprint_sha256=valid.source_credit_fingerprint_sha256,
+        )
+
+
+class _StringSubclass(str):
+    pass
+
+
+@dataclass(frozen=True)
+class _FieldTypeSpoofActuatorAdapter:
+    adapter_id: str = "field-type-spoof-actuator-test"
+
+    def compile(
+        self,
+        task: RevisionTask,
+        optimized: Mapping[str, Any],
+        *,
+        lane_id: str,
+    ) -> ActuatorProgram:
+        valid = PublicRevisionActuator().compile(
+            task,
+            optimized,
+            lane_id=lane_id,
+        )
+        return replace(valid, lane_id=_StringSubclass(valid.lane_id))
+
+
 @dataclass(frozen=True)
 class _MutatingActuatorAdapter:
     adapter_id: str = "mutating-actuator-test"
@@ -4351,6 +4436,26 @@ def self_test() -> JsonObject:
             ),
             "ACTUATOR_PROGRAM_BINDING_MISMATCH",
         )
+        actuator_subclass_spoof_rejected = _raises_ebrt_reason(
+            lambda: RevisionEngine(
+                actuator_adapter=_SubclassSpoofActuatorAdapter()
+            ).run(
+                task,
+                adapter,
+                post_run_contract=contract,
+            ),
+            "ACTUATOR_PROGRAM_TYPE_INVALID",
+        )
+        actuator_field_type_spoof_rejected = _raises_ebrt_reason(
+            lambda: RevisionEngine(
+                actuator_adapter=_FieldTypeSpoofActuatorAdapter()
+            ).run(
+                task,
+                adapter,
+                post_run_contract=contract,
+            ),
+            "ACTUATOR_PROGRAM_FIELD_TYPE_INVALID",
+        )
         mutating_actuator_rejected_single = _raises_ebrt_reason(
             lambda: RevisionEngine(actuator_adapter=_MutatingActuatorAdapter()).run(
                 task,
@@ -5026,6 +5131,8 @@ def self_test() -> JsonObject:
         "task_text_is_structurally_delimited_from_compiler_instructions": task_text_is_structurally_delimited,
         "explicit_falsey_interfaces_are_preserved": explicit_falsey_interfaces_preserved,
         "compiled_actuator_is_bound_to_backward_receipt": tampered_actuator_rejected,
+        "actuator_program_requires_exact_type_and_fields": actuator_subclass_spoof_rejected
+        and actuator_field_type_spoof_rejected,
         "actuator_cannot_mutate_sealed_core_receipt": mutating_actuator_rejected_single
         and mutating_actuator_rejected_joint,
         "core_receipts_are_validated_before_actuation": tampered_single_core_rejected
