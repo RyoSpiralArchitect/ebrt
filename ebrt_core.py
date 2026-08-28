@@ -1641,6 +1641,34 @@ def _configured_hf_hub_roots() -> tuple[Path, ...]:
     return tuple(sorted(resolved, key=lambda value: len(value.parts), reverse=True))
 
 
+def _blob_content_matches_address(path: Path) -> bool:
+    before = path.stat()
+    if len(path.name) == 64:
+        digest = hashlib.sha256()
+    elif len(path.name) == 40:
+        digest = hashlib.sha1()
+        digest.update(f"blob {before.st_size}\0".encode("ascii"))
+    else:
+        return False
+    with path.open("rb") as source:
+        while chunk := source.read(8 * 1024 * 1024):
+            digest.update(chunk)
+    after = path.stat()
+    identity_before = (
+        before.st_dev,
+        before.st_ino,
+        before.st_size,
+        before.st_mtime_ns,
+    )
+    identity_after = (
+        after.st_dev,
+        after.st_ino,
+        after.st_size,
+        after.st_mtime_ns,
+    )
+    return identity_before == identity_after and digest.hexdigest() == path.name
+
+
 def _snapshot_uses_hf_blob_link_layout(path: Path, repository: Path) -> bool:
     blobs = repository / "blobs"
     try:
@@ -1659,6 +1687,7 @@ def _snapshot_uses_hf_blob_link_layout(path: Path, repository: Path) -> bool:
                 or target.stat().st_size <= 0
                 or target.parent != blobs_root
                 or re.fullmatch(r"(?:[0-9a-f]{40}|[0-9a-f]{64})", target.name) is None
+                or not _blob_content_matches_address(target)
             ):
                 return False
     except (OSError, RuntimeError):
@@ -2012,13 +2041,30 @@ def _make_core_executor(
     return execute
 
 
+def _expected_loss_probe_gradient(
+    envelope: TrajectoryEnvelope,
+    *,
+    loss_weight: float,
+) -> float:
+    zero = torch.zeros(len(envelope.evidence_ids), dtype=DTYPE)
+    trajectory = _forward(envelope, zero).detach()
+    target = envelope.target.detach()
+    terminal = torch.sum(target - trajectory[-1])
+    path = torch.mean(target - trajectory[envelope.event_index :])
+    return _finite(
+        loss_weight * float(terminal + (0.15 * path)),
+        "BACKWARD_PROBE_EXPECTED_GRADIENT",
+    )
+
+
 class _BackwardExecutionProbe:
-    """Run-local autograd witness, independent of the serialized receipt."""
+    """Run-local witness bound to the declared EBRT objective backward."""
 
     def __init__(self) -> None:
         self.tensor = torch.zeros((), dtype=DTYPE, requires_grad=True)
         self.hook_count = 0
         self.gradient: torch.Tensor | None = None
+        self.expected_gradient: float | None = None
         self._handle = self.tensor.register_hook(self._record)
 
     def _record(self, gradient: torch.Tensor) -> torch.Tensor:
@@ -2026,11 +2072,24 @@ class _BackwardExecutionProbe:
         self.gradient = gradient.detach().clone()
         return gradient
 
-    def instrument(self, envelope: TrajectoryEnvelope) -> TrajectoryEnvelope:
+    def instrument(
+        self,
+        envelope: TrajectoryEnvelope,
+        *,
+        loss_weight: float = 1.0,
+    ) -> TrajectoryEnvelope:
         cloned = _clone_envelope(envelope)
+        self.expected_gradient = _expected_loss_probe_gradient(
+            cloned,
+            loss_weight=_finite(loss_weight, "BACKWARD_PROBE_LOSS_WEIGHT"),
+        )
+        _require(
+            abs(self.expected_gradient) > FLOAT_TOLERANCE,
+            "BACKWARD_PROBE_EXPECTED_GRADIENT_ZERO",
+        )
         return replace(
             cloned,
-            target=cloned.target + (0.0 * self.tensor),
+            target=cloned.target + self.tensor - self.tensor.detach(),
         )
 
     def close(self) -> None:
@@ -2040,8 +2099,15 @@ class _BackwardExecutionProbe:
         return (
             self.hook_count == 1
             and self.gradient is not None
+            and self.expected_gradient is not None
             and self.gradient.shape == torch.Size([])
             and bool(torch.isfinite(self.gradient))
+            and math.isclose(
+                float(self.gradient),
+                self.expected_gradient,
+                rel_tol=1.0e-9,
+                abs_tol=FLOAT_TOLERANCE,
+            )
         )
 
 
@@ -2827,7 +2893,12 @@ class JointRevisionEngine:
             )
             envelopes.append(envelope)
         backward_probe = _BackwardExecutionProbe()
-        core_envelopes = [backward_probe.instrument(envelopes[0])]
+        core_envelopes = [
+            backward_probe.instrument(
+                envelopes[0],
+                loss_weight=ordered_lanes[0].weight,
+            )
+        ]
         core_envelopes.extend(_clone_envelope(envelope) for envelope in envelopes[1:])
         try:
             core_execution_trusted, raw_joint_receipt = _execute_core(
@@ -3559,7 +3630,7 @@ def self_test() -> JsonObject:
                 "config.json": b'{"model_type":"fixture"}',
                 "tokenizer_config.json": b"{}",
                 "tokenizer.json": b"{}",
-                "model.safetensors": b"fixture-weights",
+                "model.safetensors": f"fixture-weights-{revision}".encode(),
             }
             for filename, payload in files.items():
                 if blob_links:
@@ -3601,8 +3672,15 @@ def self_test() -> JsonObject:
                 lambda: _local_model_id(copied_cache_path),
                 "LOCAL_MODEL_ID_REVISION_REQUIRED",
             )
+            (cached_path_a / "model.safetensors").resolve().write_bytes(
+                b"tampered-fixture-weights"
+            )
+            tampered_blob_requires_explicit_identity = _raises_ebrt_reason(
+                lambda: _local_model_id(cached_path_a),
+                "LOCAL_MODEL_ID_REVISION_REQUIRED",
+            )
         imitated_cache_requires_explicit_identity = _raises_ebrt_reason(
-            lambda: _local_model_id(cached_path_a),
+            lambda: _local_model_id(cached_path_b),
             "LOCAL_MODEL_ID_REVISION_REQUIRED",
         )
     cached_path_a = Path("/tmp/hub/models--example--model/snapshots/" + "a" * 40)
@@ -3841,6 +3919,39 @@ def self_test() -> JsonObject:
 
         mutated_single_executor_closure_rejected = _raises_ebrt_reason(
             replay_with_mutated_single_executor_closure,
+            "CORE_EXECUTION_UNVERIFIED",
+        )
+
+        def replay_with_unrelated_single_backward() -> JsonObject:
+            cells = dict(
+                zip(
+                    RevisionEngine.run.__code__.co_freevars,
+                    RevisionEngine.run.__closure__ or (),
+                    strict=True,
+                )
+            )
+            execute_cell = cells["execute_core"]
+            original_executor = execute_cell.cell_contents
+
+            def replay(
+                _core: BackwardRevisionCore,
+                envelope: TrajectoryEnvelope,
+            ) -> tuple[bool, JsonObject]:
+                envelope.target.sum().backward()
+                return True, _clone(single["trajectory"])
+
+            try:
+                execute_cell.cell_contents = replay
+                return RevisionEngine().run(
+                    task,
+                    adapter,
+                    post_run_contract=contract,
+                )
+            finally:
+                execute_cell.cell_contents = original_executor
+
+        unrelated_single_backward_replay_rejected = _raises_ebrt_reason(
+            replay_with_unrelated_single_backward,
             "CORE_EXECUTION_UNVERIFIED",
         )
         tampered_single_core_rejected = _raises_ebrt_reason(
@@ -4322,6 +4433,42 @@ def self_test() -> JsonObject:
             replay_with_mutated_joint_executor_closure,
             "JOINT_CORE_EXECUTION_UNVERIFIED",
         )
+
+        def replay_with_unrelated_joint_backward() -> JsonObject:
+            cells = dict(
+                zip(
+                    JointRevisionEngine.run.__code__.co_freevars,
+                    JointRevisionEngine.run.__closure__ or (),
+                    strict=True,
+                )
+            )
+            execute_cell = cells["execute_core"]
+            original_executor = execute_cell.cell_contents
+
+            def replay(
+                _core: JointBackwardRevisionCore,
+                replay_envelopes: Sequence[TrajectoryEnvelope],
+                *,
+                weights: Sequence[float],
+            ) -> tuple[bool, JsonObject]:
+                _require(bool(weights), "TEST_REPLAY_WEIGHTS_MISSING")
+                replay_envelopes[0].target.sum().backward()
+                return True, _clone(joint["joint_trajectory"])
+
+            try:
+                execute_cell.cell_contents = replay
+                return JointRevisionEngine().run(
+                    task,
+                    (lane_b, lane_a),
+                    post_run_contract=contract,
+                )
+            finally:
+                execute_cell.cell_contents = original_executor
+
+        unrelated_joint_backward_replay_rejected = _raises_ebrt_reason(
+            replay_with_unrelated_joint_backward,
+            "JOINT_CORE_EXECUTION_UNVERIFIED",
+        )
         joint_reversed = JointRevisionEngine().run(
             task, (lane_a, lane_b), post_run_contract=contract
         )
@@ -4381,6 +4528,7 @@ def self_test() -> JsonObject:
         and malformed_cache_requires_explicit_identity
         and malformed_cache_explicit_identity == "example/model@weights-sha256-deadbeef"
         and copied_cache_requires_explicit_identity
+        and tampered_blob_requires_explicit_identity
         and imitated_cache_requires_explicit_identity,
         "cached_model_selection_uses_active_ref_and_rejects_ambiguity": active_cache_selection
         == cached_path_a
@@ -4426,7 +4574,9 @@ def self_test() -> JsonObject:
         "core_code_mutation_cannot_claim_backward_execution": mutated_single_code_replay_rejected
         and mutated_joint_code_replay_rejected,
         "executor_closure_mutation_cannot_claim_backward_execution": mutated_single_executor_closure_rejected
-        and mutated_joint_executor_closure_rejected,
+        and mutated_joint_executor_closure_rejected
+        and unrelated_single_backward_replay_rejected
+        and unrelated_joint_backward_replay_rejected,
         "core_receipts_bind_the_declared_update_law": alternate_control_law_rejected,
         "credit_first_order_is_compiled": invocation_before["evidence_ids"][
             : len(program.reinspect)

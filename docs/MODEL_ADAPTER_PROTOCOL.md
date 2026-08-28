@@ -124,7 +124,9 @@ both are supplied, exact equality is required.
 
 Derivation requires the exact snapshot root to sit beneath a configured
 Hugging Face hub, a 40-hex snapshot revision, complete loader material, and the
-standard symlink-to-blob layout. Merely naming an arbitrary directory
+standard symlink-to-blob layout. Every linked blob is streamed and verified
+against its SHA-256 or Git-blob SHA-1 address before the cache identity is
+derived. Merely naming an arbitrary directory
 `models--.../snapshots/...` does not create a cache identity; that directory
 must carry an explicit revision-bearing identity instead.
 
@@ -153,10 +155,15 @@ immutable code object and invokes a private function copy. Instance-level
 shadowing, function-code mutation, or simultaneous class/module-symbol
 replacement is rejected alongside injected cores. Such cores can be validated
 for conformance but cannot yield engine `PASS` from a previously captured
-receipt. A separate run-local autograd probe is connected to the public target
-with an exact zero-valued edge and must fire exactly once. This direct witness
-is outside the serialized receipt and prevents executor-closure replay from
-claiming a backward operation that did not run.
+receipt. A separate run-local, forward-value-neutral autograd probe is connected
+to the public target. Its expected derivative is computed from the declared
+EBRT objective, and it must fire exactly once with that value. The witness is
+outside the serialized receipt; an unrelated target traversal cannot promote a
+replayed receipt into a claim that the EBRT loss backward ran.
+
+This boundary is an executable conformance contract, not a Python process
+sandbox. Code with arbitrary interpreter-memory mutation can subvert any
+in-process Python invariant and is outside the runtime trust model.
 
 ## Model-visible information
 

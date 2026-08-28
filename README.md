@@ -73,7 +73,9 @@ weight snapshots cannot collapse into one receipt identity. An explicit
 they must match exactly.
 Cache identity is derived only for an exact snapshot root beneath a configured
 Hugging Face hub, with a 40-hex revision, complete loader material, and the
-standard symlink-to-blob layout. A directory that merely imitates
+standard symlink-to-blob layout. Each linked blob is streamed and checked
+against its SHA-256 or Git-blob SHA-1 address before identity derivation. A
+directory that merely imitates
 `models--.../snapshots/...` is treated as an ordinary local directory and must
 supply `--model-id` explicitly.
 For a model stored outside that cache layout, pass a public receipt identity
@@ -150,9 +152,12 @@ rejects class replacement, instance-level method shadowing, function-code
 mutation, and simultaneous rebinding of lookalike module symbols. An injected
 core receipt is still structurally validated, but cannot promote a replay into
 a claim about the current run. Independently, every engine call attaches a
-run-local zero-valued autograd probe to the public target and requires that the
-actual backward pass fire it exactly once; replacing the executor closure with
-a trusted receipt replay therefore still fails execution attestation.
+run-local, forward-value-neutral autograd probe to the public target. Its
+expected gradient is computed from the declared EBRT objective, and the actual
+backward must fire it exactly once with that value. An unrelated traversal such
+as `target.sum().backward()` therefore cannot validate a replayed receipt.
+These are executable conformance checks, not a Python process sandbox; code
+with arbitrary interpreter-memory mutation is outside the runtime trust model.
 
 ## v0.7.1 — single-trajectory revision
 
