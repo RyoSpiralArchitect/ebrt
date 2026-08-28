@@ -62,13 +62,16 @@ class EBRTError(RuntimeError):
 
 
 def _canonical_bytes(value: Any) -> bytes:
-    return json.dumps(
-        value,
-        ensure_ascii=False,
-        sort_keys=True,
-        separators=(",", ":"),
-        allow_nan=False,
-    ).encode("utf-8")
+    try:
+        return json.dumps(
+            value,
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+            allow_nan=False,
+        ).encode("utf-8")
+    except UnicodeEncodeError as exc:
+        raise EBRTError("CANONICAL_JSON_UTF8_INVALID") from exc
 
 
 def _fingerprint(value: Any) -> str:
@@ -130,6 +133,14 @@ def _safe_id(value: str, label: str) -> str:
         f"{label}_INVALID",
     )
     return value
+
+
+def _utf8_encodable(value: str) -> bool:
+    try:
+        value.encode("utf-8")
+    except UnicodeEncodeError:
+        return False
+    return True
 
 
 @dataclass(frozen=True)
@@ -257,7 +268,9 @@ def validate_task(task: RevisionTask) -> None:
     _require(type(task) is RevisionTask, "TASK_TYPE_INVALID")
     _safe_id(task.task_id, "TASK_ID")
     _require(
-        type(task.question) is str and bool(task.question.strip()),
+        type(task.question) is str
+        and bool(task.question.strip())
+        and _utf8_encodable(task.question),
         "QUESTION_INVALID",
     )
     _require(type(task.answer_choices) is tuple, "ANSWER_CHOICES_TYPE_INVALID")
@@ -269,6 +282,7 @@ def validate_task(task: RevisionTask) -> None:
             and bool(row)
             and row == row.strip()
             and row.isprintable()
+            and _utf8_encodable(row)
             for row in task.answer_choices
         ),
         "ANSWER_CHOICES_INVALID",
@@ -335,7 +349,9 @@ def validate_task(task: RevisionTask) -> None:
         _safe_id(row.evidence_id, "EVIDENCE_ID")
         _require(row.evidence_id.upper() != "NONE", "EVIDENCE_ID_RESERVED")
         _require(
-            type(row.text) is str and bool(row.text.strip()),
+            type(row.text) is str
+            and bool(row.text.strip())
+            and _utf8_encodable(row.text),
             "EVIDENCE_TEXT_INVALID",
         )
         _require(
@@ -368,6 +384,8 @@ def validate_task(task: RevisionTask) -> None:
             and isinstance(value, str)
             and bool(key.strip())
             and bool(value.strip())
+            and _utf8_encodable(key)
+            and _utf8_encodable(value)
             for key, value in task.prior_state.stable_values
         ),
         "STABLE_VALUE_INVALID",
@@ -3677,6 +3695,41 @@ def self_test() -> JsonObject:
             "EVIDENCE_TEXT_INVALID",
         )
     )
+    lone_surrogate = chr(0xD800)
+    surrogate_task_text_rejected = (
+        _raises_ebrt_reason(
+            lambda: validate_task(replace(task, question=lone_surrogate)),
+            "QUESTION_INVALID",
+        )
+        and _raises_ebrt_reason(
+            lambda: validate_task(
+                replace(
+                    task,
+                    evidence=(
+                        replace(task.evidence[0], text=lone_surrogate),
+                        *task.evidence[1:],
+                    ),
+                )
+            ),
+            "EVIDENCE_TEXT_INVALID",
+        )
+        and _raises_ebrt_reason(
+            lambda: validate_task(
+                replace(
+                    task,
+                    prior_state=replace(
+                        task.prior_state,
+                        stable_values=(("video_format", lone_surrogate),),
+                    ),
+                )
+            ),
+            "STABLE_VALUE_INVALID",
+        )
+        and _raises_ebrt_reason(
+            lambda: _canonical_bytes({"value": lone_surrogate}),
+            "CANONICAL_JSON_UTF8_INVALID",
+        )
+    )
     zero_correction_task = replace(
         task,
         evidence=tuple(
@@ -4922,6 +4975,7 @@ def self_test() -> JsonObject:
         "state_adapter_scales_are_positive": invalid_scale_rejected,
         "task_numeric_fields_reject_string_coercion": numeric_string_task_fields_rejected,
         "malformed_public_task_fields_fail_closed": malformed_public_task_fields_rejected,
+        "public_task_text_requires_utf8": surrogate_task_text_rejected,
         "correction_must_be_an_admitted_control_site": typed_zero_correction_rejected
         and transformed_zero_correction_rejected,
         "execution_probe_accepts_zero_sum_residual_components": zero_sum_residual_probe_passes,
