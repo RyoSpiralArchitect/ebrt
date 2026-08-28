@@ -1,0 +1,115 @@
+{
+  "schema_version": "ebrt-local-open-weight-receipt-v0.7.1",
+  "status": "PASS",
+  "artifact_kind": "CONTAMINATED_INTEGRATION_RECEIPT",
+  "recorded_at_utc": "2026-08-28T02:24:47Z",
+  "command": "python3 ebrt_core.py local-e2e",
+  "source": {
+    "commit": "7a2747083b5135af624faf962672b277c9ec1838",
+    "ebrt_core_sha256": "5647b516c918b972c43ea032662ebf56e966dc5972ac6baf405172e879317753"
+  },
+  "runtime": {
+    "platform": "macOS-26.2-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "python": "3.13.13",
+    "torch": "2.11.0",
+    "mlx_lm": "0.31.2"
+  },
+  "model": {
+    "model_id": "mlx-community/Mistral-7B-Instruct-v0.3-4bit@a4b8f870474b0eb527f466a03fbc187830d271f5",
+    "model_revision": "a4b8f870474b0eb527f466a03fbc187830d271f5",
+    "adapter_id": "mlx-local-primary",
+    "interface_kind": "local_open_weight",
+    "state_visibility": "public_only",
+    "differentiable_through_model": false,
+    "generation_config": {
+      "add_generation_prompt": true,
+      "max_tokens": 48,
+      "sampler_temperature": 0.0,
+      "seed": 0
+    },
+    "generation_config_fingerprint_sha256": "1a240ca0a60f2096e35d779b9e12b4310ccf6e6d827f80c5dd2e09bdc5224db4"
+  },
+  "state_adapter": {
+    "adapter_id": "typed-public-state-v0.7.1",
+    "configuration": {
+      "correction_scale": 1.0,
+      "invalidation_scale": 1.0,
+      "support_scale": 1.0
+    }
+  },
+  "public_output": {
+    "raw_text": "ANSWER=PROVE\nSUPPORT=R6,R4,R2",
+    "answer": "PROVE",
+    "support_ids": [
+      "R6",
+      "R4",
+      "R2"
+    ],
+    "logical_calls": 1,
+    "latency_ms": 9668.741707981098,
+    "request_fingerprint_sha256": "baa1f3251d531c53e37fa543cf09b6a35a18fb75d7dca52f02a882321682f981",
+    "model_result_fingerprint_sha256": "2a924f5c2f008cbbab18336ef5d24633e9e3cb220582f1de641a3e752bcd89a0"
+  },
+  "trajectory_fingerprint_sha256": "39197bfbe8807a360bdca7bf0a5592a61f46e01ddc66c9838983560a99b3c7d1",
+  "trajectory_checks": {
+    "central_finite_difference_agreement": true,
+    "control_budget_respected": true,
+    "control_is_non_neutral": true,
+    "ineligible_sites_are_zero": true,
+    "objective_decreased": true,
+    "pre_event_backward_credit_nonzero": true,
+    "real_backward_executed_once": true,
+    "stable_axis_exact_identity": true,
+    "zero_control_exact_noop": true
+  },
+  "structural_checks": {
+    "adapter_descriptor_matches_binding": true,
+    "answer_is_allowed": true,
+    "correction_is_active_support": true,
+    "gradient_did_not_cross_model_boundary": true,
+    "invalidated_support_absent": true,
+    "latency_is_finite_and_nonnegative": true,
+    "model_result_fields_typed": true,
+    "one_model_invocation": true,
+    "raw_text_conforms_to_schema": true,
+    "raw_text_matches_returned_fields": true,
+    "request_fingerprint_matches_invocation": true,
+    "support_ids_are_known": true,
+    "typed_preservation_compiled": true,
+    "typed_suppression_compiled": true
+  },
+  "post_run_contract": {
+    "checks": {
+      "expected_answer": true,
+      "forbidden_support_absent": true,
+      "required_compiled_preserve_present": true,
+      "required_support_present": true
+    },
+    "contract": {
+      "expected_answer": "PROVE",
+      "fingerprint_sha256": "bcaa0f5b233a47beee4f03b08b06373f4d4c43ccbfc330c922ff28603530ebb8",
+      "forbidden_support_ids": [
+        "R3"
+      ],
+      "required_compiled_preserve_ids": [
+        "R5"
+      ],
+      "required_support_ids": [
+        "R2",
+        "R4",
+        "R6"
+      ],
+      "schema_version": "ebrt-post-run-contract-v0.8.0"
+    },
+    "status": "PASS"
+  },
+  "result_fingerprint_sha256": "7afed35f4c0df8da72429f0902274aec21bfe6235bec0523b70acdad35476809",
+  "effect_attribution_status": "NOT_ASSESSED",
+  "claim_boundary": [
+    "This receipt records one real local open-weight integration run over a known synthetic fixture.",
+    "It does not establish causal superiority, fresh benchmark performance, or general reasoning improvement.",
+    "The state-adapter tensors are detached into a core-owned public trajectory, and the gradient does not cross either adapter boundary."
+  ],
+  "fingerprint_sha256": "addf893fc2bfbf77df059e449575974869c88124d8a4ccd82bbe08010c08e3f8"
+}
