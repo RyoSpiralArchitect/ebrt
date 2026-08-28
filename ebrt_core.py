@@ -2662,21 +2662,29 @@ def _native_summary_is_valid(
         return False
     mean, rms, max_abs, l2 = metrics
     sampled_max_abs = max(abs(sample) for sample in samples)
-    sampled_l2 = math.sqrt(sum(sample * sample for sample in samples))
+    sampled_sum = sum(samples)
+    sampled_squared_l2 = sum(sample * sample for sample in samples)
+    sampled_l2 = math.sqrt(sampled_squared_l2)
+
+    def numeric_slack(*values: float) -> float:
+        return NATIVE_SUMMARY_ABS_TOLERANCE + NATIVE_SUMMARY_REL_TOLERANCE * max(
+            (abs(number) for number in values),
+            default=0.0,
+        )
 
     def bounded_above(left: float, right: float) -> bool:
-        slack = NATIVE_SUMMARY_ABS_TOLERANCE + NATIVE_SUMMARY_REL_TOLERANCE * max(
-            abs(left), abs(right)
-        )
-        return left <= right + slack
+        return left <= right + numeric_slack(left, right)
 
-    if not (
-        math.isclose(
-            l2,
-            rms * math.sqrt(hidden_size),
+    def summary_close(left: float, right: float) -> bool:
+        return math.isclose(
+            left,
+            right,
             rel_tol=NATIVE_SUMMARY_REL_TOLERANCE,
             abs_tol=NATIVE_SUMMARY_ABS_TOLERANCE,
         )
+
+    if not (
+        summary_close(l2, rms * math.sqrt(hidden_size))
         and bounded_above(abs(mean), rms)
         and bounded_above(rms, max_abs)
         and bounded_above(max_abs, l2)
@@ -2684,6 +2692,43 @@ def _native_summary_is_valid(
         and bounded_above(sampled_l2, l2)
     ):
         return False
+    remaining_count = hidden_size - sampled_channels
+    if remaining_count == 0:
+        if not (
+            summary_close(mean, sampled_sum / hidden_size)
+            and summary_close(rms, sampled_l2 / math.sqrt(hidden_size))
+            and summary_close(max_abs, sampled_max_abs)
+            and summary_close(l2, sampled_l2)
+        ):
+            return False
+    else:
+        remaining_sum = mean * hidden_size - sampled_sum
+        remaining_squared_l2 = l2 * l2 - sampled_squared_l2
+        if remaining_squared_l2 < -numeric_slack(l2 * l2, sampled_squared_l2):
+            return False
+        remaining_squared_l2 = max(0.0, remaining_squared_l2)
+        if not (
+            bounded_above(
+                remaining_sum * remaining_sum,
+                remaining_count * remaining_squared_l2,
+            )
+            and bounded_above(
+                remaining_squared_l2,
+                remaining_count * max_abs * max_abs,
+            )
+            and bounded_above(abs(remaining_sum), remaining_count * max_abs)
+        ):
+            return False
+        if remaining_count == 1 and not summary_close(
+            remaining_squared_l2,
+            remaining_sum * remaining_sum,
+        ):
+            return False
+        if not summary_close(sampled_max_abs, max_abs) and not bounded_above(
+            max_abs * max_abs,
+            remaining_squared_l2,
+        ):
+            return False
     if phase == "prefill":
         return (
             cache_offset < prompt_token_count
@@ -2701,8 +2746,14 @@ def _native_layer_rows_are_valid(
     *,
     policy: OscilloscopePolicy,
     prompt_token_count: int,
+    max_decode_calls: int,
 ) -> bool:
-    if not isinstance(value, list) or len(value) != len(policy.native_layer_indices):
+    if not (
+        isinstance(value, list)
+        and len(value) == len(policy.native_layer_indices)
+        and type(max_decode_calls) is int
+        and 1 <= max_decode_calls <= 4096
+    ):
         return False
     expected_row_keys = {
         "layer_index",
@@ -2728,7 +2779,7 @@ def _native_layer_rows_are_valid(
             and type(prefill_count) is int
             and type(decode_count) is int
             and prefill_count >= 1
-            and decode_count >= 1
+            and 1 <= decode_count <= max_decode_calls
             and forward_count == prefill_count + decode_count
             and isinstance(captures, Mapping)
             and set(captures) == {"prefill", "decode_first", "decode_last"}
@@ -2799,14 +2850,19 @@ def _native_observation_matches_binding(
         snapshot = _sealed_snapshot(observation, "NATIVE_STATE_OBSERVATION")
         policy = _policy_from_observation(snapshot.get("policy"))
         prompt_token_count = snapshot.get("prompt_token_count")
+        max_decode_calls = configuration.get("max_tokens")
         layers_valid = (
             policy is not None
             and type(prompt_token_count) is int
             and prompt_token_count >= 1
+            and type(max_decode_calls) is int
+            and not isinstance(max_decode_calls, bool)
+            and 1 <= max_decode_calls <= 4096
             and _native_layer_rows_are_valid(
                 snapshot.get("layers"),
                 policy=policy,
                 prompt_token_count=prompt_token_count,
+                max_decode_calls=max_decode_calls,
             )
         )
     except (EBRTError, TypeError, ValueError, OverflowError):
@@ -5744,6 +5800,7 @@ def self_test() -> JsonObject:
             state_visibility="native_latent",
             differentiable_through_model=False,
             generation_config=(
+                ("max_tokens", 2),
                 (
                     "oscilloscope_policy_fingerprint",
                     synthetic_policy_receipt["fingerprint_sha256"],
@@ -5844,6 +5901,65 @@ def self_test() -> JsonObject:
             expected_request_fingerprint_sha256=str(
                 invocation_before["fingerprint_sha256"]
             ),
+        )
+        excessive_decode_count_material = _without_fingerprint(synthetic_observation)
+        excessive_decode_row = excessive_decode_count_material["layers"][0]
+        excessive_decode_row["decode_call_count"] = 999
+        excessive_decode_row["forward_call_count"] = (
+            excessive_decode_row["prefill_call_count"] + 999
+        )
+        excessive_decode_row["captures"]["decode_last"]["cache_offset_before"] = (
+            synthetic_prompt_tokens + 998
+        )
+        excessive_decode_count_checks = _structural_model_checks(
+            task,
+            program,
+            replace(
+                synthetic_native_result,
+                native_state_observation=_seal(excessive_decode_count_material),
+            ),
+            expected_descriptor=synthetic_native_descriptor,
+            expected_request_fingerprint_sha256=str(
+                invocation_before["fingerprint_sha256"]
+            ),
+        )
+        full_sample_valid = {
+            "sequence_length": 1,
+            "cache_offset_before": synthetic_prompt_tokens,
+            "hidden_size": 4,
+            "mean": 1.0,
+            "rms": 1.0,
+            "max_abs": 1.0,
+            "l2": 2.0,
+            "sampled_channel_indices": [0, 1, 2, 3],
+            "sampled_channel_values": [1.0, 1.0, 1.0, 1.0],
+        }
+        full_sample_summaries_are_recomputed = _native_summary_is_valid(
+            full_sample_valid,
+            phase="decode_first",
+            prompt_token_count=synthetic_prompt_tokens,
+            sampled_channels=4,
+        ) and not _native_summary_is_valid(
+            {**full_sample_valid, "mean": 0.0},
+            phase="decode_first",
+            prompt_token_count=synthetic_prompt_tokens,
+            sampled_channels=4,
+        )
+        partial_sample_impossible_moments_are_rejected = not _native_summary_is_valid(
+            {
+                "sequence_length": 1,
+                "cache_offset_before": synthetic_prompt_tokens,
+                "hidden_size": 8,
+                "mean": -1.0,
+                "rms": 1.0,
+                "max_abs": 1.0,
+                "l2": math.sqrt(8.0),
+                "sampled_channel_indices": [0, 2, 5, 7],
+                "sampled_channel_values": [1.0, 1.0, 1.0, 1.0],
+            },
+            phase="decode_first",
+            prompt_token_count=synthetic_prompt_tokens,
+            sampled_channels=4,
         )
         chunked_prefill_is_not_decode = _native_summary_is_valid(
             synthetic_capture(
@@ -6366,6 +6482,11 @@ def self_test() -> JsonObject:
         "native_oscilloscope_binds_decode_count_to_last_offset": not inconsistent_decode_count_checks[
             "native_state_observation_matches_declared_visibility"
         ],
+        "native_oscilloscope_bounds_decode_count_by_token_ceiling": not excessive_decode_count_checks[
+            "native_state_observation_matches_declared_visibility"
+        ],
+        "native_oscilloscope_recomputes_fully_sampled_summaries": full_sample_summaries_are_recomputed,
+        "native_oscilloscope_checks_partial_sample_moment_feasibility": partial_sample_impossible_moments_are_rejected,
         "chunked_prefill_is_not_labeled_as_decode": chunked_prefill_is_not_decode,
         "native_latent_without_oscilloscope_remains_compatible": compatible_native_checks[
             "native_state_observation_matches_declared_visibility"
