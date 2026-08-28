@@ -2220,6 +2220,35 @@ class _BackwardExecutionProbe:
             backward_probe=self.tensor,
         )
 
+    def instrument_joint(
+        self,
+        envelopes: Sequence[TrajectoryEnvelope],
+        *,
+        weights: Sequence[float],
+    ) -> list[TrajectoryEnvelope]:
+        cloned = [_clone_envelope(envelope) for envelope in envelopes]
+        _require(len(cloned) == len(weights), "JOINT_WEIGHT_COUNT_MISMATCH")
+        joint_weights = tuple(_finite(weight, "JOINT_WEIGHT") for weight in weights)
+        _require(all(weight > 0.0 for weight in joint_weights), "JOINT_WEIGHT_INVALID")
+        slices = _joint_slices(cloned)
+        zero = torch.zeros(slices[-1].stop, dtype=DTYPE)
+        neutral_loss, _parts, _trajectories = _joint_loss(
+            cloned,
+            joint_weights,
+            slices,
+            zero,
+        )
+        self.expected_gradient = _finite(
+            float(neutral_loss.detach()),
+            "JOINT_BACKWARD_PROBE_EXPECTED_GRADIENT",
+        )
+        _require(
+            abs(self.expected_gradient) > FLOAT_TOLERANCE,
+            "BACKWARD_PROBE_EXPECTED_GRADIENT_ZERO",
+        )
+        cloned[0] = replace(cloned[0], backward_probe=self.tensor)
+        return cloned
+
     def close(self) -> None:
         self._handle.remove()
 
@@ -2408,10 +2437,21 @@ def _joint_loss(
     lane_losses: list[torch.Tensor] = []
     lane_parts: JsonObject = {}
     trajectories: list[torch.Tensor] = []
+    probes = [
+        envelope.backward_probe
+        for envelope in envelopes
+        if envelope.backward_probe is not None
+    ]
+    _require(len(probes) <= 1, "JOINT_BACKWARD_PROBE_COUNT_INVALID")
     for envelope, weight, lane_slice in zip(envelopes, weights, slices, strict=True):
         lane_controls = controls[lane_slice]
-        trajectory = _forward(envelope, lane_controls)
-        lane_loss, parts = _loss(envelope, lane_controls, trajectory)
+        uninstrumented = (
+            replace(envelope, backward_probe=None)
+            if envelope.backward_probe is not None
+            else envelope
+        )
+        trajectory = _forward(uninstrumented, lane_controls)
+        lane_loss, parts = _loss(uninstrumented, lane_controls, trajectory)
         trajectories.append(trajectory)
         lane_losses.append(weight * lane_loss)
         lane_parts[envelope.lane_id] = parts
@@ -2422,6 +2462,15 @@ def _joint_loss(
                 (trajectories[left][-1, :2] - trajectories[right][-1, :2]).square()
             )
     total = torch.stack(lane_losses).sum() + 0.10 * consensus
+    if probes:
+        probe = probes[0]
+        _require(
+            probe is not None
+            and probe.shape == torch.Size([])
+            and probe.dtype == DTYPE,
+            "BACKWARD_PROBE_CONTRACT_INVALID",
+        )
+        total = total + (probe - probe.detach()) * total.detach()
     return (
         total,
         {
@@ -3027,13 +3076,10 @@ class JointRevisionEngine:
             )
             envelopes.append(envelope)
         backward_probe = _BackwardExecutionProbe()
-        core_envelopes = [
-            backward_probe.instrument(
-                envelopes[0],
-                loss_weight=ordered_lanes[0].weight,
-            )
-        ]
-        core_envelopes.extend(_clone_envelope(envelope) for envelope in envelopes[1:])
+        core_envelopes = backward_probe.instrument_joint(
+            envelopes,
+            weights=[row.weight for row in ordered_lanes],
+        )
         try:
             core_execution_trusted, raw_joint_receipt = _execute_core(
                 self.core,
@@ -3906,6 +3952,55 @@ def self_test() -> JsonObject:
         and zero_sum_probe.executed_once()
         and zero_sum_probe_receipt["checks"]["objective_decreased"]
         and zero_sum_probe_receipt["checks"]["control_is_non_neutral"]
+    )
+    zero_local_neutral = torch.zeros_like(zero_sum_probe_envelope.neutral_effects)
+    zero_local_neutral[-1] = zero_sum_probe_envelope.target
+    joint_zero_local_a = replace(
+        zero_sum_probe_envelope,
+        lane_id="joint-zero-local-a",
+        neutral_effects=zero_local_neutral,
+    )
+    joint_nonzero_local_b = replace(
+        zero_sum_probe_envelope,
+        lane_id="joint-nonzero-local-b",
+        neutral_effects=torch.zeros_like(zero_sum_probe_envelope.neutral_effects),
+    )
+    joint_probe_envelopes = (joint_zero_local_a, joint_nonzero_local_b)
+    joint_probe_weights = (1.0, 1.0)
+    joint_probe_slices = _joint_slices(joint_probe_envelopes)
+    joint_probe_zero = torch.zeros(joint_probe_slices[-1].stop, dtype=DTYPE)
+    first_lane_neutral_loss, _first_lane_parts = _loss(
+        joint_zero_local_a,
+        joint_probe_zero[joint_probe_slices[0]],
+    )
+    joint_neutral_loss, _joint_parts, _joint_trajectories = _joint_loss(
+        joint_probe_envelopes,
+        joint_probe_weights,
+        joint_probe_slices,
+        joint_probe_zero,
+    )
+    joint_objective_probe = _BackwardExecutionProbe()
+    try:
+        joint_probe_raw = JointBackwardRevisionCore().optimize(
+            joint_objective_probe.instrument_joint(
+                joint_probe_envelopes,
+                weights=joint_probe_weights,
+            ),
+            weights=joint_probe_weights,
+        )
+    finally:
+        joint_objective_probe.close()
+    joint_probe_receipt = _validate_joint_core_receipt(
+        joint_probe_envelopes,
+        joint_probe_weights,
+        joint_probe_raw,
+    )
+    joint_probe_binds_full_objective = (
+        float(first_lane_neutral_loss.detach()) == 0.0
+        and float(joint_neutral_loss.detach()) > 0.0
+        and joint_objective_probe.executed_once()
+        and joint_probe_receipt["checks"]["joint_objective_decreased"]
+        and joint_probe_receipt["checks"]["global_control_is_non_neutral"]
     )
     invalid_descriptor_rejected = _raises_ebrt_reason(
         lambda: _validate_adapter_descriptor(
@@ -5084,6 +5179,7 @@ def self_test() -> JsonObject:
         "correction_must_be_an_admitted_control_site": typed_zero_correction_rejected
         and transformed_zero_correction_rejected,
         "execution_probe_accepts_zero_sum_residual_components": zero_sum_residual_probe_passes,
+        "joint_execution_probe_binds_full_consensus_objective": joint_probe_binds_full_objective,
         "adapter_descriptor_is_runtime_validated": invalid_descriptor_rejected,
         "cached_snapshot_identity_binds_validated_revision": cached_snapshot_a
         == f"{cache_repository_id}@{'a' * 40}"
