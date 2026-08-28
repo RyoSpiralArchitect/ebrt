@@ -131,14 +131,21 @@ derived. Merely naming an arbitrary directory
 must carry an explicit revision-bearing identity instead.
 
 Automatic Hugging Face cache discovery follows the repository's `refs/main`
-revision. When that reference is absent, exactly one complete snapshot is
-required; multiple complete snapshots are rejected as ambiguous rather than
-selecting one by directory-name order. An explicit `EBRT_LOCAL_MODEL` or
-`--model` remains available when the caller intends a different snapshot. A
-sharded snapshot is complete only when its index is valid and every referenced
-`.safetensors` shard exists and is non-empty. Automatic discovery additionally
-requires parseable `config.json` and `tokenizer_config.json`, a declared model
-type, and at least one non-empty local tokenizer asset.
+revision across `HF_HUB_CACHE`, `HF_HOME`, `XDG_CACHE_HOME`, and the default
+user cache in precedence order. When that reference is absent, exactly one
+complete snapshot is required; multiple complete snapshots are rejected as
+ambiguous rather than selecting one by directory-name order. An explicit
+`EBRT_LOCAL_MODEL` or `--model` remains available when the caller intends a
+different snapshot. A sharded snapshot is complete only when its index is valid
+and every referenced `.safetensors` shard exists and is non-empty. Automatic
+discovery additionally requires parseable `config.json` and
+`tokenizer_config.json`, a declared model type, and at least one non-empty local
+tokenizer asset.
+
+`SharedMLXRuntime.model_path` is read-only after construction. A cache-derived
+runtime retains that provenance and repeats the full snapshot/blob identity
+validation immediately before lazy loading. If the path or bytes no longer
+match the bound model identity, loading fails before generation.
 
 The engine recomputes the expected invocation before generation and requires
 the returned request fingerprint and adapter descriptor to match that binding.

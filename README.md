@@ -60,9 +60,11 @@ python3 ebrt_core.py joint-local-e2e
 
 If the Mistral snapshot is already in the standard Hugging Face cache, EBRT
 discovers it automatically and the environment variable can be omitted.
-Automatic discovery follows the repository's `refs/main` revision. If that
-reference is absent while multiple complete snapshots exist, EBRT rejects the
-ambiguous cache and requires `EBRT_LOCAL_MODEL` or `--model` explicitly.
+Automatic discovery searches `HF_HUB_CACHE`, `HF_HOME`, `XDG_CACHE_HOME`, and
+the default user cache in precedence order, then follows the repository's
+`refs/main` revision. If that reference is absent while multiple complete
+snapshots exist, EBRT rejects the ambiguous cache and requires
+`EBRT_LOCAL_MODEL` or `--model` explicitly.
 For an indexed snapshot, every shard named by every weight map must exist and
 be non-empty before the snapshot is considered complete. Automatic discovery
 also requires non-empty, parseable model/tokenizer configuration and a local
@@ -78,6 +80,9 @@ against its SHA-256 or Git-blob SHA-1 address before identity derivation. A
 directory that merely imitates
 `models--.../snapshots/...` is treated as an ordinary local directory and must
 supply `--model-id` explicitly.
+The runtime exposes its bound model path as read-only and repeats cache identity
+and blob verification immediately before lazy model loading, so construction
+and generation cannot silently refer to different snapshots.
 For a model stored outside that cache layout, pass a public receipt identity
 explicitly with `--model-id provider/model@revision`. EBRT fails closed without
 that revision-bearing identity rather than grouping replaceable weights by

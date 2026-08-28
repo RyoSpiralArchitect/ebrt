@@ -1638,7 +1638,7 @@ def _configured_hf_hub_roots() -> tuple[Path, ...]:
             continue
         if candidate not in resolved:
             resolved.append(candidate)
-    return tuple(sorted(resolved, key=lambda value: len(value.parts), reverse=True))
+    return tuple(resolved)
 
 
 def _blob_content_matches_address(path: Path) -> bool:
@@ -1707,7 +1707,7 @@ def _validated_cache_model_id(path: Path) -> str | None:
             continue
         parts = relative.parts
         if len(parts) != 3 or parts[1] != "snapshots":
-            return None
+            continue
         repository_dir = root / parts[0]
         encoded_repository = parts[0].removeprefix("models--")
         repository_parts = encoded_repository.split("--")
@@ -1726,12 +1726,16 @@ def _validated_cache_model_id(path: Path) -> str | None:
                 repository_dir,
             )
         ):
-            return None
+            continue
         return f"{'/'.join(repository_parts)}@{parts[2]}"
     return None
 
 
-def _local_model_id(path: Path, *, explicit: str | None = None) -> str:
+def _resolve_local_model_identity(
+    path: Path,
+    *,
+    explicit: str | None = None,
+) -> tuple[str, bool]:
     derived = _validated_cache_model_id(path)
     if explicit is not None:
         _require(
@@ -1748,10 +1752,14 @@ def _local_model_id(path: Path, *, explicit: str | None = None) -> str:
         )
         if derived is not None:
             _require(explicit == derived, "LOCAL_MODEL_ID_CACHE_MISMATCH")
-        return explicit
+        return explicit, derived is not None
     if derived is not None:
-        return derived
+        return derived, True
     raise EBRTError("LOCAL_MODEL_ID_REVISION_REQUIRED")
+
+
+def _local_model_id(path: Path, *, explicit: str | None = None) -> str:
+    return _resolve_local_model_identity(path, explicit=explicit)[0]
 
 
 class SharedMLXRuntime:
@@ -1772,8 +1780,11 @@ class SharedMLXRuntime:
             or any(path.glob("*.safetensors.index.json")),
             "LOCAL_MODEL_WEIGHTS_NOT_FOUND",
         )
-        self.model_path = path
-        self._model_id = _local_model_id(path, explicit=model_id)
+        self._model_path = path
+        self._model_id, self._cache_identity_derived = _resolve_local_model_identity(
+            path,
+            explicit=model_id,
+        )
         _require(
             isinstance(self._model_id, str)
             and bool(self._model_id.strip())
@@ -1802,15 +1813,27 @@ class SharedMLXRuntime:
     def model_id(self) -> str:
         return self._model_id
 
+    @property
+    def model_path(self) -> Path:
+        return self._model_path
+
+    def _validate_bound_model_identity(self) -> None:
+        if self._cache_identity_derived:
+            _require(
+                _validated_cache_model_id(self._model_path) == self._model_id,
+                "LOCAL_MODEL_CACHE_IDENTITY_CHANGED",
+            )
+
     def _load(self) -> None:
         if self._model is not None:
             return
+        self._validate_bound_model_identity()
         try:
             from mlx_lm import load
         except ImportError as exc:  # pragma: no cover - environment dependent
             raise EBRTError("MLX_LM_NOT_INSTALLED") from exc
         try:
-            self._model, self._tokenizer = load(str(self.model_path))
+            self._model, self._tokenizer = load(str(self._model_path))
         except Exception as exc:  # pragma: no cover - model/runtime dependent
             raise EBRTError("MLX_MODEL_LOAD_FAILED") from exc
 
@@ -3617,7 +3640,10 @@ def self_test() -> JsonObject:
     )
     with tempfile.TemporaryDirectory() as cache_directory:
         cache_root = Path(cache_directory) / "hub"
-        cache_repository = cache_root / "models--example--model"
+        cache_repository_id = "mlx-community/Mistral-7B-Instruct-v0.3-4bit"
+        cache_repository = (
+            cache_root / "models--mlx-community--Mistral-7B-Instruct-v0.3-4bit"
+        )
         cache_blobs = cache_repository / "blobs"
         cache_snapshots = cache_repository / "snapshots"
         cache_blobs.mkdir(parents=True)
@@ -3646,17 +3672,23 @@ def self_test() -> JsonObject:
         cached_path_b = build_cache_snapshot("b" * 40)
         malformed_cache_path = build_cache_snapshot("revision-a")
         copied_cache_path = build_cache_snapshot("c" * 40, blob_links=False)
-        with mock.patch.dict(os.environ, {"HF_HUB_CACHE": str(cache_root)}):
+        cache_refs = cache_repository / "refs"
+        cache_refs.mkdir()
+        (cache_refs / "main").write_text("b" * 40, encoding="utf-8")
+        with mock.patch.dict(
+            os.environ,
+            {"HF_HUB_CACHE": str(cache_root), "EBRT_LOCAL_MODEL": ""},
+        ):
             cached_snapshot_a = _local_model_id(cached_path_a)
             cached_snapshot_b = _local_model_id(cached_path_b)
             cached_explicit_identity = _local_model_id(
                 cached_path_a,
-                explicit=f"example/model@{'a' * 40}",
+                explicit=f"{cache_repository_id}@{'a' * 40}",
             )
             cached_explicit_relabel_rejected = _raises_ebrt_reason(
                 lambda: _local_model_id(
                     cached_path_a,
-                    explicit=f"example/model@{'b' * 40}",
+                    explicit=f"{cache_repository_id}@{'b' * 40}",
                 ),
                 "LOCAL_MODEL_ID_CACHE_MISMATCH",
             )
@@ -3672,12 +3704,27 @@ def self_test() -> JsonObject:
                 lambda: _local_model_id(copied_cache_path),
                 "LOCAL_MODEL_ID_REVISION_REQUIRED",
             )
+            bound_cache_runtime = SharedMLXRuntime(str(cached_path_a))
+            try:
+                bound_cache_runtime.model_path = cached_path_b
+                runtime_model_path_is_read_only = False
+            except AttributeError:
+                runtime_model_path_is_read_only = True
             (cached_path_a / "model.safetensors").resolve().write_bytes(
                 b"tampered-fixture-weights"
             )
             tampered_blob_requires_explicit_identity = _raises_ebrt_reason(
                 lambda: _local_model_id(cached_path_a),
                 "LOCAL_MODEL_ID_REVISION_REQUIRED",
+            )
+            lazy_load_identity_revalidation_rejects_tamper = _raises_ebrt_reason(
+                bound_cache_runtime._validate_bound_model_identity,
+                "LOCAL_MODEL_CACHE_IDENTITY_CHANGED",
+            )
+            discovered_cache = _default_mlx_model_path()
+            configured_cache_is_discovered = (
+                discovered_cache is not None
+                and Path(discovered_cache).resolve() == cached_path_b.resolve()
             )
         imitated_cache_requires_explicit_identity = _raises_ebrt_reason(
             lambda: _local_model_id(cached_path_b),
@@ -4520,8 +4567,8 @@ def self_test() -> JsonObject:
         and transformed_zero_correction_rejected,
         "adapter_descriptor_is_runtime_validated": invalid_descriptor_rejected,
         "cached_snapshot_identity_binds_validated_revision": cached_snapshot_a
-        == f"example/model@{'a' * 40}"
-        and cached_snapshot_b == f"example/model@{'b' * 40}"
+        == f"{cache_repository_id}@{'a' * 40}"
+        and cached_snapshot_b == f"{cache_repository_id}@{'b' * 40}"
         and cached_snapshot_a != cached_snapshot_b
         and cached_explicit_identity == cached_snapshot_a
         and cached_explicit_relabel_rejected
@@ -4529,10 +4576,13 @@ def self_test() -> JsonObject:
         and malformed_cache_explicit_identity == "example/model@weights-sha256-deadbeef"
         and copied_cache_requires_explicit_identity
         and tampered_blob_requires_explicit_identity
-        and imitated_cache_requires_explicit_identity,
+        and imitated_cache_requires_explicit_identity
+        and runtime_model_path_is_read_only
+        and lazy_load_identity_revalidation_rejects_tamper,
         "cached_model_selection_uses_active_ref_and_rejects_ambiguity": active_cache_selection
         == cached_path_a
-        and ambiguous_cache_selection_rejected,
+        and ambiguous_cache_selection_rejected
+        and configured_cache_is_discovered,
         "cached_model_io_errors_are_stable": cache_enumeration_error_is_stable
         and active_ref_unicode_error_is_stable,
         "cached_snapshot_requires_every_indexed_weight_shard": indexed_weight_manifest_complete
@@ -4883,22 +4933,25 @@ def _default_mlx_model_path() -> str | None:
     explicit = os.environ.get("EBRT_LOCAL_MODEL")
     if explicit:
         return explicit
-    root = Path.home() / ".cache" / "huggingface" / "hub"
-    candidates = (
-        root / "models--mlx-community--Mistral-7B-Instruct-v0.3-4bit",
-        root / "models--mlx-community--Llama-3.2-3B-bf16",
+    repository_names = (
+        "models--mlx-community--Mistral-7B-Instruct-v0.3-4bit",
+        "models--mlx-community--Llama-3.2-3B-bf16",
     )
-    for candidate in candidates:
-        snapshots = candidate / "snapshots"
-        if snapshots.is_dir():
-            complete = _complete_cached_snapshots(snapshots)
-            active_revision = _read_active_cache_revision(candidate / "refs" / "main")
-            selected = _select_cached_snapshot(
-                complete,
-                active_revision=active_revision,
-            )
-            if selected is not None:
-                return str(selected)
+    for root in _configured_hf_hub_roots():
+        for repository_name in repository_names:
+            candidate = root / repository_name
+            snapshots = candidate / "snapshots"
+            if snapshots.is_dir():
+                complete = _complete_cached_snapshots(snapshots)
+                active_revision = _read_active_cache_revision(
+                    candidate / "refs" / "main"
+                )
+                selected = _select_cached_snapshot(
+                    complete,
+                    active_revision=active_revision,
+                )
+                if selected is not None:
+                    return str(selected)
     return None
 
 
