@@ -19,6 +19,7 @@ import math
 import os
 import re
 import socket
+import tempfile
 import time
 from collections import Counter
 from contextlib import contextmanager
@@ -1615,17 +1616,94 @@ class CallableModelAdapter:
         )
 
 
+def _configured_hf_hub_roots() -> tuple[Path, ...]:
+    roots: list[Path] = []
+    explicit_hub = os.environ.get("HF_HUB_CACHE")
+    if explicit_hub:
+        roots.append(Path(explicit_hub))
+    hf_home = os.environ.get("HF_HOME")
+    if hf_home:
+        roots.append(Path(hf_home) / "hub")
+    cache_home = os.environ.get("XDG_CACHE_HOME")
+    roots.append(
+        (Path(cache_home) if cache_home else Path.home() / ".cache")
+        / "huggingface"
+        / "hub"
+    )
+    resolved: list[Path] = []
+    for root in roots:
+        try:
+            candidate = root.expanduser().resolve()
+        except (OSError, RuntimeError):
+            continue
+        if candidate not in resolved:
+            resolved.append(candidate)
+    return tuple(sorted(resolved, key=lambda value: len(value.parts), reverse=True))
+
+
+def _snapshot_uses_hf_blob_link_layout(path: Path, repository: Path) -> bool:
+    blobs = repository / "blobs"
+    try:
+        blobs_root = blobs.resolve(strict=True)
+        if not blobs_root.is_dir():
+            return False
+        entries = tuple(path.iterdir())
+        if not entries:
+            return False
+        for entry in entries:
+            if not entry.is_symlink():
+                return False
+            target = entry.resolve(strict=True)
+            if (
+                not target.is_file()
+                or target.stat().st_size <= 0
+                or target.parent != blobs_root
+                or re.fullmatch(r"(?:[0-9a-f]{40}|[0-9a-f]{64})", target.name) is None
+            ):
+                return False
+    except (OSError, RuntimeError):
+        return False
+    return True
+
+
+def _validated_cache_model_id(path: Path) -> str | None:
+    try:
+        resolved_path = path.expanduser().resolve()
+    except (OSError, RuntimeError):
+        return None
+    for root in _configured_hf_hub_roots():
+        try:
+            relative = resolved_path.relative_to(root)
+        except ValueError:
+            continue
+        parts = relative.parts
+        if len(parts) != 3 or parts[1] != "snapshots":
+            return None
+        repository_dir = root / parts[0]
+        encoded_repository = parts[0].removeprefix("models--")
+        repository_parts = encoded_repository.split("--")
+        if (
+            not parts[0].startswith("models--")
+            or len(repository_parts) not in {1, 2}
+            or any(
+                re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]*", value) is None
+                for value in repository_parts
+            )
+            or re.fullmatch(r"[0-9a-f]{40}", parts[2]) is None
+            or not _snapshot_has_complete_weights(resolved_path)
+            or not _snapshot_has_complete_loader_metadata(resolved_path)
+            or not _snapshot_uses_hf_blob_link_layout(
+                resolved_path,
+                repository_dir,
+            )
+        ):
+            return None
+        return f"{'/'.join(repository_parts)}@{parts[2]}"
+    return None
+
+
 def _local_model_id(path: Path, *, explicit: str | None = None) -> str:
-    derived: str | None = None
-    for candidate in (path, *path.parents):
-        if candidate.name.startswith("models--"):
-            repository = candidate.name.removeprefix("models--").replace("--", "/")
-            if repository:
-                relative_parts = path.relative_to(candidate).parts
-                if len(relative_parts) >= 2 and relative_parts[0] == "snapshots":
-                    derived = f"{repository}@{relative_parts[1]}"
-                    break
-                raise EBRTError("LOCAL_MODEL_ID_REVISION_REQUIRED")
+    derived = _validated_cache_model_id(path)
     if explicit is not None:
         _require(
             type(explicit) is str
@@ -3466,23 +3544,67 @@ def self_test() -> JsonObject:
         ),
         "MODEL_ADAPTER_ADAPTER_ID_INVALID",
     )
-    cached_snapshot_a = _local_model_id(
-        Path("/tmp/hub/models--example--model/snapshots/revision-a")
-    )
-    cached_snapshot_b = _local_model_id(
-        Path("/tmp/hub/models--example--model/snapshots/revision-b")
-    )
-    cached_explicit_identity = _local_model_id(
-        Path("/tmp/hub/models--example--model/snapshots/revision-a"),
-        explicit="example/model@revision-a",
-    )
-    cached_explicit_relabel_rejected = _raises_ebrt_reason(
-        lambda: _local_model_id(
-            Path("/tmp/hub/models--example--model/snapshots/revision-a"),
-            explicit="example/model@revision-b",
-        ),
-        "LOCAL_MODEL_ID_CACHE_MISMATCH",
-    )
+    with tempfile.TemporaryDirectory() as cache_directory:
+        cache_root = Path(cache_directory) / "hub"
+        cache_repository = cache_root / "models--example--model"
+        cache_blobs = cache_repository / "blobs"
+        cache_snapshots = cache_repository / "snapshots"
+        cache_blobs.mkdir(parents=True)
+        cache_snapshots.mkdir()
+
+        def build_cache_snapshot(revision: str, *, blob_links: bool = True) -> Path:
+            snapshot = cache_snapshots / revision
+            snapshot.mkdir()
+            files = {
+                "config.json": b'{"model_type":"fixture"}',
+                "tokenizer_config.json": b"{}",
+                "tokenizer.json": b"{}",
+                "model.safetensors": b"fixture-weights",
+            }
+            for filename, payload in files.items():
+                if blob_links:
+                    digest = hashlib.sha256(payload).hexdigest()
+                    blob = cache_blobs / digest
+                    blob.write_bytes(payload)
+                    (snapshot / filename).symlink_to(Path("../../blobs") / digest)
+                else:
+                    (snapshot / filename).write_bytes(payload)
+            return snapshot
+
+        cached_path_a = build_cache_snapshot("a" * 40)
+        cached_path_b = build_cache_snapshot("b" * 40)
+        malformed_cache_path = build_cache_snapshot("revision-a")
+        copied_cache_path = build_cache_snapshot("c" * 40, blob_links=False)
+        with mock.patch.dict(os.environ, {"HF_HUB_CACHE": str(cache_root)}):
+            cached_snapshot_a = _local_model_id(cached_path_a)
+            cached_snapshot_b = _local_model_id(cached_path_b)
+            cached_explicit_identity = _local_model_id(
+                cached_path_a,
+                explicit=f"example/model@{'a' * 40}",
+            )
+            cached_explicit_relabel_rejected = _raises_ebrt_reason(
+                lambda: _local_model_id(
+                    cached_path_a,
+                    explicit=f"example/model@{'b' * 40}",
+                ),
+                "LOCAL_MODEL_ID_CACHE_MISMATCH",
+            )
+            malformed_cache_requires_explicit_identity = _raises_ebrt_reason(
+                lambda: _local_model_id(malformed_cache_path),
+                "LOCAL_MODEL_ID_REVISION_REQUIRED",
+            )
+            malformed_cache_explicit_identity = _local_model_id(
+                malformed_cache_path,
+                explicit="example/model@weights-sha256-deadbeef",
+            )
+            copied_cache_requires_explicit_identity = _raises_ebrt_reason(
+                lambda: _local_model_id(copied_cache_path),
+                "LOCAL_MODEL_ID_REVISION_REQUIRED",
+            )
+        imitated_cache_requires_explicit_identity = _raises_ebrt_reason(
+            lambda: _local_model_id(cached_path_a),
+            "LOCAL_MODEL_ID_REVISION_REQUIRED",
+        )
     cached_path_a = Path("/tmp/hub/models--example--model/snapshots/" + "a" * 40)
     cached_path_b = Path("/tmp/hub/models--example--model/snapshots/" + "b" * 40)
     active_cache_selection = _select_cached_snapshot(
@@ -4250,12 +4372,16 @@ def self_test() -> JsonObject:
         "correction_must_be_an_admitted_control_site": typed_zero_correction_rejected
         and transformed_zero_correction_rejected,
         "adapter_descriptor_is_runtime_validated": invalid_descriptor_rejected,
-        "cached_snapshot_identity_binds_revision": cached_snapshot_a
-        == "example/model@revision-a"
-        and cached_snapshot_b == "example/model@revision-b"
+        "cached_snapshot_identity_binds_validated_revision": cached_snapshot_a
+        == f"example/model@{'a' * 40}"
+        and cached_snapshot_b == f"example/model@{'b' * 40}"
         and cached_snapshot_a != cached_snapshot_b
         and cached_explicit_identity == cached_snapshot_a
-        and cached_explicit_relabel_rejected,
+        and cached_explicit_relabel_rejected
+        and malformed_cache_requires_explicit_identity
+        and malformed_cache_explicit_identity == "example/model@weights-sha256-deadbeef"
+        and copied_cache_requires_explicit_identity
+        and imitated_cache_requires_explicit_identity,
         "cached_model_selection_uses_active_ref_and_rejects_ambiguity": active_cache_selection
         == cached_path_a
         and ambiguous_cache_selection_rejected,

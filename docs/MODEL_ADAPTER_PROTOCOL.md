@@ -122,6 +122,12 @@ adapter name but different decoding settings cannot share a configuration
 receipt. An explicit identity cannot override a derivable cache identity; if
 both are supplied, exact equality is required.
 
+Derivation requires the exact snapshot root to sit beneath a configured
+Hugging Face hub, a 40-hex snapshot revision, complete loader material, and the
+standard symlink-to-blob layout. Merely naming an arbitrary directory
+`models--.../snapshots/...` does not create a cache identity; that directory
+must carry an explicit revision-bearing identity instead.
+
 Automatic Hugging Face cache discovery follows the repository's `refs/main`
 revision. When that reference is absent, exactly one complete snapshot is
 required; multiple complete snapshots are rejected as ambiguous rather than

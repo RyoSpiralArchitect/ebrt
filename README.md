@@ -71,6 +71,11 @@ Cache-derived model identities include the snapshot revision so different
 weight snapshots cannot collapse into one receipt identity. An explicit
 `--model-id` cannot relabel a cache-derived snapshot: when both are present,
 they must match exactly.
+Cache identity is derived only for an exact snapshot root beneath a configured
+Hugging Face hub, with a 40-hex revision, complete loader material, and the
+standard symlink-to-blob layout. A directory that merely imitates
+`models--.../snapshots/...` is treated as an ordinary local directory and must
+supply `--model-id` explicitly.
 For a model stored outside that cache layout, pass a public receipt identity
 explicitly with `--model-id provider/model@revision`. EBRT fails closed without
 that revision-bearing identity rather than grouping replaceable weights by
