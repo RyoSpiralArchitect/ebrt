@@ -489,6 +489,7 @@ class TrajectoryEnvelope:
     decay: float
     control_budget: float
     learning_rate: float
+    backward_probe: torch.Tensor | None = None
 
 
 class StateAdapter(Protocol):
@@ -521,6 +522,7 @@ def _prepare_state_envelope(
         isinstance(envelope, TrajectoryEnvelope),
         f"{label}_ENVELOPE_TYPE_INVALID",
     )
+    _require(envelope.backward_probe is None, f"{label}_BACKWARD_PROBE_RESERVED")
     _require(envelope.lane_id == lane_id, f"{label}_LANE_MISMATCH")
     adapter_id = getattr(state_adapter, "adapter_id", None)
     _safe_id(adapter_id, f"{label}_ID")
@@ -753,6 +755,13 @@ def _loss(
     else:
         smoothness = torch.zeros((), dtype=DTYPE)
     total = terminal + 0.15 * path + 0.02 * control + 0.01 * smoothness
+    if envelope.backward_probe is not None:
+        probe = envelope.backward_probe
+        _require(
+            probe.shape == torch.Size([]) and probe.dtype == DTYPE,
+            "BACKWARD_PROBE_CONTRACT_INVALID",
+        )
+        total = total + (probe - probe.detach()) * total.detach()
     return total, {
         "terminal": _finite(float(terminal.detach()), "TERMINAL_LOSS"),
         "path": _finite(float(path.detach()), "PATH_LOSS"),
@@ -2125,12 +2134,9 @@ def _expected_loss_probe_gradient(
     loss_weight: float,
 ) -> float:
     zero = torch.zeros(len(envelope.evidence_ids), dtype=DTYPE)
-    trajectory = _forward(envelope, zero).detach()
-    target = envelope.target.detach()
-    terminal = torch.sum(target - trajectory[-1])
-    path = torch.mean(target - trajectory[envelope.event_index :])
+    neutral_loss, _parts = _loss(envelope, zero)
     return _finite(
-        loss_weight * float(terminal + (0.15 * path)),
+        loss_weight * float(neutral_loss.detach()),
         "BACKWARD_PROBE_EXPECTED_GRADIENT",
     )
 
@@ -2167,7 +2173,7 @@ class _BackwardExecutionProbe:
         )
         return replace(
             cloned,
-            target=cloned.target + self.tensor - self.tensor.detach(),
+            backward_probe=self.tensor,
         )
 
     def close(self) -> None:
@@ -3687,6 +3693,82 @@ def self_test() -> JsonObject:
         ),
         "CORRECTION_CONTROL_INELIGIBLE",
     )
+    zero_sum_probe_task = RevisionTask(
+        task_id="zero-sum-probe",
+        question="Should the revised answer be A or B?",
+        answer_choices=("A", "B"),
+        evidence=(
+            Evidence(
+                evidence_id="P1",
+                ordinal=1,
+                text="Initial public state.",
+                role="context",
+                neutral_effect=(0.0, 0.0, 0.0),
+                control_basis=(1.0, 0.0, 0.0),
+            ),
+            Evidence(
+                evidence_id="P2",
+                ordinal=2,
+                text="Late correction.",
+                role="correction",
+                neutral_effect=(0.0, 0.0, 0.0),
+                control_basis=(1.0, 0.0, 0.0),
+            ),
+        ),
+        before_horizon_evidence_ids=("P1",),
+        prior_state=PriorPublicState(
+            answer="A",
+            active_support_ids=("P1",),
+            stable_values=(),
+        ),
+        event=RevisionEvent(
+            event_id="zero-sum-event",
+            correction_evidence_id="P2",
+            invalidated_evidence_ids=(),
+            stable_evidence_ids=(),
+        ),
+        terminal_target=(1.0, -1.0, 0.0),
+        reinspection_count=2,
+    )
+    zero_sum_probe_envelope = _prepare_state_envelope(
+        zero_sum_probe_task,
+        TypedPublicStateAdapter(),
+        TypedPublicStateAdapter().build(
+            zero_sum_probe_task,
+            lane_id="zero-sum-probe",
+        ),
+        lane_id="zero-sum-probe",
+        label="ZERO_SUM_PROBE_STATE_ADAPTER",
+    )
+    zero_sum_trajectory = _forward(
+        zero_sum_probe_envelope,
+        torch.zeros(len(zero_sum_probe_task.evidence), dtype=DTYPE),
+    ).detach()
+    legacy_all_ones_projection = float(
+        torch.sum(zero_sum_probe_envelope.target - zero_sum_trajectory[-1])
+        + 0.15
+        * torch.mean(
+            zero_sum_probe_envelope.target
+            - zero_sum_trajectory[zero_sum_probe_envelope.event_index :]
+        )
+    )
+    zero_sum_probe = _BackwardExecutionProbe()
+    try:
+        zero_sum_probe_raw = BackwardRevisionCore().optimize(
+            zero_sum_probe.instrument(zero_sum_probe_envelope)
+        )
+    finally:
+        zero_sum_probe.close()
+    zero_sum_probe_receipt = _validate_single_core_receipt(
+        zero_sum_probe_envelope,
+        zero_sum_probe_raw,
+    )
+    zero_sum_residual_probe_passes = (
+        legacy_all_ones_projection == 0.0
+        and zero_sum_probe.executed_once()
+        and zero_sum_probe_receipt["checks"]["objective_decreased"]
+        and zero_sum_probe_receipt["checks"]["control_is_non_neutral"]
+    )
     invalid_descriptor_rejected = _raises_ebrt_reason(
         lambda: _validate_adapter_descriptor(
             AdapterDescriptor(
@@ -3800,6 +3882,37 @@ def self_test() -> JsonObject:
             configured_cache_is_discovered = (
                 discovered_cache is not None
                 and Path(discovered_cache).resolve() == cached_path_b.resolve()
+            )
+        inadmissible_root = Path(cache_directory) / "inadmissible-hub"
+        inadmissible_repository = (
+            inadmissible_root / "models--mlx-community--Mistral-7B-Instruct-v0.3-4bit"
+        )
+        inadmissible_snapshot = inadmissible_repository / "snapshots" / ("d" * 40)
+        inadmissible_snapshot.mkdir(parents=True)
+        for filename, payload in (
+            ("config.json", b'{"model_type":"fixture"}'),
+            ("tokenizer_config.json", b"{}"),
+            ("tokenizer.json", b"{}"),
+            ("model.safetensors", b"copied-weights"),
+        ):
+            (inadmissible_snapshot / filename).write_bytes(payload)
+        inadmissible_refs = inadmissible_repository / "refs"
+        inadmissible_refs.mkdir()
+        (inadmissible_refs / "main").write_text("d" * 40, encoding="utf-8")
+        with mock.patch.dict(
+            os.environ,
+            {
+                "HF_HUB_CACHE": str(inadmissible_root),
+                "HF_HOME": str(Path(cache_directory)),
+                "XDG_CACHE_HOME": "",
+                "EBRT_LOCAL_MODEL": "",
+            },
+        ):
+            fallback_after_inadmissible = _default_mlx_model_path()
+            automatic_discovery_skips_inadmissible_root = (
+                fallback_after_inadmissible is not None
+                and Path(fallback_after_inadmissible).resolve()
+                == cached_path_b.resolve()
             )
         imitated_cache_requires_explicit_identity = _raises_ebrt_reason(
             lambda: _local_model_id(cached_path_b),
@@ -4119,7 +4232,11 @@ def self_test() -> JsonObject:
                 _core: BackwardRevisionCore,
                 envelope: TrajectoryEnvelope,
             ) -> tuple[bool, JsonObject]:
-                envelope.target.sum().backward()
+                _require(
+                    envelope.backward_probe is not None,
+                    "TEST_BACKWARD_PROBE_MISSING",
+                )
+                torch.ones((), dtype=DTYPE, requires_grad=True).backward()
                 return True, _clone(single["trajectory"])
 
             try:
@@ -4737,7 +4854,11 @@ def self_test() -> JsonObject:
                 weights: Sequence[float],
             ) -> tuple[bool, JsonObject]:
                 _require(bool(weights), "TEST_REPLAY_WEIGHTS_MISSING")
-                replay_envelopes[0].target.sum().backward()
+                _require(
+                    replay_envelopes[0].backward_probe is not None,
+                    "TEST_BACKWARD_PROBE_MISSING",
+                )
+                torch.ones((), dtype=DTYPE, requires_grad=True).backward()
                 return True, _clone(joint["joint_trajectory"])
 
             try:
@@ -4803,6 +4924,7 @@ def self_test() -> JsonObject:
         "malformed_public_task_fields_fail_closed": malformed_public_task_fields_rejected,
         "correction_must_be_an_admitted_control_site": typed_zero_correction_rejected
         and transformed_zero_correction_rejected,
+        "execution_probe_accepts_zero_sum_residual_components": zero_sum_residual_probe_passes,
         "adapter_descriptor_is_runtime_validated": invalid_descriptor_rejected,
         "cached_snapshot_identity_binds_validated_revision": cached_snapshot_a
         == f"{cache_repository_id}@{'a' * 40}"
@@ -4821,6 +4943,7 @@ def self_test() -> JsonObject:
         == cached_path_a
         and ambiguous_cache_selection_rejected
         and configured_cache_is_discovered
+        and automatic_discovery_skips_inadmissible_root
         and xdg_and_default_cache_roots_are_retained,
         "cached_model_io_errors_are_stable": cache_enumeration_error_is_stable
         and active_ref_unicode_error_is_stable,
@@ -5192,10 +5315,23 @@ def _default_mlx_model_path() -> str | None:
             candidate = root / repository_name
             snapshots = candidate / "snapshots"
             if snapshots.is_dir():
-                complete = _complete_cached_snapshots(snapshots)
+                complete = tuple(
+                    snapshot
+                    for snapshot in _complete_cached_snapshots(snapshots)
+                    if _validated_cache_model_id(snapshot) is not None
+                )
                 active_revision = _read_active_cache_revision(
                     candidate / "refs" / "main"
                 )
+                if active_revision is not None:
+                    _require(
+                        bool(re.fullmatch(r"[0-9A-Fa-f]{7,64}", active_revision)),
+                        "LOCAL_MODEL_ACTIVE_REF_INVALID",
+                    )
+                    if not any(
+                        snapshot.name == active_revision for snapshot in complete
+                    ):
+                        continue
                 selected = _select_cached_snapshot(
                     complete,
                     active_revision=active_revision,
