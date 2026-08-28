@@ -1929,6 +1929,25 @@ def _structural_model_checks(
     )
     raw_text_typed = type(result.raw_text) is str
     descriptor_typed = type(result.descriptor) is AdapterDescriptor
+    descriptor_valid = False
+    expected_descriptor_valid = False
+    if descriptor_typed:
+        try:
+            _validate_adapter_descriptor(result.descriptor, "RETURNED_MODEL_ADAPTER")
+            descriptor_valid = True
+        except EBRTError:
+            pass
+    try:
+        _validate_adapter_descriptor(expected_descriptor, "EXPECTED_MODEL_ADAPTER")
+        expected_descriptor_valid = True
+    except EBRTError:
+        pass
+    descriptor_matches = (
+        descriptor_valid
+        and expected_descriptor_valid
+        and _canonical_bytes(result.descriptor.to_dict())
+        == _canonical_bytes(expected_descriptor.to_dict())
+    )
     request_fingerprint_typed = type(result.request_fingerprint_sha256) is str
     latency_typed = type(result.latency_ms) in {int, float}
     logical_calls_typed = type(result.logical_calls) is int
@@ -1936,7 +1955,7 @@ def _structural_model_checks(
         answer_typed
         and support_ids_typed
         and raw_text_typed
-        and descriptor_typed
+        and descriptor_valid
         and request_fingerprint_typed
         and latency_typed
         and logical_calls_typed
@@ -1972,13 +1991,12 @@ def _structural_model_checks(
         "one_model_invocation": logical_calls_typed and result.logical_calls == 1,
         "request_fingerprint_matches_invocation": request_fingerprint_typed
         and result.request_fingerprint_sha256 == expected_request_fingerprint_sha256,
-        "adapter_descriptor_matches_binding": descriptor_typed
-        and result.descriptor == expected_descriptor,
+        "adapter_descriptor_matches_binding": descriptor_matches,
         "latency_is_finite_and_nonnegative": latency_valid,
         "gradient_did_not_cross_model_boundary": (
-            descriptor_typed
-            and not expected_descriptor.differentiable_through_model
-            and not result.descriptor.differentiable_through_model
+            descriptor_matches
+            and expected_descriptor.differentiable_through_model is False
+            and result.descriptor.differentiable_through_model is False
         ),
     }
 
@@ -4243,6 +4261,40 @@ def self_test() -> JsonObject:
                 invocation_before["fingerprint_sha256"]
             ),
         )
+        numeric_gradient_descriptor_checks = _structural_model_checks(
+            task,
+            program,
+            replace(
+                valid_result,
+                descriptor=replace(
+                    valid_result.descriptor,
+                    differentiable_through_model=0,
+                ),
+            ),
+            expected_descriptor=adapter.descriptor,
+            expected_request_fingerprint_sha256=str(
+                invocation_before["fingerprint_sha256"]
+            ),
+        )
+        boolean_configuration_descriptor = replace(
+            adapter.descriptor,
+            generation_config=(("feature_enabled", True),),
+        )
+        integer_configuration_descriptor_checks = _structural_model_checks(
+            task,
+            program,
+            replace(
+                valid_result,
+                descriptor=replace(
+                    boolean_configuration_descriptor,
+                    generation_config=(("feature_enabled", 1),),
+                ),
+            ),
+            expected_descriptor=boolean_configuration_descriptor,
+            expected_request_fingerprint_sha256=str(
+                invocation_before["fingerprint_sha256"]
+            ),
+        )
         raw_text_tamper_checks = _structural_model_checks(
             task,
             program,
@@ -4694,6 +4746,14 @@ def self_test() -> JsonObject:
             "request_fingerprint_matches_invocation"
         ],
         "adapter_descriptor_tamper_is_detected": not descriptor_tamper_checks[
+            "adapter_descriptor_matches_binding"
+        ]
+        and not numeric_gradient_descriptor_checks["adapter_descriptor_matches_binding"]
+        and not numeric_gradient_descriptor_checks["model_result_fields_typed"]
+        and not numeric_gradient_descriptor_checks[
+            "gradient_did_not_cross_model_boundary"
+        ]
+        and not integer_configuration_descriptor_checks[
             "adapter_descriptor_matches_binding"
         ],
         "raw_text_field_tamper_is_detected": raw_text_tamper_checks[

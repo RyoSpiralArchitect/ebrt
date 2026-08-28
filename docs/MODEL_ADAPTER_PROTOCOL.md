@@ -111,6 +111,9 @@ logical-call count. The runtime requires the exact public container and scalar
 types: in particular, `logical_calls` is a non-boolean integer and latency is a
 finite, non-boolean JSON number. Malformed adapter output fails structurally
 without leaking a native type exception.
+The returned descriptor is independently revalidated and matched to the
+pre-call binding by canonical JSON bytes, not Python dataclass equality. Boolean
+and numeric values therefore remain type-distinct.
 
 The reference MLX runtime derives `model_id` from a standard Hugging Face cache
 snapshot as `repository@revision`. A model outside that layout must supply an

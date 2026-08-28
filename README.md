@@ -89,6 +89,9 @@ that revision-bearing identity rather than grouping replaceable weights by
 their filesystem path. The MLX adapter also binds its seed, token ceiling,
 sampler temperature, and chat-template mode into a separately fingerprinted
 generation configuration in every model receipt.
+Returned adapter descriptors are revalidated and compared to the pre-call
+binding as canonical JSON bytes, so Python's `False == 0` or `True == 1`
+coercions cannot preserve structural `PASS`.
 
 The committed interface was verified locally with
 `mlx-community/Mistral-7B-Instruct-v0.3-4bit`. The v0.7.1 integration fixture
