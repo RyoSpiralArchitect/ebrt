@@ -919,9 +919,6 @@ class BackwardRevisionCore:
         )
 
 
-_ORIGINAL_SINGLE_CORE_OPTIMIZE = BackwardRevisionCore.optimize
-
-
 def _core_lane_material(
     envelope: TrajectoryEnvelope,
     receipt: Mapping[str, Any],
@@ -1892,18 +1889,62 @@ def _grade_contract(
     }
 
 
-def _is_trusted_builtin_core(
-    core: Any,
+def _make_core_executor(
     expected_type: type[Any],
-    original_optimize: Callable[..., JsonObject],
-) -> bool:
-    """Only the exact built-in implementation can attest this run's backward."""
+    pinned_optimize: Callable[..., JsonObject],
+) -> Callable[..., tuple[bool, JsonObject]]:
+    """Capture one core implementation outside mutable module lookup."""
 
-    return (
-        type(core) is expected_type
-        and "optimize" not in vars(core)
-        and expected_type.__dict__.get("optimize") is original_optimize
+    def trusted(core: Any) -> bool:
+        return (
+            type(core) is expected_type
+            and "optimize" not in vars(core)
+            and expected_type.__dict__.get("optimize") is pinned_optimize
+        )
+
+    def execute(core: Any, *args: Any, **kwargs: Any) -> tuple[bool, JsonObject]:
+        trusted_before = trusted(core)
+        receipt = (
+            pinned_optimize(core, *args, **kwargs)
+            if trusted_before
+            else core.optimize(*args, **kwargs)
+        )
+        return trusted_before and trusted(core), receipt
+
+    return execute
+
+
+def _bind_single_core_execution(
+    method: Callable[..., JsonObject],
+) -> Callable[..., JsonObject]:
+    execute_core = _make_core_executor(
+        BackwardRevisionCore,
+        BackwardRevisionCore.optimize,
     )
+
+    def bound(
+        self: Any,
+        task: RevisionTask,
+        model_adapter: ModelAdapter,
+        *,
+        lane_id: str = "primary",
+        prompt_policy: Literal["chronological", "credit_first"] = "credit_first",
+        post_run_contract: PostRunContract | None = None,
+    ) -> JsonObject:
+        return method(
+            self,
+            task,
+            model_adapter,
+            lane_id=lane_id,
+            prompt_policy=prompt_policy,
+            post_run_contract=post_run_contract,
+            _execute_core=execute_core,
+        )
+
+    bound.__name__ = method.__name__
+    bound.__qualname__ = method.__qualname__
+    bound.__doc__ = method.__doc__
+    return bound
 
 
 class RevisionEngine:
@@ -1920,6 +1961,7 @@ class RevisionEngine:
         self.state_adapter = state_adapter or TypedPublicStateAdapter()
         self.actuator_adapter = actuator_adapter or PublicRevisionActuator()
 
+    @_bind_single_core_execution
     def run(
         self,
         task: RevisionTask,
@@ -1928,6 +1970,7 @@ class RevisionEngine:
         lane_id: str = "primary",
         prompt_policy: Literal["chronological", "credit_first"] = "credit_first",
         post_run_contract: PostRunContract | None = None,
+        _execute_core: Callable[..., tuple[bool, JsonObject]],
     ) -> JsonObject:
         validate_task(task)
         if post_run_contract is not None:
@@ -1939,32 +1982,15 @@ class RevisionEngine:
             lane_id=lane_id,
             label="STATE_ADAPTER",
         )
-        core_execution_trusted = _is_trusted_builtin_core(
+        core_execution_trusted, raw_core_receipt = _execute_core(
             self.core,
-            BackwardRevisionCore,
-            _ORIGINAL_SINGLE_CORE_OPTIMIZE,
-        )
-        raw_core_receipt = (
-            _ORIGINAL_SINGLE_CORE_OPTIMIZE(
-                self.core,
-                _clone_envelope(envelope),
-            )
-            if core_execution_trusted
-            else self.core.optimize(_clone_envelope(envelope))
+            _clone_envelope(envelope),
         )
         optimized = _validate_single_core_receipt(
             envelope,
             raw_core_receipt,
         )
-        _require(
-            core_execution_trusted
-            and _is_trusted_builtin_core(
-                self.core,
-                BackwardRevisionCore,
-                _ORIGINAL_SINGLE_CORE_OPTIMIZE,
-            ),
-            "CORE_EXECUTION_UNVERIFIED",
-        )
+        _require(core_execution_trusted, "CORE_EXECUTION_UNVERIFIED")
         program = self.actuator_adapter.compile(
             task,
             _clone(optimized),
@@ -2284,9 +2310,6 @@ class JointBackwardRevisionCore:
         )
 
 
-_ORIGINAL_JOINT_CORE_OPTIMIZE = JointBackwardRevisionCore.optimize
-
-
 def _validate_joint_core_receipt(
     envelopes: Sequence[TrajectoryEnvelope],
     weights: Sequence[float],
@@ -2598,6 +2621,35 @@ def _merge_model_results(
     )
 
 
+def _bind_joint_core_execution(
+    method: Callable[..., JsonObject],
+) -> Callable[..., JsonObject]:
+    execute_core = _make_core_executor(
+        JointBackwardRevisionCore,
+        JointBackwardRevisionCore.optimize,
+    )
+
+    def bound(
+        self: Any,
+        task: RevisionTask,
+        lanes: Sequence[JointLaneSpec],
+        *,
+        post_run_contract: PostRunContract | None = None,
+    ) -> JsonObject:
+        return method(
+            self,
+            task,
+            lanes,
+            post_run_contract=post_run_contract,
+            _execute_core=execute_core,
+        )
+
+    bound.__name__ = method.__name__
+    bound.__qualname__ = method.__qualname__
+    bound.__doc__ = method.__doc__
+    return bound
+
+
 class JointRevisionEngine:
     """v0.8 trajectory composition followed by adapter-local actuation."""
 
@@ -2610,12 +2662,14 @@ class JointRevisionEngine:
         self.core = core or JointBackwardRevisionCore()
         self.actuator_adapter = actuator_adapter or PublicRevisionActuator()
 
+    @_bind_joint_core_execution
     def run(
         self,
         task: RevisionTask,
         lanes: Sequence[JointLaneSpec],
         *,
         post_run_contract: PostRunContract | None = None,
+        _execute_core: Callable[..., tuple[bool, JsonObject]],
     ) -> JsonObject:
         validate_task(task)
         if post_run_contract is not None:
@@ -2635,37 +2689,17 @@ class JointRevisionEngine:
             )
             envelopes.append(envelope)
         core_envelopes = [_clone_envelope(envelope) for envelope in envelopes]
-        core_execution_trusted = _is_trusted_builtin_core(
+        core_execution_trusted, raw_joint_receipt = _execute_core(
             self.core,
-            JointBackwardRevisionCore,
-            _ORIGINAL_JOINT_CORE_OPTIMIZE,
-        )
-        raw_joint_receipt = (
-            _ORIGINAL_JOINT_CORE_OPTIMIZE(
-                self.core,
-                core_envelopes,
-                weights=[row.weight for row in ordered_lanes],
-            )
-            if core_execution_trusted
-            else self.core.optimize(
-                core_envelopes,
-                weights=[row.weight for row in ordered_lanes],
-            )
+            core_envelopes,
+            weights=[row.weight for row in ordered_lanes],
         )
         joint = _validate_joint_core_receipt(
             envelopes,
             [row.weight for row in ordered_lanes],
             raw_joint_receipt,
         )
-        _require(
-            core_execution_trusted
-            and _is_trusted_builtin_core(
-                self.core,
-                JointBackwardRevisionCore,
-                _ORIGINAL_JOINT_CORE_OPTIMIZE,
-            ),
-            "JOINT_CORE_EXECUTION_UNVERIFIED",
-        )
+        _require(core_execution_trusted, "JOINT_CORE_EXECUTION_UNVERIFIED")
         programs: dict[str, ActuatorProgram] = {}
         results: dict[str, ModelResult] = {}
         structural: JsonObject = {}
@@ -3506,7 +3540,7 @@ def self_test() -> JsonObject:
             core = BackwardRevisionCore()
             core.optimize = _SpoofedReplayCallable(
                 single["trajectory"],
-                _ORIGINAL_SINGLE_CORE_OPTIMIZE,
+                BackwardRevisionCore.optimize,
             )
             return RevisionEngine(core=core).run(
                 task,
@@ -3533,6 +3567,31 @@ def self_test() -> JsonObject:
 
         patched_single_core_replay_rejected = _raises_ebrt_reason(
             replay_with_patched_single_core,
+            "CORE_EXECUTION_UNVERIFIED",
+        )
+
+        def replay_with_rebound_single_symbols() -> JsonObject:
+            def replay(
+                _core: BackwardRevisionCore,
+                _envelope: TrajectoryEnvelope,
+            ) -> JsonObject:
+                return _clone(single["trajectory"])
+
+            with (
+                mock.patch.object(BackwardRevisionCore, "optimize", replay),
+                mock.patch.dict(
+                    globals(),
+                    {"_ORIGINAL_SINGLE_CORE_OPTIMIZE": replay},
+                ),
+            ):
+                return RevisionEngine().run(
+                    task,
+                    adapter,
+                    post_run_contract=contract,
+                )
+
+        rebound_single_symbols_replay_rejected = _raises_ebrt_reason(
+            replay_with_rebound_single_symbols,
             "CORE_EXECUTION_UNVERIFIED",
         )
         tampered_single_core_rejected = _raises_ebrt_reason(
@@ -3892,7 +3951,7 @@ def self_test() -> JsonObject:
             core = JointBackwardRevisionCore()
             core.optimize = _SpoofedReplayCallable(
                 joint["joint_trajectory"],
-                _ORIGINAL_JOINT_CORE_OPTIMIZE,
+                JointBackwardRevisionCore.optimize,
             )
             return JointRevisionEngine(core=core).run(
                 task,
@@ -3919,6 +3978,34 @@ def self_test() -> JsonObject:
 
         patched_joint_core_replay_rejected = _raises_ebrt_reason(
             replay_with_patched_joint_core,
+            "JOINT_CORE_EXECUTION_UNVERIFIED",
+        )
+
+        def replay_with_rebound_joint_symbols() -> JsonObject:
+            def replay(
+                _core: JointBackwardRevisionCore,
+                _envelopes: Sequence[TrajectoryEnvelope],
+                *,
+                weights: Sequence[float],
+            ) -> JsonObject:
+                _require(bool(weights), "TEST_REPLAY_WEIGHTS_MISSING")
+                return _clone(joint["joint_trajectory"])
+
+            with (
+                mock.patch.object(JointBackwardRevisionCore, "optimize", replay),
+                mock.patch.dict(
+                    globals(),
+                    {"_ORIGINAL_JOINT_CORE_OPTIMIZE": replay},
+                ),
+            ):
+                return JointRevisionEngine().run(
+                    task,
+                    (lane_b, lane_a),
+                    post_run_contract=contract,
+                )
+
+        rebound_joint_symbols_replay_rejected = _raises_ebrt_reason(
+            replay_with_rebound_joint_symbols,
             "JOINT_CORE_EXECUTION_UNVERIFIED",
         )
         joint_reversed = JointRevisionEngine().run(
@@ -4016,6 +4103,8 @@ def self_test() -> JsonObject:
         and shadowed_joint_core_replay_rejected,
         "class_level_core_replacement_cannot_claim_backward_execution": patched_single_core_replay_rejected
         and patched_joint_core_replay_rejected,
+        "module_symbol_rebinding_cannot_claim_backward_execution": rebound_single_symbols_replay_rejected
+        and rebound_joint_symbols_replay_rejected,
         "core_receipts_bind_the_declared_update_law": alternate_control_law_rejected,
         "credit_first_order_is_compiled": invocation_before["evidence_ids"][
             : len(program.reinspect)

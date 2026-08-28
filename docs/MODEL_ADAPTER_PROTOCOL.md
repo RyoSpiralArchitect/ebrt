@@ -141,10 +141,11 @@ protocol rejects any descriptor that claims a gradient crosses generation.
 Core receipt replay validation is not an execution attestation by itself. The
 current engine reports a backward execution only when the exact bundled single
 or joint core and its module-load original method remain identical before and
-after that call. The pinned original is invoked directly, and instance-level
-method shadowing is rejected alongside injected and class-replaced cores. Such
-cores can be validated for conformance but cannot yield engine `PASS` from a
-previously captured receipt.
+after that call. The pinned original lives in the engine method closure rather
+than a writable module-level reference. It is invoked directly, and
+instance-level shadowing or simultaneous class/module-symbol replacement is
+rejected alongside injected cores. Such cores can be validated for conformance
+but cannot yield engine `PASS` from a previously captured receipt.
 
 ## Model-visible information
 
