@@ -48,6 +48,8 @@ DTYPE = torch.float64
 FD_EPSILON = 1.0e-6
 FD_TOLERANCE = 2.0e-7
 FLOAT_TOLERANCE = 1.0e-12
+NATIVE_SUMMARY_REL_TOLERANCE = 2.0e-3
+NATIVE_SUMMARY_ABS_TOLERANCE = 1.0e-6
 
 CLAIM_BOUNDARY = (
     "EBRT differentiates only through a detached, core-owned copy of an explicit adapter-supplied trajectory.",
@@ -2658,6 +2660,30 @@ def _native_summary_is_valid(
     ]
     if indices != expected_indices:
         return False
+    mean, rms, max_abs, l2 = metrics
+    sampled_max_abs = max(abs(sample) for sample in samples)
+    sampled_l2 = math.sqrt(sum(sample * sample for sample in samples))
+
+    def bounded_above(left: float, right: float) -> bool:
+        slack = NATIVE_SUMMARY_ABS_TOLERANCE + NATIVE_SUMMARY_REL_TOLERANCE * max(
+            abs(left), abs(right)
+        )
+        return left <= right + slack
+
+    if not (
+        math.isclose(
+            l2,
+            rms * math.sqrt(hidden_size),
+            rel_tol=NATIVE_SUMMARY_REL_TOLERANCE,
+            abs_tol=NATIVE_SUMMARY_ABS_TOLERANCE,
+        )
+        and bounded_above(abs(mean), rms)
+        and bounded_above(rms, max_abs)
+        and bounded_above(max_abs, l2)
+        and bounded_above(sampled_max_abs, max_abs)
+        and bounded_above(sampled_l2, l2)
+    ):
+        return False
     if phase == "prefill":
         return (
             cache_offset < prompt_token_count
@@ -2724,6 +2750,11 @@ def _native_layer_rows_are_valid(
                 sampled_channels=policy.sampled_channels,
             ):
                 return False
+        if (
+            captures["decode_last"]["cache_offset_before"]
+            != prompt_token_count + decode_count - 1
+        ):
+            return False
         indices = captures["prefill"]["sampled_channel_indices"]
         hidden_size = captures["prefill"]["hidden_size"]
         if any(
@@ -5623,21 +5654,21 @@ def self_test() -> JsonObject:
             cache_offset_before: int,
             base: float,
         ) -> JsonObject:
+            vector = [base + 0.05 * position for position in range(8)]
+            sampled_indices = [0, 2, 5, 7]
+            sampled_values = [vector[index] for index in sampled_indices]
+            mean = sum(vector) / len(vector)
+            l2 = math.sqrt(sum(value * value for value in vector))
             return {
                 "sequence_length": sequence_length,
                 "cache_offset_before": cache_offset_before,
                 "hidden_size": 8,
-                "mean": base,
-                "rms": abs(base) + 0.1,
-                "max_abs": abs(base) + 0.2,
-                "l2": abs(base) + 0.3,
-                "sampled_channel_indices": [0, 2, 5, 7],
-                "sampled_channel_values": [
-                    base,
-                    base + 0.1,
-                    base + 0.2,
-                    base + 0.3,
-                ],
+                "mean": mean,
+                "rms": l2 / math.sqrt(len(vector)),
+                "max_abs": max(abs(value) for value in vector),
+                "l2": l2,
+                "sampled_channel_indices": sampled_indices,
+                "sampled_channel_values": sampled_values,
             }
 
         synthetic_layers: list[JsonObject] = []
@@ -5773,6 +5804,41 @@ def self_test() -> JsonObject:
             replace(
                 synthetic_native_result,
                 native_state_observation=_seal(missing_decode_material),
+            ),
+            expected_descriptor=synthetic_native_descriptor,
+            expected_request_fingerprint_sha256=str(
+                invocation_before["fingerprint_sha256"]
+            ),
+        )
+        impossible_summary_material = _without_fingerprint(synthetic_observation)
+        impossible_summary = impossible_summary_material["layers"][0]["captures"][
+            "decode_first"
+        ]
+        impossible_summary.update({"rms": 0.0, "max_abs": 0.0, "l2": 0.0})
+        impossible_summary_checks = _structural_model_checks(
+            task,
+            program,
+            replace(
+                synthetic_native_result,
+                native_state_observation=_seal(impossible_summary_material),
+            ),
+            expected_descriptor=synthetic_native_descriptor,
+            expected_request_fingerprint_sha256=str(
+                invocation_before["fingerprint_sha256"]
+            ),
+        )
+        inconsistent_decode_count_material = _without_fingerprint(synthetic_observation)
+        inconsistent_decode_row = inconsistent_decode_count_material["layers"][0]
+        inconsistent_decode_row["decode_call_count"] = 999
+        inconsistent_decode_row["forward_call_count"] = (
+            inconsistent_decode_row["prefill_call_count"] + 999
+        )
+        inconsistent_decode_count_checks = _structural_model_checks(
+            task,
+            program,
+            replace(
+                synthetic_native_result,
+                native_state_observation=_seal(inconsistent_decode_count_material),
             ),
             expected_descriptor=synthetic_native_descriptor,
             expected_request_fingerprint_sha256=str(
@@ -6292,6 +6358,12 @@ def self_test() -> JsonObject:
             "native_state_observation_matches_declared_visibility"
         ],
         "native_oscilloscope_requires_advertised_decode_phases": not missing_decode_checks[
+            "native_state_observation_matches_declared_visibility"
+        ],
+        "native_oscilloscope_rejects_impossible_summary_identities": not impossible_summary_checks[
+            "native_state_observation_matches_declared_visibility"
+        ],
+        "native_oscilloscope_binds_decode_count_to_last_offset": not inconsistent_decode_count_checks[
             "native_state_observation_matches_declared_visibility"
         ],
         "chunked_prefill_is_not_labeled_as_decode": chunked_prefill_is_not_decode,
