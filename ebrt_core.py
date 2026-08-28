@@ -24,6 +24,7 @@ from collections import Counter
 from contextlib import contextmanager
 from dataclasses import dataclass, replace
 from pathlib import Path
+from types import FunctionType
 from typing import Any, Callable, Literal, Mapping, Protocol, Sequence
 from unittest import mock
 
@@ -1895,17 +1896,36 @@ def _make_core_executor(
 ) -> Callable[..., tuple[bool, JsonObject]]:
     """Capture one core implementation outside mutable module lookup."""
 
+    pinned_code = pinned_optimize.__code__
+    pinned_defaults = pinned_optimize.__defaults__
+    pinned_kwdefaults = dict(pinned_optimize.__kwdefaults__ or {})
+    pinned_closure = pinned_optimize.__closure__
+    execution_copy = FunctionType(
+        pinned_code,
+        pinned_optimize.__globals__,
+        name=pinned_optimize.__name__,
+        argdefs=pinned_defaults,
+        closure=pinned_closure,
+    )
+    execution_copy.__kwdefaults__ = dict(pinned_kwdefaults)
+
     def trusted(core: Any) -> bool:
+        current = expected_type.__dict__.get("optimize")
         return (
             type(core) is expected_type
             and "optimize" not in vars(core)
-            and expected_type.__dict__.get("optimize") is pinned_optimize
+            and current is pinned_optimize
+            and current.__code__ is pinned_code
+            and current.__defaults__ == pinned_defaults
+            and dict(current.__kwdefaults__ or {}) == pinned_kwdefaults
+            and current.__closure__ == pinned_closure
+            and execution_copy.__code__ is pinned_code
         )
 
     def execute(core: Any, *args: Any, **kwargs: Any) -> tuple[bool, JsonObject]:
         trusted_before = trusted(core)
         receipt = (
-            pinned_optimize(core, *args, **kwargs)
+            execution_copy(core, *args, **kwargs)
             if trusted_before
             else core.optimize(*args, **kwargs)
         )
@@ -3594,6 +3614,33 @@ def self_test() -> JsonObject:
             replay_with_rebound_single_symbols,
             "CORE_EXECUTION_UNVERIFIED",
         )
+
+        def replay_with_mutated_single_code() -> JsonObject:
+            def replay(
+                _core: BackwardRevisionCore,
+                _envelope: TrajectoryEnvelope,
+            ) -> JsonObject:
+                return _clone(globals()["_TEST_SINGLE_CODE_REPLAY_RECEIPT"])
+
+            original_code = BackwardRevisionCore.optimize.__code__
+            with mock.patch.dict(
+                globals(),
+                {"_TEST_SINGLE_CODE_REPLAY_RECEIPT": single["trajectory"]},
+            ):
+                try:
+                    BackwardRevisionCore.optimize.__code__ = replay.__code__
+                    return RevisionEngine().run(
+                        task,
+                        adapter,
+                        post_run_contract=contract,
+                    )
+                finally:
+                    BackwardRevisionCore.optimize.__code__ = original_code
+
+        mutated_single_code_replay_rejected = _raises_ebrt_reason(
+            replay_with_mutated_single_code,
+            "CORE_EXECUTION_UNVERIFIED",
+        )
         tampered_single_core_rejected = _raises_ebrt_reason(
             lambda: RevisionEngine(core=_TamperedSingleCore()).run(
                 task,
@@ -4008,6 +4055,36 @@ def self_test() -> JsonObject:
             replay_with_rebound_joint_symbols,
             "JOINT_CORE_EXECUTION_UNVERIFIED",
         )
+
+        def replay_with_mutated_joint_code() -> JsonObject:
+            def replay(
+                _core: JointBackwardRevisionCore,
+                _envelopes: Sequence[TrajectoryEnvelope],
+                *,
+                weights: Sequence[float],
+            ) -> JsonObject:
+                _require(bool(weights), "TEST_REPLAY_WEIGHTS_MISSING")
+                return _clone(globals()["_TEST_JOINT_CODE_REPLAY_RECEIPT"])
+
+            original_code = JointBackwardRevisionCore.optimize.__code__
+            with mock.patch.dict(
+                globals(),
+                {"_TEST_JOINT_CODE_REPLAY_RECEIPT": joint["joint_trajectory"]},
+            ):
+                try:
+                    JointBackwardRevisionCore.optimize.__code__ = replay.__code__
+                    return JointRevisionEngine().run(
+                        task,
+                        (lane_b, lane_a),
+                        post_run_contract=contract,
+                    )
+                finally:
+                    JointBackwardRevisionCore.optimize.__code__ = original_code
+
+        mutated_joint_code_replay_rejected = _raises_ebrt_reason(
+            replay_with_mutated_joint_code,
+            "JOINT_CORE_EXECUTION_UNVERIFIED",
+        )
         joint_reversed = JointRevisionEngine().run(
             task, (lane_a, lane_b), post_run_contract=contract
         )
@@ -4105,6 +4182,8 @@ def self_test() -> JsonObject:
         and patched_joint_core_replay_rejected,
         "module_symbol_rebinding_cannot_claim_backward_execution": rebound_single_symbols_replay_rejected
         and rebound_joint_symbols_replay_rejected,
+        "core_code_mutation_cannot_claim_backward_execution": mutated_single_code_replay_rejected
+        and mutated_joint_code_replay_rejected,
         "core_receipts_bind_the_declared_update_law": alternate_control_law_rejected,
         "credit_first_order_is_compiled": invocation_before["evidence_ids"][
             : len(program.reinspect)

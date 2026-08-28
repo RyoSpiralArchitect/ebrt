@@ -139,9 +139,10 @@ booleans are rejected rather than coerced.
 The engine attributes `real_backward_executed_once` only to the exact bundled
 core implementation and its module-load original method, checked before and
 after execution. The original callable is captured in the engine method closure
-rather than retained in a writable module symbol. The engine invokes that
-callable directly and rejects class replacement, instance-level method
-shadowing, and simultaneous rebinding of lookalike module symbols. An injected
+rather than retained in a writable module symbol. Its immutable code object is
+captured separately and executed through a private function copy. The engine
+rejects class replacement, instance-level method shadowing, function-code
+mutation, and simultaneous rebinding of lookalike module symbols. An injected
 core receipt is still structurally validated, but cannot promote a replay into
 a claim about the current run.
 
