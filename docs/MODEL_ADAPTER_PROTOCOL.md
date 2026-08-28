@@ -120,10 +120,13 @@ snapshot as `repository@revision`. A model outside that layout must supply an
 explicit revision-bearing identity; a filesystem path alone is not accepted as
 weight identity because its contents can be replaced in place. Its descriptor
 separately records and fingerprints `max_tokens`, seed, sampler temperature,
-and chat-template generation mode, so two executions with the same weights and
-adapter name but different decoding settings cannot share a configuration
-receipt. An explicit identity cannot override a derivable cache identity; if
-both are supplied, exact equality is required.
+the explicit `chat_template` or `plain_text` rendering mode, and whether a chat
+generation prompt is appended. Two executions with the same weights and
+adapter name but different rendering or decoding settings therefore cannot
+share a configuration receipt. Plain-text rendering permits an explicitly
+selected base-model snapshot to execute; it does not qualify that model for an
+instruction-following output contract. An explicit identity cannot override a
+derivable cache identity; if both are supplied, exact equality is required.
 
 Derivation requires the exact snapshot root to sit beneath a configured
 Hugging Face hub, a 40-hex snapshot revision, complete loader material, and the

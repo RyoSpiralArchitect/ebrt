@@ -15,14 +15,16 @@ forward trajectory
   -> replay or regeneration
 ```
 
-The current release has two executable layers:
+The current release has four executable stages:
 
 - **v0.7.1:** one trajectory, one real local backward pass, one compiled
   actuator, and one real open-weight regeneration;
 - **v0.8.0:** one joint backward block over multiple public trajectories,
   lane-specific actuators, real local generations, and deterministic merge;
 - **v0.8.1:** an optional, non-invasive state oscilloscope for faster local
-  algorithm iteration.
+  algorithm iteration;
+- **v0.8.2:** a four-model local output-diff development corpus that separates
+  algorithm-diagnostic cells from adapter/capability failures.
 
 The generator is an adapter, not the definition of EBRT. The bundled reference
 backend is a local MLX model. Hosted APIs and other local runtimes can meet the
@@ -162,6 +164,37 @@ This instrument exists to locate where an EBRT signal is lost or distorted
 while improving the module. Its native-state measurements apply only to the
 observed local run. They are not evidence about hosted-model internals,
 cross-model regularities, semantic superiority, or general reasoning gains.
+
+### 4. Local output-diff corpus
+
+The auxiliary v0.8.2 runner stores the actual natural-language generations for
+a matched direct full-context arm and an EBRT credit-first arm:
+
+```bash
+python3 local_output_diff_corpus_v0_8_2.py self-test
+
+python3 local_output_diff_corpus_v0_8_2.py run \
+  --model "$EBRT_LOCAL_MODEL" \
+  --prompt-mode chat_template \
+  --output /tmp/ebrt-local-output-run.json
+
+python3 local_output_diff_corpus_v0_8_2.py verify \
+  /tmp/ebrt-local-output-run.json
+
+python3 local_output_diff_corpus_v0_8_2.py verify-aggregate \
+  artifacts/local_output_diff_corpus_v0_8_2/r01/results.json
+```
+
+The committed corpus contains four cached model snapshots, four cases, and 32
+terminal local calls. Raw output changed in all 16 paired cells, but only
+Mistral satisfied the common output schema in both arms. Its final answer was
+unchanged in all four cases while support lineage moved: one EBRT-only contract
+pass, two direct-only passes, and one pass in both arms. The remaining 12 cells
+are retained as adapter/capability failures rather than counted as EBRT quality
+losses.
+
+See the [R&D note](docs/RND_LOCAL_OUTPUT_DIFF_CORPUS_V0_8_2.md) and the
+[generated report](artifacts/local_output_diff_corpus_v0_8_2/r01/report.md).
 
 ## What the core owns
 
@@ -336,12 +369,15 @@ are separate measurements. A `PASS` in one category does not silently imply a
 | Path | Role |
 | --- | --- |
 | [`ebrt_core.py`](ebrt_core.py) | v0.7.1/v0.8 monolith and CLI |
+| [`local_output_diff_corpus_v0_8_2.py`](local_output_diff_corpus_v0_8_2.py) | matched local-model output corpus runner |
 | [`requirements-core.txt`](requirements-core.txt) | network-zero core dependency |
 | [`requirements-local-mlx.txt`](requirements-local-mlx.txt) | Apple-silicon local backend |
 | [`docs/EBRT_CORE_THESIS.md`](docs/EBRT_CORE_THESIS.md) | mathematical and conceptual anchor |
 | [`docs/MODEL_ADAPTER_PROTOCOL.md`](docs/MODEL_ADAPTER_PROTOCOL.md) | provider-neutral binding contract |
 | [`docs/ROADMAP_MODEL_INTERFACE_CORE.md`](docs/ROADMAP_MODEL_INTERFACE_CORE.md) | evidence-labelled path beyond v0.8 |
+| [`docs/RND_LOCAL_OUTPUT_DIFF_CORPUS_V0_8_2.md`](docs/RND_LOCAL_OUTPUT_DIFF_CORPUS_V0_8_2.md) | generated-output failure atlas and bounded next hypotheses |
 | [`artifacts/model_interface_core_v0_7_1/local_mistral_e2e_r01.json`](artifacts/model_interface_core_v0_7_1/local_mistral_e2e_r01.json) | sanitized real local E2E receipt |
+| [`artifacts/local_output_diff_corpus_v0_8_2/r01/results.json`](artifacts/local_output_diff_corpus_v0_8_2/r01/results.json) | sealed four-model, 32-call development corpus |
 
 ### Frozen research history
 
