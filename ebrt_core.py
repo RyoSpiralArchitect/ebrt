@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""EBRT v0.8: model-interface-agnostic backward revision.
+"""EBRT v0.8.1: model-interface-agnostic backward revision.
 
 The core owns a differentiable public trajectory, backward credit assignment,
 bounded control projection, and joint-lane composition.  Model-specific code
@@ -35,8 +35,11 @@ import torch
 CORE_PROTOCOL_VERSION = "ebrt-model-interface-core-v0.7.1"
 JOINT_PROTOCOL_VERSION = "ebrt-joint-trajectory-v0.8.0"
 RESULT_SCHEMA_VERSION = "ebrt-model-interface-result-v0.8.0"
-SELF_TEST_SCHEMA_VERSION = "ebrt-model-interface-self-test-v0.8.0"
+SELF_TEST_SCHEMA_VERSION = "ebrt-model-interface-self-test-v0.8.1"
 POST_RUN_CONTRACT_VERSION = "ebrt-post-run-contract-v0.8.0"
+OSCILLOSCOPE_SCHEMA_VERSION = "ebrt-state-oscilloscope-v0.8.1"
+NATIVE_OBSERVATION_SCHEMA_VERSION = "ebrt-native-state-observation-v0.8.1"
+OSCILLOSCOPE_CHECK_SCHEMA_VERSION = "ebrt-oscilloscope-check-v0.8.1"
 AXES = ("revision", "invalidation", "stability")
 EVIDENCE_ROLES = frozenset(
     {"context", "required_support", "invalidated_prior", "correction", "stable"}
@@ -52,6 +55,7 @@ CLAIM_BOUNDARY = (
     "A passing conformance run establishes protocol execution, not semantic superiority or general reasoning improvement.",
     "The bundled public trajectory is an inspectable surrogate, not a transcript of private model reasoning.",
     "Heterogeneous multi-model effects remain unassessed until distinct model backends are run under a locked comparison.",
+    "Optional native-state observations are detached development diagnostics; their measurements are not consumed by credit assignment, actuation, or generator decisions and do not support cross-model claims.",
 )
 
 JsonObject = dict[str, Any]
@@ -833,6 +837,239 @@ def _trajectory_rows(
     ]
 
 
+@dataclass(frozen=True)
+class OscilloscopePolicy:
+    """A bounded, observation-only window over public and local native state."""
+
+    event_window_radius: int = 1
+    native_layer_indices: tuple[int, ...] = (0, 15, 31)
+    sampled_channels: int = 16
+
+    def to_dict(self) -> JsonObject:
+        _validate_oscilloscope_policy(self)
+        return _seal(
+            {
+                "schema_version": "ebrt-oscilloscope-policy-v0.8.1",
+                "event_window_radius": self.event_window_radius,
+                "native_layer_indices": list(self.native_layer_indices),
+                "sampled_channels": self.sampled_channels,
+                "capture_phases": ["prefill", "decode_first", "decode_last"],
+                "feeds_controller": False,
+            }
+        )
+
+
+def _validate_oscilloscope_policy(policy: OscilloscopePolicy) -> None:
+    _require(type(policy) is OscilloscopePolicy, "OSCILLOSCOPE_POLICY_TYPE_INVALID")
+    _require(
+        type(policy.event_window_radius) is int
+        and 0 <= policy.event_window_radius <= 8,
+        "OSCILLOSCOPE_WINDOW_RADIUS_INVALID",
+    )
+    _require(
+        type(policy.native_layer_indices) is tuple
+        and 1 <= len(policy.native_layer_indices) <= 8
+        and all(
+            type(index) is int and 0 <= index <= 4095
+            for index in policy.native_layer_indices
+        )
+        and tuple(sorted(policy.native_layer_indices)) == policy.native_layer_indices
+        and len(set(policy.native_layer_indices)) == len(policy.native_layer_indices),
+        "OSCILLOSCOPE_LAYER_INDICES_INVALID",
+    )
+    _require(
+        type(policy.sampled_channels) is int and 4 <= policy.sampled_channels <= 64,
+        "OSCILLOSCOPE_SAMPLED_CHANNELS_INVALID",
+    )
+
+
+def _oscilloscope_window_indices(
+    envelope: TrajectoryEnvelope, policy: OscilloscopePolicy
+) -> tuple[int, ...]:
+    lower = max(0, envelope.event_index - policy.event_window_radius)
+    upper = min(
+        len(envelope.evidence_ids) - 1,
+        envelope.event_index + policy.event_window_radius,
+    )
+    return tuple(sorted({*range(lower, upper + 1), len(envelope.evidence_ids) - 1}))
+
+
+def _trajectory_step_diagnostics(
+    envelope: TrajectoryEnvelope,
+    trajectory: torch.Tensor,
+    neutral: torch.Tensor,
+    index: int,
+) -> JsonObject:
+    state = trajectory[index]
+    previous = (
+        trajectory[index - 1]
+        if index > 0
+        else torch.zeros(len(envelope.axis_ids), dtype=DTYPE)
+    )
+    velocity = state - previous
+    if index > 1:
+        prior_velocity = trajectory[index - 1] - trajectory[index - 2]
+        curvature = torch.linalg.vector_norm(velocity - prior_velocity) / (
+            torch.linalg.vector_norm(velocity) + 1.0e-12
+        )
+    else:
+        curvature = torch.zeros((), dtype=DTYPE)
+    return {
+        "step": index + 1,
+        "evidence_id": envelope.evidence_ids[index],
+        "role": envelope.roles[index],
+        "state": {
+            axis_id: _finite(float(state[axis]), "OSCILLOSCOPE_STATE")
+            for axis, axis_id in enumerate(envelope.axis_ids)
+        },
+        "state_l2": _finite(
+            float(torch.linalg.vector_norm(state)), "OSCILLOSCOPE_STATE_L2"
+        ),
+        "velocity_l2": _finite(
+            float(torch.linalg.vector_norm(velocity)), "OSCILLOSCOPE_VELOCITY_L2"
+        ),
+        "curvature": _finite(float(curvature), "OSCILLOSCOPE_CURVATURE"),
+        "delta_from_neutral_l2": _finite(
+            float(torch.linalg.vector_norm(state - neutral[index])),
+            "OSCILLOSCOPE_DELTA_L2",
+        ),
+    }
+
+
+def _public_oscilloscope_receipt(
+    envelope: TrajectoryEnvelope,
+    optimized: Mapping[str, Any],
+    policy: OscilloscopePolicy,
+) -> JsonObject:
+    """Replays three diagnostic arms without feeding any observation back."""
+
+    _validate_oscilloscope_policy(policy)
+    snapshot = _sealed_snapshot(optimized, "OSCILLOSCOPE_SOURCE_TRAJECTORY")
+    credit_rows = snapshot.get("credit_map")
+    _require(
+        isinstance(credit_rows, list)
+        and len(credit_rows) == len(envelope.evidence_ids),
+        "OSCILLOSCOPE_CREDIT_MAP_INVALID",
+    )
+    controls = torch.tensor(
+        [row["control"] for row in credit_rows],
+        dtype=DTYPE,
+    )
+    _require(
+        controls.shape == (len(envelope.evidence_ids),)
+        and bool(torch.all(torch.isfinite(controls))),
+        "OSCILLOSCOPE_CONTROL_INVALID",
+    )
+    neutral_controls = torch.zeros_like(controls)
+    sham_controls = torch.zeros_like(controls)
+    eligible_indices = torch.nonzero(envelope.eligible_mask).flatten()
+    sham_controls[eligible_indices] = controls[eligible_indices].flip(0)
+
+    neutral_trajectory = _forward(envelope, neutral_controls).detach()
+    exact_trajectory = _forward(envelope, controls).detach()
+    sham_trajectory = _forward(envelope, sham_controls).detach()
+    _neutral_loss, neutral_parts = _loss(envelope, neutral_controls, neutral_trajectory)
+    _exact_loss, exact_parts = _loss(envelope, controls, exact_trajectory)
+    _sham_loss, sham_parts = _loss(envelope, sham_controls, sham_trajectory)
+    indices = _oscilloscope_window_indices(envelope, policy)
+
+    def arm(
+        trajectory: torch.Tensor,
+        loss_parts: Mapping[str, Any],
+    ) -> JsonObject:
+        return {
+            "loss": _clone(loss_parts),
+            "window": [
+                _trajectory_step_diagnostics(
+                    envelope,
+                    trajectory,
+                    neutral_trajectory,
+                    index,
+                )
+                for index in indices
+            ],
+        }
+
+    event_credit_l1 = sum(
+        abs(float(credit_rows[index]["gradient"])) for index in indices
+    )
+    total_credit_l1 = sum(abs(float(row["gradient"])) for row in credit_rows)
+    exact_terminal_delta = torch.linalg.vector_norm(
+        exact_trajectory[-1] - neutral_trajectory[-1]
+    )
+    sham_terminal_delta = torch.linalg.vector_norm(
+        sham_trajectory[-1] - neutral_trajectory[-1]
+    )
+    stability_index = envelope.axis_ids.index("stability")
+    checks = {
+        "observer_is_post_optimization_only": True,
+        "observer_does_not_feed_controller": True,
+        "neutral_replay_matches_core_receipt": _canonical_bytes(
+            _trajectory_rows(envelope, neutral_trajectory)
+        )
+        == _canonical_bytes(snapshot["neutral"]["trajectory"]),
+        "exact_replay_matches_core_receipt": _canonical_bytes(
+            _trajectory_rows(envelope, exact_trajectory)
+        )
+        == _canonical_bytes(snapshot["revised"]["trajectory"]),
+        "sham_l2_matches_exact": math.isclose(
+            float(torch.linalg.vector_norm(sham_controls)),
+            float(torch.linalg.vector_norm(controls)),
+            rel_tol=0.0,
+            abs_tol=FLOAT_TOLERANCE,
+        ),
+        "sham_value_multiset_matches_exact": sorted(sham_controls.tolist())
+        == sorted(controls.tolist()),
+        "stability_axis_is_observation_identity": torch.equal(
+            neutral_trajectory[:, stability_index],
+            exact_trajectory[:, stability_index],
+        )
+        and torch.equal(
+            neutral_trajectory[:, stability_index],
+            sham_trajectory[:, stability_index],
+        ),
+    }
+    _require(all(checks.values()), "OSCILLOSCOPE_PUBLIC_REPLAY_FAILED")
+    return _seal(
+        {
+            "schema_version": OSCILLOSCOPE_SCHEMA_VERSION,
+            "status": "CAPTURED",
+            "scope": "core_owned_public_trajectory",
+            "source_trajectory_fingerprint_sha256": snapshot["fingerprint_sha256"],
+            "policy": policy.to_dict(),
+            "selected_steps": [index + 1 for index in indices],
+            "arms": {
+                "neutral": arm(neutral_trajectory, neutral_parts),
+                "exact": arm(exact_trajectory, exact_parts),
+                "reversed_temporal_l2_value_multiset_sham": arm(
+                    sham_trajectory, sham_parts
+                ),
+            },
+            "diagnostics": {
+                "event_window_credit_fraction": _finite(
+                    event_credit_l1 / max(total_credit_l1, FLOAT_TOLERANCE),
+                    "OSCILLOSCOPE_CREDIT_FRACTION",
+                ),
+                "exact_terminal_delta_l2": _finite(
+                    float(exact_terminal_delta),
+                    "OSCILLOSCOPE_EXACT_TERMINAL_DELTA",
+                ),
+                "sham_terminal_delta_l2": _finite(
+                    float(sham_terminal_delta),
+                    "OSCILLOSCOPE_SHAM_TERMINAL_DELTA",
+                ),
+                "exact_objective_advantage_over_sham": _finite(
+                    float(sham_parts["total"]) - float(exact_parts["total"]),
+                    "OSCILLOSCOPE_OBJECTIVE_ADVANTAGE",
+                ),
+            },
+            "checks": checks,
+            "feeds_controller": False,
+            "claim_status": "DEVELOPMENT_DIAGNOSTIC_ONLY",
+        }
+    )
+
+
 class BackwardRevisionCore:
     """Provider-free v0.7.1 single-trajectory optimizer."""
 
@@ -1488,20 +1725,22 @@ class ModelResult:
     request_fingerprint_sha256: str
     latency_ms: float
     logical_calls: int = 1
+    native_state_observation: Mapping[str, Any] | None = None
 
     def to_dict(self) -> JsonObject:
-        return _seal(
-            {
-                "schema_version": "ebrt-model-result-v0.7.1",
-                "answer": self.answer,
-                "support_ids": list(self.support_ids),
-                "raw_text": self.raw_text,
-                "adapter": self.descriptor.to_dict(),
-                "request_fingerprint_sha256": self.request_fingerprint_sha256,
-                "latency_ms": _finite(self.latency_ms, "LATENCY_MS"),
-                "logical_calls": self.logical_calls,
-            }
-        )
+        material: JsonObject = {
+            "schema_version": "ebrt-model-result-v0.7.1",
+            "answer": self.answer,
+            "support_ids": list(self.support_ids),
+            "raw_text": self.raw_text,
+            "adapter": self.descriptor.to_dict(),
+            "request_fingerprint_sha256": self.request_fingerprint_sha256,
+            "latency_ms": _finite(self.latency_ms, "LATENCY_MS"),
+            "logical_calls": self.logical_calls,
+        }
+        if self.native_state_observation is not None:
+            material["native_state_observation"] = _clone(self.native_state_observation)
+        return _seal(material)
 
 
 class ModelAdapter(Protocol):
@@ -1852,6 +2091,190 @@ def _local_model_id(path: Path, *, explicit: str | None = None) -> str:
     return _resolve_local_model_identity(path, explicit=explicit)[0]
 
 
+def _sampled_transition(left: Sequence[float], right: Sequence[float]) -> JsonObject:
+    _require(len(left) == len(right) and bool(left), "NATIVE_TRANSITION_SHAPE_INVALID")
+    dot = sum(a * b for a, b in zip(left, right, strict=True))
+    left_norm = math.sqrt(sum(value * value for value in left))
+    right_norm = math.sqrt(sum(value * value for value in right))
+    delta_norm = math.sqrt(sum((a - b) ** 2 for a, b in zip(left, right, strict=True)))
+    cosine = dot / max(left_norm * right_norm, FLOAT_TOLERANCE)
+    return {
+        "sampled_channel_cosine": _finite(cosine, "NATIVE_TRANSITION_COSINE"),
+        "sampled_channel_relative_l2_delta": _finite(
+            delta_norm / max(left_norm, FLOAT_TOLERANCE),
+            "NATIVE_TRANSITION_RELATIVE_DELTA",
+        ),
+    }
+
+
+class _MLXNativeCollector:
+    """Keeps scalar summaries and sampled channels, never full activations."""
+
+    def __init__(self, policy: OscilloscopePolicy) -> None:
+        _validate_oscilloscope_policy(policy)
+        self.policy = policy
+        self._captures: dict[int, dict[str, JsonObject]] = {
+            index: {} for index in policy.native_layer_indices
+        }
+        self._call_counts = {index: 0 for index in policy.native_layer_indices}
+
+    def record(self, layer_index: int, output: Any) -> None:
+        try:
+            import mlx.core as mx
+        except ImportError as exc:  # pragma: no cover - environment dependent
+            raise EBRTError("MLX_LM_NOT_INSTALLED") from exc
+        _require(layer_index in self._captures, "NATIVE_LAYER_NOT_SELECTED")
+        shape = tuple(int(value) for value in output.shape)
+        _require(len(shape) == 3 and shape[0] == 1, "NATIVE_STATE_SHAPE_INVALID")
+        hidden_size = shape[2]
+        _require(
+            hidden_size >= self.policy.sampled_channels,
+            "NATIVE_STATE_TOO_NARROW",
+        )
+        count = self.policy.sampled_channels
+        if count == 1:
+            channel_indices = (0,)
+        else:
+            channel_indices = tuple(
+                round(position * (hidden_size - 1) / (count - 1))
+                for position in range(count)
+            )
+        vector = output[0, -1, :]
+        sampled = vector[mx.array(channel_indices)]
+        mean = mx.mean(vector)
+        rms = mx.sqrt(mx.mean(mx.square(vector)))
+        maximum = mx.max(mx.abs(vector))
+        l2 = mx.sqrt(mx.sum(mx.square(vector)))
+        mx.eval(sampled, mean, rms, maximum, l2)
+        sampled_values = tuple(
+            _finite(float(value), "NATIVE_SAMPLED_CHANNEL")
+            for value in sampled.tolist()
+        )
+        summary: JsonObject = {
+            "sequence_length": shape[1],
+            "hidden_size": hidden_size,
+            "mean": _finite(float(mean.item()), "NATIVE_STATE_MEAN"),
+            "rms": _finite(float(rms.item()), "NATIVE_STATE_RMS"),
+            "max_abs": _finite(float(maximum.item()), "NATIVE_STATE_MAX_ABS"),
+            "l2": _finite(float(l2.item()), "NATIVE_STATE_L2"),
+            "sampled_channel_indices": list(channel_indices),
+            "sampled_channel_values": list(sampled_values),
+        }
+        call_index = self._call_counts[layer_index]
+        self._call_counts[layer_index] = call_index + 1
+        captures = self._captures[layer_index]
+        if call_index == 0:
+            captures["prefill"] = summary
+        else:
+            captures.setdefault("decode_first", summary)
+            captures["decode_last"] = summary
+
+    def receipt(
+        self,
+        *,
+        model_id: str,
+        adapter_id: str,
+        request_fingerprint_sha256: str,
+        restoration_exact: bool,
+    ) -> JsonObject:
+        layers: list[JsonObject] = []
+        for layer_index in self.policy.native_layer_indices:
+            captures = self._captures[layer_index]
+            _require("prefill" in captures, "NATIVE_PREFILL_NOT_CAPTURED")
+            transitions: JsonObject = {}
+            for left_name, right_name, label in (
+                ("prefill", "decode_first", "prefill_to_decode_first"),
+                ("decode_first", "decode_last", "decode_first_to_decode_last"),
+            ):
+                if left_name in captures and right_name in captures:
+                    transitions[label] = _sampled_transition(
+                        captures[left_name]["sampled_channel_values"],
+                        captures[right_name]["sampled_channel_values"],
+                    )
+            layers.append(
+                {
+                    "layer_index": layer_index,
+                    "forward_call_count": self._call_counts[layer_index],
+                    "captures": _clone(captures),
+                    "transitions": transitions,
+                }
+            )
+        checks = {
+            "selected_layers_captured": len(layers)
+            == len(self.policy.native_layer_indices),
+            "prefill_captured_for_every_layer": all(
+                "prefill" in row["captures"] for row in layers
+            ),
+            "full_activations_not_retained": True,
+            "forward_value_passthrough": True,
+            "model_layers_restored_exactly": restoration_exact,
+            "observation_not_used_by_controller": True,
+        }
+        _require(all(checks.values()), "NATIVE_OBSERVATION_CHECK_FAILED")
+        return _seal(
+            {
+                "schema_version": NATIVE_OBSERVATION_SCHEMA_VERSION,
+                "status": "CAPTURED",
+                "scope": "selected_native_residual_stream_summaries",
+                "model_id": model_id,
+                "adapter_id": adapter_id,
+                "request_fingerprint_sha256": request_fingerprint_sha256,
+                "policy": self.policy.to_dict(),
+                "layers": layers,
+                "checks": checks,
+                "feeds_controller": False,
+                "artifact_sensitivity_status": "DERIVED_MODEL_DATA_REVIEW_BEFORE_EXPORT",
+                "claim_status": "LOCAL_DEVELOPMENT_DIAGNOSTIC_ONLY",
+            }
+        )
+
+
+@contextmanager
+def _observe_mlx_native_layers(
+    model: Any,
+    policy: OscilloscopePolicy,
+) -> Any:
+    _validate_oscilloscope_policy(policy)
+    try:
+        import mlx.nn as nn
+    except ImportError as exc:  # pragma: no cover - environment dependent
+        raise EBRTError("MLX_LM_NOT_INSTALLED") from exc
+    model_body = getattr(model, "model", None)
+    layers = getattr(model_body, "layers", None)
+    _require(isinstance(layers, list) and bool(layers), "NATIVE_LAYERS_UNAVAILABLE")
+    _require(
+        all(index < len(layers) for index in policy.native_layer_indices),
+        "NATIVE_LAYER_INDEX_OUT_OF_RANGE",
+    )
+    collector = _MLXNativeCollector(policy)
+    originals = {index: layers[index] for index in policy.native_layer_indices}
+
+    class _ObservedBlock(nn.Module):
+        def __init__(self, inner: Any, layer_index: int) -> None:
+            super().__init__()
+            self.inner = inner
+            self.layer_index = layer_index
+            self.use_sliding = getattr(inner, "use_sliding", False)
+
+        def __call__(self, *args: Any, **kwargs: Any) -> Any:
+            output = self.inner(*args, **kwargs)
+            collector.record(self.layer_index, output)
+            return output
+
+    for index, original in originals.items():
+        layers[index] = _ObservedBlock(original, index)
+    restoration_exact = False
+    try:
+        yield collector
+    finally:
+        for index, original in originals.items():
+            layers[index] = original
+        restoration_exact = all(
+            layers[index] is original for index, original in originals.items()
+        )
+        setattr(collector, "_restoration_exact", restoration_exact)
+
+
 class SharedMLXRuntime:
     """Lazy one-process MLX runtime shared by one or more v0.8 lanes."""
 
@@ -1927,7 +2350,14 @@ class SharedMLXRuntime:
         except Exception as exc:  # pragma: no cover - model/runtime dependent
             raise EBRTError("MLX_MODEL_LOAD_FAILED") from exc
 
-    def generate(self, prompt: str) -> str:
+    def _generate(
+        self,
+        prompt: str,
+        *,
+        oscilloscope_policy: OscilloscopePolicy | None,
+        adapter_id: str | None,
+        request_fingerprint_sha256: str | None,
+    ) -> tuple[str, JsonObject | None]:
         self._load()
         try:
             import mlx.core as mx
@@ -1942,37 +2372,113 @@ class SharedMLXRuntime:
                 tokenize=False,
                 add_generation_prompt=True,
             )
-            return generate(
-                self._model,
-                self._tokenizer,
-                prompt=rendered,
-                max_tokens=self.max_tokens,
-                sampler=make_sampler(temp=0.0),
-                verbose=False,
+            if oscilloscope_policy is None:
+                return (
+                    generate(
+                        self._model,
+                        self._tokenizer,
+                        prompt=rendered,
+                        max_tokens=self.max_tokens,
+                        sampler=make_sampler(temp=0.0),
+                        verbose=False,
+                    ),
+                    None,
+                )
+            _validate_oscilloscope_policy(oscilloscope_policy)
+            _safe_id(adapter_id, "OSCILLOSCOPE_ADAPTER_ID")
+            _require(
+                type(request_fingerprint_sha256) is str
+                and re.fullmatch(r"[0-9a-f]{64}", request_fingerprint_sha256)
+                is not None,
+                "OSCILLOSCOPE_REQUEST_FINGERPRINT_INVALID",
             )
+            with _observe_mlx_native_layers(
+                self._model,
+                oscilloscope_policy,
+            ) as collector:
+                raw = generate(
+                    self._model,
+                    self._tokenizer,
+                    prompt=rendered,
+                    max_tokens=self.max_tokens,
+                    sampler=make_sampler(temp=0.0),
+                    verbose=False,
+                )
+            observation = collector.receipt(
+                model_id=self.model_id,
+                adapter_id=adapter_id,
+                request_fingerprint_sha256=request_fingerprint_sha256,
+                restoration_exact=bool(getattr(collector, "_restoration_exact", False)),
+            )
+            return raw, observation
+        except EBRTError:
+            raise
         except Exception as exc:  # pragma: no cover - model/runtime dependent
             raise EBRTError("MLX_GENERATION_FAILED") from exc
+
+    def generate(self, prompt: str) -> str:
+        raw, observation = self._generate(
+            prompt,
+            oscilloscope_policy=None,
+            adapter_id=None,
+            request_fingerprint_sha256=None,
+        )
+        _require(observation is None, "UNEXPECTED_NATIVE_OBSERVATION")
+        return raw
+
+    def generate_observed(
+        self,
+        prompt: str,
+        *,
+        policy: OscilloscopePolicy,
+        adapter_id: str,
+        request_fingerprint_sha256: str,
+    ) -> tuple[str, JsonObject]:
+        raw, observation = self._generate(
+            prompt,
+            oscilloscope_policy=policy,
+            adapter_id=adapter_id,
+            request_fingerprint_sha256=request_fingerprint_sha256,
+        )
+        _require(observation is not None, "NATIVE_OBSERVATION_MISSING")
+        return raw, observation
 
 
 @dataclass
 class MLXLocalAdapter:
     runtime: SharedMLXRuntime
     adapter_id: str
+    oscilloscope_policy: OscilloscopePolicy | None = None
 
     @property
     def descriptor(self) -> AdapterDescriptor:
+        policy = self.oscilloscope_policy
+        if policy is not None:
+            _validate_oscilloscope_policy(policy)
+        generation_config: list[tuple[str, str | int | float | bool]] = [
+            ("add_generation_prompt", True),
+            ("max_tokens", self.runtime.max_tokens),
+        ]
+        if policy is not None:
+            generation_config.append(
+                (
+                    "oscilloscope_policy_fingerprint",
+                    str(policy.to_dict()["fingerprint_sha256"]),
+                )
+            )
+        generation_config.extend(
+            [
+                ("sampler_temperature", 0.0),
+                ("seed", self.runtime.seed),
+            ]
+        )
         return AdapterDescriptor(
             adapter_id=self.adapter_id,
             model_id=self.runtime.model_id,
             interface_kind="local_open_weight",
-            state_visibility="public_only",
+            state_visibility=("native_latent" if policy is not None else "public_only"),
             differentiable_through_model=False,
-            generation_config=(
-                ("add_generation_prompt", True),
-                ("max_tokens", self.runtime.max_tokens),
-                ("sampler_temperature", 0.0),
-                ("seed", self.runtime.seed),
-            ),
+            generation_config=tuple(generation_config),
         )
 
     def generate(
@@ -1984,7 +2490,16 @@ class MLXLocalAdapter:
     ) -> ModelResult:
         invocation = build_model_invocation(task, program, prompt_policy=prompt_policy)
         started = time.perf_counter()
-        raw = self.runtime.generate(str(invocation["prompt"]))
+        observation: JsonObject | None = None
+        if self.oscilloscope_policy is None:
+            raw = self.runtime.generate(str(invocation["prompt"]))
+        else:
+            raw, observation = self.runtime.generate_observed(
+                str(invocation["prompt"]),
+                policy=self.oscilloscope_policy,
+                adapter_id=self.adapter_id,
+                request_fingerprint_sha256=str(invocation["fingerprint_sha256"]),
+            )
         latency_ms = (time.perf_counter() - started) * 1000.0
         answer, support = _parse_model_text(raw, task=task)
         return ModelResult(
@@ -1994,7 +2509,54 @@ class MLXLocalAdapter:
             descriptor=self.descriptor,
             request_fingerprint_sha256=str(invocation["fingerprint_sha256"]),
             latency_ms=latency_ms,
+            native_state_observation=observation,
         )
+
+
+def _native_observation_matches_binding(
+    observation: Mapping[str, Any] | None,
+    *,
+    descriptor: AdapterDescriptor,
+    request_fingerprint_sha256: str,
+) -> bool:
+    configuration = dict(descriptor.generation_config)
+    if descriptor.state_visibility == "public_only":
+        return (
+            observation is None
+            and "oscilloscope_policy_fingerprint" not in configuration
+        )
+    if observation is None:
+        return False
+    try:
+        snapshot = _sealed_snapshot(observation, "NATIVE_STATE_OBSERVATION")
+        policy = _sealed_snapshot(
+            snapshot.get("policy"),
+            "NATIVE_STATE_OBSERVATION_POLICY",
+        )
+    except EBRTError:
+        return False
+    checks = snapshot.get("checks")
+    layers = snapshot.get("layers")
+    selected = policy.get("native_layer_indices")
+    return bool(
+        snapshot.get("schema_version") == NATIVE_OBSERVATION_SCHEMA_VERSION
+        and snapshot.get("status") == "CAPTURED"
+        and snapshot.get("model_id") == descriptor.model_id
+        and snapshot.get("adapter_id") == descriptor.adapter_id
+        and snapshot.get("request_fingerprint_sha256") == request_fingerprint_sha256
+        and snapshot.get("feeds_controller") is False
+        and snapshot.get("artifact_sensitivity_status")
+        == "DERIVED_MODEL_DATA_REVIEW_BEFORE_EXPORT"
+        and snapshot.get("claim_status") == "LOCAL_DEVELOPMENT_DIAGNOSTIC_ONLY"
+        and isinstance(checks, Mapping)
+        and bool(checks)
+        and all(value is True for value in checks.values())
+        and isinstance(layers, list)
+        and isinstance(selected, list)
+        and [row.get("layer_index") for row in layers] == selected
+        and configuration.get("oscilloscope_policy_fingerprint")
+        == policy.get("fingerprint_sha256")
+    )
 
 
 def _structural_model_checks(
@@ -2034,6 +2596,9 @@ def _structural_model_checks(
     request_fingerprint_typed = type(result.request_fingerprint_sha256) is str
     latency_typed = type(result.latency_ms) in {int, float}
     logical_calls_typed = type(result.logical_calls) is int
+    native_observation_typed = result.native_state_observation is None or isinstance(
+        result.native_state_observation, Mapping
+    )
     fields_typed = (
         answer_typed
         and support_ids_typed
@@ -2042,6 +2607,7 @@ def _structural_model_checks(
         and request_fingerprint_typed
         and latency_typed
         and logical_calls_typed
+        and native_observation_typed
     )
     parsed_raw: tuple[str, tuple[str, ...]] | None = None
     if raw_text_typed:
@@ -2080,6 +2646,12 @@ def _structural_model_checks(
             descriptor_matches
             and expected_descriptor.differentiable_through_model is False
             and result.descriptor.differentiable_through_model is False
+        ),
+        "native_state_observation_matches_declared_visibility": descriptor_matches
+        and _native_observation_matches_binding(
+            result.native_state_observation,
+            descriptor=expected_descriptor,
+            request_fingerprint_sha256=expected_request_fingerprint_sha256,
         ),
     }
 
@@ -2310,6 +2882,7 @@ class RevisionEngine:
         core: BackwardRevisionCore | None = None,
         state_adapter: StateAdapter | None = None,
         actuator_adapter: ActuatorAdapter | None = None,
+        oscilloscope_policy: OscilloscopePolicy | None = None,
     ) -> None:
         self.core = BackwardRevisionCore() if core is None else core
         self.state_adapter = (
@@ -2318,6 +2891,9 @@ class RevisionEngine:
         self.actuator_adapter = (
             PublicRevisionActuator() if actuator_adapter is None else actuator_adapter
         )
+        if oscilloscope_policy is not None:
+            _validate_oscilloscope_policy(oscilloscope_policy)
+        self.oscilloscope_policy = oscilloscope_policy
 
     @_bind_single_core_execution
     def run(
@@ -2356,6 +2932,15 @@ class RevisionEngine:
             core_execution_trusted and backward_probe.executed_once(),
             "CORE_EXECUTION_UNVERIFIED",
         )
+        oscilloscope = (
+            _public_oscilloscope_receipt(
+                envelope,
+                optimized,
+                self.oscilloscope_policy,
+            )
+            if self.oscilloscope_policy is not None
+            else None
+        )
         program = self.actuator_adapter.compile(
             task,
             _clone(optimized),
@@ -2393,30 +2978,31 @@ class RevisionEngine:
             if post_run_contract is not None
             else {"status": "NOT_ASSESSED", "contract": None, "checks": {}}
         )
-        return _seal(
-            {
-                "schema_version": RESULT_SCHEMA_VERSION,
-                "mode": "single_lane_v0.7.1",
+        material: JsonObject = {
+            "schema_version": RESULT_SCHEMA_VERSION,
+            "mode": "single_lane_v0.7.1",
+            "status": "PASS",
+            "core_protocol": CORE_PROTOCOL_VERSION,
+            "task_fingerprint_sha256": _fingerprint(task.to_public_dict()),
+            "trajectory": optimized,
+            "actuator": program.to_dict(),
+            "model_result": result.to_dict(),
+            "structural_verification": {
                 "status": "PASS",
-                "core_protocol": CORE_PROTOCOL_VERSION,
-                "task_fingerprint_sha256": _fingerprint(task.to_public_dict()),
-                "trajectory": optimized,
-                "actuator": program.to_dict(),
-                "model_result": result.to_dict(),
-                "structural_verification": {
-                    "status": "PASS",
-                    "checks": structural,
-                },
-                "post_run_contract": contract_grade,
-                "semantic_correctness_status": (
-                    contract_grade["status"]
-                    if post_run_contract is not None
-                    else "NOT_ASSESSED"
-                ),
-                "effect_attribution_status": "NOT_ASSESSED",
-                "claim_boundary": list(CLAIM_BOUNDARY),
-            }
-        )
+                "checks": structural,
+            },
+            "post_run_contract": contract_grade,
+            "semantic_correctness_status": (
+                contract_grade["status"]
+                if post_run_contract is not None
+                else "NOT_ASSESSED"
+            ),
+            "effect_attribution_status": "NOT_ASSESSED",
+            "claim_boundary": list(CLAIM_BOUNDARY),
+        }
+        if oscilloscope is not None:
+            material["oscilloscope"] = oscilloscope
+        return _seal(material)
 
 
 @dataclass(frozen=True)
@@ -3771,6 +4357,12 @@ def self_test() -> JsonObject:
         ),
         "STATE_SCALE_INVALID",
     )
+    invalid_oscilloscope_policy_rejected = _raises_ebrt_reason(
+        lambda: _validate_oscilloscope_policy(
+            OscilloscopePolicy(native_layer_indices=(2, 1))
+        ),
+        "OSCILLOSCOPE_LAYER_INDICES_INVALID",
+    )
     numeric_string_task_fields_rejected = (
         _raises_ebrt_reason(
             lambda: validate_task(replace(task, decay="0.85")),
@@ -4319,6 +4911,16 @@ def self_test() -> JsonObject:
     engine = RevisionEngine()
     with _network_denied() as network:
         single = engine.run(
+            task,
+            adapter,
+            post_run_contract=contract,
+        )
+        oscilloscope_policy = OscilloscopePolicy(
+            event_window_radius=1,
+            native_layer_indices=(0, 1, 2),
+            sampled_channels=4,
+        )
+        observed_single = RevisionEngine(oscilloscope_policy=oscilloscope_policy).run(
             task,
             adapter,
             post_run_contract=contract,
@@ -5173,6 +5775,7 @@ def self_test() -> JsonObject:
         "stability_basis_requires_exact_zero": near_zero_stability_rejected,
         "parser_sentinel_cannot_be_evidence_id": reserved_evidence_id_rejected,
         "state_adapter_scales_are_positive": invalid_scale_rejected,
+        "oscilloscope_policy_is_bounded_and_ordered": invalid_oscilloscope_policy_rejected,
         "task_numeric_fields_reject_string_coercion": numeric_string_task_fields_rejected,
         "malformed_public_task_fields_fail_closed": malformed_public_task_fields_rejected,
         "public_task_text_requires_utf8": surrogate_task_text_rejected,
@@ -5317,6 +5920,27 @@ def self_test() -> JsonObject:
             "invalidation_scale": 0.75,
             "support_scale": 1.25,
         },
+        "public_oscilloscope_is_post_optimization_and_noninvasive": observed_single[
+            "trajectory"
+        ]["fingerprint_sha256"]
+        == single["trajectory"]["fingerprint_sha256"]
+        and observed_single["actuator"]["fingerprint_sha256"]
+        == single["actuator"]["fingerprint_sha256"]
+        and observed_single["model_result"]["raw_text"]
+        == single["model_result"]["raw_text"]
+        and observed_single["oscilloscope"]["feeds_controller"] is False
+        and observed_single["oscilloscope"]["source_trajectory_fingerprint_sha256"]
+        == single["trajectory"]["fingerprint_sha256"],
+        "public_oscilloscope_replays_neutral_exact_and_matched_sham": set(
+            observed_single["oscilloscope"]["arms"]
+        )
+        == {
+            "neutral",
+            "exact",
+            "reversed_temporal_l2_value_multiset_sham",
+        }
+        and observed_single["oscilloscope"]["selected_steps"] == [5, 6]
+        and all(observed_single["oscilloscope"]["checks"].values()),
         "task_owned_trajectory_parameters_are_bound": task_parameter_tampering_rejected,
         "single_lane_v0_7_1_pass": single["status"] == "PASS",
         "single_lane_contract_pass": single["post_run_contract"]["status"] == "PASS",
@@ -5617,6 +6241,94 @@ def run_local_e2e(model_path: str | None, model_id: str | None = None) -> JsonOb
     return result
 
 
+def run_local_oscilloscope_e2e(
+    model_path: str | None,
+    model_id: str | None = None,
+    *,
+    policy: OscilloscopePolicy | None = None,
+) -> JsonObject:
+    """Prove that selected native observation is forward-value non-invasive."""
+
+    selected_policy = OscilloscopePolicy() if policy is None else policy
+    _validate_oscilloscope_policy(selected_policy)
+    task = build_demo_task()
+    contract = build_demo_contract()
+    runtime = SharedMLXRuntime(_resolved_model_path(model_path), model_id=model_id)
+    baseline = RevisionEngine().run(
+        task,
+        MLXLocalAdapter(runtime, adapter_id="mlx-local-primary"),
+        post_run_contract=contract,
+    )
+    observed = RevisionEngine(oscilloscope_policy=selected_policy).run(
+        task,
+        MLXLocalAdapter(
+            runtime,
+            adapter_id="mlx-local-primary",
+            oscilloscope_policy=selected_policy,
+        ),
+        post_run_contract=contract,
+    )
+    baseline_model = baseline["model_result"]
+    observed_model = observed["model_result"]
+    native = observed_model.get("native_state_observation")
+    public = observed.get("oscilloscope")
+    checks = {
+        "baseline_contract_pass": baseline["post_run_contract"]["status"] == "PASS",
+        "observed_contract_pass": observed["post_run_contract"]["status"] == "PASS",
+        "probe_on_off_raw_output_identical": baseline_model["raw_text"]
+        == observed_model["raw_text"],
+        "probe_on_off_answer_identical": baseline_model["answer"]
+        == observed_model["answer"],
+        "probe_on_off_support_identical": baseline_model["support_ids"]
+        == observed_model["support_ids"],
+        "probe_on_off_request_identical": baseline_model["request_fingerprint_sha256"]
+        == observed_model["request_fingerprint_sha256"],
+        "probe_on_off_public_trajectory_identical": baseline["trajectory"][
+            "fingerprint_sha256"
+        ]
+        == observed["trajectory"]["fingerprint_sha256"],
+        "probe_on_off_actuator_identical": baseline["actuator"]["fingerprint_sha256"]
+        == observed["actuator"]["fingerprint_sha256"],
+        "native_observation_is_structurally_bound": observed["structural_verification"][
+            "checks"
+        ]["native_state_observation_matches_declared_visibility"],
+        "native_observation_is_detached_diagnostic": isinstance(native, Mapping)
+        and native.get("feeds_controller") is False,
+        "public_observation_is_post_optimization_only": isinstance(public, Mapping)
+        and public.get("feeds_controller") is False
+        and public.get("source_trajectory_fingerprint_sha256")
+        == observed["trajectory"]["fingerprint_sha256"],
+        "selected_native_layers_are_exact": isinstance(native, Mapping)
+        and [row["layer_index"] for row in native.get("layers", [])]
+        == list(selected_policy.native_layer_indices),
+    }
+    _require(all(checks.values()), "LOCAL_OSCILLOSCOPE_E2E_FAILED")
+    return _seal(
+        {
+            "schema_version": OSCILLOSCOPE_CHECK_SCHEMA_VERSION,
+            "status": "PASS",
+            "policy": selected_policy.to_dict(),
+            "baseline_result_fingerprint_sha256": baseline["fingerprint_sha256"],
+            "observed_result": observed,
+            "runtime_diagnostics": {
+                "baseline_first_latency_ms": baseline_model["latency_ms"],
+                "observed_second_latency_ms": observed_model["latency_ms"],
+                "serial_delta_second_minus_first_ms": _finite(
+                    float(observed_model["latency_ms"])
+                    - float(baseline_model["latency_ms"]),
+                    "OSCILLOSCOPE_SERIAL_DELTA_MS",
+                ),
+                "serial_order": ["baseline_cold_first", "observed_warm_second"],
+                "overhead_status": "NOT_ASSESSED_COLD_WARM_CONFOUNDED",
+            },
+            "checks": checks,
+            "effect_attribution_status": "NOT_ASSESSED",
+            "generalization_status": "NOT_A_GOAL_OF_THIS_DIAGNOSTIC",
+            "claim_boundary": list(CLAIM_BOUNDARY),
+        }
+    )
+
+
 def run_joint_local_e2e(
     model_path: str | None, model_id: str | None = None
 ) -> JsonObject:
@@ -5661,7 +6373,7 @@ def run_joint_local_e2e(
 def capabilities() -> JsonObject:
     return _seal(
         {
-            "schema_version": "ebrt-capabilities-v0.8.0",
+            "schema_version": "ebrt-capabilities-v0.8.1",
             "status": "READY",
             "core_protocol": CORE_PROTOCOL_VERSION,
             "joint_protocol": JOINT_PROTOCOL_VERSION,
@@ -5669,7 +6381,7 @@ def capabilities() -> JsonObject:
                 "state_adapter": "build(task, lane_id) -> TrajectoryEnvelope",
                 "actuator_adapter": "compile(task, credit_receipt, lane_id) -> ActuatorProgram",
                 "model_adapter": "generate(task, program, prompt_policy) -> ModelResult",
-                "observer": "sealed JSON receipts with independent structural and post-run grades",
+                "observer": "sealed JSON receipts plus optional post-optimization public and selected native-state diagnostics",
             },
             "implemented_model_adapters": [
                 {
@@ -5682,6 +6394,11 @@ def capabilities() -> JsonObject:
                 },
             ],
             "hosted_provider_e2e_status": "DEFERRED_NO_CREDENTIALS",
+            "optional_oscilloscope": {
+                "status": "EXECUTABLE_LOCAL_OPEN_WEIGHT",
+                "scope": "event-window public replay plus selected MLX residual-stream summaries",
+                "feeds_controller": False,
+            },
             "gradient_boundary": "StateAdapter trajectory; never ModelAdapter generation",
             "claim_boundary": list(CLAIM_BOUNDARY),
         }
@@ -5695,7 +6412,7 @@ def _pretty(value: Mapping[str, Any]) -> str:
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest="command", required=True)
-    commands.add_parser("self-test", help="run network-zero v0.7.1/v0.8 conformance")
+    commands.add_parser("self-test", help="run network-zero v0.7.1/v0.8.1 conformance")
     commands.add_parser("capabilities", help="print the adapter and claim contract")
     commands.add_parser("demo-task", help="print the known synthetic task")
     local = commands.add_parser(
@@ -5705,6 +6422,34 @@ def build_parser() -> argparse.ArgumentParser:
     local.add_argument(
         "--model-id",
         help="revision-bearing identity (provider/model@revision) required outside a Hugging Face snapshot",
+    )
+    oscilloscope = commands.add_parser(
+        "local-oscilloscope-e2e",
+        help="compare probe OFF/ON and capture selected local native-state summaries",
+    )
+    oscilloscope.add_argument(
+        "--model", help="path to a complete local MLX model snapshot"
+    )
+    oscilloscope.add_argument(
+        "--model-id",
+        help="revision-bearing identity (provider/model@revision) required outside a Hugging Face snapshot",
+    )
+    oscilloscope.add_argument(
+        "--layers",
+        default="0,15,31",
+        help="comma-separated zero-based transformer layer indices",
+    )
+    oscilloscope.add_argument(
+        "--event-window-radius",
+        type=int,
+        default=1,
+        help="public trajectory steps retained on each side of the late event",
+    )
+    oscilloscope.add_argument(
+        "--sampled-channels",
+        type=int,
+        default=16,
+        help="evenly spaced residual channels retained per native capture",
     )
     joint = commands.add_parser(
         "joint-local-e2e",
@@ -5729,6 +6474,24 @@ def main(argv: Sequence[str] | None = None) -> int:
             value = build_demo_task().to_public_dict()
         elif args.command == "local-e2e":
             value = run_local_e2e(args.model, args.model_id)
+        elif args.command == "local-oscilloscope-e2e":
+            try:
+                layer_indices = tuple(
+                    int(value.strip())
+                    for value in args.layers.split(",")
+                    if value.strip()
+                )
+            except ValueError as exc:
+                raise EBRTError("OSCILLOSCOPE_LAYER_INDICES_INVALID") from exc
+            value = run_local_oscilloscope_e2e(
+                args.model,
+                args.model_id,
+                policy=OscilloscopePolicy(
+                    event_window_radius=args.event_window_radius,
+                    native_layer_indices=layer_indices,
+                    sampled_channels=args.sampled_channels,
+                ),
+            )
         elif args.command == "joint-local-e2e":
             value = run_joint_local_e2e(args.model, args.model_id)
         else:  # pragma: no cover
@@ -5739,7 +6502,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         print(
             _pretty(
                 {
-                    "schema_version": "ebrt-error-v0.8.0",
+                    "schema_version": "ebrt-error-v0.8.1",
                     "status": "ERROR",
                     "reason_code": str(error),
                 }
