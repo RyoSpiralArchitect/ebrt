@@ -2683,6 +2683,38 @@ def _native_summary_is_valid(
             abs_tol=NATIVE_SUMMARY_ABS_TOLERANCE,
         )
 
+    def bounded_moments_feasible(
+        count: int,
+        total: float,
+        squared_l2: float,
+        bound: float,
+    ) -> bool:
+        if count == 0:
+            return summary_close(total, 0.0) and summary_close(squared_l2, 0.0)
+        if squared_l2 < -numeric_slack(squared_l2) or bound < 0.0:
+            return False
+        squared_l2 = max(0.0, squared_l2)
+        if not bounded_above(abs(total), count * bound):
+            return False
+        minimum_squared_l2 = total * total / count
+        if summary_close(bound, 0.0):
+            return summary_close(total, 0.0) and summary_close(squared_l2, 0.0)
+        unit_sum = (total + count * bound) / (2.0 * bound)
+        if not bounded_above(0.0, unit_sum) or not bounded_above(unit_sum, count):
+            return False
+        unit_sum = min(float(count), max(0.0, unit_sum))
+        saturated = min(count, math.floor(unit_sum))
+        fractional = unit_sum - saturated
+        maximum_squared_l2 = (
+            bound
+            * bound
+            * (4.0 * (saturated + fractional * fractional) - 4.0 * unit_sum + count)
+        )
+        return bounded_above(
+            minimum_squared_l2,
+            squared_l2,
+        ) and bounded_above(squared_l2, maximum_squared_l2)
+
     if not (
         summary_close(l2, rms * math.sqrt(hidden_size))
         and bounded_above(abs(mean), rms)
@@ -2707,28 +2739,25 @@ def _native_summary_is_valid(
         if remaining_squared_l2 < -numeric_slack(l2 * l2, sampled_squared_l2):
             return False
         remaining_squared_l2 = max(0.0, remaining_squared_l2)
-        if not (
-            bounded_above(
-                remaining_sum * remaining_sum,
-                remaining_count * remaining_squared_l2,
-            )
-            and bounded_above(
-                remaining_squared_l2,
-                remaining_count * max_abs * max_abs,
-            )
-            and bounded_above(abs(remaining_sum), remaining_count * max_abs)
-        ):
-            return False
-        if remaining_count == 1 and not summary_close(
+        if not bounded_moments_feasible(
+            remaining_count,
+            remaining_sum,
             remaining_squared_l2,
-            remaining_sum * remaining_sum,
+            max_abs,
         ):
             return False
-        if not summary_close(sampled_max_abs, max_abs) and not bounded_above(
-            max_abs * max_abs,
-            remaining_squared_l2,
-        ):
-            return False
+        if not summary_close(sampled_max_abs, max_abs):
+            squared_after_maximum = remaining_squared_l2 - max_abs * max_abs
+            if not any(
+                bounded_moments_feasible(
+                    remaining_count - 1,
+                    remaining_sum - sign * max_abs,
+                    squared_after_maximum,
+                    max_abs,
+                )
+                for sign in (-1.0, 1.0)
+            ):
+                return False
     if phase == "prefill":
         return (
             cache_offset < prompt_token_count
@@ -5961,6 +5990,32 @@ def self_test() -> JsonObject:
             prompt_token_count=synthetic_prompt_tokens,
             sampled_channels=4,
         )
+        residual_maximum_valid = {
+            "sequence_length": 1,
+            "cache_offset_before": synthetic_prompt_tokens,
+            "hidden_size": 6,
+            "mean": 0.0,
+            "rms": math.sqrt(2.0 / 6.0),
+            "max_abs": 1.0,
+            "l2": math.sqrt(2.0),
+            "sampled_channel_indices": [0, 2, 3, 5],
+            "sampled_channel_values": [0.0, 0.0, 0.0, 0.0],
+        }
+        residual_maximum_is_jointly_feasible = _native_summary_is_valid(
+            residual_maximum_valid,
+            phase="decode_first",
+            prompt_token_count=synthetic_prompt_tokens,
+            sampled_channels=4,
+        ) and not _native_summary_is_valid(
+            {
+                **residual_maximum_valid,
+                "rms": 0.5,
+                "l2": math.sqrt(1.5),
+            },
+            phase="decode_first",
+            prompt_token_count=synthetic_prompt_tokens,
+            sampled_channels=4,
+        )
         chunked_prefill_is_not_decode = _native_summary_is_valid(
             synthetic_capture(
                 sequence_length=2,
@@ -6487,6 +6542,7 @@ def self_test() -> JsonObject:
         ],
         "native_oscilloscope_recomputes_fully_sampled_summaries": full_sample_summaries_are_recomputed,
         "native_oscilloscope_checks_partial_sample_moment_feasibility": partial_sample_impossible_moments_are_rejected,
+        "native_oscilloscope_binds_residual_maximum_to_moments": residual_maximum_is_jointly_feasible,
         "chunked_prefill_is_not_labeled_as_decode": chunked_prefill_is_not_decode,
         "native_latent_without_oscilloscope_remains_compatible": compatible_native_checks[
             "native_state_observation_matches_declared_visibility"
