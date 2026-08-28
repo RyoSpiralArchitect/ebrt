@@ -20,7 +20,9 @@ The current release has two executable layers:
 - **v0.7.1:** one trajectory, one real local backward pass, one compiled
   actuator, and one real open-weight regeneration;
 - **v0.8.0:** one joint backward block over multiple public trajectories,
-  lane-specific actuators, real local generations, and deterministic merge.
+  lane-specific actuators, real local generations, and deterministic merge;
+- **v0.8.1:** an optional, non-invasive state oscilloscope for faster local
+  algorithm iteration.
 
 The generator is an adapter, not the definition of EBRT. The bundled reference
 backend is a local MLX model. Hosted APIs and other local runtimes can meet the
@@ -43,7 +45,10 @@ contracts, real reverse-mode autodiff, finite differences, control budgets,
 zero-control identity, deterministic merge, lane-order invariance, task-owned
 trajectory binding, admitted-core receipt replay, nonzero model-visible credit,
 immutable actuator inputs, exact post-run contract receipts, and both
-state-adapter and model-adapter stop-gradient boundaries.
+state-adapter and model-adapter stop-gradient boundaries. It also checks that
+the optional public oscilloscope runs strictly after optimization, leaves the
+trajectory, actuator, and model output unchanged, and labels its reversed sham
+geometry exactly.
 
 ### 2. Real local model
 
@@ -106,6 +111,57 @@ with a strict post-run contract `PASS`. This is an end-to-end mechanism check
 over a known synthetic fixture, not a claim of general reasoning improvement.
 The committed sanitized receipt is
 [`artifacts/model_interface_core_v0_7_1/local_mistral_e2e_r01.json`](artifacts/model_interface_core_v0_7_1/local_mistral_e2e_r01.json).
+
+### 3. Selective State Oscilloscope
+
+The oscilloscope is a development instrument, not a new reasoning claim. It
+observes only selected windows and never feeds a measurement into the
+controller:
+
+```bash
+python3 ebrt_core.py local-oscilloscope-e2e
+
+# Optional selection for another compatible local architecture
+python3 ebrt_core.py local-oscilloscope-e2e \
+  --layers 0,15,31 \
+  --event-window-radius 1 \
+  --sampled-channels 16
+```
+
+One command performs the same deterministic local generation with the probe
+OFF and ON. Acceptance requires exact equality of the raw natural-language
+output, parsed answer, support IDs, request fingerprint, public trajectory,
+and actuator. The observed run then retains only:
+
+- the event-centered public trajectory window for neutral, exact, and an
+  explicitly named L2/value-multiset-matched reversed temporal sham;
+- scalar residual-stream summaries from the selected MLX layers at prefill,
+  first decode, and last decode;
+- evenly spaced channel samples and sampled-channel transition diagnostics.
+
+Full native activations are not serialized or retained. The wrapper returns
+the original layer output unchanged and restores the exact model-layer objects
+after generation. The current reference check captures layers `0`, `15`, and
+`31`; its probe-OFF and probe-ON outputs are both:
+
+```text
+ANSWER=PROVE
+SUPPORT=R6,R4,R2
+```
+
+The command records the two serial wall times but marks instrumentation
+overhead `NOT_ASSESSED_COLD_WARM_CONFOUNDED`: the first call includes cold model
+loading and the second runs warm. A future overhead benchmark needs matched
+warm-up and counterbalanced order.
+
+Even sampled latent channels are derived model data. Native receipts are marked
+`DERIVED_MODEL_DATA_REVIEW_BEFORE_EXPORT`; inspect them before publishing or
+moving them outside the local development boundary.
+
+This instrument exists to locate where an EBRT signal is lost or distorted
+while improving the module. Its native-state measurements apply only to the
+observed local run. They are not evidence about hosted-model internals,
+cross-model regularities, semantic superiority, or general reasoning gains.
 
 ## What the core owns
 
