@@ -1,7 +1,7 @@
 # EBRT Model-Interface Core Roadmap
 
 Status: **ACTIVE ENGINEERING AND RESEARCH PLAN**
-Current implementation: **v0.7.1 core + v0.8.0 joint trajectory**
+Current implementation: **v0.7.1 core + v0.8.2 local output corpus**
 
 This roadmap starts where the sealed v0.6 line ends. It does not rewrite those
 artifacts or reinterpret their results. The new line separates the backward
@@ -93,17 +93,46 @@ Status: **IMPLEMENTED + VERIFIED**
 The verified v0.8.0 run demonstrates multi-lane composition around one local
 model. It does **not** establish a heterogeneous multi-model effect.
 
-### v0.8.1 — Heterogeneous local execution
+### v0.8.1 — Selective state oscilloscope
 
-Status: **DEFERRED**
+Status: **IMPLEMENTED + VERIFIED**
 
-- Connect two distinct local open-weight model IDs through the same v0.8
-  protocol.
-- Lock prompts, decoding, task order, budgets, merge policy, and failure rules.
-- Separate protocol completion from agreement, complementarity, and quality.
-- Preserve disagreements as first-class artifacts rather than forcing a merge.
+- Observe selected event-centered public-trajectory windows after optimization.
+- Capture bounded scalar and sampled-channel residual summaries at selected MLX
+  layers without changing model outputs or feeding observations back into the
+  controller.
+- Require exact probe-OFF/probe-ON equality and restore original layer objects.
+- Treat native measurements as run-local development instruments, not
+  cross-model scientific evidence.
 
-### v0.8.2 — Hosted-provider adapters
+### v0.8.2 — Heterogeneous local output-diff corpus
+
+Status: **IMPLEMENTED + VERIFIED; DEVELOPMENT ONLY**
+
+- Execute direct full-context and EBRT credit-first arms across four local model
+  snapshots, four cases, and 32 terminal calls.
+- Store raw generated text, parsed answer, support lineage, public controller
+  receipts, and common post-call grades.
+- Require explicit chat-template or plain-text rendering in the model
+  descriptor rather than silently guessing.
+- Admit only Mistral's four paired cells to algorithm diagnosis; retain the
+  other 12 format-failed cells as adapter/capability diagnostics.
+- Observe zero answer changes and four support-lineage changes. Do not infer a
+  gradient-specific or general reasoning effect from the bundled arm contrast.
+
+### v0.8.3 — Role-stratified provider-uptake canary
+
+Status: **RESEARCH TARGET**
+
+- Test whether a public-role coverage floor prevents top-k credit from dropping
+  required dependency roles.
+- Preserve a separate receipt for compiled evidence selection and actual
+  provider uptake.
+- Add fresh, pre-locked cases with an unsaturated answer surface.
+- Begin with one instruction-capable model; expand only after a second model's
+  adapter-readiness canary passes.
+
+### v0.8.4 — Hosted-provider adapters
 
 Status: **CONFORMANCE ONLY; LIVE E2E DEFERRED**
 

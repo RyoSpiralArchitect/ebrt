@@ -2351,6 +2351,7 @@ class SharedMLXRuntime:
         model_id: str | None = None,
         max_tokens: int = 48,
         seed: int = 0,
+        prompt_rendering_mode: Literal["chat_template", "plain_text"] = "chat_template",
     ):
         path = Path(model_path).expanduser().resolve()
         _require(path.is_dir(), "LOCAL_MODEL_PATH_NOT_FOUND")
@@ -2383,8 +2384,14 @@ class SharedMLXRuntime:
             and 0 <= seed <= 2**63 - 1,
             "MLX_SEED_INVALID",
         )
+        _require(
+            type(prompt_rendering_mode) is str
+            and prompt_rendering_mode in {"chat_template", "plain_text"},
+            "MLX_PROMPT_RENDERING_MODE_INVALID",
+        )
         self.max_tokens = max_tokens
         self.seed = seed
+        self.prompt_rendering_mode = prompt_rendering_mode
         self._model: Any = None
         self._tokenizer: Any = None
 
@@ -2433,11 +2440,14 @@ class SharedMLXRuntime:
             raise EBRTError("MLX_LM_NOT_INSTALLED") from exc
         try:
             mx.random.seed(self.seed)
-            rendered = self._tokenizer.apply_chat_template(
-                [{"role": "user", "content": prompt}],
-                tokenize=False,
-                add_generation_prompt=True,
-            )
+            if self.prompt_rendering_mode == "chat_template":
+                rendered = self._tokenizer.apply_chat_template(
+                    [{"role": "user", "content": prompt}],
+                    tokenize=False,
+                    add_generation_prompt=True,
+                )
+            else:
+                rendered = prompt
             if oscilloscope_policy is None:
                 return (
                     generate(
@@ -2534,8 +2544,12 @@ class MLXLocalAdapter:
         if policy is not None:
             _validate_oscilloscope_policy(policy)
         generation_config: list[tuple[str, str | int | float | bool]] = [
-            ("add_generation_prompt", True),
+            (
+                "add_generation_prompt",
+                self.runtime.prompt_rendering_mode == "chat_template",
+            ),
             ("max_tokens", self.runtime.max_tokens),
+            ("prompt_rendering_mode", self.runtime.prompt_rendering_mode),
         ]
         if policy is not None:
             generation_config.append(
@@ -4285,6 +4299,7 @@ class _DescriptorOnlyMLXRuntime:
     model_id: str
     max_tokens: int
     seed: int
+    prompt_rendering_mode: Literal["chat_template", "plain_text"] = "chat_template"
 
 
 @dataclass(frozen=True)
@@ -5245,8 +5260,18 @@ def self_test() -> JsonObject:
         ),
         adapter_id="mlx-config-binding-test",
     ).descriptor
+    mlx_config_plain = MLXLocalAdapter(
+        runtime=_DescriptorOnlyMLXRuntime(
+            model_id="example/model@revision",
+            max_tokens=32,
+            seed=0,
+            prompt_rendering_mode="plain_text",
+        ),
+        adapter_id="mlx-config-binding-test",
+    ).descriptor
     _validate_adapter_descriptor(mlx_config_a, "MLX_CONFIG_TEST_A")
     _validate_adapter_descriptor(mlx_config_b, "MLX_CONFIG_TEST_B")
+    _validate_adapter_descriptor(mlx_config_plain, "MLX_CONFIG_TEST_PLAIN")
     adapter = _conformance_adapter(
         adapter_id="local-conformance-a", model_id="transparent-local-double-a"
     )
@@ -6519,9 +6544,20 @@ def self_test() -> JsonObject:
         == {
             "add_generation_prompt": True,
             "max_tokens": 32,
+            "prompt_rendering_mode": "chat_template",
             "sampler_temperature": 0.0,
             "seed": 0,
-        },
+        }
+        and mlx_config_plain.to_dict()["generation_config"]
+        == {
+            "add_generation_prompt": False,
+            "max_tokens": 32,
+            "prompt_rendering_mode": "plain_text",
+            "sampler_temperature": 0.0,
+            "seed": 0,
+        }
+        and mlx_config_a.to_dict()["generation_config_fingerprint_sha256"]
+        != mlx_config_plain.to_dict()["generation_config_fingerprint_sha256"],
         "native_oscilloscope_rows_are_recomputed_structurally": synthetic_native_checks[
             "native_state_observation_matches_declared_visibility"
         ]
