@@ -158,8 +158,13 @@ Status: **IMPLEMENTED + VERIFIED; MIXED DEVELOPMENT RESULT**
   non-standard-library modules to 42 full owning-distribution receipts and 10
   repository modules to source receipts, then requires both staged-manifest
   and clone fingerprints to equal the lock. All r01-r07 public outputs are
-  byte-identical; none of the integrity repetitions is counted as fresh
-  evidence.
+  byte-identical. A seventh review found that a timestamp-valid generated
+  `.pyc` could diverge from its locked source while still being executed. r08
+  launches the admitted run before non-standard-library imports with a fresh
+  empty `pycache_prefix` and bytecode writes disabled, forcing 2,861 Python
+  modules through verified source while retaining content receipts for 189
+  native extensions. All r01-r08 public outputs are byte-identical; none of
+  the integrity repetitions is counted as fresh evidence.
 - No gradient-specific, causal-superiority, general-reasoning, or cross-model
   claim is admitted from this canary.
 

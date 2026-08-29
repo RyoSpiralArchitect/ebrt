@@ -2,7 +2,10 @@
 
 Status: **COMPLETE DEVELOPMENT CANARY; MIXED RESULT; NOT A BENCHMARK**
 
-Canonical complete-integrity artifact:
+Canonical verified-source integrity artifact:
+[`artifacts/role_stratified_uptake_v0_8_3/r08_verified_source/results.json`](../artifacts/role_stratified_uptake_v0_8_3/r08_verified_source/results.json)
+
+Preserved complete-integrity artifact:
 [`artifacts/role_stratified_uptake_v0_8_3/r07_complete_integrity/results.json`](../artifacts/role_stratified_uptake_v0_8_3/r07_complete_integrity/results.json)
 
 Preserved immutable-model/runtime-code integrity artifact:
@@ -44,6 +47,9 @@ Immutable-model/runtime-code lock:
 Complete dependency/mount-binding lock:
 [`policy_lock_role_stratified_uptake_v0_8_3_6_r07.json`](../policy_lock_role_stratified_uptake_v0_8_3_6_r07.json)
 
+Verified-source execution lock:
+[`policy_lock_role_stratified_uptake_v0_8_3_7_r08.json`](../policy_lock_role_stratified_uptake_v0_8_3_7_r08.json)
+
 ## Question
 
 The v0.8.2 corpus exposed two different failures:
@@ -73,6 +79,7 @@ there are only three development cases over one model snapshot.
 - Exact-runtime lock commit before r05 calls: `9894121`.
 - Immutable-model/runtime-code lock commit before r06 calls: `5ad3ee2`.
 - Complete dependency/mount-binding lock commit before r07 calls: `9d2027c`.
+- Verified-source execution lock commit before r08 calls: `15833fc`.
 - Model: `mlx-community/Mistral-7B-Instruct-v0.3-4bit@a4b8f...`.
 - Three fresh synthetic late-event cases.
 - Three arms and one generation per arm:
@@ -147,6 +154,20 @@ with both exact locked fingerprints. The portable verifier passes all eight
 checks. r07 is still a contaminated integrity repetition over known cases, not
 fresh scientific evidence, and all nine public outputs remain byte-identical
 across r01/r02/r03/r04/r05/r06/r07.
+
+A seventh review identified a CPython-specific execution gap: a
+timestamp-valid generated `.pyc` can contain bytecode that differs from its
+corresponding locked `.py`, while `module.__file__` still points at that source
+and package manifests omit the generated cache. r08 starts a child interpreter
+before importing repository or site-package modules, assigns it a fresh empty
+`pycache_prefix`, and disables bytecode writes. This makes CPython ignore
+adjacent caches and compile 2,861 Python modules from the content-bound source;
+189 native-extension modules remain content-bound by the r07 receipt. A local
+self-test demonstrates both sides with a deliberately divergent,
+timestamp-valid cache: the ordinary interpreter returns the cached value while
+the r08 policy returns the source value. Portable verification passes all nine
+checks. r08 remains a contaminated integrity repetition, not fresh scientific
+evidence, and all nine public outputs remain byte-identical across r01-r08.
 
 The candidate reserves capacity for the correction plus every public evidence
 node whose caller-supplied role is `required_support`, then fills remaining
