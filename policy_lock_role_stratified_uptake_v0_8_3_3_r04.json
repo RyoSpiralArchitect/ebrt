@@ -1,0 +1,29 @@
+{
+  "base_lock_fingerprint_sha256": "25ff025738aaa418b698f4bb4e915fabd986442d7de4130cf19f5fe2ce2faccc",
+  "claim_boundary": [
+    "This r04 execution repeats already observed cases only to bind the verified bytes to the actual MLX loader path.",
+    "The staged run is contaminated by known r01-r03 outputs and is not fresh scientific replication evidence.",
+    "MLX receives a private copy-on-write regular-file tree, never the writable Hugging Face cache path.",
+    "All staged files are exact locked bytes, distinct inodes, read-only during loading, and rehashed after calls.",
+    "All original v0.8.3 effect-attribution, one-model, public-role, and stop-gradient boundaries remain unchanged."
+  ],
+  "effect_attribution_status": "NOT_ASSESSED",
+  "exact_snapshot_manifest_fingerprint_sha256": "429e669ee9a248a3d40706899853f7049194f2fc8ef2042788e71aa0f5883892",
+  "fingerprint_sha256": "cfe7f5e33a559bd9f1e435e5c8cb12df04099d93ddca55897078ba01d0c665f7",
+  "replication_status": "INTEGRITY_REPLICATION_OVER_KNOWN_R01_R03_CASES",
+  "schema_version": "ebrt-role-uptake-loader-lock-v0.8.3.3",
+  "snapshot_lock_fingerprint_sha256": "586ff867c02ece567d0aa64270cd56695b6ca0e21f3f4d6fe8b71a932b88af20",
+  "source_lock_fingerprint_sha256": "fd18fab3e432db40ae3fc971d45c866e1b7e2dc95c50933e39729b4bc5b1708b",
+  "staging_policy": {
+    "content_check": "EXACT_LOCKED_BLOB_HASH_BEFORE_AND_AFTER_LOAD_AND_CALLS",
+    "loader_receives_cache_path": false,
+    "private_directory_mode_during_load": "0500",
+    "source_and_staged_inodes": "REQUIRE_DISTINCT",
+    "staged_entries": "REGULAR_FILES_ONLY",
+    "staged_file_mode": "0444",
+    "staged_path_exported": false,
+    "strategy": "PRIVATE_APFS_COPY_ON_WRITE_CLONE"
+  },
+  "status": "LOCKED_BEFORE_PROVIDER_CALLS",
+  "wrapper_sha256": "1e005444065567f50a3052136b72e9c5848a145249bfe143ec4025225b9dd833"
+}
