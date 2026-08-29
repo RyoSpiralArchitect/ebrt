@@ -2,7 +2,10 @@
 
 Status: **COMPLETE DEVELOPMENT CANARY; MIXED RESULT; NOT A BENCHMARK**
 
-Canonical stdlib-tree-bound integrity artifact:
+Canonical CPython-framework-bound integrity artifact:
+[`artifacts/role_stratified_uptake_v0_8_3/r13_framework_bound/results.json`](../artifacts/role_stratified_uptake_v0_8_3/r13_framework_bound/results.json)
+
+Preserved stdlib-tree-bound integrity artifact:
 [`artifacts/role_stratified_uptake_v0_8_3/r12_stdlib_tree_bound/results.json`](../artifacts/role_stratified_uptake_v0_8_3/r12_stdlib_tree_bound/results.json)
 
 Preserved r11 post-call integrity failure:
@@ -74,6 +77,9 @@ Corrected imported-stdlib execution lock:
 Complete stdlib-code-tree execution lock:
 [`policy_lock_role_stratified_uptake_v0_8_3_11_r12.json`](../policy_lock_role_stratified_uptake_v0_8_3_11_r12.json)
 
+CPython-framework-bound execution lock:
+[`policy_lock_role_stratified_uptake_v0_8_3_12_r13.json`](../policy_lock_role_stratified_uptake_v0_8_3_12_r13.json)
+
 ## Question
 
 The v0.8.2 corpus exposed two different failures:
@@ -108,6 +114,7 @@ there are only three development cases over one model snapshot.
 - Imported-stdlib lock commit before the zero-call r10 failure: `34c84ea`.
 - Corrected imported-stdlib lock commit before the r11 calls: `0ef1062`.
 - Complete stdlib-code-tree lock commit before r12 calls: `61e1895`.
+- CPython framework lock commit before r13 calls: `36d2f71`.
 - Model: `mlx-community/Mistral-7B-Instruct-v0.3-4bit@a4b8f...`.
 - Three fresh synthetic late-event cases.
 - Three arms and one generation per arm:
@@ -231,6 +238,18 @@ outputs are byte-identical (`9/9`). r12 remains a contaminated integrity
 repetition, not fresh evidence. Its boundary excludes non-code stdlib data,
 dyld/shared system libraries, kernel, hardware, code signing, and malicious
 root behavior.
+
+A tenth review separated the small launcher from the CPython implementation on
+macOS. Both r12 interpreter entries resolved to the same 119,232-byte
+`bin/python3.13`, while built-in and frozen behavior resides in the
+13,551,088-byte `Python.framework/Versions/3.13/Python` library. r13 binds that
+framework binary by exact path, size, and SHA-256 before and after calls while
+reusing r12's stable stdlib-tree universe. Portable verification passes all 16
+checks, the imported set again grows only from 392 to 397 covered modules, and
+all complete r01-r09/r12/r13 public outputs remain byte-identical (`9/9`). r13
+is the canonical integrity artifact but remains a contaminated repetition, not
+fresh evidence. Other dyld dependencies and shared system libraries stay
+explicitly outside the attested boundary.
 
 The candidate reserves capacity for the correction plus every public evidence
 node whose caller-supplied role is `required_support`, then fills remaining

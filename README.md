@@ -283,7 +283,7 @@ python3 -E -S role_stratified_uptake_integrity_v0_8_3_8.py \
   verify artifacts/role_stratified_uptake_v0_8_3/r09_startup_isolated/results.json \
   --lock policy_lock_role_stratified_uptake_v0_8_3_8_r09.json
 
-python3 -E -S role_stratified_uptake_integrity_v0_8_3_11.py \
+python3 -E -S role_stratified_uptake_integrity_v0_8_3_12.py \
   --base-lock policy_lock_role_stratified_uptake_v0_8_3.json \
   --source-lock policy_lock_role_stratified_uptake_v0_8_3_1_r02.json \
   --snapshot-lock policy_lock_role_stratified_uptake_v0_8_3_2_r03.json \
@@ -295,8 +295,9 @@ python3 -E -S role_stratified_uptake_integrity_v0_8_3_11.py \
   --startup-lock policy_lock_role_stratified_uptake_v0_8_3_8_r09.json \
   --stdlib-lock policy_lock_role_stratified_uptake_v0_8_3_9_r10.json \
   --imported-lock policy_lock_role_stratified_uptake_v0_8_3_10_r11.json \
-  verify artifacts/role_stratified_uptake_v0_8_3/r12_stdlib_tree_bound/results.json \
-  --lock policy_lock_role_stratified_uptake_v0_8_3_11_r12.json
+  --tree-lock policy_lock_role_stratified_uptake_v0_8_3_11_r12.json \
+  verify artifacts/role_stratified_uptake_v0_8_3/r13_framework_bound/results.json \
+  --lock policy_lock_role_stratified_uptake_v0_8_3_12_r13.json
 ```
 
 The deterministic compiler coverage floor repaired both intentionally exposed
@@ -309,7 +310,7 @@ the candidate changed the generated answer from `60_UNITS` to the expected
 failed. This is a useful mixed development result, not a superiority claim.
 
 See the [v0.8.3 R&D note](docs/RND_ROLE_STRATIFIED_UPTAKE_CANARY_V0_8_3.md) and
-the [stdlib-tree-bound r12 artifact](artifacts/role_stratified_uptake_v0_8_3/r12_stdlib_tree_bound/results.json).
+the [framework-bound r13 artifact](artifacts/role_stratified_uptake_v0_8_3/r13_framework_bound/results.json).
 The original r01 artifact is retained because review found that its pre-call
 lock did not bind imported implementation files or reject arbitrary explicit
 model identities. A second review found that r02 still did not bind the exact
@@ -354,7 +355,11 @@ were lazily imported. Both failures are retained. r12 instead locks the entire
 against that fixed universe before and after generation. The imported set grew
 from 392 to 397 modules, all covered; its portable verifier passes 16/16
 checks. All complete r01-r09/r12 public outputs remain byte-identical (`9/9`).
-None of these integrity successors is fresh evidence.
+An additional review found that the 119KB launcher was not the 13.55MB macOS
+Python framework implementation. r13 adds that framework binary to the
+pre/post lock; its portable verifier also passes 16/16 checks. All complete
+r01-r09/r12/r13 public outputs remain byte-identical (`9/9`). None of these
+integrity successors is fresh evidence.
 
 ## What the core owns
 

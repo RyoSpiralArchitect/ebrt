@@ -174,8 +174,11 @@ Status: **IMPLEMENTED + VERIFIED; MIXED DEVELOPMENT RESULT**
   complete 1,839-file stdlib Python/native code tree plus the interpreter, then
   verifies the varying imported sets against that stable universe. Its
   portable verifier passes 16/16 checks. All complete r01-r09/r12 public
-  outputs are byte-identical; no integrity repetition is counted as fresh
-  evidence.
+  outputs are byte-identical. A tenth review distinguished the small CPython
+  launcher from the macOS framework implementation. r13 additionally locks the
+  13.55MB `Python.framework/Versions/3.13/Python` binary and passes 16/16
+  portable checks. All complete r01-r09/r12/r13 public outputs are
+  byte-identical; no integrity repetition is counted as fresh evidence.
 - No gradient-specific, causal-superiority, general-reasoning, or cross-model
   claim is admitted from this canary.
 
