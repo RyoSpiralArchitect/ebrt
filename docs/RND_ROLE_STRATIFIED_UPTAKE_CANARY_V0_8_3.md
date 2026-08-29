@@ -2,7 +2,16 @@
 
 Status: **COMPLETE DEVELOPMENT CANARY; MIXED RESULT; NOT A BENCHMARK**
 
-Canonical startup-isolated integrity artifact:
+Canonical stdlib-tree-bound integrity artifact:
+[`artifacts/role_stratified_uptake_v0_8_3/r12_stdlib_tree_bound/results.json`](../artifacts/role_stratified_uptake_v0_8_3/r12_stdlib_tree_bound/results.json)
+
+Preserved r11 post-call integrity failure:
+[`artifacts/role_stratified_uptake_v0_8_3/r11_stdlib_bound_attempt01/postcall_failure.json`](../artifacts/role_stratified_uptake_v0_8_3/r11_stdlib_bound_attempt01/postcall_failure.json)
+
+Preserved r10 zero-call preflight failure:
+[`artifacts/role_stratified_uptake_v0_8_3/r10_stdlib_bound_attempt01/preflight_failure.json`](../artifacts/role_stratified_uptake_v0_8_3/r10_stdlib_bound_attempt01/preflight_failure.json)
+
+Preserved startup-isolated integrity artifact:
 [`artifacts/role_stratified_uptake_v0_8_3/r09_startup_isolated/results.json`](../artifacts/role_stratified_uptake_v0_8_3/r09_startup_isolated/results.json)
 
 Preserved verified-source integrity artifact:
@@ -56,6 +65,15 @@ Verified-source execution lock:
 Startup-isolated execution lock:
 [`policy_lock_role_stratified_uptake_v0_8_3_8_r09.json`](../policy_lock_role_stratified_uptake_v0_8_3_8_r09.json)
 
+Imported-stdlib execution lock:
+[`policy_lock_role_stratified_uptake_v0_8_3_9_r10.json`](../policy_lock_role_stratified_uptake_v0_8_3_9_r10.json)
+
+Corrected imported-stdlib execution lock:
+[`policy_lock_role_stratified_uptake_v0_8_3_10_r11.json`](../policy_lock_role_stratified_uptake_v0_8_3_10_r11.json)
+
+Complete stdlib-code-tree execution lock:
+[`policy_lock_role_stratified_uptake_v0_8_3_11_r12.json`](../policy_lock_role_stratified_uptake_v0_8_3_11_r12.json)
+
 ## Question
 
 The v0.8.2 corpus exposed two different failures:
@@ -87,6 +105,9 @@ there are only three development cases over one model snapshot.
 - Complete dependency/mount-binding lock commit before r07 calls: `9d2027c`.
 - Verified-source execution lock commit before r08 calls: `15833fc`.
 - Startup-isolated execution lock commit before r09 calls: `5a573d0`.
+- Imported-stdlib lock commit before the zero-call r10 failure: `34c84ea`.
+- Corrected imported-stdlib lock commit before the r11 calls: `0ef1062`.
+- Complete stdlib-code-tree lock commit before r12 calls: `61e1895`.
 - Model: `mlx-community/Mistral-7B-Instruct-v0.3-4bit@a4b8f...`.
 - Three fresh synthetic late-event cases.
 - Three arms and one generation per arm:
@@ -188,6 +209,28 @@ running under ordinary Python but not under the admitted path. Portable
 verification passes all 12 checks. r09 is a contaminated integrity repetition
 over the known r01-r08 cases, not fresh scientific evidence; all nine public
 outputs remain byte-identical across r01-r09 (`9/9`).
+
+A ninth review observed that r09 still trusted the CPython executable and
+standard-library implementation behind its version string. r10 sealed the two
+interpreter paths plus 392 imported file-backed stdlib modules. Its first run
+failed before provider calls because the wrapper re-entered r09's historical
+exact-module gate with a new `__main__` module; that zero-call failure is
+retained. r11 corrected the plumbing and completed all nine calls, then failed
+before artifact write because its exact imported-stdlib set grew from 392 to
+397 through legitimate lazy imports. That post-call failure is also retained
+and contributes no result rows.
+
+r12 fixes the representation rather than weakening the gate. It locks the
+complete standard-library code universe: 1,761 Python source files and 78
+native extensions, plus the resolved CPython executable. Pre- and post-call
+coverage receipts may contain different imported-module sets, but every member
+must resolve into the same locked tree with exact size and SHA-256. The observed
+392-to-397 expansion passes that contract; the tree itself is unchanged, the
+portable verifier passes all 16 checks, and all complete r01-r09/r12 public
+outputs are byte-identical (`9/9`). r12 remains a contaminated integrity
+repetition, not fresh evidence. Its boundary excludes non-code stdlib data,
+dyld/shared system libraries, kernel, hardware, code signing, and malicious
+root behavior.
 
 The candidate reserves capacity for the correction plus every public evidence
 node whose caller-supplied role is `required_support`, then fills remaining

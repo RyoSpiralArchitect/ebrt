@@ -282,6 +282,21 @@ python3 -E -S role_stratified_uptake_integrity_v0_8_3_8.py \
   --verified-source-lock policy_lock_role_stratified_uptake_v0_8_3_7_r08.json \
   verify artifacts/role_stratified_uptake_v0_8_3/r09_startup_isolated/results.json \
   --lock policy_lock_role_stratified_uptake_v0_8_3_8_r09.json
+
+python3 -E -S role_stratified_uptake_integrity_v0_8_3_11.py \
+  --base-lock policy_lock_role_stratified_uptake_v0_8_3.json \
+  --source-lock policy_lock_role_stratified_uptake_v0_8_3_1_r02.json \
+  --snapshot-lock policy_lock_role_stratified_uptake_v0_8_3_2_r03.json \
+  --loader-lock policy_lock_role_stratified_uptake_v0_8_3_3_r04.json \
+  --runtime-lock policy_lock_role_stratified_uptake_v0_8_3_4_r05.json \
+  --immutable-lock policy_lock_role_stratified_uptake_v0_8_3_5_r06.json \
+  --complete-lock policy_lock_role_stratified_uptake_v0_8_3_6_r07.json \
+  --verified-source-lock policy_lock_role_stratified_uptake_v0_8_3_7_r08.json \
+  --startup-lock policy_lock_role_stratified_uptake_v0_8_3_8_r09.json \
+  --stdlib-lock policy_lock_role_stratified_uptake_v0_8_3_9_r10.json \
+  --imported-lock policy_lock_role_stratified_uptake_v0_8_3_10_r11.json \
+  verify artifacts/role_stratified_uptake_v0_8_3/r12_stdlib_tree_bound/results.json \
+  --lock policy_lock_role_stratified_uptake_v0_8_3_11_r12.json
 ```
 
 The deterministic compiler coverage floor repaired both intentionally exposed
@@ -294,7 +309,7 @@ the candidate changed the generated answer from `60_UNITS` to the expected
 failed. This is a useful mixed development result, not a superiority claim.
 
 See the [v0.8.3 R&D note](docs/RND_ROLE_STRATIFIED_UPTAKE_CANARY_V0_8_3.md) and
-the [startup-isolated r09 artifact](artifacts/role_stratified_uptake_v0_8_3/r09_startup_isolated/results.json).
+the [stdlib-tree-bound r12 artifact](artifacts/role_stratified_uptake_v0_8_3/r12_stdlib_tree_bound/results.json).
 The original r01 artifact is retained because review found that its pre-call
 lock did not bind imported implementation files or reject arbitrary explicit
 model identities. A second review found that r02 still did not bind the exact
@@ -329,7 +344,17 @@ bootstrap ran. r09 requires both outer and child interpreters to start with
 `-E -S`, manually admits only the two locked site-package roots after startup,
 and retains the empty-cache source policy. Its portable verifier passes 12/12
 checks, and all r01-r09 public outputs remain byte-identical (`9/9`). None of
-the integrity successors is fresh evidence.
+the integrity successors is fresh evidence. A ninth review found that r09 did
+not bind the CPython executable or standard-library code. r10 added those
+receipts but failed before provider calls because it re-entered r09's exact
+module-set gate; r11 called the sealed base runner directly, completed nine
+calls, then failed its own post-call gate when five legitimate stdlib modules
+were lazily imported. Both failures are retained. r12 instead locks the entire
+1,839-file stdlib Python/native code tree and checks imported-module coverage
+against that fixed universe before and after generation. The imported set grew
+from 392 to 397 modules, all covered; its portable verifier passes 16/16
+checks. All complete r01-r09/r12 public outputs remain byte-identical (`9/9`).
+None of these integrity successors is fresh evidence.
 
 ## What the core owns
 

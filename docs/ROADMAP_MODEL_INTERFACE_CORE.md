@@ -167,9 +167,15 @@ Status: **IMPLEMENTED + VERIFIED; MIXED DEVELOPMENT RESULT**
   site initialization could still run before that bootstrap. r09 requires
   `-E -S` for both outer and child interpreters, manually admits only the two
   locked package roots, and bypasses `.pth`, `sitecustomize`, and
-  `usercustomize`. Its portable verifier passes 12/12 checks. All r01-r09
-  public outputs are byte-identical; none of the integrity repetitions is
-  counted as fresh evidence.
+  `usercustomize`. A ninth review found that CPython and stdlib code remained
+  outside the receipt. r10 then failed before calls at a historical module-set
+  gate; r11 completed nine calls but failed after a legitimate 392-to-397
+  stdlib lazy-import expansion. Both failures are preserved. r12 locks the
+  complete 1,839-file stdlib Python/native code tree plus the interpreter, then
+  verifies the varying imported sets against that stable universe. Its
+  portable verifier passes 16/16 checks. All complete r01-r09/r12 public
+  outputs are byte-identical; no integrity repetition is counted as fresh
+  evidence.
 - No gradient-specific, causal-superiority, general-reasoning, or cross-model
   claim is admitted from this canary.
 
