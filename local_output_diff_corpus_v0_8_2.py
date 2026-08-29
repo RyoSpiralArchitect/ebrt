@@ -12,6 +12,7 @@ from __future__ import annotations
 import argparse
 import difflib
 import json
+import math
 import time
 from dataclasses import dataclass
 from pathlib import Path
@@ -585,6 +586,21 @@ def _verify_run(value: Any) -> JsonObject:
     snapshot = _sealed_snapshot(value, "LOCAL_OUTPUT_DIFF_RUN")
     if snapshot.get("schema_version") != RUN_SCHEMA_VERSION:
         raise EBRTError("LOCAL_OUTPUT_DIFF_SCHEMA_INVALID")
+    expected_run_keys = {
+        "schema_version",
+        "status",
+        "model_adapter",
+        "execution_policy",
+        "cases",
+        "summary",
+        "native_state_capture_status",
+        "effect_attribution_status",
+        "generalization_status",
+        "claim_boundary",
+        "fingerprint_sha256",
+    }
+    if set(snapshot) != expected_run_keys:
+        raise EBRTError("LOCAL_OUTPUT_DIFF_RUN_SHAPE_INVALID")
     descriptor = snapshot.get("model_adapter")
     execution_policy = snapshot.get("execution_policy")
     if not isinstance(descriptor, Mapping) or not isinstance(execution_policy, Mapping):
@@ -628,8 +644,20 @@ def _verify_run(value: Any) -> JsonObject:
     seed = generation_config.get("seed")
     sampler_temperature = generation_config.get("sampler_temperature")
     expected_generation_prompt = prompt_rendering_mode == "chat_template"
+    expected_execution_policy_keys = {
+        "temperature",
+        "seed",
+        "max_tokens_per_arm",
+        "prompt_rendering_mode",
+        "calls_per_cell",
+        "automatic_retry",
+        "arm_order",
+        "latency_comparison_status",
+    }
     execution_checks = {
         "run_complete": snapshot.get("status") == "COMPLETE",
+        "execution_policy_shape_exact": set(execution_policy)
+        == expected_execution_policy_keys,
         "adapter_id_exact": descriptor.get("adapter_id") == "corpus-local-model",
         "model_id_revision_bound": isinstance(descriptor.get("model_id"), str)
         and "@" in descriptor["model_id"].strip("@"),
@@ -652,8 +680,12 @@ def _verify_run(value: Any) -> JsonObject:
         "seed_bound": execution_policy.get("seed") == seed,
         "temperature_bound": execution_policy.get("temperature") == sampler_temperature,
         "no_automatic_retry": execution_policy.get("automatic_retry") is False,
+        "one_call_per_arm_policy_exact": execution_policy.get("calls_per_cell")
+        == {ARM_DIRECT: 1, ARM_EBRT: 1},
         "arm_order_policy_bound": execution_policy.get("arm_order")
         == "counterbalanced_by_case_index",
+        "latency_boundary_exact": execution_policy.get("latency_comparison_status")
+        == "NOT_ASSESSED_SERIAL_COLD_WARM_AND_ORDER",
     }
     if not all(execution_checks.values()):
         raise EBRTError("LOCAL_OUTPUT_DIFF_EXECUTION_BINDING_INVALID")
@@ -671,10 +703,26 @@ def _verify_run(value: Any) -> JsonObject:
         zip(cells, expected_cases, strict=True)
     ):
         sealed = _sealed_snapshot(cell, "LOCAL_OUTPUT_DIFF_CELL")
+        expected_cell_keys = {
+            "case_id",
+            "family",
+            "task",
+            "task_fingerprint_sha256",
+            "post_call_contract",
+            "call_order",
+            "calls_are_one_each",
+            "compiled_revision",
+            "arms",
+            "output_diff",
+            "comparison_category",
+            "effect_attribution_status",
+            "fingerprint_sha256",
+        }
         expected_task = expected_case.task.to_public_dict()
         expected_contract = expected_case.contract.to_dict()
         expected_order = ARM_IDS if index % 2 == 0 else tuple(reversed(ARM_IDS))
         cell_checks = {
+            "cell_shape_exact": set(sealed) == expected_cell_keys,
             "case_id_exact": sealed.get("case_id") == expected_case.task.task_id,
             "family_exact": sealed.get("family") == expected_case.family,
             "task_exact": _canonical_bytes(sealed.get("task"))
@@ -693,7 +741,11 @@ def _verify_run(value: Any) -> JsonObject:
             raise EBRTError("LOCAL_OUTPUT_DIFF_CELL_CONTENT_INVALID")
 
         compiled = sealed.get("compiled_revision")
-        if not isinstance(compiled, Mapping):
+        if not isinstance(compiled, Mapping) or set(compiled) != {
+            "trajectory",
+            "actuator",
+            "public_oscilloscope",
+        }:
             raise EBRTError("LOCAL_OUTPUT_DIFF_COMPILED_REVISION_MISSING")
         observed_trajectory = _sealed_snapshot(
             compiled.get("trajectory"), "LOCAL_OUTPUT_DIFF_TRAJECTORY_RECEIPT"
@@ -733,14 +785,38 @@ def _verify_run(value: Any) -> JsonObject:
         parsed_results: dict[str, JsonObject] = {}
         recomputed_grades: dict[str, JsonObject] = {}
         arms = sealed.get("arms")
-        if not isinstance(arms, Mapping):
+        if not isinstance(arms, Mapping) or set(arms) != set(ARM_IDS):
             raise EBRTError("LOCAL_OUTPUT_DIFF_ARMS_INVALID")
         for arm_id in ARM_IDS:
             arm = arms.get(arm_id)
-            if not isinstance(arm, Mapping):
+            if not isinstance(arm, Mapping) or set(arm) != {
+                "invocation_fingerprint_sha256",
+                "result",
+                "output_grade",
+            }:
                 raise EBRTError("LOCAL_OUTPUT_DIFF_ARM_MISSING")
             result = _sealed_snapshot(arm.get("result"), "LOCAL_OUTPUT_DIFF_ARM_RESULT")
             grade = _sealed_snapshot(arm.get("output_grade"), "LOCAL_OUTPUT_DIFF_GRADE")
+            expected_result_keys = {
+                "status",
+                "error_code",
+                "raw_text",
+                "answer",
+                "support_ids",
+                "request_fingerprint_sha256",
+                "latency_ms",
+                "logical_calls",
+                "fingerprint_sha256",
+            }
+            latency_ms = result.get("latency_ms")
+            if not (
+                set(result) == expected_result_keys
+                and isinstance(latency_ms, (int, float))
+                and not isinstance(latency_ms, bool)
+                and math.isfinite(float(latency_ms))
+                and float(latency_ms) >= 0.0
+            ):
+                raise EBRTError("LOCAL_OUTPUT_DIFF_ARM_RESULT_SHAPE_INVALID")
             if result.get("logical_calls") != 1:
                 raise EBRTError("LOCAL_OUTPUT_DIFF_LOGICAL_CALL_COUNT_INVALID")
             expected_invocation_fingerprint = expected_invocations[arm_id][
@@ -828,10 +904,13 @@ def _verify_run(value: Any) -> JsonObject:
     }
     checks = {
         "top_receipt_sealed": True,
+        "run_and_cell_shapes_exact": True,
         "adapter_descriptor_replayed_exactly": True,
+        "execution_policy_replayed_exactly": True,
         "execution_binding_exact": True,
         "compiled_revision_replayed_exactly": True,
         "invocations_recompiled_exactly": True,
+        "result_shapes_exact_without_native_payload": True,
         "all_cells_sealed": True,
         "case_ids_exact": [cell["case_id"] for cell in cells]
         == [row.task.task_id for row in expected_cases],
