@@ -1,0 +1,2237 @@
+{
+  "base_run": {
+    "cases": [
+      {
+        "arms": {
+          "direct_full_context": {
+            "invocation_fingerprint_sha256": "eac60fb69e3de797edfe90e55359544a16bdb21dbf66700e320bb7569e4d1c0a",
+            "provider_uptake": null,
+            "result": {
+              "answer": "DOCK_A",
+              "error_code": null,
+              "fingerprint_sha256": "84088ac2bec65c5d23bd05e0fb19af9ce341c74dbc606709a740780d472d11f2",
+              "latency_ms": 9054.816209012643,
+              "logical_calls": 1,
+              "raw_text": "ANSWER=DOCK_A\nSUPPORT=R1, R2, R4, R6",
+              "request_fingerprint_sha256": "eac60fb69e3de797edfe90e55359544a16bdb21dbf66700e320bb7569e4d1c0a",
+              "status": "PARSED",
+              "support_ids": [
+                "R1",
+                "R2",
+                "R4",
+                "R6"
+              ]
+            },
+            "semantic_grade": {
+              "checks": {
+                "expected_answer": true,
+                "forbidden_support_absent": true,
+                "required_support_present": true,
+                "schema_parsed": true
+              },
+              "contract_fingerprint_sha256": "ef5802e32284c49561f144018ff28b243b970ba6f3b065441f2f90a04729a3b8",
+              "fingerprint_sha256": "444f759202751b5257e83aed2369ccd8ec54806d3a6615b357c0f76369dbe4e4",
+              "status": "PASS"
+            }
+          },
+          "ebrt_role_stratified": {
+            "invocation_fingerprint_sha256": "2d1f115f4e332ca3e9524ffa780c396e3a14503bdc849dfae8c23b8c17aefe48",
+            "provider_uptake": {
+              "checks": {
+                "compiled_obligations_retained": true,
+                "output_parsed": true
+              },
+              "compiled_obligation_ids": [
+                "R6",
+                "R4",
+                "R2"
+              ],
+              "fingerprint_sha256": "c94060fccf923f8008a5cb9dbe895b842a5a6c24ce3b4bc8469460c3bbfdab42",
+              "missing_compiled_obligation_ids": [],
+              "observed_support_ids": [
+                "R2",
+                "R4",
+                "R6"
+              ],
+              "status": "PASS"
+            },
+            "result": {
+              "answer": "DOCK_A",
+              "error_code": null,
+              "fingerprint_sha256": "7f0800aa26ffc16541418322f340863abd5990acc530492674604b45cdbd61cd",
+              "latency_ms": 5734.145666996483,
+              "logical_calls": 1,
+              "raw_text": "ANSWER=DOCK_A\nSUPPORT=R6,R4,R2",
+              "request_fingerprint_sha256": "2d1f115f4e332ca3e9524ffa780c396e3a14503bdc849dfae8c23b8c17aefe48",
+              "status": "PARSED",
+              "support_ids": [
+                "R6",
+                "R4",
+                "R2"
+              ]
+            },
+            "semantic_grade": {
+              "checks": {
+                "expected_answer": true,
+                "forbidden_support_absent": true,
+                "required_support_present": true,
+                "schema_parsed": true
+              },
+              "contract_fingerprint_sha256": "ef5802e32284c49561f144018ff28b243b970ba6f3b065441f2f90a04729a3b8",
+              "fingerprint_sha256": "444f759202751b5257e83aed2369ccd8ec54806d3a6615b357c0f76369dbe4e4",
+              "status": "PASS"
+            }
+          },
+          "ebrt_top_k": {
+            "invocation_fingerprint_sha256": "8a54e4b2d7ed4802fd18dc8a6c1dd80f3fef5d8e4f5dcdbb86978eb1c5b2ba57",
+            "provider_uptake": {
+              "checks": {
+                "compiled_obligations_retained": true,
+                "output_parsed": true
+              },
+              "compiled_obligation_ids": [
+                "R6",
+                "R4"
+              ],
+              "fingerprint_sha256": "2d9a17d1c3706cd0a8add2249f46c4283c7b9a13d3a43808d919252220764eef",
+              "missing_compiled_obligation_ids": [],
+              "observed_support_ids": [
+                "R1",
+                "R2",
+                "R4",
+                "R5",
+                "R6"
+              ],
+              "status": "PASS"
+            },
+            "result": {
+              "answer": "DOCK_A",
+              "error_code": null,
+              "fingerprint_sha256": "75aadddea88bf7d6566a6738df307f42bca4cb02cb27dee7d6781c28a0d18d6e",
+              "latency_ms": 6197.859083011281,
+              "logical_calls": 1,
+              "raw_text": "ANSWER=DOCK_A\nSUPPORT=R6,R4,R1,R2,R5",
+              "request_fingerprint_sha256": "8a54e4b2d7ed4802fd18dc8a6c1dd80f3fef5d8e4f5dcdbb86978eb1c5b2ba57",
+              "status": "PARSED",
+              "support_ids": [
+                "R6",
+                "R4",
+                "R1",
+                "R2",
+                "R5"
+              ]
+            },
+            "semantic_grade": {
+              "checks": {
+                "expected_answer": true,
+                "forbidden_support_absent": true,
+                "required_support_present": true,
+                "schema_parsed": true
+              },
+              "contract_fingerprint_sha256": "ef5802e32284c49561f144018ff28b243b970ba6f3b065441f2f90a04729a3b8",
+              "fingerprint_sha256": "444f759202751b5257e83aed2369ccd8ec54806d3a6615b357c0f76369dbe4e4",
+              "status": "PASS"
+            }
+          }
+        },
+        "call_order": [
+          "direct_full_context",
+          "ebrt_top_k",
+          "ebrt_role_stratified"
+        ],
+        "case_id": "parcel-dock-policy-revision",
+        "compiled": {
+          "ebrt_role_stratified": {
+            "coverage": {
+              "coverage_source": "CALLER_SUPPLIED_PUBLIC_ROLES",
+              "fingerprint_sha256": "32c38dc206f946b3ae710a216df205028c45d87cc2b2a0ae106bbf45cdc202e3",
+              "missing_required_public_evidence_ids": [],
+              "required_public_evidence_ids": [
+                "R2",
+                "R4",
+                "R6"
+              ],
+              "selected_evidence_ids": [
+                "R6",
+                "R4",
+                "R2"
+              ],
+              "status": "PASS"
+            },
+            "program": {
+              "fingerprint_sha256": "e8ac568b0beefa3cd989b9b7f862cf6e22e3b721bfae0ee204ee9abd1adff7cc",
+              "lane_id": "primary",
+              "preserve_evidence_ids": [
+                "R5"
+              ],
+              "reinspect": [
+                {
+                  "allocation_units": 51,
+                  "evidence_id": "R6",
+                  "signed_control": 0.5270759046427647
+                },
+                {
+                  "allocation_units": 35,
+                  "evidence_id": "R4",
+                  "signed_control": 0.36232630512845587
+                },
+                {
+                  "allocation_units": 14,
+                  "evidence_id": "R2",
+                  "signed_control": 0.1389040743232254
+                }
+              ],
+              "schema_version": "ebrt-actuator-program-v0.7.1",
+              "source_credit_fingerprint_sha256": "00fdc2969decc03424d5f246af98d4399601fff9cdf5a470d27e358eb74ec60b",
+              "steps": [
+                "LOAD_FULL_CONTEXT",
+                "SUPPRESS_INVALIDATED_SUPPORT",
+                "REINSPECT_ROLE_COVERAGE_THEN_CREDIT",
+                "PRESERVE_STABLE_CONSTRAINTS",
+                "REGENERATE_ONCE"
+              ],
+              "suppress_evidence_ids": [
+                "R3"
+              ]
+            }
+          },
+          "ebrt_top_k": {
+            "coverage": {
+              "coverage_source": "CALLER_SUPPLIED_PUBLIC_ROLES",
+              "fingerprint_sha256": "b0208dd73fad345d9c6cc5ff3484cb25d345789975d446698dbb40af053fc66c",
+              "missing_required_public_evidence_ids": [
+                "R2"
+              ],
+              "required_public_evidence_ids": [
+                "R2",
+                "R4",
+                "R6"
+              ],
+              "selected_evidence_ids": [
+                "R6",
+                "R4",
+                "R1"
+              ],
+              "status": "FAIL"
+            },
+            "program": {
+              "fingerprint_sha256": "cb8d59c6ef7b545029a7beee6b08d6a2a70b55f9d5c933b07d6fa9b1bba98f38",
+              "lane_id": "primary",
+              "preserve_evidence_ids": [
+                "R5"
+              ],
+              "reinspect": [
+                {
+                  "allocation_units": 49,
+                  "evidence_id": "R6",
+                  "signed_control": 0.5270759046427647
+                },
+                {
+                  "allocation_units": 34,
+                  "evidence_id": "R4",
+                  "signed_control": 0.36232630512845587
+                },
+                {
+                  "allocation_units": 17,
+                  "evidence_id": "R1",
+                  "signed_control": 0.1771026947621124
+                }
+              ],
+              "schema_version": "ebrt-actuator-program-v0.7.1",
+              "source_credit_fingerprint_sha256": "00fdc2969decc03424d5f246af98d4399601fff9cdf5a470d27e358eb74ec60b",
+              "steps": [
+                "LOAD_FULL_CONTEXT",
+                "SUPPRESS_INVALIDATED_SUPPORT",
+                "REINSPECT_BY_BACKWARD_CREDIT",
+                "PRESERVE_STABLE_CONSTRAINTS",
+                "REGENERATE_ONCE"
+              ],
+              "suppress_evidence_ids": [
+                "R3"
+              ]
+            }
+          },
+          "trajectory": {
+            "axis_ids": [
+              "revision",
+              "invalidation",
+              "stability"
+            ],
+            "backtracking_steps": 0,
+            "checks": {
+              "central_finite_difference_agreement": true,
+              "control_budget_respected": true,
+              "control_is_non_neutral": true,
+              "ineligible_sites_are_zero": true,
+              "objective_decreased": true,
+              "pre_event_backward_credit_nonzero": true,
+              "real_backward_executed_once": true,
+              "stable_axis_exact_identity": true,
+              "zero_control_exact_noop": true
+            },
+            "control_budget": 0.75,
+            "control_l2": 0.75,
+            "credit_map": [
+              {
+                "absolute_control": 0.1771026947621124,
+                "control": 0.1771026947621124,
+                "eligible": true,
+                "evidence_id": "R1",
+                "gradient": -0.42021358157265887,
+                "role": "context",
+                "step": 1
+              },
+              {
+                "absolute_control": 0.1389040743232254,
+                "control": 0.1389040743232254,
+                "eligible": true,
+                "evidence_id": "R2",
+                "gradient": -0.32957927966483047,
+                "role": "required_support",
+                "step": 2
+              },
+              {
+                "absolute_control": 0.32054786382282785,
+                "control": 0.32054786382282785,
+                "eligible": true,
+                "evidence_id": "R3",
+                "gradient": -0.7605675684573011,
+                "role": "invalidated_prior",
+                "step": 3
+              },
+              {
+                "absolute_control": 0.36232630512845587,
+                "control": 0.36232630512845587,
+                "eligible": true,
+                "evidence_id": "R4",
+                "gradient": -0.8596957521201326,
+                "role": "required_support",
+                "step": 4
+              },
+              {
+                "absolute_control": 0.0,
+                "control": 0.0,
+                "eligible": false,
+                "evidence_id": "R5",
+                "gradient": 0.0,
+                "role": "stable",
+                "step": 5
+              },
+              {
+                "absolute_control": 0.5270759046427647,
+                "control": 0.5270759046427647,
+                "eligible": true,
+                "evidence_id": "R6",
+                "gradient": -1.2505990038609371,
+                "role": "correction",
+                "step": 6
+              }
+            ],
+            "event_index": 5,
+            "fingerprint_sha256": "00fdc2969decc03424d5f246af98d4399601fff9cdf5a470d27e358eb74ec60b",
+            "finite_difference_max_abs_error": 7.766509657614051e-11,
+            "gradient_boundary": "detached_public_trajectory_after_state_adapter",
+            "lane_id": "primary",
+            "neutral": {
+              "loss": {
+                "control": 0.0,
+                "path": 0.22285986284238746,
+                "smoothness": 0.0,
+                "terminal": 0.6685795885271624,
+                "total": 0.7020085679535205
+              },
+              "trajectory": [
+                {
+                  "evidence_id": "R1",
+                  "role": "context",
+                  "state": {
+                    "invalidation": 0.0,
+                    "revision": -0.41,
+                    "stability": 0.0
+                  },
+                  "step": 1
+                },
+                {
+                  "evidence_id": "R2",
+                  "role": "required_support",
+                  "state": {
+                    "invalidation": 0.0,
+                    "revision": -0.2385,
+                    "stability": 0.0
+                  },
+                  "step": 2
+                },
+                {
+                  "evidence_id": "R3",
+                  "role": "invalidated_prior",
+                  "state": {
+                    "invalidation": 0.0,
+                    "revision": -1.0227249999999999,
+                    "stability": 0.0
+                  },
+                  "step": 3
+                },
+                {
+                  "evidence_id": "R4",
+                  "role": "required_support",
+                  "state": {
+                    "invalidation": 0.0,
+                    "revision": -0.6593162499999999,
+                    "stability": 0.0
+                  },
+                  "step": 4
+                },
+                {
+                  "evidence_id": "R5",
+                  "role": "stable",
+                  "state": {
+                    "invalidation": 0.0,
+                    "revision": -0.5604188124999999,
+                    "stability": 1.0
+                  },
+                  "step": 5
+                },
+                {
+                  "evidence_id": "R6",
+                  "role": "correction",
+                  "state": {
+                    "invalidation": 1.0,
+                    "revision": 0.1436440093750001,
+                    "stability": 0.85
+                  },
+                  "step": 6
+                }
+              ]
+            },
+            "revised": {
+              "loss": {
+                "control": 0.28125,
+                "path": 0.024914150107120735,
+                "smoothness": 0.06334146956526297,
+                "terminal": 0.0747424503213622,
+                "total": 0.08473798753308295
+              },
+              "trajectory": [
+                {
+                  "evidence_id": "R1",
+                  "role": "context",
+                  "state": {
+                    "invalidation": 0.0,
+                    "revision": -0.27328627674918615,
+                    "stability": 0.0
+                  },
+                  "step": 1
+                },
+                {
+                  "evidence_id": "R2",
+                  "role": "required_support",
+                  "state": {
+                    "invalidation": 0.0,
+                    "revision": -0.05052420334161094,
+                    "stability": 0.0
+                  },
+                  "step": 2
+                },
+                {
+                  "evidence_id": "R3",
+                  "role": "invalidated_prior",
+                  "state": {
+                    "invalidation": 0.18910135337023948,
+                    "revision": -0.5467433098278376,
+                    "stability": 0.0
+                  },
+                  "step": 3
+                },
+                {
+                  "evidence_id": "R4",
+                  "role": "required_support",
+                  "state": {
+                    "invalidation": 0.16073615036470354,
+                    "revision": 0.08558441666917882,
+                    "stability": 0.0
+                  },
+                  "step": 4
+                },
+                {
+                  "evidence_id": "R5",
+                  "role": "stable",
+                  "state": {
+                    "invalidation": 0.13662572780999802,
+                    "revision": 0.072746754168802,
+                    "stability": 1.0
+                  },
+                  "step": 5
+                },
+                {
+                  "evidence_id": "R6",
+                  "role": "correction",
+                  "state": {
+                    "invalidation": 1.3673660863592383,
+                    "revision": 1.1794717492211013,
+                    "stability": 0.85
+                  },
+                  "step": 6
+                }
+              ]
+            },
+            "schema_version": "ebrt-model-interface-core-v0.7.1",
+            "state_adapter_config": {
+              "correction_scale": 1.0,
+              "invalidation_scale": 1.0,
+              "support_scale": 1.0
+            },
+            "state_adapter_id": "typed-public-state-v0.7.1"
+          }
+        },
+        "diffs": {
+          "direct_to_top_k": {
+            "answer_changed": false,
+            "answer_transition": [
+              "DOCK_A",
+              "DOCK_A"
+            ],
+            "fingerprint_sha256": "6384353f76b5faeb5544ef352ed7ef40ad9f5491181f1db583a7771988ac072b",
+            "left_arm": "direct_full_context",
+            "raw_text_changed": true,
+            "right_arm": "ebrt_top_k",
+            "support_added": [
+              "R5"
+            ],
+            "support_changed": true,
+            "support_removed": [],
+            "unified_diff": [
+              "--- direct_full_context",
+              "+++ ebrt_top_k",
+              "@@ -1,2 +1,2 @@",
+              " ANSWER=DOCK_A",
+              "-SUPPORT=R1, R2, R4, R6",
+              "+SUPPORT=R6,R4,R1,R2,R5"
+            ]
+          },
+          "top_k_to_role": {
+            "answer_changed": false,
+            "answer_transition": [
+              "DOCK_A",
+              "DOCK_A"
+            ],
+            "fingerprint_sha256": "498eaa67d56fe6db976adfe2c598efdbe704cd3b3f694f9b91c50a63d7f1e2f5",
+            "left_arm": "ebrt_top_k",
+            "raw_text_changed": true,
+            "right_arm": "ebrt_role_stratified",
+            "support_added": [],
+            "support_changed": true,
+            "support_removed": [
+              "R1",
+              "R5"
+            ],
+            "unified_diff": [
+              "--- ebrt_top_k",
+              "+++ ebrt_role_stratified",
+              "@@ -1,2 +1,2 @@",
+              " ANSWER=DOCK_A",
+              "-SUPPORT=R6,R4,R1,R2,R5",
+              "+SUPPORT=R6,R4,R2"
+            ]
+          }
+        },
+        "family": "coverage_loss_required_identity",
+        "fingerprint_sha256": "27558c94244cfb673b5714693de92d11a35c7df8e3ca8526198f24269a155ee4",
+        "post_call_contract": {
+          "expected_answer": "DOCK_A",
+          "fingerprint_sha256": "ef5802e32284c49561f144018ff28b243b970ba6f3b065441f2f90a04729a3b8",
+          "forbidden_support_ids": [
+            "R3"
+          ],
+          "required_compiled_preserve_ids": [
+            "R5"
+          ],
+          "required_support_ids": [
+            "R2",
+            "R4",
+            "R6"
+          ],
+          "schema_version": "ebrt-post-run-contract-v0.8.0"
+        },
+        "task": {
+          "answer_choices": [
+            "DOCK_C",
+            "DOCK_A"
+          ],
+          "before_horizon_evidence_ids": [
+            "R1",
+            "R2",
+            "R3",
+            "R4",
+            "R5"
+          ],
+          "event": {
+            "correction_evidence_id": "R6",
+            "event_id": "parcel-dock-policy-revision-late-correction",
+            "invalidated_evidence_ids": [
+              "R3"
+            ],
+            "stable_evidence_ids": [
+              "R5"
+            ]
+          },
+          "evidence": [
+            {
+              "control_basis": [
+                0.78,
+                0.0,
+                0.0
+              ],
+              "evidence_id": "R1",
+              "neutral_effect": [
+                -0.41,
+                0.0,
+                0.0
+              ],
+              "ordinal": 1,
+              "role": "context",
+              "text": "Parcel Q-24 is ready for a dock assignment."
+            },
+            {
+              "control_basis": [
+                0.52,
+                0.0,
+                0.0
+              ],
+              "evidence_id": "R2",
+              "neutral_effect": [
+                0.11,
+                0.0,
+                0.0
+              ],
+              "ordinal": 2,
+              "role": "required_support",
+              "text": "The parcel label records service tier PRIORITY."
+            },
+            {
+              "control_basis": [
+                1.02,
+                0.61,
+                0.0
+              ],
+              "evidence_id": "R3",
+              "neutral_effect": [
+                -0.82,
+                0.0,
+                0.0
+              ],
+              "ordinal": 3,
+              "role": "invalidated_prior",
+              "text": "The retired routing sheet maps PRIORITY parcels to DOCK_C."
+            },
+            {
+              "control_basis": [
+                0.98,
+                0.0,
+                0.0
+              ],
+              "evidence_id": "R4",
+              "neutral_effect": [
+                0.21,
+                0.0,
+                0.0
+              ],
+              "ordinal": 4,
+              "role": "required_support",
+              "text": "The current routing policy maps PRIORITY parcels to DOCK_A."
+            },
+            {
+              "control_basis": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "evidence_id": "R5",
+              "neutral_effect": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "ordinal": 5,
+              "role": "stable",
+              "text": "The wrapping mode remains WEATHER_SEALED."
+            },
+            {
+              "control_basis": [
+                1.03,
+                0.52,
+                0.0
+              ],
+              "evidence_id": "R6",
+              "neutral_effect": [
+                0.62,
+                1.0,
+                0.0
+              ],
+              "ordinal": 6,
+              "role": "correction",
+              "text": "Late correction: R3 is superseded; apply the current routing policy in R4."
+            }
+          ],
+          "prior_state": {
+            "active_support_ids": [
+              "R2",
+              "R3",
+              "R5"
+            ],
+            "answer": "DOCK_C",
+            "stable_values": [
+              {
+                "key": "wrapping_mode",
+                "value": "WEATHER_SEALED"
+              }
+            ]
+          },
+          "question": "Which dock should parcel Q-24 be sent to under the corrected routing policy?",
+          "schema_version": "ebrt-revision-task-v0.7.1",
+          "task_id": "parcel-dock-policy-revision",
+          "trajectory_contract": {
+            "axes": [
+              "revision",
+              "invalidation",
+              "stability"
+            ],
+            "control_budget": 0.75,
+            "decay": 0.85,
+            "learning_rate": 0.8,
+            "reinspection_count": 3,
+            "terminal_target": [
+              1.3,
+              1.0,
+              0.85
+            ]
+          }
+        }
+      },
+      {
+        "arms": {
+          "direct_full_context": {
+            "invocation_fingerprint_sha256": "cf9b78e9c1b3a69154471b8d181e0f7cebf1e8e87b35d6cd5f042747acc2e84c",
+            "provider_uptake": null,
+            "result": {
+              "answer": "60_UNITS",
+              "error_code": null,
+              "fingerprint_sha256": "c2419a029983cc781fc669c64cf5f1fd73397c59761b672cfdcf856d8ae45751",
+              "latency_ms": 4876.049374986906,
+              "logical_calls": 1,
+              "raw_text": "ANSWER=60_UNITS\nSUPPORT=R1, R2, R4, R5, R6",
+              "request_fingerprint_sha256": "cf9b78e9c1b3a69154471b8d181e0f7cebf1e8e87b35d6cd5f042747acc2e84c",
+              "status": "PARSED",
+              "support_ids": [
+                "R1",
+                "R2",
+                "R4",
+                "R5",
+                "R6"
+              ]
+            },
+            "semantic_grade": {
+              "checks": {
+                "expected_answer": false,
+                "forbidden_support_absent": true,
+                "required_support_present": true,
+                "schema_parsed": true
+              },
+              "contract_fingerprint_sha256": "0042cf86ec2dc5a9a85461591a007bbe81d24e160f29169401ad648a227edf16",
+              "fingerprint_sha256": "def1fef2b1a5c81e45eddc3d79e4edb130a0729fa8f01d370e2ef7bacddd0eb4",
+              "status": "FAIL"
+            }
+          },
+          "ebrt_role_stratified": {
+            "invocation_fingerprint_sha256": "cc2daa7d1b0ade17e19676c075eccdd67e536bc3ca0e1d0bf88405d3507b1158",
+            "provider_uptake": {
+              "checks": {
+                "compiled_obligations_retained": false,
+                "output_parsed": true
+              },
+              "compiled_obligation_ids": [
+                "R6",
+                "R2",
+                "R4"
+              ],
+              "fingerprint_sha256": "7398b4e4f1bdd2e686ff7ff78262de2e85ac97f98d60b1f5caab2e5169ad7cd9",
+              "missing_compiled_obligation_ids": [
+                "R6"
+              ],
+              "observed_support_ids": [
+                "R2",
+                "R4",
+                "R5"
+              ],
+              "status": "FAIL"
+            },
+            "result": {
+              "answer": "6_UNITS",
+              "error_code": null,
+              "fingerprint_sha256": "9569d14ebbe8c4a3dc395f9fe47c3a2a50729d3192f7a81c92f63c087fba3091",
+              "latency_ms": 5536.120540986303,
+              "logical_calls": 1,
+              "raw_text": "ANSWER=6_UNITS\nSUPPORT=R2,R4,R5",
+              "request_fingerprint_sha256": "cc2daa7d1b0ade17e19676c075eccdd67e536bc3ca0e1d0bf88405d3507b1158",
+              "status": "PARSED",
+              "support_ids": [
+                "R2",
+                "R4",
+                "R5"
+              ]
+            },
+            "semantic_grade": {
+              "checks": {
+                "expected_answer": true,
+                "forbidden_support_absent": true,
+                "required_support_present": false,
+                "schema_parsed": true
+              },
+              "contract_fingerprint_sha256": "0042cf86ec2dc5a9a85461591a007bbe81d24e160f29169401ad648a227edf16",
+              "fingerprint_sha256": "89d998190d73306ae18719c717689e4b7506345749c5eb62d339d95c5821d2e3",
+              "status": "FAIL"
+            }
+          },
+          "ebrt_top_k": {
+            "invocation_fingerprint_sha256": "a98361427bf1aa644e3121a4e431b0b37cdabd18fc1695badb823f75f66fc8c9",
+            "provider_uptake": {
+              "checks": {
+                "compiled_obligations_retained": false,
+                "output_parsed": true
+              },
+              "compiled_obligation_ids": [
+                "R6",
+                "R2"
+              ],
+              "fingerprint_sha256": "fce90d9ed6ed053f9c6dabda5d58bde705f450861f34209dbed0f0171438d579",
+              "missing_compiled_obligation_ids": [
+                "R6"
+              ],
+              "observed_support_ids": [
+                "R1",
+                "R2",
+                "R4",
+                "R5"
+              ],
+              "status": "FAIL"
+            },
+            "result": {
+              "answer": "60_UNITS",
+              "error_code": null,
+              "fingerprint_sha256": "ce462b911fb6244f37559747d85b86cf8a38efd539e69751fd0d905fd7defc44",
+              "latency_ms": 5808.546292013489,
+              "logical_calls": 1,
+              "raw_text": "ANSWER=60_UNITS\nSUPPORT=R1,R2,R4,R5",
+              "request_fingerprint_sha256": "a98361427bf1aa644e3121a4e431b0b37cdabd18fc1695badb823f75f66fc8c9",
+              "status": "PARSED",
+              "support_ids": [
+                "R1",
+                "R2",
+                "R4",
+                "R5"
+              ]
+            },
+            "semantic_grade": {
+              "checks": {
+                "expected_answer": false,
+                "forbidden_support_absent": true,
+                "required_support_present": false,
+                "schema_parsed": true
+              },
+              "contract_fingerprint_sha256": "0042cf86ec2dc5a9a85461591a007bbe81d24e160f29169401ad648a227edf16",
+              "fingerprint_sha256": "d35d9ec41014e7e2b99064d712acd6cde36924f06ed2088c363d36e5a581ef87",
+              "status": "FAIL"
+            }
+          }
+        },
+        "call_order": [
+          "ebrt_top_k",
+          "ebrt_role_stratified",
+          "direct_full_context"
+        ],
+        "case_id": "scaled-reading-schema-revision",
+        "compiled": {
+          "ebrt_role_stratified": {
+            "coverage": {
+              "coverage_source": "CALLER_SUPPLIED_PUBLIC_ROLES",
+              "fingerprint_sha256": "b0e00f3bc40417a9ca0f96f84f94855411f6ce8a1aa9e43b8c6d8c8b959bf481",
+              "missing_required_public_evidence_ids": [],
+              "required_public_evidence_ids": [
+                "R2",
+                "R4",
+                "R6"
+              ],
+              "selected_evidence_ids": [
+                "R6",
+                "R2",
+                "R4"
+              ],
+              "status": "PASS"
+            },
+            "program": {
+              "fingerprint_sha256": "482f38700c8ef4c728d085488833e3b2087841fc6b7484358672080806ff49fb",
+              "lane_id": "primary",
+              "preserve_evidence_ids": [
+                "R5"
+              ],
+              "reinspect": [
+                {
+                  "allocation_units": 54,
+                  "evidence_id": "R6",
+                  "signed_control": 0.5281150587474903
+                },
+                {
+                  "allocation_units": 27,
+                  "evidence_id": "R2",
+                  "signed_control": 0.2622968681141757
+                },
+                {
+                  "allocation_units": 19,
+                  "evidence_id": "R4",
+                  "signed_control": 0.19263381317614767
+                }
+              ],
+              "schema_version": "ebrt-actuator-program-v0.7.1",
+              "source_credit_fingerprint_sha256": "afb1d2d86328823f0a87339afb056009b4895a08e799dd80e50e9c5bba523870",
+              "steps": [
+                "LOAD_FULL_CONTEXT",
+                "SUPPRESS_INVALIDATED_SUPPORT",
+                "REINSPECT_ROLE_COVERAGE_THEN_CREDIT",
+                "PRESERVE_STABLE_CONSTRAINTS",
+                "REGENERATE_ONCE"
+              ],
+              "suppress_evidence_ids": [
+                "R3"
+              ]
+            }
+          },
+          "ebrt_top_k": {
+            "coverage": {
+              "coverage_source": "CALLER_SUPPLIED_PUBLIC_ROLES",
+              "fingerprint_sha256": "7a680e097d10e75374527df155be680a3d1cc9359e9fe80843df3b0f7ed76f6c",
+              "missing_required_public_evidence_ids": [
+                "R4"
+              ],
+              "required_public_evidence_ids": [
+                "R2",
+                "R4",
+                "R6"
+              ],
+              "selected_evidence_ids": [
+                "R6",
+                "R1",
+                "R2"
+              ],
+              "status": "FAIL"
+            },
+            "program": {
+              "fingerprint_sha256": "8c98c76397b59ea69d8ae83cc71f5e7d85cc9d9e30506243c5bc05b80f747d0e",
+              "lane_id": "primary",
+              "preserve_evidence_ids": [
+                "R5"
+              ],
+              "reinspect": [
+                {
+                  "allocation_units": 49,
+                  "evidence_id": "R6",
+                  "signed_control": 0.5281150587474903
+                },
+                {
+                  "allocation_units": 26,
+                  "evidence_id": "R1",
+                  "signed_control": 0.2730028627310807
+                },
+                {
+                  "allocation_units": 25,
+                  "evidence_id": "R2",
+                  "signed_control": 0.2622968681141757
+                }
+              ],
+              "schema_version": "ebrt-actuator-program-v0.7.1",
+              "source_credit_fingerprint_sha256": "afb1d2d86328823f0a87339afb056009b4895a08e799dd80e50e9c5bba523870",
+              "steps": [
+                "LOAD_FULL_CONTEXT",
+                "SUPPRESS_INVALIDATED_SUPPORT",
+                "REINSPECT_BY_BACKWARD_CREDIT",
+                "PRESERVE_STABLE_CONSTRAINTS",
+                "REGENERATE_ONCE"
+              ],
+              "suppress_evidence_ids": [
+                "R3"
+              ]
+            }
+          },
+          "trajectory": {
+            "axis_ids": [
+              "revision",
+              "invalidation",
+              "stability"
+            ],
+            "backtracking_steps": 0,
+            "checks": {
+              "central_finite_difference_agreement": true,
+              "control_budget_respected": true,
+              "control_is_non_neutral": true,
+              "ineligible_sites_are_zero": true,
+              "objective_decreased": true,
+              "pre_event_backward_credit_nonzero": true,
+              "real_backward_executed_once": true,
+              "stable_axis_exact_identity": true,
+              "zero_control_exact_noop": true
+            },
+            "control_budget": 0.75,
+            "control_l2": 0.7500000000000001,
+            "credit_map": [
+              {
+                "absolute_control": 0.2730028627310807,
+                "control": 0.2730028627310807,
+                "eligible": true,
+                "evidence_id": "R1",
+                "gradient": -0.6924200560061632,
+                "role": "context",
+                "step": 1
+              },
+              {
+                "absolute_control": 0.2622968681141757,
+                "control": 0.2622968681141757,
+                "eligible": true,
+                "evidence_id": "R2",
+                "gradient": -0.6652663283196472,
+                "role": "required_support",
+                "step": 2
+              },
+              {
+                "absolute_control": 0.32117983850715387,
+                "control": 0.32117983850715387,
+                "eligible": true,
+                "evidence_id": "R3",
+                "gradient": -0.8146118305954863,
+                "role": "invalidated_prior",
+                "step": 3
+              },
+              {
+                "absolute_control": 0.19263381317614767,
+                "control": 0.19263381317614767,
+                "eligible": true,
+                "evidence_id": "R4",
+                "gradient": -0.4885791832867969,
+                "role": "required_support",
+                "step": 4
+              },
+              {
+                "absolute_control": 0.0,
+                "control": 0.0,
+                "eligible": false,
+                "evidence_id": "R5",
+                "gradient": 0.0,
+                "role": "stable",
+                "step": 5
+              },
+              {
+                "absolute_control": 0.5281150587474903,
+                "control": 0.5281150587474903,
+                "eligible": true,
+                "evidence_id": "R6",
+                "gradient": -1.3394638242890626,
+                "role": "correction",
+                "step": 6
+              }
+            ],
+            "event_index": 5,
+            "fingerprint_sha256": "afb1d2d86328823f0a87339afb056009b4895a08e799dd80e50e9c5bba523870",
+            "finite_difference_max_abs_error": 2.0594614902336161e-10,
+            "gradient_boundary": "detached_public_trajectory_after_state_adapter",
+            "lane_id": "primary",
+            "neutral": {
+              "loss": {
+                "control": 0.0,
+                "path": 0.2556569949171896,
+                "smoothness": 0.0,
+                "terminal": 0.7669709847515687,
+                "total": 0.8053195339891471
+              },
+              "trajectory": [
+                {
+                  "evidence_id": "R1",
+                  "role": "context",
+                  "state": {
+                    "invalidation": 0.0,
+                    "revision": -0.55,
+                    "stability": 0.0
+                  },
+                  "step": 1
+                },
+                {
+                  "evidence_id": "R2",
+                  "role": "required_support",
+                  "state": {
+                    "invalidation": 0.0,
+                    "revision": -0.25750000000000006,
+                    "stability": 0.0
+                  },
+                  "step": 2
+                },
+                {
+                  "evidence_id": "R3",
+                  "role": "invalidated_prior",
+                  "state": {
+                    "invalidation": 0.0,
+                    "revision": -1.038875,
+                    "stability": 0.0
+                  },
+                  "step": 3
+                },
+                {
+                  "evidence_id": "R4",
+                  "role": "required_support",
+                  "state": {
+                    "invalidation": 0.0,
+                    "revision": -0.77304375,
+                    "stability": 0.0
+                  },
+                  "step": 4
+                },
+                {
+                  "evidence_id": "R5",
+                  "role": "stable",
+                  "state": {
+                    "invalidation": 0.0,
+                    "revision": -0.6570871875000001,
+                    "stability": 1.0
+                  },
+                  "step": 5
+                },
+                {
+                  "evidence_id": "R6",
+                  "role": "correction",
+                  "state": {
+                    "invalidation": 1.0,
+                    "revision": 0.06147589062499992,
+                    "stability": 0.85
+                  },
+                  "step": 6
+                }
+              ]
+            },
+            "revised": {
+              "loss": {
+                "control": 0.28125000000000006,
+                "path": 0.029302843381157576,
+                "smoothness": 0.13265356928153674,
+                "terminal": 0.08790853014347273,
+                "total": 0.09925549234346173
+              },
+              "trajectory": [
+                {
+                  "evidence_id": "R1",
+                  "role": "context",
+                  "state": {
+                    "invalidation": 0.0,
+                    "revision": -0.23029985619324844,
+                    "stability": 0.0
+                  },
+                  "step": 1
+                },
+                {
+                  "evidence_id": "R2",
+                  "role": "required_support",
+                  "state": {
+                    "invalidation": 0.0,
+                    "revision": 0.2655588830904023,
+                    "stability": 0.0
+                  },
+                  "step": 2
+                },
+                {
+                  "evidence_id": "R3",
+                  "role": "invalidated_prior",
+                  "state": {
+                    "invalidation": 0.18944974210896595,
+                    "revision": -0.2774901346991493,
+                    "stability": 0.0
+                  },
+                  "step": 3
+                },
+                {
+                  "evidence_id": "R4",
+                  "role": "required_support",
+                  "state": {
+                    "invalidation": 0.16103228079262105,
+                    "revision": -0.026917936621392663,
+                    "stability": 0.0
+                  },
+                  "step": 4
+                },
+                {
+                  "evidence_id": "R5",
+                  "role": "stable",
+                  "state": {
+                    "invalidation": 0.1368774386737279,
+                    "revision": -0.022880246128183762,
+                    "stability": 1.0
+                  },
+                  "step": 5
+                },
+                {
+                  "evidence_id": "R6",
+                  "role": "correction",
+                  "state": {
+                    "invalidation": 1.3679940581294419,
+                    "revision": 1.099008872165037,
+                    "stability": 0.85
+                  },
+                  "step": 6
+                }
+              ]
+            },
+            "schema_version": "ebrt-model-interface-core-v0.7.1",
+            "state_adapter_config": {
+              "correction_scale": 1.0,
+              "invalidation_scale": 1.0,
+              "support_scale": 1.0
+            },
+            "state_adapter_id": "typed-public-state-v0.7.1"
+          }
+        },
+        "diffs": {
+          "direct_to_top_k": {
+            "answer_changed": false,
+            "answer_transition": [
+              "60_UNITS",
+              "60_UNITS"
+            ],
+            "fingerprint_sha256": "990d20b2db5e580262c0a630d4d5208f1ea44eeb3eac3ba28c63813dd53b061e",
+            "left_arm": "direct_full_context",
+            "raw_text_changed": true,
+            "right_arm": "ebrt_top_k",
+            "support_added": [],
+            "support_changed": true,
+            "support_removed": [
+              "R6"
+            ],
+            "unified_diff": [
+              "--- direct_full_context",
+              "+++ ebrt_top_k",
+              "@@ -1,2 +1,2 @@",
+              " ANSWER=60_UNITS",
+              "-SUPPORT=R1, R2, R4, R5, R6",
+              "+SUPPORT=R1,R2,R4,R5"
+            ]
+          },
+          "top_k_to_role": {
+            "answer_changed": true,
+            "answer_transition": [
+              "60_UNITS",
+              "6_UNITS"
+            ],
+            "fingerprint_sha256": "f09e8501769884c70dce5bae5ad8883bf02d38e6b6a5c55b5e2808f39aff2e53",
+            "left_arm": "ebrt_top_k",
+            "raw_text_changed": true,
+            "right_arm": "ebrt_role_stratified",
+            "support_added": [],
+            "support_changed": true,
+            "support_removed": [
+              "R1"
+            ],
+            "unified_diff": [
+              "--- ebrt_top_k",
+              "+++ ebrt_role_stratified",
+              "@@ -1,2 +1,2 @@",
+              "-ANSWER=60_UNITS",
+              "-SUPPORT=R1,R2,R4,R5",
+              "+ANSWER=6_UNITS",
+              "+SUPPORT=R2,R4,R5"
+            ]
+          }
+        },
+        "family": "coverage_loss_required_rule",
+        "fingerprint_sha256": "4b4b38ce3112073dec54ef32b0872b3b884e13165bb6e7c600ae9019bdcd01ba",
+        "post_call_contract": {
+          "expected_answer": "6_UNITS",
+          "fingerprint_sha256": "0042cf86ec2dc5a9a85461591a007bbe81d24e160f29169401ad648a227edf16",
+          "forbidden_support_ids": [
+            "R3"
+          ],
+          "required_compiled_preserve_ids": [
+            "R5"
+          ],
+          "required_support_ids": [
+            "R2",
+            "R4",
+            "R6"
+          ],
+          "schema_version": "ebrt-post-run-contract-v0.8.0"
+        },
+        "task": {
+          "answer_choices": [
+            "60_UNITS",
+            "6_UNITS"
+          ],
+          "before_horizon_evidence_ids": [
+            "R1",
+            "R2",
+            "R3",
+            "R4",
+            "R5"
+          ],
+          "event": {
+            "correction_evidence_id": "R6",
+            "event_id": "scaled-reading-schema-revision-late-correction",
+            "invalidated_evidence_ids": [
+              "R3"
+            ],
+            "stable_evidence_ids": [
+              "R5"
+            ]
+          },
+          "evidence": [
+            {
+              "control_basis": [
+                1.2,
+                0.0,
+                0.0
+              ],
+              "evidence_id": "R1",
+              "neutral_effect": [
+                -0.55,
+                0.0,
+                0.0
+              ],
+              "ordinal": 1,
+              "role": "context",
+              "text": "A normalized reading must be reported for sample S-8."
+            },
+            {
+              "control_basis": [
+                0.98,
+                0.0,
+                0.0
+              ],
+              "evidence_id": "R2",
+              "neutral_effect": [
+                0.21,
+                0.0,
+                0.0
+              ],
+              "ordinal": 2,
+              "role": "required_support",
+              "text": "The raw reading for sample S-8 is 12."
+            },
+            {
+              "control_basis": [
+                1.02,
+                0.61,
+                0.0
+              ],
+              "evidence_id": "R3",
+              "neutral_effect": [
+                -0.82,
+                0.0,
+                0.0
+              ],
+              "ordinal": 3,
+              "role": "invalidated_prior",
+              "text": "The retired schema multiplies the raw reading by 5."
+            },
+            {
+              "control_basis": [
+                0.52,
+                0.0,
+                0.0
+              ],
+              "evidence_id": "R4",
+              "neutral_effect": [
+                0.11,
+                0.0,
+                0.0
+              ],
+              "ordinal": 4,
+              "role": "required_support",
+              "text": "The current schema multiplies the raw reading by 0.5."
+            },
+            {
+              "control_basis": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "evidence_id": "R5",
+              "neutral_effect": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "ordinal": 5,
+              "role": "stable",
+              "text": "The output label remains NORMALIZED_UNITS."
+            },
+            {
+              "control_basis": [
+                1.03,
+                0.52,
+                0.0
+              ],
+              "evidence_id": "R6",
+              "neutral_effect": [
+                0.62,
+                1.0,
+                0.0
+              ],
+              "ordinal": 6,
+              "role": "correction",
+              "text": "Late correction: R3 is invalid; calculate with the current schema in R4."
+            }
+          ],
+          "prior_state": {
+            "active_support_ids": [
+              "R2",
+              "R3",
+              "R5"
+            ],
+            "answer": "60_UNITS",
+            "stable_values": [
+              {
+                "key": "output_label",
+                "value": "NORMALIZED_UNITS"
+              }
+            ]
+          },
+          "question": "What normalized value should be reported under the corrected schema?",
+          "schema_version": "ebrt-revision-task-v0.7.1",
+          "task_id": "scaled-reading-schema-revision",
+          "trajectory_contract": {
+            "axes": [
+              "revision",
+              "invalidation",
+              "stability"
+            ],
+            "control_budget": 0.75,
+            "decay": 0.85,
+            "learning_rate": 0.8,
+            "reinspection_count": 3,
+            "terminal_target": [
+              1.3,
+              1.0,
+              0.85
+            ]
+          }
+        }
+      },
+      {
+        "arms": {
+          "direct_full_context": {
+            "invocation_fingerprint_sha256": "770dbad22632cbcfea6596cf84b1fe893a2ffbd5fd58d70afd4622c90397614b",
+            "provider_uptake": null,
+            "result": {
+              "answer": "ELIGIBLE",
+              "error_code": null,
+              "fingerprint_sha256": "464cbd778a52176ade14a855caa1885937fde15f4a3f57ffc0f6ea955879d5bb",
+              "latency_ms": 4501.355209038593,
+              "logical_calls": 1,
+              "raw_text": "ANSWER=ELIGIBLE\nSUPPORT=R2, R4, R6",
+              "request_fingerprint_sha256": "770dbad22632cbcfea6596cf84b1fe893a2ffbd5fd58d70afd4622c90397614b",
+              "status": "PARSED",
+              "support_ids": [
+                "R2",
+                "R4",
+                "R6"
+              ]
+            },
+            "semantic_grade": {
+              "checks": {
+                "expected_answer": true,
+                "forbidden_support_absent": true,
+                "required_support_present": true,
+                "schema_parsed": true
+              },
+              "contract_fingerprint_sha256": "73da0a33ee9e20a63d7599da9cb503b7a6768e308a50d23196066a802cb65a1f",
+              "fingerprint_sha256": "2ae1ecd036956fae3035f6990c77781711d0eb251187ef83acac37d63277ca43",
+              "status": "PASS"
+            }
+          },
+          "ebrt_role_stratified": {
+            "invocation_fingerprint_sha256": "e3db40cb53ee96596cc66466ab1fe94600ec728712e21f28c4b8a6b10556fb8a",
+            "provider_uptake": {
+              "checks": {
+                "compiled_obligations_retained": true,
+                "output_parsed": true
+              },
+              "compiled_obligation_ids": [
+                "R6",
+                "R4",
+                "R2"
+              ],
+              "fingerprint_sha256": "c94060fccf923f8008a5cb9dbe895b842a5a6c24ce3b4bc8469460c3bbfdab42",
+              "missing_compiled_obligation_ids": [],
+              "observed_support_ids": [
+                "R2",
+                "R4",
+                "R6"
+              ],
+              "status": "PASS"
+            },
+            "result": {
+              "answer": "ELIGIBLE",
+              "error_code": null,
+              "fingerprint_sha256": "a7912ef407e6eec3ae23bc71a4bcd54d2dd36d16b388c8b4a6cc94ba90c23a4e",
+              "latency_ms": 5548.226458020508,
+              "logical_calls": 1,
+              "raw_text": "ANSWER=ELIGIBLE\nSUPPORT=R6,R4,R2",
+              "request_fingerprint_sha256": "e3db40cb53ee96596cc66466ab1fe94600ec728712e21f28c4b8a6b10556fb8a",
+              "status": "PARSED",
+              "support_ids": [
+                "R6",
+                "R4",
+                "R2"
+              ]
+            },
+            "semantic_grade": {
+              "checks": {
+                "expected_answer": true,
+                "forbidden_support_absent": true,
+                "required_support_present": true,
+                "schema_parsed": true
+              },
+              "contract_fingerprint_sha256": "73da0a33ee9e20a63d7599da9cb503b7a6768e308a50d23196066a802cb65a1f",
+              "fingerprint_sha256": "2ae1ecd036956fae3035f6990c77781711d0eb251187ef83acac37d63277ca43",
+              "status": "PASS"
+            }
+          },
+          "ebrt_top_k": {
+            "invocation_fingerprint_sha256": "f0181a25b82187262c191e09feeae6eb99bfda79c443a8e880b3fad197307a15",
+            "provider_uptake": {
+              "checks": {
+                "compiled_obligations_retained": true,
+                "output_parsed": true
+              },
+              "compiled_obligation_ids": [
+                "R6",
+                "R4",
+                "R2"
+              ],
+              "fingerprint_sha256": "c94060fccf923f8008a5cb9dbe895b842a5a6c24ce3b4bc8469460c3bbfdab42",
+              "missing_compiled_obligation_ids": [],
+              "observed_support_ids": [
+                "R2",
+                "R4",
+                "R6"
+              ],
+              "status": "PASS"
+            },
+            "result": {
+              "answer": "ELIGIBLE",
+              "error_code": null,
+              "fingerprint_sha256": "118b2e0e472f0094d69cde75d3766fe36a498670786f2b2a3768fa7eb454f093",
+              "latency_ms": 5567.7745409775525,
+              "logical_calls": 1,
+              "raw_text": "ANSWER=ELIGIBLE\nSUPPORT=R6,R4,R2",
+              "request_fingerprint_sha256": "f0181a25b82187262c191e09feeae6eb99bfda79c443a8e880b3fad197307a15",
+              "status": "PARSED",
+              "support_ids": [
+                "R6",
+                "R4",
+                "R2"
+              ]
+            },
+            "semantic_grade": {
+              "checks": {
+                "expected_answer": true,
+                "forbidden_support_absent": true,
+                "required_support_present": true,
+                "schema_parsed": true
+              },
+              "contract_fingerprint_sha256": "73da0a33ee9e20a63d7599da9cb503b7a6768e308a50d23196066a802cb65a1f",
+              "fingerprint_sha256": "2ae1ecd036956fae3035f6990c77781711d0eb251187ef83acac37d63277ca43",
+              "status": "PASS"
+            }
+          }
+        },
+        "call_order": [
+          "ebrt_role_stratified",
+          "direct_full_context",
+          "ebrt_top_k"
+        ],
+        "case_id": "grant-eligibility-policy-revision",
+        "compiled": {
+          "ebrt_role_stratified": {
+            "coverage": {
+              "coverage_source": "CALLER_SUPPLIED_PUBLIC_ROLES",
+              "fingerprint_sha256": "32c38dc206f946b3ae710a216df205028c45d87cc2b2a0ae106bbf45cdc202e3",
+              "missing_required_public_evidence_ids": [],
+              "required_public_evidence_ids": [
+                "R2",
+                "R4",
+                "R6"
+              ],
+              "selected_evidence_ids": [
+                "R6",
+                "R4",
+                "R2"
+              ],
+              "status": "PASS"
+            },
+            "program": {
+              "fingerprint_sha256": "5113eadf29a993b7a5cbe63a2256b01b6aee13aabd161c4d4a6fe9430f6ef18a",
+              "lane_id": "primary",
+              "preserve_evidence_ids": [
+                "R5"
+              ],
+              "reinspect": [
+                {
+                  "allocation_units": 46,
+                  "evidence_id": "R6",
+                  "signed_control": 0.5232881450620754
+                },
+                {
+                  "allocation_units": 34,
+                  "evidence_id": "R4",
+                  "signed_control": 0.38548893352906227
+                },
+                {
+                  "allocation_units": 20,
+                  "evidence_id": "R2",
+                  "signed_control": 0.2195989602589355
+                }
+              ],
+              "schema_version": "ebrt-actuator-program-v0.7.1",
+              "source_credit_fingerprint_sha256": "ec639be3dd8f2e33b5d1c38e143e68dff7aa2531f56f255b2acda235d760a8fe",
+              "steps": [
+                "LOAD_FULL_CONTEXT",
+                "SUPPRESS_INVALIDATED_SUPPORT",
+                "REINSPECT_ROLE_COVERAGE_THEN_CREDIT",
+                "PRESERVE_STABLE_CONSTRAINTS",
+                "REGENERATE_ONCE"
+              ],
+              "suppress_evidence_ids": [
+                "R3"
+              ]
+            }
+          },
+          "ebrt_top_k": {
+            "coverage": {
+              "coverage_source": "CALLER_SUPPLIED_PUBLIC_ROLES",
+              "fingerprint_sha256": "32c38dc206f946b3ae710a216df205028c45d87cc2b2a0ae106bbf45cdc202e3",
+              "missing_required_public_evidence_ids": [],
+              "required_public_evidence_ids": [
+                "R2",
+                "R4",
+                "R6"
+              ],
+              "selected_evidence_ids": [
+                "R6",
+                "R4",
+                "R2"
+              ],
+              "status": "PASS"
+            },
+            "program": {
+              "fingerprint_sha256": "4f9fdbe9c5ff2e19ec12bb29ec9c392bce4b72d6d61207df9fc7a12c2de05870",
+              "lane_id": "primary",
+              "preserve_evidence_ids": [
+                "R5"
+              ],
+              "reinspect": [
+                {
+                  "allocation_units": 46,
+                  "evidence_id": "R6",
+                  "signed_control": 0.5232881450620754
+                },
+                {
+                  "allocation_units": 34,
+                  "evidence_id": "R4",
+                  "signed_control": 0.38548893352906227
+                },
+                {
+                  "allocation_units": 20,
+                  "evidence_id": "R2",
+                  "signed_control": 0.2195989602589355
+                }
+              ],
+              "schema_version": "ebrt-actuator-program-v0.7.1",
+              "source_credit_fingerprint_sha256": "ec639be3dd8f2e33b5d1c38e143e68dff7aa2531f56f255b2acda235d760a8fe",
+              "steps": [
+                "LOAD_FULL_CONTEXT",
+                "SUPPRESS_INVALIDATED_SUPPORT",
+                "REINSPECT_BY_BACKWARD_CREDIT",
+                "PRESERVE_STABLE_CONSTRAINTS",
+                "REGENERATE_ONCE"
+              ],
+              "suppress_evidence_ids": [
+                "R3"
+              ]
+            }
+          },
+          "trajectory": {
+            "axis_ids": [
+              "revision",
+              "invalidation",
+              "stability"
+            ],
+            "backtracking_steps": 0,
+            "checks": {
+              "central_finite_difference_agreement": true,
+              "control_budget_respected": true,
+              "control_is_non_neutral": true,
+              "ineligible_sites_are_zero": true,
+              "objective_decreased": true,
+              "pre_event_backward_credit_nonzero": true,
+              "real_backward_executed_once": true,
+              "stable_axis_exact_identity": true,
+              "zero_control_exact_noop": true
+            },
+            "control_budget": 0.75,
+            "control_l2": 0.7499999999999999,
+            "credit_map": [
+              {
+                "absolute_control": 0.07739524331077118,
+                "control": 0.07739524331077118,
+                "eligible": true,
+                "evidence_id": "R1",
+                "gradient": -0.14917860125659554,
+                "role": "context",
+                "step": 1
+              },
+              {
+                "absolute_control": 0.2195989602589355,
+                "control": 0.2195989602589355,
+                "eligible": true,
+                "evidence_id": "R2",
+                "gradient": -0.4232749239806517,
+                "role": "required_support",
+                "step": 2
+              },
+              {
+                "absolute_control": 0.2930086557256959,
+                "control": 0.2930086557256959,
+                "eligible": true,
+                "evidence_id": "R3",
+                "gradient": -0.5647714193716014,
+                "role": "invalidated_prior",
+                "step": 3
+              },
+              {
+                "absolute_control": 0.38548893352906227,
+                "control": 0.38548893352906227,
+                "eligible": true,
+                "evidence_id": "R4",
+                "gradient": -0.7430262822852187,
+                "role": "required_support",
+                "step": 4
+              },
+              {
+                "absolute_control": 0.0,
+                "control": 0.0,
+                "eligible": false,
+                "evidence_id": "R5",
+                "gradient": 0.0,
+                "role": "stable",
+                "step": 5
+              },
+              {
+                "absolute_control": 0.5232881450620754,
+                "control": 0.5232881450620754,
+                "eligible": true,
+                "evidence_id": "R6",
+                "gradient": -1.008632962378125,
+                "role": "correction",
+                "step": 6
+              }
+            ],
+            "event_index": 5,
+            "fingerprint_sha256": "ec639be3dd8f2e33b5d1c38e143e68dff7aa2531f56f255b2acda235d760a8fe",
+            "finite_difference_max_abs_error": 6.518119377574294e-11,
+            "gradient_boundary": "detached_public_trajectory_after_state_adapter",
+            "lane_id": "primary",
+            "neutral": {
+              "loss": {
+                "control": 0.0,
+                "path": 0.1478209951803048,
+                "smoothness": 0.0,
+                "terminal": 0.44346298554091446,
+                "total": 0.4656361348179602
+              },
+              "trajectory": [
+                {
+                  "evidence_id": "R1",
+                  "role": "context",
+                  "state": {
+                    "invalidation": 0.0,
+                    "revision": -0.23,
+                    "stability": 0.0
+                  },
+                  "step": 1
+                },
+                {
+                  "evidence_id": "R2",
+                  "role": "required_support",
+                  "state": {
+                    "invalidation": 0.0,
+                    "revision": -0.035500000000000004,
+                    "stability": 0.0
+                  },
+                  "step": 2
+                },
+                {
+                  "evidence_id": "R3",
+                  "role": "invalidated_prior",
+                  "state": {
+                    "invalidation": 0.0,
+                    "revision": -0.7601749999999999,
+                    "stability": 0.0
+                  },
+                  "step": 3
+                },
+                {
+                  "evidence_id": "R4",
+                  "role": "required_support",
+                  "state": {
+                    "invalidation": 0.0,
+                    "revision": -0.3761487499999999,
+                    "stability": 0.0
+                  },
+                  "step": 4
+                },
+                {
+                  "evidence_id": "R5",
+                  "role": "stable",
+                  "state": {
+                    "invalidation": 0.0,
+                    "revision": -0.3197264374999999,
+                    "stability": 1.0
+                  },
+                  "step": 5
+                },
+                {
+                  "evidence_id": "R6",
+                  "role": "correction",
+                  "state": {
+                    "invalidation": 1.0,
+                    "revision": 0.3582325281250001,
+                    "stability": 0.85
+                  },
+                  "step": 6
+                }
+              ]
+            },
+            "revised": {
+              "loss": {
+                "control": 0.28124999999999994,
+                "path": 0.016305604043772112,
+                "smoothness": 0.05315210498410406,
+                "terminal": 0.04891681213131634,
+                "total": 0.05751917378772319
+              },
+              "trajectory": [
+                {
+                  "evidence_id": "R1",
+                  "role": "context",
+                  "state": {
+                    "invalidation": 0.0,
+                    "revision": -0.2037380329480812,
+                    "stability": 0.0
+                  },
+                  "step": 1
+                },
+                {
+                  "evidence_id": "R2",
+                  "role": "required_support",
+                  "state": {
+                    "invalidation": 0.0,
+                    "revision": 0.16405401926144814,
+                    "stability": 0.0
+                  },
+                  "step": 2
+                },
+                {
+                  "evidence_id": "R3",
+                  "role": "invalidated_prior",
+                  "state": {
+                    "invalidation": 0.15099785981711175,
+                    "revision": -0.3255955748920824,
+                    "stability": 0.0
+                  },
+                  "step": 3
+                },
+                {
+                  "evidence_id": "R4",
+                  "role": "required_support",
+                  "state": {
+                    "invalidation": 0.128348180844545,
+                    "revision": 0.3754071284787994,
+                    "stability": 0.0
+                  },
+                  "step": 4
+                },
+                {
+                  "evidence_id": "R5",
+                  "role": "stable",
+                  "state": {
+                    "invalidation": 0.10909595371786324,
+                    "revision": 0.3190960592069795,
+                    "stability": 1.0
+                  },
+                  "step": 5
+                },
+                {
+                  "evidence_id": "R6",
+                  "role": "correction",
+                  "state": {
+                    "invalidation": 1.2992321042465194,
+                    "revision": 1.3910701490656123,
+                    "stability": 0.85
+                  },
+                  "step": 6
+                }
+              ]
+            },
+            "schema_version": "ebrt-model-interface-core-v0.7.1",
+            "state_adapter_config": {
+              "correction_scale": 1.0,
+              "invalidation_scale": 1.0,
+              "support_scale": 1.0
+            },
+            "state_adapter_id": "typed-public-state-v0.7.1"
+          }
+        },
+        "diffs": {
+          "direct_to_top_k": {
+            "answer_changed": false,
+            "answer_transition": [
+              "ELIGIBLE",
+              "ELIGIBLE"
+            ],
+            "fingerprint_sha256": "4e8c61fc07f0c96b8a80c0bf11b7a354321a6f9add01a6be7721f46aa21bdf28",
+            "left_arm": "direct_full_context",
+            "raw_text_changed": true,
+            "right_arm": "ebrt_top_k",
+            "support_added": [],
+            "support_changed": false,
+            "support_removed": [],
+            "unified_diff": [
+              "--- direct_full_context",
+              "+++ ebrt_top_k",
+              "@@ -1,2 +1,2 @@",
+              " ANSWER=ELIGIBLE",
+              "-SUPPORT=R2, R4, R6",
+              "+SUPPORT=R6,R4,R2"
+            ]
+          },
+          "top_k_to_role": {
+            "answer_changed": false,
+            "answer_transition": [
+              "ELIGIBLE",
+              "ELIGIBLE"
+            ],
+            "fingerprint_sha256": "b0d8893aea95226cd10faf38711a48044ce33e24b52f43a2c9ef56028117e085",
+            "left_arm": "ebrt_top_k",
+            "raw_text_changed": false,
+            "right_arm": "ebrt_role_stratified",
+            "support_added": [],
+            "support_changed": false,
+            "support_removed": [],
+            "unified_diff": []
+          }
+        },
+        "family": "coverage_already_satisfied",
+        "fingerprint_sha256": "c4b244820e82181ce547d98b247a1a82801b22b76f4ce892194813d3ad67051b",
+        "post_call_contract": {
+          "expected_answer": "ELIGIBLE",
+          "fingerprint_sha256": "73da0a33ee9e20a63d7599da9cb503b7a6768e308a50d23196066a802cb65a1f",
+          "forbidden_support_ids": [
+            "R3"
+          ],
+          "required_compiled_preserve_ids": [
+            "R5"
+          ],
+          "required_support_ids": [
+            "R2",
+            "R4",
+            "R6"
+          ],
+          "schema_version": "ebrt-post-run-contract-v0.8.0"
+        },
+        "task": {
+          "answer_choices": [
+            "INELIGIBLE",
+            "ELIGIBLE"
+          ],
+          "before_horizon_evidence_ids": [
+            "R1",
+            "R2",
+            "R3",
+            "R4",
+            "R5"
+          ],
+          "event": {
+            "correction_evidence_id": "R6",
+            "event_id": "grant-eligibility-policy-revision-late-correction",
+            "invalidated_evidence_ids": [
+              "R3"
+            ],
+            "stable_evidence_ids": [
+              "R5"
+            ]
+          },
+          "evidence": [
+            {
+              "control_basis": [
+                0.34,
+                0.0,
+                0.0
+              ],
+              "evidence_id": "R1",
+              "neutral_effect": [
+                -0.23,
+                0.0,
+                0.0
+              ],
+              "ordinal": 1,
+              "role": "context",
+              "text": "Applicant N-7 requires one final eligibility decision."
+            },
+            {
+              "control_basis": [
+                0.82,
+                0.0,
+                0.0
+              ],
+              "evidence_id": "R2",
+              "neutral_effect": [
+                0.16,
+                0.0,
+                0.0
+              ],
+              "ordinal": 2,
+              "role": "required_support",
+              "text": "Applicant N-7 has verified classification T2."
+            },
+            {
+              "control_basis": [
+                0.93,
+                0.53,
+                0.0
+              ],
+              "evidence_id": "R3",
+              "neutral_effect": [
+                -0.73,
+                0.0,
+                0.0
+              ],
+              "ordinal": 3,
+              "role": "invalidated_prior",
+              "text": "The retired policy marks classification T2 as INELIGIBLE."
+            },
+            {
+              "control_basis": [
+                1.04,
+                0.0,
+                0.0
+              ],
+              "evidence_id": "R4",
+              "neutral_effect": [
+                0.27,
+                0.0,
+                0.0
+              ],
+              "ordinal": 4,
+              "role": "required_support",
+              "text": "The current policy marks classification T2 as ELIGIBLE."
+            },
+            {
+              "control_basis": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "evidence_id": "R5",
+              "neutral_effect": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "ordinal": 5,
+              "role": "stable",
+              "text": "The review channel remains HUMAN_REVIEW."
+            },
+            {
+              "control_basis": [
+                1.02,
+                0.43,
+                0.0
+              ],
+              "evidence_id": "R6",
+              "neutral_effect": [
+                0.63,
+                1.0,
+                0.0
+              ],
+              "ordinal": 6,
+              "role": "correction",
+              "text": "Late correction: R3 is superseded; evaluate against the current policy in R4."
+            }
+          ],
+          "prior_state": {
+            "active_support_ids": [
+              "R2",
+              "R3",
+              "R5"
+            ],
+            "answer": "INELIGIBLE",
+            "stable_values": [
+              {
+                "key": "review_channel",
+                "value": "HUMAN_REVIEW"
+              }
+            ]
+          },
+          "question": "What is applicant N-7's eligibility under the corrected policy?",
+          "schema_version": "ebrt-revision-task-v0.7.1",
+          "task_id": "grant-eligibility-policy-revision",
+          "trajectory_contract": {
+            "axes": [
+              "revision",
+              "invalidation",
+              "stability"
+            ],
+            "control_budget": 0.75,
+            "decay": 0.85,
+            "learning_rate": 0.8,
+            "reinspection_count": 3,
+            "terminal_target": [
+              1.3,
+              1.0,
+              0.85
+            ]
+          }
+        }
+      }
+    ],
+    "claim_boundary": [
+      "This is a three-case development canary over one instruction-capable local model snapshot.",
+      "Public required-support roles are caller-supplied scaffold metadata, not dependencies discovered autonomously by EBRT.",
+      "Compiler coverage and provider uptake are separate receipts; one does not imply the other.",
+      "Each arm differs in its model-visible request bundle, so output differences are not attributable to gradients alone.",
+      "Semantic contracts are fixed before provider calls and remain outside all model-visible prompts.",
+      "No native activations are captured, and no general reasoning-improvement or cross-model claim is assessed."
+    ],
+    "effect_attribution_status": "NOT_ASSESSED",
+    "execution_policy": {
+      "automatic_retry": false,
+      "calls_per_cell": {
+        "direct_full_context": 1,
+        "ebrt_role_stratified": 1,
+        "ebrt_top_k": 1
+      },
+      "max_tokens_per_arm": 48,
+      "native_state_capture": "DISABLED",
+      "prompt_rendering_mode": "chat_template",
+      "schedule": [
+        [
+          "direct_full_context",
+          "ebrt_top_k",
+          "ebrt_role_stratified"
+        ],
+        [
+          "ebrt_top_k",
+          "ebrt_role_stratified",
+          "direct_full_context"
+        ],
+        [
+          "ebrt_role_stratified",
+          "direct_full_context",
+          "ebrt_top_k"
+        ]
+      ],
+      "seed": 0,
+      "temperature": 0.0
+    },
+    "fingerprint_sha256": "68ba0d1b94cc8028ca17f9538b43032012d1dcd1157639f3a694c879ead811c8",
+    "generalization_status": "ONE_MODEL_DEVELOPMENT_CANARY_ONLY",
+    "model_adapter": {
+      "adapter_id": "role-uptake-canary-model",
+      "differentiable_through_model": false,
+      "generation_config": {
+        "add_generation_prompt": true,
+        "max_tokens": 48,
+        "prompt_rendering_mode": "chat_template",
+        "sampler_temperature": 0.0,
+        "seed": 0
+      },
+      "generation_config_fingerprint_sha256": "fed8626db81072310197b1a1d3c453e9f1fb37b45e2a45bb2e515c31bbc771fa",
+      "interface_kind": "local_open_weight",
+      "model_id": "mlx-community/Mistral-7B-Instruct-v0.3-4bit@a4b8f870474b0eb527f466a03fbc187830d271f5",
+      "state_visibility": "public_only"
+    },
+    "native_state_capture_status": "DISABLED",
+    "policy_lock_fingerprint_sha256": "25ff025738aaa418b698f4bb4e915fabd986442d7de4130cf19f5fe2ce2faccc",
+    "schema_version": "ebrt-role-stratified-uptake-run-v0.8.3",
+    "status": "COMPLETE",
+    "summary": {
+      "case_count": 3,
+      "compiler_coverage_passes": {
+        "ebrt_role_stratified": 3,
+        "ebrt_top_k": 1
+      },
+      "coverage_repair_cells": 2,
+      "provider_calls": 9,
+      "provider_uptake_passes": {
+        "ebrt_role_stratified": 2,
+        "ebrt_top_k": 2
+      },
+      "semantic_passes": {
+        "direct_full_context": 2,
+        "ebrt_role_stratified": 2,
+        "ebrt_top_k": 2
+      },
+      "top_k_to_role_answer_diff_cells": 1,
+      "top_k_to_role_raw_diff_cells": 2,
+      "top_k_to_role_support_diff_cells": 2
+    }
+  },
+  "claim_boundary": [
+    "This r04 execution repeats already observed cases only to bind the verified bytes to the actual MLX loader path.",
+    "The staged run is contaminated by known r01-r03 outputs and is not fresh scientific replication evidence.",
+    "MLX receives a private copy-on-write regular-file tree, never the writable Hugging Face cache path.",
+    "All staged files are exact locked bytes, distinct inodes, read-only during loading, and rehashed after calls.",
+    "All original v0.8.3 effect-attribution, one-model, public-role, and stop-gradient boundaries remain unchanged."
+  ],
+  "clone_receipt": {
+    "all_source_and_staged_inodes_distinct": true,
+    "file_count": 7,
+    "fingerprint_sha256": "0846d0d2728eef26c65d03cbb1e14c57fcdac788850da9d22edf79fc8709d5d6",
+    "source_manifest_fingerprint_sha256": "429e669ee9a248a3d40706899853f7049194f2fc8ef2042788e71aa0f5883892",
+    "staged_manifest_fingerprint_sha256": "4c3fe2b6573386a695efaeafa386eac5c689bfea52ba2c290966a83990a0bb6b",
+    "staged_path_exported": false,
+    "staging_strategy": "PRIVATE_APFS_COPY_ON_WRITE_CLONE",
+    "status": "PASS"
+  },
+  "effect_attribution_status": "NOT_ASSESSED",
+  "fingerprint_sha256": "749fd2e6ed250ae04090e117a60d2b3ad2f4499213c2b77473a06179e0fae8ec",
+  "policy_lock_fingerprint_sha256": "cfe7f5e33a559bd9f1e435e5c8cb12df04099d93ddca55897078ba01d0c665f7",
+  "replication_status": "INTEGRITY_REPLICATION_OVER_KNOWN_R01_R03_CASES",
+  "schema_version": "ebrt-role-uptake-loader-run-v0.8.3.3",
+  "staged_bytes_unchanged": true,
+  "staged_manifest_fingerprint_after": "4c3fe2b6573386a695efaeafa386eac5c689bfea52ba2c290966a83990a0bb6b",
+  "staged_manifest_fingerprint_before": "4c3fe2b6573386a695efaeafa386eac5c689bfea52ba2c290966a83990a0bb6b",
+  "status": "COMPLETE",
+  "summary": {
+    "case_count": 3,
+    "compiler_coverage_passes": {
+      "ebrt_role_stratified": 3,
+      "ebrt_top_k": 1
+    },
+    "coverage_repair_cells": 2,
+    "provider_calls": 9,
+    "provider_uptake_passes": {
+      "ebrt_role_stratified": 2,
+      "ebrt_top_k": 2
+    },
+    "semantic_passes": {
+      "direct_full_context": 2,
+      "ebrt_role_stratified": 2,
+      "ebrt_top_k": 2
+    },
+    "top_k_to_role_answer_diff_cells": 1,
+    "top_k_to_role_raw_diff_cells": 2,
+    "top_k_to_role_support_diff_cells": 2
+  }
+}

@@ -2,7 +2,10 @@
 
 Status: **COMPLETE DEVELOPMENT CANARY; MIXED RESULT; NOT A BENCHMARK**
 
-Canonical integrity-bound artifact:
+Canonical loader-bound integrity artifact:
+[`artifacts/role_stratified_uptake_v0_8_3/r04_loader_bound/results.json`](../artifacts/role_stratified_uptake_v0_8_3/r04_loader_bound/results.json)
+
+Preserved exact-snapshot-bound artifact:
 [`artifacts/role_stratified_uptake_v0_8_3/r03_snapshot_bound/results.json`](../artifacts/role_stratified_uptake_v0_8_3/r03_snapshot_bound/results.json)
 
 Preserved source-bound artifact:
@@ -19,6 +22,9 @@ Integrity-replication lock:
 
 Exact-snapshot lock:
 [`policy_lock_role_stratified_uptake_v0_8_3_2_r03.json`](../policy_lock_role_stratified_uptake_v0_8_3_2_r03.json)
+
+Loader-bound staging lock:
+[`policy_lock_role_stratified_uptake_v0_8_3_3_r04.json`](../policy_lock_role_stratified_uptake_v0_8_3_3_r04.json)
 
 ## Question
 
@@ -45,6 +51,7 @@ there are only three development cases over one model snapshot.
 - Original lock commit before r01 calls: `8a04d04`.
 - Strengthened lock commit before r02 calls: `c6e6ee7`.
 - Exact snapshot-manifest lock commit before r03 calls: `34f7807`.
+- Loader-bound staging lock commit before r04 calls: `9f2b754`.
 - Model: `mlx-community/Mistral-7B-Instruct-v0.3-4bit@a4b8f...`.
 - Three fresh synthetic late-event cases.
 - Three arms and one generation per arm:
@@ -74,6 +81,16 @@ byte size, and blob address. Git-blob SHA-1 and SHA-256 addresses are each
 verified against file content immediately before and after the calls. r03 is
 also a contaminated integrity repetition, not new evidence. All public outputs
 remain byte-identical across r01/r02/r03 (`9/9`).
+
+A third review identified a remaining time-of-check/time-of-use boundary:
+the cache symlinks could in principle be changed while MLX loaded the model
+and restored before the post-call manifest check. r04 therefore clones the
+seven exact locked blobs into a private APFS copy-on-write tree, requires
+regular files with source-distinct inodes, marks the tree read-only during
+loading and generation, and passes only that isolated path to MLX. The staged
+manifest is rehashed after all calls. r04 is again an integrity repetition
+over known cases, not fresh evidence. All public outputs remain byte-identical
+across r01/r02/r03/r04 (`9/9`).
 
 The candidate reserves capacity for the correction plus every public evidence
 node whose caller-supplied role is `required_support`, then fills remaining

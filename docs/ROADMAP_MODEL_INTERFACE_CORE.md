@@ -141,8 +141,12 @@ Status: **IMPLEMENTED + VERIFIED; MIXED DEVELOPMENT RESULT**
   byte-identically. A second review found that revision/path identity did not
   bind the expected blob set. r03 locks all seven snapshot-relative paths,
   sizes, and content-addressed blob hashes and checks them before and after the
-  calls. All r01/r02/r03 public outputs are byte-identical; neither repetition
-  is counted as fresh evidence.
+  calls. A third review found that this still left a cache-symlink TOCTOU window
+  while MLX loaded the model. r04 passes MLX only a private APFS copy-on-write
+  tree of the exact locked regular files, requires source-distinct inodes, and
+  rehashes the staged tree after all calls. All r01/r02/r03/r04 public outputs
+  are byte-identical; none of the integrity repetitions is counted as fresh
+  evidence.
 - No gradient-specific, causal-superiority, general-reasoning, or cross-model
   claim is admitted from this canary.
 
