@@ -2,11 +2,17 @@
 
 Status: **COMPLETE DEVELOPMENT CANARY; MIXED RESULT; NOT A BENCHMARK**
 
-Artifact:
+Canonical integrity-bound artifact:
+[`artifacts/role_stratified_uptake_v0_8_3/r02_integrity/results.json`](../artifacts/role_stratified_uptake_v0_8_3/r02_integrity/results.json)
+
+Preserved original artifact:
 [`artifacts/role_stratified_uptake_v0_8_3/r01/results.json`](../artifacts/role_stratified_uptake_v0_8_3/r01/results.json)
 
 Pre-call lock:
 [`policy_lock_role_stratified_uptake_v0_8_3.json`](../policy_lock_role_stratified_uptake_v0_8_3.json)
+
+Integrity-replication lock:
+[`policy_lock_role_stratified_uptake_v0_8_3_1_r02.json`](../policy_lock_role_stratified_uptake_v0_8_3_1_r02.json)
 
 ## Question
 
@@ -30,7 +36,8 @@ there are only three development cases over one model snapshot.
 ## Locked geometry
 
 - Source main commit: `2961feb6aaa2222bb56a62cb04274587487f4a17`.
-- Lock commit before calls: `8a04d04`.
+- Original lock commit before r01 calls: `8a04d04`.
+- Strengthened lock commit before r02 calls: `c6e6ee7`.
 - Model: `mlx-community/Mistral-7B-Instruct-v0.3-4bit@a4b8f...`.
 - Three fresh synthetic late-event cases.
 - Three arms and one generation per arm:
@@ -41,6 +48,17 @@ there are only three development cases over one model snapshot.
 - `temperature=0`, `seed=0`, 48 generated-token ceiling.
 - No automatic retry and no native-state capture.
 - Semantic contracts remain post-call-only.
+
+Codex review found two attribution gaps after r01: an arbitrary external model
+directory could carry the explicit locked ID, and the pre-call lock hashed the
+canary runner without hashing the imported core/corpus implementation. The r01
+artifact remains immutable. r02 requires the exact content-address-verified
+Hugging Face cache snapshot and binds SHA-256 hashes for the wrapper plus every
+repository-local implementation file on the execution path.
+
+r02 repeats already observed cases and therefore is not fresh replication
+evidence. Its nine public outputs are byte-identical to r01 (`9/9`); it only
+strengthens execution attribution.
 
 The candidate reserves capacity for the correction plus every public evidence
 node whose caller-supplied role is `required_support`, then fills remaining

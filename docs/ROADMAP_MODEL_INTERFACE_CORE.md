@@ -135,6 +135,10 @@ Status: **IMPLEMENTED + VERIFIED; MIXED DEVELOPMENT RESULT**
   omits correction provenance and therefore remains a strict failure.
 - The already-covered control case has byte-identical provider prompts and
   outputs across top-k and role-stratified arms.
+- Review found that r01 did not bind imported implementation files or require
+  a derivable cache identity for the locked model. A pre-call-locked r02
+  integrity repetition closes both gaps and reproduces all nine public outputs
+  byte-identically. It is explicitly not counted as fresh evidence.
 - No gradient-specific, causal-superiority, general-reasoning, or cross-model
   claim is admitted from this canary.
 

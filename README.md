@@ -214,6 +214,11 @@ python3 role_stratified_uptake_canary_v0_8_3.py self-test
 python3 role_stratified_uptake_canary_v0_8_3.py verify \
   artifacts/role_stratified_uptake_v0_8_3/r01/results.json \
   --lock policy_lock_role_stratified_uptake_v0_8_3.json
+
+python3 role_stratified_uptake_integrity_v0_8_3_1.py \
+  --base-lock policy_lock_role_stratified_uptake_v0_8_3.json \
+  verify artifacts/role_stratified_uptake_v0_8_3/r02_integrity/results.json \
+  --lock policy_lock_role_stratified_uptake_v0_8_3_1_r02.json
 ```
 
 The deterministic compiler coverage floor repaired both intentionally exposed
@@ -226,7 +231,12 @@ the candidate changed the generated answer from `60_UNITS` to the expected
 failed. This is a useful mixed development result, not a superiority claim.
 
 See the [v0.8.3 R&D note](docs/RND_ROLE_STRATIFIED_UPTAKE_CANARY_V0_8_3.md) and
-the [sealed nine-call artifact](artifacts/role_stratified_uptake_v0_8_3/r01/results.json).
+the [source/model-bound r02 artifact](artifacts/role_stratified_uptake_v0_8_3/r02_integrity/results.json).
+The original r01 artifact is retained because review found that its pre-call
+lock did not bind imported implementation files or reject arbitrary explicit
+model identities. The r02 integrity replication closes those two attribution
+gaps; all nine public outputs are byte-identical to r01 and are not counted as
+fresh evidence.
 
 ## What the core owns
 
@@ -404,6 +414,8 @@ are separate measurements. A `PASS` in one category does not silently imply a
 | [`local_output_diff_corpus_v0_8_2.py`](local_output_diff_corpus_v0_8_2.py) | matched local-model output corpus runner |
 | [`role_stratified_uptake_canary_v0_8_3.py`](role_stratified_uptake_canary_v0_8_3.py) | fresh three-arm compiler-coverage/provider-uptake canary |
 | [`policy_lock_role_stratified_uptake_v0_8_3.json`](policy_lock_role_stratified_uptake_v0_8_3.json) | pre-call v0.8.3 case, schedule, model, and source lock |
+| [`role_stratified_uptake_integrity_v0_8_3_1.py`](role_stratified_uptake_integrity_v0_8_3_1.py) | source- and model-bound integrity replication wrapper |
+| [`policy_lock_role_stratified_uptake_v0_8_3_1_r02.json`](policy_lock_role_stratified_uptake_v0_8_3_1_r02.json) | pre-call hashes for the wrapper and every imported local execution file |
 | [`requirements-core.txt`](requirements-core.txt) | network-zero core dependency |
 | [`requirements-local-mlx.txt`](requirements-local-mlx.txt) | Apple-silicon local backend |
 | [`docs/EBRT_CORE_THESIS.md`](docs/EBRT_CORE_THESIS.md) | mathematical and conceptual anchor |
@@ -414,6 +426,7 @@ are separate measurements. A `PASS` in one category does not silently imply a
 | [`artifacts/model_interface_core_v0_7_1/local_mistral_e2e_r01.json`](artifacts/model_interface_core_v0_7_1/local_mistral_e2e_r01.json) | sanitized real local E2E receipt |
 | [`artifacts/local_output_diff_corpus_v0_8_2/r01/results.json`](artifacts/local_output_diff_corpus_v0_8_2/r01/results.json) | sealed four-model, 32-call development corpus |
 | [`artifacts/role_stratified_uptake_v0_8_3/r01/results.json`](artifacts/role_stratified_uptake_v0_8_3/r01/results.json) | sealed one-model, nine-call uptake canary |
+| [`artifacts/role_stratified_uptake_v0_8_3/r02_integrity/results.json`](artifacts/role_stratified_uptake_v0_8_3/r02_integrity/results.json) | canonical integrity-bound repetition; not fresh evidence |
 
 ### Frozen research history
 
