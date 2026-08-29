@@ -994,6 +994,11 @@ def aggregate_runs(runs: Sequence[Mapping[str, Any]]) -> JsonObject:
     if not runs:
         raise EBRTError("LOCAL_OUTPUT_DIFF_AGGREGATE_EMPTY")
     verified = [_verify_run(run) for run in runs]
+    if any(
+        run["execution_policy"]["max_tokens_per_arm"] != DEFAULT_MAX_TOKENS
+        for run in runs
+    ):
+        raise EBRTError("LOCAL_OUTPUT_DIFF_AGGREGATE_TOKEN_CEILING_MISMATCH")
     model_ids = [run["model_adapter"]["model_id"] for run in runs]
     if len(model_ids) != len(set(model_ids)):
         raise EBRTError("LOCAL_OUTPUT_DIFF_MODEL_DUPLICATE")
