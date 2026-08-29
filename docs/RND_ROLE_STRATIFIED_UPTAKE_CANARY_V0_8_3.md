@@ -80,6 +80,28 @@ Complete stdlib-code-tree execution lock:
 CPython-framework-bound execution lock:
 [`policy_lock_role_stratified_uptake_v0_8_3_12_r13.json`](../policy_lock_role_stratified_uptake_v0_8_3_12_r13.json)
 
+## Final integrity threat boundary
+
+The integrity successors assume a quiescent, trusted local host. Two final
+review findings are retained as explicit non-claims rather than expanded into
+an operating-system attestation project:
+
+- r13 hashes the configured
+  `Python.framework/Versions/3.13/Python` file. It does not prove the image
+  actually mapped by dyld, reject `DYLD_*` overrides, or bind transitive shared
+  libraries. `loaded_framework_image_status = NOT_ASSESSED`.
+- r08-r13 force adjacent bytecode-cache bypass and require exact on-disk source
+  receipts before and after calls. They do not preserve every repository and
+  site-package source inside an immutable mount, nor bind the transient module
+  code object against a concurrent same-user replace-and-restore attack.
+  `in_memory_python_code_status = NOT_ASSESSED`.
+
+Therefore verifier labels such as `cpython_framework_library_exact` and
+`nonstdlib_source_execution_exact` mean that the recorded configured-file and
+source-receipt boundaries are exact. They are not hostile-host execution
+attestation. These limitations do not change the original r01 scientific rows,
+which remain a three-case, one-model development canary.
+
 ## Question
 
 The v0.8.2 corpus exposed two different failures:

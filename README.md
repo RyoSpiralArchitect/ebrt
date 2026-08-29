@@ -361,6 +361,16 @@ pre/post lock; its portable verifier also passes 16/16 checks. All complete
 r01-r09/r12/r13 public outputs remain byte-identical (`9/9`). None of these
 integrity successors is fresh evidence.
 
+The final review boundary is intentionally host-trusting. The r13 framework
+receipt binds the configured on-disk framework file; it does not prove which
+image dyld mapped, reject loader overrides, or attest other shared libraries.
+Likewise, the source receipts bind cache-bypassed on-disk source before and
+after the run, not the in-memory code objects against a concurrent same-user
+file-swap attack. Interpret `cpython_framework_library_exact` and
+`nonstdlib_source_execution_exact` as receipt-level checks inside a quiescent,
+trusted local host. Loaded-image identity, hostile same-user TOCTOU, and full
+host attestation are `NOT_ASSESSED`.
+
 ## What the core owns
 
 The central file is [`ebrt_core.py`](ebrt_core.py). It contains the complete

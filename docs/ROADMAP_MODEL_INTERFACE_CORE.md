@@ -179,6 +179,11 @@ Status: **IMPLEMENTED + VERIFIED; MIXED DEVELOPMENT RESULT**
   13.55MB `Python.framework/Versions/3.13/Python` binary and passes 16/16
   portable checks. All complete r01-r09/r12/r13 public outputs are
   byte-identical; no integrity repetition is counted as fresh evidence.
+- Final review localized the remaining integrity boundary to hostile-host
+  attestation: dyld loaded-image overrides and concurrent same-user source
+  replacement are not excluded by configured-file and pre/post source hashes.
+  They are recorded as `NOT_ASSESSED`; this lane stops at a quiescent, trusted
+  local host instead of expanding into OS-level isolation.
 - No gradient-specific, causal-superiority, general-reasoning, or cross-model
   claim is admitted from this canary.
 
