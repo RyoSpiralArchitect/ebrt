@@ -32,6 +32,9 @@ algorithm iteration. It does not estimate a causal effect.
 - No automatic retry.
 - Semantic contracts fixed with the cases and evaluated only after generation.
 - Native-state capture disabled for this breadth pass.
+- Portable verification reruns deterministic compilation from each fixed task,
+  reconstructs both arm invocations, and binds both request fingerprints before
+  replaying parsing, grading, and aggregation.
 
 The arm bundle differs in evidence order and explicit revision instructions.
 Consequently, even a generated-output difference cannot be attributed to the

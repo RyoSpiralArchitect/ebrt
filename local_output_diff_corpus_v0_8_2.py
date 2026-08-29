@@ -650,14 +650,40 @@ def _verify_run(value: Any) -> JsonObject:
         compiled = sealed.get("compiled_revision")
         if not isinstance(compiled, Mapping):
             raise EBRTError("LOCAL_OUTPUT_DIFF_COMPILED_REVISION_MISSING")
-        _sealed_snapshot(
+        observed_trajectory = _sealed_snapshot(
             compiled.get("trajectory"), "LOCAL_OUTPUT_DIFF_TRAJECTORY_RECEIPT"
         )
-        _sealed_snapshot(compiled.get("actuator"), "LOCAL_OUTPUT_DIFF_ACTUATOR")
-        _sealed_snapshot(
+        observed_actuator = _sealed_snapshot(
+            compiled.get("actuator"), "LOCAL_OUTPUT_DIFF_ACTUATOR"
+        )
+        observed_oscilloscope = _sealed_snapshot(
             compiled.get("public_oscilloscope"),
             "LOCAL_OUTPUT_DIFF_OSCILLOSCOPE_RECEIPT",
         )
+        expected_program, expected_compile_receipt = compile_revision(
+            expected_case.task
+        )
+        expected_compiled = {
+            "trajectory": expected_compile_receipt["trajectory"],
+            "actuator": expected_compile_receipt["actuator"],
+            "public_oscilloscope": expected_compile_receipt["oscilloscope"],
+        }
+        observed_compiled = {
+            "trajectory": observed_trajectory,
+            "actuator": observed_actuator,
+            "public_oscilloscope": observed_oscilloscope,
+        }
+        if _canonical_bytes(observed_compiled) != _canonical_bytes(expected_compiled):
+            raise EBRTError("LOCAL_OUTPUT_DIFF_COMPILE_REPLAY_FAILED")
+
+        expected_invocations = {
+            ARM_DIRECT: build_direct_invocation(expected_case.task),
+            ARM_EBRT: build_model_invocation(
+                expected_case.task,
+                expected_program,
+                prompt_policy="credit_first",
+            ),
+        }
 
         parsed_results: dict[str, JsonObject] = {}
         recomputed_grades: dict[str, JsonObject] = {}
@@ -672,8 +698,14 @@ def _verify_run(value: Any) -> JsonObject:
             grade = _sealed_snapshot(arm.get("output_grade"), "LOCAL_OUTPUT_DIFF_GRADE")
             if result.get("logical_calls") != 1:
                 raise EBRTError("LOCAL_OUTPUT_DIFF_LOGICAL_CALL_COUNT_INVALID")
-            if arm.get("invocation_fingerprint_sha256") != result.get(
-                "request_fingerprint_sha256"
+            expected_invocation_fingerprint = expected_invocations[arm_id][
+                "fingerprint_sha256"
+            ]
+            if not (
+                arm.get("invocation_fingerprint_sha256")
+                == expected_invocation_fingerprint
+                and result.get("request_fingerprint_sha256")
+                == expected_invocation_fingerprint
             ):
                 raise EBRTError("LOCAL_OUTPUT_DIFF_INVOCATION_BINDING_INVALID")
 
@@ -752,6 +784,8 @@ def _verify_run(value: Any) -> JsonObject:
     checks = {
         "top_receipt_sealed": True,
         "execution_binding_exact": True,
+        "compiled_revision_replayed_exactly": True,
+        "invocations_recompiled_exactly": True,
         "all_cells_sealed": True,
         "case_ids_exact": [cell["case_id"] for cell in cells]
         == [row.task.task_id for row in expected_cases],

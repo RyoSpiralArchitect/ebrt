@@ -185,6 +185,11 @@ python3 local_output_diff_corpus_v0_8_2.py verify-aggregate \
   artifacts/local_output_diff_corpus_v0_8_2/r01/results.json
 ```
 
+Verification reruns the deterministic public compilation from each fixed task,
+rebuilds both model invocations, and requires their canonical fingerprints to
+match the recorded request receipts. It then reparses raw output and recomputes
+grades, diffs, categories, and aggregate summaries.
+
 The committed corpus contains four cached model snapshots, four cases, and 32
 terminal local calls. Raw output changed in all 16 paired cells, but only
 Mistral satisfied the common output schema in both arms. Its final answer was
