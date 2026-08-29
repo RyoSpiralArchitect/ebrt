@@ -675,11 +675,14 @@ def _verify_run(value: Any) -> JsonObject:
         "seed_exact": type(seed) is int and seed == 0,
         "temperature_exact": type(sampler_temperature) is float
         and sampler_temperature == 0.0,
-        "prompt_mode_bound": execution_policy.get("prompt_rendering_mode")
-        == prompt_rendering_mode,
-        "token_ceiling_bound": execution_policy.get("max_tokens_per_arm") == max_tokens,
-        "seed_bound": execution_policy.get("seed") == seed,
-        "temperature_bound": execution_policy.get("temperature") == sampler_temperature,
+        "prompt_mode_bound": type(execution_policy.get("prompt_rendering_mode")) is str
+        and execution_policy["prompt_rendering_mode"] == prompt_rendering_mode,
+        "token_ceiling_bound": type(execution_policy.get("max_tokens_per_arm")) is int
+        and execution_policy["max_tokens_per_arm"] == max_tokens,
+        "seed_bound": type(execution_policy.get("seed")) is int
+        and execution_policy["seed"] == seed,
+        "temperature_bound": type(execution_policy.get("temperature")) is float
+        and execution_policy["temperature"] == sampler_temperature,
         "no_automatic_retry": execution_policy.get("automatic_retry") is False,
         "one_call_per_arm_policy_exact": type(calls_per_cell) is dict
         and set(calls_per_cell) == set(ARM_IDS)
@@ -687,9 +690,13 @@ def _verify_run(value: Any) -> JsonObject:
             type(calls_per_cell[arm_id]) is int and calls_per_cell[arm_id] == 1
             for arm_id in ARM_IDS
         ),
-        "arm_order_policy_bound": execution_policy.get("arm_order")
-        == "counterbalanced_by_case_index",
-        "latency_boundary_exact": execution_policy.get("latency_comparison_status")
+        "arm_order_policy_bound": type(execution_policy.get("arm_order")) is str
+        and execution_policy["arm_order"] == "counterbalanced_by_case_index",
+        "latency_boundary_exact": type(
+            execution_policy.get("latency_comparison_status")
+        )
+        is str
+        and execution_policy["latency_comparison_status"]
         == "NOT_ASSESSED_SERIAL_COLD_WARM_AND_ORDER",
     }
     if not all(execution_checks.values()):
