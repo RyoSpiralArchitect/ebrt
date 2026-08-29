@@ -54,6 +54,15 @@ DEFAULT_MAX_TOKENS = 48
 ARM_DIRECT = "direct_full_context"
 ARM_EBRT = "ebrt_credit_first"
 ARM_IDS = (ARM_DIRECT, ARM_EBRT)
+ADMITTED_GENERATION_ERROR_CODES = frozenset(
+    {
+        "LOCAL_MODEL_CACHE_IDENTITY_CHANGED",
+        "MLX_GENERATION_FAILED",
+        "MLX_LM_NOT_INSTALLED",
+        "MLX_MODEL_LOAD_FAILED",
+        "UNEXPECTED_NATIVE_OBSERVATION",
+    }
+)
 CLAIM_BOUNDARY = (
     "Each arm receives one deterministic local-model generation call under the same model snapshot and token ceiling.",
     "The arms necessarily differ in evidence order and revision instructions; output differences are not attributable to gradients alone.",
@@ -381,10 +390,13 @@ def _invoke(
     try:
         raw_text = runtime.generate(str(invocation["prompt"]))
     except EBRTError as error:
+        error_code = str(error)
+        if error_code not in ADMITTED_GENERATION_ERROR_CODES:
+            raise EBRTError("LOCAL_OUTPUT_DIFF_GENERATION_ERROR_UNADMITTED") from error
         return _seal(
             {
                 "status": "GENERATION_ERROR",
-                "error_code": str(error),
+                "error_code": error_code,
                 "raw_text": None,
                 "answer": None,
                 "support_ids": [],
@@ -867,7 +879,7 @@ def _verify_run(value: Any) -> JsonObject:
             elif not (
                 raw_text is None
                 and result.get("status") == "GENERATION_ERROR"
-                and isinstance(result.get("error_code"), str)
+                and result.get("error_code") in ADMITTED_GENERATION_ERROR_CODES
                 and result.get("answer") is None
                 and result.get("support_ids") == []
             ):
