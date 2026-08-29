@@ -145,8 +145,11 @@ Status: **IMPLEMENTED + VERIFIED; MIXED DEVELOPMENT RESULT**
   while MLX loaded the model. r04 passes MLX only a private APFS copy-on-write
   tree of the exact locked regular files, requires source-distinct inodes, and
   rehashes the staged tree after all calls. All r01/r02/r03/r04 public outputs
-  are byte-identical; none of the integrity repetitions is counted as fresh
-  evidence.
+  are byte-identical. A fourth review found that the permissive `mlx-lm`
+  requirement still left execution semantics unbound. r05 fixes and checks
+  the exact Python/platform and local-model distribution versions before and
+  after calls. All r01/r02/r03/r04/r05 public outputs are byte-identical; none
+  of the integrity repetitions is counted as fresh evidence.
 - No gradient-specific, causal-superiority, general-reasoning, or cross-model
   claim is admitted from this canary.
 

@@ -2,7 +2,10 @@
 
 Status: **COMPLETE DEVELOPMENT CANARY; MIXED RESULT; NOT A BENCHMARK**
 
-Canonical loader-bound integrity artifact:
+Canonical runtime-bound integrity artifact:
+[`artifacts/role_stratified_uptake_v0_8_3/r05_runtime_bound/results.json`](../artifacts/role_stratified_uptake_v0_8_3/r05_runtime_bound/results.json)
+
+Preserved loader-bound integrity artifact:
 [`artifacts/role_stratified_uptake_v0_8_3/r04_loader_bound/results.json`](../artifacts/role_stratified_uptake_v0_8_3/r04_loader_bound/results.json)
 
 Preserved exact-snapshot-bound artifact:
@@ -25,6 +28,9 @@ Exact-snapshot lock:
 
 Loader-bound staging lock:
 [`policy_lock_role_stratified_uptake_v0_8_3_3_r04.json`](../policy_lock_role_stratified_uptake_v0_8_3_3_r04.json)
+
+Exact-runtime lock:
+[`policy_lock_role_stratified_uptake_v0_8_3_4_r05.json`](../policy_lock_role_stratified_uptake_v0_8_3_4_r05.json)
 
 ## Question
 
@@ -52,6 +58,7 @@ there are only three development cases over one model snapshot.
 - Strengthened lock commit before r02 calls: `c6e6ee7`.
 - Exact snapshot-manifest lock commit before r03 calls: `34f7807`.
 - Loader-bound staging lock commit before r04 calls: `9f2b754`.
+- Exact-runtime lock commit before r05 calls: `9894121`.
 - Model: `mlx-community/Mistral-7B-Instruct-v0.3-4bit@a4b8f...`.
 - Three fresh synthetic late-event cases.
 - Three arms and one generation per arm:
@@ -91,6 +98,15 @@ loading and generation, and passes only that isolated path to MLX. The staged
 manifest is rehashed after all calls. r04 is again an integrity repetition
 over known cases, not fresh evidence. All public outputs remain byte-identical
 across r01/r02/r03/r04 (`9/9`).
+
+A fourth review identified that `mlx-lm>=0.31.2` still admitted changed loader,
+chat-template, sampling, or generation semantics under the same execution lock.
+r05 therefore binds CPython, macOS, architecture, and the exact installed
+versions of MLX, `mlx-lm`, Torch, Transformers, tokenizers, safetensors,
+Hugging Face Hub, and NumPy. The same runtime receipt is checked before and
+after all calls. This is a version-identity receipt, not signed binary or
+hardware attestation, and r05 remains a contaminated integrity repetition.
+All public outputs remain byte-identical across r01/r02/r03/r04/r05 (`9/9`).
 
 The candidate reserves capacity for the correction plus every public evidence
 node whose caller-supplied role is `required_support`, then fills remaining
