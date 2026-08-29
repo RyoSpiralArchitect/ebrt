@@ -138,7 +138,11 @@ Status: **IMPLEMENTED + VERIFIED; MIXED DEVELOPMENT RESULT**
 - Review found that r01 did not bind imported implementation files or require
   a derivable cache identity for the locked model. A pre-call-locked r02
   integrity repetition closes both gaps and reproduces all nine public outputs
-  byte-identically. It is explicitly not counted as fresh evidence.
+  byte-identically. A second review found that revision/path identity did not
+  bind the expected blob set. r03 locks all seven snapshot-relative paths,
+  sizes, and content-addressed blob hashes and checks them before and after the
+  calls. All r01/r02/r03 public outputs are byte-identical; neither repetition
+  is counted as fresh evidence.
 - No gradient-specific, causal-superiority, general-reasoning, or cross-model
   claim is admitted from this canary.
 

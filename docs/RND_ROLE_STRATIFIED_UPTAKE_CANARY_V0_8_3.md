@@ -3,6 +3,9 @@
 Status: **COMPLETE DEVELOPMENT CANARY; MIXED RESULT; NOT A BENCHMARK**
 
 Canonical integrity-bound artifact:
+[`artifacts/role_stratified_uptake_v0_8_3/r03_snapshot_bound/results.json`](../artifacts/role_stratified_uptake_v0_8_3/r03_snapshot_bound/results.json)
+
+Preserved source-bound artifact:
 [`artifacts/role_stratified_uptake_v0_8_3/r02_integrity/results.json`](../artifacts/role_stratified_uptake_v0_8_3/r02_integrity/results.json)
 
 Preserved original artifact:
@@ -13,6 +16,9 @@ Pre-call lock:
 
 Integrity-replication lock:
 [`policy_lock_role_stratified_uptake_v0_8_3_1_r02.json`](../policy_lock_role_stratified_uptake_v0_8_3_1_r02.json)
+
+Exact-snapshot lock:
+[`policy_lock_role_stratified_uptake_v0_8_3_2_r03.json`](../policy_lock_role_stratified_uptake_v0_8_3_2_r03.json)
 
 ## Question
 
@@ -38,6 +44,7 @@ there are only three development cases over one model snapshot.
 - Source main commit: `2961feb6aaa2222bb56a62cb04274587487f4a17`.
 - Original lock commit before r01 calls: `8a04d04`.
 - Strengthened lock commit before r02 calls: `c6e6ee7`.
+- Exact snapshot-manifest lock commit before r03 calls: `34f7807`.
 - Model: `mlx-community/Mistral-7B-Instruct-v0.3-4bit@a4b8f...`.
 - Three fresh synthetic late-event cases.
 - Three arms and one generation per arm:
@@ -59,6 +66,14 @@ repository-local implementation file on the execution path.
 r02 repeats already observed cases and therefore is not fresh replication
 evidence. Its nine public outputs are byte-identical to r01 (`9/9`); it only
 strengthens execution attribution.
+
+A second review found that a cache directory could retain the expected path
+and revision name while pointing at a different internally consistent blob
+set. r03 therefore locks all seven expected snapshot-relative files by path,
+byte size, and blob address. Git-blob SHA-1 and SHA-256 addresses are each
+verified against file content immediately before and after the calls. r03 is
+also a contaminated integrity repetition, not new evidence. All public outputs
+remain byte-identical across r01/r02/r03 (`9/9`).
 
 The candidate reserves capacity for the correction plus every public evidence
 node whose caller-supplied role is `required_support`, then fills remaining
