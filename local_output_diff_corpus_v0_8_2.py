@@ -12,7 +12,6 @@ from __future__ import annotations
 import argparse
 import difflib
 import json
-import math
 import time
 from dataclasses import dataclass
 from pathlib import Path
@@ -33,6 +32,7 @@ from ebrt_core import (
     RevisionTask,
     SharedMLXRuntime,
     _canonical_bytes,
+    _finite,
     _fingerprint,
     _parse_model_text,
     _seal,
@@ -821,13 +821,11 @@ def _verify_run(value: Any) -> JsonObject:
                 "fingerprint_sha256",
             }
             latency_ms = result.get("latency_ms")
-            if not (
-                set(result) == expected_result_keys
-                and isinstance(latency_ms, (int, float))
-                and not isinstance(latency_ms, bool)
-                and math.isfinite(float(latency_ms))
-                and float(latency_ms) >= 0.0
-            ):
+            try:
+                finite_latency_ms = _finite(latency_ms, "LOCAL_OUTPUT_DIFF_LATENCY_MS")
+            except EBRTError as error:
+                raise EBRTError("LOCAL_OUTPUT_DIFF_ARM_RESULT_SHAPE_INVALID") from error
+            if not (set(result) == expected_result_keys and finite_latency_ms >= 0.0):
                 raise EBRTError("LOCAL_OUTPUT_DIFF_ARM_RESULT_SHAPE_INVALID")
             if not (
                 type(result.get("logical_calls")) is int
