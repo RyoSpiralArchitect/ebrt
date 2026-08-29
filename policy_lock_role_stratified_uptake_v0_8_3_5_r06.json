@@ -1,0 +1,211 @@
+{
+  "claim_boundary": [
+    "This r06 execution repeats already observed cases only to bind an owner-nonwritable model medium and imported runtime code.",
+    "The repeated outputs are contaminated by known r01-r05 results and are not fresh scientific replication evidence.",
+    "The model loader receives an unlinked read-only APFS disk-image mount whose exact seven files are checked before and after calls.",
+    "Recorded distribution file sets and actual imported module origins are content-hashed and matched to the pre-call lock.",
+    "The receipt is not hardware, kernel, code-signing, or malicious-root attestation.",
+    "All original v0.8.3 effect-attribution, one-model, public-role, and stop-gradient boundaries remain unchanged."
+  ],
+  "effect_attribution_status": "NOT_ASSESSED",
+  "fingerprint_sha256": "b430e5e7e116683901916965919dd2451bfec5e864ff26561a1dcb0c6fc91e41",
+  "immutable_model_policy": {
+    "backing_image_path_unlinked_before_model_load": true,
+    "execution_medium": "UNLINKED_READ_ONLY_APFS_DISK_IMAGE",
+    "hdiutil_path": "/usr/bin/hdiutil",
+    "image_format": "UDRO",
+    "loader_receives_writable_source_path": false,
+    "model_manifest_check": "EXACT_LOCKED_BLOB_HASH_BEFORE_AND_AFTER_CALLS",
+    "mount_flags": [
+      "readonly",
+      "nobrowse"
+    ],
+    "source_materialization": "PRIVATE_APFS_COPY_ON_WRITE_CLONE"
+  },
+  "replication_status": "INTEGRITY_REPLICATION_OVER_KNOWN_R01_R05_CASES",
+  "runtime_code": {
+    "distribution_content": {
+      "distributions": [
+        {
+          "distribution": "huggingface-hub",
+          "files_fingerprint_sha256": "9ac8876323cde7e0d1a7c37ae12c41cd56dc5be5f0de986a619bfd7954c30abe",
+          "hashed_bytes": 2239614,
+          "hashed_file_count": 173,
+          "version": "0.36.2"
+        },
+        {
+          "distribution": "mlx",
+          "files_fingerprint_sha256": "544daa660d7320d8de97b96e6e21fef0f051bd29c710a748a43be88692c7e83e",
+          "hashed_bytes": 1953153,
+          "hashed_file_count": 50,
+          "version": "0.31.1"
+        },
+        {
+          "distribution": "mlx-lm",
+          "files_fingerprint_sha256": "cc3743bbb939bce75bca26ffa2874a53acfd76f4c5e935595ae22030f2a8f055",
+          "hashed_bytes": 1543480,
+          "hashed_file_count": 191,
+          "version": "0.31.2"
+        },
+        {
+          "distribution": "numpy",
+          "files_fingerprint_sha256": "190d0da4586ae3d8cf2a4e0830bceb5b8e17aab9355b8e2cbdb0fdd42b87072b",
+          "hashed_bytes": 19425617,
+          "hashed_file_count": 913,
+          "version": "2.4.4"
+        },
+        {
+          "distribution": "safetensors",
+          "files_fingerprint_sha256": "a3a6cb1de700eb911bcd7d8ae0ac2b63c7ecbe54ca4267570052943bb17422b5",
+          "hashed_bytes": 1070455,
+          "hashed_file_count": 14,
+          "version": "0.7.0"
+        },
+        {
+          "distribution": "tokenizers",
+          "files_fingerprint_sha256": "37ef878102cc014aaf8e1bda621e981c2da16596cab3a782cfdc54ed67d33fc2",
+          "hashed_bytes": 8506298,
+          "hashed_file_count": 29,
+          "version": "0.22.2"
+        },
+        {
+          "distribution": "torch",
+          "files_fingerprint_sha256": "212ac415569d9acb976309760d84c03972a059456ddabec8992ec0ed3b4066fa",
+          "hashed_bytes": 343530431,
+          "hashed_file_count": 12413,
+          "version": "2.11.0"
+        },
+        {
+          "distribution": "transformers",
+          "files_fingerprint_sha256": "5f0996987ed82b5805a172db24bfb5e2cd1b6bcdae7c45e898769b79c05c787e",
+          "hashed_bytes": 52180356,
+          "hashed_file_count": 2248,
+          "version": "4.57.6"
+        }
+      ],
+      "fingerprint_sha256": "030bf88432bad69a8bcf03ca628fa4997edb12f5a7a1be0114caf4fa479e1c4f",
+      "schema_version": "ebrt-distribution-content-summary-v0.8.3.5"
+    },
+    "fingerprint_sha256": "6902872504f8a595a9005e4ce038f9a61bc53c5722e605d90d1fee576e9802c8",
+    "imported_modules": {
+      "all_origins_within_recorded_distributions": true,
+      "critical_modules": [
+        {
+          "distribution": "huggingface-hub",
+          "distribution_relative_path": "huggingface_hub/__init__.py",
+          "module": "huggingface_hub",
+          "sha256": "e586b64612482128fd24119364bc4dc6dca938407134e454a5e876341b364e35",
+          "size_bytes": 52675
+        },
+        {
+          "distribution": "mlx",
+          "distribution_relative_path": "mlx/core.cpython-313-darwin.so",
+          "module": "mlx.core",
+          "sha256": "af47cd285bda81b7973adb8a072f5a25f08361a625878b011755f347b4be63a0",
+          "size_bytes": 1408696
+        },
+        {
+          "distribution": "mlx-lm",
+          "distribution_relative_path": "mlx_lm/__init__.py",
+          "module": "mlx_lm",
+          "sha256": "f9ffa88772d26e537a98aa39ab16488a7a0d13cc1fac5d665376132c94b49608",
+          "size_bytes": 377
+        },
+        {
+          "distribution": "mlx-lm",
+          "distribution_relative_path": "mlx_lm/generate.py",
+          "module": "mlx_lm.generate",
+          "sha256": "cb9acf45737a928f0264507f4b88b34b6ecd20d86288d2fd81673d625fad608d",
+          "size_bytes": 73542
+        },
+        {
+          "distribution": "mlx-lm",
+          "distribution_relative_path": "mlx_lm/sample_utils.py",
+          "module": "mlx_lm.sample_utils",
+          "sha256": "c0ce439f8dbf0d4e6d0f37f728a324f3f72878e6a9123df41be520804c596d67",
+          "size_bytes": 12888
+        },
+        {
+          "distribution": "mlx-lm",
+          "distribution_relative_path": "mlx_lm/utils.py",
+          "module": "mlx_lm.utils",
+          "sha256": "3a53fbd0cd5dc7d5f5dbc093b903a7573b6f05ead14e61b4958162b7c585bcc2",
+          "size_bytes": 32335
+        },
+        {
+          "distribution": "numpy",
+          "distribution_relative_path": "numpy/__init__.py",
+          "module": "numpy",
+          "sha256": "2e8da3e4385e79c4885b3f7324a8b957e6f01732b239e99e266a12c62a008b8d",
+          "size_bytes": 25946
+        },
+        {
+          "distribution": "numpy",
+          "distribution_relative_path": "numpy/_core/_multiarray_umath.cpython-313-darwin.so",
+          "module": "numpy._core._multiarray_umath",
+          "sha256": "8df43663f97ffc084ba8108ac943a0b75e35fefa8bba81493901a265164ada8f",
+          "size_bytes": 3677928
+        },
+        {
+          "distribution": "safetensors",
+          "distribution_relative_path": "safetensors/__init__.py",
+          "module": "safetensors",
+          "sha256": "c1bcca66501582702c8c79aaaf2b922428800efa4367134609f8fc57363402dd",
+          "size_bytes": 194
+        },
+        {
+          "distribution": "safetensors",
+          "distribution_relative_path": "safetensors/_safetensors_rust.abi3.so",
+          "module": "safetensors._safetensors_rust",
+          "sha256": "9f8c6553b8fa7a5286d3baa9e5ce3a75e0567e441557d35c61c43e25414e0ab3",
+          "size_bytes": 1006688
+        },
+        {
+          "distribution": "tokenizers",
+          "distribution_relative_path": "tokenizers/__init__.py",
+          "module": "tokenizers",
+          "sha256": "148ecb122f3fee03be9abb1fe213dd85fbc691bf2ad2b437ff531533781a6a3a",
+          "size_bytes": 2639
+        },
+        {
+          "distribution": "tokenizers",
+          "distribution_relative_path": "tokenizers/tokenizers.abi3.so",
+          "module": "tokenizers.tokenizers",
+          "sha256": "899b244f19f1ddd6506c45ea0f7163f38952f2a552272a687a6ef4b9ddcc7327",
+          "size_bytes": 8261072
+        },
+        {
+          "distribution": "torch",
+          "distribution_relative_path": "torch/__init__.py",
+          "module": "torch",
+          "sha256": "0387d8b811b289287479c8bfdf4e1dac3a71b246f938d82da1331cf2dc8bf001",
+          "size_bytes": 107845
+        },
+        {
+          "distribution": "torch",
+          "distribution_relative_path": "torch/_C.cpython-313-darwin.so",
+          "module": "torch._C",
+          "sha256": "fe493b62d0b347b62535a37d81a25c696795105f4670ad00abb51184b72b2215",
+          "size_bytes": 50248
+        },
+        {
+          "distribution": "transformers",
+          "distribution_relative_path": "transformers/__init__.py",
+          "module": "transformers",
+          "sha256": "aa8cb54da488cf43ba37b9955bb6c0d84d2000db0306f6a5f1c20b6842482d04",
+          "size_bytes": 47000
+        }
+      ],
+      "fingerprint_sha256": "8b2a335d3c1355430f1f58d873d2f0174838a8c48b640e7ca19915fbe369f51a",
+      "module_count": 1314,
+      "module_manifest_fingerprint_sha256": "5f01df038cb5537ffa42dcbe64d49ebc7a6ee921df53be945a1a91b6636677f3",
+      "schema_version": "ebrt-imported-module-summary-v0.8.3.5"
+    },
+    "schema_version": "ebrt-runtime-code-receipt-v0.8.3.5"
+  },
+  "runtime_code_fingerprint_sha256": "6902872504f8a595a9005e4ce038f9a61bc53c5722e605d90d1fee576e9802c8",
+  "runtime_lock_fingerprint_sha256": "9fa5985e90d570db67cb099874da2204798f3730bba5f5eecb04da67c81bd5b0",
+  "schema_version": "ebrt-role-uptake-immutable-lock-v0.8.3.5",
+  "status": "LOCKED_BEFORE_PROVIDER_CALLS",
+  "wrapper_sha256": "fe971d14be2fb02a60fcd32059de1a6534e19fb3eaa13472660e0df071548ed7"
+}
