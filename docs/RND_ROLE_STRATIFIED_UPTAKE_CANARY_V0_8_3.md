@@ -2,7 +2,10 @@
 
 Status: **COMPLETE DEVELOPMENT CANARY; MIXED RESULT; NOT A BENCHMARK**
 
-Canonical immutable-model/runtime-code integrity artifact:
+Canonical complete-integrity artifact:
+[`artifacts/role_stratified_uptake_v0_8_3/r07_complete_integrity/results.json`](../artifacts/role_stratified_uptake_v0_8_3/r07_complete_integrity/results.json)
+
+Preserved immutable-model/runtime-code integrity artifact:
 [`artifacts/role_stratified_uptake_v0_8_3/r06_immutable_runtime_code/results.json`](../artifacts/role_stratified_uptake_v0_8_3/r06_immutable_runtime_code/results.json)
 
 Preserved runtime-version-bound artifact:
@@ -38,6 +41,9 @@ Exact-runtime lock:
 Immutable-model/runtime-code lock:
 [`policy_lock_role_stratified_uptake_v0_8_3_5_r06.json`](../policy_lock_role_stratified_uptake_v0_8_3_5_r06.json)
 
+Complete dependency/mount-binding lock:
+[`policy_lock_role_stratified_uptake_v0_8_3_6_r07.json`](../policy_lock_role_stratified_uptake_v0_8_3_6_r07.json)
+
 ## Question
 
 The v0.8.2 corpus exposed two different failures:
@@ -66,6 +72,7 @@ there are only three development cases over one model snapshot.
 - Loader-bound staging lock commit before r04 calls: `9f2b754`.
 - Exact-runtime lock commit before r05 calls: `9894121`.
 - Immutable-model/runtime-code lock commit before r06 calls: `5ad3ee2`.
+- Complete dependency/mount-binding lock commit before r07 calls: `9d2027c`.
 - Model: `mlx-community/Mistral-7B-Instruct-v0.3-4bit@a4b8f...`.
 - Three fresh synthetic late-event cases.
 - Three arms and one generation per arm:
@@ -126,6 +133,20 @@ distributions plus the origins and hashes of 1,314 actually imported modules.
 The claim stops short of hardware, kernel, code-signing, or malicious-root
 attestation. r06 is still a contaminated integrity repetition, and all public
 outputs remain byte-identical across r01/r02/r03/r04/r05/r06 (`9/9`).
+
+A sixth review found two narrower receipt gaps. First, r06 bound eight selected
+distributions but not every distribution that owned imported non-standard-
+library code; for example, chat-template execution imported Jinja2. Second,
+its portable verifier checked only that the mount receipt remained unchanged,
+not that it equaled the exact staged-manifest and clone fingerprints derived
+from the locked snapshot. r07 closes both gaps: it binds 3,039 imported
+file-backed non-standard-library modules to 42 owning distributions and 10
+repository modules to repository-relative source receipts, commits the full
+content of 34,910 distribution files, and compares the embedded mount receipt
+with both exact locked fingerprints. The portable verifier passes all eight
+checks. r07 is still a contaminated integrity repetition over known cases, not
+fresh scientific evidence, and all nine public outputs remain byte-identical
+across r01/r02/r03/r04/r05/r06/r07.
 
 The candidate reserves capacity for the correction plus every public evidence
 node whose caller-supplied role is `required_support`, then fills remaining

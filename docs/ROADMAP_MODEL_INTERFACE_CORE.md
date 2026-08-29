@@ -151,9 +151,15 @@ Status: **IMPLEMENTED + VERIFIED; MIXED DEVELOPMENT RESULT**
   after calls. A fifth review found that r04's owner-mode bits were reversible
   and r05's version strings did not bind imported code. r06 loads the exact
   model from an unlinked read-only APFS image and binds installed distribution
-  content plus actual imported-module origins and hashes. All
-  r01/r02/r03/r04/r05/r06 public outputs are byte-identical; none of the
-  integrity repetitions is counted as fresh evidence.
+  content plus actual imported-module origins and hashes. A sixth review found
+  that r06's selected distribution set omitted indirectly imported dependency
+  owners and that its portable mount check did not compare against the exact
+  lock-derived snapshot fingerprints. r07 binds 3,039 imported file-backed
+  non-standard-library modules to 42 full owning-distribution receipts and 10
+  repository modules to source receipts, then requires both staged-manifest
+  and clone fingerprints to equal the lock. All r01-r07 public outputs are
+  byte-identical; none of the integrity repetitions is counted as fresh
+  evidence.
 - No gradient-specific, causal-superiority, general-reasoning, or cross-model
   claim is admitted from this canary.
 
