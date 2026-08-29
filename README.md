@@ -24,7 +24,9 @@ The current release has four executable stages:
 - **v0.8.1:** an optional, non-invasive state oscilloscope for faster local
   algorithm iteration;
 - **v0.8.2:** a four-model local output-diff development corpus that separates
-  algorithm-diagnostic cells from adapter/capability failures.
+  algorithm-diagnostic cells from adapter/capability failures;
+- **v0.8.3:** a fresh role-stratified uptake canary that separates deterministic
+  compiler coverage from the local generator's observed support retention.
 
 The generator is an adapter, not the definition of EBRT. The bundled reference
 backend is a local MLX model. Hosted APIs and other local runtimes can meet the
@@ -201,6 +203,31 @@ losses.
 See the [R&D note](docs/RND_LOCAL_OUTPUT_DIFF_CORPUS_V0_8_2.md) and the
 [generated report](artifacts/local_output_diff_corpus_v0_8_2/r01/report.md).
 
+### 5. Role-stratified provider-uptake canary
+
+The v0.8.3 auxiliary runner compares direct full context, the existing scalar
+top-k actuator, and a role-stratified candidate on three fresh locked cases:
+
+```bash
+python3 role_stratified_uptake_canary_v0_8_3.py self-test
+
+python3 role_stratified_uptake_canary_v0_8_3.py verify \
+  artifacts/role_stratified_uptake_v0_8_3/r01/results.json \
+  --lock policy_lock_role_stratified_uptake_v0_8_3.json
+```
+
+The deterministic compiler coverage floor repaired both intentionally exposed
+top-k omissions: top-k covered all public required roles in `1/3` cases and the
+candidate in `3/3`. That repair did not close the provider boundary. Both
+controlled arms retained their compiled obligations in `2/3` outputs and both
+passed the strict semantic contract in `2/3` cases. In the numeric-schema case,
+the candidate changed the generated answer from `60_UNITS` to the expected
+`6_UNITS`, but omitted correction provenance `R6`, so its strict contract still
+failed. This is a useful mixed development result, not a superiority claim.
+
+See the [v0.8.3 R&D note](docs/RND_ROLE_STRATIFIED_UPTAKE_CANARY_V0_8_3.md) and
+the [sealed nine-call artifact](artifacts/role_stratified_uptake_v0_8_3/r01/results.json).
+
 ## What the core owns
 
 The central file is [`ebrt_core.py`](ebrt_core.py). It contains the complete
@@ -375,14 +402,18 @@ are separate measurements. A `PASS` in one category does not silently imply a
 | --- | --- |
 | [`ebrt_core.py`](ebrt_core.py) | v0.7.1/v0.8 monolith and CLI |
 | [`local_output_diff_corpus_v0_8_2.py`](local_output_diff_corpus_v0_8_2.py) | matched local-model output corpus runner |
+| [`role_stratified_uptake_canary_v0_8_3.py`](role_stratified_uptake_canary_v0_8_3.py) | fresh three-arm compiler-coverage/provider-uptake canary |
+| [`policy_lock_role_stratified_uptake_v0_8_3.json`](policy_lock_role_stratified_uptake_v0_8_3.json) | pre-call v0.8.3 case, schedule, model, and source lock |
 | [`requirements-core.txt`](requirements-core.txt) | network-zero core dependency |
 | [`requirements-local-mlx.txt`](requirements-local-mlx.txt) | Apple-silicon local backend |
 | [`docs/EBRT_CORE_THESIS.md`](docs/EBRT_CORE_THESIS.md) | mathematical and conceptual anchor |
 | [`docs/MODEL_ADAPTER_PROTOCOL.md`](docs/MODEL_ADAPTER_PROTOCOL.md) | provider-neutral binding contract |
 | [`docs/ROADMAP_MODEL_INTERFACE_CORE.md`](docs/ROADMAP_MODEL_INTERFACE_CORE.md) | evidence-labelled path beyond v0.8 |
 | [`docs/RND_LOCAL_OUTPUT_DIFF_CORPUS_V0_8_2.md`](docs/RND_LOCAL_OUTPUT_DIFF_CORPUS_V0_8_2.md) | generated-output failure atlas and bounded next hypotheses |
+| [`docs/RND_ROLE_STRATIFIED_UPTAKE_CANARY_V0_8_3.md`](docs/RND_ROLE_STRATIFIED_UPTAKE_CANARY_V0_8_3.md) | role-coverage repair result and remaining provider-uptake boundary |
 | [`artifacts/model_interface_core_v0_7_1/local_mistral_e2e_r01.json`](artifacts/model_interface_core_v0_7_1/local_mistral_e2e_r01.json) | sanitized real local E2E receipt |
 | [`artifacts/local_output_diff_corpus_v0_8_2/r01/results.json`](artifacts/local_output_diff_corpus_v0_8_2/r01/results.json) | sealed four-model, 32-call development corpus |
+| [`artifacts/role_stratified_uptake_v0_8_3/r01/results.json`](artifacts/role_stratified_uptake_v0_8_3/r01/results.json) | sealed one-model, nine-call uptake canary |
 
 ### Frozen research history
 

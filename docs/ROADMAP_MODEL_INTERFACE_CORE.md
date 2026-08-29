@@ -122,15 +122,21 @@ Status: **IMPLEMENTED + VERIFIED; DEVELOPMENT ONLY**
 
 ### v0.8.3 — Role-stratified provider-uptake canary
 
-Status: **RESEARCH TARGET**
+Status: **IMPLEMENTED + VERIFIED; MIXED DEVELOPMENT RESULT**
 
-- Test whether a public-role coverage floor prevents top-k credit from dropping
-  required dependency roles.
-- Preserve a separate receipt for compiled evidence selection and actual
-  provider uptake.
-- Add fresh, pre-locked cases with an unsaturated answer surface.
-- Begin with one instruction-capable model; expand only after a second model's
-  adapter-readiness canary passes.
+- A pre-call lock fixes three fresh cases, one Mistral snapshot, a 48-token
+  ceiling, and a cyclic three-arm schedule with nine terminal calls.
+- The public-role coverage floor closes deterministic compiler coverage from
+  `1/3` for scalar top-k to `3/3` for the candidate.
+- Provider uptake remains `2/3` for both controlled arms, demonstrating that
+  complete compilation does not guarantee generated support retention.
+- Strict semantic passes remain `2/3` for direct, top-k, and role-stratified
+  arms. One candidate output changes `60_UNITS` to the expected `6_UNITS`, but
+  omits correction provenance and therefore remains a strict failure.
+- The already-covered control case has byte-identical provider prompts and
+  outputs across top-k and role-stratified arms.
+- No gradient-specific, causal-superiority, general-reasoning, or cross-model
+  claim is admitted from this canary.
 
 ### v0.8.4 — Hosted-provider adapters
 
