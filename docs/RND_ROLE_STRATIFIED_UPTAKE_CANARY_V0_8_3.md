@@ -2,7 +2,10 @@
 
 Status: **COMPLETE DEVELOPMENT CANARY; MIXED RESULT; NOT A BENCHMARK**
 
-Canonical runtime-bound integrity artifact:
+Canonical immutable-model/runtime-code integrity artifact:
+[`artifacts/role_stratified_uptake_v0_8_3/r06_immutable_runtime_code/results.json`](../artifacts/role_stratified_uptake_v0_8_3/r06_immutable_runtime_code/results.json)
+
+Preserved runtime-version-bound artifact:
 [`artifacts/role_stratified_uptake_v0_8_3/r05_runtime_bound/results.json`](../artifacts/role_stratified_uptake_v0_8_3/r05_runtime_bound/results.json)
 
 Preserved loader-bound integrity artifact:
@@ -32,6 +35,9 @@ Loader-bound staging lock:
 Exact-runtime lock:
 [`policy_lock_role_stratified_uptake_v0_8_3_4_r05.json`](../policy_lock_role_stratified_uptake_v0_8_3_4_r05.json)
 
+Immutable-model/runtime-code lock:
+[`policy_lock_role_stratified_uptake_v0_8_3_5_r06.json`](../policy_lock_role_stratified_uptake_v0_8_3_5_r06.json)
+
 ## Question
 
 The v0.8.2 corpus exposed two different failures:
@@ -59,6 +65,7 @@ there are only three development cases over one model snapshot.
 - Exact snapshot-manifest lock commit before r03 calls: `34f7807`.
 - Loader-bound staging lock commit before r04 calls: `9f2b754`.
 - Exact-runtime lock commit before r05 calls: `9894121`.
+- Immutable-model/runtime-code lock commit before r06 calls: `5ad3ee2`.
 - Model: `mlx-community/Mistral-7B-Instruct-v0.3-4bit@a4b8f...`.
 - Three fresh synthetic late-event cases.
 - Three arms and one generation per arm:
@@ -107,6 +114,18 @@ Hugging Face Hub, and NumPy. The same runtime receipt is checked before and
 after all calls. This is a version-identity receipt, not signed binary or
 hardware attestation, and r05 remains a contaminated integrity repetition.
 All public outputs remain byte-identical across r01/r02/r03/r04/r05 (`9/9`).
+
+A fifth review noted that owner-reversible mode bits did not make the r04
+staging tree immutable to another process under the same account. It also
+noted that r05 distribution version strings did not exclude shadowed or
+locally modified module code. r06 therefore loads the exact model from an APFS
+read-only disk image, unlinks the backing image pathname before model load,
+and verifies the mounted seven-file manifest before and after calls. It also
+binds aggregate content hashes for 16,031 files across the eight recorded
+distributions plus the origins and hashes of 1,314 actually imported modules.
+The claim stops short of hardware, kernel, code-signing, or malicious-root
+attestation. r06 is still a contaminated integrity repetition, and all public
+outputs remain byte-identical across r01/r02/r03/r04/r05/r06 (`9/9`).
 
 The candidate reserves capacity for the correction plus every public evidence
 node whose caller-supplied role is `required_support`, then fills remaining

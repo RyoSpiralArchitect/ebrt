@@ -148,8 +148,12 @@ Status: **IMPLEMENTED + VERIFIED; MIXED DEVELOPMENT RESULT**
   are byte-identical. A fourth review found that the permissive `mlx-lm`
   requirement still left execution semantics unbound. r05 fixes and checks
   the exact Python/platform and local-model distribution versions before and
-  after calls. All r01/r02/r03/r04/r05 public outputs are byte-identical; none
-  of the integrity repetitions is counted as fresh evidence.
+  after calls. A fifth review found that r04's owner-mode bits were reversible
+  and r05's version strings did not bind imported code. r06 loads the exact
+  model from an unlinked read-only APFS image and binds installed distribution
+  content plus actual imported-module origins and hashes. All
+  r01/r02/r03/r04/r05/r06 public outputs are byte-identical; none of the
+  integrity repetitions is counted as fresh evidence.
 - No gradient-specific, causal-superiority, general-reasoning, or cross-model
   claim is admitted from this canary.
 

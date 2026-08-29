@@ -240,6 +240,15 @@ python3 role_stratified_uptake_integrity_v0_8_3_4.py \
   --loader-lock policy_lock_role_stratified_uptake_v0_8_3_3_r04.json \
   verify artifacts/role_stratified_uptake_v0_8_3/r05_runtime_bound/results.json \
   --lock policy_lock_role_stratified_uptake_v0_8_3_4_r05.json
+
+python3 role_stratified_uptake_integrity_v0_8_3_5.py \
+  --base-lock policy_lock_role_stratified_uptake_v0_8_3.json \
+  --source-lock policy_lock_role_stratified_uptake_v0_8_3_1_r02.json \
+  --snapshot-lock policy_lock_role_stratified_uptake_v0_8_3_2_r03.json \
+  --loader-lock policy_lock_role_stratified_uptake_v0_8_3_3_r04.json \
+  --runtime-lock policy_lock_role_stratified_uptake_v0_8_3_4_r05.json \
+  verify artifacts/role_stratified_uptake_v0_8_3/r06_immutable_runtime_code/results.json \
+  --lock policy_lock_role_stratified_uptake_v0_8_3_5_r06.json
 ```
 
 The deterministic compiler coverage floor repaired both intentionally exposed
@@ -252,7 +261,7 @@ the candidate changed the generated answer from `60_UNITS` to the expected
 failed. This is a useful mixed development result, not a superiority claim.
 
 See the [v0.8.3 R&D note](docs/RND_ROLE_STRATIFIED_UPTAKE_CANARY_V0_8_3.md) and
-the [runtime-bound r05 artifact](artifacts/role_stratified_uptake_v0_8_3/r05_runtime_bound/results.json).
+the [immutable-model/runtime-code r06 artifact](artifacts/role_stratified_uptake_v0_8_3/r06_immutable_runtime_code/results.json).
 The original r01 artifact is retained because review found that its pre-call
 lock did not bind imported implementation files or reject arbitrary explicit
 model identities. A second review found that r02 still did not bind the exact
@@ -266,8 +275,12 @@ outputs are byte-identical across r01/r02/r03/r04. A fourth review found that
 the open-ended `mlx-lm` requirement did not bind generation-runtime semantics.
 r05 locks the exact Python/platform envelope and local-model distribution
 versions before calls and checks them again afterward. Outputs remain
-byte-identical across r01/r02/r03/r04/r05; none of the integrity successors is
-fresh evidence.
+byte-identical across r01/r02/r03/r04/r05. A fifth review found that owner-mode
+bits remained reversible and version metadata did not bind imported code. r06
+loads from an unlinked read-only disk image and binds aggregate installed-file
+content plus actual imported-module origins and hashes. Outputs remain
+byte-identical across r01/r02/r03/r04/r05/r06; none of the integrity successors
+is fresh evidence.
 
 ## What the core owns
 
@@ -453,6 +466,8 @@ are separate measurements. A `PASS` in one category does not silently imply a
 | [`policy_lock_role_stratified_uptake_v0_8_3_3_r04.json`](policy_lock_role_stratified_uptake_v0_8_3_3_r04.json) | pre-call loader-path and staged-byte policy lock |
 | [`role_stratified_uptake_integrity_v0_8_3_4.py`](role_stratified_uptake_integrity_v0_8_3_4.py) | exact Python/platform/distribution runtime wrapper |
 | [`policy_lock_role_stratified_uptake_v0_8_3_4_r05.json`](policy_lock_role_stratified_uptake_v0_8_3_4_r05.json) | pre-call exact local runtime-version lock |
+| [`role_stratified_uptake_integrity_v0_8_3_5.py`](role_stratified_uptake_integrity_v0_8_3_5.py) | unlinked read-only model image and imported-code wrapper |
+| [`policy_lock_role_stratified_uptake_v0_8_3_5_r06.json`](policy_lock_role_stratified_uptake_v0_8_3_5_r06.json) | pre-call immutable-model/runtime-code lock |
 | [`requirements-core.txt`](requirements-core.txt) | network-zero core dependency |
 | [`requirements-local-mlx.txt`](requirements-local-mlx.txt) | Apple-silicon local backend |
 | [`docs/EBRT_CORE_THESIS.md`](docs/EBRT_CORE_THESIS.md) | mathematical and conceptual anchor |
@@ -466,7 +481,8 @@ are separate measurements. A `PASS` in one category does not silently imply a
 | [`artifacts/role_stratified_uptake_v0_8_3/r02_integrity/results.json`](artifacts/role_stratified_uptake_v0_8_3/r02_integrity/results.json) | preserved source-bound repetition; not fresh evidence |
 | [`artifacts/role_stratified_uptake_v0_8_3/r03_snapshot_bound/results.json`](artifacts/role_stratified_uptake_v0_8_3/r03_snapshot_bound/results.json) | preserved exact-snapshot-bound repetition; not fresh evidence |
 | [`artifacts/role_stratified_uptake_v0_8_3/r04_loader_bound/results.json`](artifacts/role_stratified_uptake_v0_8_3/r04_loader_bound/results.json) | preserved loader-bound repetition; not fresh evidence |
-| [`artifacts/role_stratified_uptake_v0_8_3/r05_runtime_bound/results.json`](artifacts/role_stratified_uptake_v0_8_3/r05_runtime_bound/results.json) | canonical runtime-bound repetition; not fresh evidence |
+| [`artifacts/role_stratified_uptake_v0_8_3/r05_runtime_bound/results.json`](artifacts/role_stratified_uptake_v0_8_3/r05_runtime_bound/results.json) | preserved runtime-version-bound repetition; not fresh evidence |
+| [`artifacts/role_stratified_uptake_v0_8_3/r06_immutable_runtime_code/results.json`](artifacts/role_stratified_uptake_v0_8_3/r06_immutable_runtime_code/results.json) | canonical immutable-model/runtime-code repetition; not fresh evidence |
 
 ### Frozen research history
 
