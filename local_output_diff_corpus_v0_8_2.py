@@ -644,6 +644,7 @@ def _verify_run(value: Any) -> JsonObject:
     seed = generation_config.get("seed")
     sampler_temperature = generation_config.get("sampler_temperature")
     expected_generation_prompt = prompt_rendering_mode == "chat_template"
+    calls_per_cell = execution_policy.get("calls_per_cell")
     expected_execution_policy_keys = {
         "temperature",
         "seed",
@@ -680,8 +681,12 @@ def _verify_run(value: Any) -> JsonObject:
         "seed_bound": execution_policy.get("seed") == seed,
         "temperature_bound": execution_policy.get("temperature") == sampler_temperature,
         "no_automatic_retry": execution_policy.get("automatic_retry") is False,
-        "one_call_per_arm_policy_exact": execution_policy.get("calls_per_cell")
-        == {ARM_DIRECT: 1, ARM_EBRT: 1},
+        "one_call_per_arm_policy_exact": type(calls_per_cell) is dict
+        and set(calls_per_cell) == set(ARM_IDS)
+        and all(
+            type(calls_per_cell[arm_id]) is int and calls_per_cell[arm_id] == 1
+            for arm_id in ARM_IDS
+        ),
         "arm_order_policy_bound": execution_policy.get("arm_order")
         == "counterbalanced_by_case_index",
         "latency_boundary_exact": execution_policy.get("latency_comparison_status")
@@ -817,7 +822,10 @@ def _verify_run(value: Any) -> JsonObject:
                 and float(latency_ms) >= 0.0
             ):
                 raise EBRTError("LOCAL_OUTPUT_DIFF_ARM_RESULT_SHAPE_INVALID")
-            if result.get("logical_calls") != 1:
+            if not (
+                type(result.get("logical_calls")) is int
+                and result["logical_calls"] == 1
+            ):
                 raise EBRTError("LOCAL_OUTPUT_DIFF_LOGICAL_CALL_COUNT_INVALID")
             expected_invocation_fingerprint = expected_invocations[arm_id][
                 "fingerprint_sha256"
