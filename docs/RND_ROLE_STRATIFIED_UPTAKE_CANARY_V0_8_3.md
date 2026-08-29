@@ -2,7 +2,10 @@
 
 Status: **COMPLETE DEVELOPMENT CANARY; MIXED RESULT; NOT A BENCHMARK**
 
-Canonical verified-source integrity artifact:
+Canonical startup-isolated integrity artifact:
+[`artifacts/role_stratified_uptake_v0_8_3/r09_startup_isolated/results.json`](../artifacts/role_stratified_uptake_v0_8_3/r09_startup_isolated/results.json)
+
+Preserved verified-source integrity artifact:
 [`artifacts/role_stratified_uptake_v0_8_3/r08_verified_source/results.json`](../artifacts/role_stratified_uptake_v0_8_3/r08_verified_source/results.json)
 
 Preserved complete-integrity artifact:
@@ -50,6 +53,9 @@ Complete dependency/mount-binding lock:
 Verified-source execution lock:
 [`policy_lock_role_stratified_uptake_v0_8_3_7_r08.json`](../policy_lock_role_stratified_uptake_v0_8_3_7_r08.json)
 
+Startup-isolated execution lock:
+[`policy_lock_role_stratified_uptake_v0_8_3_8_r09.json`](../policy_lock_role_stratified_uptake_v0_8_3_8_r09.json)
+
 ## Question
 
 The v0.8.2 corpus exposed two different failures:
@@ -80,6 +86,7 @@ there are only three development cases over one model snapshot.
 - Immutable-model/runtime-code lock commit before r06 calls: `5ad3ee2`.
 - Complete dependency/mount-binding lock commit before r07 calls: `9d2027c`.
 - Verified-source execution lock commit before r08 calls: `15833fc`.
+- Startup-isolated execution lock commit before r09 calls: `5a573d0`.
 - Model: `mlx-community/Mistral-7B-Instruct-v0.3-4bit@a4b8f...`.
 - Three fresh synthetic late-event cases.
 - Three arms and one generation per arm:
@@ -168,6 +175,19 @@ timestamp-valid cache: the ordinary interpreter returns the cached value while
 the r08 policy returns the source value. Portable verification passes all nine
 checks. r08 remains a contaminated integrity repetition, not fresh scientific
 evidence, and all nine public outputs remain byte-identical across r01-r08.
+
+An eighth review identified an earlier startup boundary: the outer r08 Python
+process could still import environment-provided paths or automatically process
+`.pth`, `sitecustomize`, and `usercustomize` before its source-only child was
+launched. r09 requires `python3 -E -S` at the outer CLI and repeats those flags
+for the child, failing closed otherwise. It adds only the two explicit,
+pre-call-locked site-package roots after startup without running `site.main()`
+or customization hooks, while retaining `-B` and the fresh empty
+`pycache_prefix`. A local self-test shows an actual `sitecustomize` fixture
+running under ordinary Python but not under the admitted path. Portable
+verification passes all 12 checks. r09 is a contaminated integrity repetition
+over the known r01-r08 cases, not fresh scientific evidence; all nine public
+outputs remain byte-identical across r01-r09 (`9/9`).
 
 The candidate reserves capacity for the correction plus every public evidence
 node whose caller-supplied role is `required_support`, then fills remaining

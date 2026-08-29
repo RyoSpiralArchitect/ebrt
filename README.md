@@ -270,6 +270,18 @@ python3 role_stratified_uptake_integrity_v0_8_3_7.py \
   --complete-lock policy_lock_role_stratified_uptake_v0_8_3_6_r07.json \
   verify artifacts/role_stratified_uptake_v0_8_3/r08_verified_source/results.json \
   --lock policy_lock_role_stratified_uptake_v0_8_3_7_r08.json
+
+python3 -E -S role_stratified_uptake_integrity_v0_8_3_8.py \
+  --base-lock policy_lock_role_stratified_uptake_v0_8_3.json \
+  --source-lock policy_lock_role_stratified_uptake_v0_8_3_1_r02.json \
+  --snapshot-lock policy_lock_role_stratified_uptake_v0_8_3_2_r03.json \
+  --loader-lock policy_lock_role_stratified_uptake_v0_8_3_3_r04.json \
+  --runtime-lock policy_lock_role_stratified_uptake_v0_8_3_4_r05.json \
+  --immutable-lock policy_lock_role_stratified_uptake_v0_8_3_5_r06.json \
+  --complete-lock policy_lock_role_stratified_uptake_v0_8_3_6_r07.json \
+  --verified-source-lock policy_lock_role_stratified_uptake_v0_8_3_7_r08.json \
+  verify artifacts/role_stratified_uptake_v0_8_3/r09_startup_isolated/results.json \
+  --lock policy_lock_role_stratified_uptake_v0_8_3_8_r09.json
 ```
 
 The deterministic compiler coverage floor repaired both intentionally exposed
@@ -282,7 +294,7 @@ the candidate changed the generated answer from `60_UNITS` to the expected
 failed. This is a useful mixed development result, not a superiority claim.
 
 See the [v0.8.3 R&D note](docs/RND_ROLE_STRATIFIED_UPTAKE_CANARY_V0_8_3.md) and
-the [verified-source r08 artifact](artifacts/role_stratified_uptake_v0_8_3/r08_verified_source/results.json).
+the [startup-isolated r09 artifact](artifacts/role_stratified_uptake_v0_8_3/r09_startup_isolated/results.json).
 The original r01 artifact is retained because review found that its pre-call
 lock did not bind imported implementation files or reject arbitrary explicit
 model identities. A second review found that r02 still did not bind the exact
@@ -311,7 +323,13 @@ still diverge from the locked source. r08 re-executes before repository or
 site-package imports under a fresh empty `pycache_prefix` with bytecode writes
 disabled, forcing Python modules through verified source while preserving
 native-extension content receipts. Outputs remain byte-identical across
-r01-r08; none of the integrity successors is fresh evidence.
+r01-r08. An eighth review found that the outer interpreter could still process
+environment paths, `.pth`, `sitecustomize`, or `usercustomize` before the r08
+bootstrap ran. r09 requires both outer and child interpreters to start with
+`-E -S`, manually admits only the two locked site-package roots after startup,
+and retains the empty-cache source policy. Its portable verifier passes 12/12
+checks, and all r01-r09 public outputs remain byte-identical (`9/9`). None of
+the integrity successors is fresh evidence.
 
 ## What the core owns
 

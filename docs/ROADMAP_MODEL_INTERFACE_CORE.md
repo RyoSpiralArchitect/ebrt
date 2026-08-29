@@ -163,8 +163,13 @@ Status: **IMPLEMENTED + VERIFIED; MIXED DEVELOPMENT RESULT**
   launches the admitted run before non-standard-library imports with a fresh
   empty `pycache_prefix` and bytecode writes disabled, forcing 2,861 Python
   modules through verified source while retaining content receipts for 189
-  native extensions. All r01-r08 public outputs are byte-identical; none of
-  the integrity repetitions is counted as fresh evidence.
+  native extensions. An eighth review found that automatic outer-interpreter
+  site initialization could still run before that bootstrap. r09 requires
+  `-E -S` for both outer and child interpreters, manually admits only the two
+  locked package roots, and bypasses `.pth`, `sitecustomize`, and
+  `usercustomize`. Its portable verifier passes 12/12 checks. All r01-r09
+  public outputs are byte-identical; none of the integrity repetitions is
+  counted as fresh evidence.
 - No gradient-specific, causal-superiority, general-reasoning, or cross-model
   claim is admitted from this canary.
 
