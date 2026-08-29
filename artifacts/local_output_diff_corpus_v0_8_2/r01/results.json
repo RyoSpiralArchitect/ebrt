@@ -8,11 +8,12 @@
     "This corpus can suggest engineering hypotheses but does not establish general reasoning improvement or cross-model regularity."
   ],
   "effect_attribution_status": "NOT_ASSESSED",
-  "fingerprint_sha256": "3c0442d8bdd7af916b1d36764195b6b90f0ef0301f4ee81799a58e7933da206a",
+  "fingerprint_sha256": "542de80254964dd9d91ef327aa585d1ddaac1e080064b205df7d056a71a209c4",
   "generalization_status": "DEVELOPMENT_CORPUS_ONLY",
   "run_verifications": [
     {
       "checks": {
+        "adapter_descriptor_replayed_exactly": true,
         "all_cells_sealed": true,
         "case_ids_exact": true,
         "claim_boundary_exact": true,
@@ -26,13 +27,14 @@
         "summary_replayed_exactly": true,
         "top_receipt_sealed": true
       },
-      "fingerprint_sha256": "b519442270ed8cec920f044b6355db6953a7f8acb9f219d1ed92aa10c7959f30",
+      "fingerprint_sha256": "e3a9d5a9f0db41ec1ae56870ad70be2005b4d240619f8fa8bff8fe99bb5216e6",
       "run_fingerprint_sha256": "d1f01b3e8e21a2cee92ac00a6bba613a9ca5f2563758d402ad0ce741f226bdd4",
       "schema_version": "ebrt-local-output-diff-verification-v0.8.2",
       "status": "PASS"
     },
     {
       "checks": {
+        "adapter_descriptor_replayed_exactly": true,
         "all_cells_sealed": true,
         "case_ids_exact": true,
         "claim_boundary_exact": true,
@@ -46,13 +48,14 @@
         "summary_replayed_exactly": true,
         "top_receipt_sealed": true
       },
-      "fingerprint_sha256": "51bc99d5a4b66fc8280c2a99b7d72320d2ccb836e334eed043389dcc9642108c",
+      "fingerprint_sha256": "f3e159fc1a6ce4b6025705781c132e8b5e61554fdf09d0956b8075c560cb899d",
       "run_fingerprint_sha256": "3430db5fb0d0051ae26c07ea7a0c477036c2231e0e968dfe1db02ace17ef27d7",
       "schema_version": "ebrt-local-output-diff-verification-v0.8.2",
       "status": "PASS"
     },
     {
       "checks": {
+        "adapter_descriptor_replayed_exactly": true,
         "all_cells_sealed": true,
         "case_ids_exact": true,
         "claim_boundary_exact": true,
@@ -66,13 +69,14 @@
         "summary_replayed_exactly": true,
         "top_receipt_sealed": true
       },
-      "fingerprint_sha256": "37c084913146840ea58677021588488599488bcf66e191a4e42a5c47a32ade6a",
+      "fingerprint_sha256": "7a71cdbacb3cc34a97522b3f1485a7b02c63d1f81526ce4b28c6413d58ecf5fc",
       "run_fingerprint_sha256": "82942d69ef8f146abf95c770872525f69af037c0a6d6807e4166082ef12ec8fc",
       "schema_version": "ebrt-local-output-diff-verification-v0.8.2",
       "status": "PASS"
     },
     {
       "checks": {
+        "adapter_descriptor_replayed_exactly": true,
         "all_cells_sealed": true,
         "case_ids_exact": true,
         "claim_boundary_exact": true,
@@ -86,7 +90,7 @@
         "summary_replayed_exactly": true,
         "top_receipt_sealed": true
       },
-      "fingerprint_sha256": "fabb17fea33b6baf34cf8e0901072052c7674bf57271afa59e5e00fd868f06dd",
+      "fingerprint_sha256": "a640e8bd7778ba5fa67d93028c2ec02f90a15961958dac7f9c7fdcf1f6e1953f",
       "run_fingerprint_sha256": "b69422a9298db1f50cdc0c5d3300e915a446ce70ea85d66bb54bf580ec660263",
       "schema_version": "ebrt-local-output-diff-verification-v0.8.2",
       "status": "PASS"

@@ -36,6 +36,7 @@ from ebrt_core import (
     _parse_model_text,
     _seal,
     _sealed_snapshot,
+    _validate_adapter_descriptor,
     build_demo_contract,
     build_demo_task,
     build_model_invocation,
@@ -591,21 +592,65 @@ def _verify_run(value: Any) -> JsonObject:
     generation_config = descriptor.get("generation_config")
     if not isinstance(generation_config, Mapping):
         raise EBRTError("LOCAL_OUTPUT_DIFF_GENERATION_CONFIG_MISSING")
+    expected_descriptor_keys = {
+        "adapter_id",
+        "model_id",
+        "interface_kind",
+        "state_visibility",
+        "differentiable_through_model",
+        "generation_config",
+        "generation_config_fingerprint_sha256",
+    }
+    if set(descriptor) != expected_descriptor_keys:
+        raise EBRTError("LOCAL_OUTPUT_DIFF_DESCRIPTOR_SHAPE_INVALID")
+    configuration_keys = {
+        "add_generation_prompt",
+        "max_tokens",
+        "prompt_rendering_mode",
+        "sampler_temperature",
+        "seed",
+    }
+    if set(generation_config) != configuration_keys:
+        raise EBRTError("LOCAL_OUTPUT_DIFF_GENERATION_CONFIG_SHAPE_INVALID")
+    rebuilt_descriptor = AdapterDescriptor(
+        adapter_id=descriptor.get("adapter_id"),
+        model_id=descriptor.get("model_id"),
+        interface_kind=descriptor.get("interface_kind"),
+        state_visibility=descriptor.get("state_visibility"),
+        differentiable_through_model=descriptor.get("differentiable_through_model"),
+        generation_config=tuple(sorted(generation_config.items())),
+    )
+    _validate_adapter_descriptor(rebuilt_descriptor, "LOCAL_OUTPUT_DIFF_DESCRIPTOR")
+    if _canonical_bytes(descriptor) != _canonical_bytes(rebuilt_descriptor.to_dict()):
+        raise EBRTError("LOCAL_OUTPUT_DIFF_DESCRIPTOR_REPLAY_FAILED")
+    prompt_rendering_mode = generation_config.get("prompt_rendering_mode")
+    max_tokens = generation_config.get("max_tokens")
+    seed = generation_config.get("seed")
+    sampler_temperature = generation_config.get("sampler_temperature")
+    expected_generation_prompt = prompt_rendering_mode == "chat_template"
     execution_checks = {
         "run_complete": snapshot.get("status") == "COMPLETE",
-        "model_id_bound": isinstance(descriptor.get("model_id"), str)
-        and bool(descriptor.get("model_id")),
+        "adapter_id_exact": descriptor.get("adapter_id") == "corpus-local-model",
+        "model_id_revision_bound": isinstance(descriptor.get("model_id"), str)
+        and "@" in descriptor["model_id"].strip("@"),
+        "interface_kind_exact": descriptor.get("interface_kind") == "local_open_weight",
+        "state_visibility_exact": descriptor.get("state_visibility") == "public_only",
         "model_boundary_is_nondifferentiable": descriptor.get(
             "differentiable_through_model"
         )
         is False,
+        "prompt_mode_allowed": prompt_rendering_mode in {"chat_template", "plain_text"},
+        "generation_prompt_matches_mode": generation_config.get("add_generation_prompt")
+        is expected_generation_prompt,
+        "token_ceiling_valid": type(max_tokens) is int and 1 <= max_tokens <= 4096,
+        "seed_exact": type(seed) is int and seed == 0,
+        "temperature_exact": type(sampler_temperature) is float
+        and sampler_temperature == 0.0,
         "prompt_mode_bound": execution_policy.get("prompt_rendering_mode")
-        == generation_config.get("prompt_rendering_mode"),
-        "token_ceiling_bound": execution_policy.get("max_tokens_per_arm")
-        == generation_config.get("max_tokens"),
-        "seed_bound": execution_policy.get("seed") == generation_config.get("seed"),
-        "temperature_bound": execution_policy.get("temperature")
-        == generation_config.get("sampler_temperature"),
+        == prompt_rendering_mode,
+        "token_ceiling_bound": execution_policy.get("max_tokens_per_arm") == max_tokens,
+        "seed_bound": execution_policy.get("seed") == seed,
+        "temperature_bound": execution_policy.get("temperature") == sampler_temperature,
         "no_automatic_retry": execution_policy.get("automatic_retry") is False,
         "arm_order_policy_bound": execution_policy.get("arm_order")
         == "counterbalanced_by_case_index",
@@ -783,6 +828,7 @@ def _verify_run(value: Any) -> JsonObject:
     }
     checks = {
         "top_receipt_sealed": True,
+        "adapter_descriptor_replayed_exactly": True,
         "execution_binding_exact": True,
         "compiled_revision_replayed_exactly": True,
         "invocations_recompiled_exactly": True,
