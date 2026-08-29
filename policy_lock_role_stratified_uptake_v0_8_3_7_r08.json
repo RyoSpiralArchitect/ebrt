@@ -1,0 +1,519 @@
+{
+    "claim_boundary": [
+        "This r08 execution repeats already observed cases only to exclude timestamp-valid divergent Python bytecode from the admitted execution path.",
+        "The repeated outputs are contaminated by known r01-r07 results and are not fresh scientific replication evidence.",
+        "Repository and site-package Python modules are imported under a fresh empty pycache prefix with bytecode writes disabled, so adjacent caches are ignored.",
+        "Python source and native-extension content remain bound by the r07 complete dependency receipt; the r06 read-only model mount is independently verified.",
+        "The receipt is not hardware, kernel, code-signing, malicious-root, or scientific-effect attestation.",
+        "All original v0.8.3 effect-attribution, one-model, public-role, and stop-gradient boundaries remain unchanged."
+    ],
+    "complete_lock_fingerprint_sha256": "b010d2956d9b3907ec5087ca9fc2bc620f09f14a1c90ec1d855d58ece1e4736c",
+    "effect_attribution_status": "NOT_ASSESSED",
+    "fingerprint_sha256": "c84f4a7f96a7d4f22cd478117989e9181d905580d7c15ba89c0889c98744d8a2",
+    "replication_status": "INTEGRITY_REPLICATION_OVER_KNOWN_R01_R07_CASES",
+    "runtime_code": {
+        "distribution_content": {
+            "distributions": [
+                {
+                    "distribution": "certifi",
+                    "files_fingerprint_sha256": "7fe6eff75dec7b81e940154d5b80ab295d4269b01ed0fd420749f7ceddf9a5d4",
+                    "hashed_bytes": 283742,
+                    "hashed_file_count": 14,
+                    "version": "2026.2.25"
+                },
+                {
+                    "distribution": "cffi",
+                    "files_fingerprint_sha256": "f2b8464ad8b3c1b5554d62a041980a44f5f2ffff505a1e4de96642208823082f",
+                    "hashed_bytes": 1018322,
+                    "hashed_file_count": 49,
+                    "version": "2.0.0"
+                },
+                {
+                    "distribution": "charset-normalizer",
+                    "files_fingerprint_sha256": "8114bcf4716eca7f776c0832e55135a144833837719ce7ce8313ad21e78c2a12",
+                    "hashed_bytes": 1250757,
+                    "hashed_file_count": 36,
+                    "version": "3.4.7"
+                },
+                {
+                    "distribution": "dill",
+                    "files_fingerprint_sha256": "408544b848919f3c3d86b6524e0e92d87679d42afb336800373f88d65261d031",
+                    "hashed_bytes": 833491,
+                    "hashed_file_count": 101,
+                    "version": "0.4.1"
+                },
+                {
+                    "distribution": "filelock",
+                    "files_fingerprint_sha256": "0277c39fe24f80339886a07ac883eefcfce65e921711f657a94e6bef4a7c72ad",
+                    "hashed_bytes": 175713,
+                    "hashed_file_count": 28,
+                    "version": "3.25.2"
+                },
+                {
+                    "distribution": "huggingface-hub",
+                    "files_fingerprint_sha256": "0a9e803d8183c695af238aa1e0dd4192c2e6525018780d3cd18dad5ba48df2d4",
+                    "hashed_bytes": 4531364,
+                    "hashed_file_count": 335,
+                    "version": "0.36.2"
+                },
+                {
+                    "distribution": "idna",
+                    "files_fingerprint_sha256": "1a23bf326d2b11996a59730190fdebb6ef7b9e88a2254c11e4a5d918d6c2e2ba",
+                    "hashed_bytes": 644212,
+                    "hashed_file_count": 22,
+                    "version": "3.11"
+                },
+                {
+                    "distribution": "importlib-metadata",
+                    "files_fingerprint_sha256": "1cf97f1a163d248147f6683a7ce1e5c42465d69db9cefd954c480c13682bc28e",
+                    "hashed_bytes": 166081,
+                    "hashed_file_count": 33,
+                    "version": "8.7.1"
+                },
+                {
+                    "distribution": "jinja2",
+                    "files_fingerprint_sha256": "e2a561d8c88e6963f302a0886a87e0facce9fe38ead534fe5a9abbba78422686",
+                    "hashed_bytes": 1175965,
+                    "hashed_file_count": 57,
+                    "version": "3.1.6"
+                },
+                {
+                    "distribution": "joblib",
+                    "files_fingerprint_sha256": "faf5b90afbab2478841b3334e38865cfe127e7800ad54147e48a6719af64d1d6",
+                    "hashed_bytes": 1969475,
+                    "hashed_file_count": 217,
+                    "version": "1.5.3"
+                },
+                {
+                    "distribution": "markupsafe",
+                    "files_fingerprint_sha256": "4952ca92ec7d2a8c75ec55a46a573d479998685304605d2630c7221c49d1f265",
+                    "hashed_bytes": 95796,
+                    "hashed_file_count": 14,
+                    "version": "3.0.3"
+                },
+                {
+                    "distribution": "mlx",
+                    "files_fingerprint_sha256": "466ff966e25e1275c75e0fa0eeb084cc1165c3d1861f56be1319dcfbb5bdeb38",
+                    "hashed_bytes": 2382953,
+                    "hashed_file_count": 82,
+                    "version": "0.31.1"
+                },
+                {
+                    "distribution": "mlx-lm",
+                    "files_fingerprint_sha256": "f7ecb9984659115268889e66eb300b7d651f40dc32a70ebfbd1d5c3268ab2203",
+                    "hashed_bytes": 3966124,
+                    "hashed_file_count": 358,
+                    "version": "0.31.2"
+                },
+                {
+                    "distribution": "mlx-metal",
+                    "files_fingerprint_sha256": "95933b7f0ccdd54ddded2a460246a24e18e6d1ff9af96c39c28300fa7fb6a5f4",
+                    "hashed_bytes": 157727919,
+                    "hashed_file_count": 386,
+                    "version": "0.31.1"
+                },
+                {
+                    "distribution": "mpmath",
+                    "files_fingerprint_sha256": "173f2e9e68962c7dfb6fddf839673d0706e066d2cea954473ce5682ad13d651f",
+                    "hashed_bytes": 4578097,
+                    "hashed_file_count": 180,
+                    "version": "1.3.0"
+                },
+                {
+                    "distribution": "numpy",
+                    "files_fingerprint_sha256": "47130e207ab4eee69bc71c37b290ffc66fc240b9dcb8c2ef4b57d085122c5275",
+                    "hashed_bytes": 31049688,
+                    "hashed_file_count": 1320,
+                    "version": "2.4.4"
+                },
+                {
+                    "distribution": "opentelemetry-api",
+                    "files_fingerprint_sha256": "7a8a3df9fa20fd8028558ba1ab26ba5da234e207ce59ad63e235dcae5987e32f",
+                    "hashed_bytes": 422757,
+                    "hashed_file_count": 79,
+                    "version": "1.39.1"
+                },
+                {
+                    "distribution": "packaging",
+                    "files_fingerprint_sha256": "c2cf4b7d03c20d8e1c7288f20b08264d6a7b46d3570df9ea94f9bd15664efe1f",
+                    "hashed_bytes": 557658,
+                    "hashed_file_count": 42,
+                    "version": "26.0"
+                },
+                {
+                    "distribution": "pandas",
+                    "files_fingerprint_sha256": "da6589bca727cf30d5ce7b595460615adb20345a33290de2c8774cdda030656d",
+                    "hashed_bytes": 66807260,
+                    "hashed_file_count": 2941,
+                    "version": "3.0.2"
+                },
+                {
+                    "distribution": "pillow",
+                    "files_fingerprint_sha256": "46f17d3f032a83040d54a3388c98a6d4c99009e763aa56d61a8c5ddedd794a95",
+                    "hashed_bytes": 14118484,
+                    "hashed_file_count": 230,
+                    "version": "10.4.0"
+                },
+                {
+                    "distribution": "protobuf",
+                    "files_fingerprint_sha256": "8f7cac7672890402b41df6711a58efaf033d5be36e79a546b38d9ef4c3051713",
+                    "hashed_bytes": 2560602,
+                    "hashed_file_count": 114,
+                    "version": "6.33.6"
+                },
+                {
+                    "distribution": "pyarrow",
+                    "files_fingerprint_sha256": "44fb1aa0a8b49254d2b564738ab004a60881d0c569c43d3a421dee5e276946b3",
+                    "hashed_bytes": 124664993,
+                    "hashed_file_count": 856,
+                    "version": "23.0.1"
+                },
+                {
+                    "distribution": "python-dateutil",
+                    "files_fingerprint_sha256": "651d10dd58deda1232256a70173a6e2b62d9a19d58bdc9d776fec975adcdaa2d",
+                    "hashed_bytes": 743600,
+                    "hashed_file_count": 44,
+                    "version": "2.9.0.post0"
+                },
+                {
+                    "distribution": "pyyaml",
+                    "files_fingerprint_sha256": "1d808df4a4aa91ea575802d10bb39b9669930420f20c000c46e7a758c0667710",
+                    "hashed_bytes": 865341,
+                    "hashed_file_count": 43,
+                    "version": "6.0.3"
+                },
+                {
+                    "distribution": "regex",
+                    "files_fingerprint_sha256": "d15a8bf839ad4a46eb1f298ea6051b88bbc5da54daa2cc2d99fc09284bc53f68",
+                    "hashed_bytes": 1786004,
+                    "hashed_file_count": 15,
+                    "version": "2024.11.6"
+                },
+                {
+                    "distribution": "requests",
+                    "files_fingerprint_sha256": "932ebd4d74595eb71ff9eb89479e4d3e43eec1bb24efbe98b8d6a39299824c26",
+                    "hashed_bytes": 414159,
+                    "hashed_file_count": 43,
+                    "version": "2.33.1"
+                },
+                {
+                    "distribution": "safetensors",
+                    "files_fingerprint_sha256": "63d9ed48af70ca54bd44d7f6f02b60124e27a579b0dd3c1414e6d515cce79117",
+                    "hashed_bytes": 1130454,
+                    "hashed_file_count": 22,
+                    "version": "0.7.0"
+                },
+                {
+                    "distribution": "scikit-learn",
+                    "files_fingerprint_sha256": "915cd6131dfcf417b941f73f49aa18c1f4e39660448a48fcbb59a86c6fbf7474",
+                    "hashed_bytes": 43941827,
+                    "hashed_file_count": 1587,
+                    "version": "1.8.0"
+                },
+                {
+                    "distribution": "scipy",
+                    "files_fingerprint_sha256": "02b54dd45912d78f066b663dda00f0ec62e7feac3d314122eb7e5dbbc24cdced",
+                    "hashed_bytes": 96021469,
+                    "hashed_file_count": 2397,
+                    "version": "1.17.1"
+                },
+                {
+                    "distribution": "sentencepiece",
+                    "files_fingerprint_sha256": "4c05d4da5748753ef8dbe965afac3c950134cf76f270e0101ab13203e0f296f1",
+                    "hashed_bytes": 3617427,
+                    "hashed_file_count": 20,
+                    "version": "0.2.1"
+                },
+                {
+                    "distribution": "setuptools",
+                    "files_fingerprint_sha256": "d1b7ad14c318be2b3a6889f14091d186907bec9c8a602ec8e3e283aa2bc8a19c",
+                    "hashed_bytes": 7553638,
+                    "hashed_file_count": 787,
+                    "version": "81.0.0"
+                },
+                {
+                    "distribution": "six",
+                    "files_fingerprint_sha256": "f378517ba43294cd538b0813bf13c22eaa930a5b361ee3d015fc1260a328ee21",
+                    "hashed_bytes": 80206,
+                    "hashed_file_count": 8,
+                    "version": "1.17.0"
+                },
+                {
+                    "distribution": "spiralreality",
+                    "files_fingerprint_sha256": "14b55437053c6b3645d0d82265bd93a4c6d3cabb430bd7a35fab594720387b77",
+                    "hashed_bytes": 28422,
+                    "hashed_file_count": 10,
+                    "version": "0.1.0"
+                },
+                {
+                    "distribution": "sympy",
+                    "files_fingerprint_sha256": "88d4d3b676ad66ba787572036ff42fcf906338a2ac289c8a297a362dad8c3af4",
+                    "hashed_bytes": 68984010,
+                    "hashed_file_count": 3105,
+                    "version": "1.14.0"
+                },
+                {
+                    "distribution": "threadpoolctl",
+                    "files_fingerprint_sha256": "bda2a8fad5607b9b322d5be152821b50e1bbd087c537e2e8ba96a2f4ff59808c",
+                    "hashed_bytes": 124822,
+                    "hashed_file_count": 7,
+                    "version": "3.6.0"
+                },
+                {
+                    "distribution": "tokenizers",
+                    "files_fingerprint_sha256": "312147fd5f5457a99b5893d71e53461eb1f45a9fd6bb3fdc8b7637d325af06e4",
+                    "hashed_bytes": 8582157,
+                    "hashed_file_count": 46,
+                    "version": "0.22.2"
+                },
+                {
+                    "distribution": "torch",
+                    "files_fingerprint_sha256": "dc150527110fd307603555b276fad3647223563d9543054d05f4e878c98f0e35",
+                    "hashed_bytes": 392176090,
+                    "hashed_file_count": 14641,
+                    "version": "2.11.0"
+                },
+                {
+                    "distribution": "tqdm",
+                    "files_fingerprint_sha256": "4f9d48b4ea399ee42bd263a550386d82fe831cb868b397f73b6824f8b504ce15",
+                    "hashed_bytes": 431081,
+                    "hashed_file_count": 72,
+                    "version": "4.67.3"
+                },
+                {
+                    "distribution": "transformers",
+                    "files_fingerprint_sha256": "35862c029c84848e7502b5e516625a5bf8c676ab1d1ed5c62cc5d401a9e35dab",
+                    "hashed_bytes": 107263940,
+                    "hashed_file_count": 4463,
+                    "version": "4.57.6"
+                },
+                {
+                    "distribution": "typing-extensions",
+                    "files_fingerprint_sha256": "e0cd456cb649a33c2911c8b217defa10cb4803c9e0ee7f8a32226b8e394d0bb7",
+                    "hashed_bytes": 341151,
+                    "hashed_file_count": 7,
+                    "version": "4.15.0"
+                },
+                {
+                    "distribution": "urllib3",
+                    "files_fingerprint_sha256": "00b4dcd172d4b30f1f369a1fec934c2f3d80e89cfd738e3de9aa0c0d09fe7eb9",
+                    "hashed_bytes": 900465,
+                    "hashed_file_count": 79,
+                    "version": "2.6.3"
+                },
+                {
+                    "distribution": "zipp",
+                    "files_fingerprint_sha256": "b340795f943b8a74e45582befc97cad2d6bf0257ce34585d52e069f5da6a07a4",
+                    "hashed_bytes": 54169,
+                    "hashed_file_count": 20,
+                    "version": "3.23.0"
+                }
+            ],
+            "fingerprint_sha256": "72cf5a21240d673697130d55b341115b760bca0811e98968ee374c587116dea4",
+            "schema_version": "ebrt-complete-distribution-summary-v0.8.3.6"
+        },
+        "fingerprint_sha256": "8e02537c169cffc5d81b9bc3fa861cd246deb69627e4622e69aca1a92e41fea9",
+        "imported_modules": {
+            "all_file_backed_nonstdlib_modules_bound": true,
+            "critical_modules": [
+                {
+                    "distribution": "huggingface-hub",
+                    "distribution_relative_path": "huggingface_hub/__init__.py",
+                    "module": "huggingface_hub",
+                    "sha256": "e586b64612482128fd24119364bc4dc6dca938407134e454a5e876341b364e35",
+                    "size_bytes": 52675
+                },
+                {
+                    "distribution": "mlx",
+                    "distribution_relative_path": "mlx/core.cpython-313-darwin.so",
+                    "module": "mlx.core",
+                    "sha256": "af47cd285bda81b7973adb8a072f5a25f08361a625878b011755f347b4be63a0",
+                    "size_bytes": 1408696
+                },
+                {
+                    "distribution": "mlx-lm",
+                    "distribution_relative_path": "mlx_lm/__init__.py",
+                    "module": "mlx_lm",
+                    "sha256": "f9ffa88772d26e537a98aa39ab16488a7a0d13cc1fac5d665376132c94b49608",
+                    "size_bytes": 377
+                },
+                {
+                    "distribution": "mlx-lm",
+                    "distribution_relative_path": "mlx_lm/generate.py",
+                    "module": "mlx_lm.generate",
+                    "sha256": "cb9acf45737a928f0264507f4b88b34b6ecd20d86288d2fd81673d625fad608d",
+                    "size_bytes": 73542
+                },
+                {
+                    "distribution": "mlx-lm",
+                    "distribution_relative_path": "mlx_lm/sample_utils.py",
+                    "module": "mlx_lm.sample_utils",
+                    "sha256": "c0ce439f8dbf0d4e6d0f37f728a324f3f72878e6a9123df41be520804c596d67",
+                    "size_bytes": 12888
+                },
+                {
+                    "distribution": "mlx-lm",
+                    "distribution_relative_path": "mlx_lm/utils.py",
+                    "module": "mlx_lm.utils",
+                    "sha256": "3a53fbd0cd5dc7d5f5dbc093b903a7573b6f05ead14e61b4958162b7c585bcc2",
+                    "size_bytes": 32335
+                },
+                {
+                    "distribution": "numpy",
+                    "distribution_relative_path": "numpy/__init__.py",
+                    "module": "numpy",
+                    "sha256": "2e8da3e4385e79c4885b3f7324a8b957e6f01732b239e99e266a12c62a008b8d",
+                    "size_bytes": 25946
+                },
+                {
+                    "distribution": "numpy",
+                    "distribution_relative_path": "numpy/_core/_multiarray_umath.cpython-313-darwin.so",
+                    "module": "numpy._core._multiarray_umath",
+                    "sha256": "8df43663f97ffc084ba8108ac943a0b75e35fefa8bba81493901a265164ada8f",
+                    "size_bytes": 3677928
+                },
+                {
+                    "distribution": "safetensors",
+                    "distribution_relative_path": "safetensors/__init__.py",
+                    "module": "safetensors",
+                    "sha256": "c1bcca66501582702c8c79aaaf2b922428800efa4367134609f8fc57363402dd",
+                    "size_bytes": 194
+                },
+                {
+                    "distribution": "safetensors",
+                    "distribution_relative_path": "safetensors/_safetensors_rust.abi3.so",
+                    "module": "safetensors._safetensors_rust",
+                    "sha256": "9f8c6553b8fa7a5286d3baa9e5ce3a75e0567e441557d35c61c43e25414e0ab3",
+                    "size_bytes": 1006688
+                },
+                {
+                    "distribution": "tokenizers",
+                    "distribution_relative_path": "tokenizers/__init__.py",
+                    "module": "tokenizers",
+                    "sha256": "148ecb122f3fee03be9abb1fe213dd85fbc691bf2ad2b437ff531533781a6a3a",
+                    "size_bytes": 2639
+                },
+                {
+                    "distribution": "tokenizers",
+                    "distribution_relative_path": "tokenizers/tokenizers.abi3.so",
+                    "module": "tokenizers.tokenizers",
+                    "sha256": "899b244f19f1ddd6506c45ea0f7163f38952f2a552272a687a6ef4b9ddcc7327",
+                    "size_bytes": 8261072
+                },
+                {
+                    "distribution": "torch",
+                    "distribution_relative_path": "torch/__init__.py",
+                    "module": "torch",
+                    "sha256": "0387d8b811b289287479c8bfdf4e1dac3a71b246f938d82da1331cf2dc8bf001",
+                    "size_bytes": 107845
+                },
+                {
+                    "distribution": "torch",
+                    "distribution_relative_path": "torch/_C.cpython-313-darwin.so",
+                    "module": "torch._C",
+                    "sha256": "fe493b62d0b347b62535a37d81a25c696795105f4670ad00abb51184b72b2215",
+                    "size_bytes": 50248
+                },
+                {
+                    "distribution": "transformers",
+                    "distribution_relative_path": "transformers/__init__.py",
+                    "module": "transformers",
+                    "sha256": "aa8cb54da488cf43ba37b9955bb6c0d84d2000db0306f6a5f1c20b6842482d04",
+                    "size_bytes": 47000
+                }
+            ],
+            "distribution_module_count": 3039,
+            "fingerprint_sha256": "28dc1b2ef5eead61aae3e4bdbf6dd6093e6c9472f26c1eaef2546c5a7fa7ab76",
+            "module_count": 3050,
+            "module_manifest_fingerprint_sha256": "3416afdbb1595459f83ee52b61321a2090077be9ead834e101ea660d08456597",
+            "repository_module_count": 11,
+            "repository_modules": [
+                {
+                    "module": "__main__",
+                    "repository_relative_path": "role_stratified_uptake_integrity_v0_8_3_7.py",
+                    "sha256": "fe7945f7b21bc17a6402d5a853dcb2e3138f7a6fd5287e4927aca35ef4c2fad1",
+                    "size_bytes": 24786
+                },
+                {
+                    "module": "__mp_main__",
+                    "repository_relative_path": "role_stratified_uptake_integrity_v0_8_3_7.py",
+                    "sha256": "fe7945f7b21bc17a6402d5a853dcb2e3138f7a6fd5287e4927aca35ef4c2fad1",
+                    "size_bytes": 24786
+                },
+                {
+                    "module": "ebrt_core",
+                    "repository_relative_path": "ebrt_core.py",
+                    "sha256": "b4a44de708be7a67c3abe0b93d5c380d51a0f12cdcb220805f3e7965e5c676bc",
+                    "size_bytes": 274757
+                },
+                {
+                    "module": "local_output_diff_corpus_v0_8_2",
+                    "repository_relative_path": "local_output_diff_corpus_v0_8_2.py",
+                    "sha256": "eacf6479384907e53cf4b2f29b2fdcb8415dae706ed49a2b23ab248ab1e956d6",
+                    "size_bytes": 53418
+                },
+                {
+                    "module": "role_stratified_uptake_canary_v0_8_3",
+                    "repository_relative_path": "role_stratified_uptake_canary_v0_8_3.py",
+                    "sha256": "363a07e353acb39047c6927fd308415ee81e26a53379e03db8cdf23117fc1dd4",
+                    "size_bytes": 36430
+                },
+                {
+                    "module": "role_stratified_uptake_integrity_v0_8_3_1",
+                    "repository_relative_path": "role_stratified_uptake_integrity_v0_8_3_1.py",
+                    "sha256": "7c4f9c626dadaa5f6edfa36601002a721bf599726341f505c896f3bc6e7a5d33",
+                    "size_bytes": 10952
+                },
+                {
+                    "module": "role_stratified_uptake_integrity_v0_8_3_2",
+                    "repository_relative_path": "role_stratified_uptake_integrity_v0_8_3_2.py",
+                    "sha256": "476f87c5cffde20d193ff4622ea843a585bc5cfff28c2d7404bb70f023ac3f7b",
+                    "size_bytes": 14727
+                },
+                {
+                    "module": "role_stratified_uptake_integrity_v0_8_3_3",
+                    "repository_relative_path": "role_stratified_uptake_integrity_v0_8_3_3.py",
+                    "sha256": "1e005444065567f50a3052136b72e9c5848a145249bfe143ec4025225b9dd833",
+                    "size_bytes": 18349
+                },
+                {
+                    "module": "role_stratified_uptake_integrity_v0_8_3_4",
+                    "repository_relative_path": "role_stratified_uptake_integrity_v0_8_3_4.py",
+                    "sha256": "8ae407d9e9ded02ddd614079bea5a466283a5ccfb420ec9a3f9f277221db6cee",
+                    "size_bytes": 13289
+                },
+                {
+                    "module": "role_stratified_uptake_integrity_v0_8_3_5",
+                    "repository_relative_path": "role_stratified_uptake_integrity_v0_8_3_5.py",
+                    "sha256": "fe971d14be2fb02a60fcd32059de1a6534e19fb3eaa13472660e0df071548ed7",
+                    "size_bytes": 32912
+                },
+                {
+                    "module": "role_stratified_uptake_integrity_v0_8_3_6",
+                    "repository_relative_path": "role_stratified_uptake_integrity_v0_8_3_6.py",
+                    "sha256": "f36216d449f1775cd3f904e753d30659168fe5c3872c8fb82645895966f45af8",
+                    "size_bytes": 28558
+                }
+            ],
+            "schema_version": "ebrt-complete-module-summary-v0.8.3.6"
+        },
+        "schema_version": "ebrt-complete-runtime-code-receipt-v0.8.3.6"
+    },
+    "runtime_code_fingerprint_sha256": "8e02537c169cffc5d81b9bc3fa861cd246deb69627e4622e69aca1a92e41fea9",
+    "schema_version": "ebrt-role-uptake-source-lock-v0.8.3.7",
+    "source_execution": {
+        "adjacent_pycache_ignored": true,
+        "bytecode_writes_disabled": true,
+        "cached_bytecode_file_count": 0,
+        "fingerprint_sha256": "a54d597481a80d69ecb7588122bee204b6a6c03316715371a93e2a3e43252599",
+        "fresh_empty_pycache_prefix": true,
+        "module_count": 3050,
+        "module_execution_fingerprint_sha256": "6b2e3e20752384908b9ff43862e18d776d2aab0c44f07ed04a291c71685d762b",
+        "native_extension_module_count": 189,
+        "python_source_module_count": 2861,
+        "schema_version": "ebrt-source-execution-receipt-v0.8.3.7"
+    },
+    "source_execution_fingerprint_sha256": "a54d597481a80d69ecb7588122bee204b6a6c03316715371a93e2a3e43252599",
+    "status": "LOCKED_BEFORE_PROVIDER_CALLS",
+    "wrapper_sha256": "fe7945f7b21bc17a6402d5a853dcb2e3138f7a6fd5287e4927aca35ef4c2fad1"
+}

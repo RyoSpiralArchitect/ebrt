@@ -24,7 +24,9 @@ The current release has four executable stages:
 - **v0.8.1:** an optional, non-invasive state oscilloscope for faster local
   algorithm iteration;
 - **v0.8.2:** a four-model local output-diff development corpus that separates
-  algorithm-diagnostic cells from adapter/capability failures.
+  algorithm-diagnostic cells from adapter/capability failures;
+- **v0.8.3:** a fresh role-stratified uptake canary that separates deterministic
+  compiler coverage from the local generator's observed support retention.
 
 The generator is an adapter, not the definition of EBRT. The bundled reference
 backend is a local MLX model. Hosted APIs and other local runtimes can meet the
@@ -201,6 +203,174 @@ losses.
 See the [R&D note](docs/RND_LOCAL_OUTPUT_DIFF_CORPUS_V0_8_2.md) and the
 [generated report](artifacts/local_output_diff_corpus_v0_8_2/r01/report.md).
 
+### 5. Role-stratified provider-uptake canary
+
+The v0.8.3 auxiliary runner compares direct full context, the existing scalar
+top-k actuator, and a role-stratified candidate on three fresh locked cases:
+
+```bash
+python3 role_stratified_uptake_canary_v0_8_3.py self-test
+
+python3 role_stratified_uptake_canary_v0_8_3.py verify \
+  artifacts/role_stratified_uptake_v0_8_3/r01/results.json \
+  --lock policy_lock_role_stratified_uptake_v0_8_3.json
+
+python3 role_stratified_uptake_integrity_v0_8_3_1.py \
+  --base-lock policy_lock_role_stratified_uptake_v0_8_3.json \
+  verify artifacts/role_stratified_uptake_v0_8_3/r02_integrity/results.json \
+  --lock policy_lock_role_stratified_uptake_v0_8_3_1_r02.json
+
+python3 role_stratified_uptake_integrity_v0_8_3_2.py \
+  --base-lock policy_lock_role_stratified_uptake_v0_8_3.json \
+  --prior-lock policy_lock_role_stratified_uptake_v0_8_3_1_r02.json \
+  verify artifacts/role_stratified_uptake_v0_8_3/r03_snapshot_bound/results.json \
+  --lock policy_lock_role_stratified_uptake_v0_8_3_2_r03.json
+
+python3 role_stratified_uptake_integrity_v0_8_3_3.py \
+  --base-lock policy_lock_role_stratified_uptake_v0_8_3.json \
+  --source-lock policy_lock_role_stratified_uptake_v0_8_3_1_r02.json \
+  --snapshot-lock policy_lock_role_stratified_uptake_v0_8_3_2_r03.json \
+  verify artifacts/role_stratified_uptake_v0_8_3/r04_loader_bound/results.json \
+  --lock policy_lock_role_stratified_uptake_v0_8_3_3_r04.json
+
+python3 role_stratified_uptake_integrity_v0_8_3_4.py \
+  --base-lock policy_lock_role_stratified_uptake_v0_8_3.json \
+  --source-lock policy_lock_role_stratified_uptake_v0_8_3_1_r02.json \
+  --snapshot-lock policy_lock_role_stratified_uptake_v0_8_3_2_r03.json \
+  --loader-lock policy_lock_role_stratified_uptake_v0_8_3_3_r04.json \
+  verify artifacts/role_stratified_uptake_v0_8_3/r05_runtime_bound/results.json \
+  --lock policy_lock_role_stratified_uptake_v0_8_3_4_r05.json
+
+python3 role_stratified_uptake_integrity_v0_8_3_5.py \
+  --base-lock policy_lock_role_stratified_uptake_v0_8_3.json \
+  --source-lock policy_lock_role_stratified_uptake_v0_8_3_1_r02.json \
+  --snapshot-lock policy_lock_role_stratified_uptake_v0_8_3_2_r03.json \
+  --loader-lock policy_lock_role_stratified_uptake_v0_8_3_3_r04.json \
+  --runtime-lock policy_lock_role_stratified_uptake_v0_8_3_4_r05.json \
+  verify artifacts/role_stratified_uptake_v0_8_3/r06_immutable_runtime_code/results.json \
+  --lock policy_lock_role_stratified_uptake_v0_8_3_5_r06.json
+
+python3 role_stratified_uptake_integrity_v0_8_3_6.py \
+  --base-lock policy_lock_role_stratified_uptake_v0_8_3.json \
+  --source-lock policy_lock_role_stratified_uptake_v0_8_3_1_r02.json \
+  --snapshot-lock policy_lock_role_stratified_uptake_v0_8_3_2_r03.json \
+  --loader-lock policy_lock_role_stratified_uptake_v0_8_3_3_r04.json \
+  --runtime-lock policy_lock_role_stratified_uptake_v0_8_3_4_r05.json \
+  --immutable-lock policy_lock_role_stratified_uptake_v0_8_3_5_r06.json \
+  verify artifacts/role_stratified_uptake_v0_8_3/r07_complete_integrity/results.json \
+  --lock policy_lock_role_stratified_uptake_v0_8_3_6_r07.json
+
+python3 role_stratified_uptake_integrity_v0_8_3_7.py \
+  --base-lock policy_lock_role_stratified_uptake_v0_8_3.json \
+  --source-lock policy_lock_role_stratified_uptake_v0_8_3_1_r02.json \
+  --snapshot-lock policy_lock_role_stratified_uptake_v0_8_3_2_r03.json \
+  --loader-lock policy_lock_role_stratified_uptake_v0_8_3_3_r04.json \
+  --runtime-lock policy_lock_role_stratified_uptake_v0_8_3_4_r05.json \
+  --immutable-lock policy_lock_role_stratified_uptake_v0_8_3_5_r06.json \
+  --complete-lock policy_lock_role_stratified_uptake_v0_8_3_6_r07.json \
+  verify artifacts/role_stratified_uptake_v0_8_3/r08_verified_source/results.json \
+  --lock policy_lock_role_stratified_uptake_v0_8_3_7_r08.json
+
+python3 -E -S role_stratified_uptake_integrity_v0_8_3_8.py \
+  --base-lock policy_lock_role_stratified_uptake_v0_8_3.json \
+  --source-lock policy_lock_role_stratified_uptake_v0_8_3_1_r02.json \
+  --snapshot-lock policy_lock_role_stratified_uptake_v0_8_3_2_r03.json \
+  --loader-lock policy_lock_role_stratified_uptake_v0_8_3_3_r04.json \
+  --runtime-lock policy_lock_role_stratified_uptake_v0_8_3_4_r05.json \
+  --immutable-lock policy_lock_role_stratified_uptake_v0_8_3_5_r06.json \
+  --complete-lock policy_lock_role_stratified_uptake_v0_8_3_6_r07.json \
+  --verified-source-lock policy_lock_role_stratified_uptake_v0_8_3_7_r08.json \
+  verify artifacts/role_stratified_uptake_v0_8_3/r09_startup_isolated/results.json \
+  --lock policy_lock_role_stratified_uptake_v0_8_3_8_r09.json
+
+python3 -E -S role_stratified_uptake_integrity_v0_8_3_12.py \
+  --base-lock policy_lock_role_stratified_uptake_v0_8_3.json \
+  --source-lock policy_lock_role_stratified_uptake_v0_8_3_1_r02.json \
+  --snapshot-lock policy_lock_role_stratified_uptake_v0_8_3_2_r03.json \
+  --loader-lock policy_lock_role_stratified_uptake_v0_8_3_3_r04.json \
+  --runtime-lock policy_lock_role_stratified_uptake_v0_8_3_4_r05.json \
+  --immutable-lock policy_lock_role_stratified_uptake_v0_8_3_5_r06.json \
+  --complete-lock policy_lock_role_stratified_uptake_v0_8_3_6_r07.json \
+  --verified-source-lock policy_lock_role_stratified_uptake_v0_8_3_7_r08.json \
+  --startup-lock policy_lock_role_stratified_uptake_v0_8_3_8_r09.json \
+  --stdlib-lock policy_lock_role_stratified_uptake_v0_8_3_9_r10.json \
+  --imported-lock policy_lock_role_stratified_uptake_v0_8_3_10_r11.json \
+  --tree-lock policy_lock_role_stratified_uptake_v0_8_3_11_r12.json \
+  verify artifacts/role_stratified_uptake_v0_8_3/r13_framework_bound/results.json \
+  --lock policy_lock_role_stratified_uptake_v0_8_3_12_r13.json
+```
+
+The deterministic compiler coverage floor repaired both intentionally exposed
+top-k omissions: top-k covered all public required roles in `1/3` cases and the
+candidate in `3/3`. That repair did not close the provider boundary. Both
+controlled arms retained their compiled obligations in `2/3` outputs and both
+passed the strict semantic contract in `2/3` cases. In the numeric-schema case,
+the candidate changed the generated answer from `60_UNITS` to the expected
+`6_UNITS`, but omitted correction provenance `R6`, so its strict contract still
+failed. This is a useful mixed development result, not a superiority claim.
+
+See the [v0.8.3 R&D note](docs/RND_ROLE_STRATIFIED_UPTAKE_CANARY_V0_8_3.md) and
+the [framework-bound r13 artifact](artifacts/role_stratified_uptake_v0_8_3/r13_framework_bound/results.json).
+The original r01 artifact is retained because review found that its pre-call
+lock did not bind imported implementation files or reject arbitrary explicit
+model identities. A second review found that r02 still did not bind the exact
+expected blob set at the named cache revision. The r03 integrity replication
+locks every snapshot-relative file, byte size, and content-addressed blob hash
+before calls and checks the same manifest afterward. A third review found a
+remaining cache-symlink TOCTOU window during model loading. r04 gives MLX only
+a private APFS copy-on-write tree of the exact locked regular files, with
+source-distinct inodes and pre/post content verification. All nine public
+outputs are byte-identical across r01/r02/r03/r04. A fourth review found that
+the open-ended `mlx-lm` requirement did not bind generation-runtime semantics.
+r05 locks the exact Python/platform envelope and local-model distribution
+versions before calls and checks them again afterward. Outputs remain
+byte-identical across r01/r02/r03/r04/r05. A fifth review found that owner-mode
+bits remained reversible and version metadata did not bind imported code. r06
+loads from an unlinked read-only disk image and binds aggregate installed-file
+content plus actual imported-module origins and hashes. Outputs remain
+byte-identical across r01/r02/r03/r04/r05/r06. A sixth review found that r06
+still omitted distributions reached indirectly during execution and did not
+compare its portable mount receipt to the exact lock-derived model
+fingerprints. r07 binds every imported file-backed non-standard-library module
+to full owning-distribution content or repository source and verifies both the
+staged-manifest and clone fingerprints. Outputs remain byte-identical across
+r01-r07. A seventh review found that timestamp-valid generated bytecode could
+still diverge from the locked source. r08 re-executes before repository or
+site-package imports under a fresh empty `pycache_prefix` with bytecode writes
+disabled, forcing Python modules through verified source while preserving
+native-extension content receipts. Outputs remain byte-identical across
+r01-r08. An eighth review found that the outer interpreter could still process
+environment paths, `.pth`, `sitecustomize`, or `usercustomize` before the r08
+bootstrap ran. r09 requires both outer and child interpreters to start with
+`-E -S`, manually admits only the two locked site-package roots after startup,
+and retains the empty-cache source policy. Its portable verifier passes 12/12
+checks, and all r01-r09 public outputs remain byte-identical (`9/9`). None of
+the integrity successors is fresh evidence. A ninth review found that r09 did
+not bind the CPython executable or standard-library code. r10 added those
+receipts but failed before provider calls because it re-entered r09's exact
+module-set gate; r11 called the sealed base runner directly, completed nine
+calls, then failed its own post-call gate when five legitimate stdlib modules
+were lazily imported. Both failures are retained. r12 instead locks the entire
+1,839-file stdlib Python/native code tree and checks imported-module coverage
+against that fixed universe before and after generation. The imported set grew
+from 392 to 397 modules, all covered; its portable verifier passes 16/16
+checks. All complete r01-r09/r12 public outputs remain byte-identical (`9/9`).
+An additional review found that the 119KB launcher was not the 13.55MB macOS
+Python framework implementation. r13 adds that framework binary to the
+pre/post lock; its portable verifier also passes 16/16 checks. All complete
+r01-r09/r12/r13 public outputs remain byte-identical (`9/9`). None of these
+integrity successors is fresh evidence.
+
+The final review boundary is intentionally host-trusting. The r13 framework
+receipt binds the configured on-disk framework file; it does not prove which
+image dyld mapped, reject loader overrides, or attest other shared libraries.
+Likewise, the source receipts bind cache-bypassed on-disk source before and
+after the run, not the in-memory code objects against a concurrent same-user
+file-swap attack. Interpret `cpython_framework_library_exact` and
+`nonstdlib_source_execution_exact` as receipt-level checks inside a quiescent,
+trusted local host. Loaded-image identity, hostile same-user TOCTOU, and full
+host attestation are `NOT_ASSESSED`.
+
 ## What the core owns
 
 The central file is [`ebrt_core.py`](ebrt_core.py). It contains the complete
@@ -375,14 +545,39 @@ are separate measurements. A `PASS` in one category does not silently imply a
 | --- | --- |
 | [`ebrt_core.py`](ebrt_core.py) | v0.7.1/v0.8 monolith and CLI |
 | [`local_output_diff_corpus_v0_8_2.py`](local_output_diff_corpus_v0_8_2.py) | matched local-model output corpus runner |
+| [`role_stratified_uptake_canary_v0_8_3.py`](role_stratified_uptake_canary_v0_8_3.py) | fresh three-arm compiler-coverage/provider-uptake canary |
+| [`policy_lock_role_stratified_uptake_v0_8_3.json`](policy_lock_role_stratified_uptake_v0_8_3.json) | pre-call v0.8.3 case, schedule, model, and source lock |
+| [`role_stratified_uptake_integrity_v0_8_3_1.py`](role_stratified_uptake_integrity_v0_8_3_1.py) | source- and model-bound integrity replication wrapper |
+| [`policy_lock_role_stratified_uptake_v0_8_3_1_r02.json`](policy_lock_role_stratified_uptake_v0_8_3_1_r02.json) | pre-call hashes for the wrapper and every imported local execution file |
+| [`role_stratified_uptake_integrity_v0_8_3_2.py`](role_stratified_uptake_integrity_v0_8_3_2.py) | exact expected model-snapshot manifest wrapper |
+| [`policy_lock_role_stratified_uptake_v0_8_3_2_r03.json`](policy_lock_role_stratified_uptake_v0_8_3_2_r03.json) | pre-call relative path, byte-size, and blob-hash manifest |
+| [`role_stratified_uptake_integrity_v0_8_3_3.py`](role_stratified_uptake_integrity_v0_8_3_3.py) | loader-bound private APFS staging wrapper |
+| [`policy_lock_role_stratified_uptake_v0_8_3_3_r04.json`](policy_lock_role_stratified_uptake_v0_8_3_3_r04.json) | pre-call loader-path and staged-byte policy lock |
+| [`role_stratified_uptake_integrity_v0_8_3_4.py`](role_stratified_uptake_integrity_v0_8_3_4.py) | exact Python/platform/distribution runtime wrapper |
+| [`policy_lock_role_stratified_uptake_v0_8_3_4_r05.json`](policy_lock_role_stratified_uptake_v0_8_3_4_r05.json) | pre-call exact local runtime-version lock |
+| [`role_stratified_uptake_integrity_v0_8_3_5.py`](role_stratified_uptake_integrity_v0_8_3_5.py) | unlinked read-only model image and imported-code wrapper |
+| [`policy_lock_role_stratified_uptake_v0_8_3_5_r06.json`](policy_lock_role_stratified_uptake_v0_8_3_5_r06.json) | pre-call immutable-model/runtime-code lock |
+| [`role_stratified_uptake_integrity_v0_8_3_6.py`](role_stratified_uptake_integrity_v0_8_3_6.py) | complete imported-dependency and exact locked-mount verifier |
+| [`policy_lock_role_stratified_uptake_v0_8_3_6_r07.json`](policy_lock_role_stratified_uptake_v0_8_3_6_r07.json) | pre-call complete runtime-code and lock-derived mount receipt |
+| [`role_stratified_uptake_integrity_v0_8_3_7.py`](role_stratified_uptake_integrity_v0_8_3_7.py) | verified-source child bootstrap and bytecode-cache divergence guard |
+| [`policy_lock_role_stratified_uptake_v0_8_3_7_r08.json`](policy_lock_role_stratified_uptake_v0_8_3_7_r08.json) | pre-call source-execution policy and module receipt |
 | [`requirements-core.txt`](requirements-core.txt) | network-zero core dependency |
 | [`requirements-local-mlx.txt`](requirements-local-mlx.txt) | Apple-silicon local backend |
 | [`docs/EBRT_CORE_THESIS.md`](docs/EBRT_CORE_THESIS.md) | mathematical and conceptual anchor |
 | [`docs/MODEL_ADAPTER_PROTOCOL.md`](docs/MODEL_ADAPTER_PROTOCOL.md) | provider-neutral binding contract |
 | [`docs/ROADMAP_MODEL_INTERFACE_CORE.md`](docs/ROADMAP_MODEL_INTERFACE_CORE.md) | evidence-labelled path beyond v0.8 |
 | [`docs/RND_LOCAL_OUTPUT_DIFF_CORPUS_V0_8_2.md`](docs/RND_LOCAL_OUTPUT_DIFF_CORPUS_V0_8_2.md) | generated-output failure atlas and bounded next hypotheses |
+| [`docs/RND_ROLE_STRATIFIED_UPTAKE_CANARY_V0_8_3.md`](docs/RND_ROLE_STRATIFIED_UPTAKE_CANARY_V0_8_3.md) | role-coverage repair result and remaining provider-uptake boundary |
 | [`artifacts/model_interface_core_v0_7_1/local_mistral_e2e_r01.json`](artifacts/model_interface_core_v0_7_1/local_mistral_e2e_r01.json) | sanitized real local E2E receipt |
 | [`artifacts/local_output_diff_corpus_v0_8_2/r01/results.json`](artifacts/local_output_diff_corpus_v0_8_2/r01/results.json) | sealed four-model, 32-call development corpus |
+| [`artifacts/role_stratified_uptake_v0_8_3/r01/results.json`](artifacts/role_stratified_uptake_v0_8_3/r01/results.json) | sealed one-model, nine-call uptake canary |
+| [`artifacts/role_stratified_uptake_v0_8_3/r02_integrity/results.json`](artifacts/role_stratified_uptake_v0_8_3/r02_integrity/results.json) | preserved source-bound repetition; not fresh evidence |
+| [`artifacts/role_stratified_uptake_v0_8_3/r03_snapshot_bound/results.json`](artifacts/role_stratified_uptake_v0_8_3/r03_snapshot_bound/results.json) | preserved exact-snapshot-bound repetition; not fresh evidence |
+| [`artifacts/role_stratified_uptake_v0_8_3/r04_loader_bound/results.json`](artifacts/role_stratified_uptake_v0_8_3/r04_loader_bound/results.json) | preserved loader-bound repetition; not fresh evidence |
+| [`artifacts/role_stratified_uptake_v0_8_3/r05_runtime_bound/results.json`](artifacts/role_stratified_uptake_v0_8_3/r05_runtime_bound/results.json) | preserved runtime-version-bound repetition; not fresh evidence |
+| [`artifacts/role_stratified_uptake_v0_8_3/r06_immutable_runtime_code/results.json`](artifacts/role_stratified_uptake_v0_8_3/r06_immutable_runtime_code/results.json) | preserved immutable-model/runtime-code repetition; not fresh evidence |
+| [`artifacts/role_stratified_uptake_v0_8_3/r07_complete_integrity/results.json`](artifacts/role_stratified_uptake_v0_8_3/r07_complete_integrity/results.json) | preserved complete-integrity repetition; not fresh evidence |
+| [`artifacts/role_stratified_uptake_v0_8_3/r08_verified_source/results.json`](artifacts/role_stratified_uptake_v0_8_3/r08_verified_source/results.json) | canonical verified-source repetition; not fresh evidence |
 
 ### Frozen research history
 

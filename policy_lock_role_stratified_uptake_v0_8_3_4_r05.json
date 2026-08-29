@@ -1,0 +1,36 @@
+{
+  "claim_boundary": [
+    "This r05 execution repeats already observed cases only to bind exact declared runtime versions.",
+    "The repeated outputs are contaminated by known r01-r04 results and are not fresh scientific replication evidence.",
+    "Python, OS product version, architecture, and all declared local-model distribution versions are checked before and after calls.",
+    "The runtime receipt binds installed distribution versions; it does not claim a signed binary or hardware attestation.",
+    "All original v0.8.3 effect-attribution, one-model, public-role, and stop-gradient boundaries remain unchanged."
+  ],
+  "effect_attribution_status": "NOT_ASSESSED",
+  "fingerprint_sha256": "9fa5985e90d570db67cb099874da2204798f3730bba5f5eecb04da67c81bd5b0",
+  "loader_lock_fingerprint_sha256": "cfe7f5e33a559bd9f1e435e5c8cb12df04099d93ddca55897078ba01d0c665f7",
+  "replication_status": "INTEGRITY_REPLICATION_OVER_KNOWN_R01_R04_CASES",
+  "runtime": {
+    "distributions": {
+      "huggingface-hub": "0.36.2",
+      "mlx": "0.31.1",
+      "mlx-lm": "0.31.2",
+      "numpy": "2.4.4",
+      "safetensors": "0.7.0",
+      "tokenizers": "0.22.2",
+      "torch": "2.11.0",
+      "transformers": "4.57.6"
+    },
+    "fingerprint_sha256": "c55dca9c3357e088aae07e0c00894ee7ad3f46a980f285c659965f2bff0054cc",
+    "machine": "arm64",
+    "macos_version": "26.2",
+    "python_implementation": "CPython",
+    "python_version": "3.13.13",
+    "schema_version": "ebrt-local-runtime-receipt-v0.8.3.4",
+    "system": "Darwin"
+  },
+  "runtime_fingerprint_sha256": "c55dca9c3357e088aae07e0c00894ee7ad3f46a980f285c659965f2bff0054cc",
+  "schema_version": "ebrt-role-uptake-runtime-lock-v0.8.3.4",
+  "status": "LOCKED_BEFORE_PROVIDER_CALLS",
+  "wrapper_sha256": "8ae407d9e9ded02ddd614079bea5a466283a5ccfb420ec9a3f9f277221db6cee"
+}

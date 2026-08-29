@@ -1,0 +1,67 @@
+{
+  "base_lock_fingerprint_sha256": "25ff025738aaa418b698f4bb4e915fabd986442d7de4130cf19f5fe2ce2faccc",
+  "claim_boundary": [
+    "This r03 execution repeats the already observed r01/r02 cases only to bind the exact expected model snapshot manifest.",
+    "The repeated outputs are contaminated by known prior results and are not fresh scientific replication evidence.",
+    "Every admitted snapshot file must resolve to the exact pre-locked content-addressed blob and byte size.",
+    "The exact snapshot manifest is checked immediately before and after the nine provider calls.",
+    "All original v0.8.3 effect-attribution, one-model, public-role, and stop-gradient boundaries remain unchanged."
+  ],
+  "effect_attribution_status": "NOT_ASSESSED",
+  "fingerprint_sha256": "586ff867c02ece567d0aa64270cd56695b6ca0e21f3f4d6fe8b71a932b88af20",
+  "prior_lock_fingerprint_sha256": "fd18fab3e432db40ae3fc971d45c866e1b7e2dc95c50933e39729b4bc5b1708b",
+  "replication_status": "INTEGRITY_REPLICATION_OVER_KNOWN_R01_R02_CASES",
+  "schema_version": "ebrt-role-uptake-snapshot-lock-v0.8.3.2",
+  "snapshot_manifest": {
+    "files": [
+      {
+        "address_algorithm": "git_blob_sha1",
+        "blob_address": "68b84bf6877ff51d722ec9f076527ab29243d567",
+        "relative_path": "config.json",
+        "size_bytes": 721
+      },
+      {
+        "address_algorithm": "sha256",
+        "blob_address": "d7182d886f93a9efa73d6d556ee33ffe839a4e09e15965eeef46f295ab5b503d",
+        "relative_path": "model.safetensors",
+        "size_bytes": 4077480215
+      },
+      {
+        "address_algorithm": "git_blob_sha1",
+        "blob_address": "807607fbe7e64033bb4dc8114430d8ddbfae4fff",
+        "relative_path": "model.safetensors.index.json",
+        "size_bytes": 52381
+      },
+      {
+        "address_algorithm": "git_blob_sha1",
+        "blob_address": "451134b2ddc2e78555d1e857518c54b4bdc2e87d",
+        "relative_path": "special_tokens_map.json",
+        "size_bytes": 414
+      },
+      {
+        "address_algorithm": "git_blob_sha1",
+        "blob_address": "8d7d23136b474a3df1182ed829db19984e295ee7",
+        "relative_path": "tokenizer.json",
+        "size_bytes": 1961548
+      },
+      {
+        "address_algorithm": "sha256",
+        "blob_address": "37f00374dea48658ee8f5d0f21895b9bc55cb0103939607c8185bfd1c6ca1f89",
+        "relative_path": "tokenizer.model",
+        "size_bytes": 587404
+      },
+      {
+        "address_algorithm": "git_blob_sha1",
+        "blob_address": "dd6391393bf053f6ae562e7ec833bc94d4670680",
+        "relative_path": "tokenizer_config.json",
+        "size_bytes": 138039
+      }
+    ],
+    "fingerprint_sha256": "429e669ee9a248a3d40706899853f7049194f2fc8ef2042788e71aa0f5883892",
+    "model_id": "mlx-community/Mistral-7B-Instruct-v0.3-4bit@a4b8f870474b0eb527f466a03fbc187830d271f5",
+    "schema_version": "ebrt-exact-model-snapshot-manifest-v0.8.3.2"
+  },
+  "snapshot_manifest_fingerprint_sha256": "429e669ee9a248a3d40706899853f7049194f2fc8ef2042788e71aa0f5883892",
+  "status": "LOCKED_BEFORE_PROVIDER_CALLS",
+  "wrapper_sha256": "476f87c5cffde20d193ff4622ea843a585bc5cfff28c2d7404bb70f023ac3f7b"
+}

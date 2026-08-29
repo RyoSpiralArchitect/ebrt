@@ -122,15 +122,70 @@ Status: **IMPLEMENTED + VERIFIED; DEVELOPMENT ONLY**
 
 ### v0.8.3 — Role-stratified provider-uptake canary
 
-Status: **RESEARCH TARGET**
+Status: **IMPLEMENTED + VERIFIED; MIXED DEVELOPMENT RESULT**
 
-- Test whether a public-role coverage floor prevents top-k credit from dropping
-  required dependency roles.
-- Preserve a separate receipt for compiled evidence selection and actual
-  provider uptake.
-- Add fresh, pre-locked cases with an unsaturated answer surface.
-- Begin with one instruction-capable model; expand only after a second model's
-  adapter-readiness canary passes.
+- A pre-call lock fixes three fresh cases, one Mistral snapshot, a 48-token
+  ceiling, and a cyclic three-arm schedule with nine terminal calls.
+- The public-role coverage floor closes deterministic compiler coverage from
+  `1/3` for scalar top-k to `3/3` for the candidate.
+- Provider uptake remains `2/3` for both controlled arms, demonstrating that
+  complete compilation does not guarantee generated support retention.
+- Strict semantic passes remain `2/3` for direct, top-k, and role-stratified
+  arms. One candidate output changes `60_UNITS` to the expected `6_UNITS`, but
+  omits correction provenance and therefore remains a strict failure.
+- The already-covered control case has byte-identical provider prompts and
+  outputs across top-k and role-stratified arms.
+- Review found that r01 did not bind imported implementation files or require
+  a derivable cache identity for the locked model. A pre-call-locked r02
+  integrity repetition closes both gaps and reproduces all nine public outputs
+  byte-identically. A second review found that revision/path identity did not
+  bind the expected blob set. r03 locks all seven snapshot-relative paths,
+  sizes, and content-addressed blob hashes and checks them before and after the
+  calls. A third review found that this still left a cache-symlink TOCTOU window
+  while MLX loaded the model. r04 passes MLX only a private APFS copy-on-write
+  tree of the exact locked regular files, requires source-distinct inodes, and
+  rehashes the staged tree after all calls. All r01/r02/r03/r04 public outputs
+  are byte-identical. A fourth review found that the permissive `mlx-lm`
+  requirement still left execution semantics unbound. r05 fixes and checks
+  the exact Python/platform and local-model distribution versions before and
+  after calls. A fifth review found that r04's owner-mode bits were reversible
+  and r05's version strings did not bind imported code. r06 loads the exact
+  model from an unlinked read-only APFS image and binds installed distribution
+  content plus actual imported-module origins and hashes. A sixth review found
+  that r06's selected distribution set omitted indirectly imported dependency
+  owners and that its portable mount check did not compare against the exact
+  lock-derived snapshot fingerprints. r07 binds 3,039 imported file-backed
+  non-standard-library modules to 42 full owning-distribution receipts and 10
+  repository modules to source receipts, then requires both staged-manifest
+  and clone fingerprints to equal the lock. All r01-r07 public outputs are
+  byte-identical. A seventh review found that a timestamp-valid generated
+  `.pyc` could diverge from its locked source while still being executed. r08
+  launches the admitted run before non-standard-library imports with a fresh
+  empty `pycache_prefix` and bytecode writes disabled, forcing 2,861 Python
+  modules through verified source while retaining content receipts for 189
+  native extensions. An eighth review found that automatic outer-interpreter
+  site initialization could still run before that bootstrap. r09 requires
+  `-E -S` for both outer and child interpreters, manually admits only the two
+  locked package roots, and bypasses `.pth`, `sitecustomize`, and
+  `usercustomize`. A ninth review found that CPython and stdlib code remained
+  outside the receipt. r10 then failed before calls at a historical module-set
+  gate; r11 completed nine calls but failed after a legitimate 392-to-397
+  stdlib lazy-import expansion. Both failures are preserved. r12 locks the
+  complete 1,839-file stdlib Python/native code tree plus the interpreter, then
+  verifies the varying imported sets against that stable universe. Its
+  portable verifier passes 16/16 checks. All complete r01-r09/r12 public
+  outputs are byte-identical. A tenth review distinguished the small CPython
+  launcher from the macOS framework implementation. r13 additionally locks the
+  13.55MB `Python.framework/Versions/3.13/Python` binary and passes 16/16
+  portable checks. All complete r01-r09/r12/r13 public outputs are
+  byte-identical; no integrity repetition is counted as fresh evidence.
+- Final review localized the remaining integrity boundary to hostile-host
+  attestation: dyld loaded-image overrides and concurrent same-user source
+  replacement are not excluded by configured-file and pre/post source hashes.
+  They are recorded as `NOT_ASSESSED`; this lane stops at a quiescent, trusted
+  local host instead of expanding into OS-level isolation.
+- No gradient-specific, causal-superiority, general-reasoning, or cross-model
+  claim is admitted from this canary.
 
 ### v0.8.4 — Hosted-provider adapters
 

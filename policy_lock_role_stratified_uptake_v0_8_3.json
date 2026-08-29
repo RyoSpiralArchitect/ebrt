@@ -1,0 +1,95 @@
+{
+  "cases": [
+    {
+      "case_id": "parcel-dock-policy-revision",
+      "contract_fingerprint_sha256": "ef5802e32284c49561f144018ff28b243b970ba6f3b065441f2f90a04729a3b8",
+      "role_selection": [
+        "R6",
+        "R4",
+        "R2"
+      ],
+      "task_fingerprint_sha256": "a12f0e47ca675904fe9c515406525cfd4f4e647feb3d017895b28e591049aae3",
+      "top_k_selection": [
+        "R6",
+        "R4",
+        "R1"
+      ]
+    },
+    {
+      "case_id": "scaled-reading-schema-revision",
+      "contract_fingerprint_sha256": "0042cf86ec2dc5a9a85461591a007bbe81d24e160f29169401ad648a227edf16",
+      "role_selection": [
+        "R6",
+        "R2",
+        "R4"
+      ],
+      "task_fingerprint_sha256": "9636c7bc020d38aa6ae6d02135612844e87a9a4c9defcab6fa4337e2e461d276",
+      "top_k_selection": [
+        "R6",
+        "R1",
+        "R2"
+      ]
+    },
+    {
+      "case_id": "grant-eligibility-policy-revision",
+      "contract_fingerprint_sha256": "73da0a33ee9e20a63d7599da9cb503b7a6768e308a50d23196066a802cb65a1f",
+      "role_selection": [
+        "R6",
+        "R4",
+        "R2"
+      ],
+      "task_fingerprint_sha256": "090b7a090e2e69738ef104b0ff3bd05ce504c782bef875dec68d80ff574e6b1c",
+      "top_k_selection": [
+        "R6",
+        "R4",
+        "R2"
+      ]
+    }
+  ],
+  "claim_boundary": [
+    "This is a three-case development canary over one instruction-capable local model snapshot.",
+    "Public required-support roles are caller-supplied scaffold metadata, not dependencies discovered autonomously by EBRT.",
+    "Compiler coverage and provider uptake are separate receipts; one does not imply the other.",
+    "Each arm differs in its model-visible request bundle, so output differences are not attributable to gradients alone.",
+    "Semantic contracts are fixed before provider calls and remain outside all model-visible prompts.",
+    "No native activations are captured, and no general reasoning-improvement or cross-model claim is assessed."
+  ],
+  "effect_attribution_status": "NOT_ASSESSED",
+  "execution_policy": {
+    "automatic_retry": false,
+    "calls_per_cell": {
+      "direct_full_context": 1,
+      "ebrt_role_stratified": 1,
+      "ebrt_top_k": 1
+    },
+    "max_tokens_per_arm": 48,
+    "native_state_capture": "DISABLED",
+    "prompt_rendering_mode": "chat_template",
+    "schedule": [
+      [
+        "direct_full_context",
+        "ebrt_top_k",
+        "ebrt_role_stratified"
+      ],
+      [
+        "ebrt_top_k",
+        "ebrt_role_stratified",
+        "direct_full_context"
+      ],
+      [
+        "ebrt_role_stratified",
+        "direct_full_context",
+        "ebrt_top_k"
+      ]
+    ],
+    "seed": 0,
+    "temperature": 0.0
+  },
+  "fingerprint_sha256": "25ff025738aaa418b698f4bb4e915fabd986442d7de4130cf19f5fe2ce2faccc",
+  "generalization_status": "ONE_MODEL_DEVELOPMENT_CANARY_ONLY",
+  "model_id": "mlx-community/Mistral-7B-Instruct-v0.3-4bit@a4b8f870474b0eb527f466a03fbc187830d271f5",
+  "runner_sha256": "363a07e353acb39047c6927fd308415ee81e26a53379e03db8cdf23117fc1dd4",
+  "schema_version": "ebrt-role-stratified-uptake-lock-v0.8.3",
+  "source_main_commit": "2961feb6aaa2222bb56a62cb04274587487f4a17",
+  "status": "LOCKED_BEFORE_PROVIDER_CALLS"
+}

@@ -1,0 +1,16 @@
+{
+  "artifact_written": false,
+  "claim_boundary": [
+    "This is a preserved integrity-gate failure, not scientific evidence and not a provider-quality failure.",
+    "No output from this failed terminal is admitted into the canonical canary result.",
+    "The r11 lock and wrapper remain immutable; the module-set repair proceeds only in a successor namespace."
+  ],
+  "error_code": "ROLE_STDLIB_R11_POSTCALL_STATE_MISMATCH",
+  "failure_boundary": "The sealed base runner completed its nine local generations, then the exact imported-stdlib module-set comparison rejected post-call lazy-import drift before any success artifact could be written.",
+  "fingerprint_sha256": "260789c95152575395eb1075913c37e2f7ddf9402db1925dd35f0f47456b92bf",
+  "policy_lock_fingerprint_sha256": "c189031e749ce30e88fafebeb3094bacb0f8004d68d68d7b3912823177ed2ac9",
+  "pre_call_commit": "0ef1062",
+  "provider_calls": 9,
+  "schema_version": "ebrt-role-uptake-stdlib-postcall-failure-v0.8.3.10",
+  "status": "FAILED_AFTER_NINE_PROVIDER_CALLS_BEFORE_ARTIFACT_WRITE"
+}

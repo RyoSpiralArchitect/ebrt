@@ -1,0 +1,56 @@
+{
+  "base_lock_fingerprint_sha256": "25ff025738aaa418b698f4bb4e915fabd986442d7de4130cf19f5fe2ce2faccc",
+  "claim_boundary": [
+    "This r02 execution repeats the already observed r01 cases only to repair source and model attribution binding.",
+    "The repeated outputs are contaminated by the known r01 result and are not fresh scientific replication evidence.",
+    "The model gate admits only the content-address-verified locked Hugging Face cache snapshot.",
+    "The lock binds this wrapper and every repository-local implementation file imported by the execution path.",
+    "All v0.8.3 effect-attribution, one-model, public-role, and stop-gradient boundaries remain unchanged."
+  ],
+  "dependency_sha256": {
+    "ebrt_core.py": "b4a44de708be7a67c3abe0b93d5c380d51a0f12cdcb220805f3e7965e5c676bc",
+    "local_output_diff_corpus_v0_8_2.py": "eacf6479384907e53cf4b2f29b2fdcb8415dae706ed49a2b23ab248ab1e956d6",
+    "role_stratified_uptake_canary_v0_8_3.py": "363a07e353acb39047c6927fd308415ee81e26a53379e03db8cdf23117fc1dd4"
+  },
+  "effect_attribution_status": "NOT_ASSESSED",
+  "execution_geometry": {
+    "automatic_retry": false,
+    "calls_per_cell": {
+      "direct_full_context": 1,
+      "ebrt_role_stratified": 1,
+      "ebrt_top_k": 1
+    },
+    "max_tokens_per_arm": 48,
+    "native_state_capture": "DISABLED",
+    "prompt_rendering_mode": "chat_template",
+    "schedule": [
+      [
+        "direct_full_context",
+        "ebrt_top_k",
+        "ebrt_role_stratified"
+      ],
+      [
+        "ebrt_top_k",
+        "ebrt_role_stratified",
+        "direct_full_context"
+      ],
+      [
+        "ebrt_role_stratified",
+        "direct_full_context",
+        "ebrt_top_k"
+      ]
+    ],
+    "seed": 0,
+    "temperature": 0.0
+  },
+  "fingerprint_sha256": "fd18fab3e432db40ae3fc971d45c866e1b7e2dc95c50933e39729b4bc5b1708b",
+  "model_binding": {
+    "admission": "EXACT_HF_CACHE_SNAPSHOT_WITH_CONTENT_ADDRESSED_BLOBS",
+    "arbitrary_explicit_model_id": "REJECTED",
+    "model_id": "mlx-community/Mistral-7B-Instruct-v0.3-4bit@a4b8f870474b0eb527f466a03fbc187830d271f5"
+  },
+  "replication_status": "INTEGRITY_REPLICATION_OVER_KNOWN_R01_CASES",
+  "schema_version": "ebrt-role-uptake-integrity-lock-v0.8.3.1",
+  "status": "LOCKED_BEFORE_PROVIDER_CALLS",
+  "wrapper_sha256": "7c4f9c626dadaa5f6edfa36601002a721bf599726341f505c896f3bc6e7a5d33"
+}
