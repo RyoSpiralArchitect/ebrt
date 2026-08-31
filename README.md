@@ -436,6 +436,10 @@ python3 typed_public_state_regression_v0_8_5.py verify \
   --lock policy_lock_typed_public_state_v0_8_5.json
 ```
 
+The v0.8.5 live namespace is frozen. Its lock retains the exact execution
+runner hash; the current source adds a fail-closed portable-verifier check and
+will not authorize another live run under that historical lock.
+
 Both exact snapshots passed literal formatting and failed the task-shaped
 gate. Mistral retained the retired answer despite correct decision evidence;
 Qwen selected the corrected answer but omitted identity evidence from its
@@ -625,7 +629,7 @@ are separate measurements. A `PASS` in one category does not silently imply a
 | [`typed_revision_channel_canary_v0_8_4.py`](typed_revision_channel_canary_v0_8_4.py) | sealed two-model, four-arm typed revision-channel canary |
 | [`policy_lock_typed_revision_channel_v0_8_4.json`](policy_lock_typed_revision_channel_v0_8_4.json) | pre-call v0.8.4 cases, models, schedule, source, and invocation lock |
 | [`interpret_typed_revision_channel_v0_8_4.py`](interpret_typed_revision_channel_v0_8_4.py) | deterministic post-review contrast and denominator interpreter |
-| [`typed_public_state_regression_v0_8_5.py`](typed_public_state_regression_v0_8_5.py) | typed-state adapter, two-stage readiness gate, and contaminated regression runner |
+| [`typed_public_state_regression_v0_8_5.py`](typed_public_state_regression_v0_8_5.py) | frozen typed-state runner and fail-closed portable verifier for the two-stage readiness artifact |
 | [`policy_lock_typed_public_state_v0_8_5.json`](policy_lock_typed_public_state_v0_8_5.json) | pre-call v0.8.5 sources, exact models, readiness, cases, and invocation lock |
 | [`role_stratified_uptake_integrity_v0_8_3_1.py`](role_stratified_uptake_integrity_v0_8_3_1.py) | source- and model-bound integrity replication wrapper |
 | [`policy_lock_role_stratified_uptake_v0_8_3_1_r02.json`](policy_lock_role_stratified_uptake_v0_8_3_1_r02.json) | pre-call hashes for the wrapper and every imported local execution file |

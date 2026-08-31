@@ -59,6 +59,9 @@ PUBLIC_STATE_SCHEMA_VERSION = "ebrt-typed-public-state-v0.8.5"
 VERIFICATION_SCHEMA_VERSION = "ebrt-typed-public-state-verification-v0.8.5"
 SELF_TEST_SCHEMA_VERSION = "ebrt-typed-public-state-self-test-v0.8.5"
 BASE_MAIN_COMMIT = "b1221eccb9b7d1a73595893966ddec4d33d65d3d"
+SEALED_EXECUTION_RUNNER_SHA256 = (
+    "f01b0a758faacf2d1de5d925c82d003a5f5002ef2359b102ee9c7d6a209c6ac9"
+)
 
 ARM_DIRECT = "direct_typed_state"
 ARM_ROLE = "role_control_typed_state"
@@ -482,6 +485,8 @@ def _format_probe(runtime: SharedMLXRuntime) -> JsonObject:
         error_code = None
         status = "PASS" if raw_text == FORMAT_EXPECTED else "FAIL"
     except EBRTError as error:
+        if str(error) not in ADMITTED_GENERATION_ERROR_CODES:
+            raise EBRTError("V085_FORMAT_GENERATION_ERROR_UNADMITTED") from error
         raw_text = None
         error_code = str(error)
         status = "FAIL"
@@ -695,7 +700,10 @@ def lock_spec() -> JsonObject:
             "schema_version": LOCK_SCHEMA_VERSION,
             "status": "LOCKED_BEFORE_MODEL_CALLS",
             "base_main_commit": BASE_MAIN_COMMIT,
-            "runner_sha256": _runner_sha256(),
+            # v0.8.5-r01 was executed under these exact historical bytes.  The
+            # verifier may be hardened, but this frozen namespace must never
+            # silently authorize another live run under changed source.
+            "runner_sha256": SEALED_EXECUTION_RUNNER_SHA256,
             "dependency_sha256": _dependency_sha256(),
             "model_ids": list(MODEL_IDS),
             "readiness": {
@@ -768,6 +776,8 @@ def run_regression(
     model_paths: Sequence[str], lock: Mapping[str, Any]
 ) -> JsonObject:
     locked = validate_lock(lock)
+    if _runner_sha256() != locked["runner_sha256"]:
+        raise EBRTError("V085_EXECUTION_NAMESPACE_FROZEN")
     runtimes: dict[str, SharedMLXRuntime] = {}
     for model_path in model_paths:
         runtime = SharedMLXRuntime(
@@ -851,6 +861,47 @@ def _result_receipt_exact(
     return sealed
 
 
+def _format_probe_receipt_exact(value: Any) -> JsonObject:
+    sealed = _sealed_snapshot(value, "V085_FORMAT_PROBE")
+    try:
+        latency = _finite(sealed.get("latency_ms"), "V085_FORMAT_LATENCY")
+    except EBRTError as error:
+        raise EBRTError("V085_FORMAT_SHAPE_INVALID") from error
+    raw_text = sealed.get("raw_text")
+    error_code = sealed.get("error_code")
+    if (
+        set(sealed)
+        != {
+            "status",
+            "raw_text",
+            "error_code",
+            "prompt_sha256",
+            "expected_output_sha256",
+            "latency_ms",
+            "logical_calls",
+            "fingerprint_sha256",
+        }
+        or latency < 0
+        or sealed.get("logical_calls") != 1
+        or (raw_text is not None and type(raw_text) is not str)
+        or (raw_text is None and type(error_code) is not str)
+        or (raw_text is not None and error_code is not None)
+    ):
+        raise EBRTError("V085_FORMAT_SHAPE_INVALID")
+    if raw_text is None and error_code not in ADMITTED_GENERATION_ERROR_CODES:
+        raise EBRTError("V085_FORMAT_GENERATION_ERROR_UNADMITTED")
+    expected_status = "PASS" if raw_text == FORMAT_EXPECTED else "FAIL"
+    if (
+        sealed["status"] != expected_status
+        or sealed["prompt_sha256"]
+        != hashlib.sha256(FORMAT_PROMPT.encode()).hexdigest()
+        or sealed["expected_output_sha256"]
+        != hashlib.sha256(FORMAT_EXPECTED.encode()).hexdigest()
+    ):
+        raise EBRTError("V085_FORMAT_REPLAY_FAILED")
+    return sealed
+
+
 def verify_run(value: Any, lock: Mapping[str, Any]) -> JsonObject:
     locked = validate_lock(lock)
     snapshot = _sealed_snapshot(value, "V085_RUN")
@@ -912,47 +963,8 @@ def verify_run(value: Any, lock: Mapping[str, Any]) -> JsonObject:
             "fingerprint_sha256",
         } or readiness.get("logical_calls") != 2:
             raise EBRTError("V085_READINESS_SHAPE_INVALID")
-        format_probe = _sealed_snapshot(
-            readiness["format_ready"], "V085_FORMAT_PROBE"
-        )
-        try:
-            format_latency = _finite(
-                format_probe.get("latency_ms"), "V085_FORMAT_LATENCY"
-            )
-        except EBRTError as error:
-            raise EBRTError("V085_FORMAT_SHAPE_INVALID") from error
-        format_raw = format_probe.get("raw_text")
-        format_error = format_probe.get("error_code")
-        if (
-            set(format_probe)
-            != {
-                "status",
-                "raw_text",
-                "error_code",
-                "prompt_sha256",
-                "expected_output_sha256",
-                "latency_ms",
-                "logical_calls",
-                "fingerprint_sha256",
-            }
-            or format_latency < 0
-            or format_probe.get("logical_calls") != 1
-            or (format_raw is not None and type(format_raw) is not str)
-            or (format_raw is None and type(format_error) is not str)
-            or (format_raw is not None and format_error is not None)
-        ):
-            raise EBRTError("V085_FORMAT_SHAPE_INVALID")
-        expected_format_status = (
-            "PASS" if format_raw == FORMAT_EXPECTED else "FAIL"
-        )
-        if (
-            format_probe["status"] != expected_format_status
-            or format_probe["prompt_sha256"]
-            != hashlib.sha256(FORMAT_PROMPT.encode()).hexdigest()
-            or format_probe["expected_output_sha256"]
-            != hashlib.sha256(FORMAT_EXPECTED.encode()).hexdigest()
-        ):
-            raise EBRTError("V085_FORMAT_REPLAY_FAILED")
+        format_probe = _format_probe_receipt_exact(readiness["format_ready"])
+        expected_format_status = format_probe["status"]
         task_ready = _sealed_snapshot(
             readiness["task_channel_ready"], "V085_TASK_READINESS"
         )
@@ -1195,6 +1207,31 @@ def self_test() -> JsonObject:
         sort_keys=True,
         separators=(",", ":"),
     )
+
+    def format_error_receipt(error_code: str) -> JsonObject:
+        return _seal(
+            {
+                "status": "FAIL",
+                "raw_text": None,
+                "error_code": error_code,
+                "prompt_sha256": hashlib.sha256(FORMAT_PROMPT.encode()).hexdigest(),
+                "expected_output_sha256": hashlib.sha256(
+                    FORMAT_EXPECTED.encode()
+                ).hexdigest(),
+                "latency_ms": 0.0,
+                "logical_calls": 1,
+            }
+        )
+
+    admitted_format_error = sorted(ADMITTED_GENERATION_ERROR_CODES)[0]
+    try:
+        _format_probe_receipt_exact(format_error_receipt("INTERNAL_BUG"))
+    except EBRTError as error:
+        unknown_format_error_rejected = (
+            str(error) == "V085_FORMAT_GENERATION_ERROR_UNADMITTED"
+        )
+    else:
+        unknown_format_error_rejected = False
     checks = {
         "four_contaminated_cases_reused": len(cases) == 4,
         "heldout_readiness_case_is_distinct": build_readiness_case().task.task_id
@@ -1260,6 +1297,17 @@ def self_test() -> JsonObject:
             for arm_id in ARM_IDS
         ),
         "portable_verifier_passes": verification["status"] == "PASS",
+        "admitted_format_error_receipt_accepted": _format_probe_receipt_exact(
+            format_error_receipt(admitted_format_error)
+        )["error_code"]
+        == admitted_format_error,
+        "unknown_format_error_receipt_rejected": unknown_format_error_rejected,
+        "historical_execution_runner_hash_preserved": scripted_lock[
+            "runner_sha256"
+        ]
+        == SEALED_EXECUTION_RUNNER_SHA256,
+        "changed_runner_cannot_reexecute_frozen_namespace": _runner_sha256()
+        != SEALED_EXECUTION_RUNNER_SHA256,
         "native_state_capture_disabled": True,
     }
     if not all(checks.values()):

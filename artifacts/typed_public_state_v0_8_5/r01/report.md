@@ -90,6 +90,12 @@ this r01 artifact remains unchanged.
 - Portable verification fingerprint:
   `83759763795294197aaf726ac038f7c14c270e4bee369ccd312eee531132170b`
 
+Post-review verifier hardening rejects unknown format-probe generation-error
+codes. The lock continues to identify the exact r01 execution runner
+`f01b0a758faacf2d1de5d925c82d003a5f5002ef2359b102ee9c7d6a209c6ac9`;
+the hardened source can verify this artifact but cannot execute another live
+run under the frozen v0.8.5 namespace. Result bytes were not regenerated.
+
 ## Claim boundary
 
 - The four published v0.8.4 cases received zero calls in this block.

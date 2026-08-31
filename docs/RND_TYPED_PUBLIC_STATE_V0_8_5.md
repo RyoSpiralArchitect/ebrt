@@ -134,6 +134,14 @@ diagnostic adapter with zero regression cells, exact arm-shared output
 guidance, strict state-parser rejection cases, grade replay, and portable
 artifact verification.
 
+After r01, review found that a resealed format-probe receipt with
+`raw_text=null` could carry an arbitrary internal error code. The portable
+verifier now admits only the same generation-error allowlist used by task
+calls. The historical execution-runner hash remains unchanged in the pre-call
+lock, and the hardened source refuses another live run in this frozen v0.8.5
+namespace. Existing result bytes and their verification fingerprint remain
+unchanged; any new execution requires a successor namespace and fresh lock.
+
 ## Claim boundary
 
 - This is contaminated engineering regression, not fresh quality evidence.
