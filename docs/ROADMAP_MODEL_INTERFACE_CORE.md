@@ -1,7 +1,7 @@
 # EBRT Model-Interface Core Roadmap
 
 Status: **ACTIVE ENGINEERING AND RESEARCH PLAN**
-Current implementation: **v0.7.1 core + v0.8.4 typed-channel canary**
+Current implementation: **v0.7.1 core + v0.8.5 typed-state regression pre-call lock**
 
 This roadmap starts where the sealed v0.6 line ends. It does not rewrite those
 artifacts or reinterpret their results. The new line separates the backward
@@ -215,16 +215,18 @@ Status: **IMPLEMENTED + VERIFIED; POST-REVIEW INTERPRETATION NARROWED**
 
 ### v0.8.5 — Typed public-state adapter regression
 
-Status: **RESEARCH TARGET**
+Status: **IMPLEMENTED + PRE-CALL LOCKED; LOCAL RUN NOT YET EXECUTED**
 
-- Replace literal-copy admission with a held-out task-shaped channel-composition
-  probe and separate `FORMAT_READY` from `TASK_CHANNEL_READY`.
+- Separate literal `FORMAT_READY` from a held-out task-shaped
+  `TASK_CHANNEL_READY`; only adapters passing both enter regression cells.
 - Give decision support, revision provenance, and preserved constraints
-  distinct slots in one compact structured output object.
+  distinct pairwise-disjoint slots in one compact typed public state.
 - Keep the core objective, role-stratified program, one-call geometry, and
   portable receipts fixed.
-- Treat v0.8.4 cases as contaminated engineering regression material; require a
-  new sealed surface before making any fresh quality claim.
+- Give direct and role-controlled arms the exact same output guidance, closing
+  the prompt-asymmetry defect found in post-review of v0.8.4.
+- Treat v0.8.4 cases as contaminated engineering regression material; this
+  iteration cannot provide fresh quality evidence.
 - Do not add stronger gradients, additional lanes, or more model breadth until
   the model-interface boundary closes.
 
