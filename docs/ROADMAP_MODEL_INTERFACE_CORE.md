@@ -1,7 +1,7 @@
 # EBRT Model-Interface Core Roadmap
 
 Status: **ACTIVE ENGINEERING AND RESEARCH PLAN**
-Current implementation: **v0.7.1 core + v0.8.4 typed-channel canary**
+Current implementation: **v0.7.1 core + v0.8.5 typed-state admission diagnostic**
 
 This roadmap starts where the sealed v0.6 line ends. It does not rewrite those
 artifacts or reinterpret their results. The new line separates the backward
@@ -215,16 +215,23 @@ Status: **IMPLEMENTED + VERIFIED; POST-REVIEW INTERPRETATION NARROWED**
 
 ### v0.8.5 — Typed public-state adapter regression
 
-Status: **RESEARCH TARGET**
+Status: **COMPLETE ADAPTER DIAGNOSTIC; ALGORITHM NOT ASSESSED**
 
-- Replace literal-copy admission with a held-out task-shaped channel-composition
-  probe and separate `FORMAT_READY` from `TASK_CHANNEL_READY`.
+- Separate literal `FORMAT_READY` from a held-out task-shaped
+  `TASK_CHANNEL_READY`; only adapters passing both enter regression cells.
 - Give decision support, revision provenance, and preserved constraints
-  distinct slots in one compact structured output object.
+  distinct pairwise-disjoint slots in one compact typed public state.
 - Keep the core objective, role-stratified program, one-call geometry, and
   portable receipts fixed.
-- Treat v0.8.4 cases as contaminated engineering regression material; require a
-  new sealed surface before making any fresh quality claim.
+- Give direct and role-controlled arms the exact same output guidance, closing
+  the prompt-asymmetry defect found in post-review of v0.8.4.
+- Treat v0.8.4 cases as contaminated engineering regression material; this
+  iteration cannot provide fresh quality evidence.
+- Record `FORMAT_READY=2/2`, `TASK_CHANNEL_READY=0/2`, and zero admitted
+  regression cells. Preserve this as a readiness-gate success and complementary
+  Mistral/Qwen interface failure atlas, not an algorithm loss.
+- Test caller-supplied public evidence-role rendering only in a successor
+  namespace with a new lock; do not relax or rerun v0.8.5 r01.
 - Do not add stronger gradients, additional lanes, or more model breadth until
   the model-interface boundary closes.
 

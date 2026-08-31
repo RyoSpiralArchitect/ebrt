@@ -1,0 +1,20 @@
+{
+  "checks": {
+    "adapter_admission_replayed": true,
+    "aggregate_replayed": true,
+    "dependency_hashes_exact": true,
+    "diffs_replayed": true,
+    "format_readiness_replayed": true,
+    "invocations_recompiled": true,
+    "model_identities_exact": true,
+    "model_outputs_reparsed": true,
+    "policy_lock_exact": true,
+    "provider_uptake_replayed": true,
+    "task_channel_readiness_replayed": true,
+    "typed_states_regraded": true
+  },
+  "fingerprint_sha256": "83759763795294197aaf726ac038f7c14c270e4bee369ccd312eee531132170b",
+  "run_fingerprint_sha256": "6c7ced068b2d1ae6e764ecc06e8c658df4af582eb940d624894781d532546cab",
+  "schema_version": "ebrt-typed-public-state-verification-v0.8.5",
+  "status": "PASS"
+}

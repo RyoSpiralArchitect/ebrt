@@ -1,0 +1,283 @@
+{
+  "claim_boundary": [
+    "This is a contaminated engineering regression over the four published v0.8.4 cases, not a fresh benchmark.",
+    "Literal FORMAT_READY and held-out TASK_CHANNEL_READY are separate receipts; only models passing both execute regression cells.",
+    "Direct and role-controlled arms share the exact output-contract fingerprint; the control contrast still bundles evidence order and explicit revision instructions.",
+    "Decision support, revision provenance, and preserved constraints are public adapter fields, not discovered private model states.",
+    "Semantic contracts are post-call grading material and are absent from model-visible prompts.",
+    "No gradient crosses a model adapter, and public trajectories are not private reasoning transcripts.",
+    "One deterministic sample per contaminated cell cannot establish causal superiority, general reasoning improvement, or cross-model regularity."
+  ],
+  "effect_attribution_status": "NOT_ASSESSED",
+  "execution_policy": {
+    "arm_ids": [
+      "direct_typed_state",
+      "role_control_typed_state"
+    ],
+    "automatic_retry": false,
+    "calls_per_arm_per_case": 1,
+    "max_tokens_per_call": 96,
+    "native_state_capture": "DISABLED",
+    "output_contract_fingerprint_sha256": "5863e855ea986e0e6ba05b54361cdfc366d392e13daa733332709042bab9eb73",
+    "prompt_rendering_mode": "chat_template",
+    "schedule": [
+      [
+        "direct_typed_state",
+        "role_control_typed_state"
+      ],
+      [
+        "role_control_typed_state",
+        "direct_typed_state"
+      ],
+      [
+        "direct_typed_state",
+        "role_control_typed_state"
+      ],
+      [
+        "role_control_typed_state",
+        "direct_typed_state"
+      ]
+    ],
+    "seed": 0,
+    "temperature": 0.0
+  },
+  "fingerprint_sha256": "6c7ced068b2d1ae6e764ecc06e8c658df4af582eb940d624894781d532546cab",
+  "generalization_status": "CONTAMINATED_ENGINEERING_REGRESSION_ONLY",
+  "native_state_capture_status": "DISABLED",
+  "policy_lock_fingerprint_sha256": "47e2e05077bb115bb58d7e4e5f72fd2d74b42bf3fce5550be9a0d21cfbd8f991",
+  "runs": [
+    {
+      "cases": [],
+      "fingerprint_sha256": "a48f2e32299ec10a8797c6fb3965a9a282f71fb190c68c81eb3e3a385159ceaa",
+      "model_adapter": {
+        "adapter_id": "typed-public-state-model",
+        "differentiable_through_model": false,
+        "generation_config": {
+          "add_generation_prompt": true,
+          "max_tokens": 96,
+          "prompt_rendering_mode": "chat_template",
+          "sampler_temperature": 0.0,
+          "seed": 0
+        },
+        "generation_config_fingerprint_sha256": "920ce7125e0ba93d9dda827c1612b7550247f86d4b1fe3edd21ef24844fc8f1a",
+        "interface_kind": "local_open_weight",
+        "model_id": "mlx-community/Mistral-7B-Instruct-v0.3-4bit@a4b8f870474b0eb527f466a03fbc187830d271f5",
+        "state_visibility": "public_only"
+      },
+      "readiness": {
+        "disposition": "ADAPTER_OR_CAPABILITY_DIAGNOSTIC_NO_REGRESSION_CELLS",
+        "fingerprint_sha256": "dcb70cb6e139a57b5c5a803c66a3a03ec9b2649b41a6830acf034786320932ca",
+        "format_ready": {
+          "error_code": null,
+          "expected_output_sha256": "d67500563e17732561f3496ac01402942ada10ef981d6d7dc17525393ed73a77",
+          "fingerprint_sha256": "f308e06e79675bf2a2eb0e9f71c4960e1355e80eb29039d85657344de3321f40",
+          "latency_ms": 8458.12554199074,
+          "logical_calls": 1,
+          "prompt_sha256": "6e0ca346b7075e92465aaf04cafa547a406b93473f1f5ab00d277edae1bf8fcf",
+          "raw_text": "STATE_JSON={\"answer\":\"READY\",\"decision_support_ids\":[\"R1\"],\"preserved_constraint_ids\":[\"R3\"],\"revision_event_id\":\"R2\"}",
+          "status": "PASS"
+        },
+        "logical_calls": 2,
+        "status": "FAIL",
+        "task_channel_ready": {
+          "fingerprint_sha256": "7cf87b51b26f8537062478d1ee6cb7c424d8370991da79e15867f13d4b5c5224",
+          "invocation_fingerprint_sha256": "4a10b70ed8e2ad843ad30b81a257a9bccd949b704a62347c272125f24b2b7f7a",
+          "result": {
+            "error_code": null,
+            "fingerprint_sha256": "ee3a4083289e4f2c4a858270afd5bfad7ccf2fd14d130e2808ed5d6517ecbe17",
+            "latency_ms": 5368.866750010056,
+            "logical_calls": 1,
+            "public_state": {
+              "answer": "GATE_RED",
+              "decision_support_ids": [
+                "R2",
+                "R4"
+              ],
+              "fingerprint_sha256": "79d9622bf11ae76be6e12f45ee9d4823457644746ee30bdef366e44674f72855",
+              "preserved_constraint_ids": [
+                "R1",
+                "R5"
+              ],
+              "revision_event_id": "R6",
+              "schema_version": "ebrt-typed-public-state-v0.8.5"
+            },
+            "raw_text": "STATE_JSON={\"answer\":\"GATE_RED\",\"decision_support_ids\":[\"R2\",\"R4\"],\"revision_event_id\":\"R6\",\"preserved_constraint_ids\":[\"R1\",\"R5\"]}",
+            "request_fingerprint_sha256": "4a10b70ed8e2ad843ad30b81a257a9bccd949b704a62347c272125f24b2b7f7a",
+            "status": "PARSED"
+          },
+          "semantic_grade": {
+            "checks": {
+              "channels_pairwise_disjoint": true,
+              "decision_support_exact": true,
+              "expected_answer": false,
+              "forbidden_evidence_absent": true,
+              "preserved_constraints_exact": false,
+              "revision_event_exact": true,
+              "schema_parsed": true
+            },
+            "contract_fingerprint_sha256": "fd1727218dcee14566bf489f7d61d9a2a2dcb7d4453f52e3a486ceec2b4ec5ce",
+            "expected": {
+              "answer": "GATE_BLUE",
+              "decision_support_ids": [
+                "R2",
+                "R4"
+              ],
+              "preserved_constraint_ids": [
+                "R5"
+              ],
+              "revision_event_id": "R6"
+            },
+            "fingerprint_sha256": "063bd1dd723c2dfe581f2d10f5e5b4dd73364f934861de8588aef725d37c69f1",
+            "status": "FAIL"
+          },
+          "status": "FAIL"
+        }
+      },
+      "status": "ADAPTER_OR_CAPABILITY_DIAGNOSTIC",
+      "summary": {
+        "admitted_to_regression": false,
+        "case_count": 0,
+        "format_ready": true,
+        "logical_calls": 2,
+        "parsed_outputs": {
+          "direct_typed_state": 0,
+          "role_control_typed_state": 0
+        },
+        "provider_uptake_passes": 0,
+        "raw_output_diff_cells": 0,
+        "strict_passes": {
+          "direct_typed_state": 0,
+          "role_control_typed_state": 0
+        },
+        "strict_regressions": 0,
+        "strict_repairs": 0,
+        "task_channel_ready": false
+      }
+    },
+    {
+      "cases": [],
+      "fingerprint_sha256": "8a9811e85ba15d8ff0a2c293f3d455fd6d938db6c4a26a5f921fc569d913d816",
+      "model_adapter": {
+        "adapter_id": "typed-public-state-model",
+        "differentiable_through_model": false,
+        "generation_config": {
+          "add_generation_prompt": true,
+          "max_tokens": 96,
+          "prompt_rendering_mode": "chat_template",
+          "sampler_temperature": 0.0,
+          "seed": 0
+        },
+        "generation_config_fingerprint_sha256": "920ce7125e0ba93d9dda827c1612b7550247f86d4b1fe3edd21ef24844fc8f1a",
+        "interface_kind": "local_open_weight",
+        "model_id": "mlx-community/Qwen2.5-1.5B-Instruct-4bit@8b403126fc14f14cfc99bb4cfa72ecbc129ea677",
+        "state_visibility": "public_only"
+      },
+      "readiness": {
+        "disposition": "ADAPTER_OR_CAPABILITY_DIAGNOSTIC_NO_REGRESSION_CELLS",
+        "fingerprint_sha256": "01d54c336bac478ca38512f78daf54ff2070a335ff3cfd8fe5b4c662aa714647",
+        "format_ready": {
+          "error_code": null,
+          "expected_output_sha256": "d67500563e17732561f3496ac01402942ada10ef981d6d7dc17525393ed73a77",
+          "fingerprint_sha256": "bfa1ca071c725e3efacd57df96f8437eff71a82c0424c79d844507707e59a244",
+          "latency_ms": 1421.375417005038,
+          "logical_calls": 1,
+          "prompt_sha256": "6e0ca346b7075e92465aaf04cafa547a406b93473f1f5ab00d277edae1bf8fcf",
+          "raw_text": "STATE_JSON={\"answer\":\"READY\",\"decision_support_ids\":[\"R1\"],\"preserved_constraint_ids\":[\"R3\"],\"revision_event_id\":\"R2\"}",
+          "status": "PASS"
+        },
+        "logical_calls": 2,
+        "status": "FAIL",
+        "task_channel_ready": {
+          "fingerprint_sha256": "78175733b8ab3acc3f8e04776b41b69245eb1dda4a6b8ef609c2fa0e142ed5b9",
+          "invocation_fingerprint_sha256": "4a10b70ed8e2ad843ad30b81a257a9bccd949b704a62347c272125f24b2b7f7a",
+          "result": {
+            "error_code": null,
+            "fingerprint_sha256": "c96e119ea6959e44005d6066accc55e68bd8cf5f36c5fa2a7a9dddb6f6f27566",
+            "latency_ms": 900.6139999983134,
+            "logical_calls": 1,
+            "public_state": {
+              "answer": "GATE_BLUE",
+              "decision_support_ids": [
+                "R4"
+              ],
+              "fingerprint_sha256": "d4786d873e9959f6150d6aec67f70a3f99faef0f5cdbb4d58729f405b653a3c6",
+              "preserved_constraint_ids": [
+                "R5"
+              ],
+              "revision_event_id": "R6",
+              "schema_version": "ebrt-typed-public-state-v0.8.5"
+            },
+            "raw_text": "STATE_JSON={\"answer\":\"GATE_BLUE\",\"decision_support_ids\":[\"R4\"],\"preserved_constraint_ids\":[\"R5\"],\"revision_event_id\":\"R6\"}",
+            "request_fingerprint_sha256": "4a10b70ed8e2ad843ad30b81a257a9bccd949b704a62347c272125f24b2b7f7a",
+            "status": "PARSED"
+          },
+          "semantic_grade": {
+            "checks": {
+              "channels_pairwise_disjoint": true,
+              "decision_support_exact": false,
+              "expected_answer": true,
+              "forbidden_evidence_absent": true,
+              "preserved_constraints_exact": true,
+              "revision_event_exact": true,
+              "schema_parsed": true
+            },
+            "contract_fingerprint_sha256": "fd1727218dcee14566bf489f7d61d9a2a2dcb7d4453f52e3a486ceec2b4ec5ce",
+            "expected": {
+              "answer": "GATE_BLUE",
+              "decision_support_ids": [
+                "R2",
+                "R4"
+              ],
+              "preserved_constraint_ids": [
+                "R5"
+              ],
+              "revision_event_id": "R6"
+            },
+            "fingerprint_sha256": "c7dafcd7b8dacf227cd254862dcfaebba89d55e7f8946c13349d155da2ebbf81",
+            "status": "FAIL"
+          },
+          "status": "FAIL"
+        }
+      },
+      "status": "ADAPTER_OR_CAPABILITY_DIAGNOSTIC",
+      "summary": {
+        "admitted_to_regression": false,
+        "case_count": 0,
+        "format_ready": true,
+        "logical_calls": 2,
+        "parsed_outputs": {
+          "direct_typed_state": 0,
+          "role_control_typed_state": 0
+        },
+        "provider_uptake_passes": 0,
+        "raw_output_diff_cells": 0,
+        "strict_passes": {
+          "direct_typed_state": 0,
+          "role_control_typed_state": 0
+        },
+        "strict_regressions": 0,
+        "strict_repairs": 0,
+        "task_channel_ready": false
+      }
+    }
+  ],
+  "schema_version": "ebrt-typed-public-state-run-v0.8.5",
+  "status": "COMPLETE_WITH_BOUNDED_ADAPTER_ADMISSION",
+  "summary": {
+    "adapter_diagnostic_models": 2,
+    "admitted_regression_models": 0,
+    "denominator_cells_per_arm": 0,
+    "format_ready_models": 2,
+    "logical_calls": 4,
+    "model_count": 2,
+    "provider_uptake_passes": 0,
+    "raw_output_diff_cells": 0,
+    "strict_passes": {
+      "direct_typed_state": 0,
+      "role_control_typed_state": 0
+    },
+    "strict_regressions": 0,
+    "strict_repairs": 0,
+    "task_channel_ready_models": 0
+  }
+}
