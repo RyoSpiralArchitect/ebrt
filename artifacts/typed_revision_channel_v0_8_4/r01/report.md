@@ -2,6 +2,18 @@
 
 Status: **COMPLETE DEVELOPMENT CANARY; PORTABLE VERIFICATION PASS**
 
+Post-review status: **INTERPRETATION NARROWED; ORIGINAL RUN UNCHANGED**
+
+Review found that the typed prompts alone included support-selection guidance
+for a scored stable-evidence criterion. The schema comparison is therefore a
+bundled output-interface and support-guidance contrast, not a pure
+field-factorization contrast. Review also separated Qwen's task-shaped typed
+parse failures from the algorithm-quality denominator. See
+[`post_review_interpretation.json`](post_review_interpretation.json). The
+frozen legacy aggregate still says `algorithm_diagnostic_models=2`; the
+post-review receipt supersedes that interpretation with the corrected count
+of `1` without rewriting the source artifact.
+
 This sealed run crossed two public factors over four fresh synthetic cases and
 two local instruction-model snapshots:
 
@@ -22,18 +34,24 @@ four cases by four arms by two models. There was no automatic retry.
 | Parsed `direct_typed` outputs | 4/8 |
 | Parsed `role_flat` outputs | 8/8 |
 | Parsed `role_typed` outputs | 4/8 |
-| Strict passes: `direct_flat` | 2/8 |
-| Strict passes: `direct_typed` | 0/8 |
-| Strict passes: `role_flat` | 0/8 |
-| Strict passes: `role_typed` | 1/8 |
+| Mechanical strict passes: `direct_flat` | 2/8 |
+| Mechanical strict passes: `direct_typed` | 0/8 |
+| Mechanical strict passes: `role_flat` | 0/8 |
+| Mechanical strict passes: `role_typed` | 1/8 |
+| Full-factorial algorithm-diagnostic models | 1/2 |
+| Admitted strict passes: `direct_flat` | 2/4 |
+| Admitted strict passes: `direct_typed` | 0/4 |
+| Admitted strict passes: `role_flat` | 0/4 |
+| Admitted strict passes: `role_typed` | 1/4 |
 | `role_flat` provider-uptake passes | 4/8 |
 | `role_typed` provider-uptake passes | 3/8 |
 | Flat-to-typed raw differences under control | 8/8 |
 | Flat-to-typed strict repairs under control | 1/8 |
 | Direct-to-control raw differences under typed schema | 7/8 |
 
-The typed channel therefore produced an observable provider-side difference,
-but did not produce a general quality improvement.
+The bundled typed interface produced an observable provider-side difference,
+but did not produce a general quality improvement. Field factorization alone
+is not identified.
 
 ## One positive mechanism case
 
@@ -48,8 +66,9 @@ Mistral, archive-tier case:
 
 `role_flat` omitted required decision evidence `R2`. With the same public EBRT
 program, `role_typed` restored `R2`, moved correction provenance `R6` into its
-own field, and passed the strict contract. This is one development example,
-not evidence of a general effect.
+own field, and passed the strict contract. Because typed-only guidance also
+changed, this is one bundled-interface development example, not evidence of a
+field-factorization or general effect.
 
 ## Failure atlas
 
@@ -80,8 +99,10 @@ not evidence of a general effect.
   this snapshot, while the direction of the quality effect is mixed.
 
 The readiness failure is itself diagnostic: literal schema copying did not
-test task-shaped field composition. Future model admission needs separate
-`FORMAT_READY` and `TASK_CHANNEL_READY` receipts.
+test task-shaped field composition. Qwen is retained as a partial
+adapter/interface surface and excluded from algorithm-quality denominators.
+Future model admission needs separate `FORMAT_READY` and
+`TASK_CHANNEL_READY` receipts.
 
 ## Next bounded iteration
 
@@ -110,13 +131,19 @@ single-call geometry fixed, and repair the model-interface boundary:
   `55a1fb8b11c49cfa69b074916ec2bee18e52bd7e18a2635070f8e510651f4fc6`
 - Portable verification fingerprint:
   `39930c83d22ac0e1fef6f5f63549dfdb26c81a36be1107ac6877de2eeefc76fa`
+- Post-review interpretation fingerprint:
+  `da5dcd2f5a661b7f8ca7d802ee54ff8a0aa8780f378a3ac4aefda46c6590f872`
 
 ## Claim boundary
 
 - The control contrast bundles evidence order and explicit revision
   instructions; it is not gradient-only.
-- The typed channel changes the public output contract, not the backward
-  objective.
+- The typed package changes output shape and typed-only support-selection
+  guidance, not the backward objective; field factorization alone is not
+  identified.
+- Only the fully parsed Mistral factorial enters the narrowed
+  algorithm-diagnostic surface; Qwen's typed failures remain interface
+  diagnostics.
 - Caller-supplied roles are scaffolding, not autonomously discovered causal
   structure.
 - Public trajectories are surrogates, not private reasoning transcripts.

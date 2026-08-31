@@ -189,20 +189,26 @@ Status: **IMPLEMENTED + VERIFIED; MIXED DEVELOPMENT RESULT**
 
 ### v0.8.4 — Typed revision-channel canary
 
-Status: **IMPLEMENTED + VERIFIED; MIXED DEVELOPMENT RESULT**
+Status: **IMPLEMENTED + VERIFIED; POST-REVIEW INTERPRETATION NARROWED**
 
 - Lock four fresh cases, two exact local instruction-model snapshots, a
   four-arm Williams schedule, and 34 logical calls before execution.
 - Cross chronological versus role-stratified control with flat versus typed
-  revision-provenance output while keeping the public backward objective and
-  controlled program unchanged.
-- Observe one Mistral strict repair: typed control restores required `R2` and
-  moves correction `R6` from decision support into `REVISION_EVENT`.
-- Observe only `1/8` controlled flat-to-typed strict repairs overall, continued
-  stable-evidence leakage, and one Mistral numeric answer that stays on the
-  retired rule in all arms.
-- Preserve Qwen's `0/8` task-shaped typed parse result as an adapter diagnostic
-  after its weaker literal-copy readiness probe passed.
+  revision-provenance interface packages while keeping the public backward
+  objective and controlled program unchanged.
+- Preserve a post-review finding that typed-only support-selection guidance
+  also changed a scored criterion; field factorization alone is therefore not
+  identified by this lock.
+- Observe one Mistral strict repair: the typed package restores required `R2`
+  and moves correction `R6` from decision support into `REVISION_EVENT`.
+- Record `1/4` strict repairs on the sole full-factorial
+  algorithm-diagnostic model and `1/8` mechanically across all cells; the
+  latter is not a cross-model quality denominator.
+- Preserve continued stable-evidence leakage and one Mistral numeric answer
+  that stays on the retired rule in all arms.
+- Preserve Qwen's `0/8` task-shaped typed parse result as a partial
+  adapter/interface diagnostic after its weaker literal-copy readiness probe
+  passed; exclude it from algorithm-quality denominators.
 - Observe opposite-direction Qwen answer flips under the public control bundle;
   the actuator is non-neutral on this surface but not quality-monotonic.
 - Admit no gradient-specific, causal, general-quality, or cross-model claim.

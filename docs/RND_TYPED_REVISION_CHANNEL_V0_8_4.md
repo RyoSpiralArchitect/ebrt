@@ -8,8 +8,33 @@ Canonical artifact:
 Portable verification:
 [`artifacts/typed_revision_channel_v0_8_4/r01/verification.json`](../artifacts/typed_revision_channel_v0_8_4/r01/verification.json)
 
+Post-review interpretation:
+[`artifacts/typed_revision_channel_v0_8_4/r01/post_review_interpretation.json`](../artifacts/typed_revision_channel_v0_8_4/r01/post_review_interpretation.json)
+
 Human-readable failure atlas:
 [`artifacts/typed_revision_channel_v0_8_4/r01/report.md`](../artifacts/typed_revision_channel_v0_8_4/r01/report.md)
+
+## Post-review correction
+
+The original lock, runner, provider outputs, grades, and portable verification
+remain byte-identical. Review found two interpretation defects:
+
+1. the typed prompts uniquely said to exclude stable constraints from
+   `SUPPORT`, while the same exclusion was a scored criterion in every arm;
+   therefore flat versus typed is a **bundled output-interface and
+   support-guidance contrast**, not a pure field-factorization contrast;
+2. literal readiness alone admitted Qwen to the original aggregate even though
+   none of its eight task-shaped typed outputs parsed. Qwen is now a partial
+   adapter/interface diagnostic, not part of the algorithm-quality
+   denominator.
+
+The deterministic post-review receipt records two literal-ready models, one
+full-factorial algorithm-diagnostic model (Mistral), and one partial
+interface-diagnostic model (Qwen). Mechanically graded all-cell totals remain
+available but are not interpreted as cross-model quality counts. The frozen
+legacy field `results.json.summary.algorithm_diagnostic_models=2` is retained
+for artifact identity but superseded for interpretation by the receipt's
+corrected count of `1`.
 
 ## Why this canary exists
 
@@ -18,11 +43,12 @@ actuator retained the correction plus both required-support roles in every
 case. Provider uptake remained incomplete, especially when the correction
 event had to be cited in the same `SUPPORT` field as decision evidence.
 
-v0.8.4 tests the smallest interface repair suggested by that failure. It does
+v0.8.4 tests one small interface package suggested by that failure. It does
 not change the public backward objective, control budget, role-stratified
 selection, or number of generation calls. It asks whether correction
 provenance becomes easier to retain when it receives a dedicated public output
-channel.
+channel plus the locked typed-only support-selection guidance. Those two
+changes are not separately identified in this run.
 
 ## Locked 2x2 surface
 
@@ -49,17 +75,18 @@ never included in a model prompt.
 The block completed all 34 logical calls and portable verification replayed
 all ten receipt classes. The compact aggregate is:
 
-| Arm | Parsed | Strict pass |
-| --- | ---: | ---: |
-| `direct_flat` | 8/8 | 2/8 |
-| `direct_typed` | 4/8 | 0/8 |
-| `role_flat` | 8/8 | 0/8 |
-| `role_typed` | 4/8 | 1/8 |
+| Arm | Parsed, all cells | Strict pass, all cells | Strict pass, admitted surface |
+| --- | ---: | ---: | ---: |
+| `direct_flat` | 8/8 | 2/8 | 2/4 |
+| `direct_typed` | 4/8 | 0/8 | 0/4 |
+| `role_flat` | 8/8 | 0/8 | 0/4 |
+| `role_typed` | 4/8 | 1/8 | 1/4 |
 
-The controlled flat-to-typed raw output changed in 8/8 cells, but only one
-cell moved from strict FAIL to strict PASS. The typed control contrast changed
-raw output in 7/8 cells. These are public-output observations, not causal or
-quality claims.
+The mechanically evaluated controlled flat-to-typed-package output changed in
+8/8 cells, but only one cell moved from strict FAIL to strict PASS. The typed
+control contrast changed raw output in 7/8 cells. These are public-output
+observations, not causal or quality claims. Only Mistral's four fully parsed
+cells per arm enter the narrowed algorithm-diagnostic surface.
 
 ## What the one strict repair means
 
@@ -80,9 +107,10 @@ REVISION_EVENT=R6
 ```
 
 That output passed answer, decision-support, invalidation, stable-evidence,
-and channel-separation checks. It is a concrete instance where public
-factorization repaired provider uptake. It is one contaminated development
-example and must not be generalized.
+and channel-separation checks. It is a concrete instance where the bundled
+typed interface package coincided with repaired provider uptake. The run does
+not isolate field factorization from typed-only support guidance. It is one
+contaminated development example and must not be generalized.
 
 ## What did not improve
 
@@ -113,8 +141,8 @@ literal schema copy
 task-shaped channel composition
 ```
 
-This must be recorded as a readiness-gate defect. Those eight typed format
-failures do not update the EBRT quality count.
+This is a readiness-gate defect. Those eight typed format failures are
+interface evidence and do not update the EBRT algorithm-quality count.
 
 ### The actuator is non-null but not monotonic
 
@@ -163,6 +191,11 @@ Portable artifact verification:
 python3 typed_revision_channel_canary_v0_8_4.py verify \
   artifacts/typed_revision_channel_v0_8_4/r01/results.json \
   --lock policy_lock_typed_revision_channel_v0_8_4.json
+
+python3 interpret_typed_revision_channel_v0_8_4.py verify \
+  --source artifacts/typed_revision_channel_v0_8_4/r01/results.json \
+  --lock policy_lock_typed_revision_channel_v0_8_4.json \
+  --receipt artifacts/typed_revision_channel_v0_8_4/r01/post_review_interpretation.json
 ```
 
 The run artifact is immutable evidence for this development block. It must not
@@ -173,7 +206,10 @@ be overwritten by a repaired adapter or regraded under a relaxed parser.
 - No gradient crosses either local model.
 - The control factor bundles evidence order and explicit revision
   instructions.
-- The typed factor changes the public output interface only.
+- The typed package changes both output shape and typed-only support-selection
+  guidance; a pure field-factorization effect is not identified.
+- Qwen's typed task-shape failures remain adapter/interface diagnostics and are
+  excluded from the narrowed algorithm-quality denominator.
 - The cases are synthetic and the run has one deterministic sample per cell.
 - No general reasoning improvement, causal superiority, or cross-model
   regularity is claimed.
