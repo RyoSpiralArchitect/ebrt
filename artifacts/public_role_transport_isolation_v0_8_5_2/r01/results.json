@@ -1,0 +1,2604 @@
+{
+  "claim_boundary": [
+    "This is a contaminated engineering repair over the known v0.8.5 readiness failure and four published v0.8.4 cases, not a fresh benchmark.",
+    "Literal FORMAT_READY and known-failure TASK_CHANNEL_READY are separate receipts; only models passing both execute regression cells.",
+    "Each evidence role is caller-supplied public scaffold metadata already present in RevisionTask, not a dependency discovered by EBRT or the model.",
+    "After removing only the caller-supplied role key, every model-visible readiness and regression prompt matches v0.8.5 byte for byte.",
+    "Direct and role-controlled arms share the exact role-record schema and output-contract fingerprint; the control contrast still bundles evidence order and explicit revision instructions.",
+    "Decision support, revision provenance, and preserved constraints are public adapter fields, not private model states.",
+    "Semantic contracts are post-call grading material and are absent from model-visible prompts.",
+    "No gradient crosses a model adapter, and public trajectories are not private reasoning transcripts.",
+    "One deterministic sample per contaminated cell cannot establish causal superiority, general reasoning improvement, or cross-model regularity."
+  ],
+  "effect_attribution_status": "NOT_ASSESSED",
+  "execution_policy": {
+    "arm_ids": [
+      "direct_public_roles",
+      "role_control_public_roles"
+    ],
+    "automatic_retry": false,
+    "calls_per_arm_per_case": 1,
+    "max_tokens_per_call": 96,
+    "native_state_capture": "DISABLED",
+    "output_contract_fingerprint_sha256": "5863e855ea986e0e6ba05b54361cdfc366d392e13daa733332709042bab9eb73",
+    "prompt_rendering_mode": "chat_template",
+    "public_role_record_fingerprint_sha256": "d7d16db4dff34cbfa58524880eee35072cfb7f76ad3ca1ada74438cea62452a4",
+    "schedule": [
+      [
+        "direct_public_roles",
+        "role_control_public_roles"
+      ],
+      [
+        "role_control_public_roles",
+        "direct_public_roles"
+      ],
+      [
+        "direct_public_roles",
+        "role_control_public_roles"
+      ],
+      [
+        "role_control_public_roles",
+        "direct_public_roles"
+      ]
+    ],
+    "seed": 0,
+    "temperature": 0.0
+  },
+  "fingerprint_sha256": "f6af26d4f2242c8b9ebe8b35718468a4b955ed55cf6476fe7a2e55fd19b09c40",
+  "generalization_status": "CONTAMINATED_ENGINEERING_REGRESSION_ONLY",
+  "native_state_capture_status": "DISABLED",
+  "policy_lock_fingerprint_sha256": "115b8f6bb1d6fcc69b6ffb50a468fd632e5fbaaf308c4d1c51fe2b10bcce1fb5",
+  "runs": [
+    {
+      "cases": [
+        {
+          "arms": {
+            "direct_public_roles": {
+              "invocation_fingerprint_sha256": "c7bcd385016a8a9219433c8e67e15c002506a101d6af55c3d187acecea31cec3",
+              "provider_uptake": null,
+              "result": {
+                "error_code": null,
+                "fingerprint_sha256": "4de387d6df07ae2bc15772462e5be5954dca78830ab05a648f869ede88dda1ce",
+                "latency_ms": 5623.820833003265,
+                "logical_calls": 1,
+                "public_state": {
+                  "answer": "LANE_SOUTH",
+                  "decision_support_ids": [
+                    "R2",
+                    "R4"
+                  ],
+                  "fingerprint_sha256": "cc84ef09dac80766ce340c49580ff53077cb8bc194d8b751379f2a48d7b2e57b",
+                  "preserved_constraint_ids": [
+                    "R5"
+                  ],
+                  "revision_event_id": "R6",
+                  "schema_version": "ebrt-public-role-isolation-v0.8.5.2"
+                },
+                "raw_text": "STATE_JSON={\"answer\":\"LANE_SOUTH\",\"decision_support_ids\":[\"R2\",\"R4\"],\"preserved_constraint_ids\":[\"R5\"],\"revision_event_id\":\"R6\"}",
+                "request_fingerprint_sha256": "c7bcd385016a8a9219433c8e67e15c002506a101d6af55c3d187acecea31cec3",
+                "status": "PARSED"
+              },
+              "semantic_grade": {
+                "checks": {
+                  "channels_pairwise_disjoint": true,
+                  "decision_support_exact": true,
+                  "expected_answer": true,
+                  "forbidden_evidence_absent": true,
+                  "preserved_constraints_exact": true,
+                  "revision_event_exact": true,
+                  "schema_parsed": true
+                },
+                "contract_fingerprint_sha256": "18fc20e3fcd1a12b9fa79dfc0e7fed793deff01da22c48d8097e83da99bf05ac",
+                "expected": {
+                  "answer": "LANE_SOUTH",
+                  "decision_support_ids": [
+                    "R2",
+                    "R4"
+                  ],
+                  "preserved_constraint_ids": [
+                    "R5"
+                  ],
+                  "revision_event_id": "R6"
+                },
+                "fingerprint_sha256": "65adf1a33185d1ad05f18a500c1b6da425a951db3761a99b2184ab64d53295b4",
+                "status": "PASS"
+              }
+            },
+            "role_control_public_roles": {
+              "invocation_fingerprint_sha256": "f65e254e511bcd60d09353c863c3ee95ab8ac72cf69c9b0eb361f537831de069",
+              "provider_uptake": {
+                "checks": {
+                  "decision_roles_retained": true,
+                  "output_parsed": true,
+                  "preserve_role_retained": true,
+                  "revision_role_retained": true,
+                  "suppressed_evidence_absent": true
+                },
+                "fingerprint_sha256": "f41befa6086c933341d703455eb75f4762cdec0dbf3fef04597f81e39e624a93",
+                "program_fingerprint_sha256": "04ffcf01ca57511648fbfd18a378eeadcb7072bcfecfc71dee1ee08a22f291f9",
+                "status": "PASS"
+              },
+              "result": {
+                "error_code": null,
+                "fingerprint_sha256": "86b3bdb1547d629a17e5a9197c318f8d85cfe48aaec0783a283a21c36981346e",
+                "latency_ms": 6447.379208999337,
+                "logical_calls": 1,
+                "public_state": {
+                  "answer": "LANE_SOUTH",
+                  "decision_support_ids": [
+                    "R4",
+                    "R2"
+                  ],
+                  "fingerprint_sha256": "8e0f99bc1f363337541b5b51642260f035439b1a585c526d20ddbe5d802b723e",
+                  "preserved_constraint_ids": [
+                    "R5"
+                  ],
+                  "revision_event_id": "R6",
+                  "schema_version": "ebrt-public-role-isolation-v0.8.5.2"
+                },
+                "raw_text": "STATE_JSON={\"answer\":\"LANE_SOUTH\",\"decision_support_ids\":[\"R4\",\"R2\"],\"revision_event_id\":\"R6\",\"preserved_constraint_ids\":[\"R5\"]}",
+                "request_fingerprint_sha256": "f65e254e511bcd60d09353c863c3ee95ab8ac72cf69c9b0eb361f537831de069",
+                "status": "PARSED"
+              },
+              "semantic_grade": {
+                "checks": {
+                  "channels_pairwise_disjoint": true,
+                  "decision_support_exact": true,
+                  "expected_answer": true,
+                  "forbidden_evidence_absent": true,
+                  "preserved_constraints_exact": true,
+                  "revision_event_exact": true,
+                  "schema_parsed": true
+                },
+                "contract_fingerprint_sha256": "18fc20e3fcd1a12b9fa79dfc0e7fed793deff01da22c48d8097e83da99bf05ac",
+                "expected": {
+                  "answer": "LANE_SOUTH",
+                  "decision_support_ids": [
+                    "R2",
+                    "R4"
+                  ],
+                  "preserved_constraint_ids": [
+                    "R5"
+                  ],
+                  "revision_event_id": "R6"
+                },
+                "fingerprint_sha256": "65adf1a33185d1ad05f18a500c1b6da425a951db3761a99b2184ab64d53295b4",
+                "status": "PASS"
+              }
+            }
+          },
+          "call_order": [
+            "direct_public_roles",
+            "role_control_public_roles"
+          ],
+          "case_id": "freight-lane-rule-revision",
+          "compiled": {
+            "role_program": {
+              "fingerprint_sha256": "04ffcf01ca57511648fbfd18a378eeadcb7072bcfecfc71dee1ee08a22f291f9",
+              "lane_id": "primary",
+              "preserve_evidence_ids": [
+                "R5"
+              ],
+              "reinspect": [
+                {
+                  "allocation_units": 51,
+                  "evidence_id": "R6",
+                  "signed_control": 0.5237647942865276
+                },
+                {
+                  "allocation_units": 35,
+                  "evidence_id": "R4",
+                  "signed_control": 0.36400406143879643
+                },
+                {
+                  "allocation_units": 14,
+                  "evidence_id": "R2",
+                  "signed_control": 0.14842175505151714
+                }
+              ],
+              "schema_version": "ebrt-actuator-program-v0.7.1",
+              "source_credit_fingerprint_sha256": "caaad1464928748890bbdefb3847483f0c454af9fc37460acd186028dedcf0fa",
+              "steps": [
+                "LOAD_FULL_CONTEXT",
+                "SUPPRESS_INVALIDATED_SUPPORT",
+                "REINSPECT_ROLE_COVERAGE_THEN_CREDIT",
+                "PRESERVE_STABLE_CONSTRAINTS",
+                "REGENERATE_ONCE"
+              ],
+              "suppress_evidence_ids": [
+                "R3"
+              ]
+            },
+            "trajectory": {
+              "axis_ids": [
+                "revision",
+                "invalidation",
+                "stability"
+              ],
+              "backtracking_steps": 0,
+              "checks": {
+                "central_finite_difference_agreement": true,
+                "control_budget_respected": true,
+                "control_is_non_neutral": true,
+                "ineligible_sites_are_zero": true,
+                "objective_decreased": true,
+                "pre_event_backward_credit_nonzero": true,
+                "real_backward_executed_once": true,
+                "stable_axis_exact_identity": true,
+                "zero_control_exact_noop": true
+              },
+              "control_budget": 0.75,
+              "control_l2": 0.7500000000000001,
+              "credit_map": [
+                {
+                  "absolute_control": 0.1792778567595957,
+                  "control": 0.1792778567595957,
+                  "eligible": true,
+                  "evidence_id": "R1",
+                  "gradient": -0.4290937087664781,
+                  "role": "context",
+                  "step": 1
+                },
+                {
+                  "absolute_control": 0.14842175505151714,
+                  "control": 0.14842175505151714,
+                  "eligible": true,
+                  "evidence_id": "R2",
+                  "gradient": -0.35524097893521056,
+                  "role": "required_support",
+                  "step": 2
+                },
+                {
+                  "absolute_control": 0.3185936537741545,
+                  "control": 0.3185936537741545,
+                  "eligible": true,
+                  "evidence_id": "R3",
+                  "gradient": -0.7625399754233624,
+                  "role": "invalidated_prior",
+                  "step": 3
+                },
+                {
+                  "absolute_control": 0.36400406143879643,
+                  "control": 0.36400406143879643,
+                  "eligible": true,
+                  "evidence_id": "R4",
+                  "gradient": -0.8712277999746562,
+                  "role": "required_support",
+                  "step": 4
+                },
+                {
+                  "absolute_control": 0.0,
+                  "control": 0.0,
+                  "eligible": false,
+                  "evidence_id": "R5",
+                  "gradient": 0.0,
+                  "role": "stable",
+                  "step": 5
+                },
+                {
+                  "absolute_control": 0.5237647942865276,
+                  "control": 0.5237647942865276,
+                  "eligible": true,
+                  "evidence_id": "R6",
+                  "gradient": -1.2536081263125,
+                  "role": "correction",
+                  "step": 6
+                }
+              ],
+              "event_index": 5,
+              "fingerprint_sha256": "caaad1464928748890bbdefb3847483f0c454af9fc37460acd186028dedcf0fa",
+              "finite_difference_max_abs_error": 4.8938408880871975e-11,
+              "gradient_boundary": "detached_public_trajectory_after_state_adapter",
+              "lane_id": "primary",
+              "neutral": {
+                "loss": {
+                  "control": 0.0,
+                  "path": 0.2154840605655376,
+                  "smoothness": 0.0,
+                  "terminal": 0.6464521816966128,
+                  "total": 0.6787747907814434
+                },
+                "trajectory": [
+                  {
+                    "evidence_id": "R1",
+                    "role": "context",
+                    "state": {
+                      "invalidation": 0.0,
+                      "revision": -0.44,
+                      "stability": 0.0
+                    },
+                    "step": 1
+                  },
+                  {
+                    "evidence_id": "R2",
+                    "role": "required_support",
+                    "state": {
+                      "invalidation": 0.0,
+                      "revision": -0.244,
+                      "stability": 0.0
+                    },
+                    "step": 2
+                  },
+                  {
+                    "evidence_id": "R3",
+                    "role": "invalidated_prior",
+                    "state": {
+                      "invalidation": 0.0,
+                      "revision": -1.0473999999999999,
+                      "stability": 0.0
+                    },
+                    "step": 3
+                  },
+                  {
+                    "evidence_id": "R4",
+                    "role": "required_support",
+                    "state": {
+                      "invalidation": 0.0,
+                      "revision": -0.6602899999999999,
+                      "stability": 0.0
+                    },
+                    "step": 4
+                  },
+                  {
+                    "evidence_id": "R5",
+                    "role": "stable",
+                    "state": {
+                      "invalidation": 0.0,
+                      "revision": -0.5612465,
+                      "stability": 1.0
+                    },
+                    "step": 5
+                  },
+                  {
+                    "evidence_id": "R6",
+                    "role": "correction",
+                    "state": {
+                      "invalidation": 1.0,
+                      "revision": 0.16294047500000003,
+                      "stability": 0.85
+                    },
+                    "step": 6
+                  }
+                ]
+              },
+              "revised": {
+                "loss": {
+                  "control": 0.28125000000000006,
+                  "path": 0.024812485851197996,
+                  "smoothness": 0.057496171011799914,
+                  "terminal": 0.07443745755359399,
+                  "total": 0.08435929214139169
+                },
+                "trajectory": [
+                  {
+                    "evidence_id": "R1",
+                    "role": "context",
+                    "state": {
+                      "invalidation": 0.0,
+                      "revision": -0.29632095564118166,
+                      "stability": 0.0
+                    },
+                    "step": 1
+                  },
+                  {
+                    "evidence_id": "R2",
+                    "role": "required_support",
+                    "state": {
+                      "invalidation": 0.0,
+                      "revision": -0.03788820756495827,
+                      "stability": 0.0
+                    },
+                    "step": 2
+                  },
+                  {
+                    "evidence_id": "R3",
+                    "role": "invalidated_prior",
+                    "state": {
+                      "invalidation": 0.19418788768743198,
+                      "revision": -0.5516408443747711,
+                      "stability": 0.0
+                    },
+                    "step": 3
+                  },
+                  {
+                    "evidence_id": "R4",
+                    "role": "required_support",
+                    "state": {
+                      "invalidation": 0.16505970453431718,
+                      "revision": 0.11332867612598965,
+                      "stability": 0.0
+                    },
+                    "step": 4
+                  },
+                  {
+                    "evidence_id": "R5",
+                    "role": "stable",
+                    "state": {
+                      "invalidation": 0.1403007488541696,
+                      "revision": 0.0963293747070912,
+                      "stability": 1.0
+                    },
+                    "step": 5
+                  },
+                  {
+                    "evidence_id": "R6",
+                    "role": "correction",
+                    "state": {
+                      "invalidation": 1.3787798852313173,
+                      "revision": 1.226510452094614,
+                      "stability": 0.85
+                    },
+                    "step": 6
+                  }
+                ]
+              },
+              "schema_version": "ebrt-model-interface-core-v0.7.1",
+              "state_adapter_config": {
+                "correction_scale": 1.0,
+                "invalidation_scale": 1.0,
+                "support_scale": 1.0
+              },
+              "state_adapter_id": "typed-public-state-v0.7.1"
+            }
+          },
+          "diff": {
+            "answer_transition": [
+              "LANE_SOUTH",
+              "LANE_SOUTH"
+            ],
+            "fingerprint_sha256": "5ea6eab3b329e6f4e79d72404fb83532fc288ec455003f7c10d97e7988ffdc68",
+            "left_arm": "direct_public_roles",
+            "parsed_state_changed": true,
+            "raw_text_changed": true,
+            "right_arm": "role_control_public_roles",
+            "unified_diff": [
+              "--- direct_public_roles",
+              "+++ role_control_public_roles",
+              "@@ -1 +1 @@",
+              "-STATE_JSON={\"answer\":\"LANE_SOUTH\",\"decision_support_ids\":[\"R2\",\"R4\"],\"preserved_constraint_ids\":[\"R5\"],\"revision_event_id\":\"R6\"}",
+              "+STATE_JSON={\"answer\":\"LANE_SOUTH\",\"decision_support_ids\":[\"R4\",\"R2\"],\"revision_event_id\":\"R6\",\"preserved_constraint_ids\":[\"R5\"]}"
+            ]
+          },
+          "family": "identity_rule_revision",
+          "fingerprint_sha256": "804f1f2d5499af6fc673e0001e42f817a4251db9e644613302908ae360f695f6",
+          "post_call_contract": {
+            "expected_answer": "LANE_SOUTH",
+            "fingerprint_sha256": "18fc20e3fcd1a12b9fa79dfc0e7fed793deff01da22c48d8097e83da99bf05ac",
+            "forbidden_support_ids": [
+              "R3"
+            ],
+            "required_compiled_preserve_ids": [
+              "R5"
+            ],
+            "required_support_ids": [
+              "R2",
+              "R4",
+              "R6"
+            ],
+            "schema_version": "ebrt-post-run-contract-v0.8.0"
+          },
+          "task": {
+            "answer_choices": [
+              "LANE_NORTH",
+              "LANE_SOUTH"
+            ],
+            "before_horizon_evidence_ids": [
+              "R1",
+              "R2",
+              "R3",
+              "R4",
+              "R5"
+            ],
+            "event": {
+              "correction_evidence_id": "R6",
+              "event_id": "freight-lane-rule-revision-late-correction",
+              "invalidated_evidence_ids": [
+                "R3"
+              ],
+              "stable_evidence_ids": [
+                "R5"
+              ]
+            },
+            "evidence": [
+              {
+                "control_basis": [
+                  0.81,
+                  0.0,
+                  0.0
+                ],
+                "evidence_id": "R1",
+                "neutral_effect": [
+                  -0.44,
+                  0.0,
+                  0.0
+                ],
+                "ordinal": 1,
+                "role": "context",
+                "text": "Freight F-31 needs one dispatch lane."
+              },
+              {
+                "control_basis": [
+                  0.57,
+                  0.0,
+                  0.0
+                ],
+                "evidence_id": "R2",
+                "neutral_effect": [
+                  0.13,
+                  0.0,
+                  0.0
+                ],
+                "ordinal": 2,
+                "role": "required_support",
+                "text": "Its verified dispatch code is DELTA_4."
+              },
+              {
+                "control_basis": [
+                  1.04,
+                  0.63,
+                  0.0
+                ],
+                "evidence_id": "R3",
+                "neutral_effect": [
+                  -0.84,
+                  0.0,
+                  0.0
+                ],
+                "ordinal": 3,
+                "role": "invalidated_prior",
+                "text": "The retired sheet maps DELTA_4 to LANE_NORTH."
+              },
+              {
+                "control_basis": [
+                  1.01,
+                  0.0,
+                  0.0
+                ],
+                "evidence_id": "R4",
+                "neutral_effect": [
+                  0.23,
+                  0.0,
+                  0.0
+                ],
+                "ordinal": 4,
+                "role": "required_support",
+                "text": "The current dispatch rule maps DELTA_4 to LANE_SOUTH."
+              },
+              {
+                "control_basis": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "evidence_id": "R5",
+                "neutral_effect": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "ordinal": 5,
+                "role": "stable",
+                "text": "The seal requirement remains DOUBLE_SEALED."
+              },
+              {
+                "control_basis": [
+                  1.05,
+                  0.54,
+                  0.0
+                ],
+                "evidence_id": "R6",
+                "neutral_effect": [
+                  0.64,
+                  1.0,
+                  0.0
+                ],
+                "ordinal": 6,
+                "role": "correction",
+                "text": "Late correction: R3 is superseded; apply the current dispatch rule in R4."
+              }
+            ],
+            "prior_state": {
+              "active_support_ids": [
+                "R2",
+                "R3",
+                "R5"
+              ],
+              "answer": "LANE_NORTH",
+              "stable_values": [
+                {
+                  "key": "seal_requirement",
+                  "value": "DOUBLE_SEALED"
+                }
+              ]
+            },
+            "question": "Which lane should freight F-31 enter under the corrected dispatch rule?",
+            "schema_version": "ebrt-revision-task-v0.7.1",
+            "task_id": "freight-lane-rule-revision",
+            "trajectory_contract": {
+              "axes": [
+                "revision",
+                "invalidation",
+                "stability"
+              ],
+              "control_budget": 0.75,
+              "decay": 0.85,
+              "learning_rate": 0.8,
+              "reinspection_count": 3,
+              "terminal_target": [
+                1.3,
+                1.0,
+                0.85
+              ]
+            }
+          }
+        },
+        {
+          "arms": {
+            "direct_public_roles": {
+              "invocation_fingerprint_sha256": "4916549251c29c7a61cc42dc75d9dd5f510db1b74ad55ea275de3a2955e91e98",
+              "provider_uptake": null,
+              "result": {
+                "error_code": null,
+                "fingerprint_sha256": "97bdb7e45f25f4f05ef9edb3fc82d01f8b4f905d7d37392bbf9a9a182d683c90",
+                "latency_ms": 5510.834999993676,
+                "logical_calls": 1,
+                "public_state": {
+                  "answer": "45_CREDITS",
+                  "decision_support_ids": [
+                    "R2",
+                    "R4"
+                  ],
+                  "fingerprint_sha256": "10c6022067b9f360f69d5ea9caf1389036eca895577070e3530d22417acd5987",
+                  "preserved_constraint_ids": [
+                    "R5"
+                  ],
+                  "revision_event_id": "R6",
+                  "schema_version": "ebrt-public-role-isolation-v0.8.5.2"
+                },
+                "raw_text": "STATE_JSON={\"answer\":\"45_CREDITS\",\"decision_support_ids\":[\"R2\",\"R4\"],\"revision_event_id\":\"R6\",\"preserved_constraint_ids\":[\"R5\"]}",
+                "request_fingerprint_sha256": "4916549251c29c7a61cc42dc75d9dd5f510db1b74ad55ea275de3a2955e91e98",
+                "status": "PARSED"
+              },
+              "semantic_grade": {
+                "checks": {
+                  "channels_pairwise_disjoint": true,
+                  "decision_support_exact": true,
+                  "expected_answer": false,
+                  "forbidden_evidence_absent": true,
+                  "preserved_constraints_exact": true,
+                  "revision_event_exact": true,
+                  "schema_parsed": true
+                },
+                "contract_fingerprint_sha256": "5215d0382411912ce658e73cdc2166c86b6e6939c5b76c98b39ae110e60084a8",
+                "expected": {
+                  "answer": "15_CREDITS",
+                  "decision_support_ids": [
+                    "R2",
+                    "R4"
+                  ],
+                  "preserved_constraint_ids": [
+                    "R5"
+                  ],
+                  "revision_event_id": "R6"
+                },
+                "fingerprint_sha256": "18e61f92355c1c5e2e7e7cbea0f0e935e8533b9a82043ee72c58cc372551d964",
+                "status": "FAIL"
+              }
+            },
+            "role_control_public_roles": {
+              "invocation_fingerprint_sha256": "ac998187aabf72a2801cdee0cbc76155c90d8bdb6cb00102a8c4b0bf95dc77de",
+              "provider_uptake": {
+                "checks": {
+                  "decision_roles_retained": true,
+                  "output_parsed": true,
+                  "preserve_role_retained": true,
+                  "revision_role_retained": true,
+                  "suppressed_evidence_absent": true
+                },
+                "fingerprint_sha256": "79f189f000dd35d36f95f1dab3292f61d72653980feb8eaffe5eb548af21048d",
+                "program_fingerprint_sha256": "6d33e5ab750db06848380e287223b3e9cd56a2e25c8e2378d0da7da7ce9e1e6e",
+                "status": "PASS"
+              },
+              "result": {
+                "error_code": null,
+                "fingerprint_sha256": "fd32a8e6509d0115de327fd919e5c371f09d0e6153ea4eaae454ed3dbd1a6f67",
+                "latency_ms": 6322.719291012618,
+                "logical_calls": 1,
+                "public_state": {
+                  "answer": "45_CREDITS",
+                  "decision_support_ids": [
+                    "R2",
+                    "R4"
+                  ],
+                  "fingerprint_sha256": "10c6022067b9f360f69d5ea9caf1389036eca895577070e3530d22417acd5987",
+                  "preserved_constraint_ids": [
+                    "R5"
+                  ],
+                  "revision_event_id": "R6",
+                  "schema_version": "ebrt-public-role-isolation-v0.8.5.2"
+                },
+                "raw_text": "STATE_JSON={\"answer\":\"45_CREDITS\",\"decision_support_ids\":[\"R2\",\"R4\"],\"revision_event_id\":\"R6\",\"preserved_constraint_ids\":[\"R5\"]}",
+                "request_fingerprint_sha256": "ac998187aabf72a2801cdee0cbc76155c90d8bdb6cb00102a8c4b0bf95dc77de",
+                "status": "PARSED"
+              },
+              "semantic_grade": {
+                "checks": {
+                  "channels_pairwise_disjoint": true,
+                  "decision_support_exact": true,
+                  "expected_answer": false,
+                  "forbidden_evidence_absent": true,
+                  "preserved_constraints_exact": true,
+                  "revision_event_exact": true,
+                  "schema_parsed": true
+                },
+                "contract_fingerprint_sha256": "5215d0382411912ce658e73cdc2166c86b6e6939c5b76c98b39ae110e60084a8",
+                "expected": {
+                  "answer": "15_CREDITS",
+                  "decision_support_ids": [
+                    "R2",
+                    "R4"
+                  ],
+                  "preserved_constraint_ids": [
+                    "R5"
+                  ],
+                  "revision_event_id": "R6"
+                },
+                "fingerprint_sha256": "18e61f92355c1c5e2e7e7cbea0f0e935e8533b9a82043ee72c58cc372551d964",
+                "status": "FAIL"
+              }
+            }
+          },
+          "call_order": [
+            "role_control_public_roles",
+            "direct_public_roles"
+          ],
+          "case_id": "credit-scale-rule-revision",
+          "compiled": {
+            "role_program": {
+              "fingerprint_sha256": "6d33e5ab750db06848380e287223b3e9cd56a2e25c8e2378d0da7da7ce9e1e6e",
+              "lane_id": "primary",
+              "preserve_evidence_ids": [
+                "R5"
+              ],
+              "reinspect": [
+                {
+                  "allocation_units": 52,
+                  "evidence_id": "R6",
+                  "signed_control": 0.5218244318704105
+                },
+                {
+                  "allocation_units": 27,
+                  "evidence_id": "R2",
+                  "signed_control": 0.2723956148390534
+                },
+                {
+                  "allocation_units": 21,
+                  "evidence_id": "R4",
+                  "signed_control": 0.2053069144698063
+                }
+              ],
+              "schema_version": "ebrt-actuator-program-v0.7.1",
+              "source_credit_fingerprint_sha256": "35b9e134ada22730475fbdc9884980a0c23eb839b5f72a081a67d6a490367bf0",
+              "steps": [
+                "LOAD_FULL_CONTEXT",
+                "SUPPRESS_INVALIDATED_SUPPORT",
+                "REINSPECT_ROLE_COVERAGE_THEN_CREDIT",
+                "PRESERVE_STABLE_CONSTRAINTS",
+                "REGENERATE_ONCE"
+              ],
+              "suppress_evidence_ids": [
+                "R3"
+              ]
+            },
+            "trajectory": {
+              "axis_ids": [
+                "revision",
+                "invalidation",
+                "stability"
+              ],
+              "backtracking_steps": 0,
+              "checks": {
+                "central_finite_difference_agreement": true,
+                "control_budget_respected": true,
+                "control_is_non_neutral": true,
+                "ineligible_sites_are_zero": true,
+                "objective_decreased": true,
+                "pre_event_backward_credit_nonzero": true,
+                "real_backward_executed_once": true,
+                "stable_axis_exact_identity": true,
+                "zero_control_exact_noop": true
+              },
+              "control_budget": 0.75,
+              "control_l2": 0.7499999999999999,
+              "credit_map": [
+                {
+                  "absolute_control": 0.2705077244391787,
+                  "control": 0.2705077244391787,
+                  "eligible": true,
+                  "evidence_id": "R1",
+                  "gradient": -0.6709854273377601,
+                  "role": "context",
+                  "step": 1
+                },
+                {
+                  "absolute_control": 0.2723956148390534,
+                  "control": 0.2723956148390534,
+                  "eligible": true,
+                  "evidence_id": "R2",
+                  "gradient": -0.6756682767807954,
+                  "role": "required_support",
+                  "step": 2
+                },
+                {
+                  "absolute_control": 0.31729250418060967,
+                  "control": 0.31729250418060967,
+                  "eligible": true,
+                  "evidence_id": "R3",
+                  "gradient": -0.7870335198378515,
+                  "role": "invalidated_prior",
+                  "step": 3
+                },
+                {
+                  "absolute_control": 0.2053069144698063,
+                  "control": 0.2053069144698063,
+                  "eligible": true,
+                  "evidence_id": "R4",
+                  "gradient": -0.5092569834244922,
+                  "role": "required_support",
+                  "step": 4
+                },
+                {
+                  "absolute_control": 0.0,
+                  "control": 0.0,
+                  "eligible": false,
+                  "evidence_id": "R5",
+                  "gradient": 0.0,
+                  "role": "stable",
+                  "step": 5
+                },
+                {
+                  "absolute_control": 0.5218244318704105,
+                  "control": 0.5218244318704105,
+                  "eligible": true,
+                  "evidence_id": "R6",
+                  "gradient": -1.2943681742906252,
+                  "role": "correction",
+                  "step": 6
+                }
+              ],
+              "event_index": 5,
+              "fingerprint_sha256": "35b9e134ada22730475fbdc9884980a0c23eb839b5f72a081a67d6a490367bf0",
+              "finite_difference_max_abs_error": 1.6001211466942777e-10,
+              "gradient_boundary": "detached_public_trajectory_after_state_adapter",
+              "lane_id": "primary",
+              "neutral": {
+                "loss": {
+                  "control": 0.0,
+                  "path": 0.24828075421243082,
+                  "smoothness": 0.0,
+                  "terminal": 0.7448422626372925,
+                  "total": 0.7820843757691571
+                },
+                "trajectory": [
+                  {
+                    "evidence_id": "R1",
+                    "role": "context",
+                    "state": {
+                      "invalidation": 0.0,
+                      "revision": -0.58,
+                      "stability": 0.0
+                    },
+                    "step": 1
+                  },
+                  {
+                    "evidence_id": "R2",
+                    "role": "required_support",
+                    "state": {
+                      "invalidation": 0.0,
+                      "revision": -0.25299999999999995,
+                      "stability": 0.0
+                    },
+                    "step": 2
+                  },
+                  {
+                    "evidence_id": "R3",
+                    "role": "invalidated_prior",
+                    "state": {
+                      "invalidation": 0.0,
+                      "revision": -1.00505,
+                      "stability": 0.0
+                    },
+                    "step": 3
+                  },
+                  {
+                    "evidence_id": "R4",
+                    "role": "required_support",
+                    "state": {
+                      "invalidation": 0.0,
+                      "revision": -0.7342925,
+                      "stability": 0.0
+                    },
+                    "step": 4
+                  },
+                  {
+                    "evidence_id": "R5",
+                    "role": "stable",
+                    "state": {
+                      "invalidation": 0.0,
+                      "revision": -0.624148625,
+                      "stability": 1.0
+                    },
+                    "step": 5
+                  },
+                  {
+                    "evidence_id": "R6",
+                    "role": "correction",
+                    "state": {
+                      "invalidation": 1.0,
+                      "revision": 0.07947366874999995,
+                      "stability": 0.85
+                    },
+                    "step": 6
+                  }
+                ]
+              },
+              "revised": {
+                "loss": {
+                  "control": 0.2812499999999999,
+                  "path": 0.026475050747719525,
+                  "smoothness": 0.11474340592702806,
+                  "terminal": 0.07942515224315858,
+                  "total": 0.0901688439145868
+                },
+                "trajectory": [
+                  {
+                    "evidence_id": "R1",
+                    "role": "context",
+                    "state": {
+                      "invalidation": 0.0,
+                      "revision": -0.26836529127546127,
+                      "stability": 0.0
+                    },
+                    "step": 1
+                  },
+                  {
+                    "evidence_id": "R2",
+                    "role": "required_support",
+                    "state": {
+                      "invalidation": 0.0,
+                      "revision": 0.2804005764843086,
+                      "stability": 0.0
+                    },
+                    "step": 2
+                  },
+                  {
+                    "evidence_id": "R3",
+                    "role": "invalidated_prior",
+                    "state": {
+                      "invalidation": 0.18116347746047434,
+                      "revision": -0.2446027685299066,
+                      "stability": 0.0
+                    },
+                    "step": 3
+                  },
+                  {
+                    "evidence_id": "R4",
+                    "role": "required_support",
+                    "state": {
+                      "invalidation": 0.15398895584140318,
+                      "revision": 0.023446206563352903,
+                      "stability": 0.0
+                    },
+                    "step": 4
+                  },
+                  {
+                    "evidence_id": "R5",
+                    "role": "stable",
+                    "state": {
+                      "invalidation": 0.1308906124651927,
+                      "revision": 0.019929275578849968,
+                      "stability": 1.0
+                    },
+                    "step": 5
+                  },
+                  {
+                    "evidence_id": "R6",
+                    "role": "correction",
+                    "state": {
+                      "invalidation": 1.3508104635523488,
+                      "revision": 1.110837839015031,
+                      "stability": 0.85
+                    },
+                    "step": 6
+                  }
+                ]
+              },
+              "schema_version": "ebrt-model-interface-core-v0.7.1",
+              "state_adapter_config": {
+                "correction_scale": 1.0,
+                "invalidation_scale": 1.0,
+                "support_scale": 1.0
+              },
+              "state_adapter_id": "typed-public-state-v0.7.1"
+            }
+          },
+          "diff": {
+            "answer_transition": [
+              "45_CREDITS",
+              "45_CREDITS"
+            ],
+            "fingerprint_sha256": "ccf9f9c1a3f05e428922bed20a8416302cb8cad90190975c2895fc4a96b54e99",
+            "left_arm": "direct_public_roles",
+            "parsed_state_changed": false,
+            "raw_text_changed": false,
+            "right_arm": "role_control_public_roles",
+            "unified_diff": []
+          },
+          "family": "numeric_rule_revision",
+          "fingerprint_sha256": "0f266bac4a895652581244f6b9404cec5bbe765c0ad90bbb82574dc9a520a740",
+          "post_call_contract": {
+            "expected_answer": "15_CREDITS",
+            "fingerprint_sha256": "5215d0382411912ce658e73cdc2166c86b6e6939c5b76c98b39ae110e60084a8",
+            "forbidden_support_ids": [
+              "R3"
+            ],
+            "required_compiled_preserve_ids": [
+              "R5"
+            ],
+            "required_support_ids": [
+              "R2",
+              "R4",
+              "R6"
+            ],
+            "schema_version": "ebrt-post-run-contract-v0.8.0"
+          },
+          "task": {
+            "answer_choices": [
+              "45_CREDITS",
+              "15_CREDITS"
+            ],
+            "before_horizon_evidence_ids": [
+              "R1",
+              "R2",
+              "R3",
+              "R4",
+              "R5"
+            ],
+            "event": {
+              "correction_evidence_id": "R6",
+              "event_id": "credit-scale-rule-revision-late-correction",
+              "invalidated_evidence_ids": [
+                "R3"
+              ],
+              "stable_evidence_ids": [
+                "R5"
+              ]
+            },
+            "evidence": [
+              {
+                "control_basis": [
+                  1.18,
+                  0.0,
+                  0.0
+                ],
+                "evidence_id": "R1",
+                "neutral_effect": [
+                  -0.58,
+                  0.0,
+                  0.0
+                ],
+                "ordinal": 1,
+                "role": "context",
+                "text": "Batch B-9 requires one credit allocation."
+              },
+              {
+                "control_basis": [
+                  1.01,
+                  0.0,
+                  0.0
+                ],
+                "evidence_id": "R2",
+                "neutral_effect": [
+                  0.24,
+                  0.0,
+                  0.0
+                ],
+                "ordinal": 2,
+                "role": "required_support",
+                "text": "Its verified base count is 5."
+              },
+              {
+                "control_basis": [
+                  1.0,
+                  0.59,
+                  0.0
+                ],
+                "evidence_id": "R3",
+                "neutral_effect": [
+                  -0.79,
+                  0.0,
+                  0.0
+                ],
+                "ordinal": 3,
+                "role": "invalidated_prior",
+                "text": "The retired scale multiplies the base count by 9."
+              },
+              {
+                "control_basis": [
+                  0.55,
+                  0.0,
+                  0.0
+                ],
+                "evidence_id": "R4",
+                "neutral_effect": [
+                  0.12,
+                  0.0,
+                  0.0
+                ],
+                "ordinal": 4,
+                "role": "required_support",
+                "text": "The current scale multiplies the base count by 3."
+              },
+              {
+                "control_basis": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "evidence_id": "R5",
+                "neutral_effect": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "ordinal": 5,
+                "role": "stable",
+                "text": "The ledger label remains VERIFIED_CREDITS."
+              },
+              {
+                "control_basis": [
+                  1.01,
+                  0.5,
+                  0.0
+                ],
+                "evidence_id": "R6",
+                "neutral_effect": [
+                  0.61,
+                  1.0,
+                  0.0
+                ],
+                "ordinal": 6,
+                "role": "correction",
+                "text": "Late correction: R3 is invalid; calculate with the current scale in R4."
+              }
+            ],
+            "prior_state": {
+              "active_support_ids": [
+                "R2",
+                "R3",
+                "R5"
+              ],
+              "answer": "45_CREDITS",
+              "stable_values": [
+                {
+                  "key": "ledger_label",
+                  "value": "VERIFIED_CREDITS"
+                }
+              ]
+            },
+            "question": "How many credits should batch B-9 receive under the corrected scale?",
+            "schema_version": "ebrt-revision-task-v0.7.1",
+            "task_id": "credit-scale-rule-revision",
+            "trajectory_contract": {
+              "axes": [
+                "revision",
+                "invalidation",
+                "stability"
+              ],
+              "control_budget": 0.75,
+              "decay": 0.85,
+              "learning_rate": 0.8,
+              "reinspection_count": 3,
+              "terminal_target": [
+                1.3,
+                1.0,
+                0.85
+              ]
+            }
+          }
+        },
+        {
+          "arms": {
+            "direct_public_roles": {
+              "invocation_fingerprint_sha256": "f5c97b4490b57f7549a701ec0812ab4008ecbd6d6cb6e32da353868d0ad0efe8",
+              "provider_uptake": null,
+              "result": {
+                "error_code": null,
+                "fingerprint_sha256": "d6bb10bf8d76ca9d12643e2eff6e2c48c00da104256b8a6d3c7548aef4bd51ca",
+                "latency_ms": 5631.580124987522,
+                "logical_calls": 1,
+                "public_state": {
+                  "answer": "COLD_TIER",
+                  "decision_support_ids": [
+                    "R2",
+                    "R4"
+                  ],
+                  "fingerprint_sha256": "1a963fba6d5764f782ea3820bd42ca47aa0cfef016d9471fd0511098276af85b",
+                  "preserved_constraint_ids": [
+                    "R5"
+                  ],
+                  "revision_event_id": "R6",
+                  "schema_version": "ebrt-public-role-isolation-v0.8.5.2"
+                },
+                "raw_text": "STATE_JSON={\"answer\":\"COLD_TIER\",\"decision_support_ids\":[\"R2\",\"R4\"],\"preserved_constraint_ids\":[\"R5\"],\"revision_event_id\":\"R6\"}",
+                "request_fingerprint_sha256": "f5c97b4490b57f7549a701ec0812ab4008ecbd6d6cb6e32da353868d0ad0efe8",
+                "status": "PARSED"
+              },
+              "semantic_grade": {
+                "checks": {
+                  "channels_pairwise_disjoint": true,
+                  "decision_support_exact": true,
+                  "expected_answer": true,
+                  "forbidden_evidence_absent": true,
+                  "preserved_constraints_exact": true,
+                  "revision_event_exact": true,
+                  "schema_parsed": true
+                },
+                "contract_fingerprint_sha256": "10c8962c82ef8ed39395ed7cc88a4479dd41de7d51949fb37334ec37dd72dfcd",
+                "expected": {
+                  "answer": "COLD_TIER",
+                  "decision_support_ids": [
+                    "R2",
+                    "R4"
+                  ],
+                  "preserved_constraint_ids": [
+                    "R5"
+                  ],
+                  "revision_event_id": "R6"
+                },
+                "fingerprint_sha256": "3d044e5e8e4b382bd859bccd6feb506c53c32ad37737efe48c9931b5e7246685",
+                "status": "PASS"
+              }
+            },
+            "role_control_public_roles": {
+              "invocation_fingerprint_sha256": "6a47e683150bc847ebc2d761f87b65f67614921fface0b70f5d34da249646f1b",
+              "provider_uptake": {
+                "checks": {
+                  "decision_roles_retained": true,
+                  "output_parsed": true,
+                  "preserve_role_retained": true,
+                  "revision_role_retained": true,
+                  "suppressed_evidence_absent": true
+                },
+                "fingerprint_sha256": "4f12c391a294eef371d1ee1124590b17b05f89bbc492ae179d3a480724116d53",
+                "program_fingerprint_sha256": "d0683dfe5ab6004133b7b0b8bdcc3d933ee7e5ede7a19e7b83166817c8465507",
+                "status": "PASS"
+              },
+              "result": {
+                "error_code": null,
+                "fingerprint_sha256": "d0135367c401be1da75453479c795c1a8a4ab496e3a5ffedcd11d3c634713be9",
+                "latency_ms": 6415.351874995395,
+                "logical_calls": 1,
+                "public_state": {
+                  "answer": "COLD_TIER",
+                  "decision_support_ids": [
+                    "R4",
+                    "R2"
+                  ],
+                  "fingerprint_sha256": "84febb06d09b7287b61f3d774ff8a965b75b13e256efed3c87bccc9a9a66d3be",
+                  "preserved_constraint_ids": [
+                    "R5"
+                  ],
+                  "revision_event_id": "R6",
+                  "schema_version": "ebrt-public-role-isolation-v0.8.5.2"
+                },
+                "raw_text": "STATE_JSON={\"answer\":\"COLD_TIER\",\"decision_support_ids\":[\"R4\",\"R2\"],\"revision_event_id\":\"R6\",\"preserved_constraint_ids\":[\"R5\"]}",
+                "request_fingerprint_sha256": "6a47e683150bc847ebc2d761f87b65f67614921fface0b70f5d34da249646f1b",
+                "status": "PARSED"
+              },
+              "semantic_grade": {
+                "checks": {
+                  "channels_pairwise_disjoint": true,
+                  "decision_support_exact": true,
+                  "expected_answer": true,
+                  "forbidden_evidence_absent": true,
+                  "preserved_constraints_exact": true,
+                  "revision_event_exact": true,
+                  "schema_parsed": true
+                },
+                "contract_fingerprint_sha256": "10c8962c82ef8ed39395ed7cc88a4479dd41de7d51949fb37334ec37dd72dfcd",
+                "expected": {
+                  "answer": "COLD_TIER",
+                  "decision_support_ids": [
+                    "R2",
+                    "R4"
+                  ],
+                  "preserved_constraint_ids": [
+                    "R5"
+                  ],
+                  "revision_event_id": "R6"
+                },
+                "fingerprint_sha256": "3d044e5e8e4b382bd859bccd6feb506c53c32ad37737efe48c9931b5e7246685",
+                "status": "PASS"
+              }
+            }
+          },
+          "call_order": [
+            "direct_public_roles",
+            "role_control_public_roles"
+          ],
+          "case_id": "archive-tier-policy-revision",
+          "compiled": {
+            "role_program": {
+              "fingerprint_sha256": "d0683dfe5ab6004133b7b0b8bdcc3d933ee7e5ede7a19e7b83166817c8465507",
+              "lane_id": "primary",
+              "preserve_evidence_ids": [
+                "R5"
+              ],
+              "reinspect": [
+                {
+                  "allocation_units": 46,
+                  "evidence_id": "R6",
+                  "signed_control": 0.520542508169171
+                },
+                {
+                  "allocation_units": 34,
+                  "evidence_id": "R4",
+                  "signed_control": 0.39069747524551635
+                },
+                {
+                  "allocation_units": 20,
+                  "evidence_id": "R2",
+                  "signed_control": 0.22687838901289864
+                }
+              ],
+              "schema_version": "ebrt-actuator-program-v0.7.1",
+              "source_credit_fingerprint_sha256": "1b201db6ee48e31fb6c211ec3d1426ecf68349420eb57bca816a7883f4bc015b",
+              "steps": [
+                "LOAD_FULL_CONTEXT",
+                "SUPPRESS_INVALIDATED_SUPPORT",
+                "REINSPECT_ROLE_COVERAGE_THEN_CREDIT",
+                "PRESERVE_STABLE_CONSTRAINTS",
+                "REGENERATE_ONCE"
+              ],
+              "suppress_evidence_ids": [
+                "R3"
+              ]
+            },
+            "trajectory": {
+              "axis_ids": [
+                "revision",
+                "invalidation",
+                "stability"
+              ],
+              "backtracking_steps": 0,
+              "checks": {
+                "central_finite_difference_agreement": true,
+                "control_budget_respected": true,
+                "control_is_non_neutral": true,
+                "ineligible_sites_are_zero": true,
+                "objective_decreased": true,
+                "pre_event_backward_credit_nonzero": true,
+                "real_backward_executed_once": true,
+                "stable_axis_exact_identity": true,
+                "zero_control_exact_noop": true
+              },
+              "control_budget": 0.75,
+              "control_l2": 0.75,
+              "credit_map": [
+                {
+                  "absolute_control": 0.08745370460206502,
+                  "control": 0.08745370460206502,
+                  "eligible": true,
+                  "evidence_id": "R1",
+                  "gradient": -0.16264055736721525,
+                  "role": "context",
+                  "step": 1
+                },
+                {
+                  "absolute_control": 0.22687838901289864,
+                  "control": 0.22687838901289864,
+                  "eligible": true,
+                  "evidence_id": "R2",
+                  "gradient": -0.4219332709979038,
+                  "role": "required_support",
+                  "step": 2
+                },
+                {
+                  "absolute_control": 0.28243410944150177,
+                  "control": 0.28243410944150177,
+                  "eligible": true,
+                  "evidence_id": "R3",
+                  "gradient": -0.5252520883831634,
+                  "role": "invalidated_prior",
+                  "step": 3
+                },
+                {
+                  "absolute_control": 0.39069747524551635,
+                  "control": 0.39069747524551635,
+                  "eligible": true,
+                  "evidence_id": "R4",
+                  "gradient": -0.7265930634388945,
+                  "role": "required_support",
+                  "step": 4
+                },
+                {
+                  "absolute_control": 0.0,
+                  "control": 0.0,
+                  "eligible": false,
+                  "evidence_id": "R5",
+                  "gradient": 0.0,
+                  "role": "stable",
+                  "step": 5
+                },
+                {
+                  "absolute_control": 0.520542508169171,
+                  "control": 0.520542508169171,
+                  "eligible": true,
+                  "evidence_id": "R6",
+                  "gradient": -0.9680701812140625,
+                  "role": "correction",
+                  "step": 6
+                }
+              ],
+              "event_index": 5,
+              "fingerprint_sha256": "1b201db6ee48e31fb6c211ec3d1426ecf68349420eb57bca816a7883f4bc015b",
+              "finite_difference_max_abs_error": 7.927225542658789e-11,
+              "gradient_boundary": "detached_public_trajectory_after_state_adapter",
+              "lane_id": "primary",
+              "neutral": {
+                "loss": {
+                  "control": 0.0,
+                  "path": 0.13353939003654433,
+                  "smoothness": 0.0,
+                  "terminal": 0.400618170109633,
+                  "total": 0.4206490786151147
+                },
+                "trajectory": [
+                  {
+                    "evidence_id": "R1",
+                    "role": "context",
+                    "state": {
+                      "invalidation": 0.0,
+                      "revision": -0.27,
+                      "stability": 0.0
+                    },
+                    "step": 1
+                  },
+                  {
+                    "evidence_id": "R2",
+                    "role": "required_support",
+                    "state": {
+                      "invalidation": 0.0,
+                      "revision": -0.049500000000000016,
+                      "stability": 0.0
+                    },
+                    "step": 2
+                  },
+                  {
+                    "evidence_id": "R3",
+                    "role": "invalidated_prior",
+                    "state": {
+                      "invalidation": 0.0,
+                      "revision": -0.7520749999999999,
+                      "stability": 0.0
+                    },
+                    "step": 3
+                  },
+                  {
+                    "evidence_id": "R4",
+                    "role": "required_support",
+                    "state": {
+                      "invalidation": 0.0,
+                      "revision": -0.3392637499999999,
+                      "stability": 0.0
+                    },
+                    "step": 4
+                  },
+                  {
+                    "evidence_id": "R5",
+                    "role": "stable",
+                    "state": {
+                      "invalidation": 0.0,
+                      "revision": -0.28837418749999993,
+                      "stability": 1.0
+                    },
+                    "step": 5
+                  },
+                  {
+                    "evidence_id": "R6",
+                    "role": "correction",
+                    "state": {
+                      "invalidation": 1.0,
+                      "revision": 0.40488194062500005,
+                      "stability": 0.85
+                    },
+                    "step": 6
+                  }
+                ]
+              },
+              "revised": {
+                "loss": {
+                  "control": 0.28125,
+                  "path": 0.01908139896247561,
+                  "smoothness": 0.0511063696455605,
+                  "terminal": 0.057244196887426824,
+                  "total": 0.06624247042825378
+                },
+                "trajectory": [
+                  {
+                    "evidence_id": "R1",
+                    "role": "context",
+                    "state": {
+                      "invalidation": 0.0,
+                      "revision": -0.23597974170001929,
+                      "stability": 0.0
+                    },
+                    "step": 1
+                  },
+                  {
+                    "evidence_id": "R2",
+                    "role": "required_support",
+                    "state": {
+                      "invalidation": 0.0,
+                      "revision": 0.1712523789758698,
+                      "stability": 0.0
+                    },
+                    "step": 2
+                  },
+                  {
+                    "evidence_id": "R3",
+                    "role": "invalidated_prior",
+                    "state": {
+                      "invalidation": 0.1403297662607021,
+                      "revision": -0.31404314983670883,
+                      "stability": 0.0
+                    },
+                    "step": 3
+                  },
+                  {
+                    "evidence_id": "R4",
+                    "role": "required_support",
+                    "state": {
+                      "invalidation": 0.11928030132159678,
+                      "revision": 0.43106197742617847,
+                      "stability": 0.0
+                    },
+                    "step": 4
+                  },
+                  {
+                    "evidence_id": "R5",
+                    "role": "stable",
+                    "state": {
+                      "invalidation": 0.10138825612335726,
+                      "revision": 0.3664026808122517,
+                      "stability": 1.0
+                    },
+                    "step": 5
+                  },
+                  {
+                    "evidence_id": "R6",
+                    "role": "correction",
+                    "state": {
+                      "invalidation": 1.3013333935158504,
+                      "revision": 1.45390444999114,
+                      "stability": 0.85
+                    },
+                    "step": 6
+                  }
+                ]
+              },
+              "schema_version": "ebrt-model-interface-core-v0.7.1",
+              "state_adapter_config": {
+                "correction_scale": 1.0,
+                "invalidation_scale": 1.0,
+                "support_scale": 1.0
+              },
+              "state_adapter_id": "typed-public-state-v0.7.1"
+            }
+          },
+          "diff": {
+            "answer_transition": [
+              "COLD_TIER",
+              "COLD_TIER"
+            ],
+            "fingerprint_sha256": "d992888eb0cd2f03862af97a9ff45b739bf4983d3b68aba2a3455117ac3dde77",
+            "left_arm": "direct_public_roles",
+            "parsed_state_changed": true,
+            "raw_text_changed": true,
+            "right_arm": "role_control_public_roles",
+            "unified_diff": [
+              "--- direct_public_roles",
+              "+++ role_control_public_roles",
+              "@@ -1 +1 @@",
+              "-STATE_JSON={\"answer\":\"COLD_TIER\",\"decision_support_ids\":[\"R2\",\"R4\"],\"preserved_constraint_ids\":[\"R5\"],\"revision_event_id\":\"R6\"}",
+              "+STATE_JSON={\"answer\":\"COLD_TIER\",\"decision_support_ids\":[\"R4\",\"R2\"],\"revision_event_id\":\"R6\",\"preserved_constraint_ids\":[\"R5\"]}"
+            ]
+          },
+          "family": "policy_revision",
+          "fingerprint_sha256": "45f858d3aa6a48204cb59bf010f10ea1a399403610424049eb2d9eb278e34174",
+          "post_call_contract": {
+            "expected_answer": "COLD_TIER",
+            "fingerprint_sha256": "10c8962c82ef8ed39395ed7cc88a4479dd41de7d51949fb37334ec37dd72dfcd",
+            "forbidden_support_ids": [
+              "R3"
+            ],
+            "required_compiled_preserve_ids": [
+              "R5"
+            ],
+            "required_support_ids": [
+              "R2",
+              "R4",
+              "R6"
+            ],
+            "schema_version": "ebrt-post-run-contract-v0.8.0"
+          },
+          "task": {
+            "answer_choices": [
+              "HOT_TIER",
+              "COLD_TIER"
+            ],
+            "before_horizon_evidence_ids": [
+              "R1",
+              "R2",
+              "R3",
+              "R4",
+              "R5"
+            ],
+            "event": {
+              "correction_evidence_id": "R6",
+              "event_id": "archive-tier-policy-revision-late-correction",
+              "invalidated_evidence_ids": [
+                "R3"
+              ],
+              "stable_evidence_ids": [
+                "R5"
+              ]
+            },
+            "evidence": [
+              {
+                "control_basis": [
+                  0.39,
+                  0.0,
+                  0.0
+                ],
+                "evidence_id": "R1",
+                "neutral_effect": [
+                  -0.27,
+                  0.0,
+                  0.0
+                ],
+                "ordinal": 1,
+                "role": "context",
+                "text": "Record A-12 requires one storage-tier decision."
+              },
+              {
+                "control_basis": [
+                  0.86,
+                  0.0,
+                  0.0
+                ],
+                "evidence_id": "R2",
+                "neutral_effect": [
+                  0.18,
+                  0.0,
+                  0.0
+                ],
+                "ordinal": 2,
+                "role": "required_support",
+                "text": "Its verified retention class is LONG_TERM."
+              },
+              {
+                "control_basis": [
+                  0.91,
+                  0.51,
+                  0.0
+                ],
+                "evidence_id": "R3",
+                "neutral_effect": [
+                  -0.71,
+                  0.0,
+                  0.0
+                ],
+                "ordinal": 3,
+                "role": "invalidated_prior",
+                "text": "The retired policy maps LONG_TERM records to HOT_TIER."
+              },
+              {
+                "control_basis": [
+                  1.07,
+                  0.0,
+                  0.0
+                ],
+                "evidence_id": "R4",
+                "neutral_effect": [
+                  0.3,
+                  0.0,
+                  0.0
+                ],
+                "ordinal": 4,
+                "role": "required_support",
+                "text": "The current policy maps LONG_TERM records to COLD_TIER."
+              },
+              {
+                "control_basis": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "evidence_id": "R5",
+                "neutral_effect": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "ordinal": 5,
+                "role": "stable",
+                "text": "The checksum mode remains SHA256."
+              },
+              {
+                "control_basis": [
+                  1.03,
+                  0.45,
+                  0.0
+                ],
+                "evidence_id": "R6",
+                "neutral_effect": [
+                  0.65,
+                  1.0,
+                  0.0
+                ],
+                "ordinal": 6,
+                "role": "correction",
+                "text": "Late correction: R3 is superseded; use the current storage policy in R4."
+              }
+            ],
+            "prior_state": {
+              "active_support_ids": [
+                "R2",
+                "R3",
+                "R5"
+              ],
+              "answer": "HOT_TIER",
+              "stable_values": [
+                {
+                  "key": "checksum_mode",
+                  "value": "SHA256"
+                }
+              ]
+            },
+            "question": "Which storage tier should record A-12 receive under the corrected policy?",
+            "schema_version": "ebrt-revision-task-v0.7.1",
+            "task_id": "archive-tier-policy-revision",
+            "trajectory_contract": {
+              "axes": [
+                "revision",
+                "invalidation",
+                "stability"
+              ],
+              "control_budget": 0.75,
+              "decay": 0.85,
+              "learning_rate": 0.8,
+              "reinspection_count": 3,
+              "terminal_target": [
+                1.3,
+                1.0,
+                0.85
+              ]
+            }
+          }
+        },
+        {
+          "arms": {
+            "direct_public_roles": {
+              "invocation_fingerprint_sha256": "25ea5a656592115a06f8797d62e76f26a6668523c0d019159e3c8db5d43efdd9",
+              "provider_uptake": null,
+              "result": {
+                "error_code": null,
+                "fingerprint_sha256": "5220dd4141dc1f8e72b773680c53a258501f3090bc4759102b14ea63f012fea0",
+                "latency_ms": 5353.149125003256,
+                "logical_calls": 1,
+                "public_state": {
+                  "answer": "APPROVE",
+                  "decision_support_ids": [
+                    "R2",
+                    "R4"
+                  ],
+                  "fingerprint_sha256": "5274f07dc5459d30713e47313985fba19ef723d04cdc0118eeb8d5fd7c06739d",
+                  "preserved_constraint_ids": [
+                    "R5"
+                  ],
+                  "revision_event_id": "R6",
+                  "schema_version": "ebrt-public-role-isolation-v0.8.5.2"
+                },
+                "raw_text": "STATE_JSON={\"answer\":\"APPROVE\",\"decision_support_ids\":[\"R2\",\"R4\"],\"preserved_constraint_ids\":[\"R5\"],\"revision_event_id\":\"R6\"}",
+                "request_fingerprint_sha256": "25ea5a656592115a06f8797d62e76f26a6668523c0d019159e3c8db5d43efdd9",
+                "status": "PARSED"
+              },
+              "semantic_grade": {
+                "checks": {
+                  "channels_pairwise_disjoint": true,
+                  "decision_support_exact": true,
+                  "expected_answer": true,
+                  "forbidden_evidence_absent": true,
+                  "preserved_constraints_exact": true,
+                  "revision_event_exact": true,
+                  "schema_parsed": true
+                },
+                "contract_fingerprint_sha256": "be2b5508de8c76072a540699815e4b8ecf6e1f12d740d7d538534361443a3c6a",
+                "expected": {
+                  "answer": "APPROVE",
+                  "decision_support_ids": [
+                    "R2",
+                    "R4"
+                  ],
+                  "preserved_constraint_ids": [
+                    "R5"
+                  ],
+                  "revision_event_id": "R6"
+                },
+                "fingerprint_sha256": "6806db8df58e81767c86aad660a7605823d70475f797359ca13e4eaf9a1c7149",
+                "status": "PASS"
+              }
+            },
+            "role_control_public_roles": {
+              "invocation_fingerprint_sha256": "ca09a6d22907207619058777da7c19695fe2a91b13544ca0bda05cfa135d4e24",
+              "provider_uptake": {
+                "checks": {
+                  "decision_roles_retained": true,
+                  "output_parsed": true,
+                  "preserve_role_retained": true,
+                  "revision_role_retained": true,
+                  "suppressed_evidence_absent": true
+                },
+                "fingerprint_sha256": "942d3acf58a4c45d3d04bb31553c6470abd0a3ffc746d55b46cd765920a4d539",
+                "program_fingerprint_sha256": "e550fa11178d5a6ac7826dc38ce9c8fc8f0c723f02ed46b6c8f8e738cd61b4e6",
+                "status": "PASS"
+              },
+              "result": {
+                "error_code": null,
+                "fingerprint_sha256": "e8508f8bc509a52a9e9af5d0dd856a88de0a52e6029b630f69576f0ebbd97536",
+                "latency_ms": 6143.257542003994,
+                "logical_calls": 1,
+                "public_state": {
+                  "answer": "APPROVE",
+                  "decision_support_ids": [
+                    "R4",
+                    "R2"
+                  ],
+                  "fingerprint_sha256": "a15b33dee39bc77627ea53328495a46ef4ce64a10a08df1041f3ecc95610d0ef",
+                  "preserved_constraint_ids": [
+                    "R5"
+                  ],
+                  "revision_event_id": "R6",
+                  "schema_version": "ebrt-public-role-isolation-v0.8.5.2"
+                },
+                "raw_text": "STATE_JSON={\"answer\":\"APPROVE\",\"decision_support_ids\":[\"R4\",\"R2\"],\"revision_event_id\":\"R6\",\"preserved_constraint_ids\":[\"R5\"]}",
+                "request_fingerprint_sha256": "ca09a6d22907207619058777da7c19695fe2a91b13544ca0bda05cfa135d4e24",
+                "status": "PARSED"
+              },
+              "semantic_grade": {
+                "checks": {
+                  "channels_pairwise_disjoint": true,
+                  "decision_support_exact": true,
+                  "expected_answer": true,
+                  "forbidden_evidence_absent": true,
+                  "preserved_constraints_exact": true,
+                  "revision_event_exact": true,
+                  "schema_parsed": true
+                },
+                "contract_fingerprint_sha256": "be2b5508de8c76072a540699815e4b8ecf6e1f12d740d7d538534361443a3c6a",
+                "expected": {
+                  "answer": "APPROVE",
+                  "decision_support_ids": [
+                    "R2",
+                    "R4"
+                  ],
+                  "preserved_constraint_ids": [
+                    "R5"
+                  ],
+                  "revision_event_id": "R6"
+                },
+                "fingerprint_sha256": "6806db8df58e81767c86aad660a7605823d70475f797359ca13e4eaf9a1c7149",
+                "status": "PASS"
+              }
+            }
+          },
+          "call_order": [
+            "role_control_public_roles",
+            "direct_public_roles"
+          ],
+          "case_id": "permit-state-rule-revision",
+          "compiled": {
+            "role_program": {
+              "fingerprint_sha256": "e550fa11178d5a6ac7826dc38ce9c8fc8f0c723f02ed46b6c8f8e738cd61b4e6",
+              "lane_id": "primary",
+              "preserve_evidence_ids": [
+                "R5"
+              ],
+              "reinspect": [
+                {
+                  "allocation_units": 51,
+                  "evidence_id": "R6",
+                  "signed_control": 0.5434446690971791
+                },
+                {
+                  "allocation_units": 26,
+                  "evidence_id": "R4",
+                  "signed_control": 0.26903027067852475
+                },
+                {
+                  "allocation_units": 23,
+                  "evidence_id": "R2",
+                  "signed_control": 0.2442813035481996
+                }
+              ],
+              "schema_version": "ebrt-actuator-program-v0.7.1",
+              "source_credit_fingerprint_sha256": "32dc531c407c27a7ac157081012d8f1c035b8d0055e2e05009720538f0dcb9b6",
+              "steps": [
+                "LOAD_FULL_CONTEXT",
+                "SUPPRESS_INVALIDATED_SUPPORT",
+                "REINSPECT_ROLE_COVERAGE_THEN_CREDIT",
+                "PRESERVE_STABLE_CONSTRAINTS",
+                "REGENERATE_ONCE"
+              ],
+              "suppress_evidence_ids": [
+                "R3"
+              ]
+            },
+            "trajectory": {
+              "axis_ids": [
+                "revision",
+                "invalidation",
+                "stability"
+              ],
+              "backtracking_steps": 0,
+              "checks": {
+                "central_finite_difference_agreement": true,
+                "control_budget_respected": true,
+                "control_is_non_neutral": true,
+                "ineligible_sites_are_zero": true,
+                "objective_decreased": true,
+                "pre_event_backward_credit_nonzero": true,
+                "real_backward_executed_once": true,
+                "stable_axis_exact_identity": true,
+                "zero_control_exact_noop": true
+              },
+              "control_budget": 0.75,
+              "control_l2": 0.75,
+              "credit_map": [
+                {
+                  "absolute_control": 0.15405482207636456,
+                  "control": 0.15405482207636456,
+                  "eligible": true,
+                  "evidence_id": "R1",
+                  "gradient": -0.35366323901592817,
+                  "role": "context",
+                  "step": 1
+                },
+                {
+                  "absolute_control": 0.2442813035481996,
+                  "control": 0.2442813035481996,
+                  "eligible": true,
+                  "evidence_id": "R2",
+                  "gradient": -0.5607959288743619,
+                  "role": "required_support",
+                  "step": 2
+                },
+                {
+                  "absolute_control": 0.33374295740930504,
+                  "control": 0.33374295740930504,
+                  "eligible": true,
+                  "evidence_id": "R3",
+                  "gradient": -0.7661728060522592,
+                  "role": "invalidated_prior",
+                  "step": 3
+                },
+                {
+                  "absolute_control": 0.26903027067852475,
+                  "control": 0.26903027067852475,
+                  "eligible": true,
+                  "evidence_id": "R4",
+                  "gradient": -0.6176120658809061,
+                  "role": "required_support",
+                  "step": 4
+                },
+                {
+                  "absolute_control": 0.0,
+                  "control": 0.0,
+                  "eligible": false,
+                  "evidence_id": "R5",
+                  "gradient": 0.0,
+                  "role": "stable",
+                  "step": 5
+                },
+                {
+                  "absolute_control": 0.5434446690971791,
+                  "control": 0.5434446690971791,
+                  "eligible": true,
+                  "evidence_id": "R6",
+                  "gradient": -1.247584459275,
+                  "role": "correction",
+                  "step": 6
+                }
+              ],
+              "event_index": 5,
+              "fingerprint_sha256": "32dc531c407c27a7ac157081012d8f1c035b8d0055e2e05009720538f0dcb9b6",
+              "finite_difference_max_abs_error": 7.513145661164344e-11,
+              "gradient_boundary": "detached_public_trajectory_after_state_adapter",
+              "lane_id": "primary",
+              "neutral": {
+                "loss": {
+                  "control": 0.0,
+                  "path": 0.20172631399318142,
+                  "smoothness": 0.0,
+                  "terminal": 0.6051789419795442,
+                  "total": 0.6354378890785215
+                },
+                "trajectory": [
+                  {
+                    "evidence_id": "R1",
+                    "role": "context",
+                    "state": {
+                      "invalidation": 0.0,
+                      "revision": -0.36,
+                      "stability": 0.0
+                    },
+                    "step": 1
+                  },
+                  {
+                    "evidence_id": "R2",
+                    "role": "required_support",
+                    "state": {
+                      "invalidation": 0.0,
+                      "revision": -0.10599999999999998,
+                      "stability": 0.0
+                    },
+                    "step": 2
+                  },
+                  {
+                    "evidence_id": "R3",
+                    "role": "invalidated_prior",
+                    "state": {
+                      "invalidation": 0.0,
+                      "revision": -0.9701,
+                      "stability": 0.0
+                    },
+                    "step": 3
+                  },
+                  {
+                    "evidence_id": "R4",
+                    "role": "required_support",
+                    "state": {
+                      "invalidation": 0.0,
+                      "revision": -0.6645849999999999,
+                      "stability": 0.0
+                    },
+                    "step": 4
+                  },
+                  {
+                    "evidence_id": "R5",
+                    "role": "stable",
+                    "state": {
+                      "invalidation": 0.0,
+                      "revision": -0.5648972499999999,
+                      "stability": 1.0
+                    },
+                    "step": 5
+                  },
+                  {
+                    "evidence_id": "R6",
+                    "role": "correction",
+                    "state": {
+                      "invalidation": 1.0,
+                      "revision": 0.19983733750000016,
+                      "stability": 0.85
+                    },
+                    "step": 6
+                  }
+                ]
+              },
+              "revised": {
+                "loss": {
+                  "control": 0.28125,
+                  "path": 0.028125717371362016,
+                  "smoothness": 0.09563519935373972,
+                  "terminal": 0.08437715211408604,
+                  "total": 0.09517736171332775
+                },
+                "trajectory": [
+                  {
+                    "evidence_id": "R1",
+                    "role": "context",
+                    "state": {
+                      "invalidation": 0.0,
+                      "revision": -0.2545351839060259,
+                      "stability": 0.0
+                    },
+                    "step": 1
+                  },
+                  {
+                    "evidence_id": "R2",
+                    "role": "required_support",
+                    "state": {
+                      "invalidation": 0.0,
+                      "revision": 0.20641312894966365,
+                      "stability": 0.0
+                    },
+                    "step": 2
+                  },
+                  {
+                    "evidence_id": "R3",
+                    "role": "invalidated_prior",
+                    "state": {
+                      "invalidation": 0.2124407803330758,
+                      "revision": -0.35691847257502546,
+                      "stability": 0.0
+                    },
+                    "step": 3
+                  },
+                  {
+                    "evidence_id": "R4",
+                    "role": "required_support",
+                    "state": {
+                      "invalidation": 0.18057466328311444,
+                      "revision": 0.05103377810987117,
+                      "stability": 0.0
+                    },
+                    "step": 4
+                  },
+                  {
+                    "evidence_id": "R5",
+                    "role": "stable",
+                    "state": {
+                      "invalidation": 0.15348846379064726,
+                      "revision": 0.043378711393390494,
+                      "stability": 1.0
+                    },
+                    "step": 5
+                  },
+                  {
+                    "evidence_id": "R6",
+                    "role": "correction",
+                    "state": {
+                      "invalidation": 1.407996166827066,
+                      "revision": 1.2521102089940555,
+                      "stability": 0.85
+                    },
+                    "step": 6
+                  }
+                ]
+              },
+              "schema_version": "ebrt-model-interface-core-v0.7.1",
+              "state_adapter_config": {
+                "correction_scale": 1.0,
+                "invalidation_scale": 1.0,
+                "support_scale": 1.0
+              },
+              "state_adapter_id": "typed-public-state-v0.7.1"
+            }
+          },
+          "diff": {
+            "answer_transition": [
+              "APPROVE",
+              "APPROVE"
+            ],
+            "fingerprint_sha256": "8b818df73f41534d8a55dd86ba0bbc2c7a985d145fbbf15127b8fd257b6d70ff",
+            "left_arm": "direct_public_roles",
+            "parsed_state_changed": true,
+            "raw_text_changed": true,
+            "right_arm": "role_control_public_roles",
+            "unified_diff": [
+              "--- direct_public_roles",
+              "+++ role_control_public_roles",
+              "@@ -1 +1 @@",
+              "-STATE_JSON={\"answer\":\"APPROVE\",\"decision_support_ids\":[\"R2\",\"R4\"],\"preserved_constraint_ids\":[\"R5\"],\"revision_event_id\":\"R6\"}",
+              "+STATE_JSON={\"answer\":\"APPROVE\",\"decision_support_ids\":[\"R4\",\"R2\"],\"revision_event_id\":\"R6\",\"preserved_constraint_ids\":[\"R5\"]}"
+            ]
+          },
+          "family": "eligibility_revision",
+          "fingerprint_sha256": "b28f34c0fb5cf3ea6940414006278e944d1fa31b30be27d344910354be9cee65",
+          "post_call_contract": {
+            "expected_answer": "APPROVE",
+            "fingerprint_sha256": "be2b5508de8c76072a540699815e4b8ecf6e1f12d740d7d538534361443a3c6a",
+            "forbidden_support_ids": [
+              "R3"
+            ],
+            "required_compiled_preserve_ids": [
+              "R5"
+            ],
+            "required_support_ids": [
+              "R2",
+              "R4",
+              "R6"
+            ],
+            "schema_version": "ebrt-post-run-contract-v0.8.0"
+          },
+          "task": {
+            "answer_choices": [
+              "HOLD",
+              "APPROVE"
+            ],
+            "before_horizon_evidence_ids": [
+              "R1",
+              "R2",
+              "R3",
+              "R4",
+              "R5"
+            ],
+            "event": {
+              "correction_evidence_id": "R6",
+              "event_id": "permit-state-rule-revision-late-correction",
+              "invalidated_evidence_ids": [
+                "R3"
+              ],
+              "stable_evidence_ids": [
+                "R5"
+              ]
+            },
+            "evidence": [
+              {
+                "control_basis": [
+                  0.69,
+                  0.0,
+                  0.0
+                ],
+                "evidence_id": "R1",
+                "neutral_effect": [
+                  -0.36,
+                  0.0,
+                  0.0
+                ],
+                "ordinal": 1,
+                "role": "context",
+                "text": "Request P-8 needs one permit-state decision."
+              },
+              {
+                "control_basis": [
+                  0.93,
+                  0.0,
+                  0.0
+                ],
+                "evidence_id": "R2",
+                "neutral_effect": [
+                  0.2,
+                  0.0,
+                  0.0
+                ],
+                "ordinal": 2,
+                "role": "required_support",
+                "text": "Its verified review class is C2."
+              },
+              {
+                "control_basis": [
+                  1.08,
+                  0.66,
+                  0.0
+                ],
+                "evidence_id": "R3",
+                "neutral_effect": [
+                  -0.88,
+                  0.0,
+                  0.0
+                ],
+                "ordinal": 3,
+                "role": "invalidated_prior",
+                "text": "The retired rule assigns class C2 to HOLD."
+              },
+              {
+                "control_basis": [
+                  0.74,
+                  0.0,
+                  0.0
+                ],
+                "evidence_id": "R4",
+                "neutral_effect": [
+                  0.16,
+                  0.0,
+                  0.0
+                ],
+                "ordinal": 4,
+                "role": "required_support",
+                "text": "The current rule assigns class C2 to APPROVE."
+              },
+              {
+                "control_basis": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "evidence_id": "R5",
+                "neutral_effect": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "ordinal": 5,
+                "role": "stable",
+                "text": "The audit route remains HUMAN_REVIEW."
+              },
+              {
+                "control_basis": [
+                  1.08,
+                  0.56,
+                  0.0
+                ],
+                "evidence_id": "R6",
+                "neutral_effect": [
+                  0.68,
+                  1.0,
+                  0.0
+                ],
+                "ordinal": 6,
+                "role": "correction",
+                "text": "Late correction: R3 is invalid; apply the current permit rule in R4."
+              }
+            ],
+            "prior_state": {
+              "active_support_ids": [
+                "R2",
+                "R3",
+                "R5"
+              ],
+              "answer": "HOLD",
+              "stable_values": [
+                {
+                  "key": "audit_route",
+                  "value": "HUMAN_REVIEW"
+                }
+              ]
+            },
+            "question": "What permit state should request P-8 receive under the corrected rule?",
+            "schema_version": "ebrt-revision-task-v0.7.1",
+            "task_id": "permit-state-rule-revision",
+            "trajectory_contract": {
+              "axes": [
+                "revision",
+                "invalidation",
+                "stability"
+              ],
+              "control_budget": 0.75,
+              "decay": 0.85,
+              "learning_rate": 0.8,
+              "reinspection_count": 3,
+              "terminal_target": [
+                1.3,
+                1.0,
+                0.85
+              ]
+            }
+          }
+        }
+      ],
+      "fingerprint_sha256": "902293923e6f52161b2ae7695b9be6c2a0eb3c7ddc971814e78844fca37cd4d0",
+      "model_adapter": {
+        "adapter_id": "public-role-isolation-model",
+        "differentiable_through_model": false,
+        "generation_config": {
+          "add_generation_prompt": true,
+          "max_tokens": 96,
+          "prompt_rendering_mode": "chat_template",
+          "sampler_temperature": 0.0,
+          "seed": 0
+        },
+        "generation_config_fingerprint_sha256": "920ce7125e0ba93d9dda827c1612b7550247f86d4b1fe3edd21ef24844fc8f1a",
+        "interface_kind": "local_open_weight",
+        "model_id": "mlx-community/Mistral-7B-Instruct-v0.3-4bit@a4b8f870474b0eb527f466a03fbc187830d271f5",
+        "state_visibility": "public_only"
+      },
+      "readiness": {
+        "disposition": "ADMITTED_TO_REGRESSION",
+        "fingerprint_sha256": "819a3d5d4fc96844d3e184c7da9d846dd94ad64633fc65f7ebbda1c096968b5c",
+        "format_ready": {
+          "error_code": null,
+          "expected_output_sha256": "d67500563e17732561f3496ac01402942ada10ef981d6d7dc17525393ed73a77",
+          "fingerprint_sha256": "322af3ed0dd0fd4ecaa1972bf9baae752ed5fc4d83683abac942468c504ef9b2",
+          "latency_ms": 7805.7371670001885,
+          "logical_calls": 1,
+          "prompt_sha256": "6e0ca346b7075e92465aaf04cafa547a406b93473f1f5ab00d277edae1bf8fcf",
+          "raw_text": "STATE_JSON={\"answer\":\"READY\",\"decision_support_ids\":[\"R1\"],\"preserved_constraint_ids\":[\"R3\"],\"revision_event_id\":\"R2\"}",
+          "status": "PASS"
+        },
+        "logical_calls": 2,
+        "status": "PASS",
+        "task_channel_ready": {
+          "fingerprint_sha256": "1971c0467604929a4f6c29a78afb1345c983e13e934cb134b471f84bc37d5cd8",
+          "invocation_fingerprint_sha256": "8daf591891c6ab4942dd7ee2b296e1783503180e0d956b6e3dc9ff854bb2fd4a",
+          "result": {
+            "error_code": null,
+            "fingerprint_sha256": "dc982fe6f4fb02b9d50fe66c62e93f95d629cecc9add57bf3be5bbe2753fd58c",
+            "latency_ms": 5395.490291004535,
+            "logical_calls": 1,
+            "public_state": {
+              "answer": "GATE_BLUE",
+              "decision_support_ids": [
+                "R2",
+                "R4"
+              ],
+              "fingerprint_sha256": "d7b51aec41ed5dd8df370e273eac04999cec63187e45c21232a6574eaddd3e80",
+              "preserved_constraint_ids": [
+                "R5"
+              ],
+              "revision_event_id": "R6",
+              "schema_version": "ebrt-public-role-isolation-v0.8.5.2"
+            },
+            "raw_text": "STATE_JSON={\"answer\":\"GATE_BLUE\",\"decision_support_ids\":[\"R2\",\"R4\"],\"preserved_constraint_ids\":[\"R5\"],\"revision_event_id\":\"R6\"}",
+            "request_fingerprint_sha256": "8daf591891c6ab4942dd7ee2b296e1783503180e0d956b6e3dc9ff854bb2fd4a",
+            "status": "PARSED"
+          },
+          "semantic_grade": {
+            "checks": {
+              "channels_pairwise_disjoint": true,
+              "decision_support_exact": true,
+              "expected_answer": true,
+              "forbidden_evidence_absent": true,
+              "preserved_constraints_exact": true,
+              "revision_event_exact": true,
+              "schema_parsed": true
+            },
+            "contract_fingerprint_sha256": "fd1727218dcee14566bf489f7d61d9a2a2dcb7d4453f52e3a486ceec2b4ec5ce",
+            "expected": {
+              "answer": "GATE_BLUE",
+              "decision_support_ids": [
+                "R2",
+                "R4"
+              ],
+              "preserved_constraint_ids": [
+                "R5"
+              ],
+              "revision_event_id": "R6"
+            },
+            "fingerprint_sha256": "0d1932dfd5e0eea337dbc0f9f69518649a773edc48aae0550172b1e68c9bb91b",
+            "status": "PASS"
+          },
+          "status": "PASS"
+        }
+      },
+      "status": "COMPLETE",
+      "summary": {
+        "admitted_to_regression": true,
+        "case_count": 4,
+        "format_ready": true,
+        "logical_calls": 10,
+        "parsed_outputs": {
+          "direct_public_roles": 4,
+          "role_control_public_roles": 4
+        },
+        "provider_uptake_passes": 4,
+        "raw_output_diff_cells": 3,
+        "strict_passes": {
+          "direct_public_roles": 3,
+          "role_control_public_roles": 3
+        },
+        "strict_regressions": 0,
+        "strict_repairs": 0,
+        "task_channel_ready": true
+      }
+    },
+    {
+      "cases": [],
+      "fingerprint_sha256": "893e6b6d102066dfc688ff32886a0fe77c2d01557ce13ae354e1d4edcdcd43c0",
+      "model_adapter": {
+        "adapter_id": "public-role-isolation-model",
+        "differentiable_through_model": false,
+        "generation_config": {
+          "add_generation_prompt": true,
+          "max_tokens": 96,
+          "prompt_rendering_mode": "chat_template",
+          "sampler_temperature": 0.0,
+          "seed": 0
+        },
+        "generation_config_fingerprint_sha256": "920ce7125e0ba93d9dda827c1612b7550247f86d4b1fe3edd21ef24844fc8f1a",
+        "interface_kind": "local_open_weight",
+        "model_id": "mlx-community/Qwen2.5-1.5B-Instruct-4bit@8b403126fc14f14cfc99bb4cfa72ecbc129ea677",
+        "state_visibility": "public_only"
+      },
+      "readiness": {
+        "disposition": "ADAPTER_OR_CAPABILITY_DIAGNOSTIC_NO_REGRESSION_CELLS",
+        "fingerprint_sha256": "0ba4acb018db6fd5b6e8015f1d60651405902ce59b139afd466dee37c0fd1493",
+        "format_ready": {
+          "error_code": null,
+          "expected_output_sha256": "d67500563e17732561f3496ac01402942ada10ef981d6d7dc17525393ed73a77",
+          "fingerprint_sha256": "4f2c2e5fc7dd93eb0974524f8e7d477426c87172a401a679a7688afe1bc9aedc",
+          "latency_ms": 1246.725332995993,
+          "logical_calls": 1,
+          "prompt_sha256": "6e0ca346b7075e92465aaf04cafa547a406b93473f1f5ab00d277edae1bf8fcf",
+          "raw_text": "STATE_JSON={\"answer\":\"READY\",\"decision_support_ids\":[\"R1\"],\"preserved_constraint_ids\":[\"R3\"],\"revision_event_id\":\"R2\"}",
+          "status": "PASS"
+        },
+        "logical_calls": 2,
+        "status": "FAIL",
+        "task_channel_ready": {
+          "fingerprint_sha256": "d4135fab24951cae8aeaaa07175585c5d83ba95127badad5c15d646fbf13892c",
+          "invocation_fingerprint_sha256": "8daf591891c6ab4942dd7ee2b296e1783503180e0d956b6e3dc9ff854bb2fd4a",
+          "result": {
+            "error_code": null,
+            "fingerprint_sha256": "9dbe1e495b11c857a00e6d9908ead7a68b77b71bf9891b5712d9743beeda9627",
+            "latency_ms": 931.9318340130849,
+            "logical_calls": 1,
+            "public_state": {
+              "answer": "GATE_BLUE",
+              "decision_support_ids": [
+                "R4"
+              ],
+              "fingerprint_sha256": "79d2cbc38bea9bd5f3e4a1ed6cbe95af8d76129bff32f5a3a7267a78e015e38e",
+              "preserved_constraint_ids": [
+                "R5"
+              ],
+              "revision_event_id": "R6",
+              "schema_version": "ebrt-public-role-isolation-v0.8.5.2"
+            },
+            "raw_text": "STATE_JSON={\"answer\":\"GATE_BLUE\",\"decision_support_ids\":[\"R4\"],\"preserved_constraint_ids\":[\"R5\"],\"revision_event_id\":\"R6\"}",
+            "request_fingerprint_sha256": "8daf591891c6ab4942dd7ee2b296e1783503180e0d956b6e3dc9ff854bb2fd4a",
+            "status": "PARSED"
+          },
+          "semantic_grade": {
+            "checks": {
+              "channels_pairwise_disjoint": true,
+              "decision_support_exact": false,
+              "expected_answer": true,
+              "forbidden_evidence_absent": true,
+              "preserved_constraints_exact": true,
+              "revision_event_exact": true,
+              "schema_parsed": true
+            },
+            "contract_fingerprint_sha256": "fd1727218dcee14566bf489f7d61d9a2a2dcb7d4453f52e3a486ceec2b4ec5ce",
+            "expected": {
+              "answer": "GATE_BLUE",
+              "decision_support_ids": [
+                "R2",
+                "R4"
+              ],
+              "preserved_constraint_ids": [
+                "R5"
+              ],
+              "revision_event_id": "R6"
+            },
+            "fingerprint_sha256": "c7dafcd7b8dacf227cd254862dcfaebba89d55e7f8946c13349d155da2ebbf81",
+            "status": "FAIL"
+          },
+          "status": "FAIL"
+        }
+      },
+      "status": "ADAPTER_OR_CAPABILITY_DIAGNOSTIC",
+      "summary": {
+        "admitted_to_regression": false,
+        "case_count": 0,
+        "format_ready": true,
+        "logical_calls": 2,
+        "parsed_outputs": {
+          "direct_public_roles": 0,
+          "role_control_public_roles": 0
+        },
+        "provider_uptake_passes": 0,
+        "raw_output_diff_cells": 0,
+        "strict_passes": {
+          "direct_public_roles": 0,
+          "role_control_public_roles": 0
+        },
+        "strict_regressions": 0,
+        "strict_repairs": 0,
+        "task_channel_ready": false
+      }
+    }
+  ],
+  "schema_version": "ebrt-public-role-isolation-run-v0.8.5.2",
+  "status": "COMPLETE_WITH_BOUNDED_ADAPTER_ADMISSION",
+  "summary": {
+    "adapter_diagnostic_models": 1,
+    "admitted_regression_models": 1,
+    "denominator_cells_per_arm": 4,
+    "format_ready_models": 2,
+    "logical_calls": 12,
+    "model_count": 2,
+    "provider_uptake_passes": 4,
+    "raw_output_diff_cells": 3,
+    "strict_passes": {
+      "direct_public_roles": 3,
+      "role_control_public_roles": 3
+    },
+    "strict_regressions": 0,
+    "strict_repairs": 0,
+    "task_channel_ready_models": 1
+  }
+}

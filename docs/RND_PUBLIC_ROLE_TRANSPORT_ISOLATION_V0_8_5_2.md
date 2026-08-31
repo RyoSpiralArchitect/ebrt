@@ -1,6 +1,6 @@
 # EBRT v0.8.5.2 — exact public-role isolation
 
-Status before local model calls: `LOCKED_NOT_RUN`.
+Status: `COMPLETE_WITH_BOUNDED_ADAPTER_ADMISSION`.
 
 ## Question
 
@@ -71,3 +71,26 @@ python3 public_role_transport_isolation_v0_8_5_2.py lock-spec \
 The live one-shot command is authorized only after the generated lock and
 runner are present in a pushed commit. A failed or null result is preserved as
 first-class evidence and is not retried under this namespace.
+
+## r01 result
+
+The lock was pushed in commit `11ff6f5` before execution. The single run used
+12 logical calls with no retry.
+
+- Full prompt projection: `9 / 9` exact after deleting only `role`.
+- Mistral task readiness: v0.8.5 `FAIL` to v0.8.5.2 `PASS`.
+- Qwen task readiness: v0.8.5 `FAIL` to v0.8.5.2 `FAIL` (required support
+  `R2` remained absent).
+- Mistral strict regression: `3 / 4` direct and `3 / 4` controlled.
+- Strict repairs / regressions: `0 / 0`.
+- Direct/control raw differences: `3 / 4`.
+- Direct/control normalized public-state differences: `0 / 4`.
+- Direct/control answer differences: `0 / 4`.
+
+The isolated role field is associated with one contaminated model's known
+readiness repair, while causal attribution remains `NOT_ASSESSED`. The
+direct/control semantic effect is `NULL_ON_ADMITTED_CELLS`.
+
+See
+[`artifacts/public_role_transport_isolation_v0_8_5_2/r01/report.md`](../artifacts/public_role_transport_isolation_v0_8_5_2/r01/report.md)
+for exact outputs, hashes, and claim boundaries.

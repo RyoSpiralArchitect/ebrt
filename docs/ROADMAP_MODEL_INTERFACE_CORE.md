@@ -1,7 +1,7 @@
 # EBRT Model-Interface Core Roadmap
 
 Status: **ACTIVE ENGINEERING AND RESEARCH PLAN**
-Current implementation: **v0.7.1 core + v0.8.5 typed-state admission diagnostic**
+Current implementation: **v0.7.1 core + v0.8.5.2 exact public-role isolation**
 
 This roadmap starts where the sealed v0.6 line ends. It does not rewrite those
 artifacts or reinterpret their results. The new line separates the backward
@@ -262,6 +262,30 @@ Status: **COMPLETE BUNDLED ADAPTER DIAGNOSTIC**
   is `NOT_IDENTIFIED`.
 - Isolate the intended field in v0.8.5.2 by restoring the exact prior label
   line under a fresh namespace and lock; never rerun or rewrite v0.8.5.1 r01.
+
+### v0.8.5.2 — Exact public-role isolation
+
+Status: **COMPLETE CONTAMINATED INTERFACE ASSOCIATION; CAUSAL EFFECT NOT ASSESSED**
+
+- Restore the exact v0.8.5 adapter-label line while retaining the public role
+  field added by v0.8.5.1.
+- Make full prompt projection a hard pre-call gate: deleting only `role` from
+  readiness and all direct/controlled evidence records must reconstruct all
+  nine v0.8.5 prompts byte-for-byte.
+- Preserve the exact models, typed output state, cases, controller, schedule,
+  sampling, readiness admission, and no-retry geometry.
+- Commit and push the fresh lock before the one-shot local execution.
+- Record Mistral readiness `FAIL -> PASS` and Qwen `FAIL -> FAIL`; describe the
+  isolated field as associated with one contaminated model's repair, never as
+  a causal or cross-model effect.
+- Record Mistral `3/4` strict passes in both arms, zero repair/regression, and
+  the shared `credit-scale-rule-revision` answer failure.
+- Normalize set-like channels before interpretation: the three raw arm
+  differences are ordering-only; normalized public-state and answer
+  differences remain `0/4`.
+- Treat public-role uptake as a measured adapter capability. Do not infer that
+  role labels are sufficient across model scales or that the current control
+  program changes final answer semantics.
 
 ### v0.8.6 — Hosted-provider adapters
 
