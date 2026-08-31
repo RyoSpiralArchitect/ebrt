@@ -1,7 +1,7 @@
 # EBRT Model-Interface Core Roadmap
 
 Status: **ACTIVE ENGINEERING AND RESEARCH PLAN**
-Current implementation: **v0.7.1 core + v0.8.5.2 exact public-role isolation**
+Current implementation: **v0.7.1 core + v0.8.5.3 adapter-breadth gate**
 
 This roadmap starts where the sealed v0.6 line ends. It does not rewrite those
 artifacts or reinterpret their results. The new line separates the backward
@@ -286,6 +286,26 @@ Status: **COMPLETE CONTAMINATED INTERFACE ASSOCIATION; CAUSAL EFFECT NOT ASSESSE
 - Treat public-role uptake as a measured adapter capability. Do not infer that
   role labels are sufficient across model scales or that the current control
   program changes final answer semantics.
+
+### v0.8.5.3 — Public-role adapter breadth gate
+
+Status: **COMPLETE ADAPTER DIAGNOSTIC; ALGORITHM NOT ASSESSED**
+
+- Preserve all nine v0.8.5.2 model-visible prompts byte-for-byte and change
+  only the exact model snapshots to Llama 3.2 3B bf16 and Gemma 2 2B 4-bit.
+- Require literal and task-shaped readiness before any contaminated regression
+  cell; preserve the minimum four-call result when neither model is admitted.
+- Record `MLX_GENERATION_FAILED` at both probes for both snapshots and zero
+  final public states, output comparisons, or algorithm denominators.
+- Keep the sealed error code separate from a post-run static diagnosis: both
+  tokenizer configurations lack a chat template under the locked
+  `chat_template` rendering mode.
+- Do not call this weak model capability or a negative reasoning result. The
+  public error code hides the underlying exception, so causal attribution is
+  not assessed.
+- Add a zero-call rendering-capability preflight before any future breadth
+  execution. A plain-text adapter and a chat-template adapter are distinct
+  protocols and require separate locks.
 
 ### v0.8.6 — Hosted-provider adapters
 

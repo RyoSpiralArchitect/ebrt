@@ -1,0 +1,20 @@
+{
+  "checks": {
+    "adapter_admission_replayed": true,
+    "aggregate_replayed": true,
+    "dependency_hashes_exact": true,
+    "diffs_replayed": true,
+    "format_readiness_replayed": true,
+    "invocations_recompiled": true,
+    "model_identities_exact": true,
+    "model_outputs_reparsed": true,
+    "policy_lock_exact": true,
+    "provider_uptake_replayed": true,
+    "task_channel_readiness_replayed": true,
+    "typed_states_regraded": true
+  },
+  "fingerprint_sha256": "a321a1ec67559bc787601f96ccd2fb693cd2ac7845da5951e39508911e9742a7",
+  "run_fingerprint_sha256": "0abe5048dcf81e7393bf417a831505d22b50822c97aa2a22c76dd3a888ba813d",
+  "schema_version": "ebrt-public-role-adapter-breadth-verification-v0.8.5.3",
+  "status": "PASS"
+}

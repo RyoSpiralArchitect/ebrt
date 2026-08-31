@@ -1,0 +1,263 @@
+{
+  "claim_boundary": [
+    "This is a contaminated adapter-breadth canary over two previously exercised local model families and four published cases, not a fresh benchmark.",
+    "Literal FORMAT_READY and TASK_CHANNEL_READY are separate receipts; only models passing both execute regression cells.",
+    "Every model-visible readiness and regression prompt matches v0.8.5.2 byte for byte; only the exact model snapshots change.",
+    "Each evidence role is caller-supplied public scaffold metadata already present in RevisionTask, not a dependency discovered by EBRT or the model.",
+    "After removing only the caller-supplied role key, every model-visible readiness and regression prompt matches v0.8.5 byte for byte.",
+    "Direct and role-controlled arms share the exact role-record schema and output-contract fingerprint; the control contrast still bundles evidence order and explicit revision instructions.",
+    "Decision support, revision provenance, and preserved constraints are public adapter fields, not private model states.",
+    "Semantic contracts are post-call grading material and are absent from model-visible prompts.",
+    "No gradient crosses a model adapter, and public trajectories are not private reasoning transcripts.",
+    "One deterministic sample per contaminated cell cannot establish causal superiority, general reasoning improvement, model-ranking, or cross-model regularity."
+  ],
+  "effect_attribution_status": "NOT_ASSESSED",
+  "execution_policy": {
+    "arm_ids": [
+      "direct_public_roles",
+      "role_control_public_roles"
+    ],
+    "automatic_retry": false,
+    "calls_per_arm_per_case": 1,
+    "max_tokens_per_call": 96,
+    "native_state_capture": "DISABLED",
+    "output_contract_fingerprint_sha256": "5863e855ea986e0e6ba05b54361cdfc366d392e13daa733332709042bab9eb73",
+    "prompt_rendering_mode": "chat_template",
+    "public_role_record_fingerprint_sha256": "d7d16db4dff34cbfa58524880eee35072cfb7f76ad3ca1ada74438cea62452a4",
+    "schedule": [
+      [
+        "direct_public_roles",
+        "role_control_public_roles"
+      ],
+      [
+        "role_control_public_roles",
+        "direct_public_roles"
+      ],
+      [
+        "direct_public_roles",
+        "role_control_public_roles"
+      ],
+      [
+        "role_control_public_roles",
+        "direct_public_roles"
+      ]
+    ],
+    "seed": 0,
+    "temperature": 0.0
+  },
+  "fingerprint_sha256": "0abe5048dcf81e7393bf417a831505d22b50822c97aa2a22c76dd3a888ba813d",
+  "generalization_status": "CONTAMINATED_ENGINEERING_REGRESSION_ONLY",
+  "native_state_capture_status": "DISABLED",
+  "policy_lock_fingerprint_sha256": "1fb7f076a28ce30b86c30ab2e9caa8d257e52aba1acab6153710c1f379b87e07",
+  "runs": [
+    {
+      "cases": [],
+      "fingerprint_sha256": "561ca1d9b34e00b846710de16a8da512b50def0d97ea784f406ed2879ae7ef95",
+      "model_adapter": {
+        "adapter_id": "public-role-adapter-breadth-model",
+        "differentiable_through_model": false,
+        "generation_config": {
+          "add_generation_prompt": true,
+          "max_tokens": 96,
+          "prompt_rendering_mode": "chat_template",
+          "sampler_temperature": 0.0,
+          "seed": 0
+        },
+        "generation_config_fingerprint_sha256": "920ce7125e0ba93d9dda827c1612b7550247f86d4b1fe3edd21ef24844fc8f1a",
+        "interface_kind": "local_open_weight",
+        "model_id": "mlx-community/Llama-3.2-3B-bf16@60a99aaf43164077157d64bf909b7b61143c6a6d",
+        "state_visibility": "public_only"
+      },
+      "readiness": {
+        "disposition": "ADAPTER_OR_CAPABILITY_DIAGNOSTIC_NO_REGRESSION_CELLS",
+        "fingerprint_sha256": "9994ec9e3799d1acbb42c13466ce5f26c6ba47ca783f8b49c7c4bb6a7627c9aa",
+        "format_ready": {
+          "error_code": "MLX_GENERATION_FAILED",
+          "expected_output_sha256": "d67500563e17732561f3496ac01402942ada10ef981d6d7dc17525393ed73a77",
+          "fingerprint_sha256": "2dda7eb6aca25258be5608f3036a2407192d59c9c39090141e150bbce3fa7d02",
+          "latency_ms": 7778.222833992913,
+          "logical_calls": 1,
+          "prompt_sha256": "6e0ca346b7075e92465aaf04cafa547a406b93473f1f5ab00d277edae1bf8fcf",
+          "raw_text": null,
+          "status": "FAIL"
+        },
+        "logical_calls": 2,
+        "status": "FAIL",
+        "task_channel_ready": {
+          "fingerprint_sha256": "28c6a6c6607ecd8014697f8897be07a488ce28d8bf0b8dde00ca417e1368f125",
+          "invocation_fingerprint_sha256": "e2ccbbdffb6419f49e0aa30032650097f68c2932651749e2500888e38a86032d",
+          "result": {
+            "error_code": "MLX_GENERATION_FAILED",
+            "fingerprint_sha256": "a211a1ad7ddb20672ab219c0c07e9517db42304ac47e6ab7f727d8c3445d0bac",
+            "latency_ms": 0.012874996173195541,
+            "logical_calls": 1,
+            "public_state": null,
+            "raw_text": null,
+            "request_fingerprint_sha256": "e2ccbbdffb6419f49e0aa30032650097f68c2932651749e2500888e38a86032d",
+            "status": "GENERATION_ERROR"
+          },
+          "semantic_grade": {
+            "checks": {
+              "channels_pairwise_disjoint": false,
+              "decision_support_exact": false,
+              "expected_answer": false,
+              "forbidden_evidence_absent": false,
+              "preserved_constraints_exact": false,
+              "revision_event_exact": false,
+              "schema_parsed": false
+            },
+            "contract_fingerprint_sha256": "fd1727218dcee14566bf489f7d61d9a2a2dcb7d4453f52e3a486ceec2b4ec5ce",
+            "expected": {
+              "answer": "GATE_BLUE",
+              "decision_support_ids": [
+                "R2",
+                "R4"
+              ],
+              "preserved_constraint_ids": [
+                "R5"
+              ],
+              "revision_event_id": "R6"
+            },
+            "fingerprint_sha256": "91a3890ba756445588cce2ac43ff8b967927e7744097e8a0112726a405a0f292",
+            "status": "FAIL"
+          },
+          "status": "FAIL"
+        }
+      },
+      "status": "ADAPTER_OR_CAPABILITY_DIAGNOSTIC",
+      "summary": {
+        "admitted_to_regression": false,
+        "case_count": 0,
+        "format_ready": false,
+        "logical_calls": 2,
+        "parsed_outputs": {
+          "direct_public_roles": 0,
+          "role_control_public_roles": 0
+        },
+        "provider_uptake_passes": 0,
+        "raw_output_diff_cells": 0,
+        "strict_passes": {
+          "direct_public_roles": 0,
+          "role_control_public_roles": 0
+        },
+        "strict_regressions": 0,
+        "strict_repairs": 0,
+        "task_channel_ready": false
+      }
+    },
+    {
+      "cases": [],
+      "fingerprint_sha256": "0ccd35641d8ca3028946ac2ee37dd9b88698156f3e2b58dcd98f3a4a13e4aec4",
+      "model_adapter": {
+        "adapter_id": "public-role-adapter-breadth-model",
+        "differentiable_through_model": false,
+        "generation_config": {
+          "add_generation_prompt": true,
+          "max_tokens": 96,
+          "prompt_rendering_mode": "chat_template",
+          "sampler_temperature": 0.0,
+          "seed": 0
+        },
+        "generation_config_fingerprint_sha256": "920ce7125e0ba93d9dda827c1612b7550247f86d4b1fe3edd21ef24844fc8f1a",
+        "interface_kind": "local_open_weight",
+        "model_id": "mlx-community/gemma-2-2b-4bit@2da7060bea6e767e27d7a776f834071ba69bd3ba",
+        "state_visibility": "public_only"
+      },
+      "readiness": {
+        "disposition": "ADAPTER_OR_CAPABILITY_DIAGNOSTIC_NO_REGRESSION_CELLS",
+        "fingerprint_sha256": "29bd1bdca354e458bae015b06a98333ee4393c7f333f9a5b16f94e66aff713ab",
+        "format_ready": {
+          "error_code": "MLX_GENERATION_FAILED",
+          "expected_output_sha256": "d67500563e17732561f3496ac01402942ada10ef981d6d7dc17525393ed73a77",
+          "fingerprint_sha256": "224a1602c190b6b787037a1f3c6946be70bbcfc81e47b1f83e2f72d6d19821a6",
+          "latency_ms": 1776.6994169942336,
+          "logical_calls": 1,
+          "prompt_sha256": "6e0ca346b7075e92465aaf04cafa547a406b93473f1f5ab00d277edae1bf8fcf",
+          "raw_text": null,
+          "status": "FAIL"
+        },
+        "logical_calls": 2,
+        "status": "FAIL",
+        "task_channel_ready": {
+          "fingerprint_sha256": "dcb2449ff28fcd19ba9e1ee67695991ce23e32faaf19272af63d8e3e612a3bf1",
+          "invocation_fingerprint_sha256": "e2ccbbdffb6419f49e0aa30032650097f68c2932651749e2500888e38a86032d",
+          "result": {
+            "error_code": "MLX_GENERATION_FAILED",
+            "fingerprint_sha256": "20130e0199451f2e426879d424e410cb6741dc3cc2bea55c0efc3f0972586446",
+            "latency_ms": 0.011458003427833319,
+            "logical_calls": 1,
+            "public_state": null,
+            "raw_text": null,
+            "request_fingerprint_sha256": "e2ccbbdffb6419f49e0aa30032650097f68c2932651749e2500888e38a86032d",
+            "status": "GENERATION_ERROR"
+          },
+          "semantic_grade": {
+            "checks": {
+              "channels_pairwise_disjoint": false,
+              "decision_support_exact": false,
+              "expected_answer": false,
+              "forbidden_evidence_absent": false,
+              "preserved_constraints_exact": false,
+              "revision_event_exact": false,
+              "schema_parsed": false
+            },
+            "contract_fingerprint_sha256": "fd1727218dcee14566bf489f7d61d9a2a2dcb7d4453f52e3a486ceec2b4ec5ce",
+            "expected": {
+              "answer": "GATE_BLUE",
+              "decision_support_ids": [
+                "R2",
+                "R4"
+              ],
+              "preserved_constraint_ids": [
+                "R5"
+              ],
+              "revision_event_id": "R6"
+            },
+            "fingerprint_sha256": "91a3890ba756445588cce2ac43ff8b967927e7744097e8a0112726a405a0f292",
+            "status": "FAIL"
+          },
+          "status": "FAIL"
+        }
+      },
+      "status": "ADAPTER_OR_CAPABILITY_DIAGNOSTIC",
+      "summary": {
+        "admitted_to_regression": false,
+        "case_count": 0,
+        "format_ready": false,
+        "logical_calls": 2,
+        "parsed_outputs": {
+          "direct_public_roles": 0,
+          "role_control_public_roles": 0
+        },
+        "provider_uptake_passes": 0,
+        "raw_output_diff_cells": 0,
+        "strict_passes": {
+          "direct_public_roles": 0,
+          "role_control_public_roles": 0
+        },
+        "strict_regressions": 0,
+        "strict_repairs": 0,
+        "task_channel_ready": false
+      }
+    }
+  ],
+  "schema_version": "ebrt-public-role-adapter-breadth-run-v0.8.5.3",
+  "status": "COMPLETE_WITH_BOUNDED_ADAPTER_ADMISSION",
+  "summary": {
+    "adapter_diagnostic_models": 2,
+    "admitted_regression_models": 0,
+    "denominator_cells_per_arm": 0,
+    "format_ready_models": 0,
+    "logical_calls": 4,
+    "model_count": 2,
+    "provider_uptake_passes": 0,
+    "raw_output_diff_cells": 0,
+    "strict_passes": {
+      "direct_public_roles": 0,
+      "role_control_public_roles": 0
+    },
+    "strict_regressions": 0,
+    "strict_repairs": 0,
+    "task_channel_ready_models": 0
+  }
+}

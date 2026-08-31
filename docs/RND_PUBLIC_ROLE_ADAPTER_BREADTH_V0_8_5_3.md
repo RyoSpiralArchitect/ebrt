@@ -1,6 +1,6 @@
 # EBRT v0.8.5.3 — public-role adapter breadth canary
 
-Status before local model calls: `LOCKED_NOT_RUN`.
+Status: `COMPLETE_ADAPTER_DIAGNOSTIC; ALGORITHM_NOT_ASSESSED`.
 
 ## Question
 
@@ -88,3 +88,24 @@ python3 public_role_adapter_breadth_v0_8_5_3.py lock-spec \
 The runner and generated policy lock must be committed and pushed before the
 first local model call. The `r01` result is preserved without retry whether it
 passes, fails, or produces no admitted cells.
+
+## r01 result
+
+The lock was pushed in commit `391e4e3`. The no-retry run terminated after the
+minimum four calls:
+
+- Llama format/task: `FAIL / FAIL`, both `MLX_GENERATION_FAILED`;
+- Gemma format/task: `FAIL / FAIL`, both `MLX_GENERATION_FAILED`;
+- admitted models and regression cells: `0 / 0`;
+- algorithm and final-output effect: `NOT_ASSESSED_NO_ADMITTED_CELLS`.
+
+A post-run, model-call-free tokenizer-config inspection found that both
+snapshots lack a chat template while the lock requires chat-template
+rendering. This is a static adapter mismatch, not a model-reasoning result. The
+public error code does not expose the underlying exception, so runtime-failure
+causal attribution remains `NOT_ASSESSED`.
+
+See the
+[`r01` report](../artifacts/public_role_adapter_breadth_v0_8_5_3/r01/report.md)
+and
+[`post-run interpretation`](../artifacts/public_role_adapter_breadth_v0_8_5_3/r01/post_run_interpretation.json).

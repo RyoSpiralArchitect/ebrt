@@ -15,7 +15,7 @@ forward trajectory
   -> replay or regeneration
 ```
 
-The current release has nine executable stages:
+The current release has ten executable stages:
 
 - **v0.7.1:** one trajectory, one real local backward pass, one compiled
   actuator, and one real open-weight regeneration;
@@ -37,7 +37,9 @@ The current release has nine executable stages:
   caller-supplied `Evidence.role` across the local model-adapter boundary while
   keeping the typed output state and controller fixed;
 - **v0.8.5.2:** an exact role-field isolation that restores the v0.8.5 adapter
-  label and requires nine complete prompt projections to match byte for byte.
+  label and requires nine complete prompt projections to match byte for byte;
+- **v0.8.5.3:** a two-model adapter-breadth gate that fails closed before
+  algorithm cells when the locked prompt-rendering mode is unsupported.
 
 The generator is an adapter, not the definition of EBRT. The bundled reference
 backend is a local MLX model. Hosted APIs and other local runtimes can meet the
@@ -506,6 +508,30 @@ See the [v0.8.5.2 R&D note](docs/RND_PUBLIC_ROLE_TRANSPORT_ISOLATION_V0_8_5_2.md
 [sealed report](artifacts/public_role_transport_isolation_v0_8_5_2/r01/report.md),
 and [post-run interpretation](artifacts/public_role_transport_isolation_v0_8_5_2/r01/post_run_interpretation.json).
 
+### 10. Public-role adapter breadth gate
+
+v0.8.5.3 holds all nine v0.8.5.2 prompts byte-exact and substitutes two
+previously exercised local snapshots: Llama 3.2 3B bf16 and Gemma 2 2B 4-bit.
+Each model must pass literal and task-shaped readiness before any contaminated
+regression call.
+
+```bash
+python3 public_role_adapter_breadth_v0_8_5_3.py self-test
+python3 public_role_adapter_breadth_v0_8_5_3.py verify \
+  artifacts/public_role_adapter_breadth_v0_8_5_3/r01/results.json \
+  --lock policy_lock_public_role_adapter_breadth_v0_8_5_3.json
+```
+
+Both models returned `MLX_GENERATION_FAILED` at both probes, so the runner
+stopped after four calls with zero algorithm cells. A no-call static diagnosis
+then found that neither tokenizer configuration contains a chat template while
+the lock requires chat-template rendering. This is an adapter mismatch and
+failure-gate success—not evidence about model reasoning quality.
+
+See the [v0.8.5.3 R&D note](docs/RND_PUBLIC_ROLE_ADAPTER_BREADTH_V0_8_5_3.md),
+[sealed report](artifacts/public_role_adapter_breadth_v0_8_5_3/r01/report.md),
+and [post-run interpretation](artifacts/public_role_adapter_breadth_v0_8_5_3/r01/post_run_interpretation.json).
+
 ## What the core owns
 
 The central file is [`ebrt_core.py`](ebrt_core.py). It contains the complete
@@ -693,6 +719,9 @@ are separate measurements. A `PASS` in one category does not silently imply a
 | [`public_role_transport_isolation_v0_8_5_2.py`](public_role_transport_isolation_v0_8_5_2.py) | exact role-only prompt isolation and two-stage local adapter canary |
 | [`policy_lock_public_role_transport_isolation_v0_8_5_2.json`](policy_lock_public_role_transport_isolation_v0_8_5_2.json) | pre-call runner, dependencies, nine prompt projections, exact models, schedule, and invocation lock |
 | [`interpret_public_role_transport_isolation_v0_8_5_2.py`](interpret_public_role_transport_isolation_v0_8_5_2.py) | deterministic v0.8.5-to-v0.8.5.2 readiness, prompt, and normalized output interpreter |
+| [`public_role_adapter_breadth_v0_8_5_3.py`](public_role_adapter_breadth_v0_8_5_3.py) | readiness-first Llama/Gemma adapter-breadth canary on the byte-exact v0.8.5.2 surface |
+| [`policy_lock_public_role_adapter_breadth_v0_8_5_3.json`](policy_lock_public_role_adapter_breadth_v0_8_5_3.json) | pre-call source, prompt-surface, exact model, schedule, and no-retry lock |
+| [`interpret_public_role_adapter_breadth_v0_8_5_3.py`](interpret_public_role_adapter_breadth_v0_8_5_3.py) | no-call static rendering-capability and sealed readiness interpreter |
 | [`role_stratified_uptake_integrity_v0_8_3_1.py`](role_stratified_uptake_integrity_v0_8_3_1.py) | source- and model-bound integrity replication wrapper |
 | [`policy_lock_role_stratified_uptake_v0_8_3_1_r02.json`](policy_lock_role_stratified_uptake_v0_8_3_1_r02.json) | pre-call hashes for the wrapper and every imported local execution file |
 | [`role_stratified_uptake_integrity_v0_8_3_2.py`](role_stratified_uptake_integrity_v0_8_3_2.py) | exact expected model-snapshot manifest wrapper |
