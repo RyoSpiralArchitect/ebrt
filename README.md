@@ -30,6 +30,9 @@ The current release has six executable stages:
 - **v0.8.4:** a sealed two-model, 2x2 typed-interface canary plus a post-review
   receipt that separates one full-factorial algorithm-diagnostic surface from
   one partial adapter/interface diagnostic.
+- **v0.8.5:** a single typed public-state adapter and task-shaped readiness gate
+  that stops both exact local snapshots before contaminated regression cells,
+  preserving algorithm quality as `NOT_ASSESSED`.
 
 The generator is an adapter, not the definition of EBRT. The bundled reference
 backend is a local MLX model. Hosted APIs and other local runtimes can meet the
@@ -418,6 +421,31 @@ See the [v0.8.4 R&D note](docs/RND_TYPED_REVISION_CHANNEL_V0_8_4.md) and the
 preserves the original result byte-for-byte while narrowing its denominators
 and contrast claim.
 
+### 7. Typed public-state adapter regression
+
+v0.8.5 gives answer, decision support, revision provenance, and preserved
+constraints distinct destinations in one strict `STATE_JSON` object. Before
+any regression case, each model must pass both a literal format probe and a
+held-out task-shaped channel-composition probe.
+
+```bash
+python3 typed_public_state_regression_v0_8_5.py self-test
+
+python3 typed_public_state_regression_v0_8_5.py verify \
+  artifacts/typed_public_state_v0_8_5/r01/results.json \
+  --lock policy_lock_typed_public_state_v0_8_5.json
+```
+
+Both exact snapshots passed literal formatting and failed the task-shaped
+gate. Mistral retained the retired answer despite correct decision evidence;
+Qwen selected the corrected answer but omitted identity evidence from its
+lineage. The fail-closed runner therefore made zero contaminated regression
+calls. This is an adapter-readiness failure atlas and gate success, not a
+direct/control or algorithm-quality result.
+
+See the [v0.8.5 R&D note](docs/RND_TYPED_PUBLIC_STATE_V0_8_5.md) and the
+[sealed report](artifacts/typed_public_state_v0_8_5/r01/report.md).
+
 ## What the core owns
 
 The central file is [`ebrt_core.py`](ebrt_core.py). It contains the complete
@@ -597,6 +625,8 @@ are separate measurements. A `PASS` in one category does not silently imply a
 | [`typed_revision_channel_canary_v0_8_4.py`](typed_revision_channel_canary_v0_8_4.py) | sealed two-model, four-arm typed revision-channel canary |
 | [`policy_lock_typed_revision_channel_v0_8_4.json`](policy_lock_typed_revision_channel_v0_8_4.json) | pre-call v0.8.4 cases, models, schedule, source, and invocation lock |
 | [`interpret_typed_revision_channel_v0_8_4.py`](interpret_typed_revision_channel_v0_8_4.py) | deterministic post-review contrast and denominator interpreter |
+| [`typed_public_state_regression_v0_8_5.py`](typed_public_state_regression_v0_8_5.py) | typed-state adapter, two-stage readiness gate, and contaminated regression runner |
+| [`policy_lock_typed_public_state_v0_8_5.json`](policy_lock_typed_public_state_v0_8_5.json) | pre-call v0.8.5 sources, exact models, readiness, cases, and invocation lock |
 | [`role_stratified_uptake_integrity_v0_8_3_1.py`](role_stratified_uptake_integrity_v0_8_3_1.py) | source- and model-bound integrity replication wrapper |
 | [`policy_lock_role_stratified_uptake_v0_8_3_1_r02.json`](policy_lock_role_stratified_uptake_v0_8_3_1_r02.json) | pre-call hashes for the wrapper and every imported local execution file |
 | [`role_stratified_uptake_integrity_v0_8_3_2.py`](role_stratified_uptake_integrity_v0_8_3_2.py) | exact expected model-snapshot manifest wrapper |

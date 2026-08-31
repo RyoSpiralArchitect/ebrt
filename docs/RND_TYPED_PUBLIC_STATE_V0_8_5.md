@@ -1,12 +1,21 @@
 # EBRT v0.8.5 — typed public-state adapter regression
 
-Status: **LOCKED BEFORE LOCAL-MODEL CALLS**
+Status: **COMPLETE ADAPTER DIAGNOSTIC; ZERO REGRESSION CELLS; PORTABLE VERIFY PASS**
 
 Runner:
 [`typed_public_state_regression_v0_8_5.py`](../typed_public_state_regression_v0_8_5.py)
 
 Pre-call policy lock:
 [`policy_lock_typed_public_state_v0_8_5.json`](../policy_lock_typed_public_state_v0_8_5.json)
+
+Canonical result:
+[`artifacts/typed_public_state_v0_8_5/r01/results.json`](../artifacts/typed_public_state_v0_8_5/r01/results.json)
+
+Portable verification:
+[`artifacts/typed_public_state_v0_8_5/r01/verification.json`](../artifacts/typed_public_state_v0_8_5/r01/verification.json)
+
+Failure atlas:
+[`artifacts/typed_public_state_v0_8_5/r01/report.md`](../artifacts/typed_public_state_v0_8_5/r01/report.md)
 
 Lock fingerprint:
 `47e2e05077bb115bb58d7e4e5f72fd2d74b42bf3fce5550be9a0d21cfbd8f991`
@@ -75,12 +84,49 @@ role-stratified actuator. It still bundles evidence order and explicit public
 revision instructions. This regression does not identify a gradient-only
 effect.
 
+## Result
+
+The block completed exactly four readiness calls and stopped before every
+contaminated regression cell:
+
+| Model | `FORMAT_READY` | `TASK_CHANNEL_READY` | Regression cells |
+| --- | ---: | ---: | ---: |
+| Mistral 7B | PASS | FAIL | 0 |
+| Qwen 1.5B | PASS | FAIL | 0 |
+
+Mistral emitted an exactly parseable state with correct `R2,R4` decision
+support and `R6` revision provenance, but kept the retired `GATE_RED` answer
+and added context `R1` beside stable `R5`. Qwen emitted the corrected
+`GATE_BLUE` answer with exact `R6` and `R5`, but omitted identity evidence
+`R2` from decision support.
+
+Therefore:
+
+```text
+literal format readiness:       2/2
+task-shaped channel readiness:  0/2
+algorithm-quality denominator:  0
+```
+
+The gate worked as intended. This block says nothing about direct versus EBRT
+quality because neither model was admitted to those cells.
+
+The next bounded question is whether the adapter should render the
+caller-supplied public evidence roles already present in `RevisionTask` rather
+than asking the generator to reconstruct those roles from raw text inside an
+adapter-readiness test. That requires a successor namespace and fresh lock;
+r01 is not rerun or relaxed.
+
 ## Network-zero checks
 
 ```bash
 python3 typed_public_state_regression_v0_8_5.py self-test
 python3 typed_public_state_regression_v0_8_5.py lock-spec
 python3 ebrt_core.py self-test
+
+python3 typed_public_state_regression_v0_8_5.py verify \
+  artifacts/typed_public_state_v0_8_5/r01/results.json \
+  --lock policy_lock_typed_public_state_v0_8_5.json
 ```
 
 The runner self-test includes one admitted scripted adapter, one task-channel
@@ -96,5 +142,7 @@ artifact verification.
 - No gradient crosses either local model.
 - Strict output quality, provider uptake, and raw output differences remain
   separate receipts.
+- Because no model passed admission, algorithm quality and provider uptake are
+  `NOT_ASSESSED`, not zero-performance results.
 - No causal superiority, general reasoning improvement, or cross-model
   regularity is claimed.

@@ -1,7 +1,7 @@
 # EBRT Model-Interface Core Roadmap
 
 Status: **ACTIVE ENGINEERING AND RESEARCH PLAN**
-Current implementation: **v0.7.1 core + v0.8.5 typed-state regression pre-call lock**
+Current implementation: **v0.7.1 core + v0.8.5 typed-state admission diagnostic**
 
 This roadmap starts where the sealed v0.6 line ends. It does not rewrite those
 artifacts or reinterpret their results. The new line separates the backward
@@ -215,7 +215,7 @@ Status: **IMPLEMENTED + VERIFIED; POST-REVIEW INTERPRETATION NARROWED**
 
 ### v0.8.5 — Typed public-state adapter regression
 
-Status: **IMPLEMENTED + PRE-CALL LOCKED; LOCAL RUN NOT YET EXECUTED**
+Status: **COMPLETE ADAPTER DIAGNOSTIC; ALGORITHM NOT ASSESSED**
 
 - Separate literal `FORMAT_READY` from a held-out task-shaped
   `TASK_CHANNEL_READY`; only adapters passing both enter regression cells.
@@ -227,6 +227,11 @@ Status: **IMPLEMENTED + PRE-CALL LOCKED; LOCAL RUN NOT YET EXECUTED**
   the prompt-asymmetry defect found in post-review of v0.8.4.
 - Treat v0.8.4 cases as contaminated engineering regression material; this
   iteration cannot provide fresh quality evidence.
+- Record `FORMAT_READY=2/2`, `TASK_CHANNEL_READY=0/2`, and zero admitted
+  regression cells. Preserve this as a readiness-gate success and complementary
+  Mistral/Qwen interface failure atlas, not an algorithm loss.
+- Test caller-supplied public evidence-role rendering only in a successor
+  namespace with a new lock; do not relax or rerun v0.8.5 r01.
 - Do not add stronger gradients, additional lanes, or more model breadth until
   the model-interface boundary closes.
 
