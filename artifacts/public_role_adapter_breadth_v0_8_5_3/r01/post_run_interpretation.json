@@ -1,0 +1,75 @@
+{
+  "adapter_breadth_status": "ZERO_OF_TWO_ADMITTED",
+  "algorithm_effect_status": "NOT_ASSESSED_NO_ADMITTED_CELLS",
+  "claim_boundary": [
+    "This is a post-run interpretation of a contaminated adapter-breadth canary, not a fresh benchmark.",
+    "No model call is made by this interpreter; tokenizer configuration is inspected locally and hashed.",
+    "Absence of a chat template under a locked chat-template rendering mode is a static adapter mismatch, not evidence of weak model reasoning.",
+    "The public MLX_GENERATION_FAILED code intentionally does not expose its underlying exception, so runtime-failure causal attribution remains not assessed.",
+    "Models with no admitted cells contribute no direct/control or algorithm-quality denominator.",
+    "No gradient crosses a model adapter, and no causal, model-ranking, general-quality, or cross-model claim is admitted."
+  ],
+  "fingerprint_sha256": "ad088bc35f2a2227c0fb7fd5f9f6ea2bf98626854dffdda08d3945d5917ff624",
+  "lock_fingerprint_sha256": "1fb7f076a28ce30b86c30ab2e9caa8d257e52aba1acab6153710c1f379b87e07",
+  "model_rows": [
+    {
+      "admitted_to_regression": false,
+      "case_count": 0,
+      "fingerprint_sha256": "11876fcb7745a5152ff77a86b8d3af6a5cf3c569fd33246c5a7b65250c57cc46",
+      "format_error_code": "MLX_GENERATION_FAILED",
+      "format_status": "FAIL",
+      "model_id": "mlx-community/Llama-3.2-3B-bf16@60a99aaf43164077157d64bf909b7b61143c6a6d",
+      "raw_output_diff_cells": 0,
+      "static_adapter_preflight": {
+        "chat_template_present": false,
+        "fingerprint_sha256": "3ae98a9922a4f70307e685a5264b990426d5af84cf4ac9c087bb6857afc22d77",
+        "locked_prompt_rendering_mode": "chat_template",
+        "model_id": "mlx-community/Llama-3.2-3B-bf16@60a99aaf43164077157d64bf909b7b61143c6a6d",
+        "static_adapter_mismatch": true,
+        "static_compatibility_status": "CHAT_TEMPLATE_ABSENT_UNDER_LOCKED_CHAT_TEMPLATE_MODE",
+        "tokenizer_config_sha256": "8004530facf809ac432114de2a4dcc65fcb632da5ec16d666091aeb6a2ee444a"
+      },
+      "task_error_code": "MLX_GENERATION_FAILED",
+      "task_result_status": "GENERATION_ERROR",
+      "task_status": "FAIL"
+    },
+    {
+      "admitted_to_regression": false,
+      "case_count": 0,
+      "fingerprint_sha256": "d16ec73e808d586c961efa3bace38378522d9f27db570434c23d3aad4d149a3b",
+      "format_error_code": "MLX_GENERATION_FAILED",
+      "format_status": "FAIL",
+      "model_id": "mlx-community/gemma-2-2b-4bit@2da7060bea6e767e27d7a776f834071ba69bd3ba",
+      "raw_output_diff_cells": 0,
+      "static_adapter_preflight": {
+        "chat_template_present": false,
+        "fingerprint_sha256": "26282d0a3c3bdcb5fbbf9574436a4027376458d202138657d83a4d63c5becfac",
+        "locked_prompt_rendering_mode": "chat_template",
+        "model_id": "mlx-community/gemma-2-2b-4bit@2da7060bea6e767e27d7a776f834071ba69bd3ba",
+        "static_adapter_mismatch": true,
+        "static_compatibility_status": "CHAT_TEMPLATE_ABSENT_UNDER_LOCKED_CHAT_TEMPLATE_MODE",
+        "tokenizer_config_sha256": "fe5d3fb6a117764c66d7274b15df16660dcfe84795643fdbe512c502ab0cac9a"
+      },
+      "task_error_code": "MLX_GENERATION_FAILED",
+      "task_result_status": "GENERATION_ERROR",
+      "task_status": "FAIL"
+    }
+  ],
+  "next_gate": "PROMPT_RENDERING_COMPATIBILITY_MUST_CLOSE_BEFORE_ALGORITHM_EVALUATION",
+  "public_error_pattern_status": "BOTH_PROBES_MLX_GENERATION_FAILED_ON_BOTH_SNAPSHOTS",
+  "run_fingerprint_sha256": "0abe5048dcf81e7393bf417a831505d22b50822c97aa2a22c76dd3a888ba813d",
+  "runtime_failure_causal_attribution_status": "NOT_ASSESSED",
+  "schema_version": "ebrt-public-role-adapter-breadth-interpretation-v0.8.5.3",
+  "static_adapter_mismatch_status": "IDENTIFIED_ON_BOTH_SNAPSHOTS",
+  "status": "PASS",
+  "summary": {
+    "admitted_regression_cells": 0,
+    "admitted_regression_models": 0,
+    "format_ready_models": 0,
+    "model_count": 2,
+    "public_generation_error_at_both_probes": 2,
+    "static_chat_template_mismatch_models": 2,
+    "task_ready_models": 0
+  },
+  "verification_fingerprint_sha256": "a321a1ec67559bc787601f96ccd2fb693cd2ac7845da5951e39508911e9742a7"
+}
