@@ -465,12 +465,16 @@ python3 public_role_transport_canary_v0_8_5_1.py self-test
 python3 public_role_transport_canary_v0_8_5_1.py lock-spec
 ```
 
-The known v0.8.5 readiness failure and all four v0.8.4 cases remain
-contaminated engineering material. Readiness repair, direct/control output
-quality, and provider uptake are reported separately; no fresh quality or
-gradient-only claim follows from this stage.
+Mistral repaired the known readiness failure and passed `3/4` contaminated
+cells in both arms. Qwen emitted the same incomplete support lineage and was
+stopped before regression. Although raw strings changed in all four admitted
+cells, normalized direct/control public states changed in none. A post-run
+audit also found one adapter-label wording delta, so role-only effect is
+`NOT_IDENTIFIED`; v0.8.5.1 is preserved as a bundled diagnostic.
 
-See the [v0.8.5.1 pre-call R&D note](docs/RND_PUBLIC_ROLE_TRANSPORT_V0_8_5_1.md).
+See the [v0.8.5.1 R&D note](docs/RND_PUBLIC_ROLE_TRANSPORT_V0_8_5_1.md),
+[sealed report](artifacts/public_role_transport_v0_8_5_1/r01/report.md), and
+[post-run interpretation](artifacts/public_role_transport_v0_8_5_1/r01/post_run_interpretation.json).
 
 ## What the core owns
 
@@ -655,6 +659,7 @@ are separate measurements. A `PASS` in one category does not silently imply a
 | [`policy_lock_typed_public_state_v0_8_5.json`](policy_lock_typed_public_state_v0_8_5.json) | pre-call v0.8.5 sources, exact models, readiness, cases, and invocation lock |
 | [`public_role_transport_canary_v0_8_5_1.py`](public_role_transport_canary_v0_8_5_1.py) | caller-supplied public-role transport repair over the v0.8.5 task-shaped gate |
 | [`policy_lock_public_role_transport_v0_8_5_1.json`](policy_lock_public_role_transport_v0_8_5_1.json) | pre-call v0.8.5.1 runner, role-record schema, exact models, readiness, cases, and invocations |
+| [`interpret_public_role_transport_v0_8_5_1.py`](interpret_public_role_transport_v0_8_5_1.py) | deterministic prompt-delta and normalized public-state interpreter for sealed v0.8.5.1 |
 | [`role_stratified_uptake_integrity_v0_8_3_1.py`](role_stratified_uptake_integrity_v0_8_3_1.py) | source- and model-bound integrity replication wrapper |
 | [`policy_lock_role_stratified_uptake_v0_8_3_1_r02.json`](policy_lock_role_stratified_uptake_v0_8_3_1_r02.json) | pre-call hashes for the wrapper and every imported local execution file |
 | [`role_stratified_uptake_integrity_v0_8_3_2.py`](role_stratified_uptake_integrity_v0_8_3_2.py) | exact expected model-snapshot manifest wrapper |

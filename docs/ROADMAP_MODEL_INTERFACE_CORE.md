@@ -237,7 +237,7 @@ Status: **COMPLETE ADAPTER DIAGNOSTIC; ALGORITHM NOT ASSESSED**
 
 ### v0.8.5.1 — Public role transport repair
 
-Status: **PRE-CALL ENGINEERING REGRESSION**
+Status: **COMPLETE BUNDLED ADAPTER DIAGNOSTIC**
 
 - Preserve the v0.8.5 output state, task-shaped gate, controller, exact model
   snapshots, and one-call generation geometry.
@@ -251,6 +251,17 @@ Status: **PRE-CALL ENGINEERING REGRESSION**
   pass; stopped models contribute no algorithm-quality denominator.
 - Keep direct/control quality, provider uptake, and role-transport repair as
   separate receipts, with no gradient-only or generalization claim.
+- Record one Mistral readiness `FAIL -> PASS` and one Qwen `FAIL -> FAIL`.
+  Mistral entered four contaminated cells and passed `3/4` in both arms; Qwen
+  entered none.
+- Normalize set-valued public channels before interpreting output differences:
+  all four admitted direct/control differences were serialization/order only,
+  with zero answer or normalized public-state differences.
+- Preserve the post-run prompt audit: the adapter-label line also changed, so
+  the repair is `BUNDLED_PUBLIC_ROLE_PLUS_ADAPTER_LABEL` and role-only effect
+  is `NOT_IDENTIFIED`.
+- Isolate the intended field in v0.8.5.2 by restoring the exact prior label
+  line under a fresh namespace and lock; never rerun or rewrite v0.8.5.1 r01.
 
 ### v0.8.6 — Hosted-provider adapters
 

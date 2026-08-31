@@ -1,0 +1,236 @@
+{
+  "claim_boundary": [
+    "The known readiness task and all regression cases are contaminated engineering material.",
+    "v0.8.5.1 changed the evidence records and one adapter-label line, so a role-only effect is not identified.",
+    "List ordering and JSON field ordering are normalized before public-state differences are counted.",
+    "The direct/control contrast still bundles evidence order and explicit public revision instructions.",
+    "No gradient crosses a model adapter, and no causal, general-quality, or cross-model claim is admitted."
+  ],
+  "contrast_label": "BUNDLED_PUBLIC_ROLE_PLUS_ADAPTER_LABEL",
+  "current_run_fingerprint_sha256": "ba33b30c9f1840381bf3bd5f9640fe6e9c31d81fb171697413ebc4e200149a1a",
+  "current_verification_fingerprint_sha256": "8f6cb91191739926e015031ae2f3294f6f6a51a76d28089cdc7ded2fb30575c0",
+  "direct_control_semantic_effect_status": "NULL_ON_ADMITTED_MODEL",
+  "fingerprint_sha256": "ec5958b169f9d587b6c18d687ccca0e5105c0e606f20d392f3be9a604f3d162f",
+  "prior_run_fingerprint_sha256": "6c7ced068b2d1ae6e764ecc06e8c658df4af582eb940d624894781d532546cab",
+  "prior_verification_fingerprint_sha256": "83759763795294197aaf726ac038f7c14c270e4bee369ccd312eee531132170b",
+  "prompt_audit": {
+    "fingerprint_sha256": "82ce13c323fbb27b8d4c9327cc72fb30d6df93f2669b995247d8970ecf0fe348",
+    "invocation_count": 9,
+    "non_role_difference": "ADAPTER_LABEL_LINE",
+    "non_role_label_lines": [
+      "+You are a full-context generator behind the EBRT public-role adapter.",
+      "-You are a full-context generator behind the EBRT typed-state adapter."
+    ],
+    "role_only_effect_status": "NOT_IDENTIFIED",
+    "rows": [
+      {
+        "invocation": "task_channel_readiness",
+        "non_role_unified_diff": [
+          "--- v0.8.5",
+          "+++ v0.8.5.1-minus-role",
+          "@@ -1,4 +1,4 @@",
+          "-You are a full-context generator behind the EBRT typed-state adapter.",
+          "+You are a full-context generator behind the EBRT public-role adapter.",
+          " Return exactly one STATE_JSON=<object> line and nothing else.",
+          " Do not add markdown fences or commentary.",
+          " The object must contain exactly answer, decision_support_ids, revision_event_id, and preserved_constraint_ids."
+        ],
+        "text_only_projection_exact": false
+      },
+      {
+        "invocation": "freight-lane-rule-revision:direct_typed_state",
+        "non_role_unified_diff": [
+          "--- v0.8.5",
+          "+++ v0.8.5.1-minus-role",
+          "@@ -1,4 +1,4 @@",
+          "-You are a full-context generator behind the EBRT typed-state adapter.",
+          "+You are a full-context generator behind the EBRT public-role adapter.",
+          " Return exactly one STATE_JSON=<object> line and nothing else.",
+          " Do not add markdown fences or commentary.",
+          " The object must contain exactly answer, decision_support_ids, revision_event_id, and preserved_constraint_ids."
+        ],
+        "text_only_projection_exact": false
+      },
+      {
+        "invocation": "freight-lane-rule-revision:role_control_typed_state",
+        "non_role_unified_diff": [
+          "--- v0.8.5",
+          "+++ v0.8.5.1-minus-role",
+          "@@ -1,4 +1,4 @@",
+          "-You are a full-context generator behind the EBRT typed-state adapter.",
+          "+You are a full-context generator behind the EBRT public-role adapter.",
+          " Return exactly one STATE_JSON=<object> line and nothing else.",
+          " Do not add markdown fences or commentary.",
+          " The object must contain exactly answer, decision_support_ids, revision_event_id, and preserved_constraint_ids."
+        ],
+        "text_only_projection_exact": false
+      },
+      {
+        "invocation": "credit-scale-rule-revision:direct_typed_state",
+        "non_role_unified_diff": [
+          "--- v0.8.5",
+          "+++ v0.8.5.1-minus-role",
+          "@@ -1,4 +1,4 @@",
+          "-You are a full-context generator behind the EBRT typed-state adapter.",
+          "+You are a full-context generator behind the EBRT public-role adapter.",
+          " Return exactly one STATE_JSON=<object> line and nothing else.",
+          " Do not add markdown fences or commentary.",
+          " The object must contain exactly answer, decision_support_ids, revision_event_id, and preserved_constraint_ids."
+        ],
+        "text_only_projection_exact": false
+      },
+      {
+        "invocation": "credit-scale-rule-revision:role_control_typed_state",
+        "non_role_unified_diff": [
+          "--- v0.8.5",
+          "+++ v0.8.5.1-minus-role",
+          "@@ -1,4 +1,4 @@",
+          "-You are a full-context generator behind the EBRT typed-state adapter.",
+          "+You are a full-context generator behind the EBRT public-role adapter.",
+          " Return exactly one STATE_JSON=<object> line and nothing else.",
+          " Do not add markdown fences or commentary.",
+          " The object must contain exactly answer, decision_support_ids, revision_event_id, and preserved_constraint_ids."
+        ],
+        "text_only_projection_exact": false
+      },
+      {
+        "invocation": "archive-tier-policy-revision:direct_typed_state",
+        "non_role_unified_diff": [
+          "--- v0.8.5",
+          "+++ v0.8.5.1-minus-role",
+          "@@ -1,4 +1,4 @@",
+          "-You are a full-context generator behind the EBRT typed-state adapter.",
+          "+You are a full-context generator behind the EBRT public-role adapter.",
+          " Return exactly one STATE_JSON=<object> line and nothing else.",
+          " Do not add markdown fences or commentary.",
+          " The object must contain exactly answer, decision_support_ids, revision_event_id, and preserved_constraint_ids."
+        ],
+        "text_only_projection_exact": false
+      },
+      {
+        "invocation": "archive-tier-policy-revision:role_control_typed_state",
+        "non_role_unified_diff": [
+          "--- v0.8.5",
+          "+++ v0.8.5.1-minus-role",
+          "@@ -1,4 +1,4 @@",
+          "-You are a full-context generator behind the EBRT typed-state adapter.",
+          "+You are a full-context generator behind the EBRT public-role adapter.",
+          " Return exactly one STATE_JSON=<object> line and nothing else.",
+          " Do not add markdown fences or commentary.",
+          " The object must contain exactly answer, decision_support_ids, revision_event_id, and preserved_constraint_ids."
+        ],
+        "text_only_projection_exact": false
+      },
+      {
+        "invocation": "permit-state-rule-revision:direct_typed_state",
+        "non_role_unified_diff": [
+          "--- v0.8.5",
+          "+++ v0.8.5.1-minus-role",
+          "@@ -1,4 +1,4 @@",
+          "-You are a full-context generator behind the EBRT typed-state adapter.",
+          "+You are a full-context generator behind the EBRT public-role adapter.",
+          " Return exactly one STATE_JSON=<object> line and nothing else.",
+          " Do not add markdown fences or commentary.",
+          " The object must contain exactly answer, decision_support_ids, revision_event_id, and preserved_constraint_ids."
+        ],
+        "text_only_projection_exact": false
+      },
+      {
+        "invocation": "permit-state-rule-revision:role_control_typed_state",
+        "non_role_unified_diff": [
+          "--- v0.8.5",
+          "+++ v0.8.5.1-minus-role",
+          "@@ -1,4 +1,4 @@",
+          "-You are a full-context generator behind the EBRT typed-state adapter.",
+          "+You are a full-context generator behind the EBRT public-role adapter.",
+          " Return exactly one STATE_JSON=<object> line and nothing else.",
+          " Do not add markdown fences or commentary.",
+          " The object must contain exactly answer, decision_support_ids, revision_event_id, and preserved_constraint_ids."
+        ],
+        "text_only_projection_exact": false
+      }
+    ],
+    "text_only_projection_exact_count": 0
+  },
+  "readiness_transitions": [
+    {
+      "model_id": "mlx-community/Mistral-7B-Instruct-v0.3-4bit@a4b8f870474b0eb527f466a03fbc187830d271f5",
+      "transition": "FAIL_TO_PASS",
+      "v0_8_5_1_output": "STATE_JSON={\"answer\":\"GATE_BLUE\",\"decision_support_ids\":[\"R2\",\"R4\"],\"preserved_constraint_ids\":[\"R5\"],\"revision_event_id\":\"R6\"}",
+      "v0_8_5_1_status": "PASS",
+      "v0_8_5_output": "STATE_JSON={\"answer\":\"GATE_RED\",\"decision_support_ids\":[\"R2\",\"R4\"],\"revision_event_id\":\"R6\",\"preserved_constraint_ids\":[\"R1\",\"R5\"]}",
+      "v0_8_5_status": "FAIL"
+    },
+    {
+      "model_id": "mlx-community/Qwen2.5-1.5B-Instruct-4bit@8b403126fc14f14cfc99bb4cfa72ecbc129ea677",
+      "transition": "FAIL_TO_FAIL",
+      "v0_8_5_1_output": "STATE_JSON={\"answer\":\"GATE_BLUE\",\"decision_support_ids\":[\"R4\"],\"preserved_constraint_ids\":[\"R5\"],\"revision_event_id\":\"R6\"}",
+      "v0_8_5_1_status": "FAIL",
+      "v0_8_5_output": "STATE_JSON={\"answer\":\"GATE_BLUE\",\"decision_support_ids\":[\"R4\"],\"preserved_constraint_ids\":[\"R5\"],\"revision_event_id\":\"R6\"}",
+      "v0_8_5_status": "FAIL"
+    }
+  ],
+  "regression_cells": [
+    {
+      "answer_changed": false,
+      "case_id": "freight-lane-rule-revision",
+      "controlled_grade": "PASS",
+      "direct_grade": "PASS",
+      "model_id": "mlx-community/Mistral-7B-Instruct-v0.3-4bit@a4b8f870474b0eb527f466a03fbc187830d271f5",
+      "normalized_public_state_changed": false,
+      "parsed_sequence_changed": true,
+      "raw_text_changed": true,
+      "serialization_or_order_only": true
+    },
+    {
+      "answer_changed": false,
+      "case_id": "credit-scale-rule-revision",
+      "controlled_grade": "FAIL",
+      "direct_grade": "FAIL",
+      "model_id": "mlx-community/Mistral-7B-Instruct-v0.3-4bit@a4b8f870474b0eb527f466a03fbc187830d271f5",
+      "normalized_public_state_changed": false,
+      "parsed_sequence_changed": false,
+      "raw_text_changed": true,
+      "serialization_or_order_only": true
+    },
+    {
+      "answer_changed": false,
+      "case_id": "archive-tier-policy-revision",
+      "controlled_grade": "PASS",
+      "direct_grade": "PASS",
+      "model_id": "mlx-community/Mistral-7B-Instruct-v0.3-4bit@a4b8f870474b0eb527f466a03fbc187830d271f5",
+      "normalized_public_state_changed": false,
+      "parsed_sequence_changed": true,
+      "raw_text_changed": true,
+      "serialization_or_order_only": true
+    },
+    {
+      "answer_changed": false,
+      "case_id": "permit-state-rule-revision",
+      "controlled_grade": "PASS",
+      "direct_grade": "PASS",
+      "model_id": "mlx-community/Mistral-7B-Instruct-v0.3-4bit@a4b8f870474b0eb527f466a03fbc187830d271f5",
+      "normalized_public_state_changed": false,
+      "parsed_sequence_changed": true,
+      "raw_text_changed": true,
+      "serialization_or_order_only": true
+    }
+  ],
+  "role_only_effect_status": "NOT_IDENTIFIED",
+  "schema_version": "ebrt-public-role-transport-interpretation-v0.8.5.1",
+  "status": "PASS",
+  "summary": {
+    "admitted_regression_cells": 4,
+    "answer_diff_cells": 0,
+    "normalized_public_state_diff_cells": 0,
+    "parsed_sequence_diff_cells": 3,
+    "raw_text_diff_cells": 4,
+    "readiness_fail_to_fail": 1,
+    "readiness_fail_to_pass": 1,
+    "serialization_or_order_only_cells": 4,
+    "strict_controlled_passes": 3,
+    "strict_direct_passes": 3,
+    "strict_regressions": 0,
+    "strict_repairs": 0
+  }
+}

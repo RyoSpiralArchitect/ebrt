@@ -102,3 +102,30 @@ portable replay.
   receipts.
 - No causal superiority, general reasoning improvement, or cross-model
   regularity is claimed.
+
+## Result
+
+The exact block completed 12 logical calls. Mistral repaired the known
+task-channel failure and entered all four contaminated regression cells; Qwen
+emitted the same incomplete lineage as v0.8.5 and stopped before regression.
+
+```text
+FORMAT_READY:               2/2
+TASK_CHANNEL_READY:         1/2
+admitted regression models: 1/2
+Mistral strict direct:       3/4
+Mistral strict controlled:   3/4
+provider uptake:             4/4
+```
+
+The one failed Mistral case selected retired `45_CREDITS` instead of current
+`15_CREDITS` in both arms. Raw outputs differed in all four cells, but after
+normalizing set-valued channel order, direct and controlled public states were
+identical in `4/4`; the observed differences were serialization/order only.
+
+A post-run prompt audit found one unintended non-role delta in the adapter
+label line. The contrast is therefore
+`BUNDLED_PUBLIC_ROLE_PLUS_ADAPTER_LABEL`, and a role-only effect is
+`NOT_IDENTIFIED`. The sealed result is not rerun. See the
+[r01 report](../artifacts/public_role_transport_v0_8_5_1/r01/report.md) and
+[deterministic interpretation receipt](../artifacts/public_role_transport_v0_8_5_1/r01/post_run_interpretation.json).
