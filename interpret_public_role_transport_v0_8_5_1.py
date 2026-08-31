@@ -78,6 +78,30 @@ def _model_runs(value: Mapping[str, Any]) -> dict[str, Mapping[str, Any]]:
     return {row["model_adapter"]["model_id"]: row for row in value["runs"]}
 
 
+def _serialization_or_order_only(
+    raw_text_changed: bool,
+    direct_state: Mapping[str, Any] | None,
+    controlled_state: Mapping[str, Any] | None,
+) -> bool:
+    return bool(
+        raw_text_changed
+        and direct_state is not None
+        and controlled_state is not None
+        and direct_state == controlled_state
+    )
+
+
+def _semantic_effect_status(rows: Sequence[Mapping[str, Any]]) -> str:
+    if not rows:
+        return "NOT_ASSESSED_NO_ADMITTED_CELLS"
+    if any(
+        row["normalized_public_state_changed"] or row["answer_changed"]
+        for row in rows
+    ):
+        return "OBSERVED_NON_NULL_ON_ADMITTED_CELLS"
+    return "NULL_ON_ADMITTED_CELLS"
+
+
 def _prompt_audit() -> JsonObject:
     pairs: list[tuple[str, str, str]] = []
     old_readiness = prior.build_task_readiness_invocation()
@@ -200,12 +224,19 @@ def interpret(
                         and controlled_state is not None
                         and direct_state["answer"] != controlled_state["answer"]
                     ),
-                    "serialization_or_order_only": cell["diff"][
-                        "raw_text_changed"
-                    ]
-                    and direct_state == controlled_state,
+                    "serialization_or_order_only": _serialization_or_order_only(
+                        cell["diff"]["raw_text_changed"],
+                        direct_state,
+                        controlled_state,
+                    ),
                 }
             )
+
+    semantic_diff_cells = sum(
+        row["normalized_public_state_changed"] for row in cell_rows
+    )
+    answer_diff_cells = sum(row["answer_changed"] for row in cell_rows)
+    semantic_effect_status = _semantic_effect_status(cell_rows)
 
     return _seal(
         {
@@ -238,10 +269,8 @@ def interpret(
                 "parsed_sequence_diff_cells": sum(
                     row["parsed_sequence_changed"] for row in cell_rows
                 ),
-                "normalized_public_state_diff_cells": sum(
-                    row["normalized_public_state_changed"] for row in cell_rows
-                ),
-                "answer_diff_cells": sum(row["answer_changed"] for row in cell_rows),
+                "normalized_public_state_diff_cells": semantic_diff_cells,
+                "answer_diff_cells": answer_diff_cells,
                 "serialization_or_order_only_cells": sum(
                     row["serialization_or_order_only"] for row in cell_rows
                 ),
@@ -264,7 +293,7 @@ def interpret(
             },
             "contrast_label": "BUNDLED_PUBLIC_ROLE_PLUS_ADAPTER_LABEL",
             "role_only_effect_status": "NOT_IDENTIFIED",
-            "direct_control_semantic_effect_status": "NULL_ON_ADMITTED_MODEL",
+            "direct_control_semantic_effect_status": semantic_effect_status,
             "claim_boundary": list(CLAIM_BOUNDARY),
         }
     )

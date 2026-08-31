@@ -103,7 +103,7 @@ field, freeze a new lock, and execute under a new namespace.
 - Portable verification fingerprint:
   `8f6cb91191739926e015031ae2f3294f6f6a51a76d28089cdc7ded2fb30575c0`
 - Post-run interpretation fingerprint:
-  `ec5958b169f9d587b6c18d687ccca0e5105c0e606f20d392f3be9a604f3d162f`
+  `5b4048a155856e88170e13a32e1f6d2c7c4d79267ef61f0138c98435b085defa`
 
 ## Claim boundary
 

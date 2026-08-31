@@ -9,8 +9,8 @@
   "contrast_label": "BUNDLED_PUBLIC_ROLE_PLUS_ADAPTER_LABEL",
   "current_run_fingerprint_sha256": "ba33b30c9f1840381bf3bd5f9640fe6e9c31d81fb171697413ebc4e200149a1a",
   "current_verification_fingerprint_sha256": "8f6cb91191739926e015031ae2f3294f6f6a51a76d28089cdc7ded2fb30575c0",
-  "direct_control_semantic_effect_status": "NULL_ON_ADMITTED_MODEL",
-  "fingerprint_sha256": "ec5958b169f9d587b6c18d687ccca0e5105c0e606f20d392f3be9a604f3d162f",
+  "direct_control_semantic_effect_status": "NULL_ON_ADMITTED_CELLS",
+  "fingerprint_sha256": "5b4048a155856e88170e13a32e1f6d2c7c4d79267ef61f0138c98435b085defa",
   "prior_run_fingerprint_sha256": "6c7ced068b2d1ae6e764ecc06e8c658df4af582eb940d624894781d532546cab",
   "prior_verification_fingerprint_sha256": "83759763795294197aaf726ac038f7c14c270e4bee369ccd312eee531132170b",
   "prompt_audit": {
