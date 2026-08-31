@@ -15,7 +15,7 @@ forward trajectory
   -> replay or regeneration
 ```
 
-The current release has six executable stages:
+The current release has seven executable stages:
 
 - **v0.7.1:** one trajectory, one real local backward pass, one compiled
   actuator, and one real open-weight regeneration;
