@@ -235,6 +235,23 @@ Status: **COMPLETE ADAPTER DIAGNOSTIC; ALGORITHM NOT ASSESSED**
 - Do not add stronger gradients, additional lanes, or more model breadth until
   the model-interface boundary closes.
 
+### v0.8.5.1 — Public role transport repair
+
+Status: **PRE-CALL ENGINEERING REGRESSION**
+
+- Preserve the v0.8.5 output state, task-shaped gate, controller, exact model
+  snapshots, and one-call generation geometry.
+- Add exactly one model-visible evidence field: the caller-supplied public
+  `Evidence.role` already present in `RevisionTask`.
+- Prove mechanically that removing `role` reproduces every prior text-only
+  evidence record byte-for-byte.
+- Reuse the known v0.8.5 readiness failure only as contaminated engineering
+  repair material; do not call it held-out or fresh.
+- Admit regression cells only after literal and task-shaped readiness both
+  pass; stopped models contribute no algorithm-quality denominator.
+- Keep direct/control quality, provider uptake, and role-transport repair as
+  separate receipts, with no gradient-only or generalization claim.
+
 ### v0.8.6 — Hosted-provider adapters
 
 Status: **CONFORMANCE ONLY; LIVE E2E DEFERRED**
