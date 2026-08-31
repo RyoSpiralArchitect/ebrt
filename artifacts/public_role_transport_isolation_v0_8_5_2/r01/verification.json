@@ -1,0 +1,20 @@
+{
+  "checks": {
+    "adapter_admission_replayed": true,
+    "aggregate_replayed": true,
+    "dependency_hashes_exact": true,
+    "diffs_replayed": true,
+    "format_readiness_replayed": true,
+    "invocations_recompiled": true,
+    "model_identities_exact": true,
+    "model_outputs_reparsed": true,
+    "policy_lock_exact": true,
+    "provider_uptake_replayed": true,
+    "task_channel_readiness_replayed": true,
+    "typed_states_regraded": true
+  },
+  "fingerprint_sha256": "9c7a6c9827e55fef4442a57357db5d516d97e4ed878cd531b92576ea25f16403",
+  "run_fingerprint_sha256": "f6af26d4f2242c8b9ebe8b35718468a4b955ed55cf6476fe7a2e55fd19b09c40",
+  "schema_version": "ebrt-public-role-isolation-verification-v0.8.5.2",
+  "status": "PASS"
+}

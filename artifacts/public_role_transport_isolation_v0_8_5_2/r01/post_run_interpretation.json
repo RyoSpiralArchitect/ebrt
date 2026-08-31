@@ -1,0 +1,155 @@
+{
+  "claim_boundary": [
+    "The known readiness task and all regression cases are contaminated engineering material.",
+    "After removing only the public role field, all nine v0.8.5.2 prompts match v0.8.5 byte for byte.",
+    "The exact model-visible interface delta is isolated, but a one-sample readiness transition is association evidence, not causal attribution.",
+    "List ordering and JSON field ordering are normalized before public-state differences are counted.",
+    "The direct/control contrast still bundles evidence order and explicit public revision instructions.",
+    "No gradient crosses a model adapter, and no causal, general-quality, or cross-model claim is admitted."
+  ],
+  "contrast_label": "EXACT_CALLER_SUPPLIED_PUBLIC_ROLE_FIELD",
+  "current_run_fingerprint_sha256": "f6af26d4f2242c8b9ebe8b35718468a4b955ed55cf6476fe7a2e55fd19b09c40",
+  "current_verification_fingerprint_sha256": "9c7a6c9827e55fef4442a57357db5d516d97e4ed878cd531b92576ea25f16403",
+  "direct_control_semantic_effect_status": "NULL_ON_ADMITTED_CELLS",
+  "fingerprint_sha256": "6764e55b73f6cbf81de3ff839ecc89e406617a88e18230f6d17b47737b4e9cd5",
+  "model_visible_delta_status": "EXACT_PUBLIC_ROLE_FIELD_ONLY",
+  "prior_run_fingerprint_sha256": "6c7ced068b2d1ae6e764ecc06e8c658df4af582eb940d624894781d532546cab",
+  "prior_verification_fingerprint_sha256": "83759763795294197aaf726ac038f7c14c270e4bee369ccd312eee531132170b",
+  "prompt_audit": {
+    "all_text_only_projections_exact": true,
+    "fingerprint_sha256": "6a80ebd5d38262e94af7c9622c0a227b5fe59327026e2206c2c4dda256d313d9",
+    "invocation_count": 9,
+    "model_visible_delta_status": "EXACT_PUBLIC_ROLE_FIELD_ONLY",
+    "non_role_difference": "NONE",
+    "rows": [
+      {
+        "invocation": "task_channel_readiness",
+        "non_role_unified_diff": [],
+        "text_only_projection_exact": true
+      },
+      {
+        "invocation": "freight-lane-rule-revision:direct_typed_state",
+        "non_role_unified_diff": [],
+        "text_only_projection_exact": true
+      },
+      {
+        "invocation": "freight-lane-rule-revision:role_control_typed_state",
+        "non_role_unified_diff": [],
+        "text_only_projection_exact": true
+      },
+      {
+        "invocation": "credit-scale-rule-revision:direct_typed_state",
+        "non_role_unified_diff": [],
+        "text_only_projection_exact": true
+      },
+      {
+        "invocation": "credit-scale-rule-revision:role_control_typed_state",
+        "non_role_unified_diff": [],
+        "text_only_projection_exact": true
+      },
+      {
+        "invocation": "archive-tier-policy-revision:direct_typed_state",
+        "non_role_unified_diff": [],
+        "text_only_projection_exact": true
+      },
+      {
+        "invocation": "archive-tier-policy-revision:role_control_typed_state",
+        "non_role_unified_diff": [],
+        "text_only_projection_exact": true
+      },
+      {
+        "invocation": "permit-state-rule-revision:direct_typed_state",
+        "non_role_unified_diff": [],
+        "text_only_projection_exact": true
+      },
+      {
+        "invocation": "permit-state-rule-revision:role_control_typed_state",
+        "non_role_unified_diff": [],
+        "text_only_projection_exact": true
+      }
+    ],
+    "text_only_projection_exact_count": 9
+  },
+  "readiness_transitions": [
+    {
+      "model_id": "mlx-community/Mistral-7B-Instruct-v0.3-4bit@a4b8f870474b0eb527f466a03fbc187830d271f5",
+      "transition": "FAIL_TO_PASS",
+      "v0_8_5_2_output": "STATE_JSON={\"answer\":\"GATE_BLUE\",\"decision_support_ids\":[\"R2\",\"R4\"],\"preserved_constraint_ids\":[\"R5\"],\"revision_event_id\":\"R6\"}",
+      "v0_8_5_2_status": "PASS",
+      "v0_8_5_output": "STATE_JSON={\"answer\":\"GATE_RED\",\"decision_support_ids\":[\"R2\",\"R4\"],\"revision_event_id\":\"R6\",\"preserved_constraint_ids\":[\"R1\",\"R5\"]}",
+      "v0_8_5_status": "FAIL"
+    },
+    {
+      "model_id": "mlx-community/Qwen2.5-1.5B-Instruct-4bit@8b403126fc14f14cfc99bb4cfa72ecbc129ea677",
+      "transition": "FAIL_TO_FAIL",
+      "v0_8_5_2_output": "STATE_JSON={\"answer\":\"GATE_BLUE\",\"decision_support_ids\":[\"R4\"],\"preserved_constraint_ids\":[\"R5\"],\"revision_event_id\":\"R6\"}",
+      "v0_8_5_2_status": "FAIL",
+      "v0_8_5_output": "STATE_JSON={\"answer\":\"GATE_BLUE\",\"decision_support_ids\":[\"R4\"],\"preserved_constraint_ids\":[\"R5\"],\"revision_event_id\":\"R6\"}",
+      "v0_8_5_status": "FAIL"
+    }
+  ],
+  "regression_cells": [
+    {
+      "answer_changed": false,
+      "case_id": "freight-lane-rule-revision",
+      "controlled_grade": "PASS",
+      "direct_grade": "PASS",
+      "model_id": "mlx-community/Mistral-7B-Instruct-v0.3-4bit@a4b8f870474b0eb527f466a03fbc187830d271f5",
+      "normalized_public_state_changed": false,
+      "parsed_sequence_changed": true,
+      "raw_text_changed": true,
+      "serialization_or_order_only": true
+    },
+    {
+      "answer_changed": false,
+      "case_id": "credit-scale-rule-revision",
+      "controlled_grade": "FAIL",
+      "direct_grade": "FAIL",
+      "model_id": "mlx-community/Mistral-7B-Instruct-v0.3-4bit@a4b8f870474b0eb527f466a03fbc187830d271f5",
+      "normalized_public_state_changed": false,
+      "parsed_sequence_changed": false,
+      "raw_text_changed": false,
+      "serialization_or_order_only": false
+    },
+    {
+      "answer_changed": false,
+      "case_id": "archive-tier-policy-revision",
+      "controlled_grade": "PASS",
+      "direct_grade": "PASS",
+      "model_id": "mlx-community/Mistral-7B-Instruct-v0.3-4bit@a4b8f870474b0eb527f466a03fbc187830d271f5",
+      "normalized_public_state_changed": false,
+      "parsed_sequence_changed": true,
+      "raw_text_changed": true,
+      "serialization_or_order_only": true
+    },
+    {
+      "answer_changed": false,
+      "case_id": "permit-state-rule-revision",
+      "controlled_grade": "PASS",
+      "direct_grade": "PASS",
+      "model_id": "mlx-community/Mistral-7B-Instruct-v0.3-4bit@a4b8f870474b0eb527f466a03fbc187830d271f5",
+      "normalized_public_state_changed": false,
+      "parsed_sequence_changed": true,
+      "raw_text_changed": true,
+      "serialization_or_order_only": true
+    }
+  ],
+  "role_field_readiness_association": "OBSERVED_FAIL_TO_PASS_ON_ONE_CONTAMINATED_MODEL",
+  "role_only_effect_attribution_status": "NOT_ASSESSED",
+  "schema_version": "ebrt-public-role-isolation-interpretation-v0.8.5.2",
+  "status": "PASS",
+  "summary": {
+    "admitted_regression_cells": 4,
+    "answer_diff_cells": 0,
+    "normalized_public_state_diff_cells": 0,
+    "parsed_sequence_diff_cells": 3,
+    "raw_text_diff_cells": 3,
+    "readiness_fail_to_fail": 1,
+    "readiness_fail_to_pass": 1,
+    "serialization_or_order_only_cells": 3,
+    "strict_controlled_passes": 3,
+    "strict_direct_passes": 3,
+    "strict_regressions": 0,
+    "strict_repairs": 0
+  }
+}

@@ -1,0 +1,206 @@
+{
+  "base_main_commit": "519351cfcb30b5c846ae37315db227afd45190bb",
+  "cases": [
+    {
+      "case_id": "freight-lane-rule-revision",
+      "contract_fingerprint_sha256": "18fc20e3fcd1a12b9fa79dfc0e7fed793deff01da22c48d8097e83da99bf05ac",
+      "invocation_fingerprints_sha256": {
+        "direct_public_roles": "c7bcd385016a8a9219433c8e67e15c002506a101d6af55c3d187acecea31cec3",
+        "role_control_public_roles": "f65e254e511bcd60d09353c863c3ee95ab8ac72cf69c9b0eb361f537831de069"
+      },
+      "role_program_fingerprint_sha256": "04ffcf01ca57511648fbfd18a378eeadcb7072bcfecfc71dee1ee08a22f291f9",
+      "task_fingerprint_sha256": "36bd08811a447853fa097c24175e7f97ff0489dc78b37c8875aace857caf59a6"
+    },
+    {
+      "case_id": "credit-scale-rule-revision",
+      "contract_fingerprint_sha256": "5215d0382411912ce658e73cdc2166c86b6e6939c5b76c98b39ae110e60084a8",
+      "invocation_fingerprints_sha256": {
+        "direct_public_roles": "4916549251c29c7a61cc42dc75d9dd5f510db1b74ad55ea275de3a2955e91e98",
+        "role_control_public_roles": "ac998187aabf72a2801cdee0cbc76155c90d8bdb6cb00102a8c4b0bf95dc77de"
+      },
+      "role_program_fingerprint_sha256": "6d33e5ab750db06848380e287223b3e9cd56a2e25c8e2378d0da7da7ce9e1e6e",
+      "task_fingerprint_sha256": "ddc086127e103e361e83e6e85f1c261b82643954ebdc41e9b1f36dd4e43f16d2"
+    },
+    {
+      "case_id": "archive-tier-policy-revision",
+      "contract_fingerprint_sha256": "10c8962c82ef8ed39395ed7cc88a4479dd41de7d51949fb37334ec37dd72dfcd",
+      "invocation_fingerprints_sha256": {
+        "direct_public_roles": "f5c97b4490b57f7549a701ec0812ab4008ecbd6d6cb6e32da353868d0ad0efe8",
+        "role_control_public_roles": "6a47e683150bc847ebc2d761f87b65f67614921fface0b70f5d34da249646f1b"
+      },
+      "role_program_fingerprint_sha256": "d0683dfe5ab6004133b7b0b8bdcc3d933ee7e5ede7a19e7b83166817c8465507",
+      "task_fingerprint_sha256": "89f1a665c508ddfd0cbd4cd863b48ca8bfb9f8db866f32bd5ffa4e7675e8927a"
+    },
+    {
+      "case_id": "permit-state-rule-revision",
+      "contract_fingerprint_sha256": "be2b5508de8c76072a540699815e4b8ecf6e1f12d740d7d538534361443a3c6a",
+      "invocation_fingerprints_sha256": {
+        "direct_public_roles": "25ea5a656592115a06f8797d62e76f26a6668523c0d019159e3c8db5d43efdd9",
+        "role_control_public_roles": "ca09a6d22907207619058777da7c19695fe2a91b13544ca0bda05cfa135d4e24"
+      },
+      "role_program_fingerprint_sha256": "e550fa11178d5a6ac7826dc38ce9c8fc8f0c723f02ed46b6c8f8e738cd61b4e6",
+      "task_fingerprint_sha256": "5b6417bf6f2b981370cee23a04a596d6cfb11818062e8eed520f44c0f8655989"
+    }
+  ],
+  "claim_boundary": [
+    "This is a contaminated engineering repair over the known v0.8.5 readiness failure and four published v0.8.4 cases, not a fresh benchmark.",
+    "Literal FORMAT_READY and known-failure TASK_CHANNEL_READY are separate receipts; only models passing both execute regression cells.",
+    "Each evidence role is caller-supplied public scaffold metadata already present in RevisionTask, not a dependency discovered by EBRT or the model.",
+    "After removing only the caller-supplied role key, every model-visible readiness and regression prompt matches v0.8.5 byte for byte.",
+    "Direct and role-controlled arms share the exact role-record schema and output-contract fingerprint; the control contrast still bundles evidence order and explicit revision instructions.",
+    "Decision support, revision provenance, and preserved constraints are public adapter fields, not private model states.",
+    "Semantic contracts are post-call grading material and are absent from model-visible prompts.",
+    "No gradient crosses a model adapter, and public trajectories are not private reasoning transcripts.",
+    "One deterministic sample per contaminated cell cannot establish causal superiority, general reasoning improvement, or cross-model regularity."
+  ],
+  "dependency_sha256": {
+    "ebrt_core.py": "b4a44de708be7a67c3abe0b93d5c380d51a0f12cdcb220805f3e7965e5c676bc",
+    "local_output_diff_corpus_v0_8_2.py": "eacf6479384907e53cf4b2f29b2fdcb8415dae706ed49a2b23ab248ab1e956d6",
+    "role_stratified_uptake_canary_v0_8_3.py": "363a07e353acb39047c6927fd308415ee81e26a53379e03db8cdf23117fc1dd4",
+    "typed_public_state_regression_v0_8_5.py": "0f39c067f68a3c44b72c0a28fbeb61df9381ad8f5d0a0f01351c294b64cd51e1",
+    "typed_revision_channel_canary_v0_8_4.py": "0a4df0fb9e1c19173db3ee2ad3cbdd54678749cb6a4ec0cbba231d50953715b4"
+  },
+  "effect_attribution_status": "NOT_ASSESSED",
+  "execution_policy": {
+    "arm_ids": [
+      "direct_public_roles",
+      "role_control_public_roles"
+    ],
+    "automatic_retry": false,
+    "calls_per_arm_per_case": 1,
+    "max_tokens_per_call": 96,
+    "native_state_capture": "DISABLED",
+    "output_contract_fingerprint_sha256": "5863e855ea986e0e6ba05b54361cdfc366d392e13daa733332709042bab9eb73",
+    "prompt_rendering_mode": "chat_template",
+    "public_role_record_fingerprint_sha256": "d7d16db4dff34cbfa58524880eee35072cfb7f76ad3ca1ada74438cea62452a4",
+    "schedule": [
+      [
+        "direct_public_roles",
+        "role_control_public_roles"
+      ],
+      [
+        "role_control_public_roles",
+        "direct_public_roles"
+      ],
+      [
+        "direct_public_roles",
+        "role_control_public_roles"
+      ],
+      [
+        "role_control_public_roles",
+        "direct_public_roles"
+      ]
+    ],
+    "seed": 0,
+    "temperature": 0.0
+  },
+  "fingerprint_sha256": "115b8f6bb1d6fcc69b6ffb50a468fd632e5fbaaf308c4d1c51fe2b10bcce1fb5",
+  "generalization_status": "CONTAMINATED_ENGINEERING_REGRESSION_ONLY",
+  "model_ids": [
+    "mlx-community/Mistral-7B-Instruct-v0.3-4bit@a4b8f870474b0eb527f466a03fbc187830d271f5",
+    "mlx-community/Qwen2.5-1.5B-Instruct-4bit@8b403126fc14f14cfc99bb4cfa72ecbc129ea677"
+  ],
+  "prompt_isolation": {
+    "all_exact": true,
+    "comparison_count": 9,
+    "comparisons": [
+      {
+        "arm_id": "task_channel_readiness",
+        "baseline_prompt_sha256": "1c6cc63c2b93f17d18c92c6b2f3d90b326dd9cf5f751200c7767b59be8236107",
+        "case_id": "heldout-task-channel-readiness",
+        "current_prompt_sha256": "164344ebc680a57f5e793b90a52484e335e6a7a3c1baa61446a88077bbe3c662",
+        "exact": true,
+        "fingerprint_sha256": "08b8d6b4b34bf452d54b896e05a4fe2ccbe9b675320c718b00b86fe80ba7a1f5",
+        "projected_prompt_sha256": "1c6cc63c2b93f17d18c92c6b2f3d90b326dd9cf5f751200c7767b59be8236107"
+      },
+      {
+        "arm_id": "direct_public_roles",
+        "baseline_prompt_sha256": "848a498eddb949a49e44c92ddec833fcea9005e1590b1453441672d45291d24b",
+        "case_id": "freight-lane-rule-revision",
+        "current_prompt_sha256": "7eb6497f3ab2f48e6144b61c9f526dbe4daa64ceec177ddb4bf4bad316a12dfb",
+        "exact": true,
+        "fingerprint_sha256": "23dbac70c5b40b29de4caebce7ddb5736ecef4cd7505aea224683a9b48566186",
+        "projected_prompt_sha256": "848a498eddb949a49e44c92ddec833fcea9005e1590b1453441672d45291d24b"
+      },
+      {
+        "arm_id": "role_control_public_roles",
+        "baseline_prompt_sha256": "de8d0ecda4890624663bda6629abd885d2fff924f37f309ac97813b945361900",
+        "case_id": "freight-lane-rule-revision",
+        "current_prompt_sha256": "b02bcc2f03aa40535e86d20eca9ba8dfda6acba39a83f3b91a68687708781198",
+        "exact": true,
+        "fingerprint_sha256": "bd24dae50c8549d0329434a42f8f506987c933b04fa72d0e54ab98f3c96c8382",
+        "projected_prompt_sha256": "de8d0ecda4890624663bda6629abd885d2fff924f37f309ac97813b945361900"
+      },
+      {
+        "arm_id": "direct_public_roles",
+        "baseline_prompt_sha256": "7db62b2e789aa56a4cd049624265ad647e72da847ec9bbbec906c7dbff1da1b7",
+        "case_id": "credit-scale-rule-revision",
+        "current_prompt_sha256": "29e4df4565e3cec926797df2374682522dcd6b875258766807f570b1efd361c5",
+        "exact": true,
+        "fingerprint_sha256": "2e5536b64207cfafa644d2d33573d04829bbd8eb48df137ad00a53a6c40597db",
+        "projected_prompt_sha256": "7db62b2e789aa56a4cd049624265ad647e72da847ec9bbbec906c7dbff1da1b7"
+      },
+      {
+        "arm_id": "role_control_public_roles",
+        "baseline_prompt_sha256": "60d07ccadb0bf9974cf9151e1a313cc902d30cd74ae47dcccc8562314bc90cc0",
+        "case_id": "credit-scale-rule-revision",
+        "current_prompt_sha256": "d40d7afe965a9deeaf6d32b6d55bc55afdc2f403269a6579cdc180533813bf30",
+        "exact": true,
+        "fingerprint_sha256": "73241c0101c00a462039de84e0862b14eb83765c32e586877feccf6f6dbf81bf",
+        "projected_prompt_sha256": "60d07ccadb0bf9974cf9151e1a313cc902d30cd74ae47dcccc8562314bc90cc0"
+      },
+      {
+        "arm_id": "direct_public_roles",
+        "baseline_prompt_sha256": "cbc23c85f36541b27305b84623598987dfeb372b6fd436afb6b0c15a7bdb2e31",
+        "case_id": "archive-tier-policy-revision",
+        "current_prompt_sha256": "4fd98f82c11aaf8afd758853c8a41cd5f87957ecc6a8bb6baad21c9499f38ccf",
+        "exact": true,
+        "fingerprint_sha256": "7e7d8cb9310a1557cbab543ee14d2d3b0b91ea3ffea1af25d3f5dd73c410a254",
+        "projected_prompt_sha256": "cbc23c85f36541b27305b84623598987dfeb372b6fd436afb6b0c15a7bdb2e31"
+      },
+      {
+        "arm_id": "role_control_public_roles",
+        "baseline_prompt_sha256": "ac92377fbe42354c9f6bf18fd3a8643b4d4ce5da1f02d03fb8f2e6071c27a9bc",
+        "case_id": "archive-tier-policy-revision",
+        "current_prompt_sha256": "c2e1ce4a5c31fffda1cafaaf9a5d6f3b82abfa12697cb4fab324205e166707af",
+        "exact": true,
+        "fingerprint_sha256": "5e8de3d23756dfd610a15102fc772dbd76fdc73b2add42519f03a23a6212fba8",
+        "projected_prompt_sha256": "ac92377fbe42354c9f6bf18fd3a8643b4d4ce5da1f02d03fb8f2e6071c27a9bc"
+      },
+      {
+        "arm_id": "direct_public_roles",
+        "baseline_prompt_sha256": "0fe460e6bfade0f6cf7111b5de1f37951f4979aae2c0ae1717339b35bd1de9a8",
+        "case_id": "permit-state-rule-revision",
+        "current_prompt_sha256": "0ebf425eaeb99938f3017520bb28f8d379c661616a34defc2d53e29e91d063b3",
+        "exact": true,
+        "fingerprint_sha256": "19c4284cf970fd8a96091ab24c0048c9ecc8fa7bae48d2776a631f3e4c21d2f7",
+        "projected_prompt_sha256": "0fe460e6bfade0f6cf7111b5de1f37951f4979aae2c0ae1717339b35bd1de9a8"
+      },
+      {
+        "arm_id": "role_control_public_roles",
+        "baseline_prompt_sha256": "c636219ceb8b7f5ab02fbaa4084c43e4d23b35f774a469a378496ddd79df3bec",
+        "case_id": "permit-state-rule-revision",
+        "current_prompt_sha256": "0db5c8a52a37ae0353ca122bcef43bd45c965195177d6d15c485328894f236d8",
+        "exact": true,
+        "fingerprint_sha256": "dc310ec1acb29b250358d60fffdf6e70b315eef1219ac7132b00ad9e697390ab",
+        "projected_prompt_sha256": "c636219ceb8b7f5ab02fbaa4084c43e4d23b35f774a469a378496ddd79df3bec"
+      }
+    ],
+    "fingerprint_sha256": "31fa5fb43beacd0f8ea7b704d3a33373ebdaed6c185a8135254efff7da1a457c",
+    "projection_fingerprint_sha256": "b9ff045d0a9385daf3e783653a300b0ce7fc8d265cf9a1f197666c350287fdbf",
+    "reference_runner_sha256": "0f39c067f68a3c44b72c0a28fbeb61df9381ad8f5d0a0f01351c294b64cd51e1"
+  },
+  "readiness": {
+    "admission": "FORMAT_READY_AND_TASK_CHANNEL_READY",
+    "calls_per_model": 2,
+    "contract_fingerprint_sha256": "fd1727218dcee14566bf489f7d61d9a2a2dcb7d4453f52e3a486ceec2b4ec5ce",
+    "format_expected_sha256": "d67500563e17732561f3496ac01402942ada10ef981d6d7dc17525393ed73a77",
+    "format_prompt_sha256": "6e0ca346b7075e92465aaf04cafa547a406b93473f1f5ab00d277edae1bf8fcf",
+    "invocation_fingerprint_sha256": "8daf591891c6ab4942dd7ee2b296e1783503180e0d956b6e3dc9ff854bb2fd4a",
+    "task_fingerprint_sha256": "d589ea19398696e4c806baf5a748a30b6358ffc62c5f447d633a6c2c2bdf0c86",
+    "task_id": "heldout-task-channel-readiness"
+  },
+  "runner_sha256": "a9579b0b07997a49cf22af47b1864a2c73c94f0f135e3a1051fc64c90e3f6086",
+  "schema_version": "ebrt-public-role-isolation-lock-v0.8.5.2",
+  "status": "LOCKED_BEFORE_MODEL_CALLS"
+}

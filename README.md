@@ -15,7 +15,7 @@ forward trajectory
   -> replay or regeneration
 ```
 
-The current release has eight executable stages:
+The current release has nine executable stages:
 
 - **v0.7.1:** one trajectory, one real local backward pass, one compiled
   actuator, and one real open-weight regeneration;
@@ -35,7 +35,9 @@ The current release has eight executable stages:
   preserving algorithm quality as `NOT_ASSESSED`.
 - **v0.8.5.1:** a bounded public-role transport repair that carries the
   caller-supplied `Evidence.role` across the local model-adapter boundary while
-  keeping the typed output state and controller fixed.
+  keeping the typed output state and controller fixed;
+- **v0.8.5.2:** an exact role-field isolation that restores the v0.8.5 adapter
+  label and requires nine complete prompt projections to match byte for byte.
 
 The generator is an adapter, not the definition of EBRT. The bundled reference
 backend is a local MLX model. Hosted APIs and other local runtimes can meet the
@@ -476,6 +478,34 @@ See the [v0.8.5.1 R&D note](docs/RND_PUBLIC_ROLE_TRANSPORT_V0_8_5_1.md),
 [sealed report](artifacts/public_role_transport_v0_8_5_1/r01/report.md), and
 [post-run interpretation](artifacts/public_role_transport_v0_8_5_1/r01/post_run_interpretation.json).
 
+### 9. Exact public-role isolation
+
+v0.8.5.2 preserves v0.8.5.1 as a bundled diagnostic and restores the exact
+v0.8.5 adapter-label line. Before locking, it removes only `role` from every
+model-visible `EVIDENCE_JSON` record and requires the resulting complete prompt
+to match v0.8.5 for readiness and both arms of all four cases: `9/9` exact.
+
+```bash
+python3 public_role_transport_isolation_v0_8_5_2.py self-test
+python3 public_role_transport_isolation_v0_8_5_2.py verify \
+  artifacts/public_role_transport_isolation_v0_8_5_2/r01/results.json \
+  --lock policy_lock_public_role_transport_isolation_v0_8_5_2.json
+```
+
+Under the single pushed lock and one no-retry execution, Mistral again changed
+from the known readiness `FAIL` to `PASS`; Qwen remained `FAIL` because `R2`
+was absent. Mistral passed `3/4` contaminated cases in both arms. Three raw
+direct/control differences reduced to list or JSON ordering: normalized public
+state and answer differences were both `0/4`.
+
+This isolates the exact model-visible field and records a one-model readiness
+association, not causal attribution or a general quality result. The admitted
+direct/control semantic effect remains `NULL_ON_ADMITTED_CELLS`.
+
+See the [v0.8.5.2 R&D note](docs/RND_PUBLIC_ROLE_TRANSPORT_ISOLATION_V0_8_5_2.md),
+[sealed report](artifacts/public_role_transport_isolation_v0_8_5_2/r01/report.md),
+and [post-run interpretation](artifacts/public_role_transport_isolation_v0_8_5_2/r01/post_run_interpretation.json).
+
 ## What the core owns
 
 The central file is [`ebrt_core.py`](ebrt_core.py). It contains the complete
@@ -660,6 +690,9 @@ are separate measurements. A `PASS` in one category does not silently imply a
 | [`public_role_transport_canary_v0_8_5_1.py`](public_role_transport_canary_v0_8_5_1.py) | caller-supplied public-role transport repair over the v0.8.5 task-shaped gate |
 | [`policy_lock_public_role_transport_v0_8_5_1.json`](policy_lock_public_role_transport_v0_8_5_1.json) | pre-call v0.8.5.1 runner, role-record schema, exact models, readiness, cases, and invocations |
 | [`interpret_public_role_transport_v0_8_5_1.py`](interpret_public_role_transport_v0_8_5_1.py) | deterministic prompt-delta and normalized public-state interpreter for sealed v0.8.5.1 |
+| [`public_role_transport_isolation_v0_8_5_2.py`](public_role_transport_isolation_v0_8_5_2.py) | exact role-only prompt isolation and two-stage local adapter canary |
+| [`policy_lock_public_role_transport_isolation_v0_8_5_2.json`](policy_lock_public_role_transport_isolation_v0_8_5_2.json) | pre-call runner, dependencies, nine prompt projections, exact models, schedule, and invocation lock |
+| [`interpret_public_role_transport_isolation_v0_8_5_2.py`](interpret_public_role_transport_isolation_v0_8_5_2.py) | deterministic v0.8.5-to-v0.8.5.2 readiness, prompt, and normalized output interpreter |
 | [`role_stratified_uptake_integrity_v0_8_3_1.py`](role_stratified_uptake_integrity_v0_8_3_1.py) | source- and model-bound integrity replication wrapper |
 | [`policy_lock_role_stratified_uptake_v0_8_3_1_r02.json`](policy_lock_role_stratified_uptake_v0_8_3_1_r02.json) | pre-call hashes for the wrapper and every imported local execution file |
 | [`role_stratified_uptake_integrity_v0_8_3_2.py`](role_stratified_uptake_integrity_v0_8_3_2.py) | exact expected model-snapshot manifest wrapper |
