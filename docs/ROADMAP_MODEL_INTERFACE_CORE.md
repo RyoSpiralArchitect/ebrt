@@ -1,7 +1,7 @@
 # EBRT Model-Interface Core Roadmap
 
 Status: **ACTIVE ENGINEERING AND RESEARCH PLAN**
-Current implementation: **v0.7.1 core + v0.8.2 local output corpus**
+Current implementation: **v0.7.1 core + v0.8.4 typed-channel canary**
 
 This roadmap starts where the sealed v0.6 line ends. It does not rewrite those
 artifacts or reinterpret their results. The new line separates the backward
@@ -187,7 +187,48 @@ Status: **IMPLEMENTED + VERIFIED; MIXED DEVELOPMENT RESULT**
 - No gradient-specific, causal-superiority, general-reasoning, or cross-model
   claim is admitted from this canary.
 
-### v0.8.4 — Hosted-provider adapters
+### v0.8.4 — Typed revision-channel canary
+
+Status: **IMPLEMENTED + VERIFIED; POST-REVIEW INTERPRETATION NARROWED**
+
+- Lock four fresh cases, two exact local instruction-model snapshots, a
+  four-arm Williams schedule, and 34 logical calls before execution.
+- Cross chronological versus role-stratified control with flat versus typed
+  revision-provenance interface packages while keeping the public backward
+  objective and controlled program unchanged.
+- Preserve a post-review finding that typed-only support-selection guidance
+  also changed a scored criterion; field factorization alone is therefore not
+  identified by this lock.
+- Observe one Mistral strict repair: the typed package restores required `R2`
+  and moves correction `R6` from decision support into `REVISION_EVENT`.
+- Record `1/4` strict repairs on the sole full-factorial
+  algorithm-diagnostic model and `1/8` mechanically across all cells; the
+  latter is not a cross-model quality denominator.
+- Preserve continued stable-evidence leakage and one Mistral numeric answer
+  that stays on the retired rule in all arms.
+- Preserve Qwen's `0/8` task-shaped typed parse result as a partial
+  adapter/interface diagnostic after its weaker literal-copy readiness probe
+  passed; exclude it from algorithm-quality denominators.
+- Observe opposite-direction Qwen answer flips under the public control bundle;
+  the actuator is non-neutral on this surface but not quality-monotonic.
+- Admit no gradient-specific, causal, general-quality, or cross-model claim.
+
+### v0.8.5 — Typed public-state adapter regression
+
+Status: **RESEARCH TARGET**
+
+- Replace literal-copy admission with a held-out task-shaped channel-composition
+  probe and separate `FORMAT_READY` from `TASK_CHANNEL_READY`.
+- Give decision support, revision provenance, and preserved constraints
+  distinct slots in one compact structured output object.
+- Keep the core objective, role-stratified program, one-call geometry, and
+  portable receipts fixed.
+- Treat v0.8.4 cases as contaminated engineering regression material; require a
+  new sealed surface before making any fresh quality claim.
+- Do not add stronger gradients, additional lanes, or more model breadth until
+  the model-interface boundary closes.
+
+### v0.8.6 — Hosted-provider adapters
 
 Status: **CONFORMANCE ONLY; LIVE E2E DEFERRED**
 

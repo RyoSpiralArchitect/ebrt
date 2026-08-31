@@ -1,0 +1,129 @@
+{
+  "base_main_commit": "b237ec09a280f11d864f32f65d5f8d9c8c9faf06",
+  "cases": [
+    {
+      "case_id": "freight-lane-rule-revision",
+      "contract_fingerprint_sha256": "18fc20e3fcd1a12b9fa79dfc0e7fed793deff01da22c48d8097e83da99bf05ac",
+      "invocation_fingerprints_sha256": {
+        "direct_flat": "5ee5e1f9b3dddb229e17b6ac196824be79c6cadaef6aed38d1c78ba21d999653",
+        "direct_typed": "1acbbe286a4998b964c7c3446fece423f45794bc7c144c8a2e501921299fa2b2",
+        "role_flat": "2e576ff71c22b8fd88cba76f145a43b582e2fc1cbdf85ad90a8da1c4e4361cab",
+        "role_typed": "03f017fba5745da9dde2219d9c87ed24099d668a34beb41b459ded54e63c4667"
+      },
+      "role_program_fingerprint_sha256": "04ffcf01ca57511648fbfd18a378eeadcb7072bcfecfc71dee1ee08a22f291f9",
+      "task_fingerprint_sha256": "36bd08811a447853fa097c24175e7f97ff0489dc78b37c8875aace857caf59a6"
+    },
+    {
+      "case_id": "credit-scale-rule-revision",
+      "contract_fingerprint_sha256": "5215d0382411912ce658e73cdc2166c86b6e6939c5b76c98b39ae110e60084a8",
+      "invocation_fingerprints_sha256": {
+        "direct_flat": "7b791d602c3c49bc64a35b79c0eaa25a92a94943b8dc186f104d9996a5c5c0d8",
+        "direct_typed": "7418dabde795cf076248f56e5a2045114cfaf5293987164e9b8a35a676e28965",
+        "role_flat": "8a2c09882aa3e07d921b30086816499daa576730b33cd42d30592e2bf0d6ec58",
+        "role_typed": "6f2f24af19625968d950290a279c8db267c672421f59de80865953e6c03e9cce"
+      },
+      "role_program_fingerprint_sha256": "6d33e5ab750db06848380e287223b3e9cd56a2e25c8e2378d0da7da7ce9e1e6e",
+      "task_fingerprint_sha256": "ddc086127e103e361e83e6e85f1c261b82643954ebdc41e9b1f36dd4e43f16d2"
+    },
+    {
+      "case_id": "archive-tier-policy-revision",
+      "contract_fingerprint_sha256": "10c8962c82ef8ed39395ed7cc88a4479dd41de7d51949fb37334ec37dd72dfcd",
+      "invocation_fingerprints_sha256": {
+        "direct_flat": "5311530ee4763b2acaaa271e2abcc06dd07be6cae9c0203b7b745d62448757fe",
+        "direct_typed": "2916dada7529bbf46b0503cbcd5f3a728e5b934b849d7be44acc68ad7943df9b",
+        "role_flat": "1a2388bc6bf18132c2ab4d31d8188e8819dac0c82f51905b92aa4735078b586a",
+        "role_typed": "163ef7b417470b89726623091f1ec1c29b9737ac6dc3cddcf8208014aabd9cc4"
+      },
+      "role_program_fingerprint_sha256": "d0683dfe5ab6004133b7b0b8bdcc3d933ee7e5ede7a19e7b83166817c8465507",
+      "task_fingerprint_sha256": "89f1a665c508ddfd0cbd4cd863b48ca8bfb9f8db866f32bd5ffa4e7675e8927a"
+    },
+    {
+      "case_id": "permit-state-rule-revision",
+      "contract_fingerprint_sha256": "be2b5508de8c76072a540699815e4b8ecf6e1f12d740d7d538534361443a3c6a",
+      "invocation_fingerprints_sha256": {
+        "direct_flat": "f0434339b97f085450fb96fc068e24ddd5911104a0b3aca1a5470acc0837f19b",
+        "direct_typed": "621c81aea6e13723a653525c19ff78803328fcdb8e7d8b4da96a24a7c4c2d78f",
+        "role_flat": "b9cc0edb8ae081dccf8a1d456cdeeb3607377a59e80c3a5bffd653aa6fcc22e3",
+        "role_typed": "95f501932a0dce236386e75905a1129c9af8b171b2482746ba29877ad562de2a"
+      },
+      "role_program_fingerprint_sha256": "e550fa11178d5a6ac7826dc38ce9c8fc8f0c723f02ed46b6c8f8e738cd61b4e6",
+      "task_fingerprint_sha256": "5b6417bf6f2b981370cee23a04a596d6cfb11818062e8eed520f44c0f8655989"
+    }
+  ],
+  "claim_boundary": [
+    "This is a four-case, two-model development canary over instruction-capable local snapshots selected by a separate readiness call.",
+    "The two control levels differ in evidence order and explicit revision instructions; they are bundled public interventions, not a gradient-only contrast.",
+    "The typed schema is an output-interface repair: it does not increase or alter the local backward credit assignment.",
+    "Public required-support roles and revision-event types are caller-supplied scaffold metadata, not dependencies discovered autonomously by EBRT.",
+    "Semantic contracts are frozen before model calls and are absent from every model-visible prompt.",
+    "Public trajectories are inspectable surrogates, not transcripts of private model reasoning, and no gradient crosses either model adapter.",
+    "One deterministic sample per cell cannot establish causal superiority, general reasoning improvement, or cross-model regularity."
+  ],
+  "effect_attribution_status": "NOT_ASSESSED",
+  "execution_policy": {
+    "arm_ids": [
+      "direct_flat",
+      "direct_typed",
+      "role_flat",
+      "role_typed"
+    ],
+    "automatic_retry": false,
+    "calls_per_arm_per_case": 1,
+    "factorial": {
+      "control_levels": [
+        "no_external_control",
+        "role_stratified_control"
+      ],
+      "schema_levels": [
+        "flat_support",
+        "typed_revision_event"
+      ]
+    },
+    "max_tokens_per_call": 64,
+    "native_state_capture": "DISABLED",
+    "prompt_rendering_mode": "chat_template",
+    "schedule": [
+      [
+        "direct_flat",
+        "direct_typed",
+        "role_typed",
+        "role_flat"
+      ],
+      [
+        "direct_typed",
+        "role_flat",
+        "direct_flat",
+        "role_typed"
+      ],
+      [
+        "role_flat",
+        "role_typed",
+        "direct_typed",
+        "direct_flat"
+      ],
+      [
+        "role_typed",
+        "direct_flat",
+        "role_flat",
+        "direct_typed"
+      ]
+    ],
+    "seed": 0,
+    "temperature": 0.0
+  },
+  "fingerprint_sha256": "d0bfe3c2a5fa4d86d71e50a154a26a4e046b99eca7f2d1e1c049bd1e51042e15",
+  "generalization_status": "TWO_MODEL_DEVELOPMENT_CANARY_ONLY",
+  "model_ids": [
+    "mlx-community/Mistral-7B-Instruct-v0.3-4bit@a4b8f870474b0eb527f466a03fbc187830d271f5",
+    "mlx-community/Qwen2.5-1.5B-Instruct-4bit@8b403126fc14f14cfc99bb4cfa72ecbc129ea677"
+  ],
+  "readiness": {
+    "calls_per_model": 1,
+    "expected_output_sha256": "1907e75fa5b6bccb049f84e06eb92388c8a45a1709f8d0c9f1e8d8a27dc75e55",
+    "failure_disposition": "ADAPTER_OR_CAPABILITY_DIAGNOSTIC_NO_CANARY_CELLS",
+    "prompt_sha256": "949a8b7372c3137751898505b1bd51fc7b2ec25d62ec6347aebf7ce0ae7334ae"
+  },
+  "runner_sha256": "0a4df0fb9e1c19173db3ee2ad3cbdd54678749cb6a4ec0cbba231d50953715b4",
+  "schema_version": "ebrt-typed-revision-channel-lock-v0.8.4",
+  "status": "LOCKED_BEFORE_MODEL_CALLS"
+}

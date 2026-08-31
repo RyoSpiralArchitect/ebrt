@@ -1,0 +1,113 @@
+{
+  "algorithm_diagnostic_surface": {
+    "case_count": 4,
+    "denominator_cells_per_arm": 4,
+    "model_count": 1,
+    "parsed_outputs": {
+      "direct_flat": 4,
+      "direct_typed": 4,
+      "role_flat": 4,
+      "role_typed": 4
+    },
+    "strict_passes": {
+      "direct_flat": 2,
+      "direct_typed": 0,
+      "role_flat": 0,
+      "role_typed": 1
+    }
+  },
+  "corrected_counts": {
+    "full_factorial_algorithm_diagnostic_models": 1,
+    "literal_ready_models": 2,
+    "partial_interface_diagnostic_models": 1
+  },
+  "fingerprint_sha256": "da5dcd2f5a661b7f8ca7d802ee54ff8a0aa8780f378a3ac4aefda46c6590f872",
+  "interface_diagnostic_surface": {
+    "case_count": 4,
+    "denominator_cells_per_arm": 4,
+    "model_count": 1,
+    "parsed_outputs": {
+      "direct_flat": 4,
+      "direct_typed": 0,
+      "role_flat": 4,
+      "role_typed": 0
+    },
+    "strict_passes": {
+      "direct_flat": 0,
+      "direct_typed": 0,
+      "role_flat": 0,
+      "role_typed": 0
+    }
+  },
+  "interpretation": [
+    "All-cell counts are mechanical grades, not a cross-model algorithm-quality denominator.",
+    "Only full-factorial task-shaped parse surfaces enter the algorithm diagnostic; Qwen typed failures remain adapter/interface evidence.",
+    "The positive controlled repair is one Mistral cell within a bundled output-interface and support-guidance contrast.",
+    "Field factorization alone, causal superiority, and general reasoning improvement remain not identified."
+  ],
+  "mechanically_graded_all_cells": {
+    "case_count": 8,
+    "denominator_cells_per_arm": 8,
+    "model_count": 2,
+    "parsed_outputs": {
+      "direct_flat": 8,
+      "direct_typed": 4,
+      "role_flat": 8,
+      "role_typed": 4
+    },
+    "strict_passes": {
+      "direct_flat": 2,
+      "direct_typed": 0,
+      "role_flat": 0,
+      "role_typed": 1
+    }
+  },
+  "model_scopes": [
+    {
+      "interpretation_scope": "FULL_FACTORIAL_ALGORITHM_DIAGNOSTIC",
+      "literal_readiness_status": "PASS",
+      "model_id": "mlx-community/Mistral-7B-Instruct-v0.3-4bit@a4b8f870474b0eb527f466a03fbc187830d271f5",
+      "parsed_outputs": {
+        "direct_flat": 4,
+        "direct_typed": 4,
+        "role_flat": 4,
+        "role_typed": 4
+      },
+      "task_shaped_typed_channel_ready": true
+    },
+    {
+      "interpretation_scope": "PARTIAL_INTERFACE_DIAGNOSTIC",
+      "literal_readiness_status": "PASS",
+      "model_id": "mlx-community/Qwen2.5-1.5B-Instruct-4bit@8b403126fc14f14cfc99bb4cfa72ecbc129ea677",
+      "parsed_outputs": {
+        "direct_flat": 4,
+        "direct_typed": 0,
+        "role_flat": 4,
+        "role_typed": 0
+      },
+      "task_shaped_typed_channel_ready": false
+    }
+  ],
+  "prompt_contrast_audit": {
+    "audited_case_count": 4,
+    "contrast_scope": "BUNDLED_OUTPUT_INTERFACE_AND_SUPPORT_GUIDANCE",
+    "pure_field_factorization_effect_status": "NOT_IDENTIFIED",
+    "scored_guidance_symmetric": false,
+    "typed_only_scored_guidance": [
+      "Keep stable constraints out of SUPPORT unless they directly determine ANSWER."
+    ]
+  },
+  "review_findings": {
+    "algorithm_diagnostic_admission": "CORRECTED_POST_REVIEW",
+    "schema_contrast_prompt_symmetry": "ORIGINAL_LOCKED_DESIGN_ASYMMETRIC"
+  },
+  "schema_version": "ebrt-typed-revision-channel-post-review-interpretation-v0.8.4",
+  "source": {
+    "original_artifact_mutated": false,
+    "policy_lock_fingerprint_sha256": "d0bfe3c2a5fa4d86d71e50a154a26a4e046b99eca7f2d1e1c049bd1e51042e15",
+    "portable_verification_fingerprint_sha256": "39930c83d22ac0e1fef6f5f63549dfdb26c81a36be1107ac6877de2eeefc76fa",
+    "results_file_sha256": "55a1fb8b11c49cfa69b074916ec2bee18e52bd7e18a2635070f8e510651f4fc6",
+    "run_fingerprint_sha256": "2a4dfc288e85c9fd26f73eac37f37e4e8068194067b267709cd2b1ec4ff94d95"
+  },
+  "status": "PASS_WITH_NARROWED_INTERPRETATION"
+}

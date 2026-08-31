@@ -15,7 +15,7 @@ forward trajectory
   -> replay or regeneration
 ```
 
-The current release has four executable stages:
+The current release has six executable stages:
 
 - **v0.7.1:** one trajectory, one real local backward pass, one compiled
   actuator, and one real open-weight regeneration;
@@ -26,7 +26,10 @@ The current release has four executable stages:
 - **v0.8.2:** a four-model local output-diff development corpus that separates
   algorithm-diagnostic cells from adapter/capability failures;
 - **v0.8.3:** a fresh role-stratified uptake canary that separates deterministic
-  compiler coverage from the local generator's observed support retention.
+  compiler coverage from the local generator's observed support retention;
+- **v0.8.4:** a sealed two-model, 2x2 typed-interface canary plus a post-review
+  receipt that separates one full-factorial algorithm-diagnostic surface from
+  one partial adapter/interface diagnostic.
 
 The generator is an adapter, not the definition of EBRT. The bundled reference
 backend is a local MLX model. Hosted APIs and other local runtimes can meet the
@@ -371,6 +374,50 @@ file-swap attack. Interpret `cpython_framework_library_exact` and
 trusted local host. Loaded-image identity, hostile same-user TOCTOU, and full
 host attestation are `NOT_ASSESSED`.
 
+### 6. Typed revision-channel canary
+
+v0.8.4 keeps the role-stratified controller fixed and crosses chronological
+versus controlled context with flat versus typed output-interface packages.
+Post-review audit found that the typed package also included typed-only
+support-selection guidance for a scored stable-evidence criterion. The result
+therefore does **not** identify field factorization alone.
+
+```bash
+python3 typed_revision_channel_canary_v0_8_4.py self-test
+
+python3 typed_revision_channel_canary_v0_8_4.py verify \
+  artifacts/typed_revision_channel_v0_8_4/r01/results.json \
+  --lock policy_lock_typed_revision_channel_v0_8_4.json
+
+python3 interpret_typed_revision_channel_v0_8_4.py verify \
+  --source artifacts/typed_revision_channel_v0_8_4/r01/results.json \
+  --lock policy_lock_typed_revision_channel_v0_8_4.json \
+  --receipt artifacts/typed_revision_channel_v0_8_4/r01/post_review_interpretation.json
+```
+
+The sealed block ran four fresh cases, two exact local instruction-model
+snapshots, and 34 logical calls with no retry. Mistral produced one strict
+flat-to-typed-package repair: the typed controlled arm restored required
+decision evidence `R2` while moving correction provenance `R6` into its own
+field. This is `1/4` within the sole full-factorial algorithm-diagnostic model.
+The mechanically graded all-cell count is `1/8`, but that is not a cross-model
+quality denominator.
+
+The Qwen snapshot passed a literal readiness copy probe but produced no
+parseable task-shaped typed output. It is therefore a partial adapter/interface
+diagnostic and its typed failures are excluded from algorithm-quality counts.
+Its flat outputs still showed a positive
+answer flip in one case and a negative flip in another under the same control
+bundle. The result therefore exposes two next bottlenecks: readiness must test
+task-shaped channel composition, and a provider-visible actuator can be
+non-neutral without controlling quality monotonically.
+
+See the [v0.8.4 R&D note](docs/RND_TYPED_REVISION_CHANNEL_V0_8_4.md) and the
+[sealed report](artifacts/typed_revision_channel_v0_8_4/r01/report.md). The
+[post-review interpretation receipt](artifacts/typed_revision_channel_v0_8_4/r01/post_review_interpretation.json)
+preserves the original result byte-for-byte while narrowing its denominators
+and contrast claim.
+
 ## What the core owns
 
 The central file is [`ebrt_core.py`](ebrt_core.py). It contains the complete
@@ -547,6 +594,9 @@ are separate measurements. A `PASS` in one category does not silently imply a
 | [`local_output_diff_corpus_v0_8_2.py`](local_output_diff_corpus_v0_8_2.py) | matched local-model output corpus runner |
 | [`role_stratified_uptake_canary_v0_8_3.py`](role_stratified_uptake_canary_v0_8_3.py) | fresh three-arm compiler-coverage/provider-uptake canary |
 | [`policy_lock_role_stratified_uptake_v0_8_3.json`](policy_lock_role_stratified_uptake_v0_8_3.json) | pre-call v0.8.3 case, schedule, model, and source lock |
+| [`typed_revision_channel_canary_v0_8_4.py`](typed_revision_channel_canary_v0_8_4.py) | sealed two-model, four-arm typed revision-channel canary |
+| [`policy_lock_typed_revision_channel_v0_8_4.json`](policy_lock_typed_revision_channel_v0_8_4.json) | pre-call v0.8.4 cases, models, schedule, source, and invocation lock |
+| [`interpret_typed_revision_channel_v0_8_4.py`](interpret_typed_revision_channel_v0_8_4.py) | deterministic post-review contrast and denominator interpreter |
 | [`role_stratified_uptake_integrity_v0_8_3_1.py`](role_stratified_uptake_integrity_v0_8_3_1.py) | source- and model-bound integrity replication wrapper |
 | [`policy_lock_role_stratified_uptake_v0_8_3_1_r02.json`](policy_lock_role_stratified_uptake_v0_8_3_1_r02.json) | pre-call hashes for the wrapper and every imported local execution file |
 | [`role_stratified_uptake_integrity_v0_8_3_2.py`](role_stratified_uptake_integrity_v0_8_3_2.py) | exact expected model-snapshot manifest wrapper |
@@ -568,9 +618,11 @@ are separate measurements. A `PASS` in one category does not silently imply a
 | [`docs/ROADMAP_MODEL_INTERFACE_CORE.md`](docs/ROADMAP_MODEL_INTERFACE_CORE.md) | evidence-labelled path beyond v0.8 |
 | [`docs/RND_LOCAL_OUTPUT_DIFF_CORPUS_V0_8_2.md`](docs/RND_LOCAL_OUTPUT_DIFF_CORPUS_V0_8_2.md) | generated-output failure atlas and bounded next hypotheses |
 | [`docs/RND_ROLE_STRATIFIED_UPTAKE_CANARY_V0_8_3.md`](docs/RND_ROLE_STRATIFIED_UPTAKE_CANARY_V0_8_3.md) | role-coverage repair result and remaining provider-uptake boundary |
+| [`docs/RND_TYPED_REVISION_CHANNEL_V0_8_4.md`](docs/RND_TYPED_REVISION_CHANNEL_V0_8_4.md) | typed-channel result, readiness-gate defect, and next bounded adapter repair |
 | [`artifacts/model_interface_core_v0_7_1/local_mistral_e2e_r01.json`](artifacts/model_interface_core_v0_7_1/local_mistral_e2e_r01.json) | sanitized real local E2E receipt |
 | [`artifacts/local_output_diff_corpus_v0_8_2/r01/results.json`](artifacts/local_output_diff_corpus_v0_8_2/r01/results.json) | sealed four-model, 32-call development corpus |
 | [`artifacts/role_stratified_uptake_v0_8_3/r01/results.json`](artifacts/role_stratified_uptake_v0_8_3/r01/results.json) | sealed one-model, nine-call uptake canary |
+| [`artifacts/typed_revision_channel_v0_8_4/r01/results.json`](artifacts/typed_revision_channel_v0_8_4/r01/results.json) | sealed two-model, 34-call typed-channel canary |
 | [`artifacts/role_stratified_uptake_v0_8_3/r02_integrity/results.json`](artifacts/role_stratified_uptake_v0_8_3/r02_integrity/results.json) | preserved source-bound repetition; not fresh evidence |
 | [`artifacts/role_stratified_uptake_v0_8_3/r03_snapshot_bound/results.json`](artifacts/role_stratified_uptake_v0_8_3/r03_snapshot_bound/results.json) | preserved exact-snapshot-bound repetition; not fresh evidence |
 | [`artifacts/role_stratified_uptake_v0_8_3/r04_loader_bound/results.json`](artifacts/role_stratified_uptake_v0_8_3/r04_loader_bound/results.json) | preserved loader-bound repetition; not fresh evidence |
