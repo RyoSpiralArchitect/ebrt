@@ -1,0 +1,18 @@
+{
+  "checks": {
+    "aggregate_summary_replayed": true,
+    "deterministic_compilation_replayed": true,
+    "factorial_diffs_replayed": true,
+    "invocations_recompiled": true,
+    "model_identities_exact": true,
+    "model_outputs_reparsed": true,
+    "policy_lock_exact": true,
+    "provider_uptake_replayed": true,
+    "readiness_replayed": true,
+    "typed_channel_grades_replayed": true
+  },
+  "fingerprint_sha256": "39930c83d22ac0e1fef6f5f63549dfdb26c81a36be1107ac6877de2eeefc76fa",
+  "run_fingerprint_sha256": "2a4dfc288e85c9fd26f73eac37f37e4e8068194067b267709cd2b1ec4ff94d95",
+  "schema_version": "ebrt-typed-revision-channel-verification-v0.8.4",
+  "status": "PASS"
+}
