@@ -1,0 +1,20 @@
+{
+  "checks": {
+    "adapter_admission_replayed": true,
+    "aggregate_replayed": true,
+    "dependency_hashes_exact": true,
+    "diffs_replayed": true,
+    "format_readiness_replayed": true,
+    "invocations_recompiled": true,
+    "model_identities_exact": true,
+    "model_outputs_reparsed": true,
+    "policy_lock_exact": true,
+    "provider_uptake_replayed": true,
+    "task_channel_readiness_replayed": true,
+    "typed_states_regraded": true
+  },
+  "fingerprint_sha256": "8f6cb91191739926e015031ae2f3294f6f6a51a76d28089cdc7ded2fb30575c0",
+  "run_fingerprint_sha256": "ba33b30c9f1840381bf3bd5f9640fe6e9c31d81fb171697413ebc4e200149a1a",
+  "schema_version": "ebrt-public-role-transport-verification-v0.8.5.1",
+  "status": "PASS"
+}

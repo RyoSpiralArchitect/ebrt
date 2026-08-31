@@ -15,7 +15,7 @@ forward trajectory
   -> replay or regeneration
 ```
 
-The current release has seven executable stages:
+The current release has eight executable stages:
 
 - **v0.7.1:** one trajectory, one real local backward pass, one compiled
   actuator, and one real open-weight regeneration;
@@ -33,6 +33,9 @@ The current release has seven executable stages:
 - **v0.8.5:** a single typed public-state adapter and task-shaped readiness gate
   that stops both exact local snapshots before contaminated regression cells,
   preserving algorithm quality as `NOT_ASSESSED`.
+- **v0.8.5.1:** a bounded public-role transport repair that carries the
+  caller-supplied `Evidence.role` across the local model-adapter boundary while
+  keeping the typed output state and controller fixed.
 
 The generator is an adapter, not the definition of EBRT. The bundled reference
 backend is a local MLX model. Hosted APIs and other local runtimes can meet the
@@ -450,6 +453,29 @@ direct/control or algorithm-quality result.
 See the [v0.8.5 R&D note](docs/RND_TYPED_PUBLIC_STATE_V0_8_5.md) and the
 [sealed report](artifacts/typed_public_state_v0_8_5/r01/report.md).
 
+### 8. Public role transport repair
+
+v0.8.5.1 changes one model-visible input field: every evidence record now
+retains the caller-supplied public `Evidence.role` already present in
+`RevisionTask`. Removing that field reconstructs the v0.8.5 text-only record
+exactly. No expected answer or post-call semantic contract enters a prompt.
+
+```bash
+python3 public_role_transport_canary_v0_8_5_1.py self-test
+python3 public_role_transport_canary_v0_8_5_1.py lock-spec
+```
+
+Mistral repaired the known readiness failure and passed `3/4` contaminated
+cells in both arms. Qwen emitted the same incomplete support lineage and was
+stopped before regression. Although raw strings changed in all four admitted
+cells, normalized direct/control public states changed in none. A post-run
+audit also found one adapter-label wording delta, so role-only effect is
+`NOT_IDENTIFIED`; v0.8.5.1 is preserved as a bundled diagnostic.
+
+See the [v0.8.5.1 R&D note](docs/RND_PUBLIC_ROLE_TRANSPORT_V0_8_5_1.md),
+[sealed report](artifacts/public_role_transport_v0_8_5_1/r01/report.md), and
+[post-run interpretation](artifacts/public_role_transport_v0_8_5_1/r01/post_run_interpretation.json).
+
 ## What the core owns
 
 The central file is [`ebrt_core.py`](ebrt_core.py). It contains the complete
@@ -631,6 +657,9 @@ are separate measurements. A `PASS` in one category does not silently imply a
 | [`interpret_typed_revision_channel_v0_8_4.py`](interpret_typed_revision_channel_v0_8_4.py) | deterministic post-review contrast and denominator interpreter |
 | [`typed_public_state_regression_v0_8_5.py`](typed_public_state_regression_v0_8_5.py) | frozen typed-state runner and fail-closed portable verifier for the two-stage readiness artifact |
 | [`policy_lock_typed_public_state_v0_8_5.json`](policy_lock_typed_public_state_v0_8_5.json) | pre-call v0.8.5 sources, exact models, readiness, cases, and invocation lock |
+| [`public_role_transport_canary_v0_8_5_1.py`](public_role_transport_canary_v0_8_5_1.py) | caller-supplied public-role transport repair over the v0.8.5 task-shaped gate |
+| [`policy_lock_public_role_transport_v0_8_5_1.json`](policy_lock_public_role_transport_v0_8_5_1.json) | pre-call v0.8.5.1 runner, role-record schema, exact models, readiness, cases, and invocations |
+| [`interpret_public_role_transport_v0_8_5_1.py`](interpret_public_role_transport_v0_8_5_1.py) | deterministic prompt-delta and normalized public-state interpreter for sealed v0.8.5.1 |
 | [`role_stratified_uptake_integrity_v0_8_3_1.py`](role_stratified_uptake_integrity_v0_8_3_1.py) | source- and model-bound integrity replication wrapper |
 | [`policy_lock_role_stratified_uptake_v0_8_3_1_r02.json`](policy_lock_role_stratified_uptake_v0_8_3_1_r02.json) | pre-call hashes for the wrapper and every imported local execution file |
 | [`role_stratified_uptake_integrity_v0_8_3_2.py`](role_stratified_uptake_integrity_v0_8_3_2.py) | exact expected model-snapshot manifest wrapper |
