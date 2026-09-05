@@ -1,6 +1,6 @@
 # v0.8.5.5 — Numeric revision diagnosis
 
-Status: **ZERO-CALL VALIDATED; PRIOR-OUTPUT AUDIT COMPLETE; LOCAL BLOCK NOT RUN**
+Status: **COMPLETE EIGHT-CALL BLOCK; NO FINAL REPAIR; TWO COMPONENT FORMAT FAILURES**
 
 The v0.8.5.4 credit case cites R2/R4, identifies R6, and preserves the R5
 reference, yet all three outputs still say `45_CREDITS` instead of
@@ -134,8 +134,8 @@ Failure artifacts stay sealed; any change requires a successor lock.
 - 51 synthetic self-checks: PASS, including all three edit classes, exact raw
   and choice-order isolation, unchanged strict failures, component type errors,
   separate denominators, readiness stop, generation errors, and journal replay.
-- Real cached tokenizer preflight: 8/8 prompts rendered; no weights loaded for
-  generation and **zero new model generations**.
+- At preparation, real cached tokenizer preflight rendered 8/8 prompts with
+  no weights loaded for generation and **zero new model generations**.
 - Lock:
   `b98b42b4b01116cd3135b864b9b46c094f6788ff91610449c1b7983b7ff591d1`.
 - Preflight:
@@ -162,4 +162,57 @@ python3 numeric_revision_diagnostic_v0_8_5_5.py verify \
 Verification replays prompts, parsing, strict grades, path diagnostics,
 component checks, and the complete dispatch/terminal journal without another
 model call. Hashes are integrity checks, not signatures or proof of model
-execution. No `r01` result or execution claim exists at this preparation stage.
+execution. No `r01` result or execution claim existed at the preparation stage.
+
+## r01 — 2026-09-06
+
+After user authorization, lock commit
+`c4f6079b40eba6500ce25b4b75ed2f2557b940b5` was pushed before the one-shot run.
+All **8/8 calls completed without retries**. Both legacy readiness checks
+passed; every generation ended with `stop`, below the 96-token ceiling.
+The unchanged portable verifier passed, including the 18-entry journal.
+
+| Probe | Official outcome | Emitted observation |
+| --- | --- | --- |
+| `final_reference` | Strict FAIL | `45_CREDITS`; support R2/R4, event R6, preserved reference R5 |
+| `final_choice_order` | Strict FAIL | Byte-identical to reference |
+| `final_explicit_operands` | Strict FAIL | Byte-identical to reference |
+| `inspect_computation` | FORMAT_ERROR | Bare multiline object with 5, 3, 15, `15_CREDITS`, and rule ID R6 |
+| `isolated_arithmetic` | FORMAT_ERROR | Bare `{"result":15}` instead of the required prefixed product object |
+| `isolated_label` | Component PASS | `LABEL_JSON={"answer":"15_CREDITS"}` with amount 15 supplied in the prompt |
+
+There are **0/3 strict final-state passes** and no final-state repair or diff.
+All three state outputs miss only the required `/answer` revision under the
+secondary path diagnostic; support, event, and preserved-reference checks pass.
+Reversing choice order and explicitly naming R2/R4 do not repair this observed
+case. No compiler default changes follow from the block.
+
+Only **1/3 component outputs is parsed**; the other two retain
+`V0855_COMPONENT_LINE_INVALID` and null component checks. The raw calculation
+text contains useful leads, but we do not strip prefixes, accept extra lines,
+rename `result` to `product`, or regrade those outputs. In the computation
+text, R6 is the correction event, not the factor-bearing R4 expected by the
+registered rule-ID check. A syntax-only repair would therefore not settle
+the provenance question either.
+
+The initial readiness checks covered the existing STATE_JSON interface,
+**not the two newly failing component formats**. This is a limitation of the
+measurement setup: the run completes, but the intended rule/arithmetic/readout
+diagnosis remains partial. The label-only PASS is assisted and is not a
+full-task repair. The raw appearance of 15 does not prove reliable arithmetic,
+nor does a format failure prove an inability to multiply.
+
+The smallest next gate is an explicit, independently admitted component
+output contract: clarify its exact shape and separate factor-source evidence
+from correction-event evidence, keeping the parser and semantic criteria
+strict. Only a successor lock may test that change. After that gate, a public
+calculation record feeding final-state generation is a candidate experiment,
+not an implemented or established repair. Do not add more controller machinery
+or repeat r01 to seek a passing sample.
+
+Total input tokens: 3333. Total output tokens including terminal tokens: 340.
+These are observed costs, not matched-compute or speed evidence.
+
+See the immutable generated [report](../artifacts/numeric_revision_diagnostic_v0_8_5_5/r01/report.md),
+[results](../artifacts/numeric_revision_diagnostic_v0_8_5_5/r01/results.json),
+and the separate [post-run interpretation](../artifacts/numeric_revision_diagnostic_v0_8_5_5/r01/interpretation.md).

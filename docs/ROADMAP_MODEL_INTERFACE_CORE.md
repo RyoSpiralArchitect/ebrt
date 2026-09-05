@@ -342,7 +342,7 @@ Status: **COMPLETE CANARY; NO REPAIR BENEFIT; PREPEND NOT PROMOTED**
 
 ### v0.8.5.5 — Numeric revision diagnosis
 
-Status: **ZERO-CALL VALIDATED; PRIOR-OUTPUT AUDIT COMPLETE; LIVE NOT RUN**
+Status: **COMPLETE EIGHT-CALL BLOCK; NO FINAL REPAIR; COMPONENT DIAGNOSIS PARTIAL**
 
 - Borrow the miss / over-edit / wrong-value distinction from *What Else Needs
   Fixing?* as a secondary tracked-public-path diagnostic, not a new benchmark
@@ -355,9 +355,18 @@ Status: **ZERO-CALL VALIDATED; PRIOR-OUTPUT AUDIT COMPLETE; LIVE NOT RUN**
   independently scored public-computation/arithmetic/label probes.
 - Keep raw evidence unchanged in full-task probes. Explicit operand selection
   and a given numeric label value are diagnostic assistance, not EBRT gains.
-- Complete 51 synthetic checks and eight real tokenizer renders with zero
-  new model generations. Publish the sealed lock before any authorized run;
-  do not change the controller or promote a new compiler default yet.
+- Complete 51 synthetic checks and eight real tokenizer renders before live
+  execution. Publish lock commit `c4f6079`, then complete the authorized r01:
+  eight calls, no retries, all `stop`, and portable journal verification PASS.
+- Preserve byte-identical `45_CREDITS` final outputs: 0/3 strict passes and no
+  repair from reversing choices or explicitly naming operands.
+- Retain two new component-format errors without regrading their raw numeric
+  text. The label-only probe passes with its numeric amount already supplied;
+  it is not a final-state repair. Component diagnosis remains partial.
+- Next admit the new component output contracts independently, preserving
+  factor-source versus correction-event provenance. Only then consider a
+  public calculation record feeding final generation under a successor lock.
+- Do not repeat r01, change the controller, or promote a compiler default.
 - See [design, prior audit, and commands](RND_NUMERIC_REVISION_DIAGNOSTIC_V0_8_5_5.md).
 
 ### v0.8.6 — Hosted-provider adapters
