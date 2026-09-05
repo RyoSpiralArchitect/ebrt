@@ -307,6 +307,30 @@ Status: **COMPLETE ADAPTER DIAGNOSTIC; ALGORITHM NOT ASSESSED**
   execution. A plain-text adapter and a chat-template adapter are distinct
   protocols and require separate locks.
 
+### v0.8.5.4 — Revision-prefix placement
+
+Status: **ZERO-CALL VALIDATED; LOCAL LOCK/PREFLIGHT READY; LIVE NOT RUN**
+
+- Keep the core monolith and frozen experiment history unchanged; place this
+  bounded comparison and its verifier in one auxiliary runner.
+- Compare a contemporaneous full-context baseline with the same existing
+  public revision program appended versus prepended to chronological raw
+  evidence. Keep the final question and output contract identical in all arms.
+- Start with the known Mistral snapshot and four existing cases: two readiness
+  calls, then at most twelve regression calls, without retry.
+- Gate execution on tokenizer-only rendering/tokenization preflight plus
+  committed and pushed lock/preflight artifacts.
+- Separate wrong values, missed required references, extra references, stale
+  evidence, and stable-constraint references. Do not claim preservation of
+  stable fact values that the current output schema does not emit.
+- Treat a prefix effect as placement sensitivity, not proof that gradient
+  allocation or target selection improves reasoning. The three reinspection
+  targets remain mandatory in this corpus.
+- Record 42 passing synthetic self-checks and all 14 real tokenizer preflight
+  renders; append/prepend input-token counts match in all four cases. This is
+  preparation, with zero real model generations and no r01 outcome yet.
+- See [design and commands](RND_REVISION_PREFIX_PLACEMENT_V0_8_5_4.md).
+
 ### v0.8.6 — Hosted-provider adapters
 
 Status: **CONFORMANCE ONLY; LIVE E2E DEFERRED**
