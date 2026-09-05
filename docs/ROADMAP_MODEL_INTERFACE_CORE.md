@@ -309,7 +309,7 @@ Status: **COMPLETE ADAPTER DIAGNOSTIC; ALGORITHM NOT ASSESSED**
 
 ### v0.8.5.4 — Revision-prefix placement
 
-Status: **ZERO-CALL VALIDATED; LOCAL LOCK/PREFLIGHT READY; LIVE NOT RUN**
+Status: **COMPLETE CANARY; NO REPAIR BENEFIT; PREPEND NOT PROMOTED**
 
 - Keep the core monolith and frozen experiment history unchanged; place this
   bounded comparison and its verifier in one auxiliary runner.
@@ -327,8 +327,17 @@ Status: **ZERO-CALL VALIDATED; LOCAL LOCK/PREFLIGHT READY; LIVE NOT RUN**
   allocation or target selection improves reasoning. The three reinspection
   targets remain mandatory in this corpus.
 - Record 42 passing synthetic self-checks and all 14 real tokenizer preflight
-  renders; append/prepend input-token counts match in all four cases. This is
-  preparation, with zero real model generations and no r01 outcome yet.
+  renders; append/prepend input-token counts match in all four cases.
+- After publishing lock commit `c104a9c`, complete the authorized one-shot r01:
+  14/14 calls, both readiness probes passed, no retry or output-ceiling hit.
+- Preserve strict PASS counts of baseline 3/4, append 2/4, prepend 0/4.
+  Prepend has one channel-overlap rejection and two required-support omissions;
+  all arms retain the known wrong numeric answer despite correct references.
+- Record append/prepend normalized-state differences in 1/3 jointly parsed
+  pairs and answer differences in 0/3. No strict repair over the new baseline;
+  do not promote prepend or claim gradient-allocation superiority.
+- Next isolate the shared numeric readout failure under a successor design;
+  do not rerun r01 or weaken the existing output/support contracts.
 - See [design and commands](RND_REVISION_PREFIX_PLACEMENT_V0_8_5_4.md).
 
 ### v0.8.6 — Hosted-provider adapters

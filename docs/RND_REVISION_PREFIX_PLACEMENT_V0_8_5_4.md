@@ -1,6 +1,6 @@
 # v0.8.5.4 — Revision-prefix placement canary
 
-Status: **ZERO-CALL VALIDATED; LOCAL LOCK/PREFLIGHT READY; NO LIVE RESULT**
+Status: **COMPLETE ONE-SHOT CANARY; PLACEMENT DIFFERENCES WITH STRICT REGRESSIONS**
 
 ## Question and implementation boundary
 
@@ -182,6 +182,52 @@ Local artifacts:
 - [Tokenizer preflight](../artifacts/revision_prefix_placement_v0_8_5_4/preflight.json):
   `f1d85b33d95b6384e50b0015b349a624d180754172575a662ecd9493b9a9bfd9`.
 
-The local generation count remains **0**. No `r01` result exists yet. Pushing
-the sealed inputs and authorizing the bounded local run are the next gate;
-offline validation is not an observed generator improvement.
+At the pre-run checkpoint, the local generation count was **0** and no `r01`
+result existed. The following section records the separately authorized run;
+offline validation itself was not an observed generator improvement.
+
+## r01 — 2026-09-06
+
+The user authorized publishing the locked inputs and the bounded local run.
+Commit `c104a9c1296047e4ea48f3d048090f38117eafba` was pushed before execution.
+The runner completed **14/14 logical calls without retries**. Both readiness
+probes passed, all generations ended with `stop`, and none hit the 96-token
+ceiling. The unchanged portable verifier passed. The 30-entry journal was also
+checked for its hash chain, exact dispatch/terminal pairing, and agreement
+with the saved results.
+
+| Arm | Parsed public outputs | Strict PASS | Input tokens, four cases | Output tokens, four cases |
+| --- | ---: | ---: | ---: | ---: |
+| baseline | 4/4 | 3/4 | 2626 | 208 |
+| append | 4/4 | 2/4 | 3346 | 205 |
+| prepend | 3/4 | 0/4 | 3346 | 205 |
+
+Append/prepend differs on normalized public state in **1/3 jointly parsed
+pairs**, but on answer in **0/3**. The fourth pair is unavailable to semantic
+comparison because prepend repeats R6 in both decision support and revision
+event, correctly triggering `V0852_STATE_CHANNELS_OVERLAP`. It is not silently
+repaired or counted as a parsed semantic difference.
+
+- Freight: baseline/append pass; prepend has the R6 channel-overlap failure.
+- Credits: all arms preserve the required support references but emit stale
+  `45_CREDITS` instead of `15_CREDITS` (the current rule is 5 × 3).
+- Archive: baseline/append pass; prepend omits required support R2.
+- Permit: baseline passes; append and prepend omit required support R2.
+
+There are no strict repairs against the contemporaneous baseline, one strict
+regression for append, and three for prepend. Moving this existing public
+program to the front is **not promoted to the default**. This result concerns
+the small contaminated Mistral canary, not a general rejection of prefix
+conditioning or the Trace as State method. Placement sensitivity is observed;
+causal attribution and gradient-allocation superiority remain `NOT_ASSESSED`.
+
+The next bounded diagnostic should isolate the shared numeric value/readout
+failure while retaining the existing strict contracts, rather than adopting
+prefix placement or immediately adding a larger controller. Possible
+distinctions are arithmetic execution, stale-rule adoption, and answer-choice
+mapping. These are hypotheses, not established causes. No successor generation
+or algorithm change has been performed in this run.
+
+See the immutable generated [r01 report](../artifacts/revision_prefix_placement_v0_8_5_4/r01/report.md),
+[results](../artifacts/revision_prefix_placement_v0_8_5_4/r01/results.json), and
+the separate [post-run interpretation](../artifacts/revision_prefix_placement_v0_8_5_4/r01/interpretation.md).

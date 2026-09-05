@@ -1,0 +1,9 @@
+{
+  "artifact_fingerprint_sha256": "fbe70eb242717d29d210e13b5971278cf38000e22916a9d3e70033f2eaf28396",
+  "fingerprint_sha256": "86008542a796d2d44c424a2d3ff0b740e55323389f3e508b40f83b9c4e10fbe6",
+  "logical_calls": 0,
+  "model_execution": "NOT_REEXECUTED",
+  "replayed": "PROMPT_PLAN_OUTPUT_PARSING_STRICT_GRADING_NORMALIZED_DIFF",
+  "status": "PASS",
+  "tokenization": "RECORDED_NOT_REEXECUTED"
+}
