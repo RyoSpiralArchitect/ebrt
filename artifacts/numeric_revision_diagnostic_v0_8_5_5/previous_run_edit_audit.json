@@ -1,0 +1,737 @@
+{
+  "cells": [
+    {
+      "arm": "baseline",
+      "case_id": "freight-lane-rule-revision",
+      "original_parse_error": null,
+      "original_strict_grade": {
+        "checks": {
+          "channels_pairwise_disjoint": true,
+          "decision_support_exact": true,
+          "expected_answer": true,
+          "forbidden_evidence_absent": true,
+          "preserved_constraints_exact": true,
+          "revision_event_exact": true,
+          "schema_parsed": true
+        },
+        "contract_fingerprint_sha256": "18fc20e3fcd1a12b9fa79dfc0e7fed793deff01da22c48d8097e83da99bf05ac",
+        "expected": {
+          "answer": "LANE_SOUTH",
+          "decision_support_ids": [
+            "R2",
+            "R4"
+          ],
+          "preserved_constraint_ids": [
+            "R5"
+          ],
+          "revision_event_id": "R6"
+        },
+        "fingerprint_sha256": "65adf1a33185d1ad05f18a500c1b6da425a951db3761a99b2184ab64d53295b4",
+        "status": "PASS"
+      },
+      "secondary_edit_diagnostics": {
+        "before_provenance": "CALLER_PRIOR_STATE_ROLE_PARTITION_NOT_A_NEW_MODEL_OUTPUT",
+        "counts": {
+          "miss": 0,
+          "over_edit": 0,
+          "wrong_value": 0
+        },
+        "errors": {
+          "miss": [],
+          "over_edit": [],
+          "wrong_value": []
+        },
+        "observed_edit_paths": [
+          "/answer",
+          "/decision_support_ids/R3",
+          "/decision_support_ids/R4"
+        ],
+        "required_edit_paths": [
+          "/answer",
+          "/decision_support_ids/R3",
+          "/decision_support_ids/R4"
+        ],
+        "status": "ASSESSED",
+        "strict_contract_remains_primary": true,
+        "tracked_paths_complete": true,
+        "untracked": [
+          "revision_event_id_before_unknown",
+          "stable_fact_values_not_emitted"
+        ]
+      }
+    },
+    {
+      "arm": "append",
+      "case_id": "freight-lane-rule-revision",
+      "original_parse_error": null,
+      "original_strict_grade": {
+        "checks": {
+          "channels_pairwise_disjoint": true,
+          "decision_support_exact": true,
+          "expected_answer": true,
+          "forbidden_evidence_absent": true,
+          "preserved_constraints_exact": true,
+          "revision_event_exact": true,
+          "schema_parsed": true
+        },
+        "contract_fingerprint_sha256": "18fc20e3fcd1a12b9fa79dfc0e7fed793deff01da22c48d8097e83da99bf05ac",
+        "expected": {
+          "answer": "LANE_SOUTH",
+          "decision_support_ids": [
+            "R2",
+            "R4"
+          ],
+          "preserved_constraint_ids": [
+            "R5"
+          ],
+          "revision_event_id": "R6"
+        },
+        "fingerprint_sha256": "65adf1a33185d1ad05f18a500c1b6da425a951db3761a99b2184ab64d53295b4",
+        "status": "PASS"
+      },
+      "secondary_edit_diagnostics": {
+        "before_provenance": "CALLER_PRIOR_STATE_ROLE_PARTITION_NOT_A_NEW_MODEL_OUTPUT",
+        "counts": {
+          "miss": 0,
+          "over_edit": 0,
+          "wrong_value": 0
+        },
+        "errors": {
+          "miss": [],
+          "over_edit": [],
+          "wrong_value": []
+        },
+        "observed_edit_paths": [
+          "/answer",
+          "/decision_support_ids/R3",
+          "/decision_support_ids/R4"
+        ],
+        "required_edit_paths": [
+          "/answer",
+          "/decision_support_ids/R3",
+          "/decision_support_ids/R4"
+        ],
+        "status": "ASSESSED",
+        "strict_contract_remains_primary": true,
+        "tracked_paths_complete": true,
+        "untracked": [
+          "revision_event_id_before_unknown",
+          "stable_fact_values_not_emitted"
+        ]
+      }
+    },
+    {
+      "arm": "prepend",
+      "case_id": "freight-lane-rule-revision",
+      "original_parse_error": "V0852_STATE_CHANNELS_OVERLAP",
+      "original_strict_grade": {
+        "checks": {
+          "channels_pairwise_disjoint": false,
+          "decision_support_exact": false,
+          "expected_answer": false,
+          "forbidden_evidence_absent": false,
+          "preserved_constraints_exact": false,
+          "revision_event_exact": false,
+          "schema_parsed": false
+        },
+        "contract_fingerprint_sha256": "18fc20e3fcd1a12b9fa79dfc0e7fed793deff01da22c48d8097e83da99bf05ac",
+        "expected": {
+          "answer": "LANE_SOUTH",
+          "decision_support_ids": [
+            "R2",
+            "R4"
+          ],
+          "preserved_constraint_ids": [
+            "R5"
+          ],
+          "revision_event_id": "R6"
+        },
+        "fingerprint_sha256": "22f41d399754e221e3edf57c051579a6127b07a8b4144122bf5acf0a1ef75567",
+        "status": "FAIL"
+      },
+      "secondary_edit_diagnostics": {
+        "counts": null,
+        "status": "NOT_ASSESSED_INVALID_PUBLIC_STATE"
+      }
+    },
+    {
+      "arm": "baseline",
+      "case_id": "credit-scale-rule-revision",
+      "original_parse_error": null,
+      "original_strict_grade": {
+        "checks": {
+          "channels_pairwise_disjoint": true,
+          "decision_support_exact": true,
+          "expected_answer": false,
+          "forbidden_evidence_absent": true,
+          "preserved_constraints_exact": true,
+          "revision_event_exact": true,
+          "schema_parsed": true
+        },
+        "contract_fingerprint_sha256": "5215d0382411912ce658e73cdc2166c86b6e6939c5b76c98b39ae110e60084a8",
+        "expected": {
+          "answer": "15_CREDITS",
+          "decision_support_ids": [
+            "R2",
+            "R4"
+          ],
+          "preserved_constraint_ids": [
+            "R5"
+          ],
+          "revision_event_id": "R6"
+        },
+        "fingerprint_sha256": "18e61f92355c1c5e2e7e7cbea0f0e935e8533b9a82043ee72c58cc372551d964",
+        "status": "FAIL"
+      },
+      "secondary_edit_diagnostics": {
+        "before_provenance": "CALLER_PRIOR_STATE_ROLE_PARTITION_NOT_A_NEW_MODEL_OUTPUT",
+        "counts": {
+          "miss": 1,
+          "over_edit": 0,
+          "wrong_value": 0
+        },
+        "errors": {
+          "miss": [
+            "/answer"
+          ],
+          "over_edit": [],
+          "wrong_value": []
+        },
+        "observed_edit_paths": [
+          "/decision_support_ids/R3",
+          "/decision_support_ids/R4"
+        ],
+        "required_edit_paths": [
+          "/answer",
+          "/decision_support_ids/R3",
+          "/decision_support_ids/R4"
+        ],
+        "status": "ASSESSED",
+        "strict_contract_remains_primary": true,
+        "tracked_paths_complete": false,
+        "untracked": [
+          "revision_event_id_before_unknown",
+          "stable_fact_values_not_emitted"
+        ]
+      }
+    },
+    {
+      "arm": "append",
+      "case_id": "credit-scale-rule-revision",
+      "original_parse_error": null,
+      "original_strict_grade": {
+        "checks": {
+          "channels_pairwise_disjoint": true,
+          "decision_support_exact": true,
+          "expected_answer": false,
+          "forbidden_evidence_absent": true,
+          "preserved_constraints_exact": true,
+          "revision_event_exact": true,
+          "schema_parsed": true
+        },
+        "contract_fingerprint_sha256": "5215d0382411912ce658e73cdc2166c86b6e6939c5b76c98b39ae110e60084a8",
+        "expected": {
+          "answer": "15_CREDITS",
+          "decision_support_ids": [
+            "R2",
+            "R4"
+          ],
+          "preserved_constraint_ids": [
+            "R5"
+          ],
+          "revision_event_id": "R6"
+        },
+        "fingerprint_sha256": "18e61f92355c1c5e2e7e7cbea0f0e935e8533b9a82043ee72c58cc372551d964",
+        "status": "FAIL"
+      },
+      "secondary_edit_diagnostics": {
+        "before_provenance": "CALLER_PRIOR_STATE_ROLE_PARTITION_NOT_A_NEW_MODEL_OUTPUT",
+        "counts": {
+          "miss": 1,
+          "over_edit": 0,
+          "wrong_value": 0
+        },
+        "errors": {
+          "miss": [
+            "/answer"
+          ],
+          "over_edit": [],
+          "wrong_value": []
+        },
+        "observed_edit_paths": [
+          "/decision_support_ids/R3",
+          "/decision_support_ids/R4"
+        ],
+        "required_edit_paths": [
+          "/answer",
+          "/decision_support_ids/R3",
+          "/decision_support_ids/R4"
+        ],
+        "status": "ASSESSED",
+        "strict_contract_remains_primary": true,
+        "tracked_paths_complete": false,
+        "untracked": [
+          "revision_event_id_before_unknown",
+          "stable_fact_values_not_emitted"
+        ]
+      }
+    },
+    {
+      "arm": "prepend",
+      "case_id": "credit-scale-rule-revision",
+      "original_parse_error": null,
+      "original_strict_grade": {
+        "checks": {
+          "channels_pairwise_disjoint": true,
+          "decision_support_exact": true,
+          "expected_answer": false,
+          "forbidden_evidence_absent": true,
+          "preserved_constraints_exact": true,
+          "revision_event_exact": true,
+          "schema_parsed": true
+        },
+        "contract_fingerprint_sha256": "5215d0382411912ce658e73cdc2166c86b6e6939c5b76c98b39ae110e60084a8",
+        "expected": {
+          "answer": "15_CREDITS",
+          "decision_support_ids": [
+            "R2",
+            "R4"
+          ],
+          "preserved_constraint_ids": [
+            "R5"
+          ],
+          "revision_event_id": "R6"
+        },
+        "fingerprint_sha256": "18e61f92355c1c5e2e7e7cbea0f0e935e8533b9a82043ee72c58cc372551d964",
+        "status": "FAIL"
+      },
+      "secondary_edit_diagnostics": {
+        "before_provenance": "CALLER_PRIOR_STATE_ROLE_PARTITION_NOT_A_NEW_MODEL_OUTPUT",
+        "counts": {
+          "miss": 1,
+          "over_edit": 0,
+          "wrong_value": 0
+        },
+        "errors": {
+          "miss": [
+            "/answer"
+          ],
+          "over_edit": [],
+          "wrong_value": []
+        },
+        "observed_edit_paths": [
+          "/decision_support_ids/R3",
+          "/decision_support_ids/R4"
+        ],
+        "required_edit_paths": [
+          "/answer",
+          "/decision_support_ids/R3",
+          "/decision_support_ids/R4"
+        ],
+        "status": "ASSESSED",
+        "strict_contract_remains_primary": true,
+        "tracked_paths_complete": false,
+        "untracked": [
+          "revision_event_id_before_unknown",
+          "stable_fact_values_not_emitted"
+        ]
+      }
+    },
+    {
+      "arm": "baseline",
+      "case_id": "archive-tier-policy-revision",
+      "original_parse_error": null,
+      "original_strict_grade": {
+        "checks": {
+          "channels_pairwise_disjoint": true,
+          "decision_support_exact": true,
+          "expected_answer": true,
+          "forbidden_evidence_absent": true,
+          "preserved_constraints_exact": true,
+          "revision_event_exact": true,
+          "schema_parsed": true
+        },
+        "contract_fingerprint_sha256": "10c8962c82ef8ed39395ed7cc88a4479dd41de7d51949fb37334ec37dd72dfcd",
+        "expected": {
+          "answer": "COLD_TIER",
+          "decision_support_ids": [
+            "R2",
+            "R4"
+          ],
+          "preserved_constraint_ids": [
+            "R5"
+          ],
+          "revision_event_id": "R6"
+        },
+        "fingerprint_sha256": "3d044e5e8e4b382bd859bccd6feb506c53c32ad37737efe48c9931b5e7246685",
+        "status": "PASS"
+      },
+      "secondary_edit_diagnostics": {
+        "before_provenance": "CALLER_PRIOR_STATE_ROLE_PARTITION_NOT_A_NEW_MODEL_OUTPUT",
+        "counts": {
+          "miss": 0,
+          "over_edit": 0,
+          "wrong_value": 0
+        },
+        "errors": {
+          "miss": [],
+          "over_edit": [],
+          "wrong_value": []
+        },
+        "observed_edit_paths": [
+          "/answer",
+          "/decision_support_ids/R3",
+          "/decision_support_ids/R4"
+        ],
+        "required_edit_paths": [
+          "/answer",
+          "/decision_support_ids/R3",
+          "/decision_support_ids/R4"
+        ],
+        "status": "ASSESSED",
+        "strict_contract_remains_primary": true,
+        "tracked_paths_complete": true,
+        "untracked": [
+          "revision_event_id_before_unknown",
+          "stable_fact_values_not_emitted"
+        ]
+      }
+    },
+    {
+      "arm": "append",
+      "case_id": "archive-tier-policy-revision",
+      "original_parse_error": null,
+      "original_strict_grade": {
+        "checks": {
+          "channels_pairwise_disjoint": true,
+          "decision_support_exact": true,
+          "expected_answer": true,
+          "forbidden_evidence_absent": true,
+          "preserved_constraints_exact": true,
+          "revision_event_exact": true,
+          "schema_parsed": true
+        },
+        "contract_fingerprint_sha256": "10c8962c82ef8ed39395ed7cc88a4479dd41de7d51949fb37334ec37dd72dfcd",
+        "expected": {
+          "answer": "COLD_TIER",
+          "decision_support_ids": [
+            "R2",
+            "R4"
+          ],
+          "preserved_constraint_ids": [
+            "R5"
+          ],
+          "revision_event_id": "R6"
+        },
+        "fingerprint_sha256": "3d044e5e8e4b382bd859bccd6feb506c53c32ad37737efe48c9931b5e7246685",
+        "status": "PASS"
+      },
+      "secondary_edit_diagnostics": {
+        "before_provenance": "CALLER_PRIOR_STATE_ROLE_PARTITION_NOT_A_NEW_MODEL_OUTPUT",
+        "counts": {
+          "miss": 0,
+          "over_edit": 0,
+          "wrong_value": 0
+        },
+        "errors": {
+          "miss": [],
+          "over_edit": [],
+          "wrong_value": []
+        },
+        "observed_edit_paths": [
+          "/answer",
+          "/decision_support_ids/R3",
+          "/decision_support_ids/R4"
+        ],
+        "required_edit_paths": [
+          "/answer",
+          "/decision_support_ids/R3",
+          "/decision_support_ids/R4"
+        ],
+        "status": "ASSESSED",
+        "strict_contract_remains_primary": true,
+        "tracked_paths_complete": true,
+        "untracked": [
+          "revision_event_id_before_unknown",
+          "stable_fact_values_not_emitted"
+        ]
+      }
+    },
+    {
+      "arm": "prepend",
+      "case_id": "archive-tier-policy-revision",
+      "original_parse_error": null,
+      "original_strict_grade": {
+        "checks": {
+          "channels_pairwise_disjoint": true,
+          "decision_support_exact": false,
+          "expected_answer": true,
+          "forbidden_evidence_absent": true,
+          "preserved_constraints_exact": true,
+          "revision_event_exact": true,
+          "schema_parsed": true
+        },
+        "contract_fingerprint_sha256": "10c8962c82ef8ed39395ed7cc88a4479dd41de7d51949fb37334ec37dd72dfcd",
+        "expected": {
+          "answer": "COLD_TIER",
+          "decision_support_ids": [
+            "R2",
+            "R4"
+          ],
+          "preserved_constraint_ids": [
+            "R5"
+          ],
+          "revision_event_id": "R6"
+        },
+        "fingerprint_sha256": "1e97cb9fef70c0e2fba3490d09258787510694e6f3c8ec465556d32952f305ca",
+        "status": "FAIL"
+      },
+      "secondary_edit_diagnostics": {
+        "before_provenance": "CALLER_PRIOR_STATE_ROLE_PARTITION_NOT_A_NEW_MODEL_OUTPUT",
+        "counts": {
+          "miss": 0,
+          "over_edit": 1,
+          "wrong_value": 0
+        },
+        "errors": {
+          "miss": [],
+          "over_edit": [
+            "/decision_support_ids/R2"
+          ],
+          "wrong_value": []
+        },
+        "observed_edit_paths": [
+          "/answer",
+          "/decision_support_ids/R2",
+          "/decision_support_ids/R3",
+          "/decision_support_ids/R4"
+        ],
+        "required_edit_paths": [
+          "/answer",
+          "/decision_support_ids/R3",
+          "/decision_support_ids/R4"
+        ],
+        "status": "ASSESSED",
+        "strict_contract_remains_primary": true,
+        "tracked_paths_complete": false,
+        "untracked": [
+          "revision_event_id_before_unknown",
+          "stable_fact_values_not_emitted"
+        ]
+      }
+    },
+    {
+      "arm": "baseline",
+      "case_id": "permit-state-rule-revision",
+      "original_parse_error": null,
+      "original_strict_grade": {
+        "checks": {
+          "channels_pairwise_disjoint": true,
+          "decision_support_exact": true,
+          "expected_answer": true,
+          "forbidden_evidence_absent": true,
+          "preserved_constraints_exact": true,
+          "revision_event_exact": true,
+          "schema_parsed": true
+        },
+        "contract_fingerprint_sha256": "be2b5508de8c76072a540699815e4b8ecf6e1f12d740d7d538534361443a3c6a",
+        "expected": {
+          "answer": "APPROVE",
+          "decision_support_ids": [
+            "R2",
+            "R4"
+          ],
+          "preserved_constraint_ids": [
+            "R5"
+          ],
+          "revision_event_id": "R6"
+        },
+        "fingerprint_sha256": "6806db8df58e81767c86aad660a7605823d70475f797359ca13e4eaf9a1c7149",
+        "status": "PASS"
+      },
+      "secondary_edit_diagnostics": {
+        "before_provenance": "CALLER_PRIOR_STATE_ROLE_PARTITION_NOT_A_NEW_MODEL_OUTPUT",
+        "counts": {
+          "miss": 0,
+          "over_edit": 0,
+          "wrong_value": 0
+        },
+        "errors": {
+          "miss": [],
+          "over_edit": [],
+          "wrong_value": []
+        },
+        "observed_edit_paths": [
+          "/answer",
+          "/decision_support_ids/R3",
+          "/decision_support_ids/R4"
+        ],
+        "required_edit_paths": [
+          "/answer",
+          "/decision_support_ids/R3",
+          "/decision_support_ids/R4"
+        ],
+        "status": "ASSESSED",
+        "strict_contract_remains_primary": true,
+        "tracked_paths_complete": true,
+        "untracked": [
+          "revision_event_id_before_unknown",
+          "stable_fact_values_not_emitted"
+        ]
+      }
+    },
+    {
+      "arm": "append",
+      "case_id": "permit-state-rule-revision",
+      "original_parse_error": null,
+      "original_strict_grade": {
+        "checks": {
+          "channels_pairwise_disjoint": true,
+          "decision_support_exact": false,
+          "expected_answer": true,
+          "forbidden_evidence_absent": true,
+          "preserved_constraints_exact": true,
+          "revision_event_exact": true,
+          "schema_parsed": true
+        },
+        "contract_fingerprint_sha256": "be2b5508de8c76072a540699815e4b8ecf6e1f12d740d7d538534361443a3c6a",
+        "expected": {
+          "answer": "APPROVE",
+          "decision_support_ids": [
+            "R2",
+            "R4"
+          ],
+          "preserved_constraint_ids": [
+            "R5"
+          ],
+          "revision_event_id": "R6"
+        },
+        "fingerprint_sha256": "3da8bef4be549b4db33abbc07024bd0892a2f3585e68a0cfa9a7d3b5f1ebb57c",
+        "status": "FAIL"
+      },
+      "secondary_edit_diagnostics": {
+        "before_provenance": "CALLER_PRIOR_STATE_ROLE_PARTITION_NOT_A_NEW_MODEL_OUTPUT",
+        "counts": {
+          "miss": 0,
+          "over_edit": 1,
+          "wrong_value": 0
+        },
+        "errors": {
+          "miss": [],
+          "over_edit": [
+            "/decision_support_ids/R2"
+          ],
+          "wrong_value": []
+        },
+        "observed_edit_paths": [
+          "/answer",
+          "/decision_support_ids/R2",
+          "/decision_support_ids/R3",
+          "/decision_support_ids/R4"
+        ],
+        "required_edit_paths": [
+          "/answer",
+          "/decision_support_ids/R3",
+          "/decision_support_ids/R4"
+        ],
+        "status": "ASSESSED",
+        "strict_contract_remains_primary": true,
+        "tracked_paths_complete": false,
+        "untracked": [
+          "revision_event_id_before_unknown",
+          "stable_fact_values_not_emitted"
+        ]
+      }
+    },
+    {
+      "arm": "prepend",
+      "case_id": "permit-state-rule-revision",
+      "original_parse_error": null,
+      "original_strict_grade": {
+        "checks": {
+          "channels_pairwise_disjoint": true,
+          "decision_support_exact": false,
+          "expected_answer": true,
+          "forbidden_evidence_absent": true,
+          "preserved_constraints_exact": true,
+          "revision_event_exact": true,
+          "schema_parsed": true
+        },
+        "contract_fingerprint_sha256": "be2b5508de8c76072a540699815e4b8ecf6e1f12d740d7d538534361443a3c6a",
+        "expected": {
+          "answer": "APPROVE",
+          "decision_support_ids": [
+            "R2",
+            "R4"
+          ],
+          "preserved_constraint_ids": [
+            "R5"
+          ],
+          "revision_event_id": "R6"
+        },
+        "fingerprint_sha256": "3da8bef4be549b4db33abbc07024bd0892a2f3585e68a0cfa9a7d3b5f1ebb57c",
+        "status": "FAIL"
+      },
+      "secondary_edit_diagnostics": {
+        "before_provenance": "CALLER_PRIOR_STATE_ROLE_PARTITION_NOT_A_NEW_MODEL_OUTPUT",
+        "counts": {
+          "miss": 0,
+          "over_edit": 1,
+          "wrong_value": 0
+        },
+        "errors": {
+          "miss": [],
+          "over_edit": [
+            "/decision_support_ids/R2"
+          ],
+          "wrong_value": []
+        },
+        "observed_edit_paths": [
+          "/answer",
+          "/decision_support_ids/R2",
+          "/decision_support_ids/R3",
+          "/decision_support_ids/R4"
+        ],
+        "required_edit_paths": [
+          "/answer",
+          "/decision_support_ids/R3",
+          "/decision_support_ids/R4"
+        ],
+        "status": "ASSESSED",
+        "strict_contract_remains_primary": true,
+        "tracked_paths_complete": false,
+        "untracked": [
+          "revision_event_id_before_unknown",
+          "stable_fact_values_not_emitted"
+        ]
+      }
+    }
+  ],
+  "claim_boundary": {
+    "automatic_output_repair": false,
+    "component_assistance": "EXPLICIT_OPERANDS_AND_GIVEN_VALUE_ARE_DIAGNOSTIC_SCAFFOLDS",
+    "effect_attribution": "NOT_ASSESSED",
+    "gradient_through_model": false,
+    "gradient_utility": "NOT_ASSESSED_NO_CONTROL_INTERVENTION",
+    "internal_reasoning": "NOT_OBSERVED_PUBLIC_DIAGNOSTIC_OUTPUT_ONLY",
+    "optional_edits": "NONE",
+    "repair_metric": "TRACKED_PUBLIC_PATH_ADAPTATION_NOT_REVPROPBENCH_REPLICATION",
+    "scope": "KNOWN_SINGLE_CASE_COMPONENT_DIAGNOSIS_NOT_QUALITY_BENCHMARK",
+    "stable_fact_values": "NOT_OBSERVABLE_IN_LEGACY_STATE_SCHEMA"
+  },
+  "fingerprint_sha256": "782cf6421f3851754a162048e48119a0f8af82fba9b3bbb26d979e9228884559",
+  "logical_calls": 0,
+  "schema_version": "ebrt-numeric-prior-audit-v0.8.5.5",
+  "source_artifact_fingerprint_sha256": "fbe70eb242717d29d210e13b5971278cf38000e22916a9d3e70033f2eaf28396",
+  "source_sha256": "1ad4b0b367a801fa7f1804683f8f9ec9d37d2070f4634e80b8072e0fe0c08336",
+  "source_verification": {
+    "artifact_fingerprint_sha256": "fbe70eb242717d29d210e13b5971278cf38000e22916a9d3e70033f2eaf28396",
+    "fingerprint_sha256": "86008542a796d2d44c424a2d3ff0b740e55323389f3e508b40f83b9c4e10fbe6",
+    "logical_calls": 0,
+    "model_execution": "NOT_REEXECUTED",
+    "replayed": "PROMPT_PLAN_OUTPUT_PARSING_STRICT_GRADING_NORMALIZED_DIFF",
+    "status": "PASS",
+    "tokenization": "RECORDED_NOT_REEXECUTED"
+  },
+  "status": "SECONDARY_AUDIT_ONLY_PRIOR_ARTIFACT_UNCHANGED"
+}

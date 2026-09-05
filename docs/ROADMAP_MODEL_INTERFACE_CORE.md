@@ -340,6 +340,26 @@ Status: **COMPLETE CANARY; NO REPAIR BENEFIT; PREPEND NOT PROMOTED**
   do not rerun r01 or weaken the existing output/support contracts.
 - See [design and commands](RND_REVISION_PREFIX_PLACEMENT_V0_8_5_4.md).
 
+### v0.8.5.5 — Numeric revision diagnosis
+
+Status: **ZERO-CALL VALIDATED; PRIOR-OUTPUT AUDIT COMPLETE; LIVE NOT RUN**
+
+- Borrow the miss / over-edit / wrong-value distinction from *What Else Needs
+  Fixing?* as a secondary tracked-public-path diagnostic, not a new benchmark
+  or a replacement for the legacy strict contract.
+- Preserve the old `45_CREDITS` output as a missed answer revision. Preserve
+  channel-overlap failures as unparsed, and distinguish R2 preservation loss
+  from failure to add a newly required support reference.
+- Keep one auxiliary runner and one known numeric case. Freeze at most eight
+  local calls: two readiness, three same-schema final-state probes, and three
+  independently scored public-computation/arithmetic/label probes.
+- Keep raw evidence unchanged in full-task probes. Explicit operand selection
+  and a given numeric label value are diagnostic assistance, not EBRT gains.
+- Complete 51 synthetic checks and eight real tokenizer renders with zero
+  new model generations. Publish the sealed lock before any authorized run;
+  do not change the controller or promote a new compiler default yet.
+- See [design, prior audit, and commands](RND_NUMERIC_REVISION_DIAGNOSTIC_V0_8_5_5.md).
+
 ### v0.8.6 — Hosted-provider adapters
 
 Status: **CONFORMANCE ONLY; LIVE E2E DEFERRED**
