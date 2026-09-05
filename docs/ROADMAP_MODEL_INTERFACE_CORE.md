@@ -369,6 +369,33 @@ Status: **COMPLETE EIGHT-CALL BLOCK; NO FINAL REPAIR; COMPONENT DIAGNOSIS PARTIA
 - Do not repeat r01, change the controller, or promote a compiler default.
 - See [design, prior audit, and commands](RND_NUMERIC_REVISION_DIAGNOSTIC_V0_8_5_5.md).
 
+### v0.8.5.6 — Public calculation bridge
+
+Status: **ZERO-CALL VALIDATED; LOCK AND PREFLIGHT READY; LIVE NOT RUN**
+
+- Keep the failed v0.8.5.5 outputs and all existing contracts unchanged.
+  Admit the CALC_JSON interface independently with literal and task-shaped
+  checks, alongside the two existing STATE_JSON readiness checks.
+- Freeze at most eight local calls: four readiness, one target calculation,
+  then raw-only / operands-only / product-bridge final generation. Failed
+  readiness stops target calls; an unparsed target calculation preserves the
+  raw reference but skips both bridges.
+- Forward only actual model-emitted fields. Drop the answer label, never
+  recompute the product, and retain parsed but semantically wrong records.
+  The added product field is the only difference between the two bridges.
+- Keep full raw context and strict final grading. Separate calculation
+  checks from final repair, missed revisions, over-edits, and wrong values.
+- Record 57 passing synthetic checks, including mocked orchestration and
+  durable pre-generation dispatch. Render six fixed prompts and two clearly
+  labelled synthetic bridge previews with the cached tokenizer: zero model
+  generations, not a readiness or repair result.
+- Freeze transformation and bounds before execution; journal actual dynamic
+  payload bytes from the calculation terminal before dispatch. Require a
+  published preparation commit and separate one-shot execution authorization.
+- No gradient-utility, matched-compute, or causal superiority claim; no core,
+  compiler-default, UI, or provider expansion.
+- See [design and commands](RND_PUBLIC_CALCULATION_BRIDGE_V0_8_5_6.md).
+
 ### v0.8.6 — Hosted-provider adapters
 
 Status: **CONFORMANCE ONLY; LIVE E2E DEFERRED**
