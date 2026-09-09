@@ -371,7 +371,7 @@ Status: **COMPLETE EIGHT-CALL BLOCK; NO FINAL REPAIR; COMPONENT DIAGNOSIS PARTIA
 
 ### v0.8.5.6 — Public calculation bridge
 
-Status: **ZERO-CALL VALIDATED; LOCK AND PREFLIGHT READY; LIVE NOT RUN**
+Status: **COMPLETE EIGHT-CALL BLOCK; PRODUCT-BRIDGE ANSWER CORRECT; STRICT FINAL 0/3**
 
 - Keep the failed v0.8.5.5 outputs and all existing contracts unchanged.
   Admit the CALC_JSON interface independently with literal and task-shaped
@@ -392,6 +392,16 @@ Status: **ZERO-CALL VALIDATED; LOCK AND PREFLIGHT READY; LIVE NOT RUN**
 - Freeze transformation and bounds before execution; journal actual dynamic
   payload bytes from the calculation terminal before dispatch. Require a
   published preparation commit and separate one-shot execution authorization.
+- After user authorization, publish `f8723aa`, then complete the eight-call
+  r01 without retries. All four readiness checks and all seven target
+  calculation checks pass; the unchanged portable verifier passes.
+- Retain final answers raw-only 45, operands-only 45, product-bridge 15.
+  The product is model-emitted, not recomputed, and the label is not forwarded.
+  Both bridges omit required R2: strict final-state passes remain 0/3.
+- Separate the repaired answer value from the lost support. The smallest
+  candidate successor holds the recorded numeric fields fixed and varies only
+  the partial source-ID field; it is a contaminated replay diagnostic requiring
+  a new lock and execution authorization, not a promoted compiler repair.
 - No gradient-utility, matched-compute, or causal superiority claim; no core,
   compiler-default, UI, or provider expansion.
 - See [design and commands](RND_PUBLIC_CALCULATION_BRIDGE_V0_8_5_6.md).

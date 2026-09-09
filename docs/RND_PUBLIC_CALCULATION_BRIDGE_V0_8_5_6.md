@@ -1,6 +1,6 @@
 # v0.8.5.6 — Public calculation bridge
 
-Status: **ZERO-CALL VALIDATED; LOCK AND PREFLIGHT READY; LIVE NOT RUN**
+Status: **COMPLETE EIGHT-CALL BLOCK; PRODUCT-BRIDGE ANSWER CORRECT; STRICT FINAL 0/3**
 
 The preceding [numeric diagnosis](RND_NUMERIC_REVISION_DIAGNOSTIC_V0_8_5_5.md)
 retains three identical, strictly failing `45_CREDITS` final outputs. Its
@@ -130,8 +130,8 @@ schema do not become measurable here.
   before invocation, source-bound dynamic prompts, unchanged semantic errors,
   four- and six-call stops, generation errors, exact journal replay, and
   rejection of a second execution claim. They are not real model calls.
-- Six fixed prompts and two synthetic previews rendered with the real cached
-  tokenizer. New model generations: **0**.
+- At preparation, six fixed prompts and two synthetic previews rendered with
+  the real cached tokenizer. Preparation model generations: **0**.
 - Self-test fingerprint:
   `84d62010bc9794a278cb0abebc7bdbc7f5f1e1a81b1370b9eb196dbf9c7bc25c`.
 - Lock fingerprint:
@@ -161,3 +161,56 @@ The portable verifier recomputes admission, actual-source projection, prompts,
 grades, and journal correspondence without a model call. Recorded tokenizer
 bytes are checked for internal consistency but not retokenized by that
 verifier. Hashes are integrity checks, not signatures or proof of execution.
+
+## r01 — 2026-09-10
+
+After explicit user authorization, preparation commit
+`f8723aaa8d0c074772803f83b7bf9b55c86bdcbe` was pushed before execution.
+The source, cached snapshot, runtime versions, and rendering matched the
+sealed preflight. All **8/8 calls completed without retries**; all four
+readiness checks passed. Every generation ended with `stop`, and the largest
+output was 53 tokens, below the 96-token ceiling. Portable verification
+passed, including all 18 journal entries and actual dynamic projections.
+
+The target calculation now satisfies the unchanged parser and all seven
+component checks: base 5, current multiplier 3, product 15, label
+`15_CREDITS`, factor-bearing source R4. This is one valid public computation
+under the new prompt, not a regrade of the old malformed output or evidence
+about the raw-only call's private computation.
+
+| Final condition | Answer | Decision support | Strict outcome | Secondary edit errors |
+| --- | --- | --- | --- | --- |
+| `raw_only` | `45_CREDITS` | R2, R4 | FAIL: answer | 1 miss |
+| `operands_only` | `45_CREDITS` | R4 | FAIL: answer and support | 1 miss, 1 over-edit |
+| `product_bridge` | `15_CREDITS` | R4 | FAIL: support | 1 over-edit |
+
+The raw-only output is byte-identical to the v0.8.5.5 reference. Adding the
+emitted product is accompanied by a correct answer-value change, with no
+answer label forwarded. **It is not a strict final-state repair:** both
+bridge outputs omit required R2. R6 remains the revision event, R5 remains
+the preserved reference, and invalidated R3 is absent in all three outputs.
+R2 was present in the caller's before state, so its removal is an over-edit
+under the registered secondary metric, while the legacy grader calls it a
+missing required support. Both diagnoses are retained.
+
+Actual bridge input counts were 752 and 757 tokens, not the synthetic preview
+counts. The eight calls consumed 4136 input and 376 output tokens including
+terminal tokens; summed per-call latency was about 62.045 seconds. These are
+observed costs, not matched-compute or speed evidence.
+
+The narrow next question is whether the **partial source record** encourages
+the final output to collapse its support onto R4. That is a hypothesis, not
+an established cause. A successor could keep the recorded numeric fields
+fixed and compare retaining versus omitting only `rule_evidence_id`, with
+full raw evidence and strict grading unchanged. It must declare the reused
+record as a contaminated replay, not a fresh calculator result. No new
+execution is authorized by this result, and no compiler default changes.
+
+See the immutable generated [report](../artifacts/public_calculation_bridge_v0_8_5_6/r01/report.md),
+[results](../artifacts/public_calculation_bridge_v0_8_5_6/r01/results.json),
+and separate [interpretation](../artifacts/public_calculation_bridge_v0_8_5_6/r01/interpretation.md).
+
+- Run fingerprint:
+  `c541b13a4541d0c0a3ff6db380f2d0d7cca93379fd491b3c55e208b8376acc5b`.
+- Verification fingerprint:
+  `40fc5cfc408c9232bad7ebe3bbe5e7501d0b70d308d782e34a8eb68a89a5c2a8`.

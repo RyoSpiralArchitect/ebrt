@@ -1,0 +1,9 @@
+{
+  "artifact_fingerprint_sha256": "c541b13a4541d0c0a3ff6db380f2d0d7cca93379fd491b3c55e208b8376acc5b",
+  "fingerprint_sha256": "40fc5cfc408c9232bad7ebe3bbe5e7501d0b70d308d782e34a8eb68a89a5c2a8",
+  "logical_calls": 0,
+  "model_execution": "NOT_REEXECUTED",
+  "replayed": "READINESS_DYNAMIC_SOURCE_PROJECTION_PROMPTS_GRADES_AND_DISPATCH_JOURNAL",
+  "status": "PASS",
+  "tokenization": "RECORDED_NOT_REEXECUTED"
+}
