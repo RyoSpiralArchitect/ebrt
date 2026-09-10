@@ -406,6 +406,31 @@ Status: **COMPLETE EIGHT-CALL BLOCK; PRODUCT-BRIDGE ANSWER CORRECT; STRICT FINAL
   compiler-default, UI, or provider expansion.
 - See [design and commands](RND_PUBLIC_CALCULATION_BRIDGE_V0_8_5_6.md).
 
+### v0.8.5.7 — Supplementary source-field ablation
+
+Status: **PREPARED; ZERO NEW MODEL GENERATIONS; EXECUTION NOT AUTHORIZED YET**
+
+- Preserve the v0.8.5.6 result: the emitted product fixes the answer value,
+  but both bridge outputs lose required R2 and strict final passes stay 0/3.
+- Reuse only the pinned actual calculation terminal. No new calculator,
+  product recomputation, forwarded answer label, or gold support insertion.
+  Declare this one known case a contaminated recorded-source replay.
+- Compare with versus without the supplementary `rule_evidence_id` field;
+  full chronological raw evidence and all instructions/contracts stay fixed.
+  The with-source prompt matches the previous actual dispatch byte-for-byte.
+- Prepare two unchanged STATE_JSON readiness calls, then AB/BA final pairs:
+  at most six calls, four final-state cells, no retry, 96-token output ceiling.
+  Keep fresh per-call KV state and the same cached Mistral snapshot.
+- Record 58 passing synthetic checks and all six actual cached-tokenizer
+  renders. Final input lengths are 757 versus 747: not matched total compute.
+- Measure strict final repair, R2 retention, answer value, tracked edit errors,
+  and within-arm consistency separately. Reversed-order repeats are not fresh
+  cases or evidence of causal superiority. Retain errors and nulls unchanged.
+- Keep the core and old artifacts untouched. Require a published preparation
+  commit and separate authorization before any live generation; no compiler
+  default, UI, provider, or controller expansion follows from preparation.
+- See [design and commands](RND_SOURCE_FIELD_ABLATION_V0_8_5_7.md).
+
 ### v0.8.6 — Hosted-provider adapters
 
 Status: **CONFORMANCE ONLY; LIVE E2E DEFERRED**
