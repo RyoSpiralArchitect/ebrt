@@ -443,6 +443,24 @@ Status: **COMPLETE SIX-CALL BLOCK; REPEATED RAW OUTPUT DIFFERENCE; STRICT FINAL 
   unchanged content and grading. No successor execution is authorized here.
 - See [design and commands](RND_SOURCE_FIELD_ABLATION_V0_8_5_7.md).
 
+### v0.8.5.8 — Role-boundary placement and backend portability
+
+Status: **PREPARATION; BACKEND RESULTS NOT YET ASSESSED**
+
+- Move only the five existing generic role-separation lines after the fixed
+  no-source numeric record. Preserve content, full evidence, output schema,
+  strict grading, and the exact predecessor early-position prompt.
+- Run separate sealed MLX, managed Furnace TensorRT-LLM, and OpenAI API blocks
+  when their profiles are admitted. Each has two readiness calls and four
+  AB/BA final calls; maximum six generations, no retries, per backend.
+- Keep the Mac 4-bit model, Furnace bf16 model, and hosted API model distinct.
+  The shared protocol tests portability, not matched-compute superiority.
+- Bind API requests and pre-counted input budgets, preserve uncertain charges,
+  and cap the API block at $0.40 under the recorded 2026-10-20 rate card.
+- Keep failed role partitions unparsed. Do not subtract event IDs from outputs,
+  insert the expected support set, or promote placement before results exist.
+- See [design and operation](RND_ROLE_BOUNDARY_PLACEMENT_V0_8_5_8.md).
+
 ### v0.8.6 — Hosted-provider adapters
 
 Status: **CONFORMANCE ONLY; LIVE E2E DEFERRED**
