@@ -1,6 +1,14 @@
 # v0.8.5.8 — Role-boundary instruction placement
 
-Status: **THREE BACKEND PROFILES SEALED; GENERATION RESULTS NOT YET ASSESSED**
+Status: **THREE SIX-CALL BLOCKS COMPLETE; PLACEMENT DIRECTION DIFFERS; NO DEFAULT PROMOTION**
+
+All three blocks ran once from published preparation commit
+`fb5a89ccb09ec8acf12d3793ba2217642ccde4f5`. Each passed both readiness checks,
+completed all six generations without retries, and passed independent portable
+verification after collection. Early versus late strict final counts are
+**MLX 0/2 → 0/2, Furnace 2/2 → 0/2, API 0/2 → 2/2**. These are separate
+within-backend observations, not a pooled score. See the
+[recorded outputs and interpretation](../artifacts/role_boundary_placement_v0_8_5_8/interpretation.md).
 
 The [previous source-field ablation](RND_SOURCE_FIELD_ABLATION_V0_8_5_7.md)
 changed a repeated support omission into repeated support/event overlap.
@@ -144,4 +152,48 @@ The public prompt bytes are common, but tokenizer/rendering counts differ
 across backends. This difference is recorded, not normalized away.
 Furnace work is isolated at
 `/home/ryospiralarchitect/scratch/ebrt-role-placement-v0858-20261020.JPYz9f/worktree`.
-At this checkpoint all model generation counts remain zero.
+At that preparation checkpoint all model generation counts were zero.
+
+## Recorded results — 2026-10-20
+
+| Backend | Completed / planned generations | Parsed final states | Early strict | Late strict | Recorded distinction |
+| --- | ---: | ---: | ---: | ---: | --- |
+| [Mac MLX](../artifacts/role_boundary_placement_v0_8_5_8/mlx_r01/results.json) | 6/6 | 0/4 | 0/2 | 0/2 | Both overlap support with event R6; late additionally omits R2 in raw text |
+| [Furnace](../artifacts/role_boundary_placement_v0_8_5_8/furnace_r01/results.json) | 6/6 | 2/4 | 2/2 | 0/2 | Early passes; late adds R1 and overlaps support with event R6 |
+| [OpenAI API](../artifacts/role_boundary_placement_v0_8_5_8/openai_r01/results.json) | 6/6 | 4/4 | 0/2 | 2/2 | Early over-adds preserved R1; late satisfies the unchanged full contract |
+
+Every arm repeated byte-identically within its backend across the AB/BA
+schedule. Every final raw string contains `15_CREDITS`. That last observation
+is not a parsed-answer success for rejected states: MLX and Furnace-late
+retain `V0852_STATE_CHANNELS_OVERLAP`, with normalized-state comparison and
+tracked edit counts unassessed. No post-processing removes R6 or repairs R2.
+
+For both API pairs, late removes one tracked over-edit at
+`/preserved_constraint_ids/R1`, while the answer stays unchanged. For both
+Furnace pairs, late changes a strict pass into an invalid public state.
+The corresponding API and Furnace directions are opposite. MLX supplies a
+repeated raw difference, not a strict repair. None of these outputs validates
+stable fact values absent from the public schema.
+
+This completes a real three-backend **compiler-boundary** run, not the full
+trajectory/backward/actuator E2E evaluation. There was no new backward pass,
+calculation call, controller modification, or model training in this assay.
+The portable verifier checks evidence consistency, not execution authenticity.
+
+## Decision and smallest successor
+
+Do not promote late placement globally, or choose backend defaults from this
+single known case. The same generic instruction movement can repair one
+recorded backend block and damage another. Backend identity here bundles
+weights, quantization, tokenizer/rendering, runtime, and generation policy;
+this comparison cannot isolate any one of them as the cause.
+
+The next proposed step is a small **fresh transfer check**, not another tweak
+to this case: predeclare new numeric revisions and evidence-ID/order variants,
+then apply the same early/late transformation and unchanged role contract
+separately on the admitted backends. Grade misses, over-edits, and wrong values
+only for valid public states; retain invalid states separately. Do not fit a
+backend routing rule to r01 or branch the monolith by model name. A new lock,
+explicit call/budget ceiling, and execution authorization precede any further
+generation. The result does not establish gradient utility, general reasoning
+improvement, or matched-compute model superiority.

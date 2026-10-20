@@ -445,7 +445,7 @@ Status: **COMPLETE SIX-CALL BLOCK; REPEATED RAW OUTPUT DIFFERENCE; STRICT FINAL 
 
 ### v0.8.5.8 — Role-boundary placement and backend portability
 
-Status: **PREPARATION; BACKEND RESULTS NOT YET ASSESSED**
+Status: **THREE SIX-CALL BLOCKS COMPLETE; OPPOSITE PLACEMENT DIRECTIONS; NO PROMOTION**
 
 - Move only the five existing generic role-separation lines after the fixed
   no-source numeric record. Preserve content, full evidence, output schema,
@@ -459,16 +459,32 @@ Status: **PREPARATION; BACKEND RESULTS NOT YET ASSESSED**
   and cap the API block at $0.40 under the recorded 2026-10-20 rate card.
 - Keep failed role partitions unparsed. Do not subtract event IDs from outputs,
   insert the expected support set, or promote placement before results exist.
+- Publish all three profiles at `fb5a89c`, then complete each six-call block
+  once. Both readiness calls pass per backend; all terminals complete and all
+  three fourteen-entry journals pass independent portable verification.
+- Preserve early/late strict final counts separately: MLX 0/2 versus 0/2,
+  Furnace 2/2 versus 0/2, API 0/2 versus 2/2. All arms repeat byte-identically
+  within their backend. Do not pool them into an algorithm success rate.
+- Record API's repeated removal of an extra preserved R1 as strict repair;
+  Furnace's repeated support/event overlap as strict regression; and MLX's
+  changed raw supports as an unparsed non-repair. Raw answer 15 is not a
+  substitute for valid final-state grading.
+- Keep the core and compiler defaults unchanged. The next proposed gate is a
+  fresh small transfer block under a new lock, not backend-specific routing
+  fitted to this one known case. No additional generations follow from r01.
 - See [design and operation](RND_ROLE_BOUNDARY_PLACEMENT_V0_8_5_8.md).
 
 ### v0.8.6 — Hosted-provider adapters
 
-Status: **CONFORMANCE ONLY; LIVE E2E DEFERRED**
+Status: **CORE-ADAPTER E2E DEFERRED; AUXILIARY API COMPILER RUN RECORDED IN v0.8.5.8**
 
 - Bind provider SDKs at the existing `ModelAdapter.generate` edge.
 - Keep API credentials and provider receipts outside public artifacts.
 - Run fresh sealed E2E blocks only when credentials and provider policy are
   available.
+- Distinguish the completed v0.8.5.8 direct provider/compiler assay from a
+  full core trajectory/backward/actuator run; the former does not close this
+  E2E gate or justify an adapter/default promotion.
 - Never describe a hosted API boundary as differentiable.
 
 ## v0.9 — Evaluation and actuator fidelity
