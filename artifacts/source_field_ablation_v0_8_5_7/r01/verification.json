@@ -1,0 +1,9 @@
+{
+  "artifact_fingerprint_sha256": "000bcf5324141fd47a979c9ee1db77622b6e6c7a8dd24c814bf019f37ddb1a57",
+  "fingerprint_sha256": "af1151711bc7f1616ca8b73554f779bf9b6496d9aa9225cdb6efc28973437d04",
+  "logical_calls": 0,
+  "model_execution": "NOT_REEXECUTED",
+  "replayed": "PINNED_SOURCE_FIELD_ONLY_PROMPTS_READINESS_AB_BA_GRADES_JOURNAL",
+  "status": "PASS",
+  "tokenization": "RECORDED_NOT_REEXECUTED"
+}

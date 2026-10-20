@@ -1,6 +1,6 @@
 # v0.8.5.7 — Supplementary source-field ablation
 
-Status: **PREPARED; 58 SYNTHETIC CHECKS PASS; ZERO NEW MODEL GENERATIONS**
+Status: **COMPLETE SIX-CALL BLOCK; REPEATED RAW OUTPUT DIFFERENCE; STRICT FINAL 0/4**
 
 The [v0.8.5.6 result](RND_PUBLIC_CALCULATION_BRIDGE_V0_8_5_6.md#r01--2026-09-10)
 contains a correct public calculation and a correct product-bridge answer,
@@ -152,3 +152,46 @@ Verification recomputes source binding, projections, prompts, readiness,
 grades, pair diagnostics, and journal correspondence without generation.
 It checks recorded tokenization for internal consistency, not by retokenizing.
 Hashes establish integrity, not signatures or independent proof of execution.
+
+## r01 — 2026-10-20
+
+After explicit authorization, preparation commit
+`5ee39a915804d1e246c45e5d5b4198ea2083a30b` was published before the
+one-shot run. Source, runtime, cached snapshot, and all six input renderings
+matched the sealed preflight. Both readiness checks passed; **6/6 calls
+completed without retries**. All outputs ended with `stop`, at most 56 tokens.
+Portable verification passed over the 14-entry journal and all recorded
+projections, prompts, grades, and comparisons.
+
+| Condition | Literal answer field | Literal decision-support field | Strict result |
+| --- | --- | --- | --- |
+| With source, both repeats | `15_CREDITS` | R4 | 0/2: required R2 absent |
+| Without source, both repeats | `15_CREDITS` | R2, R4, R6 | 0/2: channel overlap |
+
+Raw outputs were byte-identical within each arm despite reversed pair order.
+With-source outputs also match the old product-bridge output. Removing the
+field changes the raw support list, but R6 then appears in both support and
+revision-event channels. The unchanged parser rejects those states with
+`V0852_STATE_CHANNELS_OVERLAP`; R2 text presence is not promoted to a valid
+R2-preservation grade. Both paired normalized-state comparisons remain
+unassessed because the without-source states are not admitted.
+
+Strict final PASS remains **0/4**. The observation is a repeat-consistent raw
+output contrast, not a strict repair or evidence of gradient utility. It
+motivates separating numeric record interpretation from output-role
+assignment; it does not identify a unique internal cause. The known-case,
+single-model, greedy-repeat and ten-input-token-difference limits remain.
+
+The six calls consumed 3737 input and 310 output tokens including terminal
+tokens, with about 72.863 seconds of summed recorded call latency. No new
+calculator was invoked. The execution claim is retained and the budget is
+closed; no default, core, UI, or provider changes follow from this result.
+
+See the immutable generated [report](../artifacts/source_field_ablation_v0_8_5_7/r01/report.md),
+[results](../artifacts/source_field_ablation_v0_8_5_7/r01/results.json), and
+separate [interpretation](../artifacts/source_field_ablation_v0_8_5_7/r01/interpretation.md).
+
+- Run fingerprint:
+  `000bcf5324141fd47a979c9ee1db77622b6e6c7a8dd24c814bf019f37ddb1a57`.
+- Verification fingerprint:
+  `af1151711bc7f1616ca8b73554f779bf9b6496d9aa9225cdb6efc28973437d04`.

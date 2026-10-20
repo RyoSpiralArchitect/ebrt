@@ -408,7 +408,7 @@ Status: **COMPLETE EIGHT-CALL BLOCK; PRODUCT-BRIDGE ANSWER CORRECT; STRICT FINAL
 
 ### v0.8.5.7 — Supplementary source-field ablation
 
-Status: **PREPARED; ZERO NEW MODEL GENERATIONS; EXECUTION NOT AUTHORIZED YET**
+Status: **COMPLETE SIX-CALL BLOCK; REPEATED RAW OUTPUT DIFFERENCE; STRICT FINAL 0/4**
 
 - Preserve the v0.8.5.6 result: the emitted product fixes the answer value,
   but both bridge outputs lose required R2 and strict final passes stay 0/3.
@@ -429,6 +429,18 @@ Status: **PREPARED; ZERO NEW MODEL GENERATIONS; EXECUTION NOT AUTHORIZED YET**
 - Keep the core and old artifacts untouched. Require a published preparation
   commit and separate authorization before any live generation; no compiler
   default, UI, provider, or controller expansion follows from preparation.
+- After authorization, publish `5ee39a9` and complete r01: both readiness
+  checks pass, six calls complete without retries, all `stop` below the cap,
+  and portable verification passes over all 14 journal entries.
+- Retain identical raw outputs within each arm across AB/BA order. With the
+  field: answer 15 and support R4 only, missing R2. Without it: raw answer 15
+  and support R2/R4/R6, rejected for R6 support/event channel overlap.
+- Keep strict PASS at 0/4. Raw R2 presence in an invalid state is not admitted
+  R2 preservation; paired normalized-state comparisons remain unassessed.
+  Do not promote field deletion as a repair or relax channel validation.
+- The smallest proposed successor is placement of the existing generic
+  role-separation instructions after the fixed supplementary record, with
+  unchanged content and grading. No successor execution is authorized here.
 - See [design and commands](RND_SOURCE_FIELD_ABLATION_V0_8_5_7.md).
 
 ### v0.8.6 — Hosted-provider adapters
