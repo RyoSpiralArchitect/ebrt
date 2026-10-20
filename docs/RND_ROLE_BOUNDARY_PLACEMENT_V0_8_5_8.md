@@ -1,6 +1,6 @@
 # v0.8.5.8 — Role-boundary instruction placement
 
-Status: **PREPARATION; THREE SEPARATE BACKEND PROFILES; NO RESULT CLAIM YET**
+Status: **THREE BACKEND PROFILES SEALED; GENERATION RESULTS NOT YET ASSESSED**
 
 The [previous source-field ablation](RND_SOURCE_FIELD_ABLATION_V0_8_5_7.md)
 changed a repeated support omission into repeated support/event overlap.
@@ -73,6 +73,10 @@ zero retries and a 60-second timeout. Every dispatched call reserves its full
 input count plus maximum output cost before generation, durably in the
 journal; uncertain outcomes retain their reservation and stop the run.
 
+The prepared API block reserves 260345 micro-USD ($0.260345) for its maximum
+six generations. This is the full pre-counted-input plus maximum-output
+reservation, not observed consumption.
+
 The hard block ceiling is $0.40 at the checked rate card. Input is reserved at
 $5/M, conservatively covering the $4/M rate and 1.25x cache-write multiplier;
 output is reserved at $20/M. These rates were checked on 2026-10-20 against
@@ -121,3 +125,23 @@ new generation. It does not authenticate execution or rerun tokenization.
 No strict contract is relaxed to admit malformed outputs. Stable reference
 membership is observable; stable fact values not emitted by the schema are
 still unobservable.
+
+## Prepared profiles — 2026-10-20
+
+All three share protocol fingerprint
+`6c701e951dc8088301ece340044f477d118de336269762810bfed8d11dd0947f`.
+Both Mac and Furnace ran the same 36-check synthetic test successfully.
+Furnace's managed doctor reported its freeze and CUDA checks passing; its
+existing modelopt/transformers warning was not repaired or suppressed.
+
+| Profile | Format readiness tokens | Task readiness tokens | Early / late tokens | Profile fingerprint |
+| --- | ---: | ---: | --- | --- |
+| [MLX](../artifacts/role_boundary_placement_v0_8_5_8/profiles/mlx.json) | 72 | 657 | 747 / 747 | `f2c23e5f60381e312ffc4b9c4bd148957e7b12281147d4f53f4e2dd7800e1581` |
+| [Furnace](../artifacts/role_boundary_placement_v0_8_5_8/profiles/furnace.json) | 70 | 655 | 745 / 745 | `de5edbcf3c34cf20f36a000d59ec19ba5bbcb5d8aa96cd4f1efadfea94ff5ac6` |
+| [OpenAI](../artifacts/role_boundary_placement_v0_8_5_8/profiles/openai.json) | 55 | 518 | 586 / 586 | `e458499d2bc55dc95427dc42f2f85397dc7d94eaf45944489eeb3ee37f4859dd` |
+
+The public prompt bytes are common, but tokenizer/rendering counts differ
+across backends. This difference is recorded, not normalized away.
+Furnace work is isolated at
+`/home/ryospiralarchitect/scratch/ebrt-role-placement-v0858-20261020.JPYz9f/worktree`.
+At this checkpoint all model generation counts remain zero.
