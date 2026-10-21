@@ -15,7 +15,7 @@ forward trajectory
   -> replay or regeneration
 ```
 
-The current development path has eleven executable stages:
+The current development path has twelve executable stages:
 
 - **v0.7.1:** one trajectory, one real local backward pass, one compiled
   actuator, and one real open-weight regeneration;
@@ -43,6 +43,9 @@ The current development path has eleven executable stages:
 - **v0.8.6:** a two-call hosted-provider comparison through the current core,
   with separate mechanism, structural, and output grades plus local provider
   receipts.
+- **v0.9 development:** three fresh support-retention diagnostics comparing
+  direct generation, current top-k, and a public-role coverage candidate under
+  a fixed nine-attempt plan.
 
 The generator is an adapter, not the definition of EBRT. The bundled reference
 backend is a local MLX model. Hosted APIs and other local runtimes can meet the
@@ -608,6 +611,52 @@ Run its network-zero tests with:
 python3 -m unittest -v test_ebrt_hosted
 ```
 
+### 12. Fresh required-support diagnostics
+
+The support-retention runner tests a low-credit observation, a low-credit rule,
+and an already-covered case whose correct answer stays unchanged. These are
+three deliberately engineered synthetic diagnostics, not a random benchmark.
+The observation and rule are both needed to derive each answer.
+
+```bash
+python3 ebrt_support_eval.py plan --model gpt-5.6-sol \
+  --output /tmp/ebrt-support-plan.json
+python3 ebrt_support_eval.py run --plan /tmp/ebrt-support-plan.json \
+  --output /tmp/ebrt-support-results.json
+python3 ebrt_support_eval.py verify --plan /tmp/ebrt-support-plan.json \
+  --report /tmp/ebrt-support-results.json
+```
+
+`plan` and `verify` require no API calls. The plan fixes the cases, post-run
+contracts, programs, actual prompts, generation settings, execution source
+hashes, and cyclic arm order before generation. `run` checks that plan again
+and permits at most nine generation attempts: three cases times three arms,
+with no retries. Failed attempts consume the same budget. Output files stay
+outside the checkout, are created exclusively, and use mode `0600`.
+
+The candidate reserves slots for caller-declared required support, then ranks
+within those constraints by the existing credit. It reuses the experimental
+role-stratified compiler with the same three slots, 100 allocation units, and
+original optimized control vector and L2 budget. Selected sites keep their
+original signed control values. The already-covered case requires byte-equal
+top-k and candidate prompts before any API call.
+
+The candidate is an **auxiliary experiment**, not an admitted replacement for
+the core's standard actuator. Caller-supplied role quality and role extraction
+are not evaluated. The report separates compiler coverage, retention of
+compiled obligations, required-support retention, answer correctness, and
+strict output grades. A completed run can contain failing output grades;
+execution and offline integrity verification have separate statuses.
+Execution `PASS` means all nine responses completed, parsed, and used matched
+settings and model identity. Structural and output-contract grades remain
+separate; execution success does not mean the core accepted every output.
+Verification reparses visible outputs and recomputes grades and summaries;
+it is not a provider signature or host attestation.
+
+```bash
+python3 -m unittest -v test_ebrt_support_eval
+```
+
 ## What the core owns
 
 The central file is [`ebrt_core.py`](ebrt_core.py). It contains the complete
@@ -785,6 +834,8 @@ are separate measurements. A `PASS` in one category does not silently imply a
 | [`ebrt_core.py`](ebrt_core.py) | v0.7.1/v0.8 monolith and CLI |
 | [`ebrt_demo.py`](ebrt_demo.py) | network-zero comparison walkthrough with deterministic JSON output |
 | [`ebrt_hosted.py`](ebrt_hosted.py) | two-call hosted comparison through the current core, with local-only provider receipts |
+| [`ebrt_support_cases.py`](ebrt_support_cases.py) | three fresh, engineered required-support diagnostics |
+| [`ebrt_support_eval.py`](ebrt_support_eval.py) | predeclared nine-call support-retention comparison and offline result verifier |
 | [`local_output_diff_corpus_v0_8_2.py`](local_output_diff_corpus_v0_8_2.py) | matched local-model output corpus runner |
 | [`role_stratified_uptake_canary_v0_8_3.py`](role_stratified_uptake_canary_v0_8_3.py) | fresh three-arm compiler-coverage/provider-uptake canary |
 | [`policy_lock_role_stratified_uptake_v0_8_3.json`](policy_lock_role_stratified_uptake_v0_8_3.json) | pre-call v0.8.3 case, schedule, model, and source lock |

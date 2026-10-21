@@ -225,12 +225,31 @@ class HostedComparisonTests(unittest.TestCase):
     def test_hard_call_budget_blocks_third_call(self) -> None:
         client = FakeClient(response(), response(), response())
         runtime = hosted.HostedResponsesRuntime(self.config, client=client)
+        self.assertEqual(runtime.max_attempts, 2)
         self.assertEqual(runtime.generate(self.invocation), REPLY)
         self.assertEqual(runtime.generate(self.invocation), REPLY)
         with self.assertRaisesRegex(EBRTError, "HOSTED_CALL_BUDGET_EXHAUSTED"):
             runtime.generate(self.invocation)
         self.assertEqual(runtime.attempts, 2)
         self.assertEqual(len(client.responses.calls), 2)
+
+    def test_explicit_nine_attempt_limit_blocks_the_tenth_call(self) -> None:
+        client = FakeClient(*(response() for _ in range(10)))
+        runtime = hosted.HostedResponsesRuntime(self.config, client=client, max_attempts=9)
+        for _ in range(9):
+            self.assertEqual(runtime.generate(self.invocation), REPLY)
+        with self.assertRaisesRegex(EBRTError, "HOSTED_CALL_BUDGET_EXHAUSTED"):
+            runtime.generate(self.invocation)
+        self.assertEqual(runtime.attempts, 9)
+        self.assertEqual(len(client.responses.calls), 9)
+
+    def test_invalid_explicit_attempt_limits_fail_before_provider_calls(self) -> None:
+        for limit in (0, 10, True, False):
+            with self.subTest(limit=limit):
+                client = FakeClient()
+                with self.assertRaisesRegex(EBRTError, "HOSTED_CALL_LIMIT_INVALID"):
+                    hosted.HostedResponsesRuntime(self.config, client=client, max_attempts=limit)
+                self.assertEqual(client.responses.calls, [])
 
     def test_failed_calls_spend_budget_and_are_never_automatically_retried(self) -> None:
         client = FakeClient(RuntimeError(SECRET), RuntimeError(SECRET), response())

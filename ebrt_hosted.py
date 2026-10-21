@@ -79,10 +79,13 @@ def _usage(value: Any) -> dict[str, int | None]:
 
 
 class HostedResponsesRuntime:
-    """One shared configuration, two paid attempts at most, and no retries."""
+    """One shared configuration and an explicit attempt limit, without retries."""
 
-    def __init__(self, config: HostedConfig, client: Any = None) -> None:
+    def __init__(self, config: HostedConfig, client: Any = None, *, max_attempts: int = 2) -> None:
+        if type(max_attempts) is not int or not 1 <= max_attempts <= 9:
+            raise EBRTError("HOSTED_CALL_LIMIT_INVALID")
         self.config = config
+        self.max_attempts = max_attempts
         if client is None:
             if not os.environ.get("OPENAI_API_KEY"):
                 raise EBRTError("HOSTED_API_KEY_MISSING")
@@ -101,7 +104,7 @@ class HostedResponsesRuntime:
         self.receipts: list[dict[str, Any]] = []
 
     def generate(self, invocation: Mapping[str, Any]) -> str:
-        if self.attempts >= 2:
+        if self.attempts >= self.max_attempts:
             raise EBRTError("HOSTED_CALL_BUDGET_EXHAUSTED")
         prompt = invocation.get("prompt")
         if not isinstance(prompt, str) or not prompt.strip():
