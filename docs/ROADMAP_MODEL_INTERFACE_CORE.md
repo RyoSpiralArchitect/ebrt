@@ -1,7 +1,7 @@
 # EBRT Model-Interface Core Roadmap
 
 Status: **ACTIVE ENGINEERING AND RESEARCH PLAN**
-Current implementation: **v0.7.1 core + v0.8.5.3 adapter-breadth gate**
+Current implementation: **verified v0.7.1 backward core + coverage-first mainline + hosted integration**
 
 This roadmap starts where the sealed v0.6 line ends. It does not rewrite those
 artifacts or reinterpret their results. The new line separates the backward
@@ -309,13 +309,29 @@ Status: **COMPLETE ADAPTER DIAGNOSTIC; ALGORITHM NOT ASSESSED**
 
 ### v0.8.6 — Hosted-provider adapters
 
-Status: **CONFORMANCE ONLY; LIVE E2E DEFERRED**
+Status: **IMPLEMENTED; LIVE INTEGRATION VERIFIED; MIXED OUTPUT GRADES**
 
-- Bind provider SDKs at the existing `ModelAdapter.generate` edge.
-- Keep API credentials and provider receipts outside public artifacts.
-- Run fresh sealed E2E blocks only when credentials and provider policy are
-  available.
-- Never describe a hosted API boundary as differentiable.
+- `ebrt_hosted.py` binds the Responses API through `CallableModelAdapter` at
+  the existing generation edge. Core logic and sealed historical sources are
+  unchanged.
+- Direct full context and EBRT credit-first share one model configuration and
+  the full evidence, with one attempt each and no retries. Failure handling,
+  the two-attempt ceiling, and local receipt boundaries have 18 offline tests.
+- A two-call `gpt-5.6-sol` run completed on the known synthetic fixture. Both
+  answers were `PROVE`. Direct generation cited `R4,R6` and failed the required
+  support check by omitting `R2`; EBRT cited `R6,R4,R2` and passed. Public
+  mechanism, structural verification, and the EBRT post-run contract passed.
+- The overall strict result remains `FAIL` because the direct output contract
+  failed. The runner preserves that result and a nonzero exit code rather
+  than weakening the contract or retrying the output.
+- Provider identifiers, usage, timing, and visible outputs stay in a local
+  report outside the checkout. Credentials and private reasoning are never
+  copied into public artifacts.
+- This is a known-fixture integration check, not a fresh sealed evaluation.
+  The two arms change the full prompt package, so this run does not identify
+  a gradient-specific effect or establish general quality improvement.
+- Fresh matched evaluation remains a v0.9 target. Hosted generation stays
+  outside the differentiable public trajectory.
 
 ## v0.9 — Evaluation and actuator fidelity
 
@@ -328,6 +344,22 @@ Status: **RESEARCH TARGET**
 - Measure actuator uptake, strict output quality, lineage integrity, cost, and
   failure modes separately.
 - Calibrate whether local surrogate descent transfers to generator behavior.
+
+The first bounded development slice now has a predeclared three-case hosted
+support-retention diagnostic in `ebrt_support_eval.py`. It compares direct full
+context, current top-k, and the existing public-role coverage candidate over
+nine no-retry calls. In the first block all arms passed all three strict output
+contracts. Candidate compiler coverage rose from 1/3 to 3/3, but top-k and
+candidate outputs were byte-identical in every case. The original diagnostic
+preserves its auxiliary-candidate labels for replay. The coverage selection
+invariant has since been admitted as the mainline default in `ebrt_engine.py`,
+with full program binding and coverage checks before generation. This is an
+engineering selection guarantee, not an observed generation-quality gain.
+See [the R&D note](RND_HOSTED_SUPPORT_RETENTION.md).
+
+The broader v0.9 gate still needs fresh matched controls, more varied support
+dependencies, and evidence beyond three engineered cases. Role extraction and
+gradient-specific effects remain unassessed.
 
 ## v1.0 gate
 

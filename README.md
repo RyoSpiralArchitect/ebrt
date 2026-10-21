@@ -15,7 +15,7 @@ forward trajectory
   -> replay or regeneration
 ```
 
-The current release has ten executable stages:
+The current development path has twelve executable stages:
 
 - **v0.7.1:** one trajectory, one real local backward pass, one compiled
   actuator, and one real open-weight regeneration;
@@ -40,6 +40,12 @@ The current release has ten executable stages:
   label and requires nine complete prompt projections to match byte for byte;
 - **v0.8.5.3:** a two-model adapter-breadth gate that fails closed before
   algorithm cells when the locked prompt-rendering mode is unsupported.
+- **v0.8.6:** a two-call hosted-provider comparison through the current core,
+  with separate mechanism, structural, and output grades plus local provider
+  receipts.
+- **v0.9 development:** three fresh support-retention diagnostics comparing
+  direct generation, current top-k, and a public-role coverage candidate under
+  a fixed nine-attempt plan.
 
 The generator is an adapter, not the definition of EBRT. The bundled reference
 backend is a local MLX model. Hosted APIs and other local runtimes can meet the
@@ -50,6 +56,10 @@ same interface without entering the autograd graph.
 ### 1. Network-zero mechanism check
 
 Requires Python 3.11+ and PyTorch.
+The standard single-lane entry point is `ebrt_engine.RevisionEngine`; the
+demo and hosted commands below select its coverage-first actuator by default.
+`ebrt_core.py` retains the historical optimizer, reference engines, and CLI
+for conformance and replay.
 
 ```bash
 python3 -m pip install -r requirements-core.txt
@@ -563,11 +573,141 @@ See the [v0.8.5.3 R&D note](docs/RND_PUBLIC_ROLE_ADAPTER_BREADTH_V0_8_5_3.md),
 [sealed report](artifacts/public_role_adapter_breadth_v0_8_5_3/r01/report.md),
 and [post-run interpretation](artifacts/public_role_adapter_breadth_v0_8_5_3/r01/post_run_interpretation.json).
 
+### 11. Hosted-provider comparison
+
+The standalone hosted runner connects the current core to the OpenAI Responses
+API on Linux or macOS. Supply `OPENAI_API_KEY` through the environment, then run
+from the repository root with the product dependencies installed:
+
+```bash
+python3 -m pip install -r requirements-product.txt
+python3 ebrt_hosted.py --model gpt-5.6-sol \
+  --output /tmp/ebrt-hosted-comparison.json
+```
+
+Choose a model available to your API account. The runner makes at most **two
+generation attempts**: direct full context and EBRT credit-first, with identical
+model settings and the same complete evidence. Each defaults to 1024 output
+tokens, low reasoning effort, and a 60-second timeout. Retries are disabled;
+failed attempts consume the two-call ceiling. Response storage for later API
+retrieval is disabled (`store=False`), and incomplete, refused, empty, or
+malformed outputs fail closed instead of being repaired or silently retried.
+
+This is the existing known synthetic fixture, used as an integration check.
+The report separates public surrogate execution, structural verification, and
+post-run output grades. A passing result does not establish general reasoning
+improvement or a causal benefit of the gradient.
+
+The aggregate status and CLI exit code include **both** output grades. A
+baseline output-contract failure remains `FAIL` even when hosted requests,
+public mechanism checks, and the EBRT post-run contract pass. Inspect the
+per-arm grades and `verification` fields to distinguish these outcomes.
+
+`--output` exclusively creates a local JSON report outside the checkout with
+mode `0600`; existing paths are rejected before any generation call. The report
+contains provider request identifiers and usage in a separate local receipt
+section. Review before export and keep it outside committed public artifacts.
+The CLI prints a short comparison without credentials or raw SDK error bodies.
+
+Run its network-zero tests with:
+
+```bash
+python3 -m unittest -v test_ebrt_hosted
+```
+
+### 12. Fresh required-support diagnostics
+
+The support-retention runner tests a low-credit observation, a low-credit rule,
+and an already-covered case whose correct answer stays unchanged. These are
+three deliberately engineered synthetic diagnostics, not a random benchmark.
+The observation and rule are both needed to derive each answer.
+
+```bash
+python3 ebrt_support_eval.py plan --model gpt-5.6-sol \
+  --output /tmp/ebrt-support-plan.json
+python3 ebrt_support_eval.py run --plan /tmp/ebrt-support-plan.json \
+  --output /tmp/ebrt-support-results.json
+python3 ebrt_support_eval.py verify --plan /tmp/ebrt-support-plan.json \
+  --report /tmp/ebrt-support-results.json
+```
+
+`plan` and `verify` require no API calls. The plan fixes the cases, post-run
+contracts, programs, actual prompts, generation settings, execution source
+hashes, and cyclic arm order before generation. `run` checks that plan again
+and permits at most nine generation attempts: three cases times three arms,
+with no retries. Failed attempts consume the same budget. Output files stay
+outside the checkout, are created exclusively, and use mode `0600`.
+
+The candidate reserves slots for caller-declared required support, then ranks
+within those constraints by the existing credit. It reuses the experimental
+role-stratified compiler with the same three slots, 100 allocation units, and
+original optimized control vector and L2 budget. Selected sites keep their
+original signed control values. The already-covered case requires byte-equal
+top-k and candidate prompts before any API call.
+
+This diagnostic preserves the original legacy top-k and auxiliary-candidate
+arms for comparison. The normal demo and hosted paths now use the admitted
+coverage-first engine described below. Caller-supplied role quality and role
+extraction are not evaluated. The report separates compiler coverage, retention of
+compiled obligations, required-support retention, answer correctness, and
+strict output grades. A completed run can contain failing output grades;
+execution and offline integrity verification have separate statuses.
+Execution `PASS` means all nine responses completed, parsed, and used matched
+settings and model identity. Structural and output-contract grades remain
+separate; execution success does not mean the core accepted every output.
+Verification reparses visible outputs and recomputes grades and summaries;
+it is not a provider signature or host attestation.
+
+In the first predeclared nine-call block, all arms passed all three strict
+output contracts. Candidate compiler coverage rose from 1/3 to 3/3; current
+top-k and candidate generated byte-identical outputs in all three cases. The
+coverage invariant is now the default selection policy; no generation-quality
+gain is claimed. See the [R&D note](docs/RND_HOSTED_SUPPORT_RETENTION.md)
+for the fixed protocol, results, and limits.
+
+```bash
+python3 -m unittest -v test_ebrt_support_eval
+```
+
+## Standard single-lane engine
+
+```python
+from ebrt_engine import RevisionEngine
+```
+
+`RevisionEngine` defaults to `CoverageFirstActuator`: reserve the late
+correction and every caller-declared `required_support` item, rank within
+those constraints by the existing credit, and preserve the original signed
+controls and L2 budget. A successful program fills the configured number of
+slots with positive integer allocations summing to 100. More than 100 slots,
+insufficient capacity, ineligible or zero-control required sites, an unfillable
+selection count, or an allocation rounded to zero stops before external
+generation. The policy guarantees complete declared support selection or a
+clear error; it does not guarantee that a generator follows the program.
+
+The engine composes the historical verified core run with an internal
+compile-only test double, then validates the complete coverage program and
+calls the actual model once. The internal double receives no semantic gold,
+makes no provider request, and contributes no answer or latency to the actual
+generation receipt. Core optimizer pinning, the run-local backward witness,
+structural checks, and post-run grading remain active. Receipts identify
+`engine_protocol=ebrt-coverage-first-engine-v1` and
+`actuator_policy=coverage_first_v1`.
+
+Historical `ebrt_core.RevisionEngine`, `JointRevisionEngine`, and local-model
+CLI commands remain available for their original protocols. They do not
+silently adopt the new policy. Source-pinned plans must be replayed against
+their recorded code revision; the R&D note gives the snapshot procedure.
+
+```bash
+python3 -m unittest -v test_ebrt_engine
+```
+
 ## What the core owns
 
-The central file is [`ebrt_core.py`](ebrt_core.py). It contains the complete
-active prototype rather than scattering the reasoning mechanism across a
-framework.
+[`ebrt_engine.py`](ebrt_engine.py) owns the standard single-lane orchestration
+and coverage-first actuator. [`ebrt_core.py`](ebrt_core.py) retains the verified
+backward mechanism, adapter types, and historical reference engines.
 
 ```text
 RevisionTask
@@ -693,14 +833,16 @@ a locked comparison.
 | Interface | Required edge | Current implementation |
 | --- | --- | --- |
 | `StateAdapter` | `build(task, lane_id) -> TrajectoryEnvelope` | `TypedPublicStateAdapter` |
-| `ActuatorAdapter` | `compile(task, credit, lane_id) -> ActuatorProgram` | `PublicRevisionActuator` |
+| `ActuatorAdapter` | `compile(task, credit, lane_id) -> ActuatorProgram` | mainline `CoverageFirstActuator`; historical `PublicRevisionActuator` |
 | `ModelAdapter` | `generate(task, program, prompt_policy) -> ModelResult` | `MLXLocalAdapter`, `CallableModelAdapter` |
-| Observer | sealed mechanism, structural, and semantic receipts | `RevisionEngine`, `JointRevisionEngine` |
+| Observer | sealed mechanism, structural, and semantic receipts | mainline `ebrt_engine.RevisionEngine`; historical single/joint engines |
 
 `CallableModelAdapter` is the provider-neutral binding edge for an SDK or
-another local runtime. Its hosted shape is covered by network-zero conformance;
-no hosted-provider E2E is claimed in v0.7.1/v0.8.0 because no credential was
-present for this development gate.
+another local runtime. The original v0.7.1/v0.8.0 hosted shape is covered by
+network-zero conformance. The separate v0.8.6 runner now exercises a real
+hosted-provider boundary on the known synthetic fixture; its receipts and
+per-arm grades describe that execution. Frozen core capability labels are
+unchanged by this standalone integration.
 
 Run `python3 ebrt_core.py capabilities` for the machine-readable boundary.
 
@@ -736,6 +878,11 @@ are separate measurements. A `PASS` in one category does not silently imply a
 | Path | Role |
 | --- | --- |
 | [`ebrt_core.py`](ebrt_core.py) | v0.7.1/v0.8 monolith and CLI |
+| [`ebrt_engine.py`](ebrt_engine.py) | standard coverage-first single-lane engine over the verified historical optimizer |
+| [`ebrt_demo.py`](ebrt_demo.py) | network-zero comparison walkthrough with deterministic JSON output |
+| [`ebrt_hosted.py`](ebrt_hosted.py) | two-call hosted comparison through the current core, with local-only provider receipts |
+| [`ebrt_support_cases.py`](ebrt_support_cases.py) | three fresh, engineered required-support diagnostics |
+| [`ebrt_support_eval.py`](ebrt_support_eval.py) | predeclared nine-call support-retention comparison and offline result verifier |
 | [`local_output_diff_corpus_v0_8_2.py`](local_output_diff_corpus_v0_8_2.py) | matched local-model output corpus runner |
 | [`role_stratified_uptake_canary_v0_8_3.py`](role_stratified_uptake_canary_v0_8_3.py) | fresh three-arm compiler-coverage/provider-uptake canary |
 | [`policy_lock_role_stratified_uptake_v0_8_3.json`](policy_lock_role_stratified_uptake_v0_8_3.json) | pre-call v0.8.3 case, schedule, model, and source lock |

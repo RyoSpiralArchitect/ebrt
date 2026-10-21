@@ -17,12 +17,12 @@ from ebrt_core import (
     AdapterDescriptor,
     CallableModelAdapter,
     EBRTError,
-    RevisionEngine,
     _parse_model_text,
     _seal,
     build_demo_contract,
     build_demo_task,
 )
+from ebrt_engine import RevisionEngine
 from local_output_diff_corpus_v0_8_2 import (
     _common_output_grade,
     build_direct_invocation,
@@ -119,6 +119,8 @@ def run_demo() -> dict[str, Any]:
             "schema_version": SCHEMA_VERSION,
             "status": "PASS" if checks_pass else "FAIL",
             "evidence_label": "CONFORMANCE_ONLY",
+            "engine_protocol": engine_result["engine_protocol"],
+            "actuator_policy": engine_result["actuator_policy"],
             "task": task.to_public_dict(),
             "generator": {
                 "adapter": descriptor.to_dict(),
@@ -162,6 +164,7 @@ def render_text(report: Mapping[str, Any]) -> str:
     lines = [
         "EBRT | one late correction, one real backward pass",
         "CONFORMANCE_ONLY | no API key or model download required",
+        f"Actuator policy: {report['actuator_policy']}",
         "",
         "1. Input and original decision",
         f"   {task['question']}",
