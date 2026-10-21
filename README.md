@@ -699,6 +699,9 @@ optimal. This small diagnostic examines sensitivity under a shared textual
 program and gradient-derived ranking; it does not establish gradient
 superiority or general reasoning improvement. See the
 [protocol note](docs/RND_CONTROL_ALIGNMENT.md) for its scope and results.
+In the first fixed eight-call block, all four conditions passed both strict
+contracts. Every paired answer and support set matched; visible differences
+only changed support-ID order. No numeric-control quality benefit was observed.
 
 ## Standard single-lane engine
 
