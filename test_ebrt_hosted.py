@@ -16,7 +16,8 @@ import unittest
 from unittest import mock
 
 import ebrt_hosted as hosted
-from ebrt_core import EBRTError, RevisionEngine, build_demo_task
+from ebrt_core import EBRTError, build_demo_task
+from ebrt_engine import RevisionEngine
 from local_output_diff_corpus_v0_8_2 import build_direct_invocation
 
 
@@ -155,6 +156,26 @@ class HostedComparisonTests(unittest.TestCase):
         self.assertEqual(report["status"], "PASS")
         self.assertEqual(report["evidence_label"], "INTEGRATION_CHECK_KNOWN_FIXTURE")
         self.assertEqual(report["effect_attribution_status"], "NOT_ASSESSED")
+
+    def test_hosted_mainline_covers_required_support_that_legacy_top_k_omits(self) -> None:
+        from ebrt_support_cases import build_cases
+
+        for case in build_cases()[:2]:
+            with self.subTest(case=case.task.task_id):
+                text = f"ANSWER={case.contract.expected_answer}\nSUPPORT=R6,R4,R2"
+                client = FakeClient(response(text), response(text))
+                with (
+                    mock.patch.object(hosted, "build_demo_task", return_value=case.task),
+                    mock.patch.object(hosted, "build_demo_contract", return_value=case.contract),
+                ):
+                    report = hosted.run_comparison(self.config, client=client)
+                self.assertEqual(report["status"], "PASS")
+                program = report["arms"]["ebrt_credit_first"]["invocation"]["actuator_program"]
+                self.assertEqual({row["evidence_id"] for row in program["reinspect"]}, {"R2", "R4", "R6"})
+                self.assertNotIn("R1", [row["evidence_id"] for row in program["reinspect"]])
+                self.assertIn("REINSPECT_JSON ", client.responses.calls[1]["input"])
+                self.assertEqual(report["ebrt_receipt"]["engine_protocol"], "ebrt-coverage-first-engine-v1")
+                self.assertEqual(report["ebrt_receipt"]["actuator_policy"], "coverage_first_v1")
 
     def test_actual_provider_prompts_share_all_evidence_without_gold_labels(self) -> None:
         client = FakeClient()

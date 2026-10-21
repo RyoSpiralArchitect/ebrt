@@ -14,7 +14,8 @@ import unittest
 from unittest import mock
 
 import ebrt_demo as demo
-from ebrt_core import CallableModelAdapter, EBRTError, RevisionEngine, build_demo_task
+from ebrt_core import CallableModelAdapter, EBRTError, build_demo_task
+from ebrt_engine import RevisionEngine
 from local_output_diff_corpus_v0_8_2 import build_direct_invocation
 
 

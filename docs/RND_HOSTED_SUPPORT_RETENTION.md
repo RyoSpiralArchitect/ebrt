@@ -6,8 +6,9 @@ One predeclared nine-call block used `gpt-5.6-sol` on 2026-10-22
 (Asia/Tokyo). All three arms answered all three new synthetic cases correctly
 and retained the complete required support. The public-role candidate repaired
 compiler coverage from 1/3 to 3/3, but its generated outputs were byte-identical
-to the current top-k outputs in every paired case. It remains an auxiliary
-candidate; this run does not justify promoting it as a quality improvement.
+to the current top-k outputs in every paired case. The coverage invariant is
+now the default selection policy. This run does not establish a generation
+quality improvement.
 
 ## Problem and cases
 
@@ -91,12 +92,49 @@ Tests cover gold-contract noninterference, the unchanged-answer control,
 capacity and attempt limits, failure retention, output-path preflight, and
 coherently resealed plan or grade tampering.
 
-## Decision and next target
+## Mainline admission
 
-Keep the coverage candidate optional. Its deterministic guarantee depends on
-correct caller-supplied public roles, and generation did not improve in this
-small block. Role extraction, gradient-specific effects, and general quality
-remain unassessed.
+The diagnostic's original auxiliary labels describe the measured protocol.
+`ebrt_engine.RevisionEngine` now admits a production `CoverageFirstActuator`
+and is the default for `ebrt_demo.py` and `ebrt_hosted.py`. The production
+compiler matches the measured candidate on all three cases. Promotion adopts
+its complete-selection invariant as an engineering requirement; it does not
+reinterpret the null generation result.
+
+The historical optimizer, reference engines, source locks, and artifacts remain
+unchanged. The new engine obtains the verified trajectory through an internal
+compile-only run, then checks the exact coverage program and actual model
+receipt. Missing capacity, unavailable mandatory control, unfillable slots,
+or a positive control rounded to zero allocation stops before the actual
+model call. Role quality remains caller-supplied.
+
+Admission validation passed 75 offline tests and all 90 historical core
+checks. A separate adversarial review found no required fixes after checking
+optimizer replay, program and descriptor mutation, gold noninterference, and
+provider-call accounting. A bounded three-call `gpt-5.6-sol` integration smoke
+then ran the production engine once on each case: all three passed structural
+and strict post-run checks. That smoke validates the new execution path and
+does not add a comparative generation-quality result. Detailed provider
+receipts remain local and are not committed.
+
+Source-pinned reports are verified at their recorded revision. The original
+nine-cell block was reverified successfully from a source snapshot at `517ad27`
+after mainline admission, without modifying the plan, scores, or expected
+checksums. From the repository root, with the retained local files:
+
+```bash
+set -o pipefail
+replay_dir=$(mktemp -d /tmp/ebrt-replay.XXXXXX)
+git archive 517ad27 | tar -x -C "$replay_dir"
+.venv/bin/python "$replay_dir/ebrt_support_eval.py" verify \
+  --plan /workspace/setup-logs/support-retention-plan-r01.json \
+  --report /workspace/setup-logs/support-retention-results-r01.json
+```
+
+## Next target
+
+Generation did not improve in this small block. Role extraction,
+gradient-specific effects, and general quality remain unassessed.
 
 The next useful gate is a separately predeclared set with competing evidence
 chains and distractors, plus matched textual and placement controls. Keep the

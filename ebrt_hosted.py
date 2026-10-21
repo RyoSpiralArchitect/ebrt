@@ -19,10 +19,11 @@ from dataclasses import dataclass
 from typing import Any, Mapping, Sequence
 
 from ebrt_core import (
-    AdapterDescriptor, CallableModelAdapter, EBRTError, PublicRevisionActuator,
-    RevisionEngine, _fingerprint, _parse_model_text, _seal,
+    AdapterDescriptor, CallableModelAdapter, EBRTError,
+    _fingerprint, _parse_model_text, _seal,
     build_demo_contract, build_demo_task,
 )
+from ebrt_engine import ACTUATOR_POLICY, ENGINE_PROTOCOL, CoverageFirstActuator, RevisionEngine
 from ebrt_demo import _prompt_records
 from local_output_diff_corpus_v0_8_2 import _common_output_grade, build_direct_invocation
 
@@ -179,7 +180,7 @@ class HostedResponsesRuntime:
         return text
 
 
-class _CaptureActuator(PublicRevisionActuator):
+class _CaptureActuator(CoverageFirstActuator):
     """Retain verified core material even when subsequent generation fails."""
 
     def __init__(self) -> None:
@@ -256,6 +257,7 @@ def run_comparison(config: HostedConfig, *, client: Any = None) -> dict[str, Any
     passed = all(matched.values()) and mechanism == structure == contract_status == "PASS" and all(arm["grade"]["status"] == "PASS" for arm in arms.values())
     return _seal({
         "schema_version": SCHEMA_VERSION, "status": "PASS" if passed else "FAIL",
+        "engine_protocol": ENGINE_PROTOCOL, "actuator_policy": ACTUATOR_POLICY,
         "privacy": PRIVACY, "evidence_label": "INTEGRATION_CHECK_KNOWN_FIXTURE",
         "generation_config": config.to_dict(), "adapter": descriptor.to_dict(),
         "task": task.to_public_dict(), "arms": arms,

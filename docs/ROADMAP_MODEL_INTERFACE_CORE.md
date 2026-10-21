@@ -1,7 +1,7 @@
 # EBRT Model-Interface Core Roadmap
 
 Status: **ACTIVE ENGINEERING AND RESEARCH PLAN**
-Current implementation: **v0.7.1 core + v0.8.6 hosted integration**
+Current implementation: **verified v0.7.1 backward core + coverage-first mainline + hosted integration**
 
 This roadmap starts where the sealed v0.6 line ends. It does not rewrite those
 artifacts or reinterpret their results. The new line separates the backward
@@ -350,9 +350,12 @@ support-retention diagnostic in `ebrt_support_eval.py`. It compares direct full
 context, current top-k, and the existing public-role coverage candidate over
 nine no-retry calls. In the first block all arms passed all three strict output
 contracts. Candidate compiler coverage rose from 1/3 to 3/3, but top-k and
-candidate outputs were byte-identical in every case. The candidate remains an
-auxiliary experiment, not an admitted core replacement or an observed quality
-improvement. See [the R&D note](RND_HOSTED_SUPPORT_RETENTION.md).
+candidate outputs were byte-identical in every case. The original diagnostic
+preserves its auxiliary-candidate labels for replay. The coverage selection
+invariant has since been admitted as the mainline default in `ebrt_engine.py`,
+with full program binding and coverage checks before generation. This is an
+engineering selection guarantee, not an observed generation-quality gain.
+See [the R&D note](RND_HOSTED_SUPPORT_RETENTION.md).
 
 The broader v0.9 gate still needs fresh matched controls, more varied support
 dependencies, and evidence beyond three engineered cases. Role extraction and

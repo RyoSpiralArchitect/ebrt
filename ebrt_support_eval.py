@@ -40,7 +40,7 @@ CALL_LIMIT = 9
 SOURCE_FILES = (
     "ebrt_core.py", "local_output_diff_corpus_v0_8_2.py",
     "role_stratified_uptake_canary_v0_8_3.py", "ebrt_hosted.py",
-    "ebrt_demo.py", "ebrt_support_cases.py", "ebrt_support_eval.py",
+    "ebrt_demo.py", "ebrt_engine.py", "ebrt_support_cases.py", "ebrt_support_eval.py",
 )
 
 
