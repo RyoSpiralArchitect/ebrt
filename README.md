@@ -67,6 +67,37 @@ the optional public oscilloscope runs strictly after optimization, leaves the
 trajectory, actuator, and model output unchanged, and labels its reversed sham
 geometry exactly.
 
+#### One-command comparison demo
+
+With the same core dependencies installed, run from the repository root:
+
+```bash
+python3 ebrt_demo.py
+python3 ebrt_demo.py --json > /tmp/ebrt-demo.json
+```
+
+No API key or model download is needed. The demo shows the original `POLISH`
+decision, the late `R6` correction, a real backward pass, per-evidence credit,
+bounded controls, zero-control versus revised public trajectories, and the
+compiled `REINSPECT / SUPPRESS / PRESERVE` program. The existing core and known
+synthetic fixture are used unchanged. On the verified CPU run, the public
+surrogate objective falls from `0.721232` to `0.080485`, within the `0.75` L2
+control budget. Revised past steps are replays computed after the late event;
+they do not overwrite the original history.
+
+Both generation arms receive the complete evidence, including the correction.
+The direct arm has no external revision program; the EBRT arm carries the
+compiled program and credit-first ordering. **Both use the same fixed scripted
+reply**, `ANSWER=PROVE` and `SUPPORT=R6,R4,R2`, independent of the prompt.
+Output equality is expected: this is a wiring and mechanism demo, not evidence
+of generator uptake, real-model quality improvement, or a gradient-specific
+effect. The common output grade is separate from the core's post-run contract,
+which also verifies compiled preservation requirements.
+
+`--json` includes full prompts, trajectories, checks, and fingerprints, with
+timings omitted for repeatable reports. Failures return a nonzero exit status.
+Run the demo's regression tests with `python3 -m unittest -v test_ebrt_demo`.
+
 ### 2. Real local model
 
 The reference adapter targets Apple silicon through MLX. Point
