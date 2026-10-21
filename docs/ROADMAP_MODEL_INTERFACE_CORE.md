@@ -345,6 +345,19 @@ Status: **RESEARCH TARGET**
   failure modes separately.
 - Calibrate whether local surrogate descent transfers to generator behavior.
 
+The first bounded development slice now has a predeclared three-case hosted
+support-retention diagnostic in `ebrt_support_eval.py`. It compares direct full
+context, current top-k, and the existing public-role coverage candidate over
+nine no-retry calls. In the first block all arms passed all three strict output
+contracts. Candidate compiler coverage rose from 1/3 to 3/3, but top-k and
+candidate outputs were byte-identical in every case. The candidate remains an
+auxiliary experiment, not an admitted core replacement or an observed quality
+improvement. See [the R&D note](RND_HOSTED_SUPPORT_RETENTION.md).
+
+The broader v0.9 gate still needs fresh matched controls, more varied support
+dependencies, and evidence beyond three engineered cases. Role extraction and
+gradient-specific effects remain unassessed.
+
 ## v1.0 gate
 
 EBRT reaches a v1.0 research release only after all of the following exist:
