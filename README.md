@@ -15,7 +15,7 @@ forward trajectory
   -> replay or regeneration
 ```
 
-The current release has ten executable stages:
+The current development path has eleven executable stages:
 
 - **v0.7.1:** one trajectory, one real local backward pass, one compiled
   actuator, and one real open-weight regeneration;
@@ -40,6 +40,9 @@ The current release has ten executable stages:
   label and requires nine complete prompt projections to match byte for byte;
 - **v0.8.5.3:** a two-model adapter-breadth gate that fails closed before
   algorithm cells when the locked prompt-rendering mode is unsupported.
+- **v0.8.6:** a two-call hosted-provider comparison through the current core,
+  with separate mechanism, structural, and output grades plus local provider
+  receipts.
 
 The generator is an adapter, not the definition of EBRT. The bundled reference
 backend is a local MLX model. Hosted APIs and other local runtimes can meet the
@@ -563,6 +566,48 @@ See the [v0.8.5.3 R&D note](docs/RND_PUBLIC_ROLE_ADAPTER_BREADTH_V0_8_5_3.md),
 [sealed report](artifacts/public_role_adapter_breadth_v0_8_5_3/r01/report.md),
 and [post-run interpretation](artifacts/public_role_adapter_breadth_v0_8_5_3/r01/post_run_interpretation.json).
 
+### 11. Hosted-provider comparison
+
+The standalone hosted runner connects the current core to the OpenAI Responses
+API on Linux or macOS. Supply `OPENAI_API_KEY` through the environment, then run
+from the repository root with the product dependencies installed:
+
+```bash
+python3 -m pip install -r requirements-product.txt
+python3 ebrt_hosted.py --model gpt-5.6-sol \
+  --output /tmp/ebrt-hosted-comparison.json
+```
+
+Choose a model available to your API account. The runner makes at most **two
+generation attempts**: direct full context and EBRT credit-first, with identical
+model settings and the same complete evidence. Each defaults to 1024 output
+tokens, low reasoning effort, and a 60-second timeout. Retries are disabled;
+failed attempts consume the two-call ceiling. Response storage for later API
+retrieval is disabled (`store=False`), and incomplete, refused, empty, or
+malformed outputs fail closed instead of being repaired or silently retried.
+
+This is the existing known synthetic fixture, used as an integration check.
+The report separates public surrogate execution, structural verification, and
+post-run output grades. A passing result does not establish general reasoning
+improvement or a causal benefit of the gradient.
+
+The aggregate status and CLI exit code include **both** output grades. A
+baseline output-contract failure remains `FAIL` even when hosted requests,
+public mechanism checks, and the EBRT post-run contract pass. Inspect the
+per-arm grades and `verification` fields to distinguish these outcomes.
+
+`--output` exclusively creates a local JSON report outside the checkout with
+mode `0600`; existing paths are rejected before any generation call. The report
+contains provider request identifiers and usage in a separate local receipt
+section. Review before export and keep it outside committed public artifacts.
+The CLI prints a short comparison without credentials or raw SDK error bodies.
+
+Run its network-zero tests with:
+
+```bash
+python3 -m unittest -v test_ebrt_hosted
+```
+
 ## What the core owns
 
 The central file is [`ebrt_core.py`](ebrt_core.py). It contains the complete
@@ -698,9 +743,11 @@ a locked comparison.
 | Observer | sealed mechanism, structural, and semantic receipts | `RevisionEngine`, `JointRevisionEngine` |
 
 `CallableModelAdapter` is the provider-neutral binding edge for an SDK or
-another local runtime. Its hosted shape is covered by network-zero conformance;
-no hosted-provider E2E is claimed in v0.7.1/v0.8.0 because no credential was
-present for this development gate.
+another local runtime. The original v0.7.1/v0.8.0 hosted shape is covered by
+network-zero conformance. The separate v0.8.6 runner now exercises a real
+hosted-provider boundary on the known synthetic fixture; its receipts and
+per-arm grades describe that execution. Frozen core capability labels are
+unchanged by this standalone integration.
 
 Run `python3 ebrt_core.py capabilities` for the machine-readable boundary.
 
@@ -736,6 +783,8 @@ are separate measurements. A `PASS` in one category does not silently imply a
 | Path | Role |
 | --- | --- |
 | [`ebrt_core.py`](ebrt_core.py) | v0.7.1/v0.8 monolith and CLI |
+| [`ebrt_demo.py`](ebrt_demo.py) | network-zero comparison walkthrough with deterministic JSON output |
+| [`ebrt_hosted.py`](ebrt_hosted.py) | two-call hosted comparison through the current core, with local-only provider receipts |
 | [`local_output_diff_corpus_v0_8_2.py`](local_output_diff_corpus_v0_8_2.py) | matched local-model output corpus runner |
 | [`role_stratified_uptake_canary_v0_8_3.py`](role_stratified_uptake_canary_v0_8_3.py) | fresh three-arm compiler-coverage/provider-uptake canary |
 | [`policy_lock_role_stratified_uptake_v0_8_3.json`](policy_lock_role_stratified_uptake_v0_8_3.json) | pre-call v0.8.3 case, schedule, model, and source lock |
