@@ -357,6 +357,14 @@ with full program binding and coverage checks before generation. This is an
 engineering selection guarantee, not an observed generation-quality gain.
 See [the R&D note](RND_HOSTED_SUPPORT_RETENTION.md).
 
+The next slice in `ebrt_alignment_eval.py` separates numeric tuple-to-site
+mapping from evidence ordering while holding selected IDs, coverage, and
+revision instructions fixed. Two new entity-join cases have active competing
+chains; four conditions per case spend at most eight attempts. Permuted
+programs remain auxiliary and do not weaken standard engine admission.
+See [the alignment protocol](RND_CONTROL_ALIGNMENT.md) for the controlled
+differences and interpretation limits.
+
 The broader v0.9 gate still needs fresh matched controls, more varied support
 dependencies, and evidence beyond three engineered cases. Role extraction and
 gradient-specific effects remain unassessed.
