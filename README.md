@@ -732,6 +732,9 @@ request-budget execution, and final semantic grades are separate checks;
 request ceilings do not measure consumed compute or establish improved
 reasoning. Signed controls remain provenance. See the
 [protocol note](docs/RND_BUDGETED_REINSPECTION.md).
+The first bounded four-call integration passed all three source checks and
+the final output contract. It verifies the execution path on a known case;
+it is not a comparative quality result.
 
 ```bash
 python3 -m unittest -v test_ebrt_reinspection

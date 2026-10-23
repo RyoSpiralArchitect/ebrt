@@ -1,6 +1,6 @@
 # Budgeted public reinspection
 
-Status: **OFFLINE VERIFIED; READY FOR BOUNDED INTEGRATION**
+Status: **EXECUTED; REQUEST-BUDGET AND SOURCE-PROVENANCE INTEGRATION PASS**
 
 The hosted numeric-alignment diagnostic in PR #50 found no answer or
 support-set benefit from changing the numeric mapping in a shared textual
@@ -83,3 +83,60 @@ An independent adversarial review found no required changes. It also checked
 one- and two-site call accounting, optional semantic contracts, and rejection
 of a success ledger truncated before its next planned stage. Historical core,
 standard-engine, hosted-runtime, and diagnostic execution sources are unchanged.
+
+## First fixed integration block
+
+One known synthetic normalization case ran with `gpt-5.6-sol` on 2026-10-23
+(Asia/Tokyo). Source was fixed at
+`36cc517d26290f483f8c33b0decee4cd8343b84e`, and the plan was saved before any
+of its provider calls. Requests used low reasoning effort and a 60-second
+per-attempt timeout, with retries disabled.
+
+| Stage | Allocation units | Requested output-token ceiling | Result |
+| --- | --- | --- | --- |
+| Reinspect correction `R6` | 52 | 328 | Exact source quotation validated |
+| Reinspect current rule `R4` | 35 | 262 | Exact source quotation validated |
+| Reinspect observation `R2` | 13 | 178 | Exact source quotation validated |
+| Final generation | N/A | 512 | Structural and post-run checks passed |
+
+All four attempts completed using the same returned model identity. Audit
+ceilings summed to 768, and the complete run reserved 1280 output tokens.
+These are request ceilings, not reported token consumption. All three source
+quotations reached the final full-context invocation, whose new fingerprint
+bound their artifacts. The final answer was `28_UNITS`, with support
+`R6,R4,R2`. Execution, source-provenance, structural, and semantic checks passed.
+
+A separate offline process rebuilt the report and passed all four stages.
+Independent review also checked the raw quotations, final request, call ledger,
+token limits, and answer/support grades. No detailed provider receipts were
+exported. The plan, report, and verification receipt remain outside the
+checkout with mode `0600`.
+
+This establishes that requested allocation scheduling and validated excerpt
+dataflow execute end to end. The known case was already solved by earlier
+single-call conditions; this run does not establish that the excerpts, extra
+calls, or allocation mapping improve quality. The four-attempt integration
+block is complete, and PR #50's earlier comparison was not rerun.
+
+Plan fingerprint:
+
+```text
+87dfc2a70217716719746faca5fbb470133ad67e3a688bbfcd36e65afd1d55db
+```
+
+Local report fingerprint:
+
+```text
+01a47753277af8722428fb7f43c5237beb3aada02464a84816c5222c8e7a75d4
+```
+
+With the retained local files, offline verification is:
+
+```bash
+python3 ebrt_reinspection_hosted.py verify \
+  --plan /workspace/setup-logs/budgeted-reinspection-plan-r01.json \
+  --report /workspace/setup-logs/budgeted-reinspection-results-r01.json
+```
+
+Future execution-source changes require replay against the recorded source
+revision. Existing hashes and scores must not be rewritten to fit newer code.
