@@ -703,6 +703,40 @@ their recorded code revision; the R&D note gives the snapshot procedure.
 python3 -m unittest -v test_ebrt_engine
 ```
 
+## Budgeted public reinspection
+
+The opt-in reinspection runtime turns the coverage-first program's allocation
+units into actual output-token ceilings for separate evidence-extraction
+requests. It validates each returned quotation against the selected source,
+then supplies the full context and validated excerpts to one final generation.
+
+```bash
+python3 ebrt_reinspection_hosted.py plan --model gpt-5.6-sol \
+  --case fresh-normalization-support --output /tmp/ebrt-reinspection-plan.json
+python3 ebrt_reinspection_hosted.py run --plan /tmp/ebrt-reinspection-plan.json \
+  --output /tmp/ebrt-reinspection-results.json
+python3 ebrt_reinspection_hosted.py verify --plan /tmp/ebrt-reinspection-plan.json \
+  --report /tmp/ebrt-reinspection-results.json
+```
+
+The default three-site run permits at most four provider attempts: three
+extractions sharing a 768-token ceiling, followed by one final request capped
+at 512 tokens. Per-site floors and exact integer largest remainders determine
+the extraction limits. Provider or quotation-validation failure stops the run
+before later requests, with no repair or retry. `plan` and `verify` are offline;
+output files are new, private files outside the checkout.
+
+This has a separate orchestration protocol and explicit stage ledger. The
+standard engine retains its single-generation contract. Quote provenance,
+request-budget execution, and final semantic grades are separate checks;
+request ceilings do not measure consumed compute or establish improved
+reasoning. Signed controls remain provenance. See the
+[protocol note](docs/RND_BUDGETED_REINSPECTION.md).
+
+```bash
+python3 -m unittest -v test_ebrt_reinspection
+```
+
 ## What the core owns
 
 [`ebrt_engine.py`](ebrt_engine.py) owns the standard single-lane orchestration
@@ -879,6 +913,8 @@ are separate measurements. A `PASS` in one category does not silently imply a
 | --- | --- |
 | [`ebrt_core.py`](ebrt_core.py) | v0.7.1/v0.8 monolith and CLI |
 | [`ebrt_engine.py`](ebrt_engine.py) | standard coverage-first single-lane engine over the verified historical optimizer |
+| [`ebrt_reinspection.py`](ebrt_reinspection.py) | opt-in public reinspection planner, exact token allocation, and source-quotation validation |
+| [`ebrt_reinspection_hosted.py`](ebrt_reinspection_hosted.py) | bounded extraction/final orchestration, explicit provider ledger, and offline verifier |
 | [`ebrt_demo.py`](ebrt_demo.py) | network-zero comparison walkthrough with deterministic JSON output |
 | [`ebrt_hosted.py`](ebrt_hosted.py) | two-call hosted comparison through the current core, with local-only provider receipts |
 | [`ebrt_support_cases.py`](ebrt_support_cases.py) | three fresh, engineered required-support diagnostics |
