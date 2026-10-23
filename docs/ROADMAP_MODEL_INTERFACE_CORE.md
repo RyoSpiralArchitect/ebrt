@@ -24,6 +24,13 @@ explicit trajectory, the core differentiates only through that trajectory, an
 actuator adapter compiles bounded credit into a backend-visible operation, and
 a model adapter performs generation beyond a stop-gradient boundary.
 
+An opt-in [budgeted public reinspection protocol](RND_BUDGETED_REINSPECTION.md)
+connects allocation units to per-site request token ceilings, validates public
+source quotations, and binds them into one final generation. It has a separate
+multi-stage call ledger and leaves the standard single-generation engine
+unchanged. Its target is observable actuator execution, not a new
+generation-quality result or a model-native gradient.
+
 ## Evidence labels
 
 | Label | Meaning |
