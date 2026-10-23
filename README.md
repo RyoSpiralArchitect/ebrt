@@ -669,6 +669,40 @@ for the fixed protocol, results, and limits.
 python3 -m unittest -v test_ebrt_support_eval
 ```
 
+### 13. Numeric control alignment and evidence placement
+
+The next diagnostic holds required-support coverage and revision instructions
+fixed. Two fresh tasks contain a relevant entity join and an active competing
+chain. Each compares the original numeric control mapping with a fixed
+permutation of the same allocation/control tuples, crossed with chronological
+and credit-first evidence ordering.
+
+```bash
+python3 ebrt_alignment_eval.py plan --model gpt-5.6-sol \
+  --output /tmp/ebrt-alignment-plan.json
+python3 ebrt_alignment_eval.py run --plan /tmp/ebrt-alignment-plan.json \
+  --output /tmp/ebrt-alignment-results.json
+python3 ebrt_alignment_eval.py verify --plan /tmp/ebrt-alignment-plan.json \
+  --report /tmp/ebrt-alignment-results.json
+```
+
+`plan` and `verify` are offline. `run` spends at most eight attempts with no
+retries. The plan fixes actual prompts, sources, contracts, settings, and
+schedule, and checks that numeric-mapping pairs differ only in numeric
+assignments while placement pairs differ only in evidence-record order.
+Selected IDs and their program order, three slots, 100 allocation units, and
+the numeric tuple multiset stay fixed. The standard engine does not admit the
+permuted programs; they are auxiliary experimental conditions.
+
+"Aligned" means the original core mapping, without assuming it is semantically
+optimal. This small diagnostic examines sensitivity under a shared textual
+program and gradient-derived ranking; it does not establish gradient
+superiority or general reasoning improvement. See the
+[protocol note](docs/RND_CONTROL_ALIGNMENT.md) for its scope and results.
+In the first fixed eight-call block, all four conditions passed both strict
+contracts. Every paired answer and support set matched; visible differences
+only changed support-ID order. No numeric-control quality benefit was observed.
+
 ## Standard single-lane engine
 
 ```python
@@ -883,6 +917,8 @@ are separate measurements. A `PASS` in one category does not silently imply a
 | [`ebrt_hosted.py`](ebrt_hosted.py) | two-call hosted comparison through the current core, with local-only provider receipts |
 | [`ebrt_support_cases.py`](ebrt_support_cases.py) | three fresh, engineered required-support diagnostics |
 | [`ebrt_support_eval.py`](ebrt_support_eval.py) | predeclared nine-call support-retention comparison and offline result verifier |
+| [`ebrt_alignment_cases.py`](ebrt_alignment_cases.py) | two fresh entity-join tasks with active competing chains |
+| [`ebrt_alignment_eval.py`](ebrt_alignment_eval.py) | predeclared eight-call numeric-alignment/placement diagnostic and offline verifier |
 | [`local_output_diff_corpus_v0_8_2.py`](local_output_diff_corpus_v0_8_2.py) | matched local-model output corpus runner |
 | [`role_stratified_uptake_canary_v0_8_3.py`](role_stratified_uptake_canary_v0_8_3.py) | fresh three-arm compiler-coverage/provider-uptake canary |
 | [`policy_lock_role_stratified_uptake_v0_8_3.json`](policy_lock_role_stratified_uptake_v0_8_3.json) | pre-call v0.8.3 case, schedule, model, and source lock |
