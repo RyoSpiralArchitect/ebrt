@@ -774,6 +774,33 @@ it is not a comparative quality result.
 python3 -m unittest -v test_ebrt_reinspection
 ```
 
+## Dependency-aware public reinspection
+
+`ebrt_dependency_hosted.py` accepts a caller-declared dependency graph between
+selected sources. Audits run in dependency order and receive validated quotes
+from their direct predecessors. The original per-source token ceilings and
+three-audit/one-final limit remain fixed; final artifacts return to original
+program order. Required source spans are graded after execution and never
+control requests or retries.
+
+The bounded comparison below shares two actual audits, then compares a tariff
+lookup with and without the register quotation that supplies its key. It uses
+one long-record synthetic case and at most six provider attempts:
+
+```bash
+python3 ebrt_dependency_canary.py plan --model gpt-5.6-sol \
+  --output /tmp/ebrt-dependency-canary-plan.json
+python3 ebrt_dependency_canary.py run --plan /tmp/ebrt-dependency-canary-plan.json \
+  --output /tmp/ebrt-dependency-canary-results.json
+python3 ebrt_dependency_canary.py verify --plan /tmp/ebrt-dependency-canary-plan.json \
+  --report /tmp/ebrt-dependency-canary-results.json
+```
+
+`plan` and `verify` are offline. Source provenance, literal required-span
+coverage, and final answer/support grades remain separate. This is a small
+serial diagnostic using caller-supplied dependencies, not a general quality
+estimate. See the [protocol note](docs/RND_DEPENDENCY_REINSPECTION.md).
+
 ## What the core owns
 
 [`ebrt_engine.py`](ebrt_engine.py) owns the standard single-lane orchestration
@@ -952,6 +979,10 @@ are separate measurements. A `PASS` in one category does not silently imply a
 | [`ebrt_engine.py`](ebrt_engine.py) | standard coverage-first single-lane engine over the verified historical optimizer |
 | [`ebrt_reinspection.py`](ebrt_reinspection.py) | opt-in public reinspection planner, exact token allocation, and source-quotation validation |
 | [`ebrt_reinspection_hosted.py`](ebrt_reinspection_hosted.py) | bounded extraction/final orchestration, explicit provider ledger, and offline verifier |
+| [`ebrt_dependency_reinspection.py`](ebrt_dependency_reinspection.py) | dependency-ordered planning, source-bound parent context, and post-run source-span grades |
+| [`ebrt_dependency_hosted.py`](ebrt_dependency_hosted.py) | opt-in dependency-aware audit execution and offline report reconstruction |
+| [`ebrt_dependency_cases.py`](ebrt_dependency_cases.py) | long-record consignment/account/tariff lookup diagnostic |
+| [`ebrt_dependency_canary.py`](ebrt_dependency_canary.py) | six-attempt comparison sharing a two-audit prefix |
 | [`ebrt_demo.py`](ebrt_demo.py) | network-zero comparison walkthrough with deterministic JSON output |
 | [`ebrt_hosted.py`](ebrt_hosted.py) | two-call hosted comparison through the current core, with local-only provider receipts |
 | [`ebrt_support_cases.py`](ebrt_support_cases.py) | three fresh, engineered required-support diagnostics |

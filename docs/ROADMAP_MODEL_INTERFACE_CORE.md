@@ -31,6 +31,13 @@ multi-stage call ledger and leaves the standard single-generation engine
 unchanged. Its target is observable actuator execution, not a new
 generation-quality result or a model-native gradient.
 
+The [dependency-aware extension](RND_DEPENDENCY_REINSPECTION.md) executes
+caller-declared selected-site edges in topological order and passes validated
+predecessor quotes into later audits. Per-ID budgets and final presentation
+order are preserved. A six-attempt shared-prefix canary separates quote
+provenance, declared-span inclusion, and final output grades on a long-record
+lookup case.
+
 ## Evidence labels
 
 | Label | Meaning |
