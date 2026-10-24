@@ -800,6 +800,9 @@ python3 ebrt_dependency_canary.py verify --plan /tmp/ebrt-dependency-canary-plan
 coverage, and final answer/support grades remain separate. This is a small
 serial diagnostic using caller-supplied dependencies, not a general quality
 estimate. See the [protocol note](docs/RND_DEPENDENCY_REINSPECTION.md).
+The first fixed block recovered the required table span with parent context;
+the isolated extraction only quoted its heading. Both final answers and
+support sets were correct, so no final-quality gain was observed.
 
 ## What the core owns
 

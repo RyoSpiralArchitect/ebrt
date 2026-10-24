@@ -1,6 +1,12 @@
 # Dependency-aware public reinspection
 
-Status: **OFFLINE VERIFIED; READY FOR BOUNDED INTEGRATION**
+Status: **EXECUTED; REQUIRED EXTRACTION SPAN RECOVERED, NO FINAL QUALITY GAIN OBSERVED**
+
+One fixed six-call block on 2026-10-25 (Asia/Tokyo) completed with
+`gpt-5.6-sol`. The contextual table audit included the declared key/fee span;
+the isolated table audit quoted only the table heading. Both final answers
+were correct with identical support sets. This is one engineered diagnostic,
+not a general quality estimate or a gradient-specific result.
 
 Budgeted reinspection executes allocation units as provider output-token
 ceilings, but its isolated requests cannot resolve dependencies across sources.
@@ -105,3 +111,75 @@ Independent adversarial review found no required fixes. Additional fake-SDK
 probes checked smaller site counts, optional contracts, pre-dispatch failures
 after zero/four/five attempts, and isolated model mismatches at attempts five
 and six. Earlier execution sources and recorded results remain unchanged.
+
+## First fixed block
+
+Source was fixed at `aa715d5506ae16b016b8e1ccb19c48c766b0ae4b` before saving the
+plan or making any of its calls. All six requests completed and parsed using
+the same returned model identity, low reasoning effort, a 60-second timeout,
+and no retries. The two prefix audits were executed once and shared.
+
+| Stage | Requested output-token ceiling | Observation |
+| --- | --- | --- |
+| Shared correction `R6` | 324 | Provenance and required span passed |
+| Shared register `R2` | 178 | Consignment/account/key span passed |
+| Contextual table `R4` | 266 | Required key/fee span passed |
+| Contextual final | 512 | Answer/support contract passed |
+| Isolated table `R4` | 266 | Provenance passed; required key/fee span missing |
+| Isolated final | 512 | Answer/support contract passed |
+
+The six request ceilings summed to 2058 tokens. These are output-token limits,
+not actual consumed compute. The contextual `R4` quotation was:
+
+```text
+Tariff key BAND_739D10 charges 29_CREDITS per consignment.
+```
+
+The isolated `R4` quotation was:
+
+```text
+Current tariff table. Match the registered key exactly; keys are not ordered by fee.
+```
+
+Both are exact source quotations. Only the first contains the required
+key/fee association. Shared `R6` and `R2` span checks passed in both conditions.
+The actual audit prompt comparison differed only in parent JSON records;
+final prompts differed only in the `R4` quotation artifact. Final settings,
+full evidence, programs, and remaining artifacts matched.
+
+Both final answers were `29_CREDITS`, with support set `{R2,R4,R6}`. Support-ID
+enumeration order differed, so raw text changed while answer and support-set
+grades did not. The full original evidence remained available to both final
+generations. A better declared-span extraction in this case did not produce
+an observed final-quality gain.
+
+Offline verification rebuilt all six stages, grades, matched-input checks,
+and comparisons successfully. Independent review also checked the quotations
+and accounting. The literal span contracts and all sources were fixed before
+the calls; no observed output was used to rewrite a contract or trigger a
+repeat. This six-attempt block is complete. Earlier blocks were not rerun.
+
+Plan fingerprint:
+
+```text
+011c369fd79a998980b856f7adf1f4887f161df0d5adc008535ef7f9b6cef3c8
+```
+
+Local report fingerprint:
+
+```text
+41d5eef48c503662618740938413ef9b734a4920cc278a39e4f78801bc2e5820
+```
+
+Detailed plan, report, and verification receipts remain outside the checkout
+at `/workspace/setup-logs/dependency-context-{plan,results,verification}-r01.json`
+with mode `0600`. They can be verified without provider calls:
+
+```bash
+python3 ebrt_dependency_canary.py verify \
+  --plan /workspace/setup-logs/dependency-context-plan-r01.json \
+  --report /workspace/setup-logs/dependency-context-results-r01.json
+```
+
+Future execution-source changes require replay against the recorded revision;
+existing hashes and grades must not be changed to fit newer code.
