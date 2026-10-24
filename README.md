@@ -804,6 +804,31 @@ The first fixed block recovered the required table span with parent context;
 the isolated extraction only quoted its heading. Both final answers and
 support sets were correct, so no final-quality gain was observed.
 
+### Non-unique solutions and an LLM judge
+
+The coloring example constructs a free JSON answer after the same three
+dependency-aware audits. Assign colors to A–F from RED/GREEN/BLUE, fix A=RED,
+and require different colors across AB, BC, CD, DE, EF, FA, and the newly added
+BE edge. Using all three colors is optional; 18 assignments are feasible.
+No reference coloring or list of acceptable answers reaches the solver.
+
+```bash
+python3 ebrt_coloring_hosted.py plan --model gpt-5.6-sol \
+  --judge-model gpt-5.6-sol --output /tmp/ebrt-coloring-plan.json
+python3 ebrt_coloring_hosted.py run --plan /tmp/ebrt-coloring-plan.json \
+  --output /tmp/ebrt-coloring-results.json
+python3 ebrt_coloring_hosted.py verify --plan /tmp/ebrt-coloring-plan.json \
+  --report /tmp/ebrt-coloring-results.json
+```
+
+The fixed block permits eight attempts: three audits, one free solution, and
+four stateless judge calls covering the generated answer, two distinct valid
+controls, and a control violating only BE. The judge sees the problem and one
+candidate without its origin, reference answers, or mechanical verdict.
+Independent predicates check its ten criterion decisions; disagreement is
+recorded without repair. Mathematical feasibility, citation lineage, and
+output format are separate. See the [example and protocol](docs/RND_NONUNIQUE_COLORING_JUDGE.md).
+
 ## What the core owns
 
 [`ebrt_engine.py`](ebrt_engine.py) owns the standard single-lane orchestration
@@ -986,6 +1011,8 @@ are separate measurements. A `PASS` in one category does not silently imply a
 | [`ebrt_dependency_hosted.py`](ebrt_dependency_hosted.py) | opt-in dependency-aware audit execution and offline report reconstruction |
 | [`ebrt_dependency_cases.py`](ebrt_dependency_cases.py) | long-record consignment/account/tariff lookup diagnostic |
 | [`ebrt_dependency_canary.py`](ebrt_dependency_canary.py) | six-attempt comparison sharing a two-audit prefix |
+| [`ebrt_coloring.py`](ebrt_coloring.py) | non-unique coloring task, independent feasibility predicates, and blind judging rubric |
+| [`ebrt_coloring_hosted.py`](ebrt_coloring_hosted.py) | three audits, free JSON answer, four LLM judgments, and offline verification |
 | [`ebrt_demo.py`](ebrt_demo.py) | network-zero comparison walkthrough with deterministic JSON output |
 | [`ebrt_hosted.py`](ebrt_hosted.py) | two-call hosted comparison through the current core, with local-only provider receipts |
 | [`ebrt_support_cases.py`](ebrt_support_cases.py) | three fresh, engineered required-support diagnostics |

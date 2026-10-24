@@ -38,6 +38,12 @@ order are preserved. A six-attempt shared-prefix canary separates quote
 provenance, declared-span inclusion, and final output grades on a long-record
 lookup case.
 
+A [non-unique coloring example](RND_NONUNIQUE_COLORING_JUDGE.md) adds a free
+JSON terminal and a blind LLM-as-a-judge rubric. It tests feasibility rather
+than equality to a reference assignment, with independent constraint checks
+and both valid and invalid calibration controls. Its eight-attempt budget
+includes the existing three-audit prefix, one solution, and four judgments.
+
 ## Evidence labels
 
 | Label | Meaning |
