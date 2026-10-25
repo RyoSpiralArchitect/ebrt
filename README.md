@@ -835,6 +835,12 @@ control, so this covers three distinct assignments. An earlier quotation
 failure remains recorded; the follow-up used an explicitly adapted source
 layout. Solver and judge used the same backend in separate contexts.
 
+The [minimal repair experiment](docs/RND_COLORING_MINIMAL_REPAIR.md) carries
+the previous coloring as explicit state. It compares repair with and without
+feedback from a differentiable public collision loss, using two solution
+requests and two blind feasibility judgments. Exhaustive checking measures
+the number of changed vertices and whether the repair is minimal.
+
 ## What the core owns
 
 [`ebrt_engine.py`](ebrt_engine.py) owns the standard single-lane orchestration
