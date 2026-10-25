@@ -840,6 +840,9 @@ the previous coloring as explicit state. It compares repair with and without
 feedback from a differentiable public collision loss, using two solution
 requests and two blind feasibility judgments. Exhaustive checking measures
 the number of changed vertices and whether the repair is minimal.
+The first four-call block found the same optimal one-vertex repair in both
+conditions (B from GREEN to BLUE). Both judges agreed on feasibility; no
+quality or edit-count advantage from gradient feedback was observed.
 
 ## What the core owns
 
