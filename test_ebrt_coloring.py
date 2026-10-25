@@ -19,7 +19,7 @@ import ebrt_coloring as planning
 import ebrt_coloring_hosted as hosted
 from ebrt_core import EBRTError, _seal
 from ebrt_hosted import HostedConfig
-from ebrt_reinspection import ReinspectionConfig
+from ebrt_reinspection import ReinspectionConfig, parse_audit
 from test_ebrt_hosted import FakeClient, MODEL, SECRET, response
 
 
@@ -128,6 +128,43 @@ class ColoringJudgeTests(unittest.TestCase):
         self.assertEqual(actual["format_status"], "PASS")
         self.assertEqual(actual["feasibility"]["status"], "FAIL")
         self.assertEqual(actual["feasibility"]["checks"], checks)
+
+    def test_each_profile_row_is_a_self_contained_contiguous_source_quote(self):
+        source = next(row.text for row in self.case.task.evidence if row.evidence_id == "R4")
+        rows = [line for line in source.splitlines() if line.startswith("PROFILE_")]
+        self.assertEqual(len(rows), 3)
+        self.assertEqual([line.split()[0] for line in rows], ["PROFILE_M", "PROFILE_N", "PROFILE_P"])
+        rule = "Every listed edge must connect differently colored vertices."
+        for line in rows:
+            with self.subTest(profile=line.split()[0]):
+                self.assertEqual(line.count("PROFILE_"), 1)
+                self.assertTrue(line.endswith(rule))
+                accepted = parse_audit(self.case.task, "R4", json.dumps({"evidence_id": "R4", "quote": line}))
+                self.assertEqual(accepted["quote"], line)
+        current = rows[1].split(" has edges ", 1)[1].split(".", 1)[0]
+        self.assertEqual([tuple(edge.strip()) for edge in current.split(",")], list(EDGES))
+        self.assertEqual(self.case.problem["edges"], [list(edge) for edge in EDGES])
+        self.assertEqual(len(planning.enumerate_colorings(self.case.problem)), 18)
+
+    def test_noncontiguous_profile_fragments_remain_rejected_before_solver_or_judges(self):
+        source = next(row.text for row in self.case.task.evidence if row.evidence_id == "R4")
+        rows = {line.split()[0]: line for line in source.splitlines() if line.startswith("PROFILE_")}
+        fragments = [rows[key].split(". ", 1)[0] + "." for key in ("PROFILE_N", "PROFILE_P")]
+        joined = " ".join(fragments)
+        self.assertNotIn(joined, source)
+        raw = json.dumps({"evidence_id": "R4", "quote": joined})
+        with self.assertRaisesRegex(EBRTError, "REINSPECTION_AUDIT_QUOTE_NOT_IN_SOURCE"):
+            parse_audit(self.case.task, "R4", raw)
+        client = successful_client(self.plan, overrides={2: raw})
+        report = hosted.run_plan(self.plan, client=client)
+        self.assertEqual(len(client.responses.calls), 3)
+        self.assertEqual(report["actual_provider_calls"], 3)
+        self.assertEqual(report["solver_provider_calls"], 0)
+        self.assertEqual(report["judge_provider_calls"], 0)
+        self.assertEqual(report["stages"][-1]["raw_text"], raw)
+        self.assertEqual(report["stages"][-1]["error_code"], "REINSPECTION_AUDIT_QUOTE_NOT_IN_SOURCE")
+        self.assertEqual(report["execution_status"], "FAIL")
+        self.assertEqual(hosted.verify_report(report, self.plan)["status"], "PASS")
 
     def test_any_feasible_assignment_is_accepted_not_just_the_calibration_solutions(self):
         alternatives = planning.enumerate_colorings()

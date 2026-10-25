@@ -1,6 +1,6 @@
 # Non-unique coloring with an LLM judge
 
-Status: **OFFLINE VERIFIED; READY FOR FIXED EIGHT-ATTEMPT BLOCK**
+Status: **FIRST BLOCK STOPPED AT QUOTATION VALIDATION; FOLLOW-UP PREFLIGHT**
 
 This example exercises dependency-aware source reinspection with a free JSON
 answer. It evaluates feasibility rather than equality to one reference answer.
@@ -92,3 +92,48 @@ Independent adversarial review found no required fixes. Mathematical validity
 of extractable colors remains assessable when citation metadata or the native
 output wrapper is malformed; the raw response and separate format failure are
 preserved. Earlier execution sources and closed blocks are unchanged.
+
+## Recorded first-block failure
+
+The first plan was fixed at source
+`2564e334b4f8c2e106587a4424bf60ca2ca4fd27` before any request. It stopped
+after three source-audit attempts, with no solver or judge calls. The table
+audit joined the PROFILE_N edge sentence to a general inequality sentence,
+skipping another profile between them in the original paragraph. That string
+was not a contiguous source substring, and provenance validation correctly
+rejected it with `REINSPECTION_AUDIT_QUOTE_NOT_IN_SOURCE`.
+
+The failed report remains unchanged. Offline consistency verification passed
+for its three attempted stages while execution remained FAIL. The closed
+block was not resumed or repaired, and no candidate/judge outcome had been
+observed.
+
+For a separately declared follow-up block, each profile's edge list and
+inequality rule are placed adjacently on one source-record line. The graph,
+18-solution set, controls, judge rubric, budget, and strict quotation validator
+are unchanged. This input-layout adaptation addresses the observed extraction
+failure; it is not evidence of robust extraction or an untouched benchmark.
+The follow-up permits at most eight new attempts, with no further automatic
+layout tuning or retries. Including the three recorded attempts gives a
+maximum of eleven actual requests across these two blocks.
+
+First plan fingerprint:
+
+```text
+3914165249492f9e6b89c5763cf471d26bfc5a42f298b23c792ba5bbe630da0d
+```
+
+First failed report fingerprint:
+
+```text
+fb2d6b12ee0a4e0ac7d0e416e7fb73e0d88fc18461b38fc7bd8e7ed5357dfbfa
+```
+
+The original source snapshot and failed plan/report are retained locally.
+Replay that report against the recorded source revision; do not rewrite its
+hashes or grades to match the follow-up layout.
+
+Follow-up preflight passed all 187 network-zero tests (29 coloring tests).
+The two added regressions accept each contiguous profile record and still
+reject stitched fragments after three attempts, before solver/judge dispatch.
+Independent review found no required implementation fixes.

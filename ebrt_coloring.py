@@ -75,8 +75,9 @@ def build_case() -> ColoringCase:
         "using all three colors is not required. "
         "Vertex A must remain RED.",
         "The retired PROFILE_N rule requires different colors only across AB, BC, CD, DE, EF, FA.",
-        "Current profiles: PROFILE_M has edges AB, BC, DE. "
-        "PROFILE_N has edges AB, BC, CD, DE, EF, FA, BE. "
+        "Current profiles:\n"
+        "PROFILE_M has edges AB, BC, DE. Every listed edge must connect differently colored vertices.\n"
+        "PROFILE_N has edges AB, BC, CD, DE, EF, FA, BE. Every listed edge must connect differently colored vertices.\n"
         "PROFILE_P has edges AC, CE, EA. Every listed edge must connect differently colored vertices.",
         "The fixed constraint remains A=RED. Preserve the JSON output schema.",
         "Late correction: R3 is superseded. Use the profile identified in R2 and its current edge list "
