@@ -43,6 +43,10 @@ JSON terminal and a blind LLM-as-a-judge rubric. It tests feasibility rather
 than equality to a reference assignment, with independent constraint checks
 and both valid and invalid calibration controls. Its eight-attempt budget
 includes the existing three-audit prefix, one solution, and four judgments.
+The executed follow-up completed all eight attempts; four judgments on three
+distinct colorings agreed with the checker, including the BE-only rejection.
+The earlier source-quotation failure is retained. Same-backend agreement on
+this small adapted example does not establish general judge reliability.
 
 ## Evidence labels
 

@@ -828,6 +828,12 @@ candidate without its origin, reference answers, or mechanical verdict.
 Independent predicates check its ten criterion decisions; disagreement is
 recorded without repair. Mathematical feasibility, citation lineage, and
 output format are separate. See the [example and protocol](docs/RND_NONUNIQUE_COLORING_JUDGE.md).
+The executed follow-up generated `RED,GREEN,RED,GREEN,RED,GREEN` for A–F.
+All four judge decisions matched the predicate checker, including rejection
+of the BE-only violation. The generated coloring coincided with one fixed
+control, so this covers three distinct assignments. An earlier quotation
+failure remains recorded; the follow-up used an explicitly adapted source
+layout. Solver and judge used the same backend in separate contexts.
 
 ## What the core owns
 
