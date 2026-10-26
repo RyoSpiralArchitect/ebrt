@@ -865,6 +865,10 @@ It yielded one minimal answer out of six for full repair and two out of six
 with feedback. The other nine solver requests timed out; all three completed
 answers were optimal and agreed with their judges. This is a small difference
 in completed outputs under the timeout setting, not an established quality gain.
+The [matched-timeout follow-up](docs/RND_HARD_REPAIR_TIMEOUT.md) keeps the
+same cases, prompts, output caps, and counterbalanced schedule while extending
+both arms' solver/judge request timeout from 60 to 180 seconds in a separate,
+source-pinned block. The earlier observations remain unchanged.
 
 ## What the core owns
 
