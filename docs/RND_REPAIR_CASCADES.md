@@ -1,6 +1,6 @@
 # Fixed repair implementation on harder cascade cases
 
-Status: **FIRST BLOCK STOPPED; PAIRED FOLLOW-UP PREFLIGHT**
+Status: **PAIRS COLLECTED; ALL SIX SOLVERS EXHAUSTED THE UNCHANGED BUDGET**
 
 This extends the terminal repair experiment in the same PR. The existing
 `ebrt_coloring_repair.py` is byte-unchanged. The evaluation adapter directly
@@ -139,3 +139,49 @@ python ebrt_repair_scaling_pairs.py plan --output /tmp/cascade-pairs-plan.json
 python ebrt_repair_scaling_pairs.py run --plan /tmp/cascade-pairs-plan.json --output /tmp/cascade-pairs-report.json
 python ebrt_repair_scaling_pairs.py verify --plan /tmp/cascade-pairs-plan.json --report /tmp/cascade-pairs-report.json --output /tmp/cascade-pairs-verification.json
 ```
+
+## Paired results: 2026-10-26 (Asia/Tokyo)
+
+The follow-up source was fixed at
+`6eb65b301b4c32e4392505892c79b0d08c26303f` before saving its plan and making
+requests. Collection completed all three planned pairs. Every solver attempt
+returned `HOSTED_RESPONSE_INCOMPLETE`, with provider usage reporting 512 output
+tokens and 512 reasoning tokens. None supplied a completed raw candidate.
+
+| Case | Exact minimum changes | Full repair | Gradient feedback | Feasibility / minimality / judge |
+| --- | --- | --- | --- | --- |
+| cascade-10 | 5 | 512-token budget exhausted | 512-token budget exhausted | NOT ASSESSED |
+| cascade-14 | 8 | 512-token budget exhausted | 512-token budget exhausted | NOT ASSESSED |
+| cascade-18 | 9 | 512-token budget exhausted | 512-token budget exhausted | NOT ASSESSED |
+
+Usable-repair production was 0/3 in each condition. This is equal observed
+completion failure under the fixed budget, not evidence of equal mathematical
+quality. There are no candidates on which to measure constraint violations,
+edit-count advantage, or minimality. No gradient advantage was demonstrated;
+repair-quality comparison remains unassessed.
+
+All six scheduled judges were explicitly skipped because there was no raw
+candidate to judge. The follow-up made six actual provider attempts, not
+twelve. Together with the preserved first failure, seven actual attempts were
+made. No additional prompts, budget changes, replacements, or retries followed.
+Follow-up provider-reported output/reasoning tokens total 3072; across both
+blocks they total 3584. No judge tokens were consumed.
+
+The report records collection COMPLETE and execution FAIL. Offline replay
+passed for the six attempted stages and all skipped slots. All 213 network-zero
+tests passed, including independent enumeration, exact solver reuse, isolated
+failures, skipped-judge accounting, model drift, and resealed tampering checks.
+The earlier successful four-call minimal-repair report still verifies with
+its original fingerprint. Runtime source files from that experiment and the
+first cascade block remain byte-unchanged.
+
+```text
+plan:   c98f49944e7c138a9110afeff2dcefb9b8b4ed6e4b79627e02819ac1251c22ef
+report: 4f343e7e390bd588f065dd57ad451b21c7997b3876c647e61845338357f004f0
+verify: a7ee837c1193e533d7434af24511da33c0e8228260a60f338e0689eacbcefb86
+```
+
+Both blocks' plans, raw reports, and verification receipts remain in private
+0600 files outside the checkout. The result motivates a separately fixed,
+matched-budget study if quality comparison is pursued further; increasing
+the budget was not part of this block.

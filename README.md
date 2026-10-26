@@ -847,6 +847,10 @@ The [cascade evaluation](docs/RND_REPAIR_CASCADES.md) keeps that repair
 implementation unchanged and tests fixed 10-, 14-, and 18-vertex problems.
 Every optimal repair must reach beyond the initially conflicting vertices;
 exact feasibility and edit-count grades are compared across both conditions.
+In the fixed paired block, both conditions exhausted the unchanged 512-token
+solver budget on all three cases without completed answers. Quality and
+minimality therefore remain unassessed; all six judges were skipped. The
+preceding fail-fast attempt and all six paired outcomes are preserved.
 
 ## What the core owns
 
