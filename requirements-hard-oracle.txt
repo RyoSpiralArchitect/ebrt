@@ -1,0 +1,2 @@
+# Optional: reproduce fixtures with a MILP solver independent of the runtime oracle.
+scipy==1.17.0

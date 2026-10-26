@@ -857,6 +857,10 @@ problems and repair implementation while raising both solver ceilings to
 That block completed all twelve attempts. Both conditions produced feasible,
 exactly minimal repairs in all three cases (5/8/9 changes), and all six judges
 agreed with mechanical feasibility checks. No quality advantage was observed.
+The [hard-case replication](docs/RND_HARD_REPAIR_REPLICATION.md) adds fixed
+24/36/48-vertex problems, independently verified exact optima, and two trials
+per condition with reversed execution order. All planned trials remain in
+the success-rate denominator, including missing or infeasible answers.
 
 ## What the core owns
 
