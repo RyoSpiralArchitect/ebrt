@@ -861,6 +861,10 @@ The [hard-case replication](docs/RND_HARD_REPAIR_REPLICATION.md) adds fixed
 24/36/48-vertex problems, independently verified exact optima, and two trials
 per condition with reversed execution order. All planned trials remain in
 the success-rate denominator, including missing or infeasible answers.
+It yielded one minimal answer out of six for full repair and two out of six
+with feedback. The other nine solver requests timed out; all three completed
+answers were optimal and agreed with their judges. This is a small difference
+in completed outputs under the timeout setting, not an established quality gain.
 
 ## What the core owns
 

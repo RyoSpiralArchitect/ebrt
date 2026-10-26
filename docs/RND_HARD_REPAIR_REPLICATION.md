@@ -1,6 +1,6 @@
 # Counterbalanced replication on harder minimum-repair cases
 
-Status: **PREFLIGHT; ONE FIXED 24-ATTEMPT BLOCK**
+Status: **COLLECTED; MINIMAL OUTPUTS 1/6 VS 2/6, NINE PROVIDER TIMEOUTS**
 
 PR #54 was reviewed and merged at
 `6402312c1fe28ade7bc14e57da8d2cded04952fb`. Review found no required fixes;
@@ -105,3 +105,73 @@ invalid outputs, judge disagreement, model drift, hidden retries, tampering,
 and truncated collections. The optional SciPy generator reproduced the fixture
 byte-for-byte before any hosted requests. Existing execution sources have no
 diff against merged main.
+
+## Executed results
+
+The run used source `01089c5116c2ad72fdcb2676bb07475bdbceddae`, fixed before
+the plan and provider requests. It completed on 2026-10-26 (Asia/Tokyo); offline
+verification and result review completed on 2026-10-27. The saved collection
+was inspected and verified without starting another run.
+
+| Problem | Trial | Full repair | Gradient feedback | Exact minimum |
+| --- | --- | --- | --- | ---: |
+| 24 vertices | 1 | Feasible, minimal: 12 edits | Provider timeout | 12 |
+| 24 vertices | 2 | Provider timeout | Feasible, minimal: 12 edits | 12 |
+| 36 vertices | 1 | Provider timeout | Provider timeout | 18 |
+| 36 vertices | 2 | Provider timeout | Provider timeout | 18 |
+| 48 vertices | 1 | Provider timeout | Feasible, minimal: 21 edits | 21 |
+| 48 vertices | 2 | Provider timeout | Provider timeout | 21 |
+
+| Condition | Planned / attempted | Completed | Feasible | Exactly minimal |
+| --- | ---: | ---: | ---: | ---: |
+| Full repair | 6 / 6 | 1 / 6 | 1 / 6 | 1 / 6 |
+| Gradient feedback | 6 / 6 | 2 / 6 | 2 / 6 | 2 / 6 |
+
+All three completed candidates passed format and every graph constraint.
+All three judges returned PASS and agreed on every individual criterion.
+Separate direct checks of the raw colors confirmed palette, coverage, A=RED,
+edge inequalities, changed-vertex sets, and the exact edit counts. Minimality
+comes from the independently verified oracles, not the judges.
+
+Every missing solver output had error `HOSTED_PROVIDER_TIMEOUT`, with a
+configured 60-second request timeout. These are not token-exhaustion records
+or mathematically incorrect colorings. Their actual logged latencies range
+from about 60.07 to 67.49 seconds; the transport timeout is not an exact global
+wall-clock deadline. Provider usage fields are null for all nine timeouts,
+so total token consumption/cost and the unfinished answers' quality are unknown.
+No zero usage is imputed and no full efficiency comparison is justified.
+
+The observed difference is one extra usable minimal answer under these request
+settings. It is not a demonstrated reasoning-quality advantage. On 24 vertices,
+the successful arm swapped between trials. The feedback-only 48-vertex success
+in trial 1 did not recur in trial 2. All completed answers were optimal, while
+timeouts leave nine mathematical outcomes unassessed. With only three selected
+problems and two trials, latency, provider conditions, sampling variability,
+and mechanism effects cannot be separated.
+
+Known solver usage and latency for the three completed outputs:
+
+| Case / trial / condition | Input tokens | Output tokens | Reasoning tokens | Latency (seconds) |
+| --- | ---: | ---: | ---: | ---: |
+| 24 / 1 / Full repair | 774 | 3036 | 2894 | 58.59 |
+| 48 / 1 / Gradient feedback | 2854 | 3297 | 3035 | 50.37 |
+| 24 / 2 / Gradient feedback | 1456 | 3014 | 2872 | 50.92 |
+
+All twelve planned solver requests were attempted once. Three judges ran and
+nine were explicitly skipped because no completed raw answer existed. Thus
+the block made fifteen actual requests, not twenty-four. Collection is COMPLETE,
+execution is FAIL because of provider errors, and offline integrity verification
+is PASS for all fifteen attempts and skipped slots. No retries, extra cases,
+sampling, or timeout/budget adjustment followed.
+
+```text
+plan:   cb31d6f3bc0e49f94a979c1167861a39a4b2df7763fa2fc7e262952cf2c6b6f3
+report: e24bdda2227d4a9aa1f05f36c00dad3820f424227054a8ce6b3353558924935b
+verify: 2c39be6ffe84f9058a88e2125d95e57269936cfe0830e8dc15bd7a51dba9b401
+```
+
+Plan, full raw report, and verification receipt remain in private 0600 files
+outside the checkout. The natural follow-up is a separately declared comparison
+with a matched, longer timeout while retaining the output budget and all cases,
+to separate answer quality from missing observations. That follow-up was not
+executed in this block.
