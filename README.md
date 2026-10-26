@@ -851,6 +851,9 @@ In the fixed paired block, both conditions exhausted the unchanged 512-token
 solver budget on all three cases without completed answers. Quality and
 minimality therefore remain unassessed; all six judges were skipped. The
 preceding fail-fast attempt and all six paired outcomes are preserved.
+The [matched-budget follow-up](docs/RND_REPAIR_BUDGET.md) keeps the same
+problems and repair implementation while raising both solver ceilings to
+4096 tokens; judge settings and the maximum twelve-attempt schedule remain fixed.
 
 ## What the core owns
 
