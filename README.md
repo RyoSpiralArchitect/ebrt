@@ -854,6 +854,9 @@ preceding fail-fast attempt and all six paired outcomes are preserved.
 The [matched-budget follow-up](docs/RND_REPAIR_BUDGET.md) keeps the same
 problems and repair implementation while raising both solver ceilings to
 4096 tokens; judge settings and the maximum twelve-attempt schedule remain fixed.
+That block completed all twelve attempts. Both conditions produced feasible,
+exactly minimal repairs in all three cases (5/8/9 changes), and all six judges
+agreed with mechanical feasibility checks. No quality advantage was observed.
 
 ## What the core owns
 
