@@ -843,6 +843,10 @@ the number of changed vertices and whether the repair is minimal.
 The first four-call block found the same optimal one-vertex repair in both
 conditions (B from GREEN to BLUE). Both judges agreed on feasibility; no
 quality or edit-count advantage from gradient feedback was observed.
+The [cascade evaluation](docs/RND_REPAIR_CASCADES.md) keeps that repair
+implementation unchanged and tests fixed 10-, 14-, and 18-vertex problems.
+Every optimal repair must reach beyond the initially conflicting vertices;
+exact feasibility and edit-count grades are compared across both conditions.
 
 ## What the core owns
 
