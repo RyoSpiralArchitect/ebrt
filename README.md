@@ -869,6 +869,11 @@ The [matched-timeout follow-up](docs/RND_HARD_REPAIR_TIMEOUT.md) keeps the
 same cases, prompts, output caps, and counterbalanced schedule while extending
 both arms' solver/judge request timeout from 60 to 180 seconds in a separate,
 source-pinned block. The earlier observations remain unchanged.
+Completion was 3/6 in both arms; feasible outputs were 3/6 versus 2/6, and
+minimal outputs 2/6 versus 1/6 (full repair versus feedback). Six other solver
+responses reached the 4096-token ceiling without completed answers; none timed
+out. All six judges agreed with mechanical checks, including one infeasible
+feedback answer. This block shows no feedback advantage.
 
 ## What the core owns
 
