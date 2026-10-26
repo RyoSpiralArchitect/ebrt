@@ -1,6 +1,6 @@
 # Fixed repair implementation on harder cascade cases
 
-Status: **PREFLIGHT; ONE TWELVE-ATTEMPT BLOCK DECLARED**
+Status: **FIRST BLOCK STOPPED; PAIRED FOLLOW-UP PREFLIGHT**
 
 This extends the terminal repair experiment in the same PR. The existing
 `ebrt_coloring_repair.py` is byte-unchanged. The evaluation adapter directly
@@ -86,4 +86,56 @@ closed plans and reports remain unchanged and verifiable.
 python ebrt_repair_scaling.py plan --output /tmp/cascades-plan.json
 python ebrt_repair_scaling.py run --plan /tmp/cascades-plan.json --output /tmp/cascades-report.json
 python ebrt_repair_scaling.py verify --plan /tmp/cascades-plan.json --report /tmp/cascades-report.json --output /tmp/cascades-verification.json
+```
+
+## First block stopped before a comparison
+
+The first block was fixed at source
+`4045557256cb8bf64ce824b4462d5738ba8198c0`. Its first request, cascade-10 /
+full_repair, returned `HOSTED_RESPONSE_INCOMPLETE`: 512 output tokens, all
+512 reported as reasoning tokens, with no completed visible candidate.
+The original global fail-fast rule stopped after one actual request. No
+feedback-arm output or judge was observed. Offline integrity verification
+passed for that failed block. It was not resumed or relabeled as a wrong
+mathematical answer.
+
+```text
+plan:   bfaff0bbb7098d59ec427eccfb23bfe893474e002aae3c5ca06e7784627db3d7
+report: 2e777a9e50c4f0116d9b05cc2815b92c391d3a350417f468353f12afa5cff554
+verify: eadcd6bd75e728145d74dbcd03e31b23e5cadee6b7d8190b90f1b70bb8d5fc1b
+```
+
+## Separately fixed paired follow-up
+
+`ebrt_repair_scaling_pairs.py` adds an evaluation-only failure-isolation policy.
+The original evaluation source and failed block remain unchanged. The new plan
+pins the original study plan and new runner hash. All three cases, both solver
+prompts, the actual backward implementation, solver settings (including the
+512 ceiling), and judge rubric/settings remain exactly the same. The evaluator
+now records provider failure as one condition's outcome and proceeds to the
+other independent condition. A judge is skipped, spending no attempt, if its
+solver returned no completed raw candidate. A completed but malformed answer
+still receives a judge. Judge format/provider failure is also retained without
+preventing the next independent pair. Returned-model drift or a pre-dispatch
+configuration failure still stops the whole follow-up.
+
+The full three-case schedule is fixed before these new calls, with at most
+12 new attempts and no replacement or repeat within this block. This repeats
+the first baseline condition as part of a newly declared paired collection;
+it is not an untouched first run. The first failure remains part of the record.
+Across both blocks the maximum is 13 actual requests. This adaptation follows
+an execution-budget failure before any completed candidate or judge outcome;
+there is no selection on an observed quality advantage. No further automatic
+budget, prompt, or case tuning is planned.
+
+Collection completion, provider completion, mathematical feasibility, edit
+optimality, and judge agreement are separate statuses. Missing outputs count
+as failure to produce a usable repair under the budget, not as a specific
+coloring-constraint violation. Summaries retain all three planned pairs,
+including missing outputs; they do not compare only surviving candidates.
+
+```bash
+python ebrt_repair_scaling_pairs.py plan --output /tmp/cascade-pairs-plan.json
+python ebrt_repair_scaling_pairs.py run --plan /tmp/cascade-pairs-plan.json --output /tmp/cascade-pairs-report.json
+python ebrt_repair_scaling_pairs.py verify --plan /tmp/cascade-pairs-plan.json --report /tmp/cascade-pairs-report.json --output /tmp/cascade-pairs-verification.json
 ```
