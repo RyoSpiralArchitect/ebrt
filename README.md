@@ -879,6 +879,11 @@ offline hybrid: directional public-state gradients guide tree priors, while
 exact constraint values are backed up through PUCT. It compares greedy repair,
 uniform PUCT, and gradient-guided PUCT under a shared state-evaluation ceiling.
 It makes no model calls and does not change the production engine.
+Across three cases and three seeds, each arm found zero feasible repairs.
+Gradient PUCT left fewer conflicts than uniform PUCT in every matched row,
+but both trees stayed shallower than the minimum required edit counts; greedy
+repair was better on the two larger cases. The report proposes bounded local
+repair trajectories as tree edges for a separate follow-up.
 
 ## What the core owns
 

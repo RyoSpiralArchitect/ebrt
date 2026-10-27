@@ -1,6 +1,6 @@
 # Gradient-guided PUCT for public repair states
 
-Status: **OFFLINE PILOT PROTOCOL; RESULTS PENDING**
+Status: **COLLECTED; ZERO FEASIBLE OUTPUTS, TREE DEPTH BELOW REQUIRED EDITS**
 
 The [matched-timeout study](RND_HARD_REPAIR_TIMEOUT.md) exposed three failures:
 constraint violations, feasible but nonminimal repairs, and no completed answer
@@ -117,6 +117,96 @@ candidate rejection, and oracle-free input projection.
 All 245 relevant network-zero tests passed before the hard-case pilot,
 including eleven new PUCT tests. No hard-case search outcomes were used to
 choose the frozen constants or change the comparison schedule.
+
+## Executed pilot and diagnosis
+
+Source `f1ad1a5702f3c30da20032587cb3a634ad126c2f` and the plan were fixed
+before hard-case searches. All 27 runs completed on 2026-10-27 (Asia/Tokyo),
+with zero provider requests. No constants, cases, seeds, or budgets were tuned
+after seeing these results.
+
+| Arm | Feasible | Minimal | State evaluations | Gradient calls | Search seconds, summed |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Gradient greedy | 0/9 | 0/9 | 109 | 109 | 0.071 |
+| Uniform PUCT | 0/9 | 0/9 | 18432 | 0 | 2.024 |
+| Gradient PUCT | 0/9 | 0/9 | 18432 | 7428 | 8.260 |
+
+The two tree arms each spent all 2048 state evaluations on every run. Greedy
+stopped at local minima after 7–17 evaluations. Total search evaluations were
+36973 of the allowed 55296. Time covers search only, excluding post-run oracle
+checks, and is one machine's measurement rather than a controlled speed study.
+The gradient prior adds work; equal state counts are not equal computation.
+
+All case/seed outcomes below are **residual conflicts / diagnostic edit count**
+of the best invalid state. None is a valid answer or has a defined excess-edit
+grade; a low edit count on an invalid assignment does not beat the optimum.
+
+| Case | Seed | Gradient greedy | Uniform PUCT | Gradient PUCT |
+| --- | ---: | ---: | ---: | ---: |
+| hard-24 | 7 | 4 / 6 | 6 / 4 | 3 / 7 |
+| hard-24 | 19 | 4 / 6 | 6 / 4 | 3 / 7 |
+| hard-24 | 43 | 4 / 6 | 6 / 4 | 3 / 7 |
+| hard-36 | 7 | 7 / 11 | 18 / 3 | 13 / 6 |
+| hard-36 | 19 | 6 / 11 | 16 / 5 | 13 / 6 |
+| hard-36 | 43 | 5 / 12 | 18 / 3 | 13 / 6 |
+| hard-48 | 7 | 5 / 16 | 22 / 8 | 16 / 8 |
+| hard-48 | 19 | 6 / 15 | 26 / 7 | 16 / 8 |
+| hard-48 | 43 | 5 / 16 | 24 / 6 | 16 / 8 |
+
+Gradient PUCT reduced residual conflicts versus uniform PUCT in all nine
+matched rows. It was worse than cheap greedy repair on the 36- and 48-vertex
+cases, and no arm found feasibility. This is a diagnostic improvement over
+one weak tree baseline, not a solved-task or compute-efficiency advantage.
+
+| Case | Minimum changed vertices in any feasible repair | Greedy depth | Uniform PUCT depth | Gradient PUCT depth |
+| --- | ---: | ---: | ---: | ---: |
+| hard-24 | 12 | 6 | 5–6 | 9 |
+| hard-36 | 18 | 11–12 | 4–5 | 6 |
+| hard-48 | 21 | 15–16 | 6–9 | 8 |
+
+Every explored path was shorter than the minimum number of vertices that
+must change. Since each edge recolors only one vertex, no evaluated state on
+those paths could be feasible. This is a post-run diagnosis, not oracle-guided
+pruning. The configured depth caps (48/72/96) were never reached, so merely
+raising the depth cap would not fix the observed bottleneck. Within the state
+budget, exploration stayed shallow. Uniform PUCT expanded all 46/70/94 root
+actions; gradient PUCT expanded 17/45/25. The immediate-state value and broad
+single-recolor tree have not provided enough useful lookahead here.
+
+Independent raw-color checks confirmed every reported conflict/edit count.
+All 27 searches replayed exactly, including work counters and incumbent traces,
+under the saved configurations. Replay spent another 36973 state evaluations
+as diagnostic work; these are not extra trials or added evidence of success.
+The pilot is not promoted to the production engine.
+
+```text
+plan:   9aa759f1133504cc7f390e74ff3d1d3fc57aa4e7a81ba400d842a02a36eb9b8d
+report: 5bbd469971214b58306d22beaee9aa066bfe2b4b6d98417d0ab1912c564097a3
+verify: 721730b7388d6f9e97910c3b3c4ac0d93f82a716e975687a4c1dc46e8ef524bc
+```
+
+The plan, full report, and replay receipt remain in private 0600 files outside
+the checkout. The original hosted blocks and their interpretations are intact.
+
+## Next comparison specification (not executed)
+
+Test a bounded local-repair trajectory as one tree edge. After the selected
+single recoloring, allow at most seven further improving gradient steps: at
+most eight actual recolorings per expansion. Recompute the gradient at each
+step, retain the original edit reference, check every intermediate assignment,
+and charge every evaluated state to the same 2048-evaluation cap. Ancestor
+cycles remain excluded. Stop early if the shared budget or local improvement
+runs out; never grant eight free evaluations per edge. The tree child is the
+trajectory endpoint, while any feasible intermediate can update the incumbent.
+
+Compare uniform versus gradient priors with this identical local-repair
+operator on both sides, alongside their no-trajectory controls (a 2x2 design).
+The uniform-prior trajectory arm also computes gradients for the common local
+operator, so it must not be described as gradient-free. This separates the
+effect of the prior from the effect of obtaining deeper candidate states.
+Keep budgets and cases fixed in a new source-pinned block; do not rewrite this
+pilot. Progressive widening is a separate possible intervention, not an
+unmeasured adjustment to combine with the first trajectory comparison.
 
 ## Path to an LLM-assisted hybrid
 
