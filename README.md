@@ -874,6 +874,11 @@ minimal outputs 2/6 versus 1/6 (full repair versus feedback). Six other solver
 responses reached the 4096-token ceiling without completed answers; none timed
 out. All six judges agreed with mechanical checks, including one infeasible
 feedback answer. This block shows no feedback advantage.
+The [PUCT repair pilot](docs/RND_PUCT_REPAIR_PILOT.md) explores a separate
+offline hybrid: directional public-state gradients guide tree priors, while
+exact constraint values are backed up through PUCT. It compares greedy repair,
+uniform PUCT, and gradient-guided PUCT under a shared state-evaluation ceiling.
+It makes no model calls and does not change the production engine.
 
 ## What the core owns
 
