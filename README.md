@@ -884,6 +884,10 @@ Gradient PUCT left fewer conflicts than uniform PUCT in every matched row,
 but both trees stayed shallower than the minimum required edit counts; greedy
 repair was better on the two larger cases. The report proposes bounded local
 repair trajectories as tree edges for a separate follow-up.
+The [bounded-trajectory study](docs/RND_PUCT_TRAJECTORY_STUDY.md) implements
+that follow-up as a 2x2 comparison of uniform/gradient priors and one/eight-move
+edges. Every intermediate state spends the shared 2048-evaluation budget;
+both trajectory conditions use the same gradient-based local repair operator.
 
 ## What the core owns
 
