@@ -188,7 +188,11 @@ verify: 721730b7388d6f9e97910c3b3c4ac0d93f82a716e975687a4c1dc46e8ef524bc
 The plan, full report, and replay receipt remain in private 0600 files outside
 the checkout. The original hosted blocks and their interpretations are intact.
 
-## Next comparison specification (not executed)
+## Next comparison specification (at pilot closure)
+
+This specification is now implemented and evaluated in the separately frozen
+[bounded-trajectory study](RND_PUCT_TRAJECTORY_STUDY.md). The pilot's original
+results above are unchanged; the proposal below predates that follow-up.
 
 Test a bounded local-repair trajectory as one tree edge. After the selected
 single recoloring, allow at most seven further improving gradient steps: at

@@ -888,6 +888,12 @@ The [bounded-trajectory study](docs/RND_PUCT_TRAJECTORY_STUDY.md) implements
 that follow-up as a 2x2 comparison of uniform/gradient priors and one/eight-move
 edges. Every intermediate state spends the shared 2048-evaluation budget;
 both trajectory conditions use the same gradient-based local repair operator.
+The fixed 36-run block found feasible repairs in 6/9 uniform-prior trajectory
+runs and 7/9 gradient-prior trajectory runs, with 6/9 exact minima in each.
+Both single-move controls remained at 0/9. Every run spent exactly 2048 state
+evaluations; all 36 searches replayed exactly, and all 18 single-move controls
+matched the closed pilot. This supports the trajectory package on these
+development cases, with no established gradient-prior or hosted-model gain.
 
 ## What the core owns
 
