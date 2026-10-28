@@ -857,6 +857,52 @@ problems and repair implementation while raising both solver ceilings to
 That block completed all twelve attempts. Both conditions produced feasible,
 exactly minimal repairs in all three cases (5/8/9 changes), and all six judges
 agreed with mechanical feasibility checks. No quality advantage was observed.
+The [hard-case replication](docs/RND_HARD_REPAIR_REPLICATION.md) adds fixed
+24/36/48-vertex problems, independently verified exact optima, and two trials
+per condition with reversed execution order. All planned trials remain in
+the success-rate denominator, including missing or infeasible answers.
+It yielded one minimal answer out of six for full repair and two out of six
+with feedback. The other nine solver requests timed out; all three completed
+answers were optimal and agreed with their judges. This is a small difference
+in completed outputs under the timeout setting, not an established quality gain.
+The [matched-timeout follow-up](docs/RND_HARD_REPAIR_TIMEOUT.md) keeps the
+same cases, prompts, output caps, and counterbalanced schedule while extending
+both arms' solver/judge request timeout from 60 to 180 seconds in a separate,
+source-pinned block. The earlier observations remain unchanged.
+Completion was 3/6 in both arms; feasible outputs were 3/6 versus 2/6, and
+minimal outputs 2/6 versus 1/6 (full repair versus feedback). Six other solver
+responses reached the 4096-token ceiling without completed answers; none timed
+out. All six judges agreed with mechanical checks, including one infeasible
+feedback answer. This block shows no feedback advantage.
+The [PUCT repair pilot](docs/RND_PUCT_REPAIR_PILOT.md) explores a separate
+offline hybrid: directional public-state gradients guide tree priors, while
+exact constraint values are backed up through PUCT. It compares greedy repair,
+uniform PUCT, and gradient-guided PUCT under a shared state-evaluation ceiling.
+It makes no model calls and does not change the production engine.
+Across three cases and three seeds, each arm found zero feasible repairs.
+Gradient PUCT left fewer conflicts than uniform PUCT in every matched row,
+but both trees stayed shallower than the minimum required edit counts; greedy
+repair was better on the two larger cases. The report proposes bounded local
+repair trajectories as tree edges for a separate follow-up.
+The [bounded-trajectory study](docs/RND_PUCT_TRAJECTORY_STUDY.md) implements
+that follow-up as a 2x2 comparison of uniform/gradient priors and one/eight-move
+edges. Every intermediate state spends the shared 2048-evaluation budget;
+both trajectory conditions use the same gradient-based local repair operator.
+The fixed 36-run block found feasible repairs in 6/9 uniform-prior trajectory
+runs and 7/9 gradient-prior trajectory runs, with 6/9 exact minima in each.
+Both single-move controls remained at 0/9. Every run spent exactly 2048 state
+evaluations; all 36 searches replayed exactly, and all 18 single-move controls
+matched the closed pilot. This supports the trajectory package on these
+development cases, with no established gradient-prior or hosted-model gain.
+The [PUCT/multistart comparison](docs/RND_PUCT_MULTISTART_STUDY.md) tests
+whether retaining the tree helps against a fixed stochastic restart policy.
+Both strategies use the same repair continuation and 2048-state evaluation
+cap; all restart and intermediate evaluations are charged.
+In the frozen 36-run comparison, multistart reached the exact minimum in 9/9
+runs with either prior; PUCT retained 6/9 minima with either prior. All runs
+spent 2048 state evaluations. Thus the retained tree was unnecessary for
+success on this development set at that budget. Work costs and arrival times
+still differ, and no general or hosted-model advantage is established.
 
 ## What the core owns
 
