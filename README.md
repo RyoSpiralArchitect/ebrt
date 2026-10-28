@@ -894,6 +894,10 @@ Both single-move controls remained at 0/9. Every run spent exactly 2048 state
 evaluations; all 36 searches replayed exactly, and all 18 single-move controls
 matched the closed pilot. This supports the trajectory package on these
 development cases, with no established gradient-prior or hosted-model gain.
+The [PUCT/multistart comparison](docs/RND_PUCT_MULTISTART_STUDY.md) tests
+whether retaining the tree helps against a fixed stochastic restart policy.
+Both strategies use the same repair continuation and 2048-state evaluation
+cap; all restart and intermediate evaluations are charged.
 
 ## What the core owns
 
