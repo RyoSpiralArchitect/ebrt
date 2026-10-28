@@ -898,6 +898,11 @@ The [PUCT/multistart comparison](docs/RND_PUCT_MULTISTART_STUDY.md) tests
 whether retaining the tree helps against a fixed stochastic restart policy.
 Both strategies use the same repair continuation and 2048-state evaluation
 cap; all restart and intermediate evaluations are charged.
+In the frozen 36-run comparison, multistart reached the exact minimum in 9/9
+runs with either prior; PUCT retained 6/9 minima with either prior. All runs
+spent 2048 state evaluations. Thus the retained tree was unnecessary for
+success on this development set at that budget. Work costs and arrival times
+still differ, and no general or hosted-model advantage is established.
 
 ## What the core owns
 

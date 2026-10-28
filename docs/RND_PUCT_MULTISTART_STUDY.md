@@ -1,6 +1,6 @@
 # PUCT versus stochastic multistart with the same repair trajectories
 
-Status: **PROTOCOL FROZEN BEFORE HARD-CASE SEARCHES; RESULTS PENDING**
+Status: **COLLECTED; MULTISTART 9/9 MINIMAL FOR BOTH PRIORS, PUCT 6/9 FOR BOTH**
 
 The [bounded-trajectory study](RND_PUCT_TRAJECTORY_STUDY.md) found feasible
 repairs in 6/9 uniform-prior PUCT runs and 7/9 gradient-prior PUCT runs, with
@@ -121,3 +121,125 @@ and replay/tamper rejection. New allocation-policy tests search only small
 fixtures during preflight. All 265 relevant network-zero tests passed,
 including ten new multistart tests. The baseline plan fingerprint matched
 the saved trajectory plan exactly before hard-case searches in this block.
+
+## Executed results
+
+Source `217d85bb9abadc310191233358ce75155a425f89` was committed before the
+plan and hard-case searches. Collection and verification completed on
+2026-10-28 (Asia/Tokyo). All 36 runs spent exactly 2048 state evaluations,
+for 73728 total, with zero provider calls. No policy tuning or added seeds
+followed these outcomes.
+
+| Allocation / prior | Completed / planned | Feasible | Exactly minimal |
+| --- | ---: | ---: | ---: |
+| PUCT / uniform | 9 / 9 | 6 / 9 | 6 / 9 |
+| PUCT / gradient | 9 / 9 | 7 / 9 | 6 / 9 |
+| Multistart / uniform | 9 / 9 | 9 / 9 | 9 / 9 |
+| Multistart / gradient | 9 / 9 | 9 / 9 | 9 / 9 |
+
+The fixed multistart policy reached the exact optimum on every case/seed
+under both priors. Each PUCT arm retained its earlier six minimal outputs.
+The retained tree was therefore not necessary for reaching the optima on
+this development set at this budget. The result supports this multistart
+comparator over the frozen PUCT policies at the stated endpoint; it is not
+a general superiority result or an isolated causal estimate for Q/N backup.
+
+| Case | Seed | PUCT / uniform | PUCT / gradient | Multistart / uniform | Multistart / gradient |
+| --- | ---: | --- | --- | --- | --- |
+| hard-24 | 7 | Optimal: 12 edits | Optimal: 12 edits | Optimal: 12 edits | Optimal: 12 edits |
+| hard-24 | 19 | Optimal: 12 edits | Optimal: 12 edits | Optimal: 12 edits | Optimal: 12 edits |
+| hard-24 | 43 | Optimal: 12 edits | Optimal: 12 edits | Optimal: 12 edits | Optimal: 12 edits |
+| hard-36 | 7 | Optimal: 18 edits | Feasible: 19 edits (+1) | Optimal: 18 edits | Optimal: 18 edits |
+| hard-36 | 19 | Optimal: 18 edits | Optimal: 18 edits | Optimal: 18 edits | Optimal: 18 edits |
+| hard-36 | 43 | Invalid: 1 conflict | Optimal: 18 edits | Optimal: 18 edits | Optimal: 18 edits |
+| hard-48 | 7 | Optimal: 21 edits | Invalid: 1 conflict | Optimal: 21 edits | Optimal: 21 edits |
+| hard-48 | 19 | Invalid: 1 conflict | Optimal: 21 edits | Optimal: 21 edits | Optimal: 21 edits |
+| hard-48 | 43 | Invalid: 1 conflict | Invalid: 2 conflicts | Optimal: 21 edits | Optimal: 21 edits |
+
+All 31 accepted assignments passed independent node-coverage, palette,
+fixed-color, edge, and original-edit checks; 30 were oracle-minimal. Invalid
+PUCT states remain diagnostics with no excess-edit grade. No failed trial
+was dropped or replaced. The PUCT controls match all original fields in the
+saved trajectory block, including their invalid-state edit counts and work
+counters. They are deterministic controls, not eighteen new independent
+observations.
+
+## Work, restart behavior, and arrival times
+
+All four rows below spend 18432 state evaluations. The identity is
+`start-state evaluations + selected first moves + improving local moves`.
+The count includes all intermediates and all repeated restart roots.
+
+| Allocation / prior | Start-state evaluations | Selected first moves | Improving local moves | Gradient calls (prior + local) | Search seconds, summed |
+| --- | ---: | ---: | ---: | --- | ---: |
+| PUCT / uniform | 9 | 4663 | 13760 | 0 + 17749 | 11.619 |
+| PUCT / gradient | 9 | 7746 | 10677 | 2036 + 18016 | 16.826 |
+| Multistart / uniform | 279 | 5513 | 12640 | 0 + 17522 | 12.668 |
+| Multistart / gradient | 279 | 7657 | 10496 | 7657 + 17629 | 17.251 |
+
+Each multistart arm spent 270 evaluations reevaluating restart roots in
+addition to its nine original roots. Both used 42 starts per 24-node run,
+29 per 36-node run, and 22 per 48-node run. Every completed episode reached
+its 2*n depth limit; the final episode ended at the shared evaluation limit.
+No hard-case restart was triggered by lack of an acyclic action. The streams
+were not reseeded at restarts. All 558 multistart episode ledgers account for
+their evaluation intervals, sampled first actions, and primitive depths.
+
+This policy spends longer consecutive paths than the retained-tree policy
+within the same overall evaluation cap. The comparison changes allocation
+and restart behavior together; it does not establish that restarting alone,
+removing Q alone, or deeper paths alone caused the difference. State counts
+are matched, but gradient computations and elapsed time differ. In this one
+environment the multistart arms took slightly longer than their corresponding
+PUCT arms; no speed or equal-FLOP advantage is claimed.
+
+The first evaluation at which an optimum was recorded is a descriptive
+trace diagnostic, assessed with the oracle after search. Every run continued
+to 2048; this metric was not a stopping condition or a selected budget:
+
+| Case | Seed | Multistart / uniform | Multistart / gradient |
+| --- | ---: | ---: | ---: |
+| hard-24 | 7 | 72 | 43 |
+| hard-24 | 19 | 272 | 188 |
+| hard-24 | 43 | 124 | 286 |
+| hard-36 | 7 | 402 | 198 |
+| hard-36 | 19 | 59 | 937 |
+| hard-36 | 43 | 129 | 218 |
+| hard-48 | 7 | 1014 | 136 |
+| hard-48 | 19 | 357 | 97 |
+| hard-48 | 43 | 1247 | 561 |
+
+Equal 9/9 final success does not imply identical trajectories or a stable
+gradient-prior efficiency benefit. Likewise, multistart does not dominate
+PUCT at every evaluation prefix: uniform PUCT reached the hard-48/seed-7
+optimum at evaluation 81, while uniform multistart first reached it at 1014.
+These are trace observations within the fixed run, not new smaller-budget
+experiments. A held-out suite and predeclared budget curves would be needed
+before selecting a generally preferred allocation policy.
+
+The successful baseline still uses the same public-state gradient local
+repair; the uniform prior does not remove that operator. On this coloring
+loss, its gradients equal direct one-step energy differences. No unique
+autograd mechanism, hosted-model improvement, or production promotion is
+established. The concrete finding is that retained PUCT statistics are not
+required for the observed repair success under this tested configuration.
+
+## Verification receipts
+
+All 36 searches replayed exactly, including results, incumbent traces,
+episode ledgers, and work counters. Replay spent another 73728 state
+evaluations as diagnostic work, not extra trials. A separate audit checked
+all 36 raw assignments and budget identities, all 558 multistart episodes,
+all 540 charged restarts, and every original field of the eighteen PUCT
+controls. Timing is not independently reproduced by replay.
+
+```text
+plan:   61ce1bb451d9e04e3b54d4f04007ee756f8cb44442565626fbd5ab96439bac07
+report: 7cf5ab7d474c2a36c365180e1f5261e09b47ecb6a87fa26178b95863a0bb72e9
+verify: 7c7e12fa129d071b1d05fff7c203dbef4bfd39a4cc3446c2a200ebe5407891e1
+audit:  1b3c7ec065e96708b9c88763156922cf9334d615386785bfc7a4327251365b83
+```
+
+The plan, raw report, replay receipt, and audit receipt remain in private
+0600 files outside the checkout. Earlier runtime sources and closed reports
+remain unchanged.

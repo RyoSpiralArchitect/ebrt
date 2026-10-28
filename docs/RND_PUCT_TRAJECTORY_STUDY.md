@@ -204,9 +204,10 @@ repair and endpoint-based tree expansion. It is not evidence that gradient
 priors alone are effective, that gradients supply information unavailable to
 direct local move scoring, or that hosted LLM reasoning has improved. Both
 trajectory conditions use the same gradient-based operator, and no model was
-called. This block also does not establish that PUCT is necessary: a matched
-evaluation-budget restart/local-search baseline has not yet been tested.
-That comparison would help isolate the contribution of the tree statistics.
+called. At this block's closure, a matched evaluation-budget restart/local-search
+baseline had not yet been tested, so this block did not establish that PUCT
+was necessary. That comparison is now recorded in the separate
+[PUCT/multistart study](RND_PUCT_MULTISTART_STUDY.md).
 No production-engine promotion or further experiment is included here.
 
 ## Replay and audit
