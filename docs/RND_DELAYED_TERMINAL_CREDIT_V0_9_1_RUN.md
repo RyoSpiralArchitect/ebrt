@@ -1,6 +1,6 @@
 # v0.9.1 hosted collection: delayed terminal credit
 
-Status: **PLAN LOCKED; GENERATION NOT YET DISPATCHED**
+Status: **CLOSED; 9/9 RESPONSES COMPLETED; ALL ARMS 0/3 ANSWER / 1/3 SUPPORT / 0/3 STRICT**
 
 This execution follows the merged [PR #57](https://github.com/RyoSpiralArchitect/ebrt/pull/57)
 and its [fixed protocol](RND_DELAYED_TERMINAL_CREDIT_V0_9_1.md). The runner,
@@ -42,8 +42,8 @@ The tested runner and test-module Git blobs match that merged preflight:
 
 The sealed plan is stored outside the checkout at
 `/workspace/setup-logs/delayed-terminal-credit-plan-r01.json`, mode `0600`.
-Provider receipts and verification artifacts will also remain private local
-files; public documentation will contain aggregate results and fingerprints,
+Provider receipts and verification artifacts also remain private local
+files; public documentation contains aggregate results and fingerprints,
 not credentials or provider response identifiers.
 
 ## Interpretation fixed before collection
@@ -59,3 +59,113 @@ Adjoint versus scrambled is the primary matched placement contrast; direct
 is contextual. A ceiling or null contrast must be reported as observed. These
 three engineered cases and one serial block cannot establish general model
 quality, a gradient-specific advantage, or model-internal backpropagation.
+
+## Observed results
+
+The single block ran on **2026-11-03, 00:55:31–00:55:47 JST**, from the pushed
+pre-dispatch commit `553bd6217ac49ac38e61e8552cfac898bc3faccb`. All nine calls
+returned `completed` and the locked model identity. There were no retries,
+incomplete responses, provider errors, or extra generation calls. Each of the
+nine response IDs was present and distinct; those IDs remain private.
+
+| Arm | Planned | Completed | Schema valid | Exact answer | Exact support | Strict conjunction |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Direct | 3 | 3 | 3 | 0 | 1 | 0 |
+| Scrambled | 3 | 3 | 3 | 0 | 1 | 0 |
+| Adjoint | 3 | 3 | 3 | 0 | 1 | 0 |
+
+All denominators include all three planned cases per arm. The completed
+wrong outputs are output-quality failures; they are not transport failures.
+The runner's collection status is `COMPLETE_EXACT_NINE_TERMINALS`, and its
+offline verifier returns `DESCRIPTIVE_ONLY`. Neither status means that the
+answers passed.
+
+| Case | Correct answer | Direct answer | Scrambled answer | Adjoint answer | Exact support, every arm |
+| --- | ---: | ---: | ---: | ---: | --- |
+| shifted_readout | 5 | 11 | 8 | 6 | FAIL |
+| merged_register | 14 | 8 | 8 | 10 | PASS |
+| cancelled_branch | 0 | 12 | 12 | 12 | FAIL |
+
+Every response supplied the same support array:
+`[E_A, E_B, E_C, E_T1, E_T2, E_EVENT]`. For `shifted_readout`, `E_A` should
+have been excluded after cancellation. For `cancelled_branch`, `E_B` should
+have been excluded. Only `merged_register` requires all three input receipts.
+Thus the observed support behavior did not follow the adjoint's zero-weight
+input exclusions. Adjoint and scrambled produced different numeric answers
+on two of the three cases, but their per-case answer/support/strict grades
+were identical. This is a null contrast on the declared quality endpoints,
+not byte-identical output or proof that weights can never affect generation.
+
+## Verification and work accounting
+
+The original offline verifier passed source/plan/report binding, prompt
+schedule, model/status receipts, and grade replay. An additional offline audit
+parsed the input receipts, matrices, and late selector directly from the sealed
+public prompts. It used integer forward evaluation and basis interventions,
+without calling the runner's `oracle`, `dynamics`, or `grade` for its independent
+answers and supports. Its nine grades agreed with the saved report.
+
+The independently reduced current-output expressions are:
+
+- `shifted_readout`: `B - C + 2 = 5`.
+- `merged_register`: `2*A + B + C - 3 = 14`.
+- `cancelled_branch`: `2*A - 2*C + 4 = 0`.
+
+These calculations also establish the two cancelled input dependencies. The
+actual runner and test-module blobs remain byte-for-byte equal to PR #57.
+Post-collection edits change documentation only. Verification and arithmetic
+audit made **zero generation calls**; this block has **nine total generation
+attempts**, plus the separate pre-dispatch model-list metadata request.
+
+| Arm | Input tokens | Output tokens | Total tokens | Reasoning tokens |
+| --- | ---: | ---: | ---: | ---: |
+| Direct | 927 | 101 | 1,028 | 0 |
+| Scrambled | 978 | 101 | 1,079 | 0 |
+| Adjoint | 978 | 110 | 1,088 | 0 |
+| Total | 2,883 | 312 | 3,195 | 0 |
+
+All token-usage fields were available. Individual output usage was 30–50
+tokens, below the 384-token ceiling; no provider truncation was recorded.
+This does not diagnose why the arithmetic failed or demonstrate that another
+model, output contract, or budget would succeed.
+
+Private artifacts are in `/workspace/setup-logs/`, all mode `0600`:
+
+| Artifact | Filename | Sealed fingerprint |
+| --- | --- | --- |
+| Plan | `delayed-terminal-credit-plan-r01.json` | `80c4d54a260938b861f6fd726a9d90f22e2818d0f28bdea3fdb02ae3db9447bd` |
+| Results | `delayed-terminal-credit-results-r01.json` | `b22460e5835ea0efde30ecfd674dbb8777d1f81ce56cc586d8d5a6c78773f50a` |
+| Verification | `delayed-terminal-credit-verification-r01.json` | `0379053c6db8caab7c31cb95911db32b67b54cb6a68f157e563e745c4182e85c` |
+| Independent audit | `delayed-terminal-credit-audit-r01.json` | `4517ee56bbb9077f1cd9924726155394dfa8740191f362075e6cb41aa949e9ed` |
+
+The execution timestamps/exit code are retained in
+`delayed-terminal-credit-execution-r01.json`, and CLI output in
+`delayed-terminal-credit-run-r01.log`. The independent audit source is retained
+as `delayed-terminal-credit-audit-r01.py`, SHA-256
+`43751e1f6229aa4dcc82fe570865967ae1820ad8659b0f930edeb481f19f685e`.
+Fingerprints establish local consistency, not provider authenticity. Raw
+provider receipts are not committed, so checking these private report seals
+requires access to the retained local artifacts.
+
+Offline replay, without another collection:
+
+```bash
+.venv/bin/python delayed_terminal_credit_v0_9_1.py verify \
+  --plan /workspace/setup-logs/delayed-terminal-credit-plan-r01.json \
+  --report /workspace/setup-logs/delayed-terminal-credit-results-r01.json
+```
+
+## Interpretation and next decision
+
+The public-surrogate mechanism gate still passes. The hosted experiment
+provides **no answer or support-quality advantage for adjoint placement** in
+this fixed block. Since direct also answered every case incorrectly, this is
+an observed quality floor, not the anticipated all-correct ceiling. A single
+draw per case/arm cannot distinguish sampling variation from a repeatable
+placement effect or explain the common arithmetic failures.
+
+A useful next separately preregistered study would test task-shaped arithmetic
+and cancellation readiness on fresh cases before a new matched placement
+comparison. Model, budget, output contract, and admission rules would need to
+be fixed before its own outputs are seen. No such follow-up was executed here;
+the current cases, failures, and nine-call block remain closed.
