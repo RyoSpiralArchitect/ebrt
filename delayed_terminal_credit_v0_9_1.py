@@ -158,7 +158,8 @@ def prompt(case: dict,arm: str) -> str:
 
 
 def make_plan(model: str, ceiling: int) -> dict:
-    if not model or not 128<=ceiling<=4096: raise ValueError("invalid config")
+    if type(model) is not str or not model.strip() or type(ceiling) is not int or not 128<=ceiling<=4096:
+        raise ValueError("invalid config")
     rows=[]
     for case_index,arm in SCHEDULE:
         case=CASES[case_index]; text=prompt(case,arm)
@@ -186,8 +187,31 @@ def replace_report(path:Path,value:dict)->None:
     os.replace(temp,path)
 
 
+def _unique_json_object(pairs: list[tuple[str, Any]]) -> dict:
+    result: dict = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError("DUPLICATE_JSON_KEY")
+        result[key] = value
+    return result
+
+
+def _reject_json_constant(_value: str) -> None:
+    raise ValueError("NONFINITE_JSON")
+
+
+def strict_json(text: str) -> Any:
+    value = json.loads(text, object_pairs_hook=_unique_json_object,
+                       parse_constant=_reject_json_constant)
+    canonical(value)  # Also rejects overflowing floats such as 1e999.
+    return value
+
+
 def read_json(path:Path)->dict:
-    return json.loads(path.read_text())
+    value = strict_json(path.read_text(encoding="utf-8"))
+    if type(value) is not dict:
+        raise ValueError("JSON_ROOT_NOT_OBJECT")
+    return value
 
 
 def verify_plan(plan:dict)->None:
@@ -197,7 +221,7 @@ def verify_plan(plan:dict)->None:
 
 
 def parse_output(text:str)->dict:
-    result=json.loads(text)
+    result=strict_json(text)
     if type(result) is not dict or set(result)!={"answer","support_ids"}:
         raise ValueError("OUTPUT_SCHEMA_INVALID")
     if type(result["answer"]) is not str or type(result["support_ids"]) is not list:
@@ -242,6 +266,34 @@ def offline_checks()->dict:
     return {"status":"PASS","network_calls":0,"cases":cases}
 
 
+class ProviderContractError(RuntimeError):
+    """Allowlisted local reason; arbitrary exception messages are not stored."""
+
+    def __init__(self, reason_code: str) -> None:
+        self.reason_code = reason_code
+        super().__init__(reason_code)
+
+
+def _response_evidence(response: Any) -> dict:
+    """Capture public output and billing metadata before any terminal check."""
+    usage = getattr(response, "usage", None)
+    detail = getattr(usage, "output_tokens_details", None)
+    return {
+        "raw": getattr(response, "output_text", None) or "",
+        "provider_status": getattr(response, "status", None),
+        "provider_response_id": getattr(response, "id", None),
+        "returned_model": getattr(response, "model", None),
+        "incomplete_reason": getattr(getattr(response, "incomplete_details", None), "reason", None),
+        "provider_error_code": getattr(getattr(response, "error", None), "code", None),
+        "usage": {
+            "input_tokens": getattr(usage, "input_tokens", None),
+            "output_tokens": getattr(usage, "output_tokens", None),
+            "total_tokens": getattr(usage, "total_tokens", None),
+            "reasoning_tokens": getattr(detail, "reasoning_tokens", None),
+        },
+    }
+
+
 def run(plan:dict, destination:Path)->dict:
     verify_plan(plan)
     if not os.getenv("OPENAI_API_KEY"):
@@ -255,7 +307,7 @@ def run(plan:dict, destination:Path)->dict:
     for index,row in enumerate(plan["schedule"]):
         report["attempts"].append({"index":index,"case_id":row["case_id"],"arm":row["arm"],
                                    "prompt_sha256":row["prompt_sha256"],"status":"STARTED"})
-        replace_report(destination,report)  # START journal before dispatch; no rescue/retry.
+        replace_report(destination,report)  # START before dispatch; no rescue/retry.
         slot=report["attempts"][-1]
         try:
             response=client.responses.create(
@@ -266,16 +318,16 @@ def run(plan:dict, destination:Path)->dict:
                 max_output_tokens=plan["max_output_tokens"],
                 store=False,
             )
-            raw=response.output_text or ""
-            if response.status!="completed": raise RuntimeError("PROVIDER_INCOMPLETE")
-            if response.model != plan["model"]: raise RuntimeError("RETURNED_MODEL_DRIFT")
-            slot.update(status="COMPLETED",raw=raw,grade=grade(row,raw),
-                        provider_response_id=getattr(response, "id", None),
-                        returned_model=response.model,
-                        usage={"input_tokens":response.usage.input_tokens if response.usage else None,
-                               "output_tokens":response.usage.output_tokens if response.usage else None})
+            slot.update(_response_evidence(response))
+            replace_report(destination,report)  # Preserve even rejected responses.
+            if slot["provider_status"] != "completed":
+                raise ProviderContractError("PROVIDER_INCOMPLETE")
+            if slot["returned_model"] != plan["model"]:
+                raise ProviderContractError("RETURNED_MODEL_DRIFT")
+            slot.update(status="COMPLETED", grade=grade(row,slot["raw"]))
         except Exception as error:
-            slot.update(status="ERROR",reason=type(error).__name__)
+            reason = error.reason_code if isinstance(error, ProviderContractError) else "PROVIDER_EXCEPTION"
+            slot.update(status="ERROR", reason=reason, error_class=type(error).__name__)
             report["status"]="STOP_ON_PROVIDER_ERROR"
             replace_report(destination,report)
             return sealed(report)
@@ -287,18 +339,75 @@ def run(plan:dict, destination:Path)->dict:
 
 def verify_report(plan:dict,report:dict)->dict:
     verify_plan(plan)
-    if not check_seal(report) or report.get("plan_fingerprint_sha256")!=plan["fingerprint_sha256"]:
+    if (type(report) is not dict or not check_seal(report)
+            or report.get("schema_version") != SCHEMA
+            or report.get("plan_fingerprint_sha256") != plan["fingerprint_sha256"]):
         raise RuntimeError("REPORT_BINDING_INVALID")
-    attempts=report["attempts"]
-    if len(attempts)>len(SCHEDULE):raise RuntimeError("ATTEMPT_OVERFLOW")
+    attempts=report.get("attempts")
+    if type(attempts) is not list or len(attempts)>len(SCHEDULE):
+        raise RuntimeError("ATTEMPT_LEDGER_INVALID")
     for index,slot in enumerate(attempts):
         row=plan["schedule"][index]
-        if (slot["index"],slot["case_id"],slot["arm"],slot["prompt_sha256"]) != (index,row["case_id"],row["arm"],row["prompt_sha256"]):
+        if (type(slot) is not dict or type(slot.get("index")) is not int
+                or (slot.get("index"),slot.get("case_id"),slot.get("arm"),slot.get("prompt_sha256"))
+                != (index,row["case_id"],row["arm"],row["prompt_sha256"])):
             raise RuntimeError("ATTEMPT_SCHEDULE_DRIFT")
-        if slot["status"]=="COMPLETED" and slot["grade"]!=grade(row,slot["raw"]):
-            raise RuntimeError("GRADE_REPLAY_MISMATCH")
-    complete=report["status"]=="COMPLETE_EXACT_NINE_TERMINALS" and len(attempts)==9 and all(a["status"]=="COMPLETED" for a in attempts)
-    by_arm={arm:{"strict":0,"answer":0,"support":0,"completed":0} for arm in ARMS}
+        if slot.get("status") not in {"STARTED", "COMPLETED", "ERROR"}:
+            raise RuntimeError("ATTEMPT_STATUS_INVALID")
+        if slot["status"] != "COMPLETED" and index != len(attempts)-1:
+            raise RuntimeError("ATTEMPT_AFTER_TERMINAL_FAILURE")
+        if "provider_status" in slot:
+            if type(slot.get("raw")) is not str:
+                raise RuntimeError("RESPONSE_EVIDENCE_INVALID")
+            for key in ("provider_status", "provider_response_id", "returned_model",
+                        "incomplete_reason", "provider_error_code"):
+                if key not in slot or (slot[key] is not None and type(slot[key]) is not str):
+                    raise RuntimeError("RESPONSE_EVIDENCE_INVALID")
+            usage=slot.get("usage")
+            keys={"input_tokens", "output_tokens", "total_tokens", "reasoning_tokens"}
+            if (type(usage) is not dict or set(usage) != keys or any(
+                    value is not None and (type(value) is not int or value < 0)
+                    for value in usage.values())):
+                raise RuntimeError("USAGE_RECEIPT_INVALID")
+        if slot["status"] == "COMPLETED":
+            if slot.get("returned_model") != plan["model"]:
+                raise RuntimeError("RECORDED_MODEL_DRIFT")
+            if slot.get("provider_status") != "completed":
+                raise RuntimeError("RECORDED_PROVIDER_STATUS_INVALID")
+            if canonical(slot.get("grade")) != canonical(grade(row,slot["raw"])):
+                raise RuntimeError("GRADE_REPLAY_MISMATCH")
+        elif "grade" in slot:
+            raise RuntimeError("NONCOMPLETED_GRADE_INVALID")
+        if slot["status"] == "ERROR":
+            reason=slot.get("reason")
+            if reason not in {"PROVIDER_INCOMPLETE", "RETURNED_MODEL_DRIFT", "PROVIDER_EXCEPTION"}:
+                raise RuntimeError("ERROR_REASON_INVALID")
+            if type(slot.get("error_class")) is not str or not slot["error_class"]:
+                raise RuntimeError("ERROR_CLASS_INVALID")
+            if reason == "PROVIDER_INCOMPLETE" and (
+                    not isinstance(slot.get("provider_status"), str)
+                    or slot["provider_status"] == "completed"):
+                raise RuntimeError("ERROR_RECEIPT_CONTRADICTION")
+            if reason == "RETURNED_MODEL_DRIFT" and (
+                    slot.get("provider_status") != "completed"
+                    or slot.get("returned_model") == plan["model"]):
+                raise RuntimeError("ERROR_RECEIPT_CONTRADICTION")
+    status=report.get("status")
+    states=[slot["status"] for slot in attempts]
+    complete=status=="COMPLETE_EXACT_NINE_TERMINALS"
+    if complete:
+        valid=len(attempts)==len(SCHEDULE) and all(s=="COMPLETED" for s in states)
+    elif status=="STOP_ON_PROVIDER_ERROR":
+        valid=bool(states) and states[-1]=="ERROR" and all(s=="COMPLETED" for s in states[:-1])
+    elif status=="RUNNING":
+        valid=all(s=="COMPLETED" for s in states) or (
+            bool(states) and states[-1]=="STARTED" and all(s=="COMPLETED" for s in states[:-1]))
+    else:
+        valid=False
+    if not valid:
+        raise RuntimeError("REPORT_TERMINAL_STATE_INVALID")
+    by_arm={arm:{"planned":sum(1 for _,a in SCHEDULE if a==arm),
+                 "strict":0,"answer":0,"support":0,"completed":0} for arm in ARMS}
     for slot in attempts:
         if slot["status"]!="COMPLETED":continue
         sums=by_arm[slot["arm"]];sums["completed"]+=1
@@ -322,7 +431,8 @@ def main()->int:
     elif args.cmd=="plan":result=make_plan(args.model,args.max_output_tokens);write_exclusive(args.output,result)
     elif args.cmd=="run":result=run(read_json(args.plan),args.output)
     else:result=verify_report(read_json(args.plan),read_json(args.report))
-    print(json.dumps(result,sort_keys=True,indent=2,ensure_ascii=False));return 0
+    print(json.dumps(result,sort_keys=True,indent=2,ensure_ascii=False))
+    return int(result.get("status") in {"STOP_ON_PROVIDER_ERROR", "INCOMPLETE_NOT_ASSESSED"})
 
 
 if __name__=="__main__":raise SystemExit(main())
