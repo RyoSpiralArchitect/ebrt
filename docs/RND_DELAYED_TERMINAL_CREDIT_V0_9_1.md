@@ -1,6 +1,6 @@
 # v0.9.1: Delayed terminal credit versus immediate local feedback
 
-Status: **NETWORK-ZERO PRECHECK PASS; FIRST HOSTED BLOCK CLOSED — [RESULTS](RND_DELAYED_TERMINAL_CREDIT_V0_9_1_RUN.md)**
+Status: **NETWORK-ZERO PRECHECK PASS; TWO HOSTED BLOCKS CLOSED — [GPT-4.1](RND_DELAYED_TERMINAL_CREDIT_V0_9_1_RUN.md) / [REQUESTED GPT-5.6](RND_DELAYED_TERMINAL_CREDIT_V0_9_1_GPT56_RUN.md)**
 
 This is a separately scoped, non-production research canary following the model-agnostic EBRT core and the PUCT/multistart comparison. It does **not** edit the frozen v0.1–v0.8 artifacts or claim improvement in the current mainline EBRT engine.
 
@@ -97,6 +97,10 @@ The first hosted block is now closed: nine completed calls, with all arms at
 [execution note](RND_DELAYED_TERMINAL_CREDIT_V0_9_1_RUN.md) for model/configuration,
 retained failures, and offline replay. The commands below describe the original
 protocol; they do not authorize repeating that consumed block under a new path.
+The maintainer subsequently requested a separate `gpt-5.6-sol` block with a
+predeclared 4096-token ceiling: all nine responses completed and all arms scored
+3/3 answer, support, and strict. That [r02 block](RND_DELAYED_TERMINAL_CREDIT_V0_9_1_GPT56_RUN.md)
+is also closed. Both results are retained under their own model/budget settings.
 
 ```bash
 python3 -m pip install -r requirements-core.txt

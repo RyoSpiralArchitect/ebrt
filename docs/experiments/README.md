@@ -9,6 +9,13 @@ and adjoint each scored **0/3 exact answer, 1/3 exact support, and 0/3 strict**.
 Offline verification and independent integer grading passed; no hosted
 quality advantage was observed.
 
+The maintainer then requested `gpt-5.6-sol`; its separately frozen
+[r02 block](../RND_DELAYED_TERMINAL_CREDIT_V0_9_1_GPT56_RUN.md) completed nine calls
+with **3/3 exact answer, support, and strict in every arm**, and byte-identical
+outputs across arms within each case. This is an observed ceiling, again with
+no placement advantage. R02 also changes the output ceiling from 384 to 4096;
+the two blocks are preserved separately and do not isolate a model-only effect.
+
 ### 5. Role-stratified provider-uptake canary
 
 The v0.8.3 auxiliary runner compares direct full context, the existing scalar

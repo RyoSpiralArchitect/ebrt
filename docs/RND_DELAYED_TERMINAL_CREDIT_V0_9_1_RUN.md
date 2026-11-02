@@ -7,6 +7,12 @@ and its [fixed protocol](RND_DELAYED_TERMINAL_CREDIT_V0_9_1.md). The runner,
 fixtures, prompts, grading, and nine-call schedule are unchanged. This note
 records the first hosted block separately from implementation/preflight.
 
+After this block closed, the maintainer's model-selection reply requested
+`gpt-5.6-sol`. Its separately authorized [r02 collection](RND_DELAYED_TERMINAL_CREDIT_V0_9_1_GPT56_RUN.md)
+uses the same fixtures and 4096 output tokens: all three arms scored 3/3 strict.
+R01's outcomes below remain unchanged; the two blocks are not pooled or treated
+as a model-only comparison.
+
 ## Configuration fixed before dispatch
 
 - Date: 2026-11-03 (Asia/Tokyo).
