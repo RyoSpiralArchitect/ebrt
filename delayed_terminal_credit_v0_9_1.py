@@ -268,7 +268,9 @@ def run(plan:dict, destination:Path)->dict:
             )
             raw=response.output_text or ""
             if response.status!="completed": raise RuntimeError("PROVIDER_INCOMPLETE")
+            if response.model != plan["model"]: raise RuntimeError("RETURNED_MODEL_DRIFT")
             slot.update(status="COMPLETED",raw=raw,grade=grade(row,raw),
+                        provider_response_id=getattr(response, "id", None),
                         returned_model=response.model,
                         usage={"input_tokens":response.usage.input_tokens if response.usage else None,
                                "output_tokens":response.usage.output_tokens if response.usage else None})
