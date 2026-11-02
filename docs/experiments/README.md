@@ -2,6 +2,20 @@
 
 These execution protocols and original findings are preserved from the former root README. Numbers are conditional on their recorded cases, models and budgets; a recorded structural PASS is not a model-quality claim. See the [project overview](../../README.md), [mechanism](../mechanism/README.md), and individual linked R&D notes.
 
+The subsequent [v0.9.1 delayed-terminal-credit protocol](../RND_DELAYED_TERMINAL_CREDIT_V0_9_1.md)
+has a [completed first hosted block](../RND_DELAYED_TERMINAL_CREDIT_V0_9_1_RUN.md):
+all nine responses completed on `gpt-4.1-2025-04-14`, but direct, scrambled,
+and adjoint each scored **0/3 exact answer, 1/3 exact support, and 0/3 strict**.
+Offline verification and independent integer grading passed; no hosted
+quality advantage was observed.
+
+The maintainer then requested `gpt-5.6-sol`; its separately frozen
+[r02 block](../RND_DELAYED_TERMINAL_CREDIT_V0_9_1_GPT56_RUN.md) completed nine calls
+with **3/3 exact answer, support, and strict in every arm**, and byte-identical
+outputs across arms within each case. This is an observed ceiling, again with
+no placement advantage. R02 also changes the output ceiling from 384 to 4096;
+the two blocks are preserved separately and do not isolate a model-only effect.
+
 ### 5. Role-stratified provider-uptake canary
 
 The v0.8.3 auxiliary runner compares direct full context, the existing scalar

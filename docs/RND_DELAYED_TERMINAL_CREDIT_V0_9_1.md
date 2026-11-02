@@ -1,6 +1,6 @@
 # v0.9.1: Delayed terminal credit versus immediate local feedback
 
-Status: **NETWORK-ZERO PRECHECK PASS; API COLLECTION NOT YET EXECUTED**
+Status: **NETWORK-ZERO PRECHECK PASS; TWO HOSTED BLOCKS CLOSED — [GPT-4.1](RND_DELAYED_TERMINAL_CREDIT_V0_9_1_RUN.md) / [REQUESTED GPT-5.6](RND_DELAYED_TERMINAL_CREDIT_V0_9_1_GPT56_RUN.md)**
 
 This is a separately scoped, non-production research canary following the model-agnostic EBRT core and the PUCT/multistart comparison. It does **not** edit the frozen v0.1–v0.8 artifacts or claim improvement in the current mainline EBRT engine.
 
@@ -92,6 +92,16 @@ The controller has full *public mathematical dynamics*, so it can already derive
 
 ## Commands
 
+The first hosted block is now closed: nine completed calls, with all arms at
+0/3 exact answer, 1/3 exact support, and 0/3 strict. See the
+[execution note](RND_DELAYED_TERMINAL_CREDIT_V0_9_1_RUN.md) for model/configuration,
+retained failures, and offline replay. The commands below describe the original
+protocol; they do not authorize repeating that consumed block under a new path.
+The maintainer subsequently requested a separate `gpt-5.6-sol` block with a
+predeclared 4096-token ceiling: all nine responses completed and all arms scored
+3/3 answer, support, and strict. That [r02 block](RND_DELAYED_TERMINAL_CREDIT_V0_9_1_GPT56_RUN.md)
+is also closed. Both results are retained under their own model/budget settings.
+
 ```bash
 python3 -m pip install -r requirements-core.txt
 python3 delayed_terminal_credit_v0_9_1.py self-test
@@ -115,7 +125,7 @@ python3 delayed_terminal_credit_v0_9_1.py verify \
 
 Install the OpenAI Python SDK in the runner environment for the hosted command. No hosted result may be described as `PASS` until that exact source-bound report exists and passes offline verification. The local mock API test cannot establish hosted accuracy.
 
-The pre-merge lightweight review passed **16 network-zero tests**, including incomplete-response retention, returned-model drift, coherently resealed model/status/grade tampering, malformed-output denominator preservation, duplicate/nonfinite JSON rejection, and CLI failure exits. The three fixtures, mathematical objectives, allocation rules, public prompts, and nine-call schedule were not changed by that hardening. API collection remains unexecuted.
+The pre-merge lightweight review passed **16 network-zero tests**, including incomplete-response retention, returned-model drift, coherently resealed model/status/grade tampering, malformed-output denominator preservation, duplicate/nonfinite JSON rejection, and CLI failure exits. The three fixtures, mathematical objectives, allocation rules, public prompts, and nine-call schedule were not changed by that hardening. API collection was unexecuted at merge; the subsequent first block is recorded separately in the [execution note](RND_DELAYED_TERMINAL_CREDIT_V0_9_1_RUN.md).
 
 ## Next decision
 
