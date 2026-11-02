@@ -16,7 +16,7 @@ revised public output + independent checks
 
 ## Mechanism in one view
 
-For an adapter-supplied public trajectory, bounded controls (u_t) act on declared transitions:
+For an adapter-supplied public trajectory, bounded controls $u_t$ act on declared transitions:
 
 $$
 h_t = F_t(h_{t-1}, e_t, u_t), \qquad
